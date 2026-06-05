@@ -1,0 +1,18 @@
+[
+  {
+    "question": "What almost stopped you from enrolling?",
+    "themes": [
+      { "theme": "Not sure it covers MY exam syllabus", "count": 63, "sampleQuote": "Looked good but I couldn't tell if it matched my unit." },
+      { "theme": "Price vs a free YouTube video", "count": 41, "sampleQuote": "Why pay when there are free explainers?" },
+      { "theme": "No time during exam term", "count": 29 }
+    ]
+  },
+  {
+    "question": "What do you struggle with most right now?",
+    "themes": [
+      { "theme": "Applying concepts to exam questions", "count": 88, "sampleQuote": "I get the theory but freeze on the actual question." },
+      { "theme": "Deferred tax and consolidation", "count": 52 },
+      { "theme": "Managing time across units", "count": 33 }
+    ]
+  }
+]

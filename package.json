@@ -1,0 +1,23 @@
+{
+  "name": "edlintics-marketing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Automated marketing engine for Edlintics. Tier 1: Manager strategy loop + content calendar.",
+  "scripts": {
+    "brief": "tsx manager/briefing/brief.ts",
+    "calendar": "tsx manager/calendar.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

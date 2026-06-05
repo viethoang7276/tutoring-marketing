@@ -1,0 +1,17 @@
+{
+  "period": {
+    "label": "Seed — no strategy session run yet",
+    "start": "2026-06-05"
+  },
+  "pillars": [],
+  "campaigns": [],
+  "filmingQueue": [],
+  "items": [],
+  "decisions": [
+    {
+      "date": "2026-06-05",
+      "summary": "Tier 1 slice scaffolded: Manager briefing + content calendar.",
+      "rationale": "Build the brain first. Empty calendar awaiting the first real strategy session."
+    }
+  ]
+}

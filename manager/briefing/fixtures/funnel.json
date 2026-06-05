@@ -1,0 +1,9 @@
+{
+  "period": "last 28 days",
+  "stages": [
+    { "name": "catalog view", "count": 4120 },
+    { "name": "course view", "count": 1380 },
+    { "name": "enrol start", "count": 246 },
+    { "name": "enrol complete", "count": 88 }
+  ]
+}

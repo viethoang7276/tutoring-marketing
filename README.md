@@ -139,3 +139,7 @@ brain outward.
 
 - 2026-06-05 — Repo scaffolded. Design captured (two-tier engine, local-first, independent).
   Decision: separate repo, reads Edlintics over `/api/v1`. First slice = Tier 1 manager + calendar.
+- 2026-06-05 — Tier 1 slice built (spec `docs/specs/0001`). TypeScript/Node engine: `npm run brief`
+  (data-grounded briefing, fixtures until the read token lands) + `npm run calendar` (system of
+  record). Brand layer (`config/brand.ts` + `docs/brand-guidelines.md`). Added `session-start.md`
+  (Manager operating rules) and `status.md` (cross-session state). See `status.md` for what's next.

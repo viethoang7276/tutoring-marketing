@@ -1,0 +1,68 @@
+[
+  {
+    "id": "p-2026-05-12-dcf",
+    "date": "2026-05-12",
+    "channel": "instagram",
+    "format": "short",
+    "title": "Why DCF falls apart if you fumble the terminal value",
+    "impressions": 18400,
+    "engagementRate": 0.071,
+    "saves": 412,
+    "clicks": 96
+  },
+  {
+    "id": "p-2026-05-15-taccount",
+    "date": "2026-05-15",
+    "channel": "instagram",
+    "format": "carousel",
+    "title": "Read any T-account in 4 moves",
+    "impressions": 9100,
+    "engagementRate": 0.094,
+    "saves": 638,
+    "clicks": 71
+  },
+  {
+    "id": "p-2026-05-18-cvp",
+    "date": "2026-05-18",
+    "channel": "tiktok",
+    "format": "short",
+    "title": "Break-even is just one line of algebra",
+    "impressions": 32100,
+    "engagementRate": 0.052,
+    "saves": 290,
+    "clicks": 54
+  },
+  {
+    "id": "p-2026-05-21-ratios",
+    "date": "2026-05-21",
+    "channel": "linkedin",
+    "format": "post",
+    "title": "The three ratios a grad recruiter actually asks about",
+    "impressions": 6200,
+    "engagementRate": 0.038,
+    "saves": 84,
+    "clicks": 138
+  },
+  {
+    "id": "p-2026-05-26-irr",
+    "date": "2026-05-26",
+    "channel": "instagram",
+    "format": "short",
+    "title": "IRR vs NPV: when they disagree, trust this one",
+    "impressions": 14700,
+    "engagementRate": 0.066,
+    "saves": 351,
+    "clicks": 88
+  },
+  {
+    "id": "p-2026-05-30-accruals",
+    "date": "2026-05-30",
+    "channel": "tiktok",
+    "format": "short",
+    "title": "Accruals, explained without the textbook words",
+    "impressions": 27600,
+    "engagementRate": 0.041,
+    "saves": 198,
+    "clicks": 39
+  }
+]
