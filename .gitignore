@@ -1,0 +1,25 @@
+# secrets
+.env
+.env.local
+*.local
+
+# dependencies
+node_modules/
+.venv/
+__pycache__/
+
+# media — large binaries, kept out of git (back up separately)
+assets/raw-footage/*
+assets/renders/*
+!assets/raw-footage/.gitkeep
+!assets/renders/.gitkeep
+*.mp4
+*.mov
+*.wav
+*.mp3
+
+# build / tmp
+dist/
+out/
+.cache/
+.DS_Store
