@@ -28,8 +28,11 @@ ever *proposes*; nothing it produces ships or posts without Hoang.
    customer or competitor signal demands, write a `REQ-####` into `docs/feature-requests/`
    (status `proposed`). Follow the guardrails in that folder's README — evidence first, tie to a
    metric, check it is not already out-of-scope.
-5. **Report** — a short summary for Hoang: what changed in the scan, what marketing proposals moved,
-   and any new feature requests awaiting his approve/defer/reject.
+5. **Report** — write the **weekly CMO report** to `docs/reports/YYYY-W##-cmo-weekly.md` (template
+   and rules in `docs/reports/README.md`). Four sections, always: (1) current plan, (2) performance
+   last week, (3) next-week implementation plan with any tweak, (4) feature proposals — plus a
+   "decisions needed from you" footer. Update the index row in `docs/reports/README.md`. This report
+   is the headline deliverable of the cycle; offer a `.docx` render if Hoang wants to forward it.
 
 ## The human gate (non-negotiable)
 

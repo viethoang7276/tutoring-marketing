@@ -83,6 +83,13 @@ _Last updated: 2026-06-05_
   cycle"). Remote weekly `/schedule` deferred — it runs in the cloud + needs a GitHub remote, which
   this local-first repo lacks; revisit once on GitHub + post-launch. Marketing repo still has no git
   remote.
+- **2026-06-06** — Added the **weekly CMO report** as the cycle's headline output: `docs/reports/`
+  (README + `_TEMPLATE.md` + first real report `2026-W23-cmo-weekly.md`). Four sections — current
+  plan / past performance / next-week plan + tweaks / feature proposals — plus a decisions footer.
+  Wired into `docs/cmo-cycle.md` step 5. Markdown canonical; `.docx` render on request. Also
+  confirmed for Hoang: `/schedule` = Anthropic cloud (needs GitHub); the local-cron equivalent is a
+  `launchd` job running `claude -p` headless against the real binary
+  (`~/.nvm/versions/node/v22.16.0/bin/claude`) — offered, not yet built (awaiting cadence + go).
 - **2026-06-05** — Reconciled the brand pack from `tutoring-web/docs/brand.md`: real semantic
   colors + full accent palette + the three brand gradients + the Inter/Source Serif Pro/Geist Mono
   type system into `config/brand.ts`; vendored Castor poses into `assets/brand/`; added the
