@@ -26,3 +26,6 @@ out/
 
 # office temp/lock files
 ~$*
+
+# generated weekly-report Word renders (markdown is canonical; docx is regenerated for Slack)
+docs/reports/*.docx

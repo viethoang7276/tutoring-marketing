@@ -33,6 +33,9 @@ ever *proposes*; nothing it produces ships or posts without Hoang.
    last week, (3) next-week implementation plan with any tweak, (4) feature proposals — plus a
    "decisions needed from you" footer. Update the index row in `docs/reports/README.md`. This report
    is the headline deliverable of the cycle; offer a `.docx` render if Hoang wants to forward it.
+   If Slack is configured (`.env` has `SLACK_BOT_TOKEN` + `SLACK_CHANNEL_ID`), deliver it by running
+   `python3 scripts/post_report_to_slack.py --send` — a summary message plus the Word doc in-thread
+   (setup: `docs/SLACK-SETUP.md`).
 
 ## The human gate (non-negotiable)
 

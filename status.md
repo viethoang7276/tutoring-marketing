@@ -90,6 +90,13 @@ _Last updated: 2026-06-05_
   confirmed for Hoang: `/schedule` = Anthropic cloud (needs GitHub); the local-cron equivalent is a
   `launchd` job running `claude -p` headless against the real binary
   (`~/.nvm/versions/node/v22.16.0/bin/claude`) — offered, not yet built (awaiting cadence + go).
+- **2026-06-06** — Slack delivery for the weekly report (summary message + Word doc in-thread):
+  `scripts/render_report_docx.py` (markdown→styled .docx) + `scripts/post_report_to_slack.py`
+  (extracts summary, renders docx, posts parent + uploads docx via Slack external-upload API into
+  the thread). Dry-run verified. Needs `SLACK_BOT_TOKEN`+`SLACK_CHANNEL_ID` in `.env` (setup:
+  `docs/SLACK-SETUP.md`). NOTE: a claude.ai Slack connector is NOT visible to this local CLI session
+  (only Chrome/Drive/Canva/Higgsfield are) — the bot-token script is the working local path.
+  Generated `docs/reports/*.docx` is gitignored.
 - **2026-06-05** — Reconciled the brand pack from `tutoring-web/docs/brand.md`: real semantic
   colors + full accent palette + the three brand gradients + the Inter/Source Serif Pro/Geist Mono
   type system into `config/brand.ts`; vendored Castor poses into `assets/brand/`; added the
