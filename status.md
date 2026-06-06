@@ -97,6 +97,12 @@ _Last updated: 2026-06-05_
   `docs/SLACK-SETUP.md`). NOTE: a claude.ai Slack connector is NOT visible to this local CLI session
   (only Chrome/Drive/Canva/Higgsfield are) — the bot-token script is the working local path.
   Generated `docs/reports/*.docx` is gitignored.
+- **2026-06-06** — Slack delivery LIVE. Created Slack app **"Edlintics CMO"** (app id `A0B8JCLT3DH`,
+  workspace Edlintics) with bot scopes `chat:write`+`files:write`; Hoang installed it + invited it to
+  channel **`C0B89A11MSB`**. Creds in **`.env.local`** (gitignored; script reads `.env` then
+  `.env.local`). First weekly report **posted successfully** (summary message + Word doc in-thread).
+  Future weeks: `python3 scripts/post_report_to_slack.py --send` (channel pre-authorized, no
+  re-confirm). Token never logged.
 - **2026-06-05** — Reconciled the brand pack from `tutoring-web/docs/brand.md`: real semantic
   colors + full accent palette + the three brand gradients + the Inter/Source Serif Pro/Geist Mono
   type system into `config/brand.ts`; vendored Castor poses into `assets/brand/`; added the
