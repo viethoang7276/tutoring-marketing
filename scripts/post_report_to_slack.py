@@ -17,7 +17,7 @@ Safety:
     the docx it would attach, and sends nothing. Posting a real message requires --send AND
     a token in .env. Nothing is posted by importing this module.
 """
-import sys, re, json
+import sys, re, json, os
 from pathlib import Path
 
 import requests
@@ -29,14 +29,20 @@ SLACK_API = "https://slack.com/api"
 
 def load_env():
     env = {}
-    f = REPO / ".env"
-    if f.exists():
+    # .env first, then .env.local overrides it (both gitignored). Real shell env wins last.
+    for name in (".env", ".env.local"):
+        f = REPO / name
+        if not f.exists():
+            continue
         for raw in f.read_text(encoding="utf8").splitlines():
             line = raw.strip()
             if not line or line.startswith("#") or "=" not in line:
                 continue
             k, v = line.split("=", 1)
             env[k.strip()] = v.strip().strip('"').strip("'")
+    for k in ("SLACK_BOT_TOKEN", "SLACK_CHANNEL_ID", "SLACK_PARENT_TS"):
+        if os.environ.get(k):
+            env[k] = os.environ[k]
     return env
 
 
@@ -133,8 +139,9 @@ def main():
     parent_ts = env.get("SLACK_PARENT_TS", "")
 
     if not send or not token or not channel:
-        why = "no --send flag" if not send else "SLACK_BOT_TOKEN/SLACK_CHANNEL_ID not set in .env"
+        why = "no --send flag" if not send else "SLACK_BOT_TOKEN/SLACK_CHANNEL_ID not set"
         print(f"--- DRY RUN ({why}) ---\n")
+        print(f"[token  ] {'present' if token else 'MISSING'}")
         print(f"[channel] {channel or '(unset)'}")
         print(f"[thread ] {parent_ts or '(new thread per post)'}")
         print(f"[attach ] {docx_path}\n")

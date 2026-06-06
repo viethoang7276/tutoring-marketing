@@ -24,7 +24,8 @@ use the **bot-token script** below. It needs no MCP and runs from cron/`launchd`
    type `/invite @Edlintics CMO` in that channel.
 5. Get the **channel ID**: click the channel name → scroll to the bottom of the About tab → copy the
    ID (starts `C`). (Or right-click the channel → Copy link; the ID is the `C…` in the URL.)
-6. In this repo's **`.env`** (gitignored — do not commit, do not paste the token in chat) set:
+6. In this repo's **`.env.local`** (or `.env` — both gitignored; do not commit, do not paste the
+   token in chat) set:
    ```
    SLACK_BOT_TOKEN=xoxb-...
    SLACK_CHANNEL_ID=C0123456789
