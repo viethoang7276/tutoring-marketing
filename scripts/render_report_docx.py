@@ -92,10 +92,20 @@ def render(md_path, out_path=None):
     n = doc.styles["Normal"]; n.font.name = SANS; n.font.size = Pt(10.5); n.font.color.rgb = INK
     n.paragraph_format.space_after = Pt(5); n.paragraph_format.line_spacing = 1.12
 
+    base = md_path.parent
     i = 0
     while i < len(lines):
         line = lines[i].rstrip()
         if not line.strip():
+            i += 1; continue
+        # image:  ![alt](path)  -> embed, centred
+        mimg = re.match(r"^!\[[^\]]*\]\(([^)]+)\)\s*$", line.strip())
+        if mimg:
+            img = (base / mimg.group(1)).resolve()
+            if img.exists():
+                p = doc.add_paragraph(); p.alignment = 1  # center
+                p.paragraph_format.space_before = Pt(6); p.paragraph_format.space_after = Pt(6)
+                p.add_run().add_picture(str(img), width=Inches(6.3))
             i += 1; continue
         # table block
         if line.lstrip().startswith("|"):

@@ -57,16 +57,14 @@ def build_summary(md_path):
     """Parent message = title + metadata + the 'Decisions needed' section, in Slack mrkdwn."""
     lines = Path(md_path).read_text(encoding="utf8").splitlines()
     title = next((l[2:].strip() for l in lines if l.startswith("# ")), "CMO weekly report")
-    week = next((re.sub(r"^- \*\*Week:\*\*\s*", "", l).strip()
-                 for l in lines if l.startswith("- **Week:**")), "")
-    source = next((re.sub(r"^- \*\*Data source[^:]*:\*\*\s*", "", l).strip()
-                   for l in lines if l.startswith("- **Data source")), "")
+    meta = next((l.strip().strip("_").strip()
+                 for l in lines if l.strip().startswith("_") and l.strip().endswith("_")), "")
 
-    # extract the "Decisions needed" section
+    # extract the decisions / "what I need from you" checklist section
     decisions = []
     grab = False
     for l in lines:
-        if l.startswith("## ") and "Decisions needed" in l:
+        if l.startswith("## ") and re.search(r"need from you|decisions needed", l, re.I):
             grab = True; continue
         if grab and l.startswith("## "):
             break
@@ -81,16 +79,14 @@ def build_summary(md_path):
         return s
 
     parts = [f"*{title}*"]
-    if week:
-        parts.append(f"_{week}_")
-    if source:
-        parts.append(f"_Data source: {source}_")
+    if meta:
+        parts.append(f"_{meta}_")
     if decisions:
         parts.append("")
-        parts.append("*Decisions needed from you*")
+        parts.append("*What I need from you*")
         parts.extend(to_mrkdwn(d) for d in decisions)
     parts.append("")
-    parts.append(":paperclip: Full report attached in this thread.")
+    parts.append(":paperclip: Full report (with charts) attached in this thread.")
     return "\n".join(parts)
 
 

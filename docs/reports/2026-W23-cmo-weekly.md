@@ -1,67 +1,64 @@
 # CMO weekly report — 2026-W23
 
-- **Week:** Mon 2026-06-01 → Sun 2026-06-07
-- **Prepared for:** Hoang (CEO)  ·  **By:** Marketing Manager (CMO)
-- **Data source this week:** research / live scan only (brief still on fixtures — no `/api/v1` token yet)
-- **Status:** proposal — nothing locked until you approve
+_Week of Mon 2026-06-01 → Sun 2026-06-07 · for Hoang · data: research and live scans only (the brief is still on fixtures until the /api/v1 token exists)_
 
-## 1. Current plan
-- **Goal:** be visible to an exam-anxious business undergraduate at the moment of peak need, so the
-  Sept 1 launch converts into the autumn exam cycle.
-- **Timing:** we are in the **June–Aug build window**. Demand spikes mid-Oct–early-Nov (midterms)
-  and early–mid-Dec (finals); IE classes start 31 Aug. Content has ranking lag, so the rule is
-  build now, harvest in October.
-- **Proposed direction — three pillars** (from `docs/research/Edlintics-Marketing-Proposal-Fall-2026.docx`):
-  1. **Worked, Not Watched** — screen-recorded worked exam problems; the moat, filmed. The spine.
-  2. **The Concept You Will Be Tested On** — seasonal concept series timed to the exam waves.
-  3. **What AI Gets Wrong** — the differentiator (AI gives an answer; it can't watch you try).
-- **Channels (proposed):** YouTube primary, TikTok + Reels as the net, Reddit/Discord light-touch,
-  LinkedIn deferred.
-- **Locked vs proposed:** brand pack is **locked** (real colours/type reconciled). Everything
-  strategic above is **proposed** — it gates on your five decisions (see footer).
+Hoang — short version: we spent this week getting our bearings, and the picture is encouraging. We
+now know exactly who we are talking to, when they will need us, and where the gap is that nobody else
+is filling. Nothing is live yet, so there are no audience numbers to report — but the groundwork that
+makes October pay off is the work of June, and that is well under way. The one thing on my mind: the
+clock. Every week we wait to start filming is a week off the runway we need before the exam panic
+hits.
 
-## 2. Performance — past week
-No channel metrics exist yet (pre-launch, nothing posted, brief is fixtures). This week was research
-and infrastructure. What got done:
-- **Company grounding** — read `tutoring-web/docs` (vision, product, brand); persona, edge, model,
-  Sept 1 launch, north-star (session completion) all internalised.
-- **Two research reports** — fall-launch market research (seasonal spine, scenarios, monthly plan)
-  and a **live TikTok/Instagram hashtag scan**. Key finding: the exact-concept lane is ~1,000× less
-  crowded than broad study tags (`#financialaccounting` ~4K vs `#studytok` 4.2M), and its incumbents
-  aim at US/CPA professionals — the EU-undergraduate exam angle is open.
-- **CEO proposal** — the Word document above (3 pillars, channels, funnel model, decisions).
-- **Brand pack reconciled** — real edlintics-blue colours, accent palette, gradients, type system,
-  Castor mascot vendored (with a do-not-use-in-marketing policy). Logo pending your redesign.
-- **CMO↔CTO loop built** — feature-request channel + cycle manual + this report format.
-- **Pipeline status:** zero of the flagship worked-examples filmed yet (blocked on your go + a
-  confirmed screen-recording setup).
+## Where the plan stands
+We are selling exam calm to anxious business undergraduates, and we launch on September 1. The whole
+game is timing. Our buyer barely exists in the summer, appears in force when midterms hit in late
+October, and again at finals in December. So the plan is simple to say and hard to do: build the
+content now, while no one is watching, so we already rank and already have an audience the moment they
+start searching in a panic.
 
-## 3. Next week — implementation plan (with tweaks)
-- **Get your five decisions** (footer) so the strategy moves from proposed to locked.
-- **Pick the 1–2 lead courses** — the surest October converters — to build the first flagship
-  worked-examples around (candidates: cash-flow statement, T-accounts).
-- **Confirm the filming setup** (screen capture + clean audio). If ready, **film the first two
-  worked-examples** next week — this is the long-lead item; every week we wait is a week off the
-  October ranking runway.
-- **Decide scheduling** — whether to wire the local `launchd` job so this report and the cycle run
-  unattended (vs staying on-demand).
-- **Tweak:** none yet. No performance data exists to tweak against; the plan stands as proposed.
-  The first real tweak cycle begins once content is live or the `/api/v1` token lands.
+![When our buyer needs us](assets/seasonal-demand.png)
 
-## 4. Feature proposals
-| REQ | Title | Status | Targets metric | Needs from you |
-|---|---|---|---|---|
-| REQ-0001 | Free concept pages for SEO + lead capture | **example** (format demo) | acquisition → course-page visits | Say if you want it promoted to a **live** proposal |
+Three pillars carry it, and I think they are right: **Worked, Not Watched** (you solving a real exam
+problem on screen — our product, filmed), **The Concept You Will Be Tested On** (a concept a week,
+timed to the exam waves), and **What AI Gets Wrong** (the honest case that ChatGPT can hand you an
+answer but cannot watch you try). The brand and the engine are locked; the strategy itself is still a
+proposal until you make the five calls at the bottom.
 
-No live feature requests this week — pre-launch, there is no customer data yet (the request engine
-runs on `demand-gaps` + `feedback` from `npm run brief`, which is fixtures until the token exists).
-REQ-0001 is a worked example of the format, not a live ask.
+## How last week went
+No channel metrics — we have posted nothing, by design. What we did instead was the homework that
+makes the rest cheaper: I read the company inside out, ran live research on how these students study
+and where they look, and scanned the competition directly on TikTok. That last one is the most useful
+thing I can show you this week.
 
-## Decisions needed from you
-- [ ] **1 — Channels:** confirm YouTube-primary / TikTok+Reels net / Reddit+Discord light / defer LinkedIn.
-- [ ] **2 — Trademark trade-off:** confirm we stay strictly topic-led (forfeit the branded-exam hook).
-- [ ] **3 — Cadence:** the realistic produced-pieces-per-week you can hold through the build.
-- [ ] **4 — Lead courses:** which 1–2 exams lead the flagship worked-examples.
-- [ ] **5 — Filming setup:** confirmed, or a gap to close before June filming.
-- [ ] **6 — Scheduling:** wire the local `launchd` weekly job, or keep the cycle on-demand.
-- [ ] **7 — REQ-0001:** promote the concept-SEO-pages idea to a live feature request, or leave as example.
+![The open lane](assets/hashtag-landscape.png)
+
+Read that chart as our whole thesis in one picture. The broad study tags are enormous and generic;
+the exact concept we teach — financial accounting — has about four thousand videos against four
+million on the general study tag. The lane is almost empty, and the few people in it are teaching US
+professionals, not European undergraduates the night before an exam. That is the room we walk into.
+On the build side: the brand pack is done, the report-and-feedback machinery you are reading is built,
+and the only thing not started is filming — which is the long pole, and the thing I most want your go
+on.
+
+## What I want to do next week
+I want to stop preparing and start making. Concretely: get your five decisions so the strategy turns
+from proposal into commitment, pick the one or two exams we lead with (my instinct is the cash-flow
+statement and T-accounts — highest pain, highest search), and if your screen-recording setup is
+ready, film the first two worked examples. **No tweak to the plan yet** — there is no performance data
+to tweak against. The first real course-correction comes when content is live or the data token
+lands; until then the plan stands as written.
+
+## Ideas for the product
+Nothing live yet — the feature-request engine runs on real customer signal (demand-gaps and feedback
+from the brief), which is still fixtures pre-launch. There is one worked example on file, REQ-0001
+(free concept pages for SEO and lead capture), parked as a format demo. If you like the idea, say so
+and I will turn it into a live request.
+
+## What I need from you
+- [ ] **Channels** — confirm YouTube primary, TikTok and Reels as the net, Reddit and Discord light, LinkedIn later.
+- [ ] **The trademark trade-off** — agree we stay strictly topic-led, giving up the branded-exam hook for safety and independence.
+- [ ] **Cadence** — the honest number of pieces a week you can sustain through the build.
+- [ ] **Lead courses** — which one or two exams we build the first worked examples around.
+- [ ] **Filming setup** — ready to go, or a gap to close before we film.
+- [ ] **Scheduling** — wire the local weekly job, or keep the cycle on-demand.
+- [ ] **REQ-0001** — promote the concept-pages idea to a live request, or leave it as an example.
