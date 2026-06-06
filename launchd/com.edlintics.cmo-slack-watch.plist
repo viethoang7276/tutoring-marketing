@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Local launchd agent: polls the Slack report thread every 15 minutes and triggers a CMO session
+  on a new reply from Hoang. Runs only while the Mac is awake. Install:
+
+    cp launchd/com.edlintics.cmo-slack-watch.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.edlintics.cmo-slack-watch.plist
+
+  Stop / uninstall:
+    launchctl unload ~/Library/LaunchAgents/com.edlintics.cmo-slack-watch.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.edlintics.cmo-slack-watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/scripts/run-slack-watch.sh</string>
+  </array>
+  <key>StartInterval</key>
+  <integer>900</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/logs/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/logs/launchd.err.log</string>
+</dict>
+</plist>

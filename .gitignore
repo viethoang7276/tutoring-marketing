@@ -29,3 +29,8 @@ out/
 
 # generated weekly-report Word renders (markdown is canonical; docx is regenerated for Slack)
 docs/reports/*.docx
+
+# slack watcher local state + logs (machine-local, not secret but not shared)
+.slack-watch-state.json
+.slack-last-thread
+logs/*.log

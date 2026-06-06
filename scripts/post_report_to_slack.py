@@ -156,6 +156,7 @@ def main():
     msg = slack("chat.postMessage", token, _json=post_kwargs)
     thread_ts = parent_ts or msg["ts"]
     upload_docx_to_thread(token, channel, thread_ts, docx_path, title=md.stem)
+    (REPO / ".slack-last-thread").write_text(thread_ts)  # so slack_watch.py knows which thread
     print(f"Posted to Slack channel {channel}, thread {thread_ts}. Attached {Path(docx_path).name}.")
 
 
