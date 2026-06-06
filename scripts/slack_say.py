@@ -12,11 +12,16 @@ from _slack_common import load_env, slack_api, REPO
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    if not args:
-        sys.exit('usage: slack_say.py "text" [--no-thread]')
-    text = args[0]
-    no_thread = "--no-thread" in sys.argv
+    argv = sys.argv[1:]
+    no_thread = "--no-thread" in argv
+    text = None
+    if "--file" in argv:
+        text = Path(argv[argv.index("--file") + 1]).read_text(encoding="utf8")
+    else:
+        pos = [a for a in argv if not a.startswith("--")]
+        text = pos[0] if pos else None
+    if not text:
+        sys.exit('usage: slack_say.py "text" | --file PATH [--no-thread]')
     env = load_env()
     token, channel = env.get("SLACK_BOT_TOKEN", ""), env.get("SLACK_CHANNEL_ID", "")
     if not token or not channel:
