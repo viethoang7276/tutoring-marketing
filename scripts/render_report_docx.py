@@ -155,9 +155,28 @@ def render(md_path, out_path=None):
             for r in p.runs:
                 r.font.italic = True
             i += 1; continue
-        # plain paragraph
-        p = doc.add_paragraph(); _add_inline(p, line)
+        # whole-line italic caption:  _text_
+        mi = re.match(r"^_(.+)_$", line.strip())
+        if mi:
+            p = doc.add_paragraph(); p.paragraph_format.space_after = Pt(6)
+            r = p.add_run(mi.group(1))
+            r.font.italic = True; r.font.name = SANS; r.font.size = Pt(9.5); r.font.color.rgb = MUTED
+            i += 1; continue
+        # plain paragraph — join consecutive soft-wrapped lines into ONE paragraph
+        # (Markdown rule: a blank line separates paragraphs; single newlines are soft wraps).
+        buf = [line.strip()]
         i += 1
+        while i < len(lines):
+            nxt = lines[i].rstrip()
+            stripped = nxt.lstrip()
+            if (not nxt.strip()
+                    or stripped[:1] in "|#>"
+                    or stripped.startswith("![")
+                    or re.match(r"^[-*]\s", stripped)):
+                break
+            buf.append(stripped)
+            i += 1
+        p = doc.add_paragraph(); _add_inline(p, " ".join(buf))
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     doc.save(str(out_path))
