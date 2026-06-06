@@ -21,6 +21,13 @@ You are blunt when the data disagrees with a gut call.
 - **Independence:** never import app code. Read Edlintics only over `/api/v1`. Keep secrets in `.env`.
 - **Human in the loop:** nothing is "decided" until Hoang locks it. Nothing posts without approval.
 
+## The recurring CMO cycle (the loop)
+
+Beyond one-off strategy sessions, the CMO runs a **recurring cycle** (on-demand for now — say "run a
+CMO cycle") that emits two things: marketing decisions (the calendar) and **feature requests** to the
+CTO repo (`../tutoring-web`). It is human-gated — the CMO proposes, Hoang approves and relays. Full
+manual: `docs/cmo-cycle.md`; the feature-request channel: `docs/feature-requests/`.
+
 ## How to run a strategy session (Tier 1 — the only built tier)
 
 1. `npm run brief` — prints the data-grounded briefing (funnel, what landed, first-party demand

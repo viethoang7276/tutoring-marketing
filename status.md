@@ -26,6 +26,11 @@ _Last updated: 2026-06-05_
 
 ## Next (in rough priority order)
 
+0. **DISCUSS the fall-launch market research with Hoang (morning 2026-06-06)** —
+   `docs/research/2026-06-05-fall-launch-market-research.md`. Argue out the 3 proposed directions
+   (A "Worked, not watched" / B seasonal-SEO harvest / C "What AI gets wrong"), resolve the 5 open
+   questions (channels, trademark trade-off, cadence, lead courses, filming setup), THEN lock
+   survivors into `calendar/calendar.json`.
 1. **Run the first real strategy session** — `npm run brief`, do the live trend scan, propose,
    and write the first real pillars/campaign into `calendar/calendar.json`.
 2. **Issue the read-only `/api/v1` token** on the app side, set `EDLINTICS_API_TOKEN` in `.env`,
@@ -52,6 +57,32 @@ _Last updated: 2026-06-05_
 
 - **2026-06-05** — Scaffolded + built Tier 1 (briefing + calendar + brand layer). Wrote
   `session-start.md`, this file, and spec 0001. Calendar still seeded/empty (no real session run).
+- **2026-06-05 (night)** — CMO market-research task. Read `tutoring-web/docs` (vision/product/brand)
+  to ground company understanding; ran live web research (StudyTok/Gen-Z finance media, short-form
+  2026 mechanics, AI-study dynamic, creator landscape, EU exam seasonality incl. the IE 2026-2027
+  calendar). Wrote `docs/research/2026-06-05-fall-launch-market-research.md` — seasonal spine,
+  scenarios, monthly calendar, 3 proposed directions, 5 open questions. To discuss morning 06-06.
+- **2026-06-06** — Live TikTok/Instagram hashtag scan (real browser, public pages only). Pulled
+  8 live TikTok video counts + content patterns; key finding: `#financialaccounting` ~4K vs
+  `#studytok` 4.2M (~1000× gap) → exact-concept lane is uncrowded but needs reach-tag stacking;
+  `vinnyhale` leads the concept lane but aims at CPA/professionals, leaving the undergrad-exam
+  angle open. Instagram no longer publishes hashtag counts (repurpose target, not measurement).
+  Wrote `docs/research/2026-06-06-tiktok-instagram-hashtag-stats.md`.
+- **2026-06-06** — Added a deeper research round (hardest accounting topics → flagship pillar
+  topics; organic-growth + conversion benchmarks; YouTube-as-search) and produced a CMO→CEO
+  **Word proposal**: `docs/research/Edlintics-Marketing-Proposal-Fall-2026.docx` (generator at
+  `scripts/build_proposal_docx.py`, needs `python-docx`). 12 sections + appendices: exec summary,
+  situation, the wedge, 3 pillars (Worked-Not-Watched / Concept-You-Will-Be-Tested-On /
+  What-AI-Gets-Wrong), channels, seasonal plan, flagship topics, funnel/targets, risks, the 5
+  decisions for Hoang, recommendation. Built but no calendar yet — awaiting Hoang's decisions.
+- **2026-06-06** — Stood up the **CMO↔CTO loop** (human-gated). New `docs/feature-requests/`
+  channel (README + `_TEMPLATE.md` + an EXAMPLE REQ-0001) and `docs/cmo-cycle.md` operating manual;
+  `session-start.md` now points to both. Flow: CMO writes feature requests from customer/competitor
+  data → Hoang approves → Hoang relays approved ones into `../tutoring-web/docs/backlog.md`/specs
+  (CMO never writes the app repo — independence). Trigger decision: **on-demand, local** ("run a CMO
+  cycle"). Remote weekly `/schedule` deferred — it runs in the cloud + needs a GitHub remote, which
+  this local-first repo lacks; revisit once on GitHub + post-launch. Marketing repo still has no git
+  remote.
 - **2026-06-05** — Reconciled the brand pack from `tutoring-web/docs/brand.md`: real semantic
   colors + full accent palette + the three brand gradients + the Inter/Source Serif Pro/Geist Mono
   type system into `config/brand.ts`; vendored Castor poses into `assets/brand/`; added the

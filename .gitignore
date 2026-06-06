@@ -23,3 +23,6 @@ dist/
 out/
 .cache/
 .DS_Store
+
+# office temp/lock files
+~$*
