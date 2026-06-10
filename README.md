@@ -82,6 +82,13 @@ proposes 2-3 directions, and argues them out with you. You bring domain judgment
 One filmed concept atomizes into ~10 assets, so **2 filming days/week, filmed ahead, build a content
 bank** that keeps the calendar full even on a bad week.
 
+Both loops are staffed by a **role-agent roster** in `.claude/agents/` — the marketing counterpart to
+the engineering and content teams in the sibling repos. `market-researcher` and `performance-analyst`
+serve the strategy loop (scan + listen + report drafting); `copywriter`, `asset-designer`, and
+`distribution-operator` run daily production; a read-only `brand-reviewer` gates everything before it
+reaches Hoang's approval. Who owns which artifact, when the CMO spawns whom, and the root-session
+fallback are in `docs/agent-team.md`.
+
 ---
 
 ## Why a separate repo (not inside tutoring-site)
