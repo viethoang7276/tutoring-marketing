@@ -21,6 +21,16 @@ ever *proposes*; nothing it produces ships or posts without Hoang.
    competitor moves, seasonality 4–6 weeks out. (See the research reports in `docs/research/`.)
 2. **Listen** — `npm run brief` for first-party signal: funnel, demand-gaps ("wanted it, didn't
    enrol"), feedback. Fixtures until the `/api/v1` token exists; the brief says which.
+   - **Need a real number before the token lands?** The app repo has a read-only CLI,
+     `edctl`, with report/feedback exports. Run from `../tutoring-web`:
+     `pnpm edctl reports enrollments --format csv`,
+     `pnpm edctl reports course-completion --format csv`,
+     `pnpm edctl reports revenue-mtd --format json`, and
+     `pnpm edctl feedback export [--course <id>] --format csv`. **Use ONLY these read-only
+     report/feedback commands** — they are the marketing-safe surface (no writes, no admin
+     token). This does **not** change the cross-division contract: marketing's *automation*
+     still reads only through `/api/v1`; these are a manual operator export, not app-code
+     imports. Full reference: `../tutoring-web/docs/onboarding/content-cli.md`.
 3. **Decide (marketing)** — update proposed pillars / campaigns / filming queue in
    `calendar/calendar.json` (Tier 1). Validate with `npm run calendar`. These remain *proposals*
    until Hoang locks them.
