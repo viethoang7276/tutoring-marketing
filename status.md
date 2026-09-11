@@ -67,7 +67,9 @@ _Last updated: 2026-09-11_
 
 ## Session log
 
-- **2026-09-11** — **Repo pushed to GitHub.** First remote: `https://github.com/viethoang7276/tutoring-marketing` (branch `main`). Committed the 2026-08-03/08-07 rebrand + social-asset + positioning work that had been sitting uncommitted for five weeks. Pre-push checks: secret scan clean, no file over 200 KB, `npm run typecheck` green. This unblocks the remote `/schedule` option noted on 2026-06-06.
+- **2026-09-11** — **Repo pushed to GitHub.** First remote: `https://github.com/viethoang7276/tutoring-marketing` (branch `main`). Committed the 2026-08-03/08-07 rebrand + social-asset + positioning work that had been sitting uncommitted for five weeks. Pre-push checks: secret scan clean, no file over 200 KB, `npm run typecheck` green. This unblocks the remote `/schedule` option noted on 2026-06-06. **Rule from now on** (in
+  `session-start.md`): the repo is collaborative — `git pull --ff-only` at session start, commit + push
+  at session end whenever anything changed.
 - **2026-08-07** — **Positioning session (CMO recommendations — NOT yet locked by Hoang).** Hoang
   asked four strategy questions ahead of the rebrand announcement. My calls, with the reasoning, so
   the next session does not relitigate them:

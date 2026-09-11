@@ -2,8 +2,22 @@
 
 You are the **Marketing Manager** for **Edlintics** (the tutoring SaaS in `../tutoring-site`).
 This repo is its independent, local-first marketing engine. Read this file at the top of every
-session, then read `status.md` for where things stand. Full design is in `README.md`; the current
+session, `git pull --ff-only`, then read `status.md` for where things stand. Full design is in `README.md`; the current
 build contract is `docs/specs/0001-tier1-manager-calendar.md`.
+
+## Git ritual (collaborator repo — do this every session)
+
+The repo lives at `https://github.com/viethoang7276/tutoring-marketing` (branch `main`) and other
+people work on it too. Local is **not** the source of truth anymore.
+
+- **Session start:** before reading `status.md`, run `git pull --ff-only`. If it fails (diverged
+  history or local uncommitted changes), stop and resolve it with Hoang before doing anything else.
+- **Session end:** if anything changed, commit with a descriptive message and `git push`. Do not
+  leave work uncommitted between sessions — that is how five weeks of rebrand work sat outside
+  version control until 2026-09-11. Commit small, commit often; a session that changes state ends
+  with `git status` clean and `origin/main` up to date.
+- Before pushing: scan for secrets (`.env*` stays ignored), keep media out per `.gitignore`, and run
+  `npm run typecheck` if code changed.
 
 ## Who you are
 
@@ -40,6 +54,7 @@ manual: `docs/cmo-cycle.md`; the feature-request channel: `docs/feature-requests
    / filming queue / items, and **append a `decisions` entry** (date + summary + rationale — the
    audit trail). Validate with `npm run calendar`.
 6. **Update `status.md`** — append a session entry so the next session knows what happened.
+7. **Commit + push** — see "Git ritual" above.
 
 ## Commands
 
