@@ -1,31 +1,49 @@
 # Brand assets
 
-Home for the visual brand: logo, mascot, and any reusable marks. Referenced by `config/brand.ts`
-(`brand.assets`) and used by Remotion templates (Tier 2).
+Home for the visual brand: the mark, the character cast, and any reusable artwork. Referenced by
+`config/brand.ts` (`brand.assets`) and by `scripts/build_social_assets.py`.
+
+**Re-vendored 2026-08-03** from the rebranded app (brand v1.2 / v1.3). The previous contents —
+Castor the beaver — were retired upstream on 2026-06-07 and have been deleted.
 
 ## Manifest (current)
 
 | File | Purpose | Status |
 |---|---|---|
-| `logo.svg` | Primary logo | **PENDING REDESIGN** (Hoang). App today uses a gradient wordmark — see `config/brand.ts` `logo`. |
-| `mascot.svg` | Castor, default "mark" pose | Vendored from `tutoring-web/public/castor`. |
-| `mascot-{mark,wave,read,shrug,loading}.svg` | Castor poses | Vendored. Monochrome edlintics blue, baked in. |
-| `favicon.svg` | Small mark | Vendored (`castor-favicon`). |
+| `app-icon-512.png` | Tie mark on the brand gradient — the social avatar / app icon | Vendored from `tutoring-web/public/brand/favicon-512.png`. |
+| `favicon.svg` | Small mark | Vendored from `tutoring-web/public/brand/`. |
+| `ledger.svg` | **Ledger** — the manual, the lead character | Vendored from `tutoring-web/public/mascot/`. |
+| `ledger-stuck.svg` | Ledger, `stuck` emotion (404 / error) | Vendored. |
+| `sigma.svg` | **Sigma** — the calculator | Vendored. |
+| `centi.svg` | **Centi** — the coin | Vendored. |
+| `plot.svg` | **Plot** — the chart | Vendored. |
+| `tempo.svg` | **Tempo** | Vendored. |
 
-SVGs are tracked in git. Large rasters/source files (`.psd`, `.ai`, big `.png`) are gitignored as
-binaries — back them up separately and keep this folder as the manifest of record.
+There is no `logo.svg`. The logo is **geometry, not a file**: a wordmark plus the collar-and-tie
+mark, both drawn from tokens so they stay crisp at any size. Spec in `config/brand.ts` `logo`;
+reference implementation in `scripts/build_social_assets.py` (`tie_mark()` / `wordmark()`).
+
+SVGs are tracked in git. Large rasters and source files (`.psd`, `.ai`, big `.png`) are gitignored —
+back them up separately and keep this folder as the manifest of record.
 
 ## Usage rules
 
-- **Logo:** gradient wordmark — "Ed" in foreground + "lintics" in the primary→blue-400 gradient,
-  Inter 800, tracking-tight, no tagline. Pending a redesign before we lean on it in renders. Never
-  place on low-contrast backgrounds; pair with `brand.colors`.
-- **Castor mascot — do NOT use in marketing.** The brand is deliberately mascot-free on marketing
-  and content. Castor is an illustrative beaver (not an icon), monochrome edlintics blue, with no
-  voice. Allowed only on app surfaces: 404, error, empty state, onboarding, loading. It must never
-  appear in a hero, course landing, lesson/finance content, or a produced concept video/thumbnail.
-  Always decorative (`aria-hidden`, empty `alt`). Source of truth: `tutoring-web/docs/brand.md`
-  § "Castor (mascot)"; machine-readable in `config/brand.ts` `mascotPolicy`.
+- **Logo.** Wordmark = "Ed" in foreground + "lintics" in the primary→blue-400 gradient, Inter 800,
+  tracking-tight, **no tagline**. Mark = necktie framed by a collar in the `#6FA0F0 → #2F58A8`
+  gradient — **never recolored**. Use `full` (collar + tie) where the logo leads; `tie` only for the
+  smallest contexts (favicon, social avatar). Clear space = the height of the "E". Never place on a
+  low-contrast background.
+- **Character cast — not a general marketing asset.** The brand is mascot-free on marketing and
+  content **by default**. The cast is an *illustrative asset, never an icon, with no voice* — it
+  never talks, jokes, cheers, or appears in a speech bubble. Always decorative (`aria-hidden`, empty
+  `alt`); meaning lives in the surrounding copy.
+  - Always allowed on app surfaces: 404, error, empty state, onboarding, loading.
+  - Every **marketing** use needs Hoang's explicit sign-off, logged in `config/brand.ts`
+    `characterSystem.approvedMarketingExceptions`. Anything not on that list is a violation and the
+    brand-reviewer flags it.
+  - The tie is on **Ledger only** (printed on its book). The others stand on bare cream stub arms.
+    Never move the tie onto another character; never recolor it.
 
-> Upstream: `tutoring-web/docs/brand.md` + the rendered page at `/en/brand-guidelines`. When the
-> app brand changes, re-reconcile `config/brand.ts` and this manifest by hand (we never import app code).
+> Upstream: `tutoring-web/docs/product/brand.md` + the rendered page at `/en/brand-guidelines`. When
+> the app brand changes, re-reconcile `config/brand.ts` and this manifest by hand (we never import
+> app code). The 2026-06-07 rebrand went unnoticed here for eight weeks — check this every cycle.

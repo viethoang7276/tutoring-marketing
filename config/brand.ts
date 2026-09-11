@@ -7,10 +7,14 @@
  *   - Remotion templates  — colors/type for animated concept graphics.
  *
  * Colors/type mirror the app brand system. Upstream sources (read, never imported):
- *   - tutoring-web/docs/brand.md            — the rules + reasoning
+ *   - tutoring-web/docs/product/brand.md    — the rules + reasoning
  *   - http://localhost:3000/en/brand-guidelines — the rendered truth (canonical when in doubt)
  * Values below are LITERAL copies (this repo never imports app code). When the app brand
- * changes, update these by hand. Reconciled 2026-06-05 from brand.md.
+ * changes, update these by hand.
+ *
+ * Reconciled 2026-06-05, then again 2026-08-03 for brand v1.2/v1.3: Castor retired in favour of
+ * the EdCharacter cast, the logo redesign landed (wordmark + collar-and-tie mark), and Lato
+ * replaced Geist Mono. Anything older than 2026-08-03 that mentions Castor is stale.
  */
 
 export const audience = {
@@ -90,64 +94,95 @@ export const gradients = {
 
 /**
  * Type system (brand.md § Typography). Inter for UI/marketing chrome + short headlines;
- * Source Serif Pro for long-form / editorial "expertise" surfaces; Geist Mono for code and
- * tabular figures (price ladders, T-accounts). No italics for emphasis — bold or color instead.
+ * Source Serif Pro for long-form / editorial "expertise" surfaces; Lato for uppercase kickers,
+ * prices and tabular figures. No italics for emphasis — bold or color instead.
  */
 export const type = {
   display: "Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif", // headlines, UI chrome
   body: "Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif", // marketing/UI body
   serif: "'Source Serif Pro', Georgia, 'Times New Roman', serif", // long-form / editorial
-  mono: "'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace", // code, formulas, figures
+  // Lato replaced Geist Mono in June 2026 — the brand dropped its monospace face.
+  accent: "Lato, system-ui, sans-serif", // uppercase kickers, prices, tabular figures
   // Headline weight signature: extrabold (800), tracking-tight.
   displayWeight: 800,
 } as const;
 
 export const assets = {
-  logo: "assets/brand/logo.svg", // PENDING REDESIGN — current app logo is a gradient wordmark (below)
-  // Castor mascot poses, vendored from tutoring-web/public/castor. Monochrome edlintics blue.
-  mascot: "assets/brand/mascot.svg", // = the "mark" pose (default)
-  mascotPoses: {
-    mark: "assets/brand/mascot-mark.svg",
-    wave: "assets/brand/mascot-wave.svg",
-    read: "assets/brand/mascot-read.svg",
-    shrug: "assets/brand/mascot-shrug.svg",
-    loading: "assets/brand/mascot-loading.svg",
-  },
+  // The logo is a wordmark + the collar-and-tie BrandMark; both are vector geometry rendered
+  // from tokens, not a stored logo.svg. Geometry mirrored in scripts/build_social_assets.py.
+  // The app icon is a WHITE tie on the blue gradient. Social avatars are the inverse — the blue
+  // gradient mark on white — so the profile picture reads as the logo. Built by the script below.
+  appIcon: "assets/brand/app-icon-512.png",
   favicon: "assets/brand/favicon.svg",
+  // EdCharacter cast, vendored 2026-08-03 from tutoring-web/public/mascot.
+  characters: {
+    ledger: "assets/brand/ledger.svg", // lead character
+    ledgerStuck: "assets/brand/ledger-stuck.svg",
+    sigma: "assets/brand/sigma.svg",
+    centi: "assets/brand/centi.svg",
+    plot: "assets/brand/plot.svg",
+    tempo: "assets/brand/tempo.svg",
+  },
+  socialRenders: "assets/renders/social/", // built by scripts/build_social_assets.py
+  fonts: "assets/fonts/", // Latin-subset woff2 for hermetic rendering
   // See assets/brand/README.md for the full manifest + usage rules.
 } as const;
 
 /**
- * Logo (brand.md § Logo). PENDING REDESIGN per Hoang. The app's current logo is a wordmark with
- * gradient text — "Ed" in foreground + "lintics" in the primary→blue-400 gradient, Inter 800,
- * tracking-tight. No tagline. Recorded here so Tier 2 stays consistent until the redesign lands.
+ * Logo. RESOLVED — the redesign landed upstream as brand v1.2: a wordmark plus the collar-and-tie
+ * BrandMark. Reconciled 2026-08-03 from `tutoring-web/docs/product/brand.md` § Logo and
+ * `components/brand/BrandMark.tsx`. Both are drawn from geometry, so they stay crisp at any size.
  */
 export const logo = {
-  status: "pending-redesign",
+  status: "current", // was pending-redesign until 2026-08-03
   wordmark: { ed: "Ed", lintics: "lintics" },
   treatment: "Ed in foreground; 'lintics' in the primary gradient (to-r, from #467DE3 to #60A5FA).",
   font: "Inter",
   weight: 800,
-  tagline: null,
+  tagline: null, // no tagline under the wordmark, ever
+  /** The mark: a necktie framed by a collar. The cast wears it, so logo and characters rhyme. */
+  mark: {
+    viewBox: "0 0 64 92",
+    variants: ["full", "tie"], // full = collar + tie; tie = smallest contexts (favicon, avatar)
+    gradient: { from: "#6FA0F0", to: "#2F58A8", dir: "to-br" }, // never recolor
+    clearSpace: "padding equal to the height of the 'E'",
+  },
 } as const;
 
 /**
- * Castor mascot policy — a SCOPED EXCEPTION, not a marketing asset (brand.md § Castor).
- * The brand is deliberately mascot-free on marketing and content. Castor is an illustrative
- * beaver in monochrome edlintics blue, never an icon, never given a voice.
+ * Character system (mascot) — a SCOPED EXCEPTION, not a general marketing asset.
+ * Reconciled 2026-08-03 from `tutoring-web/docs/product/brand.md` § "Character system".
  *
- * For THIS engine, the operative rule is: DO NOT put Castor in produced marketing content
- * (hero/landing/concept videos/thumbnails/captions). It exists in assets/ for completeness and
- * for any app-side error/empty/loading surfaces only. The Tier 2 quality gate should treat
- * Castor appearing in a marketing render as a violation.
+ * The Castor beaver was RETIRED upstream on 2026-06-07 (brand v1.2) and replaced by the
+ * EdCharacter object cast. v1.3 (2026-06-29) removed the suit + tie from every character
+ * except Ledger, which wears the mark printed on the lower half of its book.
+ *
+ * The default is still mascot-free on marketing and content. The cast is an ILLUSTRATIVE
+ * asset, never an icon, never given a voice. Each marketing use needs an explicit,
+ * logged sign-off from Hoang — see `approvedMarketingExceptions`.
  */
-export const mascotPolicy = {
-  name: "Castor",
-  color: "monochrome edlintics blue (#467DE3) — never recolor",
-  allowedSurfaces: ["404", "error", "empty-state", "onboarding", "loading"],
-  forbiddenInMarketing: true, // hero, course landing, lesson/finance content, anything with a "voice"
-  voice: "none — Castor never talks, jokes, or cheers; copy stays in the real brand voice",
+export const characterSystem = {
+  cast: ["Ledger", "Sigma", "Centi", "Plot", "Tempo"] as const,
+  lead: "Ledger", // the manual; the character used when only one is needed
+  retired: "Castor (beaver) — removed upstream 2026-06-07, do not reintroduce",
+  emotions: ["idle", "cheerful", "focused", "thinking", "proud", "surprised", "stuck", "resting"],
+  allowedAppSurfaces: ["404", "error", "empty-state", "onboarding", "loading"],
+  /** Default remains: NOT in marketing. Each exception below is individually approved. */
+  forbiddenInMarketingByDefault: true,
+  approvedMarketingExceptions: [
+    {
+      date: "2026-08-03",
+      surface: "social profile covers + Instagram pinned grid (Facebook, LinkedIn, Instagram)",
+      characters: ["Ledger", "Centi", "Plot", "Sigma"],
+      rationale:
+        "Rebrand rollout. Matches the homepage OG card (public/og/default.png), which already " +
+        "pairs the cast with accounting graphics on a marketing surface.",
+      status: "PENDING — requested by Hoang in-session; confirm before the assets go live.",
+    },
+  ],
+  voice: "none — the cast never talks, jokes, or cheers; copy stays in the real brand voice",
   decorativeOnly: true, // always aria-hidden / empty alt; meaning lives in surrounding copy
+  tieRule: "the tie is on Ledger only, printed on the book; never recolored",
 } as const;
 
 export const brand = {
@@ -159,7 +194,7 @@ export const brand = {
   type,
   assets,
   logo,
-  mascotPolicy,
+  characterSystem,
 } as const;
 export type Brand = typeof brand;
 export default brand;

@@ -13,6 +13,11 @@ assets/raw-footage/*
 assets/renders/*
 !assets/raw-footage/.gitkeep
 !assets/renders/.gitkeep
+# ...except the social profile assets: small PNGs that ARE the deliverable, plus the
+# vendored webfonts their generator needs. Kept in git so a rebuild is reproducible.
+!assets/renders/social/
+!assets/renders/social/*.png
+!assets/renders/social/README.md
 *.mp4
 *.mov
 *.wav

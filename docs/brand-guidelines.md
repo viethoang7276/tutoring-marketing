@@ -59,23 +59,41 @@ section backgrounds. Don't add new gradients ad-hoc.
 - **Inter** — UI chrome, marketing body, short headlines. Headline signature: extrabold (800),
   tracking-tight.
 - **Source Serif Pro** — long-form / editorial "expertise" surfaces (lesson + blog body, landing H1).
-- **Geist Mono** — code, formulas, tabular figures (price ladders, T-accounts).
+- **Lato** — uppercase kickers, prices, tabular figures. (Replaced Geist Mono in June 2026; the
+  brand no longer has a monospace face.)
 - No italics for emphasis — use bold or color.
 
 ## Logo
 
-**Pending redesign** (Hoang). The app today uses a gradient wordmark: "Ed" in foreground + "lintics"
-in the primary→blue-400 gradient, Inter 800, tracking-tight, no tagline. Recorded in `config/brand.ts`
-`logo` so Tier 2 stays consistent until the redesign lands. Never place on low-contrast backgrounds.
+**Resolved** — the redesign landed upstream as brand v1.2. Two parts:
 
-## Mascot — Castor (do NOT use in marketing)
+- **Wordmark** — "Ed" in foreground + "lintics" in the primary→blue-400 gradient, Inter 800,
+  tracking-tight, **no tagline**. Clear space = the height of the "E".
+- **Mark** — a necktie framed by a collar, in the `#6FA0F0 → #2F58A8` gradient (never recolored).
+  `full` = collar + tie; `tie` = tie only, for the smallest contexts (favicon, social avatar).
 
-The brand is deliberately **mascot-free on marketing and content**. Castor — a beaver in monochrome
-edlintics blue — is a scoped exception for app surfaces only (404, error, empty state, onboarding,
-loading) and is an *illustrative asset, never an icon, with no voice*. **It must never appear in a
-hero, course landing, lesson/finance content, or a produced concept video/thumbnail.** Always
-decorative (`aria-hidden`, empty `alt`).
+Both are drawn from geometry, so they stay crisp at any size — see `config/brand.ts` `logo.mark`
+and `scripts/build_social_assets.py`. Never place on low-contrast backgrounds.
 
-Poses are vendored in `assets/brand/` (`mascot-{mark,wave,read,shrug,loading}.svg`) for completeness;
-machine-readable policy is `config/brand.ts` `mascotPolicy`. The Tier 2 quality gate should flag
-Castor in any marketing render as a violation. Source of truth: `tutoring-web/docs/brand.md` § Castor.
+## Character system (mascot) — scoped exception
+
+> **Castor the beaver was retired upstream on 2026-06-07 and no longer exists.** Anything in this
+> repo dated before 2026-08-03 that mentions Castor is stale.
+
+The cast is **Ledger** (the manual — the lead), **Sigma**, **Centi**, **Plot**, **Tempo**. Each is
+an *illustrative asset, never an icon, with no voice*. The tie is on Ledger only, printed on its
+book; the others stand on bare cream arms. Eight calm emotional states — no angry, crying or silly.
+
+**The default is still mascot-free on marketing and content.** App surfaces (404, error, empty
+state, onboarding, loading) are always allowed. Every *marketing* use is a separate exception that
+needs Hoang's explicit sign-off, logged in `config/brand.ts` `characterSystem.approvedMarketingExceptions`.
+Anything not on that list is a violation, and the quality gate should flag it.
+
+Approved so far:
+
+| Date | Surface | Characters |
+|---|---|---|
+| 2026-08-03 | Social profile covers + Instagram pinned grid | Ledger, Centi, Plot, Sigma |
+
+The cast is vendored in `assets/brand/` (`ledger`, `ledger-stuck`, `sigma`, `centi`, `plot`,
+`tempo`). Source of truth: `tutoring-web/docs/product/brand.md` § "Character system".

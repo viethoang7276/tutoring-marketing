@@ -20,7 +20,9 @@ every word of them.
 - Short sentences, one idea per line. Concrete over abstract — show the number, the journal entry,
   the formula. Respect the reader's time and intelligence.
 - **Independence:** never imply affiliation with or endorsement by any university or exam board.
-- **Castor the mascot never appears in marketing content.**
+- **The character cast (Ledger, Sigma, Centi, Plot, Tempo) never gets a voice** — it never talks,
+  jokes or cheers, and never appears in a speech bubble. Copy is authored independently of it.
+  Castor the beaver was retired 2026-06-07; never reference it.
 - **Human gate:** nothing posts without Hoang's approval. You draft; you never publish.
 - Source of truth: `config/brand.ts` (machine), `docs/brand-guidelines.md` (human).
 

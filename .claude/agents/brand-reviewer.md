@@ -26,12 +26,16 @@ flag that too — both must be fixed):
    "exact exam answers", "real past paper"): HIGH.
 4. **Audience.** Finance/accounting university students — undergrad exam framing, not CPA/professional.
    Wrong-intent tags (`#fintok`, `#corporatefinance`) are findings.
-5. **Mascot.** Castor in any marketing artifact is a HIGH finding, no exceptions
-   (`config/brand.ts` `mascotPolicy`).
+5. **Character system.** The cast is Ledger, Sigma, Centi, Plot, Tempo (`config/brand.ts`
+   `characterSystem`). **Castor the beaver was retired 2026-06-07** — it appearing anywhere, or any
+   doc still citing it as current, is a HIGH finding. The cast is mascot-free-by-default on
+   marketing: a character in a marketing artifact is a HIGH finding **unless that surface is listed
+   in `characterSystem.approvedMarketingExceptions`**, in which case it passes. Also HIGH: giving a
+   character a voice or speech bubble, recoloring the tie, or putting the tie on anyone but Ledger.
 6. **Visual rules** (for renders/specs): primary gradient `#467DE3 → #60A5FA` as the signature; no
    ad-hoc gradients; max two accents per asset; subject color mapping (accounting = emerald); Inter 800
-   headlines / Source Serif Pro editorial / Geist Mono figures; no italics for emphasis; logo per the
-   recorded wordmark spec, never on low-contrast backgrounds.
+   headlines / Source Serif Pro editorial / Lato kickers and figures; no italics for emphasis; logo per
+   the recorded wordmark + tie-mark spec, never on low-contrast backgrounds.
 7. **Honesty.** Invented metrics, testimonials, or unverifiable claims ("trusted by 500 students"
    without proof) are findings regardless of voice.
 

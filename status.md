@@ -3,7 +3,7 @@
 The cross-session memory for this repo. Read after `session-start.md`. Update it at the end of any
 session that changes state (append to the session log; revise "Now" / "Next").
 
-_Last updated: 2026-06-05_
+_Last updated: 2026-09-11_
 
 ## Now (what exists and works)
 
@@ -12,10 +12,13 @@ _Last updated: 2026-06-05_
     stub, proposals prompt). Runs on **fixtures** (no read token yet).
   - `npm run calendar` → renders `calendar/calendar.json` (schema-validated).
   - `npm run typecheck` → passes.
-- **Brand layer:** `config/brand.ts` — voice rules + **real** color/accent/gradient/type tokens
-  (reconciled 2026-06-05 from `tutoring-web/docs/brand.md`) + `docs/brand-guidelines.md`. Castor
-  mascot poses vendored into `assets/brand/` with a do-not-use-in-marketing policy. Logo PENDING
-  REDESIGN (app today = gradient wordmark, recorded in `config/brand.ts` `logo`).
+- **Brand layer:** `config/brand.ts` — voice rules + **real** color/accent/gradient/type tokens +
+  `docs/brand-guidelines.md`. **Re-reconciled 2026-08-03** to app brand v1.2/v1.3: EdCharacter cast
+  (Ledger, Sigma, Centi, Plot, Tempo) vendored into `assets/brand/`, logo RESOLVED (wordmark +
+  collar-and-tie mark), Lato replaced Geist Mono. Castor is retired — do not reintroduce.
+- **Social profile assets built** — `scripts/build_social_assets.py` renders avatars, the Facebook
+  and LinkedIn covers, and three Instagram pinned tiles from real brand geometry, hermetically
+  (embedded fonts, no network). Output + upload spec: `assets/renders/social/`.
 - **Runtime:** TypeScript / Node 22, zod-validated. Deps: `zod` + dev `tsx`/`typescript`.
 
 ## Decisions locked
@@ -26,21 +29,28 @@ _Last updated: 2026-06-05_
 
 ## Next (in rough priority order)
 
-0. **DISCUSS the fall-launch market research with Hoang (morning 2026-06-06)** —
-   `docs/research/2026-06-05-fall-launch-market-research.md`. Argue out the 3 proposed directions
-   (A "Worked, not watched" / B seasonal-SEO harvest / C "What AI gets wrong"), resolve the 5 open
-   questions (channels, trademark trade-off, cadence, lead courses, filming setup), THEN lock
-   survivors into `calendar/calendar.json`.
-1. **Run the first real strategy session** — `npm run brief`, do the live trend scan, propose,
-   and write the first real pillars/campaign into `calendar/calendar.json`.
-2. **Issue the read-only `/api/v1` token** on the app side, set `EDLINTICS_API_TOKEN` in `.env`,
-   then **reconcile fixture shapes** with the real endpoints (`manager/briefing/fixtures/*` map
-   1:1 to assumed paths in `client.ts`).
-3. **Brand pack** — DONE except the logo: colors/fonts reconciled from `tutoring-web/docs/brand.md`,
-   mascot vendored. Remaining: drop the **redesigned** `logo.svg` into `assets/brand/` when ready.
-4. **Resolve open decisions** (README): channels in scope, strategy cadence, scheduler, approval
-   strictness.
-5. **Tier 2** (later): ingest → transcribe → edit → atomize → publish. Not started.
+> Launch is **2026-09-01**. The June–Aug plant window that the whole seasonal thesis depends on is
+> nearly spent and **nothing has been published**. Everything below is ordered against that.
+
+0. **FILM CF-01.** Fully prepped since June (`calendar/human-plan.md`: hook, numbers, trap, answer).
+   Unfilmed. It blocks the auto-clip pipeline test, and therefore the other five takes, and therefore
+   the entire lane-A catalogue. Nothing else in this list matters as much.
+1. **Hoang's pending confirmations** (all small, all blocking something):
+   (a) the mascot-in-marketing exception for the social profiles — logged **PENDING** in
+   `config/brand.ts` `characterSystem.approvedMarketingExceptions`;
+   (b) Instagram has no cover slot → three pinned 1080×1350 tiles instead;
+   (c) the LinkedIn rebrand post — `assets/copy/2026-08-07-linkedin-rebrand-post.md`;
+   (d) the 2026-08-07 positioning calls in the session log (restaurant / AI / accent / defensibility).
+2. **Upload the rebranded profile assets** to the three live pages, then confirm TikTok + YouTube
+   accounts actually exist (never verified since the Jun-8 setup row).
+3. **Lock `calendar/calendar.json`.** Still the **empty seed** after three months of strategy work —
+   no pillars, no campaigns, no items. The audit trail has nowhere to live until this is written.
+4. **Scheduler.** Recommendation on record: **manual posting pre-launch.** Both 2026-06-23 research
+   docs converge on 4–12 weeks of platform gatekeeping per API path, and paying $149/month to
+   automate distribution of content that does not exist is the wrong order. Revisit post-launch.
+5. **Issue the read-only `/api/v1` token** and reconcile fixture shapes — parked pre-launch by
+   Hoang's call; unblocks real numbers in `npm run brief`.
+6. **Tier 2** (later): ingest → transcribe → edit → atomize → publish. Not started.
 
 ## Known gaps / watch-outs
 
@@ -48,13 +58,90 @@ _Last updated: 2026-06-05_
 - API/token work is **parked pre-launch** (Hoang's call) — no live `/api/v1` until the app ships.
 - Brand colors/fonts in `config/brand.ts` are now **real** (reconciled from `tutoring-web/docs/brand.md`).
   Upstream is read, never imported — re-reconcile by hand if the app brand changes.
-- **Castor mascot is forbidden in marketing output** — vendored only for completeness; Tier 2's
-  quality gate must flag it in any marketing render.
-- Logo is **pending redesign** — current gradient-wordmark spec recorded but no `logo.svg` yet.
+- **The character cast is mascot-free-by-default in marketing.** Each marketing use is a separate
+  logged exception in `config/brand.ts` `characterSystem.approvedMarketingExceptions`; the social
+  profile entry is **PENDING Hoang's confirmation**. Castor is retired — flag any reference to it.
+- **The app brand drifted for eight weeks before this repo noticed** (v1.2 landed 2026-06-07,
+  reconciled 2026-08-03). Re-check `tutoring-web/docs/product/brand.md` every CMO cycle.
 - `/api/v1` endpoint shapes are **assumed**; the app may differ. Reconcile when launch nears.
 
 ## Session log
 
+- **2026-09-11** — **Repo pushed to GitHub.** First remote: `https://github.com/viethoang7276/tutoring-marketing` (branch `main`). Committed the 2026-08-03/08-07 rebrand + social-asset + positioning work that had been sitting uncommitted for five weeks. Pre-push checks: secret scan clean, no file over 200 KB, `npm run typecheck` green. This unblocks the remote `/schedule` option noted on 2026-06-06.
+- **2026-08-07** — **Positioning session (CMO recommendations — NOT yet locked by Hoang).** Hoang
+  asked four strategy questions ahead of the rebrand announcement. My calls, with the reasoning, so
+  the next session does not relitigate them:
+  - **Business ownership as credibility → use the numbers, not the narrative.** A restaurant does not
+    make you better at getting a second-year through a midterm. The credential that converts is
+    *400+ students across 20+ schools*, which is currently unused. But a live business is excellent
+    *source material* — real costs, real working capital — against the top reported struggle
+    ("I get the theory but freeze on the actual question", 88 responses). Evidence, not a brag.
+  - **The failing restaurant → do not tell it, in either version.** Not the failure, not the
+    survival arc. Four reasons: (1) audience mismatch — founder-story content attracts founders, not
+    undergrads with a midterm; (2) it is unresolved, so a survival narrative can be falsified during
+    the October spike; (3) commercial exposure with suppliers, staff, landlord; (4) confessional
+    register collides with the locked calm-expert voice. **Use the mechanics anonymised** — a
+    "60-seat restaurant" case study for CVP/break-even/working capital, and for profit-vs-cash
+    (which is CF-01 already). Revisit the real story only after it resolves, as a retrospective.
+  - **AI → split.** Do NOT market "AI runs my marketing/ops" — it undercuts the human-on-camera moat
+    and feeds the "why pay when AI is free" objection. DO run *What AI Gets Wrong* (already a locked
+    pillar), and DO teach fundamentals as the thing that lets you **audit** AI output. Flagged the
+    combined frame as the real risk: "businesses struggling" + "AI runs my marketing" + "buy my
+    course" reads as *failed entrepreneur sells course*, the most credibility-destroying frame in
+    this category.
+  - **Accent / AI voice → no AI voice, film as-is.** Contradicts the 2026-06-23 locked "no synthetic
+    presenter" decision, and both platforms now require an AI label for synthetic voiceover *even
+    over real footage* (TikTok AIGC labelling, 4-tier penalties; YouTube altered/synthetic
+    disclosure) — an AI badge on content whose whole pitch is that a human did the work. Evidence
+    against the worry: 400+ students already paid €45/hour having heard the accent; the exam-prep
+    category is built on strongly-accented teachers (Physics Wallah, Khan Sir ~24.8M, Dear Sir 20M);
+    and the EU business-school audience learns in accented English daily. What actually matters:
+    mic quality > accent, burned-in captions, terms and numbers written on screen, slightly slower
+    pace.
+  - **Defensibility vs Brilliant/Duolingo → wrong question.** Both are horizontal consumer platforms
+    needing millions of users on daily-habit mechanics; Edlintics is seasonal, syllabus-bound, and
+    explicitly anti-gamification. The real competition is the **free YouTube/ChatGPT explainer**
+    (41 responses cited price-vs-free as the enrolment blocker) — and, bluntly, not shipping. Genuine
+    moats: **syllabus specificity** (top blocker "couldn't tell if it matched my unit", 63 responses
+    — biggest unmet need and strongest structural moat are the same thing), practitioner+teacher
+    credibility, and the €45/hour human beside the €99 course. Advised NOT to pre-empt this in the
+    launch post; comment-ready reply drafted instead.
+  - **Deliverable:** `assets/copy/2026-08-07-linkedin-rebrand-post.md` — LinkedIn rebrand/launch post,
+    DRAFT v2, unpublished. Leads with the insight (textbook entries vs. the real document trail),
+    adds the AI-literacy beat, signals the AI-bookkeeping product as *direction not promise*.
+  - **Flagged:** LinkedIn is not in the locked channel plan (TikTok/Instagram/YouTube/Facebook) and
+    this post speaks to founders more than to the undergrad wedge. Fine as a credibility surface;
+    not a reason to widen the core strategy before the 15-customer validation target is met.
+- **2026-08-03** — **Rebrand rollout: social profile assets + brand-layer re-reconcile.** Hoang asked
+  for new avatars and covers for the three live profiles (instagram.com/edlintics,
+  facebook.com/edlintics, linkedin.com/company/edlintics), matching the homepage meta image.
+  Discovered the marketing brand layer was **two versions stale**: the app retired **Castor** on
+  2026-06-07 (brand v1.2) for the **EdCharacter cast** (Ledger, Sigma, Centi, Plot, Tempo), dropped
+  suit+tie from all but Ledger in v1.3 (06-29), landed the **logo redesign** (wordmark + collar-and-tie
+  mark), and replaced **Geist Mono with Lato**. None of that had reached this repo in eight weeks.
+  Re-reconciled `config/brand.ts` (`mascotPolicy` → `characterSystem`, logo `pending-redesign` →
+  `current`, type `mono` → `accent`), re-vendored `assets/brand/`, rewrote its README and
+  `docs/brand-guidelines.md`, and updated the four role agents that still enforced the Castor ban —
+  the `brand-reviewer` would otherwise have FAILED these assets on sight.
+  Built `scripts/build_social_assets.py`: composes each asset from the real `BrandMark` tie geometry
+  and the vendored cast SVGs, then rasterizes with headless Chrome at exact platform pixels. Fonts are
+  vendored in `assets/fonts/` and embedded, so renders are hermetic and reproducible (no generator, no
+  CDN). Output + upload spec in `assets/renders/social/` (un-gitignored). A `--guides` mode draws the
+  mobile-crop and profile-photo occlusions; it caught two real defects on the FB cover before delivery.
+  **Open for Hoang:** (a) the mascot-on-marketing exception is logged as **PENDING** in
+  `characterSystem.approvedMarketingExceptions` — confirm before the assets go live; (b) Instagram has
+  no cover slot, so it gets three pinned 1080×1350 tiles instead — confirm that substitution.
+- **2026-06-23** — **Social post process design** (Hoang proposed multi-channel + AI/Canva + meme
+  + Q&A video). Argued it out as CMO: pushed back on multi-channel-per-profile (one audience →
+  pillars not channels; splitting cold-start reach pre-launch is the classic mistake) and on
+  meme-led / synthetic-video (collides with the locked calm-expert voice + the human-on-camera
+  moat). Hoang locked the recommended path on all three: **one brand / one account per platform**,
+  **memes as a ~15–20% supporting format** inside brand voice, **AI/Canva for assets + static posts
+  + Q&A-with-numbers, presenter-led worked example stays human**. Wrote `docs/social-post-process.md`
+  (DRAFT v1): four content lanes (worked-example / static-carousel / Q&A / humour), the weekly
+  Plan→Produce→Brand-review→Approve→Package→Schedule→Publish→Measure loop mapped to existing role
+  agents, per-channel cadence, and the new AI/Canva static-post sub-pipeline. Open before it runs:
+  scheduler choice, account setup, first static-lane proof, confirm a published Canva brand template.
 - **2026-06-05** — Scaffolded + built Tier 1 (briefing + calendar + brand layer). Wrote
   `session-start.md`, this file, and spec 0001. Calendar still seeded/empty (no real session run).
 - **2026-06-05 (night)** — CMO market-research task. Read `tutoring-web/docs` (vision/product/brand)
