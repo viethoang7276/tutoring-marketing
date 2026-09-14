@@ -39,3 +39,8 @@ docs/reports/*.docx
 .slack-watch-state.json
 .slack-last-thread
 logs/*.log
+
+# personal data — client/contact lists (PII). NEVER commit: the GitHub remote is PUBLIC.
+# Only the README in that folder is tracked.
+data/contacts/*
+!data/contacts/README.md
