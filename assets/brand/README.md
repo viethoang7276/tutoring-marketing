@@ -19,9 +19,15 @@ Castor the beaver — were retired upstream on 2026-06-07 and have been deleted.
 | `plot.svg` | **Plot** — the chart | Vendored. |
 | `tempo.svg` | **Tempo** | Vendored. |
 
-There is no `logo.svg`. The logo is **geometry, not a file**: a wordmark plus the collar-and-tie
-mark, both drawn from tokens so they stay crisp at any size. Spec in `config/brand.ts` `logo`;
-reference implementation in `scripts/build_social_assets.py` (`tie_mark()` / `wordmark()`).
+Reusable exports added 2026-10-19:
+
+- `edlintics-logo.svg`: transparent tie + Edlintics wordmark, lettering outlined from vendored Inter 800, matching the live header proportions (26px mark / 19px text / 10px gap). Static blue gradient; live header ink is #0D1117.
+- `edlintics-mark.svg`: transparent collar-and-tie mark, without lettering.
+- `favicon.svg`: existing white mark on a rounded blue square.
+
+All three uploaded to Canva on 2026-10-19. Media IDs: wordmark `MAHYbxRt4H0`, transparent mark `MAHYbzIC5gs`, square icon `MAHYb4j6PV8`.
+
+Reference geometry remains in `scripts/build_social_assets.py` (`tie_mark()` / `wordmark()`).
 
 SVGs are tracked in git. Large rasters and source files (`.psd`, `.ai`, big `.png`) are gitignored —
 back them up separately and keep this folder as the manifest of record.
