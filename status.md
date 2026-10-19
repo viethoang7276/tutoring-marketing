@@ -225,3 +225,8 @@ _Last updated: 2026-10-19_
   Replaced both frame fills with illustration-only tickets and EdCharacters (thinking/proud).
   Preserved template text positions, typography and logo. Both corrected previews shown.
   Pending save approval; café draft still needs the same no-text-in-images correction.
+
+- **2026-10-19 — Canva sample saved.** Following user direction to provide the actual Canva
+  sample after preview, committed ticket-shortage transaction `4767579663882939557`.
+  Verified native text and illustration frames in Chrome, saved design `DAHYceQ49sU`.
+  Question page left open. No social publishing.
