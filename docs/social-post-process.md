@@ -115,3 +115,56 @@ never costs us brand consistency.
 - **First static-lane proof** — produce one Canva carousel end-to-end through this loop (analogous
   to the CF-01 auto-clip pipeline test) before scaling the lane.
 - **Brand template in Canva** — confirm a published brand template exists to generate from.
+
+## 8. Daily visual quiz pilot — 2026-10-19
+
+Requested by Hoang: adapt Brilliant's short visual questions to economics, finance,
+accounting and statistics using the existing top-question and bottom-question templates.
+This is a draft pilot, not an approved daily publishing commitment.
+
+References inspected directly in Instagram:
+- https://www.instagram.com/p/CEsgc8GoSQk/ — 2020-09-04 rectangle/triangle area puzzle.
+- https://www.instagram.com/p/CFzsSZVDUGk/ — 2020-10-01 alternating concentric-circle puzzle.
+
+Observed format: a short question, a large diagram containing the necessary clues, generous
+white space, and plausible answer options in the caption. The image carries the problem;
+the caption invites an attempt and links to the solution. These old examples demonstrate
+a format, not current reach benchmarks or proof that daily posting will work for Edlintics.
+
+Edlintics adaptation: one concept and one misconception per post, three answer options,
+and a second slide with a short visual explanation. Use original problems and artwork.
+Make all assumptions explicit on the card or caption. Avoid stock predictions, personalised
+financial advice, trivia dependent on changing law, and questions with multiple defensible answers.
+
+Pilot assets:
+- `calendar/quiz-samples.json`: four draft records, correct options, calculation checks,
+  captions, design IDs and approval state. No publish times assigned.
+- `assets/quiz-samples/*.svg`: original diagram sources.
+- `scripts/build_quiz_samples.py`: render eight PNG diagrams with CairoSVG into
+  ignored `assets/renders/quiz-samples/`. This is a fixed sample renderer, not a general engine.
+- Top template: `EAHYcAXfhLs`; bottom template: `EAHYcHgXC_g`.
+- Both source template datasets were empty when inspected. The draft sample copies have
+  CATEGORY, QUESTION, QUESTION_DIAGRAM, ANSWER_LABEL, EXPLANATION and ANSWER_DIAGRAM labels.
+  Source templates have not been modified or republished.
+
+Proposed repeatable workflow:
+1. Draft structured question records: concept, layout, prompt, assumptions, options,
+   correct answer, explanation, diagram parameters, caption and difficulty.
+2. Verify the answer independently and check that each distractor has a clear reason to be wrong.
+3. Render the diagram from a small deterministic family (balance-sheet change, percentage
+   sequence, opportunity-cost table, weighted groups). Keep numbers out of AI-generated artwork.
+4. Fill an approved Canva master with its labelled fields. Before scaling, publish approved
+   sample layouts as separate automation masters and re-check their dataset schemas.
+5. Render and inspect both pages at mobile size; check spelling, crop, units and answer alignment.
+6. Hoang reviews the final images and captions. Record approval per post; later edits revoke approval.
+7. Export ordered pages and enqueue approved posts in the chosen scheduler with explicit account,
+   timezone and publish time. Use a unique post ID to prevent duplicate scheduling and retain
+   scheduler/post IDs. Review uncertain publish outcomes before retrying.
+8. Record saves, shares, meaningful attempts and course/profile actions. Compare formats after
+   a small pilot; high comment volume alone does not establish student demand.
+
+Not built or activated: a recurring generator, general diagram renderer, export integration,
+scheduler connection, publication job or analytics ingestion. The current Canva connector can
+create/edit these designs but does not expose an export or scheduling tool in this session.
+Canva editing transactions require a displayed preview and explicit approval before commit.
+Nothing in this pilot authorises publishing or fixes the future posting frequency.

@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "created": "2026-10-19",
+  "status": "draft_pending_review",
+  "references": [
+    "https://www.instagram.com/p/CEsgc8GoSQk/",
+    "https://www.instagram.com/p/CFzsSZVDUGk/"
+  ],
+  "samples": [
+    {
+      "key": "accounting",
+      "id": "DAHYcaM16oY",
+      "txn": "4350996695437342066",
+      "layout": "top",
+      "category": "ACCOUNTING QUIZ",
+      "q": "Cash rises by €1,000 after a bank loan.\nHow much profit does the loan create?",
+      "answer": "A loan increases cash and debt equally.\nIt does not create revenue or profit.",
+      "title": "Edlintics Quiz 01 — Cash is not profit",
+      "status": "draft_pending_review",
+      "template_id": "EAHYcAXfhLs",
+      "diagram_assets": {
+        "question": "MAHYcZ8LftI",
+        "answer": "MAHYcXb-64A"
+      },
+      "options": {
+        "A": "Up €1,000",
+        "B": "No change",
+        "C": "Down €1,000"
+      },
+      "correct_option": "B",
+      "concept": "Borrowing is financing, not revenue",
+      "verification": "Assets +1000; liabilities +1000; equity and profit unchanged. Ignore interest and fees.",
+      "caption": "Cash arrives. Has profit arrived too? A business borrows €1,000 from a bank, with no interest or fees to consider. A: profit rises €1,000. B: no change. C: profit falls €1,000. Choose before swiping, then explain your reasoning. #Accounting #LearnAccounting #Edlintics",
+      "publish_at": null,
+      "approved_at": null,
+      "channels": [
+        "instagram",
+        "facebook"
+      ],
+      "difficulty": "introductory",
+      "autofill_fields": [
+        "CATEGORY",
+        "QUESTION",
+        "QUESTION_DIAGRAM",
+        "ANSWER_LABEL",
+        "EXPLANATION",
+        "ANSWER_DIAGRAM"
+      ]
+    },
+    {
+      "key": "finance",
+      "id": "DAHYcR_9ctI",
+      "txn": "910246583142846054",
+      "layout": "bottom",
+      "category": "FINANCE QUIZ",
+      "q": "An investment rises 20%, then falls 20%.\nWhat is your €100 worth now?",
+      "answer": "The 20% fall applies to €120, not €100.\nThe same percentage can mean a different amount.",
+      "title": "Edlintics Quiz 02 — Up 20%, down 20%",
+      "status": "draft_pending_review",
+      "template_id": "EAHYcHgXC_g",
+      "diagram_assets": {
+        "question": "MAHYcdDw_mI",
+        "answer": "MAHYcbeE65E"
+      },
+      "options": {
+        "A": "€96",
+        "B": "€100",
+        "C": "€104"
+      },
+      "correct_option": "A",
+      "concept": "Successive percentage changes use different bases",
+      "verification": "100 × 1.2 × 0.8 = 96. No deposits, withdrawals or fees.",
+      "caption": "Up 20%, then down 20%. What is your €100 investment worth now? A: €96. B: €100. C: €104. Assume no deposits, withdrawals or fees. Choose before swiping. Which amount is the second percentage applied to? #Finance #Percentages #Edlintics",
+      "publish_at": null,
+      "approved_at": null,
+      "channels": [
+        "instagram",
+        "facebook"
+      ],
+      "difficulty": "introductory",
+      "autofill_fields": [
+        "CATEGORY",
+        "QUESTION",
+        "QUESTION_DIAGRAM",
+        "ANSWER_LABEL",
+        "EXPLANATION",
+        "ANSWER_DIAGRAM"
+      ]
+    },
+    {
+      "key": "economics",
+      "id": "DAHYcV9CnzE",
+      "txn": "535321913081838672",
+      "layout": "top",
+      "category": "ECONOMICS QUIZ",
+      "q": "Who has the comparative advantage\nin making tables?",
+      "answer": "Count the chairs sacrificed per table.\nBeing faster at everything is not the deciding factor.",
+      "title": "Edlintics Quiz 03 — Who should make the tables",
+      "status": "draft_pending_review",
+      "template_id": "EAHYcAXfhLs",
+      "diagram_assets": {
+        "question": "MAHYceV4rK0",
+        "answer": "MAHYcW_2Atc"
+      },
+      "options": {
+        "A": "Maya",
+        "B": "Leo",
+        "C": "Same cost"
+      },
+      "correct_option": "B",
+      "concept": "Comparative advantage is lower opportunity cost",
+      "verification": "Maya gives up 8/4 = 2 chairs per table; Leo gives up 3/3 = 1 chair. Assume constant production trade-offs.",
+      "caption": "Maya can make 4 tables or 8 chairs in one day. Leo can make 3 tables or 3 chairs. Assume constant production trade-offs. Who has the comparative advantage in tables? A: Maya. B: Leo. C: same cost. Choose before swiping. Count what each person gives up. #Economics #OpportunityCost #Edlintics",
+      "publish_at": null,
+      "approved_at": null,
+      "channels": [
+        "instagram",
+        "facebook"
+      ],
+      "difficulty": "introductory",
+      "autofill_fields": [
+        "CATEGORY",
+        "QUESTION",
+        "QUESTION_DIAGRAM",
+        "ANSWER_LABEL",
+        "EXPLANATION",
+        "ANSWER_DIAGRAM"
+      ]
+    },
+    {
+      "key": "statistics",
+      "id": "DAHYcY5Ed_I",
+      "txn": "4114557717368059567",
+      "layout": "bottom",
+      "category": "STATISTICS QUIZ",
+      "q": "The group means are 60 and 80.\nWhat is the mean for all 40 students?",
+      "answer": "Count students, not groups.\nA larger group contributes more to the overall mean.",
+      "title": "Edlintics Quiz 04 — The average of averages",
+      "status": "draft_pending_review",
+      "template_id": "EAHYcHgXC_g",
+      "diagram_assets": {
+        "question": "MAHYcQ8GnAk",
+        "answer": "MAHYcYDa_9o"
+      },
+      "options": {
+        "A": "70",
+        "B": "75",
+        "C": "80"
+      },
+      "correct_option": "B",
+      "concept": "Combined means must be weighted by group size",
+      "verification": "(10 × 60 + 30 × 80)/(10 + 30) = 75. Each student has one equally weighted score on the same test.",
+      "caption": "10 students average 60. Another 30 average 80 on the same test. What is the mean score for all 40 students? A: 70. B: 75. C: 80. Choose before swiping. Each student counts equally; the groups are different sizes. #Statistics #WeightedAverage #Edlintics",
+      "publish_at": null,
+      "approved_at": null,
+      "channels": [
+        "instagram",
+        "facebook"
+      ],
+      "difficulty": "introductory",
+      "autofill_fields": [
+        "CATEGORY",
+        "QUESTION",
+        "QUESTION_DIAGRAM",
+        "ANSWER_LABEL",
+        "EXPLANATION",
+        "ANSWER_DIAGRAM"
+      ]
+    }
+  ]
+}

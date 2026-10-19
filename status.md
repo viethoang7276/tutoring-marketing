@@ -67,6 +67,9 @@ _Last updated: 2026-10-19_
 
 ## Session log
 
+- **2026-10-19** — Daily visual quiz pilot requested by Hoang, adapting two Brilliant Instagram examples (2020) to the existing Canva top/bottom question templates. Prepared four original two-slide drafts: accounting (cash vs profit), finance (successive percentage moves), economics (comparative advantage), statistics (weighted averages). Eight cleaned Canva previews inspected, four answers independently checked. `calendar/quiz-samples.json` records captions, answers, template/design/transaction IDs and pending review; diagram SVGs in `assets/quiz-samples/`; renderer at `scripts/build_quiz_samples.py`; workflow and limitations appended to `docs/social-post-process.md`. Canva edits remain **uncommitted pending explicit preview approval**, required by the connector. No source-template changes, scheduling or posting. Typecheck and diagram renderer pass.
+
+
 - **2026-10-19** — Transferred the 20 original PNG assets from the native Canva `edlintics@gmail.com` account’s Edlintics upload folder into `tnqdaiphuc@gmail.com` → Edlintics brand kit (`kAHOTUBwbig`): 8 logo variants into Logos, 12 distinct educational icons into Graphics. Verified destination filenames. Originals retained in source account. One extra `icon-banknote.png` duplicate remains in destination Graphics; permanent-deletion confirmation requested before cleanup.
 
 - **2026-10-19** — Exported the live website header logo into `assets/brand/edlintics-logo.svg` with outlined Inter 800 lettering and a transparent background. Added standalone `edlintics-mark.svg`. Uploaded both plus the existing square `favicon.svg` to Canva at Hoang’s request. Asset IDs recorded in the brand README. Follow-up: uploaded all three directly to the native app’s Edlintics Brand Kit → Logos; saved and visually verified in the user’s open panel. No calendar or publishing decisions changed.
