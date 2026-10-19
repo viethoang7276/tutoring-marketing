@@ -230,3 +230,13 @@ _Last updated: 2026-10-19_
   sample after preview, committed ticket-shortage transaction `4767579663882939557`.
   Verified native text and illustration frames in Chrome, saved design `DAHYceQ49sU`.
   Question page left open. No social publishing.
+
+- **2026-10-19 — ProProfs research bank.** Crawled all five Top Trending quizzes on each
+  economics, accounting, statistics/probability and corporate-finance category page, plus
+  the supplied banking quiz: 21 public pages, 341 visible questions. Saved the source
+  manifest and metadata-only refresh script. Created native Google Sheet with 63 selected
+  paraphrased Q&A, reviewed answers, explanations, source references and correction notes;
+  exact URL and scope in `data/research/proprofs/workbook.json`. Verified imported sentinel
+  rows, frozen headers, filters and all three tab layouts. Corrected several source errors;
+  not a verbatim or complete quiz-bank copy. Script validated against all captured pages;
+  typecheck passes. No automatic refresh, social scheduling or publication enabled.

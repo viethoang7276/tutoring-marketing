@@ -1,0 +1,64 @@
+source_id	source_question	topic	question	answer	explanation	review_note
+PP-01	1	Wages	What do we call the payment a worker receives for their labour?	A wage.	It compensates labour supplied to an employer.	
+PP-01	2	Complementary goods	What links two products typically used together?	They are complements.	Demand for one can affect demand for the other.	
+PP-01	4	Market equilibrium	At which price do buyers' and sellers' intended quantities match?	The equilibrium price.	Quantity demanded equals quantity supplied.	
+PP-02	1	Substitution	Beef becomes dearer while poultry's price stays fixed. What substitution would you expect?	Less beef; more poultry.	Consumers may switch towards the relatively cheaper substitute.	Assumes substitutes and other conditions unchanged; beef quantity demanded falls, not its demand curve.
+PP-02	2	Entrepreneurship	Who combines resources and takes the risk of starting a business?	An entrepreneur.	Entrepreneurs organise production under uncertainty.	
+PP-02	5	Supply shifts	Production costs rise. With demand unchanged, what happens to competitive equilibrium?	Price rises; quantity falls.	Higher costs shift supply left.	Assumes ordinary upward supply and downward demand curves.
+PP-03	1	National income	Which national-output measure is abbreviated GNP?	Gross national product.	It includes net primary income received from abroad.	Use residency, not citizenship, when defining the national accounting boundary.
+PP-03	3	GDP	What is the full name of GDP?	Gross domestic product.	It measures final production within an economy over a period.	Avoid double-counting intermediate production.
+PP-03	5	Resource allocation	What three allocation choices does an economy face?	What, how, and for whom to produce.	Scarcity requires choices about output, methods and distribution.	Reframed the source's negative-choice question.
+PP-04	1	Goods and services	Why do consumers value goods and services?	They satisfy needs and wants.	Usefulness motivates consumption.	
+PP-04	2	Scarcity	Why must an economy choose how to use its resources?	Resources are scarce relative to wants.	Using resources one way limits other possibilities.	
+PP-04	3	Production inputs	What four broad inputs are used to organise production?	Land, labour, capital and entrepreneurship.	These are conventional categories of productive resources.	
+PP-05	1	Natural resources	Which production-input category includes resources supplied by nature?	Land.	Economics uses land broadly, beyond plots of ground.	
+PP-05	2	Economic systems	What system organises production, distribution and consumption?	An economy.	It coordinates how goods and services reach people.	
+PP-05	3	Capitalism	Which economic system emphasises private ownership and market competition?	Capitalism.	Actual economies combine market and public institutions.	Avoid treating real economies as pure systems.
+PP-06	1	Double entry	Does double-entry bookkeeping record transactions with both debits and credits?	Yes.	Total debits must equal total credits.	
+PP-06	2	Debit convention	On which side of a T-account is a debit recorded?	The left side.	Debit and credit describe sides, not universally increases or decreases.	Source explanation misstates normal credit effects on liabilities and revenue.
+PP-06	5	Accrual accounting	When does accrual accounting recognise an expense: when incurred or when paid?	When incurred.	Payment can occur in a different accounting period.	
+PP-07	1	Trading businesses	What type of company resells purchased goods without transforming them?	A merchandising business.	Its main activity is buying and reselling goods.	Translated and paraphrased from Indonesian.
+PP-07	2	Cash purchases	Supplies costing Rp550,000 are bought for cash. What is the journal entry?	Debit Supplies; credit Cash, Rp550,000 each.	One asset increases as another decreases.	Translated and paraphrased; assumes supplies remain unused.
+PP-07	3	Financial statements	Which statement reports a business's profit over a period?	The income statement.	It compares recognised revenues and expenses.	Translated and paraphrased from Indonesian.
+PP-08	1	Normal balances	What are the usual balance sides for assets and liabilities?	Assets: debit. Liabilities: credit.	These are their normal balances.	Contra accounts are exceptions.
+PP-08	2	Asset reductions	Which entry normally reduces an asset account?	A credit.	Ordinary asset accounts have debit balances.	
+PP-08	3	Liability reductions	Which entry normally reduces a liability account?	A debit.	Ordinary liabilities have credit balances.	
+PP-09	1	Accounting equation	How are assets related to liabilities and owners' equity?	Assets equal liabilities plus equity.	Assets are financed by creditor and owner claims.	
+PP-09	2	Balance sheet	Which statement describes financial position at one date?	The balance sheet.	It reports assets, liabilities and equity.	
+PP-09	6	Double entry	Which bookkeeping system maintains the accounting equation through paired entries?	Double-entry bookkeeping.	Each transaction has balanced debit and credit effects.	
+PP-10	1	Expenses	When office space is used during a month, how is that month's rent classified?	An expense.	The rental service has been consumed.	Original multiple-choice item also offers interest paid, which may be an expense; ambiguity removed.
+PP-10	3	Financial performance	Where would you look for revenue and expenses for the year?	The income statement.	It reports performance over an accounting period.	
+PP-10	4	Revenue	What term describes earnings from supplying goods or services to customers?	Revenue.	Recognition does not necessarily coincide with cash collection.	Clarified accrual versus cash wording.
+PP-11	1	Mean transformations	Every observation rises by five. How does the dataset's mean change?	It rises by five.	Adding a constant shifts the mean by that constant.	
+PP-11	4	Scale transformations	Salaries average $70,000 with $10,000 standard deviation. All salaries double. What are the new measures?	Mean $140,000; standard deviation $20,000.	Multiplication scales both measures by the same positive factor.	Normality is unnecessary for this result.
+PP-11	5	Mean, median and mode	For 4, 10, 12, 7, 19, 10, 5 and x, when do all three averages equal 10?	x = 13.	The known values total 67; eight values must total 80.	Corrected source arithmetic: seven known values total 67, not 77; there are eight values, not nine.
+PP-12	1	Response variables	Where is the response usually plotted when one variable predicts another?	On the vertical axis.	This is the conventional scatterplot arrangement.	An axis convention does not establish causation.
+PP-12	2	Explanatory variables	Which scatterplot axis usually contains the predictor?	The horizontal axis.	Predictors are also called explanatory variables.	
+PP-12	3	Study design	You use exercises completed to predict exam grades. Which variable is the response?	Exam grade.	It is the outcome being predicted.	Association alone does not prove exercises caused the grade.
+PP-13	1	Set complements	What happens when you take a set's complement twice?	You recover the original set.	Both complements use the same universal set.	
+PP-13	3	Power sets	How many subsets can a set containing n distinct elements have?	2 to the power n.	Each element is either included or excluded.	Source explanation incorrectly adds one; the empty set is already counted.
+PP-13	4	Inclusion-exclusion	Twenty teachers teach maths or physics; twelve teach maths and four teach both. How many teach physics?	Twelve.	Physics count = 20 − 12 + 4.	Source gives eight, which counts physics-only teachers rather than all physics teachers.
+PP-14	1	Dice probability	Four fair, independent dice are rolled. What is the chance that all show matching faces?	1/216.	There are six matching outcomes among 6^4 outcomes.	Fairness and independence made explicit.
+PP-14	2	Dice sums	For two fair, independent dice, how likely is a total below eleven?	11/12.	Thirty-three of the thirty-six outcomes qualify.	Source explanation incorrectly says eleven favourable outcomes; the final fraction is correct.
+PP-14	3	Binomial probability	Each independent trial succeeds with probability 2/3. What is the chance of exactly four successes in five?	80/243.	Choose the failure position: 5 × (2/3)^4 × (1/3).	Independent trials and fixed probability assumed.
+PP-15	1	Arithmetic mean	Three bears weigh 524, 756 and 982 pounds. What is their mean weight?	754 pounds.	Divide their combined 2,262 pounds by three.	
+PP-15	2	Arithmetic mean	Find the mean of 4, 8, 12 and 16.	10.	Their sum is 40 across four observations.	
+PP-15	3	Average cost	Three cars cost $10,100, $7,800 and $12,400. What is the mean cost?	$10,100.	The $30,300 total is divided by three.	
+PP-16	1	Financial objectives	In the conventional shareholder-value model, whose wealth is the financial objective?	Shareholders' wealth.	This is a model of corporate financial decision-making.	Scoped as a model, not a universal ethical or legal priority.
+PP-16	2	Value additivity	Two cash-flow streams have present values of Rs.200 and Rs.150. What is their combined value?	Rs.350.	Present values add when valuation assumptions are consistent.	
+PP-16	4	Annuities	What term describes equal payments at regular intervals for a fixed duration?	An annuity.	An endless stream is instead called a perpetuity.	
+PP-17	1	Capital structure	A firm uses 40% debt and 60% equity. What does this mix describe?	Its capital structure.	The mix identifies its sources of financing.	
+PP-17	2	Agency problems	What is the conflict called when managers' interests diverge from owners' interests?	An agency conflict.	Decision-makers may pursue goals different from their principals.	
+PP-17	3	Working capital	Which area of finance handles cash, inventory and short-term obligations?	Working-capital management.	It supports daily operating liquidity.	
+PP-18	1	Valuation ratios	How is the price-to-earnings multiple calculated?	Share price divided by earnings per share.	It relates market price to earnings attributable to each share.	Specify consistent earnings periods when applying it.
+PP-18	2	Market versus book value	Which equity measure divided by shares outstanding gives market share price?	Market value of equity.	Book equity per share is a different measure.	Corrected source explanation, which substitutes book net assets for market equity.
+PP-18	3	Real returns	Which interest-rate measure adjusts for changes in purchasing power?	The real interest rate.	It accounts for inflation.	
+PP-19	1	Earnings dilution	Why examine earnings per share before choosing a financing method?	Financing can dilute earnings per share.	New shares or interest costs can change EPS.	Dilution is possible, not inevitable.
+PP-19	2	Financing value	Can financing choices affect firm value as well as investment choices?	Yes, under real-world financing frictions.	Taxes and financing costs can matter.	Not universal: idealised frictionless capital-structure models imply irrelevance.
+PP-19	7	Debt capacity	Which ratio family assesses a firm's capacity to meet interest or fixed obligations?	Coverage ratios.	They compare available earnings or cash with required payments.	The exact numerator and obligation depend on the ratio.
+PP-20	1	Cash-flow statements	What are the three main sections of a cash-flow statement?	Operating, investing and financing.	Marketing is not a separate main section.	
+PP-20	2	Financial leadership	Which executive typically leads the finance function?	The chief financial officer.	The role oversees financial management and reporting.	Titles and responsibilities vary by organisation.
+PP-20	4	Equity calculation	Assets total $875,000 and liabilities total $550,000. What is shareholders' equity?	$325,000.	Subtract liabilities from assets.	Condensed the source's current and non-current balances.
+PP-21	1	Banking services	What industry accepts deposits, extends credit and facilitates payments?	Banking.	These are core financial-intermediation services.	
+PP-21	3	Borrowing	What do we call funds advanced with an obligation to repay?	A loan.	Repayment terms are agreed between lender and borrower.	
+PP-21	4	Deposits	What is money placed into a bank account called?	A deposit.	Whether it earns interest depends on the account terms.	Corrected the source's implication that all deposits earn interest.

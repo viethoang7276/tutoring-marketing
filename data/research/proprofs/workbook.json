@@ -1,0 +1,14 @@
+{
+  "title": "Edlintics — Question research bank — 2026-10-19",
+  "url": "https://docs.google.com/spreadsheets/d/1AH5n4ammiaerKndY3aEevoW73RxqqAVFtvajNxwSkYg/edit",
+  "source_count": 21,
+  "selected_question_count": 63,
+  "visible_source_question_count": 341,
+  "scope": "Three selected English paraphrases per source, with reviewed answers, explanations, correction notes and source references. Not a complete reproduction of quiz banks.",
+  "crawl_manifest": "data/research/proprofs/sources.json",
+  "selection": "data/proprofs-question-selection.tsv",
+  "refresh_command": "python3 scripts/crawl-proprofs-sources.py --output /tmp/proprofs-sources-refresh.json",
+  "refresh_dependencies": ["Python 3", "curl", "beautifulsoup4"],
+  "automatic_refresh": false,
+  "publication_approved": false
+}
