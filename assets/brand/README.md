@@ -25,7 +25,7 @@ Reusable exports added 2026-10-19:
 - `edlintics-mark.svg`: transparent collar-and-tie mark, without lettering.
 - `favicon.svg`: existing white mark on a rounded blue square.
 
-All three uploaded to Canva on 2026-10-19. Media IDs: wordmark `MAHYbxRt4H0`, transparent mark `MAHYbzIC5gs`, square icon `MAHYb4j6PV8`.
+All three uploaded to Canva on 2026-10-19. Also uploaded directly through the native Canva app into the Edlintics Brand Kit → Logos and visually verified after saving (three new logos alongside the pre-existing logo). Media IDs: wordmark `MAHYbxRt4H0`, transparent mark `MAHYbzIC5gs`, square icon `MAHYb4j6PV8`.
 
 Reference geometry remains in `scripts/build_social_assets.py` (`tie_mark()` / `wordmark()`).
 
