@@ -1,0 +1,4896 @@
+{
+  "source": "https://www.proprofs.com/quiz-school/topic/economics",
+  "scope": "Category taxonomy on this page only; not a crawl of every quiz or answer bank.",
+  "topics": [
+    {
+      "topic": "Education",
+      "url": "https://www.proprofs.com/quiz-school/topic/education",
+      "parents": []
+    },
+    {
+      "topic": "Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/economics",
+      "parents": []
+    },
+    {
+      "topic": "Microeconomics",
+      "url": "https://www.proprofs.com/quiz-school/topic/microeconomics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Demand & Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/demand-and-supply",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Law of Demand",
+      "url": "https://www.proprofs.com/quiz-school/topic/law-of-demand",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Demand & Supply"
+      ]
+    },
+    {
+      "topic": "Law of Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/law-of-supply",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Demand & Supply"
+      ]
+    },
+    {
+      "topic": "Market Equilibrium",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-equilibrium",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Demand & Supply"
+      ]
+    },
+    {
+      "topic": "Shifts & Movements",
+      "url": "https://www.proprofs.com/quiz-school/topic/shifts-and-movements",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Demand & Supply"
+      ]
+    },
+    {
+      "topic": "Determinants of Demand",
+      "url": "https://www.proprofs.com/quiz-school/topic/determinants-of-demand",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Demand & Supply"
+      ]
+    },
+    {
+      "topic": "Determinants of Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/determinants-of-supply",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Demand & Supply"
+      ]
+    },
+    {
+      "topic": "Consumer Behavior",
+      "url": "https://www.proprofs.com/quiz-school/topic/consumer-behavior",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Utility Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/utility-analysis",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Consumer Behavior"
+      ]
+    },
+    {
+      "topic": "Indifference Curves",
+      "url": "https://www.proprofs.com/quiz-school/topic/indifference-curves",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Consumer Behavior"
+      ]
+    },
+    {
+      "topic": "Marginal Utility",
+      "url": "https://www.proprofs.com/quiz-school/topic/marginal-utility",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Consumer Behavior"
+      ]
+    },
+    {
+      "topic": "Budget Constraint",
+      "url": "https://www.proprofs.com/quiz-school/topic/budget-constraint",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Consumer Behavior"
+      ]
+    },
+    {
+      "topic": "Consumer Equilibrium",
+      "url": "https://www.proprofs.com/quiz-school/topic/consumer-equilibrium",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Consumer Behavior"
+      ]
+    },
+    {
+      "topic": "Production Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/production-theory",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Production Function",
+      "url": "https://www.proprofs.com/quiz-school/topic/production-function",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Production Theory"
+      ]
+    },
+    {
+      "topic": "Law of Variable Proportions",
+      "url": "https://www.proprofs.com/quiz-school/topic/law-of-variable-proportions",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Production Theory"
+      ]
+    },
+    {
+      "topic": "Returns to Scale",
+      "url": "https://www.proprofs.com/quiz-school/topic/returns-to-scale",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Production Theory"
+      ]
+    },
+    {
+      "topic": "Isoquants & Isocosts",
+      "url": "https://www.proprofs.com/quiz-school/topic/isoquants-and-isocosts",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Production Theory"
+      ]
+    },
+    {
+      "topic": "Producer Equilibrium",
+      "url": "https://www.proprofs.com/quiz-school/topic/producer-equilibrium",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Production Theory"
+      ]
+    },
+    {
+      "topic": "Cost Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/cost-theory",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Perfect Competition",
+      "url": "https://www.proprofs.com/quiz-school/topic/perfect-competition",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Cost Theory"
+      ]
+    },
+    {
+      "topic": "Monopoly Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/monopoly-market",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Cost Theory"
+      ]
+    },
+    {
+      "topic": "Monopolistic Competition",
+      "url": "https://www.proprofs.com/quiz-school/topic/monopolistic-competition",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Cost Theory"
+      ]
+    },
+    {
+      "topic": "Oligopoly Models",
+      "url": "https://www.proprofs.com/quiz-school/topic/oligopoly-models",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Cost Theory"
+      ]
+    },
+    {
+      "topic": "Price Discrimination",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-discrimination",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Cost Theory"
+      ]
+    },
+    {
+      "topic": "Market Structure",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-structure",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Market Equilibrium Price",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-equilibrium-price",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Structure"
+      ]
+    },
+    {
+      "topic": "Competition & Regulatory Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/competition-and-regulatory-policy",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Structure"
+      ]
+    },
+    {
+      "topic": "Price Ceiling",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-ceiling",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Structure"
+      ]
+    },
+    {
+      "topic": "Price Floor",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-floor",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Structure"
+      ]
+    },
+    {
+      "topic": "Taxes & Subsidies",
+      "url": "https://www.proprofs.com/quiz-school/topic/taxes-and-subsidies",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Structure"
+      ]
+    },
+    {
+      "topic": "Price Determination",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-determination",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Labor Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/labor-market",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Price Determination"
+      ]
+    },
+    {
+      "topic": "Capital Resource Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/capital-resource-market",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Price Determination"
+      ]
+    },
+    {
+      "topic": "Land Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/land-market",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Price Determination"
+      ]
+    },
+    {
+      "topic": "Marginal Productivity Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/marginal-productivity-theory",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Price Determination"
+      ]
+    },
+    {
+      "topic": "Wage Determination",
+      "url": "https://www.proprofs.com/quiz-school/topic/wage-determination",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Price Determination"
+      ]
+    },
+    {
+      "topic": "Elasticity Concepts",
+      "url": "https://www.proprofs.com/quiz-school/topic/elasticity-concepts",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Price Elasticity",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-elasticity",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Elasticity Concepts"
+      ]
+    },
+    {
+      "topic": "Income Elasticity",
+      "url": "https://www.proprofs.com/quiz-school/topic/income-elasticity",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Elasticity Concepts"
+      ]
+    },
+    {
+      "topic": "Cross Elasticity",
+      "url": "https://www.proprofs.com/quiz-school/topic/cross-elasticity",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Elasticity Concepts"
+      ]
+    },
+    {
+      "topic": "Elasticity of Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/elasticity-of-supply",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Elasticity Concepts"
+      ]
+    },
+    {
+      "topic": "Total Revenue Test",
+      "url": "https://www.proprofs.com/quiz-school/topic/total-revenue-test",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Elasticity Concepts"
+      ]
+    },
+    {
+      "topic": "Game Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/game-theory",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Payoff Matrix",
+      "url": "https://www.proprofs.com/quiz-school/topic/payoff-matrix",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Game Theory"
+      ]
+    },
+    {
+      "topic": "Nash Equilibrium",
+      "url": "https://www.proprofs.com/quiz-school/topic/nash-equilibrium",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Game Theory"
+      ]
+    },
+    {
+      "topic": "Prisoners Dilemma",
+      "url": "https://www.proprofs.com/quiz-school/topic/prisoners-dilemma",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Game Theory"
+      ]
+    },
+    {
+      "topic": "Dominant Strategy",
+      "url": "https://www.proprofs.com/quiz-school/topic/dominant-strategy",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Game Theory"
+      ]
+    },
+    {
+      "topic": "Mixed Strategy",
+      "url": "https://www.proprofs.com/quiz-school/topic/mixed-strategy",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Game Theory"
+      ]
+    },
+    {
+      "topic": "Market Failure",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-failure",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Externalities",
+      "url": "https://www.proprofs.com/quiz-school/topic/externalities",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Failure"
+      ]
+    },
+    {
+      "topic": "Public Goods",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-goods",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Failure"
+      ]
+    },
+    {
+      "topic": "Asymmetric Information",
+      "url": "https://www.proprofs.com/quiz-school/topic/asymmetric-information",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Failure"
+      ]
+    },
+    {
+      "topic": "Common Resources",
+      "url": "https://www.proprofs.com/quiz-school/topic/common-resources",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Failure"
+      ]
+    },
+    {
+      "topic": "Government Intervention",
+      "url": "https://www.proprofs.com/quiz-school/topic/government-intervention",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Market Failure"
+      ]
+    },
+    {
+      "topic": "Welfare Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/welfare-analysis",
+      "parents": [
+        "Economics",
+        "Microeconomics"
+      ]
+    },
+    {
+      "topic": "Consumer Surplus",
+      "url": "https://www.proprofs.com/quiz-school/topic/consumer-surplus",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Welfare Analysis"
+      ]
+    },
+    {
+      "topic": "Producer Surplus",
+      "url": "https://www.proprofs.com/quiz-school/topic/producer-surplus",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Welfare Analysis"
+      ]
+    },
+    {
+      "topic": "Deadweight Loss",
+      "url": "https://www.proprofs.com/quiz-school/topic/deadweight-loss",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Welfare Analysis"
+      ]
+    },
+    {
+      "topic": "Economic Efficiency",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-efficiency",
+      "parents": [
+        "Economics",
+        "Microeconomics",
+        "Welfare Analysis"
+      ]
+    },
+    {
+      "topic": "Macroeconomics",
+      "url": "https://www.proprofs.com/quiz-school/topic/macroeconomics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "National Income",
+      "url": "https://www.proprofs.com/quiz-school/topic/national-income",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "GDP & GNP",
+      "url": "https://www.proprofs.com/quiz-school/topic/gdp-and-gnp",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "National Income"
+      ]
+    },
+    {
+      "topic": "NDP & NNP",
+      "url": "https://www.proprofs.com/quiz-school/topic/ndp-and-nnp",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "National Income"
+      ]
+    },
+    {
+      "topic": "Value Added Method",
+      "url": "https://www.proprofs.com/quiz-school/topic/value-added-method",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "National Income"
+      ]
+    },
+    {
+      "topic": "Income Method",
+      "url": "https://www.proprofs.com/quiz-school/topic/income-method",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "National Income"
+      ]
+    },
+    {
+      "topic": "Expenditure Method",
+      "url": "https://www.proprofs.com/quiz-school/topic/expenditure-method",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "National Income"
+      ]
+    },
+    {
+      "topic": "Limitations of GDP",
+      "url": "https://www.proprofs.com/quiz-school/topic/limitations-of-gdp",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "National Income"
+      ]
+    },
+    {
+      "topic": "Aggregate Demand",
+      "url": "https://www.proprofs.com/quiz-school/topic/aggregate-demand",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Components of AD",
+      "url": "https://www.proprofs.com/quiz-school/topic/components-of-ad",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Demand"
+      ]
+    },
+    {
+      "topic": "Consumption Function",
+      "url": "https://www.proprofs.com/quiz-school/topic/consumption-function",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Demand"
+      ]
+    },
+    {
+      "topic": "Investment Function",
+      "url": "https://www.proprofs.com/quiz-school/topic/investment-function",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Demand"
+      ]
+    },
+    {
+      "topic": "Government Spending",
+      "url": "https://www.proprofs.com/quiz-school/topic/government-spending",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Demand"
+      ]
+    },
+    {
+      "topic": "Net Exports",
+      "url": "https://www.proprofs.com/quiz-school/topic/net-exports",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Demand"
+      ]
+    },
+    {
+      "topic": "Multiplier Effect",
+      "url": "https://www.proprofs.com/quiz-school/topic/multiplier-effect",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Demand"
+      ]
+    },
+    {
+      "topic": "Aggregate Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/aggregate-supply",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Short Run AS",
+      "url": "https://www.proprofs.com/quiz-school/topic/short-run-as",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Supply"
+      ]
+    },
+    {
+      "topic": "Long Run AS",
+      "url": "https://www.proprofs.com/quiz-school/topic/long-run-as",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Supply"
+      ]
+    },
+    {
+      "topic": "Output Gap",
+      "url": "https://www.proprofs.com/quiz-school/topic/output-gap",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Supply"
+      ]
+    },
+    {
+      "topic": "Inflationary Gap",
+      "url": "https://www.proprofs.com/quiz-school/topic/inflationary-gap",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Supply"
+      ]
+    },
+    {
+      "topic": "Deflationary Gap",
+      "url": "https://www.proprofs.com/quiz-school/topic/deflationary-gap",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Supply"
+      ]
+    },
+    {
+      "topic": "AS Shifts",
+      "url": "https://www.proprofs.com/quiz-school/topic/as-shifts",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Aggregate Supply"
+      ]
+    },
+    {
+      "topic": "Money & Banking",
+      "url": "https://www.proprofs.com/quiz-school/topic/money-and-banking",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Functions of Money",
+      "url": "https://www.proprofs.com/quiz-school/topic/functions-of-money",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Money & Banking"
+      ]
+    },
+    {
+      "topic": "Money Supply Measures",
+      "url": "https://www.proprofs.com/quiz-school/topic/money-supply-measures",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Money & Banking"
+      ]
+    },
+    {
+      "topic": "Central Bank Roles",
+      "url": "https://www.proprofs.com/quiz-school/topic/central-bank-roles",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Money & Banking"
+      ]
+    },
+    {
+      "topic": "Credit Creation",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-creation",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Money & Banking"
+      ]
+    },
+    {
+      "topic": "Money Multiplier",
+      "url": "https://www.proprofs.com/quiz-school/topic/money-multiplier",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Money & Banking"
+      ]
+    },
+    {
+      "topic": "Policy Mix & Coordination",
+      "url": "https://www.proprofs.com/quiz-school/topic/policy-mix-and-coordination",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Monetary Policy Objectives",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-policy-objectives",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Policy Mix & Coordination"
+      ]
+    },
+    {
+      "topic": "Monetary Policy Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-policy-instruments",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Policy Mix & Coordination"
+      ]
+    },
+    {
+      "topic": "Interest Rate Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/interest-rate-policy",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Policy Mix & Coordination"
+      ]
+    },
+    {
+      "topic": "Inflation Targeting",
+      "url": "https://www.proprofs.com/quiz-school/topic/inflation-targeting",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Policy Mix & Coordination"
+      ]
+    },
+    {
+      "topic": "Transmission Mechanism",
+      "url": "https://www.proprofs.com/quiz-school/topic/transmission-mechanism",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Policy Mix & Coordination"
+      ]
+    },
+    {
+      "topic": "Fiscal Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-policy",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Taxation Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/taxation-policy",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Fiscal Policy"
+      ]
+    },
+    {
+      "topic": "Budget Balance",
+      "url": "https://www.proprofs.com/quiz-school/topic/budget-balance",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Fiscal Policy"
+      ]
+    },
+    {
+      "topic": "Public Debt",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-debt",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Fiscal Policy"
+      ]
+    },
+    {
+      "topic": "Automatic Stabilizers",
+      "url": "https://www.proprofs.com/quiz-school/topic/automatic-stabilizers",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Fiscal Policy"
+      ]
+    },
+    {
+      "topic": "Inflation & Deflation",
+      "url": "https://www.proprofs.com/quiz-school/topic/inflation-and-deflation",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Price Index",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-index",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Inflation & Deflation"
+      ]
+    },
+    {
+      "topic": "Demand Pull Inflation",
+      "url": "https://www.proprofs.com/quiz-school/topic/demand-pull-inflation",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Inflation & Deflation"
+      ]
+    },
+    {
+      "topic": "Cost Push Inflation",
+      "url": "https://www.proprofs.com/quiz-school/topic/cost-push-inflation",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Inflation & Deflation"
+      ]
+    },
+    {
+      "topic": "Inflation Control",
+      "url": "https://www.proprofs.com/quiz-school/topic/inflation-control",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Inflation & Deflation"
+      ]
+    },
+    {
+      "topic": "Price Stability",
+      "url": "https://www.proprofs.com/quiz-school/topic/price-stability",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Inflation & Deflation"
+      ]
+    },
+    {
+      "topic": "Unemployment Trends",
+      "url": "https://www.proprofs.com/quiz-school/topic/unemployment-trends",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Unemployment Types",
+      "url": "https://www.proprofs.com/quiz-school/topic/unemployment-types",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Unemployment Trends"
+      ]
+    },
+    {
+      "topic": "Natural Rate",
+      "url": "https://www.proprofs.com/quiz-school/topic/natural-rate",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Unemployment Trends"
+      ]
+    },
+    {
+      "topic": "Labor Force Participation",
+      "url": "https://www.proprofs.com/quiz-school/topic/labor-force-participation",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Unemployment Trends"
+      ]
+    },
+    {
+      "topic": "Phillips Curve",
+      "url": "https://www.proprofs.com/quiz-school/topic/phillips-curve",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Unemployment Trends"
+      ]
+    },
+    {
+      "topic": "Employment Policies",
+      "url": "https://www.proprofs.com/quiz-school/topic/employment-policies",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Unemployment Trends"
+      ]
+    },
+    {
+      "topic": "Economic Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-growth",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Growth Theories",
+      "url": "https://www.proprofs.com/quiz-school/topic/growth-theories",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Economic Growth"
+      ]
+    },
+    {
+      "topic": "Productivity Factors",
+      "url": "https://www.proprofs.com/quiz-school/topic/productivity-factors",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Economic Growth"
+      ]
+    },
+    {
+      "topic": "Human Development",
+      "url": "https://www.proprofs.com/quiz-school/topic/human-development",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Economic Growth"
+      ]
+    },
+    {
+      "topic": "Sustainable Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/sustainable-growth",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Economic Growth"
+      ]
+    },
+    {
+      "topic": "Business Cycles",
+      "url": "https://www.proprofs.com/quiz-school/topic/business-cycles",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Phases of Cycle",
+      "url": "https://www.proprofs.com/quiz-school/topic/phases-of-cycle",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Business Cycles"
+      ]
+    },
+    {
+      "topic": "Leading Indicators",
+      "url": "https://www.proprofs.com/quiz-school/topic/leading-indicators",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Business Cycles"
+      ]
+    },
+    {
+      "topic": "Recession & Recovery",
+      "url": "https://www.proprofs.com/quiz-school/topic/recession-and-recovery",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Business Cycles"
+      ]
+    },
+    {
+      "topic": "Stabilization Policies",
+      "url": "https://www.proprofs.com/quiz-school/topic/stabilization-policies",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Business Cycles"
+      ]
+    },
+    {
+      "topic": "Output Fluctuations",
+      "url": "https://www.proprofs.com/quiz-school/topic/output-fluctuations",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Business Cycles"
+      ]
+    },
+    {
+      "topic": "Balance of Payments & Macroeconomic Impact",
+      "url": "https://www.proprofs.com/quiz-school/topic/balance-of-payments-and-macroeconomic-impact",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "BoP Components",
+      "url": "https://www.proprofs.com/quiz-school/topic/bop-components",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Balance of Payments & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Current Account",
+      "url": "https://www.proprofs.com/quiz-school/topic/current-account",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Balance of Payments & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Capital Account",
+      "url": "https://www.proprofs.com/quiz-school/topic/capital-account",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Balance of Payments & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "BoP Disequilibrium",
+      "url": "https://www.proprofs.com/quiz-school/topic/bop-disequilibrium",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Balance of Payments & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "BoP Adjustment",
+      "url": "https://www.proprofs.com/quiz-school/topic/bop-adjustment",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Balance of Payments & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Exchange Rate & Macroeconomic Impact",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-rate-and-macroeconomic-impact",
+      "parents": [
+        "Economics",
+        "Macroeconomics"
+      ]
+    },
+    {
+      "topic": "Fixed Exchange Rate",
+      "url": "https://www.proprofs.com/quiz-school/topic/fixed-exchange-rate",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Exchange Rate & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Floating Exchange Rate",
+      "url": "https://www.proprofs.com/quiz-school/topic/floating-exchange-rate",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Exchange Rate & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Managed Float",
+      "url": "https://www.proprofs.com/quiz-school/topic/managed-float",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Exchange Rate & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Purchasing Power Parity",
+      "url": "https://www.proprofs.com/quiz-school/topic/purchasing-power-parity",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Exchange Rate & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "Exchange Rate Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-rate-policy",
+      "parents": [
+        "Economics",
+        "Macroeconomics",
+        "Exchange Rate & Macroeconomic Impact"
+      ]
+    },
+    {
+      "topic": "International Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/international-economics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Trade Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/trade-theory",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Absolute Advantage",
+      "url": "https://www.proprofs.com/quiz-school/topic/absolute-advantage",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Theory"
+      ]
+    },
+    {
+      "topic": "Comparative Advantage",
+      "url": "https://www.proprofs.com/quiz-school/topic/comparative-advantage",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Theory"
+      ]
+    },
+    {
+      "topic": "Heckscher Ohlin Model",
+      "url": "https://www.proprofs.com/quiz-school/topic/heckscher-ohlin-model",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Theory"
+      ]
+    },
+    {
+      "topic": "Factor Price Equalization",
+      "url": "https://www.proprofs.com/quiz-school/topic/factor-price-equalization",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Theory"
+      ]
+    },
+    {
+      "topic": "New Trade Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/new-trade-theory",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Theory"
+      ]
+    },
+    {
+      "topic": "Trade Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/trade-policy",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Free Trade Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/free-trade-policy",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Policy"
+      ]
+    },
+    {
+      "topic": "Protectionism Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/protectionism-policy",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Policy"
+      ]
+    },
+    {
+      "topic": "Export Promotion",
+      "url": "https://www.proprofs.com/quiz-school/topic/export-promotion",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Policy"
+      ]
+    },
+    {
+      "topic": "Import Substitution",
+      "url": "https://www.proprofs.com/quiz-school/topic/import-substitution",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Trade Policy"
+      ]
+    },
+    {
+      "topic": "Terms of Trade",
+      "url": "https://www.proprofs.com/quiz-school/topic/terms-of-trade",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Net Barter Terms",
+      "url": "https://www.proprofs.com/quiz-school/topic/net-barter-terms",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Terms of Trade"
+      ]
+    },
+    {
+      "topic": "Gross Barter Terms",
+      "url": "https://www.proprofs.com/quiz-school/topic/gross-barter-terms",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Terms of Trade"
+      ]
+    },
+    {
+      "topic": "Income Terms",
+      "url": "https://www.proprofs.com/quiz-school/topic/income-terms",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Terms of Trade"
+      ]
+    },
+    {
+      "topic": "Factors Affecting TOT",
+      "url": "https://www.proprofs.com/quiz-school/topic/factors-affecting-tot",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Terms of Trade"
+      ]
+    },
+    {
+      "topic": "Deterioration Debate",
+      "url": "https://www.proprofs.com/quiz-school/topic/deterioration-debate",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Terms of Trade"
+      ]
+    },
+    {
+      "topic": "Tariffs & Quotas",
+      "url": "https://www.proprofs.com/quiz-school/topic/tariffs-and-quotas",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Tariff Structure",
+      "url": "https://www.proprofs.com/quiz-school/topic/tariff-structure",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Tariffs & Quotas"
+      ]
+    },
+    {
+      "topic": "Import Quota",
+      "url": "https://www.proprofs.com/quiz-school/topic/import-quota",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Tariffs & Quotas"
+      ]
+    },
+    {
+      "topic": "Tariff Effects",
+      "url": "https://www.proprofs.com/quiz-school/topic/tariff-effects",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Tariffs & Quotas"
+      ]
+    },
+    {
+      "topic": "Welfare Analysis of Tariffs & Quotas",
+      "url": "https://www.proprofs.com/quiz-school/topic/welfare-analysis-of-tariffs-and-quotas",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Tariffs & Quotas"
+      ]
+    },
+    {
+      "topic": "Revenue vs Protection",
+      "url": "https://www.proprofs.com/quiz-school/topic/revenue-vs-protection",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Tariffs & Quotas"
+      ]
+    },
+    {
+      "topic": "Non Tariff Barriers",
+      "url": "https://www.proprofs.com/quiz-school/topic/non-tariff-barriers",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Import Licensing",
+      "url": "https://www.proprofs.com/quiz-school/topic/import-licensing",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Non Tariff Barriers"
+      ]
+    },
+    {
+      "topic": "Export Subsidy",
+      "url": "https://www.proprofs.com/quiz-school/topic/export-subsidy",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Non Tariff Barriers"
+      ]
+    },
+    {
+      "topic": "Voluntary Restraints",
+      "url": "https://www.proprofs.com/quiz-school/topic/voluntary-restraints",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Non Tariff Barriers"
+      ]
+    },
+    {
+      "topic": "Technical Standards",
+      "url": "https://www.proprofs.com/quiz-school/topic/technical-standards",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Non Tariff Barriers"
+      ]
+    },
+    {
+      "topic": "Administrative Delays",
+      "url": "https://www.proprofs.com/quiz-school/topic/administrative-delays",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Non Tariff Barriers"
+      ]
+    },
+    {
+      "topic": "Economic Integration",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-integration",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Free Trade Area",
+      "url": "https://www.proprofs.com/quiz-school/topic/free-trade-area",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Economic Integration"
+      ]
+    },
+    {
+      "topic": "Customs Union",
+      "url": "https://www.proprofs.com/quiz-school/topic/customs-union",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Economic Integration"
+      ]
+    },
+    {
+      "topic": "Common Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/common-market",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Economic Integration"
+      ]
+    },
+    {
+      "topic": "Monetary Union",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-union",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Economic Integration"
+      ]
+    },
+    {
+      "topic": "International Institutions",
+      "url": "https://www.proprofs.com/quiz-school/topic/international-institutions",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "World Trade Organization",
+      "url": "https://www.proprofs.com/quiz-school/topic/world-trade-organization",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Institutions"
+      ]
+    },
+    {
+      "topic": "International Monetary Fund",
+      "url": "https://www.proprofs.com/quiz-school/topic/international-monetary-fund",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Institutions"
+      ]
+    },
+    {
+      "topic": "World Bank Group",
+      "url": "https://www.proprofs.com/quiz-school/topic/world-bank-group",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Institutions"
+      ]
+    },
+    {
+      "topic": "UNCTAD Role",
+      "url": "https://www.proprofs.com/quiz-school/topic/unctad-role",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Institutions"
+      ]
+    },
+    {
+      "topic": "OECD & GATT",
+      "url": "https://www.proprofs.com/quiz-school/topic/oecd-and-gatt",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Institutions"
+      ]
+    },
+    {
+      "topic": "Balance of Payments",
+      "url": "https://www.proprofs.com/quiz-school/topic/balance-of-payments",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Financial Account",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-account",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Balance of Payments"
+      ]
+    },
+    {
+      "topic": "Errors & Omissions",
+      "url": "https://www.proprofs.com/quiz-school/topic/errors-and-omissions",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Balance of Payments"
+      ]
+    },
+    {
+      "topic": "Foreign Reserves",
+      "url": "https://www.proprofs.com/quiz-school/topic/foreign-reserves",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Balance of Payments"
+      ]
+    },
+    {
+      "topic": "Exchange Rates",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-rates",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Fixed Regime",
+      "url": "https://www.proprofs.com/quiz-school/topic/fixed-regime",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Exchange Rates"
+      ]
+    },
+    {
+      "topic": "Floating Regime",
+      "url": "https://www.proprofs.com/quiz-school/topic/floating-regime",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Exchange Rates"
+      ]
+    },
+    {
+      "topic": "Spot & Forward",
+      "url": "https://www.proprofs.com/quiz-school/topic/spot-and-forward",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Exchange Rates"
+      ]
+    },
+    {
+      "topic": "Real Exchange Rate",
+      "url": "https://www.proprofs.com/quiz-school/topic/real-exchange-rate",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Exchange Rates"
+      ]
+    },
+    {
+      "topic": "Interest Parity",
+      "url": "https://www.proprofs.com/quiz-school/topic/interest-parity",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Exchange Rates"
+      ]
+    },
+    {
+      "topic": "Foreign Exchange Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/foreign-exchange-market",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Forex Demand",
+      "url": "https://www.proprofs.com/quiz-school/topic/forex-demand",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Foreign Exchange Market"
+      ]
+    },
+    {
+      "topic": "Forex Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/forex-supply",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Foreign Exchange Market"
+      ]
+    },
+    {
+      "topic": "Arbitrage Trading",
+      "url": "https://www.proprofs.com/quiz-school/topic/arbitrage-trading",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Foreign Exchange Market"
+      ]
+    },
+    {
+      "topic": "Hedging Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/hedging-instruments",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Foreign Exchange Market"
+      ]
+    },
+    {
+      "topic": "Speculative Trading",
+      "url": "https://www.proprofs.com/quiz-school/topic/speculative-trading",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Foreign Exchange Market"
+      ]
+    },
+    {
+      "topic": "Central Bank Intervention",
+      "url": "https://www.proprofs.com/quiz-school/topic/central-bank-intervention",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Foreign Exchange Market"
+      ]
+    },
+    {
+      "topic": "International Capital Flows",
+      "url": "https://www.proprofs.com/quiz-school/topic/international-capital-flows",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Foreign Direct Investment",
+      "url": "https://www.proprofs.com/quiz-school/topic/foreign-direct-investment",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Capital Flows"
+      ]
+    },
+    {
+      "topic": "Foreign Portfolio Investment",
+      "url": "https://www.proprofs.com/quiz-school/topic/foreign-portfolio-investment",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Capital Flows"
+      ]
+    },
+    {
+      "topic": "Remittance Flows",
+      "url": "https://www.proprofs.com/quiz-school/topic/remittance-flows",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Capital Flows"
+      ]
+    },
+    {
+      "topic": "External Borrowing",
+      "url": "https://www.proprofs.com/quiz-school/topic/external-borrowing",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Capital Flows"
+      ]
+    },
+    {
+      "topic": "Capital Controls",
+      "url": "https://www.proprofs.com/quiz-school/topic/capital-controls",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Capital Flows"
+      ]
+    },
+    {
+      "topic": "Sudden Stops",
+      "url": "https://www.proprofs.com/quiz-school/topic/sudden-stops",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Capital Flows"
+      ]
+    },
+    {
+      "topic": "Open Economy Models",
+      "url": "https://www.proprofs.com/quiz-school/topic/open-economy-models",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Mundell Fleming Model",
+      "url": "https://www.proprofs.com/quiz-school/topic/mundell-fleming-model",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Open Economy Models"
+      ]
+    },
+    {
+      "topic": "IS LM BP",
+      "url": "https://www.proprofs.com/quiz-school/topic/is-lm-bp",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Open Economy Models"
+      ]
+    },
+    {
+      "topic": "Dornbusch Model",
+      "url": "https://www.proprofs.com/quiz-school/topic/dornbusch-model",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Open Economy Models"
+      ]
+    },
+    {
+      "topic": "Marshall Lerner Condition",
+      "url": "https://www.proprofs.com/quiz-school/topic/marshall-lerner-condition",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Open Economy Models"
+      ]
+    },
+    {
+      "topic": "J Curve",
+      "url": "https://www.proprofs.com/quiz-school/topic/j-curve",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "Open Economy Models"
+      ]
+    },
+    {
+      "topic": "International Monetary System",
+      "url": "https://www.proprofs.com/quiz-school/topic/international-monetary-system",
+      "parents": [
+        "Economics",
+        "International Economics"
+      ]
+    },
+    {
+      "topic": "Gold Standard",
+      "url": "https://www.proprofs.com/quiz-school/topic/gold-standard",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Monetary System"
+      ]
+    },
+    {
+      "topic": "Bretton Woods",
+      "url": "https://www.proprofs.com/quiz-school/topic/bretton-woods",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Monetary System"
+      ]
+    },
+    {
+      "topic": "Post Bretton Woods",
+      "url": "https://www.proprofs.com/quiz-school/topic/post-bretton-woods",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Monetary System"
+      ]
+    },
+    {
+      "topic": "SDR System",
+      "url": "https://www.proprofs.com/quiz-school/topic/sdr-system",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Monetary System"
+      ]
+    },
+    {
+      "topic": "IMF Facilities",
+      "url": "https://www.proprofs.com/quiz-school/topic/imf-facilities",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Monetary System"
+      ]
+    },
+    {
+      "topic": "Exchange Rate Regimes",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-rate-regimes",
+      "parents": [
+        "Economics",
+        "International Economics",
+        "International Monetary System"
+      ]
+    },
+    {
+      "topic": "Monetary Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-economics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Money Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/money-supply",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Definition of Money",
+      "url": "https://www.proprofs.com/quiz-school/topic/definition-of-money",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Supply"
+      ]
+    },
+    {
+      "topic": "Measures of Money",
+      "url": "https://www.proprofs.com/quiz-school/topic/measures-of-money",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Supply"
+      ]
+    },
+    {
+      "topic": "High Powered Money",
+      "url": "https://www.proprofs.com/quiz-school/topic/high-powered-money",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Supply"
+      ]
+    },
+    {
+      "topic": "Determinants of Money Supply",
+      "url": "https://www.proprofs.com/quiz-school/topic/determinants-of-money-supply",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Supply"
+      ]
+    },
+    {
+      "topic": "Money Demand",
+      "url": "https://www.proprofs.com/quiz-school/topic/money-demand",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Transaction Motive",
+      "url": "https://www.proprofs.com/quiz-school/topic/transaction-motive",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Demand"
+      ]
+    },
+    {
+      "topic": "Precautionary Motive",
+      "url": "https://www.proprofs.com/quiz-school/topic/precautionary-motive",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Demand"
+      ]
+    },
+    {
+      "topic": "Speculative Motive",
+      "url": "https://www.proprofs.com/quiz-school/topic/speculative-motive",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Demand"
+      ]
+    },
+    {
+      "topic": "Liquidity Preference",
+      "url": "https://www.proprofs.com/quiz-school/topic/liquidity-preference",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Demand"
+      ]
+    },
+    {
+      "topic": "Cambridge Approach",
+      "url": "https://www.proprofs.com/quiz-school/topic/cambridge-approach",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Money Demand"
+      ]
+    },
+    {
+      "topic": "Banking System",
+      "url": "https://www.proprofs.com/quiz-school/topic/banking-system",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Bank Balance Sheet",
+      "url": "https://www.proprofs.com/quiz-school/topic/bank-balance-sheet",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Banking System"
+      ]
+    },
+    {
+      "topic": "Credit Creation Process",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-creation-process",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Banking System"
+      ]
+    },
+    {
+      "topic": "Banking Regulation",
+      "url": "https://www.proprofs.com/quiz-school/topic/banking-regulation",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Banking System"
+      ]
+    },
+    {
+      "topic": "Nonbank Institutions",
+      "url": "https://www.proprofs.com/quiz-school/topic/nonbank-institutions",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Banking System"
+      ]
+    },
+    {
+      "topic": "Central Bank",
+      "url": "https://www.proprofs.com/quiz-school/topic/central-bank",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Functions of Central Bank",
+      "url": "https://www.proprofs.com/quiz-school/topic/functions-of-central-bank",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Central Bank"
+      ]
+    },
+    {
+      "topic": "Monetary Policy Tools",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-policy-tools",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Central Bank"
+      ]
+    },
+    {
+      "topic": "Lender of Last Resort",
+      "url": "https://www.proprofs.com/quiz-school/topic/lender-of-last-resort",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Central Bank"
+      ]
+    },
+    {
+      "topic": "Open Market Operations",
+      "url": "https://www.proprofs.com/quiz-school/topic/open-market-operations",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Central Bank"
+      ]
+    },
+    {
+      "topic": "Reserve Requirements",
+      "url": "https://www.proprofs.com/quiz-school/topic/reserve-requirements",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Central Bank"
+      ]
+    },
+    {
+      "topic": "Monetary Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-policy",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Objectives of Monetary Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/objectives-of-monetary-policy",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Policy"
+      ]
+    },
+    {
+      "topic": "Expansionary Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/expansionary-policy",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Policy"
+      ]
+    },
+    {
+      "topic": "Contractionary Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/contractionary-policy",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Policy"
+      ]
+    },
+    {
+      "topic": "Policy Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/policy-instruments",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Policy"
+      ]
+    },
+    {
+      "topic": "Policy Lags",
+      "url": "https://www.proprofs.com/quiz-school/topic/policy-lags",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Policy"
+      ]
+    },
+    {
+      "topic": "Interest Rates",
+      "url": "https://www.proprofs.com/quiz-school/topic/interest-rates",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Nominal vs Real",
+      "url": "https://www.proprofs.com/quiz-school/topic/nominal-vs-real",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Interest Rates"
+      ]
+    },
+    {
+      "topic": "Determinants of Rates",
+      "url": "https://www.proprofs.com/quiz-school/topic/determinants-of-rates",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Interest Rates"
+      ]
+    },
+    {
+      "topic": "Term Structure",
+      "url": "https://www.proprofs.com/quiz-school/topic/term-structure",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Interest Rates"
+      ]
+    },
+    {
+      "topic": "Risk Premium",
+      "url": "https://www.proprofs.com/quiz-school/topic/risk-premium",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Interest Rates"
+      ]
+    },
+    {
+      "topic": "Process of Credit Creation",
+      "url": "https://www.proprofs.com/quiz-school/topic/process-of-credit-creation",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Deposit Expansion",
+      "url": "https://www.proprofs.com/quiz-school/topic/deposit-expansion",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Process of Credit Creation"
+      ]
+    },
+    {
+      "topic": "Credit Multiplier",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-multiplier",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Process of Credit Creation"
+      ]
+    },
+    {
+      "topic": "Role of Banks",
+      "url": "https://www.proprofs.com/quiz-school/topic/role-of-banks",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Process of Credit Creation"
+      ]
+    },
+    {
+      "topic": "Credit Control Tools",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-control-tools",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Process of Credit Creation"
+      ]
+    },
+    {
+      "topic": "Credit Rationing",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-rationing",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Process of Credit Creation"
+      ]
+    },
+    {
+      "topic": "Financial Institutions",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-institutions",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Commercial Banks",
+      "url": "https://www.proprofs.com/quiz-school/topic/commercial-banks",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Financial Institutions"
+      ]
+    },
+    {
+      "topic": "Development Banks",
+      "url": "https://www.proprofs.com/quiz-school/topic/development-banks",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Financial Institutions"
+      ]
+    },
+    {
+      "topic": "Nonbank Finance Firms",
+      "url": "https://www.proprofs.com/quiz-school/topic/nonbank-finance-firms",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Financial Institutions"
+      ]
+    },
+    {
+      "topic": "Regulatory Bodies",
+      "url": "https://www.proprofs.com/quiz-school/topic/regulatory-bodies",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Financial Institutions"
+      ]
+    },
+    {
+      "topic": "Monetary Transmission",
+      "url": "https://www.proprofs.com/quiz-school/topic/monetary-transmission",
+      "parents": [
+        "Economics",
+        "Monetary Economics"
+      ]
+    },
+    {
+      "topic": "Interest Rate Channel",
+      "url": "https://www.proprofs.com/quiz-school/topic/interest-rate-channel",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Transmission"
+      ]
+    },
+    {
+      "topic": "Credit Channel",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-channel",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Transmission"
+      ]
+    },
+    {
+      "topic": "Exchange Rate Channel",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-rate-channel",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Transmission"
+      ]
+    },
+    {
+      "topic": "Asset Price Channel",
+      "url": "https://www.proprofs.com/quiz-school/topic/asset-price-channel",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Transmission"
+      ]
+    },
+    {
+      "topic": "Expectations Channel",
+      "url": "https://www.proprofs.com/quiz-school/topic/expectations-channel",
+      "parents": [
+        "Economics",
+        "Monetary Economics",
+        "Monetary Transmission"
+      ]
+    },
+    {
+      "topic": "Public Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-economics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Economical Public Finance",
+      "url": "https://www.proprofs.com/quiz-school/topic/economical-public-finance",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Public Finance Scope",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-finance-scope",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Public Finance"
+      ]
+    },
+    {
+      "topic": "Public vs Private Finance",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-vs-private-finance",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Public Finance"
+      ]
+    },
+    {
+      "topic": "Role of Government",
+      "url": "https://www.proprofs.com/quiz-school/topic/role-of-government",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Public Finance"
+      ]
+    },
+    {
+      "topic": "Fiscal Functions",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-functions",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Public Finance"
+      ]
+    },
+    {
+      "topic": "Market Failure Role",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-failure-role",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Public Finance"
+      ]
+    },
+    {
+      "topic": "Economical Taxation Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/economical-taxation-theory",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Taxation Principles",
+      "url": "https://www.proprofs.com/quiz-school/topic/taxation-principles",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Taxation Theory"
+      ]
+    },
+    {
+      "topic": "Economics of Direct Taxes",
+      "url": "https://www.proprofs.com/quiz-school/topic/economics-of-direct-taxes",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Taxation Theory"
+      ]
+    },
+    {
+      "topic": "Economics of Indirect Taxes",
+      "url": "https://www.proprofs.com/quiz-school/topic/economics-of-indirect-taxes",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Taxation Theory"
+      ]
+    },
+    {
+      "topic": "Tax Incidence",
+      "url": "https://www.proprofs.com/quiz-school/topic/tax-incidence",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Taxation Theory"
+      ]
+    },
+    {
+      "topic": "Tax Evasion",
+      "url": "https://www.proprofs.com/quiz-school/topic/tax-evasion",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Economical Taxation Theory"
+      ]
+    },
+    {
+      "topic": "Government Expenditure",
+      "url": "https://www.proprofs.com/quiz-school/topic/government-expenditure",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Expenditure Classification",
+      "url": "https://www.proprofs.com/quiz-school/topic/expenditure-classification",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Expenditure"
+      ]
+    },
+    {
+      "topic": "Productive Expenditure",
+      "url": "https://www.proprofs.com/quiz-school/topic/productive-expenditure",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Expenditure"
+      ]
+    },
+    {
+      "topic": "Transfer Payments",
+      "url": "https://www.proprofs.com/quiz-school/topic/transfer-payments",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Expenditure"
+      ]
+    },
+    {
+      "topic": "Welfare Spending",
+      "url": "https://www.proprofs.com/quiz-school/topic/welfare-spending",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Expenditure"
+      ]
+    },
+    {
+      "topic": "Crowding Out Effect",
+      "url": "https://www.proprofs.com/quiz-school/topic/crowding-out-effect",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Expenditure"
+      ]
+    },
+    {
+      "topic": "Fiscal Policy & Public Finance",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-policy-and-public-finance",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Fiscal Policy Objectives",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-policy-objectives",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Fiscal Policy & Public Finance"
+      ]
+    },
+    {
+      "topic": "Fiscal Stabilization Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-stabilization-policy",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Fiscal Policy & Public Finance"
+      ]
+    },
+    {
+      "topic": "Fiscal Countercyclical Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-countercyclical-policy",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Fiscal Policy & Public Finance"
+      ]
+    },
+    {
+      "topic": "Fiscal Multipliers",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-multipliers",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Fiscal Policy & Public Finance"
+      ]
+    },
+    {
+      "topic": "Fiscal Policy Limitations",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-policy-limitations",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Fiscal Policy & Public Finance"
+      ]
+    },
+    {
+      "topic": "Classification of Public Debt",
+      "url": "https://www.proprofs.com/quiz-school/topic/classification-of-public-debt",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Internal Debt",
+      "url": "https://www.proprofs.com/quiz-school/topic/internal-debt",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Classification of Public Debt"
+      ]
+    },
+    {
+      "topic": "External Debt",
+      "url": "https://www.proprofs.com/quiz-school/topic/external-debt",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Classification of Public Debt"
+      ]
+    },
+    {
+      "topic": "Burden of Debt",
+      "url": "https://www.proprofs.com/quiz-school/topic/burden-of-debt",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Classification of Public Debt"
+      ]
+    },
+    {
+      "topic": "Debt Servicing",
+      "url": "https://www.proprofs.com/quiz-school/topic/debt-servicing",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Classification of Public Debt"
+      ]
+    },
+    {
+      "topic": "Debt Management",
+      "url": "https://www.proprofs.com/quiz-school/topic/debt-management",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Classification of Public Debt"
+      ]
+    },
+    {
+      "topic": "Budget & Deficit",
+      "url": "https://www.proprofs.com/quiz-school/topic/budget-and-deficit",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Budget Structure",
+      "url": "https://www.proprofs.com/quiz-school/topic/budget-structure",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Budget & Deficit"
+      ]
+    },
+    {
+      "topic": "Revenue Deficit",
+      "url": "https://www.proprofs.com/quiz-school/topic/revenue-deficit",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Budget & Deficit"
+      ]
+    },
+    {
+      "topic": "Fiscal Deficit in Public Finance",
+      "url": "https://www.proprofs.com/quiz-school/topic/fiscal-deficit-in-public-finance",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Budget & Deficit"
+      ]
+    },
+    {
+      "topic": "Primary Deficit",
+      "url": "https://www.proprofs.com/quiz-school/topic/primary-deficit",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Budget & Deficit"
+      ]
+    },
+    {
+      "topic": "Budgetary Reforms",
+      "url": "https://www.proprofs.com/quiz-school/topic/budgetary-reforms",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Budget & Deficit"
+      ]
+    },
+    {
+      "topic": "Theory of Public Goods",
+      "url": "https://www.proprofs.com/quiz-school/topic/theory-of-public-goods",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Public Goods Characteristics",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-goods-characteristics",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Theory of Public Goods"
+      ]
+    },
+    {
+      "topic": "Pure vs Impure Goods",
+      "url": "https://www.proprofs.com/quiz-school/topic/pure-vs-impure-goods",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Theory of Public Goods"
+      ]
+    },
+    {
+      "topic": "Free Rider Problem",
+      "url": "https://www.proprofs.com/quiz-school/topic/free-rider-problem",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Theory of Public Goods"
+      ]
+    },
+    {
+      "topic": "Public Provision",
+      "url": "https://www.proprofs.com/quiz-school/topic/public-provision",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Theory of Public Goods"
+      ]
+    },
+    {
+      "topic": "Cost Benefit Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/cost-benefit-analysis",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Theory of Public Goods"
+      ]
+    },
+    {
+      "topic": "Government Policies on Externalities",
+      "url": "https://www.proprofs.com/quiz-school/topic/government-policies-on-externalities",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Positive Externalities",
+      "url": "https://www.proprofs.com/quiz-school/topic/positive-externalities",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Policies on Externalities"
+      ]
+    },
+    {
+      "topic": "Negative Externalities",
+      "url": "https://www.proprofs.com/quiz-school/topic/negative-externalities",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Policies on Externalities"
+      ]
+    },
+    {
+      "topic": "Pigouvian Tax",
+      "url": "https://www.proprofs.com/quiz-school/topic/pigouvian-tax",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Policies on Externalities"
+      ]
+    },
+    {
+      "topic": "Subsidies Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/subsidies-policy",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Policies on Externalities"
+      ]
+    },
+    {
+      "topic": "Coase Theorem",
+      "url": "https://www.proprofs.com/quiz-school/topic/coase-theorem",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Government Policies on Externalities"
+      ]
+    },
+    {
+      "topic": "Welfare Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/welfare-economics",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Pareto Efficiency",
+      "url": "https://www.proprofs.com/quiz-school/topic/pareto-efficiency",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Welfare Economics"
+      ]
+    },
+    {
+      "topic": "Social Welfare Functions",
+      "url": "https://www.proprofs.com/quiz-school/topic/social-welfare-functions",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Welfare Economics"
+      ]
+    },
+    {
+      "topic": "Compensation Criteria",
+      "url": "https://www.proprofs.com/quiz-school/topic/compensation-criteria",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Welfare Economics"
+      ]
+    },
+    {
+      "topic": "Equity Tradeoff",
+      "url": "https://www.proprofs.com/quiz-school/topic/equity-tradeoff",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Welfare Economics"
+      ]
+    },
+    {
+      "topic": "Income Distribution",
+      "url": "https://www.proprofs.com/quiz-school/topic/income-distribution",
+      "parents": [
+        "Economics",
+        "Public Economics"
+      ]
+    },
+    {
+      "topic": "Functional Distribution",
+      "url": "https://www.proprofs.com/quiz-school/topic/functional-distribution",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Income Distribution"
+      ]
+    },
+    {
+      "topic": "Personal Distribution",
+      "url": "https://www.proprofs.com/quiz-school/topic/personal-distribution",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Income Distribution"
+      ]
+    },
+    {
+      "topic": "Lorenz Curve",
+      "url": "https://www.proprofs.com/quiz-school/topic/lorenz-curve",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Income Distribution"
+      ]
+    },
+    {
+      "topic": "Gini Coefficient",
+      "url": "https://www.proprofs.com/quiz-school/topic/gini-coefficient",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Income Distribution"
+      ]
+    },
+    {
+      "topic": "Redistribution Policy",
+      "url": "https://www.proprofs.com/quiz-school/topic/redistribution-policy",
+      "parents": [
+        "Economics",
+        "Public Economics",
+        "Income Distribution"
+      ]
+    },
+    {
+      "topic": "Econometrics & Data Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/econometrics-and-data-analysis",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Economic Data Types",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-data-types",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Cross Section Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/cross-section-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Types"
+      ]
+    },
+    {
+      "topic": "Time Series Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/time-series-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Types"
+      ]
+    },
+    {
+      "topic": "Panel Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/panel-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Types"
+      ]
+    },
+    {
+      "topic": "Qualitative Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/qualitative-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Types"
+      ]
+    },
+    {
+      "topic": "Quantitative Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/quantitative-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Types"
+      ]
+    },
+    {
+      "topic": "Economic Data Sources",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-data-sources",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Economical Primary Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/economical-primary-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Sources"
+      ]
+    },
+    {
+      "topic": "Economical Secondary Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/economical-secondary-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Sources"
+      ]
+    },
+    {
+      "topic": "Government Statistics",
+      "url": "https://www.proprofs.com/quiz-school/topic/government-statistics",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Sources"
+      ]
+    },
+    {
+      "topic": "Economical Survey Data",
+      "url": "https://www.proprofs.com/quiz-school/topic/economical-survey-data",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Sources"
+      ]
+    },
+    {
+      "topic": "Financial Databases",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-databases",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Economic Data Sources"
+      ]
+    },
+    {
+      "topic": "Descriptive Statistics",
+      "url": "https://www.proprofs.com/quiz-school/topic/descriptive-statistics",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Mean & Median",
+      "url": "https://www.proprofs.com/quiz-school/topic/mean-and-median",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Descriptive Statistics"
+      ]
+    },
+    {
+      "topic": "Mode & Range",
+      "url": "https://www.proprofs.com/quiz-school/topic/mode-and-range",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Descriptive Statistics"
+      ]
+    },
+    {
+      "topic": "Variance & SD",
+      "url": "https://www.proprofs.com/quiz-school/topic/variance-and-sd",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Descriptive Statistics"
+      ]
+    },
+    {
+      "topic": "Data Distribution",
+      "url": "https://www.proprofs.com/quiz-school/topic/data-distribution",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Descriptive Statistics"
+      ]
+    },
+    {
+      "topic": "Correlation Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/correlation-analysis",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Descriptive Statistics"
+      ]
+    },
+    {
+      "topic": "Probability Concepts in Econometrics",
+      "url": "https://www.proprofs.com/quiz-school/topic/probability-concepts-in-econometrics",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Random Variables",
+      "url": "https://www.proprofs.com/quiz-school/topic/random-variables",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Probability Concepts in Econometrics"
+      ]
+    },
+    {
+      "topic": "Econometric Probability Distributions",
+      "url": "https://www.proprofs.com/quiz-school/topic/econometric-probability-distributions",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Probability Concepts in Econometrics"
+      ]
+    },
+    {
+      "topic": "Expected Value in Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/expected-value-in-economics",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Probability Concepts in Econometrics"
+      ]
+    },
+    {
+      "topic": "Normal Distribution in Econometrics",
+      "url": "https://www.proprofs.com/quiz-school/topic/normal-distribution-in-econometrics",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Probability Concepts in Econometrics"
+      ]
+    },
+    {
+      "topic": "Law of Large Numbers",
+      "url": "https://www.proprofs.com/quiz-school/topic/law-of-large-numbers",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Probability Concepts in Econometrics"
+      ]
+    },
+    {
+      "topic": "Sampling Techniques",
+      "url": "https://www.proprofs.com/quiz-school/topic/sampling-techniques",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Random Sampling",
+      "url": "https://www.proprofs.com/quiz-school/topic/random-sampling",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Sampling Techniques"
+      ]
+    },
+    {
+      "topic": "Stratified Sampling",
+      "url": "https://www.proprofs.com/quiz-school/topic/stratified-sampling",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Sampling Techniques"
+      ]
+    },
+    {
+      "topic": "Cluster Sampling",
+      "url": "https://www.proprofs.com/quiz-school/topic/cluster-sampling",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Sampling Techniques"
+      ]
+    },
+    {
+      "topic": "Systematic Sampling",
+      "url": "https://www.proprofs.com/quiz-school/topic/systematic-sampling",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Sampling Techniques"
+      ]
+    },
+    {
+      "topic": "Sampling Error",
+      "url": "https://www.proprofs.com/quiz-school/topic/sampling-error",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Sampling Techniques"
+      ]
+    },
+    {
+      "topic": "Econometric Hypothesis Testing",
+      "url": "https://www.proprofs.com/quiz-school/topic/econometric-hypothesis-testing",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Null & Alternative",
+      "url": "https://www.proprofs.com/quiz-school/topic/null-and-alternative",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Econometric Hypothesis Testing"
+      ]
+    },
+    {
+      "topic": "Test Statistics",
+      "url": "https://www.proprofs.com/quiz-school/topic/test-statistics",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Econometric Hypothesis Testing"
+      ]
+    },
+    {
+      "topic": "Confidence Interval",
+      "url": "https://www.proprofs.com/quiz-school/topic/confidence-interval",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Econometric Hypothesis Testing"
+      ]
+    },
+    {
+      "topic": "Type I & II Errors",
+      "url": "https://www.proprofs.com/quiz-school/topic/type-i-and-ii-errors",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Econometric Hypothesis Testing"
+      ]
+    },
+    {
+      "topic": "Regression Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/regression-analysis",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Simple Regression",
+      "url": "https://www.proprofs.com/quiz-school/topic/simple-regression",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Regression Analysis"
+      ]
+    },
+    {
+      "topic": "Multiple Regression",
+      "url": "https://www.proprofs.com/quiz-school/topic/multiple-regression",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Regression Analysis"
+      ]
+    },
+    {
+      "topic": "Coefficient Interpretation",
+      "url": "https://www.proprofs.com/quiz-school/topic/coefficient-interpretation",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Regression Analysis"
+      ]
+    },
+    {
+      "topic": "Goodness of Fit",
+      "url": "https://www.proprofs.com/quiz-school/topic/goodness-of-fit",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Regression Analysis"
+      ]
+    },
+    {
+      "topic": "Multicollinearity",
+      "url": "https://www.proprofs.com/quiz-school/topic/multicollinearity",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Regression Analysis"
+      ]
+    },
+    {
+      "topic": "Model Estimation",
+      "url": "https://www.proprofs.com/quiz-school/topic/model-estimation",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Ordinary Least Squares",
+      "url": "https://www.proprofs.com/quiz-school/topic/ordinary-least-squares",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Model Estimation"
+      ]
+    },
+    {
+      "topic": "Maximum Likelihood",
+      "url": "https://www.proprofs.com/quiz-school/topic/maximum-likelihood",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Model Estimation"
+      ]
+    },
+    {
+      "topic": "Model Assumptions",
+      "url": "https://www.proprofs.com/quiz-school/topic/model-assumptions",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Model Estimation"
+      ]
+    },
+    {
+      "topic": "Heteroskedasticity",
+      "url": "https://www.proprofs.com/quiz-school/topic/heteroskedasticity",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Model Estimation"
+      ]
+    },
+    {
+      "topic": "Autocorrelation",
+      "url": "https://www.proprofs.com/quiz-school/topic/autocorrelation",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Model Estimation"
+      ]
+    },
+    {
+      "topic": "Time Series Models",
+      "url": "https://www.proprofs.com/quiz-school/topic/time-series-models",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Trend Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/trend-analysis",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Time Series Models"
+      ]
+    },
+    {
+      "topic": "Seasonality Patterns",
+      "url": "https://www.proprofs.com/quiz-school/topic/seasonality-patterns",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Time Series Models"
+      ]
+    },
+    {
+      "topic": "ARIMA Models",
+      "url": "https://www.proprofs.com/quiz-school/topic/arima-models",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Time Series Models"
+      ]
+    },
+    {
+      "topic": "Stationarity Tests",
+      "url": "https://www.proprofs.com/quiz-school/topic/stationarity-tests",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Time Series Models"
+      ]
+    },
+    {
+      "topic": "Lagged Variables",
+      "url": "https://www.proprofs.com/quiz-school/topic/lagged-variables",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Time Series Models"
+      ]
+    },
+    {
+      "topic": "Forecasting Methods",
+      "url": "https://www.proprofs.com/quiz-school/topic/forecasting-methods",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis"
+      ]
+    },
+    {
+      "topic": "Quantitative Forecasting",
+      "url": "https://www.proprofs.com/quiz-school/topic/quantitative-forecasting",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Forecasting Methods"
+      ]
+    },
+    {
+      "topic": "Qualitative Forecasting",
+      "url": "https://www.proprofs.com/quiz-school/topic/qualitative-forecasting",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Forecasting Methods"
+      ]
+    },
+    {
+      "topic": "Exponential Smoothing",
+      "url": "https://www.proprofs.com/quiz-school/topic/exponential-smoothing",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Forecasting Methods"
+      ]
+    },
+    {
+      "topic": "Regression Forecasting",
+      "url": "https://www.proprofs.com/quiz-school/topic/regression-forecasting",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Forecasting Methods"
+      ]
+    },
+    {
+      "topic": "Forecast Evaluation",
+      "url": "https://www.proprofs.com/quiz-school/topic/forecast-evaluation",
+      "parents": [
+        "Economics",
+        "Econometrics & Data Analysis",
+        "Forecasting Methods"
+      ]
+    },
+    {
+      "topic": "Financial Economics & Markets",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-economics-and-markets",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Financial System",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-system",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "System Components",
+      "url": "https://www.proprofs.com/quiz-school/topic/system-components",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial System"
+      ]
+    },
+    {
+      "topic": "Financial Intermediaries",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-intermediaries",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial System"
+      ]
+    },
+    {
+      "topic": "Flow of Funds",
+      "url": "https://www.proprofs.com/quiz-school/topic/flow-of-funds",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial System"
+      ]
+    },
+    {
+      "topic": "Financial Regulation",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-regulation",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial System"
+      ]
+    },
+    {
+      "topic": "Markets Role",
+      "url": "https://www.proprofs.com/quiz-school/topic/markets-role",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial System"
+      ]
+    },
+    {
+      "topic": "Money Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/money-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Treasury Bills",
+      "url": "https://www.proprofs.com/quiz-school/topic/treasury-bills",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Money Market"
+      ]
+    },
+    {
+      "topic": "Commercial Paper",
+      "url": "https://www.proprofs.com/quiz-school/topic/commercial-paper",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Money Market"
+      ]
+    },
+    {
+      "topic": "Certificates of Deposit",
+      "url": "https://www.proprofs.com/quiz-school/topic/certificates-of-deposit",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Money Market"
+      ]
+    },
+    {
+      "topic": "Call Money Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/call-money-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Money Market"
+      ]
+    },
+    {
+      "topic": "Repo Transactions",
+      "url": "https://www.proprofs.com/quiz-school/topic/repo-transactions",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Money Market"
+      ]
+    },
+    {
+      "topic": "Capital Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/capital-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Primary Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/primary-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Capital Market"
+      ]
+    },
+    {
+      "topic": "Secondary Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/secondary-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Capital Market"
+      ]
+    },
+    {
+      "topic": "Stock Exchange",
+      "url": "https://www.proprofs.com/quiz-school/topic/stock-exchange",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Capital Market"
+      ]
+    },
+    {
+      "topic": "Securities Regulation",
+      "url": "https://www.proprofs.com/quiz-school/topic/securities-regulation",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Capital Market"
+      ]
+    },
+    {
+      "topic": "Market Participants",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-participants",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Capital Market"
+      ]
+    },
+    {
+      "topic": "Bond Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/bond-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Government Bonds",
+      "url": "https://www.proprofs.com/quiz-school/topic/government-bonds",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Bond Market"
+      ]
+    },
+    {
+      "topic": "Corporate Bonds",
+      "url": "https://www.proprofs.com/quiz-school/topic/corporate-bonds",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Bond Market"
+      ]
+    },
+    {
+      "topic": "Bond Pricing",
+      "url": "https://www.proprofs.com/quiz-school/topic/bond-pricing",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Bond Market"
+      ]
+    },
+    {
+      "topic": "Yield Curve",
+      "url": "https://www.proprofs.com/quiz-school/topic/yield-curve",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Bond Market"
+      ]
+    },
+    {
+      "topic": "Credit Rating",
+      "url": "https://www.proprofs.com/quiz-school/topic/credit-rating",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Bond Market"
+      ]
+    },
+    {
+      "topic": "Stock Market",
+      "url": "https://www.proprofs.com/quiz-school/topic/stock-market",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Equity Shares",
+      "url": "https://www.proprofs.com/quiz-school/topic/equity-shares",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Stock Market"
+      ]
+    },
+    {
+      "topic": "Stock Indices",
+      "url": "https://www.proprofs.com/quiz-school/topic/stock-indices",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Stock Market"
+      ]
+    },
+    {
+      "topic": "IPO Process",
+      "url": "https://www.proprofs.com/quiz-school/topic/ipo-process",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Stock Market"
+      ]
+    },
+    {
+      "topic": "Market Capitalization",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-capitalization",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Stock Market"
+      ]
+    },
+    {
+      "topic": "Trading Mechanism",
+      "url": "https://www.proprofs.com/quiz-school/topic/trading-mechanism",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Stock Market"
+      ]
+    },
+    {
+      "topic": "Foreign Exchange",
+      "url": "https://www.proprofs.com/quiz-school/topic/foreign-exchange",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Forex Market Structure",
+      "url": "https://www.proprofs.com/quiz-school/topic/forex-market-structure",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Foreign Exchange"
+      ]
+    },
+    {
+      "topic": "Exchange Rate Determinants",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-rate-determinants",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Foreign Exchange"
+      ]
+    },
+    {
+      "topic": "Currency Risk",
+      "url": "https://www.proprofs.com/quiz-school/topic/currency-risk",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Foreign Exchange"
+      ]
+    },
+    {
+      "topic": "Hedging Techniques",
+      "url": "https://www.proprofs.com/quiz-school/topic/hedging-techniques",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Foreign Exchange"
+      ]
+    },
+    {
+      "topic": "Financial Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-instruments",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Equity Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/equity-instruments",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial Instruments"
+      ]
+    },
+    {
+      "topic": "Debt Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/debt-instruments",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial Instruments"
+      ]
+    },
+    {
+      "topic": "Derivative Instruments",
+      "url": "https://www.proprofs.com/quiz-school/topic/derivative-instruments",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial Instruments"
+      ]
+    },
+    {
+      "topic": "Mutual Funds",
+      "url": "https://www.proprofs.com/quiz-school/topic/mutual-funds",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial Instruments"
+      ]
+    },
+    {
+      "topic": "Exchange Traded Funds",
+      "url": "https://www.proprofs.com/quiz-school/topic/exchange-traded-funds",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Financial Instruments"
+      ]
+    },
+    {
+      "topic": "Risk & Return",
+      "url": "https://www.proprofs.com/quiz-school/topic/risk-and-return",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Expected Return",
+      "url": "https://www.proprofs.com/quiz-school/topic/expected-return",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Risk & Return"
+      ]
+    },
+    {
+      "topic": "Risk Measurement",
+      "url": "https://www.proprofs.com/quiz-school/topic/risk-measurement",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Risk & Return"
+      ]
+    },
+    {
+      "topic": "Diversification Benefit",
+      "url": "https://www.proprofs.com/quiz-school/topic/diversification-benefit",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Risk & Return"
+      ]
+    },
+    {
+      "topic": "Systematic Risk",
+      "url": "https://www.proprofs.com/quiz-school/topic/systematic-risk",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Risk & Return"
+      ]
+    },
+    {
+      "topic": "Portfolio Theory",
+      "url": "https://www.proprofs.com/quiz-school/topic/portfolio-theory",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Portfolio Diversification",
+      "url": "https://www.proprofs.com/quiz-school/topic/portfolio-diversification",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Portfolio Theory"
+      ]
+    },
+    {
+      "topic": "Efficient Frontier",
+      "url": "https://www.proprofs.com/quiz-school/topic/efficient-frontier",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Portfolio Theory"
+      ]
+    },
+    {
+      "topic": "CAPM Model",
+      "url": "https://www.proprofs.com/quiz-school/topic/capm-model",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Portfolio Theory"
+      ]
+    },
+    {
+      "topic": "Beta Coefficient",
+      "url": "https://www.proprofs.com/quiz-school/topic/beta-coefficient",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Portfolio Theory"
+      ]
+    },
+    {
+      "topic": "Portfolio Optimization",
+      "url": "https://www.proprofs.com/quiz-school/topic/portfolio-optimization",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Portfolio Theory"
+      ]
+    },
+    {
+      "topic": "Market Efficiency",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-efficiency",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets"
+      ]
+    },
+    {
+      "topic": "Efficient Market Hypothesis",
+      "url": "https://www.proprofs.com/quiz-school/topic/efficient-market-hypothesis",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Market Efficiency"
+      ]
+    },
+    {
+      "topic": "Forms of Efficiency",
+      "url": "https://www.proprofs.com/quiz-school/topic/forms-of-efficiency",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Market Efficiency"
+      ]
+    },
+    {
+      "topic": "Information Asymmetry",
+      "url": "https://www.proprofs.com/quiz-school/topic/information-asymmetry",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Market Efficiency"
+      ]
+    },
+    {
+      "topic": "Behavioral Biases",
+      "url": "https://www.proprofs.com/quiz-school/topic/behavioral-biases",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Market Efficiency"
+      ]
+    },
+    {
+      "topic": "Market Anomalies",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-anomalies",
+      "parents": [
+        "Economics",
+        "Financial Economics & Markets",
+        "Market Efficiency"
+      ]
+    },
+    {
+      "topic": "Development Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/development-economics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Economic Growth Theories",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-growth-theories",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Classical Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/classical-growth",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Economic Growth Theories"
+      ]
+    },
+    {
+      "topic": "Neoclassical Model",
+      "url": "https://www.proprofs.com/quiz-school/topic/neoclassical-model",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Economic Growth Theories"
+      ]
+    },
+    {
+      "topic": "Endogenous Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/endogenous-growth",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Economic Growth Theories"
+      ]
+    },
+    {
+      "topic": "Dual Sector Model",
+      "url": "https://www.proprofs.com/quiz-school/topic/dual-sector-model",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Economic Growth Theories"
+      ]
+    },
+    {
+      "topic": "Balanced Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/balanced-growth",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Economic Growth Theories"
+      ]
+    },
+    {
+      "topic": "Poverty & Inequality",
+      "url": "https://www.proprofs.com/quiz-school/topic/poverty-and-inequality",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Poverty Line",
+      "url": "https://www.proprofs.com/quiz-school/topic/poverty-line",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Poverty & Inequality"
+      ]
+    },
+    {
+      "topic": "Absolute Poverty",
+      "url": "https://www.proprofs.com/quiz-school/topic/absolute-poverty",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Poverty & Inequality"
+      ]
+    },
+    {
+      "topic": "Relative Poverty",
+      "url": "https://www.proprofs.com/quiz-school/topic/relative-poverty",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Poverty & Inequality"
+      ]
+    },
+    {
+      "topic": "Income Inequality",
+      "url": "https://www.proprofs.com/quiz-school/topic/income-inequality",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Poverty & Inequality"
+      ]
+    },
+    {
+      "topic": "Multidimensional Poverty",
+      "url": "https://www.proprofs.com/quiz-school/topic/multidimensional-poverty",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Poverty & Inequality"
+      ]
+    },
+    {
+      "topic": "Human Capital",
+      "url": "https://www.proprofs.com/quiz-school/topic/human-capital",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Education Investment",
+      "url": "https://www.proprofs.com/quiz-school/topic/education-investment",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Human Capital"
+      ]
+    },
+    {
+      "topic": "Health Investment",
+      "url": "https://www.proprofs.com/quiz-school/topic/health-investment",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Human Capital"
+      ]
+    },
+    {
+      "topic": "Human Development Index",
+      "url": "https://www.proprofs.com/quiz-school/topic/human-development-index",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Human Capital"
+      ]
+    },
+    {
+      "topic": "Skill Formation",
+      "url": "https://www.proprofs.com/quiz-school/topic/skill-formation",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Human Capital"
+      ]
+    },
+    {
+      "topic": "Labor Productivity",
+      "url": "https://www.proprofs.com/quiz-school/topic/labor-productivity",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Human Capital"
+      ]
+    },
+    {
+      "topic": "Structural Change",
+      "url": "https://www.proprofs.com/quiz-school/topic/structural-change",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Sectoral Shifts",
+      "url": "https://www.proprofs.com/quiz-school/topic/sectoral-shifts",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Structural Change"
+      ]
+    },
+    {
+      "topic": "Industrialization Process",
+      "url": "https://www.proprofs.com/quiz-school/topic/industrialization-process",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Structural Change"
+      ]
+    },
+    {
+      "topic": "Agricultural Transformation",
+      "url": "https://www.proprofs.com/quiz-school/topic/agricultural-transformation",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Structural Change"
+      ]
+    },
+    {
+      "topic": "Urbanization Trends",
+      "url": "https://www.proprofs.com/quiz-school/topic/urbanization-trends",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Structural Change"
+      ]
+    },
+    {
+      "topic": "Employment Transition",
+      "url": "https://www.proprofs.com/quiz-school/topic/employment-transition",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Structural Change"
+      ]
+    },
+    {
+      "topic": "Trade & Development",
+      "url": "https://www.proprofs.com/quiz-school/topic/trade-and-development",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Export Led Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/export-led-growth",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Trade & Development"
+      ]
+    },
+    {
+      "topic": "Trade Liberalization",
+      "url": "https://www.proprofs.com/quiz-school/topic/trade-liberalization",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Trade & Development"
+      ]
+    },
+    {
+      "topic": "Types of Terms of Trade",
+      "url": "https://www.proprofs.com/quiz-school/topic/types-of-terms-of-trade",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Trade & Development"
+      ]
+    },
+    {
+      "topic": "Global Value Chains",
+      "url": "https://www.proprofs.com/quiz-school/topic/global-value-chains",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Trade & Development"
+      ]
+    },
+    {
+      "topic": "Finance & Development",
+      "url": "https://www.proprofs.com/quiz-school/topic/finance-and-development",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Domestic Savings",
+      "url": "https://www.proprofs.com/quiz-school/topic/domestic-savings",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Finance & Development"
+      ]
+    },
+    {
+      "topic": "Financial Deepening",
+      "url": "https://www.proprofs.com/quiz-school/topic/financial-deepening",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Finance & Development"
+      ]
+    },
+    {
+      "topic": "Microfinance Role",
+      "url": "https://www.proprofs.com/quiz-school/topic/microfinance-role",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Finance & Development"
+      ]
+    },
+    {
+      "topic": "Capital Formation",
+      "url": "https://www.proprofs.com/quiz-school/topic/capital-formation",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Finance & Development"
+      ]
+    },
+    {
+      "topic": "Foreign Investment",
+      "url": "https://www.proprofs.com/quiz-school/topic/foreign-investment",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Finance & Development"
+      ]
+    },
+    {
+      "topic": "Institutions & Governance",
+      "url": "https://www.proprofs.com/quiz-school/topic/institutions-and-governance",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Property Rights",
+      "url": "https://www.proprofs.com/quiz-school/topic/property-rights",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Institutions & Governance"
+      ]
+    },
+    {
+      "topic": "Corruption Control",
+      "url": "https://www.proprofs.com/quiz-school/topic/corruption-control",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Institutions & Governance"
+      ]
+    },
+    {
+      "topic": "Economic Rule of Law",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-rule-of-law",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Institutions & Governance"
+      ]
+    },
+    {
+      "topic": "Political Stability",
+      "url": "https://www.proprofs.com/quiz-school/topic/political-stability",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Institutions & Governance"
+      ]
+    },
+    {
+      "topic": "Institutional Quality",
+      "url": "https://www.proprofs.com/quiz-school/topic/institutional-quality",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Institutions & Governance"
+      ]
+    },
+    {
+      "topic": "Sustainable Economic Development",
+      "url": "https://www.proprofs.com/quiz-school/topic/sustainable-economic-development",
+      "parents": [
+        "Economics",
+        "Development Economics"
+      ]
+    },
+    {
+      "topic": "Economics of Environmental Sustainability",
+      "url": "https://www.proprofs.com/quiz-school/topic/economics-of-environmental-sustainability",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Sustainable Economic Development"
+      ]
+    },
+    {
+      "topic": "Renewable Energy Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/renewable-energy-economics",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Sustainable Economic Development"
+      ]
+    },
+    {
+      "topic": "Climate Adaptation Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/climate-adaptation-economics",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Sustainable Economic Development"
+      ]
+    },
+    {
+      "topic": "Green Growth",
+      "url": "https://www.proprofs.com/quiz-school/topic/green-growth",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Sustainable Economic Development"
+      ]
+    },
+    {
+      "topic": "Sustainable Goals",
+      "url": "https://www.proprofs.com/quiz-school/topic/sustainable-goals",
+      "parents": [
+        "Economics",
+        "Development Economics",
+        "Sustainable Economic Development"
+      ]
+    },
+    {
+      "topic": "Environmental & Resource Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/environmental-and-resource-economics",
+      "parents": [
+        "Economics"
+      ]
+    },
+    {
+      "topic": "Pollution Control Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/pollution-control-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Economic Pollution Types",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-pollution-types",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Pollution Control Economics"
+      ]
+    },
+    {
+      "topic": "Pollution Externalities Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/pollution-externalities-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Pollution Control Economics"
+      ]
+    },
+    {
+      "topic": "Pollution Abatement Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/pollution-abatement-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Pollution Control Economics"
+      ]
+    },
+    {
+      "topic": "Emission Standards Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/emission-standards-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Pollution Control Economics"
+      ]
+    },
+    {
+      "topic": "Carbon Tax Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/carbon-tax-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Pollution Control Economics"
+      ]
+    },
+    {
+      "topic": "Environmental Valuation",
+      "url": "https://www.proprofs.com/quiz-school/topic/environmental-valuation",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Environmental Valuation Methods",
+      "url": "https://www.proprofs.com/quiz-school/topic/environmental-valuation-methods",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Environmental Valuation"
+      ]
+    },
+    {
+      "topic": "Contingent Valuation",
+      "url": "https://www.proprofs.com/quiz-school/topic/contingent-valuation",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Environmental Valuation"
+      ]
+    },
+    {
+      "topic": "Hedonic Pricing",
+      "url": "https://www.proprofs.com/quiz-school/topic/hedonic-pricing",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Environmental Valuation"
+      ]
+    },
+    {
+      "topic": "Travel Cost Method",
+      "url": "https://www.proprofs.com/quiz-school/topic/travel-cost-method",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Environmental Valuation"
+      ]
+    },
+    {
+      "topic": "Benefit Transfer",
+      "url": "https://www.proprofs.com/quiz-school/topic/benefit-transfer",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Environmental Valuation"
+      ]
+    },
+    {
+      "topic": "Economic Cost Benefit Analysis",
+      "url": "https://www.proprofs.com/quiz-school/topic/economic-cost-benefit-analysis",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Project Evaluation Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/project-evaluation-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Economic Cost Benefit Analysis"
+      ]
+    },
+    {
+      "topic": "Discounting Methods Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/discounting-methods-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Economic Cost Benefit Analysis"
+      ]
+    },
+    {
+      "topic": "Net Present Value Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/net-present-value-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Economic Cost Benefit Analysis"
+      ]
+    },
+    {
+      "topic": "Social Costing Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/social-costing-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Economic Cost Benefit Analysis"
+      ]
+    },
+    {
+      "topic": "Risk Assessment Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/risk-assessment-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Economic Cost Benefit Analysis"
+      ]
+    },
+    {
+      "topic": "Market Instruments in Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/market-instruments-in-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Tradable Permits",
+      "url": "https://www.proprofs.com/quiz-school/topic/tradable-permits",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Market Instruments in Economics"
+      ]
+    },
+    {
+      "topic": "Green Taxes",
+      "url": "https://www.proprofs.com/quiz-school/topic/green-taxes",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Market Instruments in Economics"
+      ]
+    },
+    {
+      "topic": "Subsidy Schemes",
+      "url": "https://www.proprofs.com/quiz-school/topic/subsidy-schemes",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Market Instruments in Economics"
+      ]
+    },
+    {
+      "topic": "Pollution Permits",
+      "url": "https://www.proprofs.com/quiz-school/topic/pollution-permits",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Market Instruments in Economics"
+      ]
+    },
+    {
+      "topic": "Deposit Refund System",
+      "url": "https://www.proprofs.com/quiz-school/topic/deposit-refund-system",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Market Instruments in Economics"
+      ]
+    },
+    {
+      "topic": "Climate Change Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/climate-change-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Carbon Emissions",
+      "url": "https://www.proprofs.com/quiz-school/topic/carbon-emissions",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Climate Change Economics"
+      ]
+    },
+    {
+      "topic": "Global Warming Costs",
+      "url": "https://www.proprofs.com/quiz-school/topic/global-warming-costs",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Climate Change Economics"
+      ]
+    },
+    {
+      "topic": "Mitigation Policies",
+      "url": "https://www.proprofs.com/quiz-school/topic/mitigation-policies",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Climate Change Economics"
+      ]
+    },
+    {
+      "topic": "Adaptation Strategies",
+      "url": "https://www.proprofs.com/quiz-school/topic/adaptation-strategies",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Climate Change Economics"
+      ]
+    },
+    {
+      "topic": "International Agreements",
+      "url": "https://www.proprofs.com/quiz-school/topic/international-agreements",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Climate Change Economics"
+      ]
+    },
+    {
+      "topic": "Resource Management Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/resource-management-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Common Property Resources",
+      "url": "https://www.proprofs.com/quiz-school/topic/common-property-resources",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Resource Management Economics"
+      ]
+    },
+    {
+      "topic": "Tragedy of Commons",
+      "url": "https://www.proprofs.com/quiz-school/topic/tragedy-of-commons",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Resource Management Economics"
+      ]
+    },
+    {
+      "topic": "Resource Allocation",
+      "url": "https://www.proprofs.com/quiz-school/topic/resource-allocation",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Resource Management Economics"
+      ]
+    },
+    {
+      "topic": "Sustainable Extraction",
+      "url": "https://www.proprofs.com/quiz-school/topic/sustainable-extraction",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Resource Management Economics"
+      ]
+    },
+    {
+      "topic": "Renewable Resource Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/renewable-resource-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Forest Resources",
+      "url": "https://www.proprofs.com/quiz-school/topic/forest-resources",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Renewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Fisheries Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/fisheries-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Renewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Biomass Utilization",
+      "url": "https://www.proprofs.com/quiz-school/topic/biomass-utilization",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Renewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Regeneration Models",
+      "url": "https://www.proprofs.com/quiz-school/topic/regeneration-models",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Renewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Nonrenewable Resource Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/nonrenewable-resource-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Exhaustible Resources",
+      "url": "https://www.proprofs.com/quiz-school/topic/exhaustible-resources",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Nonrenewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Optimal Extraction",
+      "url": "https://www.proprofs.com/quiz-school/topic/optimal-extraction",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Nonrenewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Hotelling Rule",
+      "url": "https://www.proprofs.com/quiz-school/topic/hotelling-rule",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Nonrenewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Resource Depletion",
+      "url": "https://www.proprofs.com/quiz-school/topic/resource-depletion",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Nonrenewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Mineral Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/mineral-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Nonrenewable Resource Economics"
+      ]
+    },
+    {
+      "topic": "Water Resource Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/water-resource-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Water Demand Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/water-demand-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Water Resource Economics"
+      ]
+    },
+    {
+      "topic": "Water Pricing Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/water-pricing-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Water Resource Economics"
+      ]
+    },
+    {
+      "topic": "Irrigation Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/irrigation-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Water Resource Economics"
+      ]
+    },
+    {
+      "topic": "Water Pollution Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/water-pollution-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Water Resource Economics"
+      ]
+    },
+    {
+      "topic": "Groundwater Management",
+      "url": "https://www.proprofs.com/quiz-school/topic/groundwater-management",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Water Resource Economics"
+      ]
+    },
+    {
+      "topic": "Biodiversity Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/biodiversity-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics"
+      ]
+    },
+    {
+      "topic": "Ecosystem Services Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/ecosystem-services-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Biodiversity Economics"
+      ]
+    },
+    {
+      "topic": "Species Valuation Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/species-valuation-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Biodiversity Economics"
+      ]
+    },
+    {
+      "topic": "Habitat Conservation Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/habitat-conservation-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Biodiversity Economics"
+      ]
+    },
+    {
+      "topic": "Genetic Diversity Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/genetic-diversity-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Biodiversity Economics"
+      ]
+    },
+    {
+      "topic": "Protected Areas Economics",
+      "url": "https://www.proprofs.com/quiz-school/topic/protected-areas-economics",
+      "parents": [
+        "Economics",
+        "Environmental & Resource Economics",
+        "Biodiversity Economics"
+      ]
+    },
+    {
+      "topic": "Math",
+      "url": "https://www.proprofs.com/quiz-school/topic/math",
+      "parents": []
+    },
+    {
+      "topic": "Science",
+      "url": "https://www.proprofs.com/quiz-school/topic/science",
+      "parents": []
+    },
+    {
+      "topic": "English",
+      "url": "https://www.proprofs.com/quiz-school/topic/english",
+      "parents": []
+    },
+    {
+      "topic": "History",
+      "url": "https://www.proprofs.com/quiz-school/topic/history",
+      "parents": []
+    },
+    {
+      "topic": "Geography",
+      "url": "https://www.proprofs.com/quiz-school/topic/geography",
+      "parents": []
+    },
+    {
+      "topic": "Computer Science",
+      "url": "https://www.proprofs.com/quiz-school/topic/computer-science",
+      "parents": []
+    },
+    {
+      "topic": "Civics",
+      "url": "https://www.proprofs.com/quiz-school/topic/civics",
+      "parents": []
+    },
+    {
+      "topic": "Exams & Certifications",
+      "url": "https://www.proprofs.com/quiz-school/topic/exams-and-certifications",
+      "parents": []
+    }
+  ]
+}

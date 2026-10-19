@@ -205,3 +205,12 @@ _Last updated: 2026-10-19_
   do-not-use-in-marketing mascot policy + the pending-redesign logo spec. Updated
   `docs/brand-guidelines.md` + `assets/brand/README.md`. Typecheck passes. API/token work parked
   pre-launch. Logo redesign still outstanding.
+
+- **2026-10-19 — Quiz revision and Mascots folder.** User rejected initial questions, specified
+  ProProfs economics topic source, original Canva placeholders, and EdCharacters. Indexed 560
+  topic entries. Prepared two new template drafts in `calendar/quiz-samples-v2.json`; previews
+  shown, commit approval pending. Created `FAHYcZVFBhg` Mascots folder under Edlintics, linked
+  it in Brand Graphics, uploaded and verified Ledger/Sigma/Centi/Plot/Tempo transparent PNGs.
+  Folder-wide Brand Kit sharing was blocked by auto-review; existing access retained pending
+  explicit permission. User explicitly requested a second agent for mascot preparation; it
+  exported the existing art and recorded the quiz-series brand exception. No publishing.

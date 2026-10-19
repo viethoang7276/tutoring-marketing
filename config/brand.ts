@@ -171,6 +171,15 @@ export const characterSystem = {
   forbiddenInMarketingByDefault: true,
   approvedMarketingExceptions: [
     {
+      date: "2026-10-19",
+      surface: "economics, finance, accounting, and statistics quiz social posts in Canva templates",
+      characters: ["Ledger", "Sigma", "Centi", "Plot", "Tempo"],
+      rationale:
+        "Hoang explicitly requested EdCharacter and existing graphics for quiz images, " +
+        "and asked an additional agent to add the mascots. Preserve the existing character art.",
+      status: "APPROVED for preparation and design use; publishing each post still requires approval.",
+    },
+    {
       date: "2026-08-03",
       surface: "social profile covers + Instagram pinned grid (Facebook, LinkedIn, Instagram)",
       characters: ["Ledger", "Centi", "Plot", "Sigma"],

@@ -1,0 +1,32 @@
+{
+  "created": "2026-10-19",
+  "status": "draft_pending_review",
+  "source": "https://www.proprofs.com/quiz-school/topic/economics",
+  "mascots_folder": "https://www.canva.com/folder/FAHYcZVFBhg",
+  "samples": [
+    {
+      "key": "cafe-pricing",
+      "design_id": "DAHYcZ-BtOY",
+      "transaction_id": "6257145239498010105",
+      "preview_url": "https://www.canva.com/d/-dRB-MxmgJEyRU1",
+      "template_id": "EAHYcAXfhLs",
+      "question": "Both cafés want the highest profit. Will they keep prices or both discount?",
+      "answer": "Both discount. Discounting strictly dominates keeping price for each café: 80 > 60 and 40 > 20. One-shot game; independent choices; each maximizes own payoff.",
+      "source_topic": "https://www.proprofs.com/quiz-school/topic/prisoners-dilemma",
+      "question_asset": "MAHYcRVS_Pk",
+      "answer_asset": "MAHYcdImmC0"
+    },
+    {
+      "key": "ticket-shortage",
+      "design_id": "DAHYceQ49sU",
+      "transaction_id": "4767579663882939557",
+      "preview_url": "https://www.canva.com/d/qRu6TUXtkBjGlm2",
+      "template_id": "EAHYcHgXC_g",
+      "question": "Tickets are capped at €10. How many buyers still miss out?",
+      "answer": "4. Ten buyers each want one ticket, six are available, each ticket goes to a distinct buyer. No resale or further supply. The example illustrates shortage at the stated price; it does not infer that the cap caused a change in supply.",
+      "source_topic": "https://www.proprofs.com/quiz-school/quizzes/price-ceiling-shortage-effect-quiz",
+      "question_asset": "MAHYcaH-brQ",
+      "answer_asset": "MAHYcel-Uvo"
+    }
+  ]
+}

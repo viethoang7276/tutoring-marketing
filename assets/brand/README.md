@@ -50,6 +50,23 @@ back them up separately and keep this folder as the manifest of record.
   - The tie is on **Ledger only** (printed on its book). The others stand on bare cream stub arms.
     Never move the tie onto another character; never recolor it.
 
+### Quiz series exception — 2026-10-19
+
+Hoang explicitly approved using EdCharacter and existing graphics for economics, finance,
+accounting, and statistics quiz posts in the existing Canva templates, and requested an additional
+agent to add the mascots. This exception is recorded in `config/brand.ts`. Preparation and design
+use are approved; publication still requires post approval. Keep the original cast artwork intact.
+
+Run `python3 scripts/build_edcharacter_assets.py` with CairoSVG and Pillow installed to create
+transparent 960 × 1080 PNGs of all six existing SVG assets and a labeled contact sheet in
+`assets/renders/edcharacters/`. PNGs are generated, gitignored upload assets; the SVGs and build
+script are the reproducible source. The contact sheet is a selection reference, not a post image.
+
 > Upstream: `tutoring-web/docs/product/brand.md` + the rendered page at `/en/brand-guidelines`. When
 > the app brand changes, re-reconcile `config/brand.ts` and this manifest by hand (we never import
 > app code). The 2026-06-07 rebrand went unnoticed here for eight weeks — check this every cycle.
+
+Canva placement verified 2026-10-19: five idle characters uploaded to
+[Edlintics / Mascots](https://www.canva.com/folder/FAHYcZVFBhg), linked in Brand Kit
+Graphics. Ledger `MAHYcRGqVl4`, Sigma `MAHYcdvon44`, Centi `MAHYceRqfc4`,
+Plot `MAHYccAqQy4`, Tempo `MAHYcQG8xGE`. Existing folder permissions retained.

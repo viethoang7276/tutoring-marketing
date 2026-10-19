@@ -168,3 +168,26 @@ scheduler connection, publication job or analytics ingestion. The current Canva 
 create/edit these designs but does not expose an export or scheduling tool in this session.
 Canva editing transactions require a displayed preview and explicit approval before commit.
 Nothing in this pilot authorises publishing or fixes the future posting frequency.
+
+
+## Quiz revision — 2026-10-19
+
+The first four samples were rejected by Hoang and superseded. Their pending transactions are
+not approved for commit. The previous overlay-image approach must not be reused: retain the
+actual template frames, native text placeholders, layout and logo.
+
+The user explicitly authorized EdCharacters for the quiz series. Five transparent character
+PNGs are saved in Edlintics → Mascots (`FAHYcZVFBhg`) and the folder is linked under
+Brand Kit `kAHOTUBwbig` → Graphics. Native upload was verified by both the folder listing and UI.
+Broader Brand Kit sharing was blocked by automatic approval review; existing access retained.
+
+`calendar/quiz-samples-v2.json` records two new two-page drafts: café pricing (top question) and
+ticket shortage (bottom question). Both use original SVG compositions with Centi and Ledger,
+fill the actual frames, and preserve the source templates. Previews shown; explicit approval
+to commit is pending. Nothing scheduled or published.
+
+The public economics category taxonomy was downloaded and indexed in
+`docs/research/2026-10-19-economics-topic-index.json` (560 entries). This is an index of the
+category page, not a claim to have crawled every linked quiz. Selected price-ceiling and
+principles quizzes were read; source explanations require checking, including their occasional
+confusion of demand shifts with quantity-demanded changes. Original question text is used.

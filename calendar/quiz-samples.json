@@ -1,7 +1,7 @@
 {
   "version": 1,
   "created": "2026-10-19",
-  "status": "draft_pending_review",
+  "status": "rejected_superseded",
   "references": [
     "https://www.instagram.com/p/CEsgc8GoSQk/",
     "https://www.instagram.com/p/CFzsSZVDUGk/"
@@ -16,7 +16,7 @@
       "q": "Cash rises by €1,000 after a bank loan.\nHow much profit does the loan create?",
       "answer": "A loan increases cash and debt equally.\nIt does not create revenue or profit.",
       "title": "Edlintics Quiz 01 — Cash is not profit",
-      "status": "draft_pending_review",
+      "status": "rejected_superseded",
       "template_id": "EAHYcAXfhLs",
       "diagram_assets": {
         "question": "MAHYcZ8LftI",
@@ -56,7 +56,7 @@
       "q": "An investment rises 20%, then falls 20%.\nWhat is your €100 worth now?",
       "answer": "The 20% fall applies to €120, not €100.\nThe same percentage can mean a different amount.",
       "title": "Edlintics Quiz 02 — Up 20%, down 20%",
-      "status": "draft_pending_review",
+      "status": "rejected_superseded",
       "template_id": "EAHYcHgXC_g",
       "diagram_assets": {
         "question": "MAHYcdDw_mI",
@@ -96,7 +96,7 @@
       "q": "Who has the comparative advantage\nin making tables?",
       "answer": "Count the chairs sacrificed per table.\nBeing faster at everything is not the deciding factor.",
       "title": "Edlintics Quiz 03 — Who should make the tables",
-      "status": "draft_pending_review",
+      "status": "rejected_superseded",
       "template_id": "EAHYcAXfhLs",
       "diagram_assets": {
         "question": "MAHYceV4rK0",
@@ -136,7 +136,7 @@
       "q": "The group means are 60 and 80.\nWhat is the mean for all 40 students?",
       "answer": "Count students, not groups.\nA larger group contributes more to the overall mean.",
       "title": "Edlintics Quiz 04 — The average of averages",
-      "status": "draft_pending_review",
+      "status": "rejected_superseded",
       "template_id": "EAHYcHgXC_g",
       "diagram_assets": {
         "question": "MAHYcQ8GnAk",
@@ -167,5 +167,6 @@
         "ANSWER_DIAGRAM"
       ]
     }
-  ]
+  ],
+  "feedback": "User rejected first questions; requests ProProfs economics topics, original Canva text/image placeholders, and EdCharacters."
 }
