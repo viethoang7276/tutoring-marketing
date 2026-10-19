@@ -219,3 +219,9 @@ _Last updated: 2026-10-19_
   five characters × eight states. Added the 35 non-idle variants to the existing
   Graphics → Mascots folder `FAHYcZVFBhg`; five idle assets already existed.
   Original filenames identify character and state. Folder permissions unchanged.
+
+- **2026-10-19 — Editable-text sample correction.** Revised the ticket-shortage transaction
+  after user clarified that all question/answer copy must remain in native Canva text boxes.
+  Replaced both frame fills with illustration-only tickets and EdCharacters (thinking/proud).
+  Preserved template text positions, typography and logo. Both corrected previews shown.
+  Pending save approval; café draft still needs the same no-text-in-images correction.

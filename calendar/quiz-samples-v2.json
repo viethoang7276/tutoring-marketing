@@ -14,7 +14,8 @@
       "answer": "Both discount. Discounting strictly dominates keeping price for each café: 80 > 60 and 40 > 20. One-shot game; independent choices; each maximizes own payoff.",
       "source_topic": "https://www.proprofs.com/quiz-school/topic/prisoners-dilemma",
       "question_asset": "MAHYcRVS_Pk",
-      "answer_asset": "MAHYcdImmC0"
+      "answer_asset": "MAHYcdImmC0",
+      "status": "requires_revision_no_text_in_images"
     },
     {
       "key": "ticket-shortage",
@@ -22,11 +23,12 @@
       "transaction_id": "4767579663882939557",
       "preview_url": "https://www.canva.com/d/qRu6TUXtkBjGlm2",
       "template_id": "EAHYcHgXC_g",
-      "question": "Tickets are capped at €10. How many buyers still miss out?",
+      "question": "At €10 each, 10 buyers want one ticket each. Only 6 tickets are available. How many buyers miss out?",
       "answer": "4. Ten buyers each want one ticket, six are available, each ticket goes to a distinct buyer. No resale or further supply. The example illustrates shortage at the stated price; it does not infer that the cap caused a change in supply.",
       "source_topic": "https://www.proprofs.com/quiz-school/quizzes/price-ceiling-shortage-effect-quiz",
-      "question_asset": "MAHYcaH-brQ",
-      "answer_asset": "MAHYcel-Uvo"
+      "question_asset": "MAHYcijP_44",
+      "answer_asset": "MAHYcnGlH64",
+      "rendering": "All copy in native Canva text placeholders. Image frames contain only ticket and mascot illustrations; thinking on question page, proud on answer page."
     }
   ]
 }
