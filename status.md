@@ -214,3 +214,8 @@ _Last updated: 2026-10-19_
   Folder-wide Brand Kit sharing was blocked by auto-review; existing access retained pending
   explicit permission. User explicitly requested a second agent for mascot preparation; it
   exported the existing art and recorded the quiz-series brand exception. No publishing.
+
+- **2026-10-19 — Full mascot states.** Found the existing Desktop export pack for all
+  five characters × eight states. Added the 35 non-idle variants to the existing
+  Graphics → Mascots folder `FAHYcZVFBhg`; five idle assets already existed.
+  Original filenames identify character and state. Folder permissions unchanged.

@@ -70,3 +70,11 @@ Canva placement verified 2026-10-19: five idle characters uploaded to
 [Edlintics / Mascots](https://www.canva.com/folder/FAHYcZVFBhg), linked in Brand Kit
 Graphics. Ledger `MAHYcRGqVl4`, Sigma `MAHYcdvon44`, Centi `MAHYceRqfc4`,
 Plot `MAHYccAqQy4`, Tempo `MAHYcQG8xGE`. Existing folder permissions retained.
+
+### Full mascot state library — 2026-10-19
+
+Located the existing export pack at `~/Desktop/edlintics-mascots-canva/characters-png/`
+(with vector sources in `characters-svg/`). It contains each of the five characters in
+eight states: idle, cheerful, focused, thinking, proud, surprised, stuck, and resting.
+Added the 35 non-idle PNGs to the existing Canva Mascots folder; the five previously
+uploaded files without state suffixes are the idle variants. No new artwork generated.
