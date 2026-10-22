@@ -1,0 +1,249 @@
+{
+ "width": 1080,
+ "height": 1350,
+ "background": "#ffffff",
+ "fonts": {
+  "serif": "Source Serif 4, serif (template font ref YACgEfdj394 — unverified name)",
+  "label": "Inter, sans-serif (Canva default ref YACgEZ1cb1Q — unverified name)"
+ },
+ "elements": [
+  {
+   "type": "text",
+   "id": "title",
+   "x": 90,
+   "y": 78,
+   "w": 900,
+   "lines": [
+    "Videos given up for ONE extra logo"
+   ],
+   "size": 36,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "ava_calc",
+   "x": 90,
+   "y": 158,
+   "w": 900,
+   "lines": [
+    "Ava: 3 videos ÷ 6 logos = ½ video per logo"
+   ],
+   "size": 32,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "ava_bar",
+   "x": 90,
+   "y": 212,
+   "w": 900,
+   "h": 80,
+   "fill": "#ffffff",
+   "r": 12,
+   "stroke": "#0d1523",
+   "sw": 3
+  },
+  {
+   "type": "rect",
+   "id": "ava_fill",
+   "x": 93,
+   "y": 215,
+   "w": 447,
+   "h": 74,
+   "fill": "#9fb6e3",
+   "r": 10
+  },
+  {
+   "type": "text",
+   "id": "ava_fill_t",
+   "x": 93,
+   "y": 225,
+   "w": 447,
+   "lines": [
+    "½"
+   ],
+   "size": 38,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "ben_calc",
+   "x": 90,
+   "y": 328,
+   "w": 900,
+   "lines": [
+    "Ben: 1 video ÷ 4 logos = ¼ video per logo"
+   ],
+   "size": 32,
+   "fill": "#2960c7",
+   "font": "label",
+   "bold": true,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "ben_bar",
+   "x": 90,
+   "y": 382,
+   "w": 900,
+   "h": 80,
+   "fill": "#ffffff",
+   "r": 12,
+   "stroke": "#0d1523",
+   "sw": 3
+  },
+  {
+   "type": "rect",
+   "id": "ben_fill",
+   "x": 93,
+   "y": 385,
+   "w": 224,
+   "h": 74,
+   "fill": "#2960c7",
+   "r": 10
+  },
+  {
+   "type": "text",
+   "id": "ben_fill_t",
+   "x": 93,
+   "y": 395,
+   "w": 224,
+   "lines": [
+    "¼"
+   ],
+   "size": 38,
+   "fill": "#ffffff",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "scale",
+   "x": 590,
+   "y": 472,
+   "w": 400,
+   "lines": [
+    "Full bar = 1 whole video"
+   ],
+   "size": 24,
+   "fill": "#5b6475",
+   "font": "label",
+   "bold": false,
+   "align": "end",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "takeaway_panel",
+   "x": 90,
+   "y": 575,
+   "w": 900,
+   "h": 345,
+   "fill": "#eef3fc",
+   "r": 24
+  },
+  {
+   "type": "text",
+   "id": "takeaway",
+   "x": 130,
+   "y": 605,
+   "w": 820,
+   "lines": [
+    "Lower opportunity cost, not outright speed,",
+    "decides comparative advantage."
+   ],
+   "size": 36,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "explanation",
+   "x": 130,
+   "y": 723,
+   "w": 820,
+   "lines": [
+    "Ava is faster at both jobs: that is absolute advantage. Ben is",
+    "slower at both, yet each logo costs him fewer videos. Ava's",
+    "time is better spent on videos: each video costs her 2 logos,",
+    "but costs Ben 4."
+   ],
+   "size": 30,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.35,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "kicker",
+   "x": 441,
+   "y": 1009,
+   "w": 198,
+   "lines": [
+    "Answer"
+   ],
+   "size": 56,
+   "fill": "#2960c7",
+   "font": "serif",
+   "bold": true,
+   "align": "center",
+   "lh": 1.4,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "headline",
+   "x": 50,
+   "y": 1102,
+   "w": 980,
+   "lines": [
+    "Ben. Each extra logo costs Ben ¼ of a video, but costs",
+    "Ava ½ of a video."
+   ],
+   "size": 40,
+   "fill": "#0d1523",
+   "font": "serif",
+   "bold": false,
+   "align": "center",
+   "lh": 1.2,
+   "italic": false
+  },
+  {
+   "type": "logo",
+   "id": "logo",
+   "x": 434.6,
+   "y": 1269,
+   "w": 221.1,
+   "h": 61.9,
+   "href": "../../brand/edlintics-logo.svg"
+  }
+ ]
+}

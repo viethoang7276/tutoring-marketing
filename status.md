@@ -3,7 +3,7 @@
 The cross-session memory for this repo. Read after `session-start.md`. Update it at the end of any
 session that changes state (append to the session log; revise "Now" / "Next").
 
-_Last updated: 2026-10-19_
+_Last updated: 2026-10-22_
 
 ## Now (what exists and works)
 
@@ -240,3 +240,48 @@ _Last updated: 2026-10-19_
   rows, frozen headers, filters and all three tab layouts. Corrected several source errors;
   not a verbatim or complete quiz-bank copy. Script validated against all captured pages;
   typecheck passes. No automatic refresh, social scheduling or publication enabled.
+
+- **2026-10-22 — Two-slide puzzle trial (P21-02-v1, P21-03-v1).** Copied drafts `DAHYoW276ng` →
+  `DAHYt_HUDes` (P21-02, operations sequencing) and `DAHYoQUI2Ic` → `DAHYt4njkDI` (P21-03,
+  comparative advantage); originals and templates untouched. Both built with native Canva text and
+  shapes (no images, no characters). Edits are in OPEN, UNCOMMITTED transactions
+  `3729500247876028980` and `6129918852066499766`; nothing saved, exported or published.
+  Added `calendar/puzzle-trial.json` (manifest with content hash and separate content/design/publish
+  approvals), `scripts/puzzle_trial.py` (dry-run plan, checks, approvals, SVG render) with 12 tests,
+  editable SVG sources + layout JSON in `assets/puzzles/`, and Sheet snapshots in
+  `data/puzzles/snapshots/`. Brand gaps: added labels use Canva's default sans (connector cannot set
+  fonts); tint colours derived from template blue; brand kit values not readable. Sheets read
+  read-only via Chrome (Drive connector cannot see them). Awaiting Hoang's content and design review.
+
+- **2026-10-22 (later) — Weekly social workflow, templates and first test posts.** Handoff from a
+  cloud Claude session. Rules live in `CLAUDE.md` and `docs/content-workflow/` (process, brand
+  graphics catalog, skill copies — copy `docs/content-workflow/skills/*` into `.claude/skills/`).
+  - **Templates (copy, never edit):** Canva Definition `DAHYuPFDiDU`, This vs That `DAHYuGf21MI`,
+    Puzzle `DAHYuGZYL_E`. Replicated in Claude Design canvas "Edlintics Post Templates"
+    (https://claude.ai/artifact/7yg3KS9LosoEoZEqEP2GAp; Source Serif 4/Inter stand-ins, raster
+    illustrations as placeholders because Canva exports can't be downloaded).
+  - **Format decisions:** Definition = 8 slides (cover, tree, ideas 1–3, CTA with "Swipe for 2 more
+    ideas", ideas 4–5; last footer "Save this for your next exam"). Puzzle = big bold blue category
+    word on top (e.g. "Economics"), the WHOLE question in one block of full sentences with
+    assumptions inside (no separate footnote or second question line), diagram, logo; answer slide
+    states answer + reason in a full sentence. Always full sentences on slides (diagram labels
+    excepted). Every post has caption + first comment (rules in the process doc).
+  - **Graphics:** reuse first from Canva folder "Edlintics · Brand graphics" `FAHYugebSqU`
+    (catalog `docs/content-workflow/brand-graphics.md`, 11 items); generate only when nothing fits,
+    then file + catalog it.
+  - **Test posts (AI-label test; nothing scheduled or posted):** Thu 22 Oct (Canva, all saved) —
+    10:00 coffee puzzle `DAHYuhVm9ig` (new style), 13:00 Opportunity cost carousel `DAHYuQbDjXA`,
+    18:00 order-sequencing puzzle `DAHYudhNxSU` (still OLD style: small topic + assumption line).
+    Fri 23 Oct (Claude Design) — 10:00 −20%/+20% returns, 18:00 weighted average. Only the 13:00
+    carousel contains AI-generated images.
+  - **Review & approvals:** review page https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6 —
+    Approve / Request changes per post, stored in its `reviews` collection (read with ArtifactData).
+  - **Scheduled task** "Edlintics weekly content plan" (Thu 07:59 ICT, Opus 5.5) plans content only,
+    incl. captions/first comments. Publishing/scheduling stay disabled; no Instagram connector.
+  - **Open items:** restyle the 18:00 sequencing puzzle; save the updated `edlintics-puzzle-visuals`
+    skill (proposal card pending; add the big-category rule); decide whether the review page
+    replaces the Content Desk for approvals; old duplicate `docs/weekly-content-process.md`
+    (superseded by `docs/content-workflow/`); empty `assets/canva-exports/` folder can be deleted;
+    record AI-label results after posting.
+
+- **2026-10-22 (night) — Hub page, fixes, first scheduled batch.** Review page (https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6) became the hub: 30-day calendar with text/image readiness (`slots`), post requests with Claude drafting (`requests`), Research and Templates tabs, full-size slide pop-ups, and a "Send to Claude to fix" button on change requests. Process changes recorded in `docs/content-workflow/weekly-content-process.md`: question benchmark (mandatory gates + 100-point score), USD default, monthly batch, engagement-style first comments that never reveal the answer, fix loop, posting route A. Fixes: sequencing puzzle restyled (`DAHYvZ57YiY`, CTA added), coffee puzzle got line-art cups (`DAHYv972lE0`), Friday puzzles redrawn on the Claude Design canvas (jars, student figures, balance beam) with CTA artboards; CTA added to the canvas Puzzle and This vs That templates; all amounts switched to $. Saved designs filed in Canva "Social media posts" `FAHYcHrS5PE`. **Scheduled (Hoang's go):** 5 posts on Facebook + Instagram (Meta Business Suite) and the LinkedIn page, Fri 23 Oct 10:00/13:00/18:00 and Sat 24 Oct 10:00/18:00 Madrid; Facebook Story on 4 of 5 (not the coffee post). First comments queued as session-only check-ins. New skill `.claude/skills/edlintics-schedule-posts/`. Open: weekly cleanup rule for old Canva posts; AI-label test confounded by the CTA desk illustration; Thursday task's own copy of the process doc needs the new sections.

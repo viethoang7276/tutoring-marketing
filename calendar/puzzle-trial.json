@@ -1,0 +1,263 @@
+{
+  "trial": "two-slide puzzle carousels",
+  "created": "2026-10-22",
+  "timezone_for_publishing": "Europe/Madrid",
+  "publishing_enabled": false,
+  "scheduling_enabled": false,
+  "brand_reference": {
+    "templates": [
+      "EAHYcAXfhLs",
+      "EAHYcHgXC_g"
+    ],
+    "logo_asset": "MAHYcDuPL7o",
+    "brand_kit": "kAHOTUBwbig",
+    "tokens_observed_in_template": {
+      "background": "#ffffff",
+      "ink": "#0d1523",
+      "accent": "#2960c7",
+      "template_font_ref": "YACgEfdj394"
+    },
+    "tokens_introduced_unverified": {
+      "tint": "#c9d8f5",
+      "panel": "#eef3fc",
+      "muted_fill": "#9fb6e3",
+      "caption_grey": "#5b6475",
+      "label_font_ref": "YACgEZ1cb1Q (Canva default; connector cannot set fonts)"
+    },
+    "gaps": [
+      "Brand kit colour/font values not readable via connector",
+      "Added labels use Canva default sans, not the template serif",
+      "Tint/panel colours derived from #2960c7, not from an approved palette",
+      "config/brand.ts and brand v1.2 notes disagree on ink/paper; template values used"
+    ]
+  },
+  "candidates": [
+    {
+      "candidate_id": "P21-02-v1",
+      "content_version": "v1",
+      "visual_spec_version": "1",
+      "topic": "Operations sequencing",
+      "source_snapshot": "data/puzzles/snapshots/2026-10-22-P21-02-v1.json",
+      "slides": {
+        "question": {
+          "kicker": "OPERATIONS QUIZ",
+          "prompt": "Both orders need 10 minutes of work. Which should start first to finish BOTH sooner?",
+          "visual_text": [
+            "Print step (1 printer)",
+            "Pack step (1 packer)",
+            "Order A",
+            "1 min",
+            "9 min",
+            "Order B",
+            "9 min",
+            "1 min",
+            "Start A or start B?"
+          ],
+          "assumptions": [
+            "Both orders are ready now.",
+            "Each order must finish printing before packing.",
+            "Each station handles one whole order at a time.",
+            "The printer and packer can work at the same time.",
+            "No setup or transfer time.",
+            "Goal: both orders packed as early as possible."
+          ]
+        },
+        "answer": {
+          "kicker": "ANSWER",
+          "headline": "Start A. Both orders are packed after 11 minutes. Starting B first takes 19 minutes.",
+          "visual_text": [
+            "Start A first: both done at 11 min",
+            "Start B first: both done at 19 min",
+            "packer idle"
+          ],
+          "takeaway": "Equal total work does not mean equal completion time.",
+          "explanation": "Sequencing changes overlap. Starting A lets the packer begin after 1 minute. Starting B leaves the packer idle for 9 minutes, so A's 9-minute pack comes last."
+        }
+      },
+      "required_assumptions": [
+        "ready now",
+        "finish printing before packing",
+        "one whole order at a time",
+        "work at the same time",
+        "no setup or transfer time",
+        "as early as possible"
+      ],
+      "answer_tokens": [
+        "Start A.",
+        "11 min",
+        "19 min"
+      ],
+      "maths": {
+        "kind": "two_machine_flow_shop",
+        "jobs": {
+          "A": [
+            1,
+            9
+          ],
+          "B": [
+            9,
+            1
+          ]
+        },
+        "expected_makespans": {
+          "AB": 11,
+          "BA": 19
+        },
+        "expected_first": "A"
+      },
+      "canva": {
+        "source_design": "DAHYoW276ng",
+        "source_template": "EAHYcAXfhLs",
+        "design_id": "DAHYt_HUDes",
+        "edit_url": "https://www.canva.com/d/NKtdv7994EGbTrX",
+        "view_url": "https://www.canva.com/d/uLZjKIXBwGirl5u",
+        "transaction_id": "3729500247876028980",
+        "state": "edits_open",
+        "asset_version": 1
+      },
+      "svg_sources": {
+        "question": {
+          "layout": "assets/puzzles/P21-02/question.layout.json",
+          "svg": "assets/puzzles/P21-02/question.svg"
+        },
+        "answer": {
+          "layout": "assets/puzzles/P21-02/answer.layout.json",
+          "svg": "assets/puzzles/P21-02/answer.svg"
+        }
+      },
+      "exports": [],
+      "review_status": "awaiting_review",
+      "approvals": {
+        "content": null,
+        "design": null,
+        "publish": null
+      },
+      "log": [
+        {
+          "at": "2026-10-22",
+          "event": "design_created",
+          "note": "copy of DAHYoW276ng; originals untouched"
+        },
+        {
+          "at": "2026-10-22",
+          "event": "edits_applied",
+          "note": "native text+shapes; uncommitted transaction"
+        }
+      ]
+    },
+    {
+      "candidate_id": "P21-03-v1",
+      "content_version": "v1",
+      "visual_spec_version": "1",
+      "topic": "Economics comparative advantage",
+      "source_snapshot": "data/puzzles/snapshots/2026-10-22-P21-03-v1.json",
+      "slides": {
+        "question": {
+          "kicker": "ECONOMICS QUIZ",
+          "prompt": "Ava is faster at BOTH jobs. Who can make one extra logo while giving up fewer videos?",
+          "visual_text": [
+            "In one day, each person can make EITHER:",
+            "Ava",
+            "6 logos",
+            "OR",
+            "3 videos",
+            "Ben",
+            "4 logos",
+            "OR",
+            "1 video",
+            "Ava or Ben?"
+          ],
+          "assumptions": [
+            "Time can be split between tasks.",
+            "Constant production rates. Equal output quality.",
+            "Both can switch time from videos to logos."
+          ]
+        },
+        "answer": {
+          "kicker": "Answer",
+          "headline": "Ben. Each extra logo costs Ben ¼ of a video, but costs Ava ½ of a video.",
+          "visual_text": [
+            "Videos given up for ONE extra logo",
+            "Ava: 3 videos ÷ 6 logos = ½ video per logo",
+            "Ben: 1 video ÷ 4 logos = ¼ video per logo",
+            "Full bar = 1 whole video"
+          ],
+          "takeaway": "Lower opportunity cost, not outright speed, decides comparative advantage.",
+          "explanation": "Ava is faster at both jobs: that is absolute advantage. Ben is slower at both, yet each logo costs him fewer videos. Ava's time is better spent on videos: each video costs her 2 logos, but costs Ben 4."
+        }
+      },
+      "required_assumptions": [
+        "either",
+        "time can be split",
+        "constant production rates",
+        "equal output quality",
+        "switch time from videos to logos"
+      ],
+      "answer_tokens": [
+        "Ben.",
+        "¼",
+        "½",
+        "1/4",
+        "1/2"
+      ],
+      "maths": {
+        "kind": "comparative_advantage",
+        "capacity": {
+          "Ava": {
+            "logos": 6,
+            "videos": 3
+          },
+          "Ben": {
+            "logos": 4,
+            "videos": 1
+          }
+        },
+        "faster_at_both": "Ava",
+        "expected_oc_videos_per_logo": {
+          "Ava": "1/2",
+          "Ben": "1/4"
+        },
+        "expected_answer": "Ben"
+      },
+      "canva": {
+        "source_design": "DAHYoQUI2Ic",
+        "source_template": "EAHYcHgXC_g",
+        "design_id": "DAHYt4njkDI",
+        "edit_url": "https://www.canva.com/d/XmtZ_8KpKo1MD4G",
+        "view_url": "https://www.canva.com/d/MboBIlH_MWPfoGF",
+        "transaction_id": "6129918852066499766",
+        "state": "edits_open",
+        "asset_version": 1
+      },
+      "svg_sources": {
+        "question": {
+          "layout": "assets/puzzles/P21-03/question.layout.json",
+          "svg": "assets/puzzles/P21-03/question.svg"
+        },
+        "answer": {
+          "layout": "assets/puzzles/P21-03/answer.layout.json",
+          "svg": "assets/puzzles/P21-03/answer.svg"
+        }
+      },
+      "exports": [],
+      "review_status": "awaiting_review",
+      "approvals": {
+        "content": null,
+        "design": null,
+        "publish": null
+      },
+      "log": [
+        {
+          "at": "2026-10-22",
+          "event": "design_created",
+          "note": "copy of DAHYoQUI2Ic; originals untouched"
+        },
+        {
+          "at": "2026-10-22",
+          "event": "edits_applied",
+          "note": "native text+shapes; uncommitted transaction"
+        }
+      ]
+    }
+  ]
+}

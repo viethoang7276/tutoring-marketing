@@ -1,0 +1,541 @@
+{
+ "width": 1080,
+ "height": 1350,
+ "background": "#ffffff",
+ "fonts": {
+  "serif": "Source Serif 4, serif (template font ref YACgEfdj394 — unverified name)",
+  "label": "Inter, sans-serif (Canva default ref YACgEZ1cb1Q — unverified name)"
+ },
+ "elements": [
+  {
+   "type": "text",
+   "id": "kicker",
+   "x": 428,
+   "y": 75,
+   "w": 234,
+   "lines": [
+    "ANSWER"
+   ],
+   "size": 56,
+   "fill": "#2960c7",
+   "font": "serif",
+   "bold": true,
+   "align": "center",
+   "lh": 1.4,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "headline",
+   "x": 103,
+   "y": 157,
+   "w": 885,
+   "lines": [
+    "Start A. Both orders are packed after 11 minutes.",
+    "Starting B first takes 19 minutes."
+   ],
+   "size": 36,
+   "fill": "#0d1523",
+   "font": "serif",
+   "bold": false,
+   "align": "center",
+   "lh": 1.2,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s1_title",
+   "x": 90,
+   "y": 318,
+   "w": 900,
+   "lines": [
+    "Start A first: both done at 11 min"
+   ],
+   "size": 32,
+   "fill": "#2960c7",
+   "font": "label",
+   "bold": true,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s1_printer",
+   "x": 70,
+   "y": 392,
+   "w": 120,
+   "lines": [
+    "Printer"
+   ],
+   "size": 26,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s1_packer",
+   "x": 70,
+   "y": 462,
+   "w": 120,
+   "lines": [
+    "Packer"
+   ],
+   "size": 26,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s1_p_a",
+   "x": 200,
+   "y": 380,
+   "w": 42,
+   "h": 56,
+   "fill": "#2960c7",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s1_p_a_t",
+   "x": 200,
+   "y": 393,
+   "w": 42,
+   "lines": [
+    "A"
+   ],
+   "size": 24,
+   "fill": "#ffffff",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s1_p_b",
+   "x": 242,
+   "y": 380,
+   "w": 378,
+   "h": 56,
+   "fill": "#c9d8f5",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s1_p_b_t",
+   "x": 242,
+   "y": 393,
+   "w": 378,
+   "lines": [
+    "B"
+   ],
+   "size": 24,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s1_k_a",
+   "x": 242,
+   "y": 450,
+   "w": 378,
+   "h": 56,
+   "fill": "#2960c7",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s1_k_a_t",
+   "x": 242,
+   "y": 463,
+   "w": 378,
+   "lines": [
+    "A"
+   ],
+   "size": 24,
+   "fill": "#ffffff",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s1_k_b",
+   "x": 620,
+   "y": 450,
+   "w": 42,
+   "h": 56,
+   "fill": "#c9d8f5",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s1_k_b_t",
+   "x": 620,
+   "y": 463,
+   "w": 42,
+   "lines": [
+    "B"
+   ],
+   "size": 24,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s1_finish",
+   "x": 660,
+   "y": 370,
+   "w": 4,
+   "h": 146,
+   "fill": "#0d1523",
+   "r": 0
+  },
+  {
+   "type": "text",
+   "id": "s1_zero",
+   "x": 180,
+   "y": 520,
+   "w": 40,
+   "lines": [
+    "0"
+   ],
+   "size": 24,
+   "fill": "#5b6475",
+   "font": "label",
+   "bold": false,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s1_end",
+   "x": 612,
+   "y": 520,
+   "w": 100,
+   "lines": [
+    "11 min"
+   ],
+   "size": 26,
+   "fill": "#2960c7",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s2_title",
+   "x": 90,
+   "y": 588,
+   "w": 900,
+   "lines": [
+    "Start B first: both done at 19 min"
+   ],
+   "size": 32,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s2_printer",
+   "x": 70,
+   "y": 662,
+   "w": 120,
+   "lines": [
+    "Printer"
+   ],
+   "size": 26,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s2_packer",
+   "x": 70,
+   "y": 732,
+   "w": 120,
+   "lines": [
+    "Packer"
+   ],
+   "size": 26,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s2_p_b",
+   "x": 200,
+   "y": 650,
+   "w": 378,
+   "h": 56,
+   "fill": "#c9d8f5",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s2_p_b_t",
+   "x": 200,
+   "y": 663,
+   "w": 378,
+   "lines": [
+    "B"
+   ],
+   "size": 24,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s2_p_a",
+   "x": 578,
+   "y": 650,
+   "w": 42,
+   "h": 56,
+   "fill": "#2960c7",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s2_p_a_t",
+   "x": 578,
+   "y": 663,
+   "w": 42,
+   "lines": [
+    "A"
+   ],
+   "size": 24,
+   "fill": "#ffffff",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s2_idle",
+   "x": 200,
+   "y": 735,
+   "w": 378,
+   "lines": [
+    "packer idle"
+   ],
+   "size": 24,
+   "fill": "#5b6475",
+   "font": "label",
+   "bold": false,
+   "align": "center",
+   "lh": 1.3,
+   "italic": true
+  },
+  {
+   "type": "rect",
+   "id": "s2_k_b",
+   "x": 578,
+   "y": 720,
+   "w": 42,
+   "h": 56,
+   "fill": "#c9d8f5",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s2_k_b_t",
+   "x": 578,
+   "y": 733,
+   "w": 42,
+   "lines": [
+    "B"
+   ],
+   "size": 24,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s2_k_a",
+   "x": 620,
+   "y": 720,
+   "w": 378,
+   "h": 56,
+   "fill": "#2960c7",
+   "r": 0,
+   "stroke": "#ffffff",
+   "sw": 3
+  },
+  {
+   "type": "text",
+   "id": "s2_k_a_t",
+   "x": 620,
+   "y": 733,
+   "w": 378,
+   "lines": [
+    "A"
+   ],
+   "size": 24,
+   "fill": "#ffffff",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "s2_finish",
+   "x": 996,
+   "y": 640,
+   "w": 4,
+   "h": 146,
+   "fill": "#0d1523",
+   "r": 0
+  },
+  {
+   "type": "text",
+   "id": "s2_zero",
+   "x": 180,
+   "y": 790,
+   "w": 40,
+   "lines": [
+    "0"
+   ],
+   "size": 24,
+   "fill": "#5b6475",
+   "font": "label",
+   "bold": false,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "s2_end",
+   "x": 943,
+   "y": 790,
+   "w": 110,
+   "lines": [
+    "19 min"
+   ],
+   "size": 26,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "center",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "rect",
+   "id": "takeaway_panel",
+   "x": 90,
+   "y": 885,
+   "w": 900,
+   "h": 305,
+   "fill": "#eef3fc",
+   "r": 24
+  },
+  {
+   "type": "text",
+   "id": "takeaway",
+   "x": 130,
+   "y": 915,
+   "w": 820,
+   "lines": [
+    "Equal total work does not mean equal",
+    "completion time."
+   ],
+   "size": 36,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": true,
+   "align": "start",
+   "lh": 1.3,
+   "italic": false
+  },
+  {
+   "type": "text",
+   "id": "explanation",
+   "x": 130,
+   "y": 1035,
+   "w": 820,
+   "lines": [
+    "Sequencing changes overlap. Starting A lets the packer",
+    "begin after 1 minute. Starting B leaves the packer idle for 9",
+    "minutes, so A's 9-minute pack comes last."
+   ],
+   "size": 30,
+   "fill": "#0d1523",
+   "font": "label",
+   "bold": false,
+   "align": "start",
+   "lh": 1.35,
+   "italic": false
+  },
+  {
+   "type": "logo",
+   "id": "logo",
+   "x": 434.6,
+   "y": 1269,
+   "w": 221.1,
+   "h": 61.9,
+   "href": "../../brand/edlintics-logo.svg"
+  }
+ ]
+}
