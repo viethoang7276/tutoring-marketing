@@ -49,6 +49,18 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
 9. **Log** the run.
 10. **Stop.** The Thursday run makes no Canva edits and does no scheduling or posting.
 
+## Workflow map
+
+The editable map of this process is the Workflow tab on the hub page (`workflow/main` in its database). When the map and this document disagree, ask Hoang which one is current; the map is meant to be the one he edits.
+
+## Weekly Instagram trend scan (added 23 Oct 2026)
+
+Every week (proposed: Wednesday, before planning) Claude scans Instagram in Hoang's logged-in Chrome for carousels and posts that perform well with business and finance students.
+- **Where:** a saved list of education accounts in business, finance, accounting and economics, plus the Explore and hashtag pages for the subject families. Read only; never like, follow, comment or message.
+- **What to record per find** (hub `trends` collection): week, source account and post URL, format (tier list, matrix, top-10 list, puzzle, definition, this vs that, meme, other), topic, visible engagement (likes, comments, shares if shown), why it works in one line, and "our version": how Edlintics could cover the same idea with its own question, templates, voice and US dollars.
+- **Rules:** take the format and the topic, never the wording, artwork or data. No logos of other companies on our slides. Count engagement only as shown publicly; never estimate.
+- **Output:** 5 to 15 finds a week. The best 3 to 5 go into `requests` as ideas marked "from trend scan", so they enter the monthly plan through the benchmark and scoring like any other idea. New formats that keep appearing become template proposals.
+
 ## Currency
 
 All amounts in questions, slides, captions and first comments are in US dollars, written with a $ sign ($1.80, $3,000). This is the default for every exercise (agreed 22 Oct 2026).
