@@ -42,6 +42,10 @@ Per post:
   1. **Post the first comment** with the matching `k<n>` text.
   2. **Self-like** the post (agreed 23 Oct 2026).
   3. **Self-repost** it (agreed 23 Oct 2026). LinkedIn: Repost › "Repost" (instant, no added text). Instagram: the Repost button if the app offers it on our own post. Facebook: Share › "Share now" to the page feed. If a platform doesn't offer a repost of our own post, skip it and say so in the report; don't substitute a story share or anything else without asking.
+- **Where (proven 23 Oct 2026):**
+  - Facebook: the extension can't act on facebook.com. Use Business Suite › Content › **Feed & grid** (`/latest/posts/feed_and_grid?business_id=110625140398351&asset_id=108471317472449`). The left column is the page feed: "Comment as Edlintics", the Like button and Share › "Share now" (Feed, Public) all act as the page. Shift+Enter makes line breaks.
+  - Instagram: in the same view, the right column's "Comment" button opens a comments panel that posts as edlintics. **Shift+Enter submits there**, so type the whole comment as one line, with paragraphs joined by spaces. The heart in that preview does nothing, and Chrome's instagram.com is logged into Hoang's personal account. So Instagram self-like and repost can't be done as the page from here: skip them and report it.
+  - LinkedIn: the page's published list (`/company/31541400/admin/page-posts/published/`) shows "Comment as Edlintics" and an identity switcher showing the page logo. Shift+Enter makes line breaks. Repost › "Repost" works instantly.
 - Check the identity switcher before each click: a like, comment or repost made as Hoang's personal profile is the wrong one; undo it and redo as the page.
 - First-comment rules: `docs/content-workflow/weekly-content-process.md`. Never reveal the answer.
 
