@@ -1,0 +1,178 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&family=Inter:wght@400;600&display=block">
+<style>
+  html,body{margin:0;background:#fff;overflow:hidden}
+  #stage{width:1080px;height:1350px;position:relative;overflow:hidden;background:#fff}
+  svg{display:block}
+</style></head>
+<body>
+<div id="stage"><svg id="svg" width="1080" height="1350" viewBox="0 0 1080 1350"></svg></div>
+<script>
+// Traveling Ledger: one continuous scene across N panels (each 1080x1350).
+// render(t, mode, panel) draws frame at time t (seconds).
+//   mode "panel": camera fixed on panel `panel`; mode "follow": camera follows Ledger.
+const C = window.SCENE = window.SCENE || {};
+const W = 1080, H = 1350;
+const INK = '#0D1523', BLUE = '#2960C7', LIGHT = '#C9D8F5', GOLD = '#C2922F', GREY = '#5B6475';
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svg');
+
+// ---- scene config (overridable via window.SCENE before load) ----
+const panels = C.panels || [
+  {title: '5 accounting concepts you should know', body: 'Walk through them with Ledger.'},
+  {title: '1. Double-entry', body: 'Every transaction is recorded twice, as a debit and an equal credit, so the books always balance.', ex: 'Buy a $500 laptop with cash: equipment up $500, cash down $500.'},
+  {title: '2. Accrual accounting', body: 'Revenue and expenses are recorded when they are earned or incurred, not when the cash moves.', ex: 'A $2,000 job finished in March and paid in April is March revenue.'},
+  {title: '3. Matching principle', body: 'An expense is recorded in the same period as the revenue it helps to earn.', ex: 'Stock bought for $600 in April and sold in May: the $600 cost goes in May.'},
+  {title: '4. Depreciation', body: 'The cost of a long-lived asset is spread over the years the business uses it.', ex: 'A $30,000 van used for 5 years with no resale value: $6,000 a year.'},
+  {title: '5. Working capital', body: 'Current assets minus current liabilities: the cushion for day-to-day running.', ex: '$80,000 of current assets minus $50,000 of current liabilities = $30,000.'},
+];
+const LOW = 1080, MID = 900, HIGH = 720, R = 40;
+// Route from Hoang's sketch: start, step up, loop, climb a wall, come down, end.
+const ROUTE = C.route || [
+  `M 180 ${LOW} L 1500 ${LOW}`,
+  `Q 1560 ${LOW} 1560 ${LOW-R} L 1560 ${MID+R} Q 1560 ${MID} 1620 ${MID} L 2560 ${MID}`,
+  `C 2800 ${MID} 2820 ${MID-330} 2660 ${MID-330} C 2500 ${MID-330} 2520 ${MID} 2760 ${MID} L 3700 ${MID}`,
+  `Q 3760 ${MID} 3760 ${MID-R} L 3760 ${HIGH+R} Q 3760 ${HIGH} 3820 ${HIGH} L 4780 ${HIGH}`,
+  `Q 4840 ${HIGH} 4840 ${HIGH+R} L 4840 ${MID-R} Q 4840 ${MID} 4900 ${MID} L 6000 ${MID}`,
+].join(' ');
+const SPEED = C.speed || 360;        // px per second along the path
+const STEP_HZ = 2.2;                 // steps per second
+const LEDGER_SCALE = 0.85;
+const DOT_GAP = 30, DOT_R = 6, LEAD = 0;
+
+const routePath = document.createElementNS(NS, 'path');
+routePath.setAttribute('d', ROUTE);
+const total = routePath.getTotalLength();
+const WALK = total / SPEED;
+const DURATION = WALK + (C.hold ?? 1.5);
+window.META = {total, walk: WALK, duration: DURATION, panels: panels.length};
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e); return e;
+}
+function wrap(text, maxChars) {
+  const words = text.split(' '), lines = []; let cur = '';
+  for (const w of words) { if ((cur + ' ' + w).trim().length > maxChars) { lines.push(cur.trim()); cur = w; } else cur += ' ' + w; }
+  if (cur.trim()) lines.push(cur.trim()); return lines;
+}
+function textBlock(g, x, y, lines, size, attrs) {
+  const t = el('text', Object.assign({x, y, 'text-anchor': 'middle', 'font-size': size}, attrs), g);
+  lines.forEach((ln, i) => { const s = el('tspan', {x, dy: i ? size * 1.25 : 0}, t); s.textContent = ln; });
+  return t;
+}
+const ease = x => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+
+// Ledger, rebuilt from assets/brand/ledger.svg with jointed legs and arms.
+function ledger(parent, phase) {
+  const s = Math.sin(phase), bob = Math.abs(Math.cos(phase)) * -6;
+  const g = el('g', {}, parent);
+  el('ellipse', {cx: 120, cy: 222, rx: 42, ry: 5, fill: INK, opacity: 0.08}, g);
+  const leg = (hx, a) => { const lg = el('g', {transform: `rotate(${a} ${hx} 186)`}, g);
+    el('line', {x1: hx, y1: 186, x2: hx, y2: 210, stroke: INK, 'stroke-width': 9, 'stroke-linecap': 'round'}, lg);
+    el('rect', {x: hx - 14, y: 208, width: 29, height: 14, rx: 7, fill: INK}, lg); };
+  leg(102, s * 24); leg(138, -s * 24);
+  const body = el('g', {transform: `translate(0 ${bob})`}, g);
+  const arm = (sx, d, hx, hy, a) => { const ag = el('g', {transform: `rotate(${a} ${sx} 152)`}, body);
+    el('path', {d, fill: 'none', stroke: INK, 'stroke-width': 13, 'stroke-linecap': 'round'}, ag);
+    el('path', {d, fill: 'none', stroke: '#FBFAF6', 'stroke-width': 8, 'stroke-linecap': 'round'}, ag);
+    el('circle', {cx: hx, cy: hy, r: 9, fill: '#FBFAF6', stroke: INK, 'stroke-width': 3}, ag); };
+  arm(62, 'M62 152 Q50 172 54 188', 54, 190, -s * 18);
+  arm(178, 'M178 152 Q190 172 186 188', 186, 190, s * 18);
+  body.insertAdjacentHTML('beforeend', `
+    <rect x="52" y="38" width="136" height="154" rx="18" fill="#FBFAF6" stroke="${INK}" stroke-width="5"/>
+    <line x1="70" y1="46" x2="70" y2="184" stroke="${INK}" stroke-width="3.5" opacity="0.45"/>
+    <line x1="74" y1="46" x2="74" y2="184" stroke="${INK}" stroke-width="1.5" opacity="0.25"/>
+    <path d="M150 34 h18 v26 l-9 -7 -9 7 z" fill="#467DE3"/>
+    <rect x="86" y="58" width="60" height="6" rx="3" fill="#E6E3DA"/>
+    <rect x="86" y="70" width="60" height="6" rx="3" fill="#E6E3DA"/>
+    <rect x="86" y="82" width="40" height="6" rx="3" fill="#E6E3DA"/>
+    <path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="#222C3D"/>
+    <path d="M108 150 L120 168 L116 173 L102 154 Z" fill="#FFFFFF" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M132 150 L120 168 L124 173 L138 154 Z" fill="#FFFFFF" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M114 152 L126 152 L129 161 L111 161 Z" fill="#467DE3"/>
+    <path d="M112 162 L128 162 L124 184 L120 189 L116 184 Z" fill="#467DE3"/>
+    <circle cx="102" cy="110" r="7.5" fill="${INK}"/><circle cx="104.55" cy="107.45" r="2.25" fill="#fff"/>
+    <circle cx="138" cy="110" r="7.5" fill="${INK}"/><circle cx="140.55" cy="107.45" r="2.25" fill="#fff"/>
+    <path d="M106 134 Q120 146 134 134" fill="none" stroke="${INK}" stroke-width="4.5" stroke-linecap="round"/>`);
+  return g;
+}
+
+let LOGO = '';
+function angleAt(len) {
+  const a = routePath.getPointAtLength(Math.max(0, len - 6)), b = routePath.getPointAtLength(Math.min(total, len + 6));
+  return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+}
+window.ledgerXAt = t => routePath.getPointAtLength(Math.min(total, Math.max(0, t) * SPEED)).x;
+
+window.render = function (t, mode, panel) {
+  svg.innerHTML = '';
+  const len = Math.min(total, Math.max(0, t) * SPEED);
+  const p = routePath.getPointAtLength(len);
+  let camX;
+  if (mode === 'follow') {
+    // camera holds on a panel and pans quickly as Ledger crosses into the next one
+    const k = Math.floor(p.x / W), local = p.x - k * W, PAN = 150;
+    if (local > W - PAN) camX = k * W + ease((local - (W - PAN)) / (2 * PAN)) * W;
+    else if (local < PAN) camX = (k - 1) * W + ease((local + PAN) / (2 * PAN)) * W;
+    else camX = k * W;
+    camX = Math.min(Math.max(camX, 0), panels.length * W - W);
+  } else camX = panel * W;
+  const world = el('g', {transform: `translate(${-camX} 0)`});
+
+  // panel copy
+  panels.forEach((pn, i) => {
+    const x0 = i * W, cx = x0 + W / 2;
+    if (x0 > camX + W || x0 + W < camX) return;
+    const arrive = i === 0 ? -1 : (Math.max(0, routeLenAtX(x0 + 160)) / SPEED);
+    const o = ease((t - arrive) / 0.6);
+    const g = el('g', {opacity: o, transform: `translate(0 ${(1 - o) * 24})`}, world);
+    if (i === 0) {
+      textBlock(g, cx, 330, wrap(pn.title, 18), 92, {'font-family': "'Source Serif 4', Georgia, serif", 'font-weight': 700, fill: INK});
+      textBlock(g, cx, 640, [pn.body], 40, {'font-family': "'Source Serif 4', Georgia, serif", fill: BLUE});
+    } else {
+      textBlock(g, cx, 160, [pn.title], 68, {'font-family': "'Source Serif 4', Georgia, serif", 'font-weight': 700, fill: BLUE});
+      textBlock(g, cx, 260, wrap(pn.body, 40), 42, {'font-family': "'Source Serif 4', Georgia, serif", fill: INK});
+      if (pn.ex) textBlock(g, cx, 470, wrap(pn.ex, 52), 32, {'font-family': 'Inter, sans-serif', fill: GREY});
+    }
+    // logo
+    if (LOGO) world.insertAdjacentHTML('beforeend', LOGO.replace('<svg', `<svg x="${cx - 110}" y="1262"`));
+  });
+
+  // start dot
+  el('circle', {cx: 180, cy: LOW, r: 12, fill: 'none', stroke: BLUE, 'stroke-width': 4}, world);
+  // dotted path, drawn up to Ledger
+  for (let d = 18; d <= len + LEAD; d += DOT_GAP) {
+    const q = routePath.getPointAtLength(d);
+    if (q.x < camX - 20 || q.x > camX + W + 20) continue;
+    el('circle', {cx: q.x, cy: q.y, r: DOT_R, fill: BLUE}, world);
+  }
+  if (len >= total) el('circle', {cx: p.x, cy: p.y, r: 14, fill: GOLD}, world);
+
+  // Ledger, feet on the path, tilted with the route
+  const walking = t < WALK;
+  const phase = walking ? t * STEP_HZ * Math.PI : 0;
+  const a = angleAt(len);
+  const lw = el('g', {transform: `translate(${p.x} ${p.y}) rotate(${a}) scale(${LEDGER_SCALE}) translate(-120 -222)`}, world);
+  ledger(lw, phase);
+};
+
+// x -> first path length reaching that x (for text reveal timing)
+const xs = []; for (let d = 0; d <= total; d += 4) xs.push([d, routePath.getPointAtLength(d).x]);
+function routeLenAtX(x) { for (const [d, px] of xs) if (px >= x) return d; return total; }
+window.panelWindow = i => {
+  const enter = i === 0 ? 0 : routeLenAtX(i * W - 140) / SPEED;
+  const exit = i === panels.length - 1 ? DURATION : routeLenAtX((i + 1) * W + 140) / SPEED;
+  return [enter, exit];
+};
+// logo SVG (assets/brand/edlintics-logo.svg) drawn 220px wide at the bottom of each panel
+window.loadLogo = svgText => { LOGO = svgText.trim().replace(/width="[^"]*" height="[^"]*"/, 'width="220" height="61.5"'); };
+// wait for the web fonts, or the first frames render with invisible text
+window.READY = Promise.all([
+  document.fonts.load('700 92px "Source Serif 4"'), document.fonts.load('400 42px "Source Serif 4"'),
+  document.fonts.load('400 32px Inter'),
+]).then(() => document.fonts.ready).then(() => true);
+</script>
+</body></html>
