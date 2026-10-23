@@ -21,6 +21,7 @@
 |---|---|---|---|
 | Puzzle | 14 | 10:00 and 18:00 daily | Two slides: question and answer, then the CTA (skill `edlintics-puzzle-visuals`) |
 | Concept carousel | 3 | Tue, Thu, Sat 13:00 (time proposed) | Definition explained, or This vs That (skill `edlintics-concept-carousel`) |
+| 5 [category] concepts | 4 | Mon, Wed, Fri, Sun 13:00 (the days between definition posts; agreed 23 Oct 2026) | Animated video carousel, Ledger walks the path (Canva template DAHY0pRBfnM, `motion/traveling-ledger/`) |
 
 Every post gets a **caption** and a **first comment**, and both are part of the content Hoang approves.
 
