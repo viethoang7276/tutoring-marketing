@@ -1,6 +1,6 @@
 // Render the traveling-Ledger scene to JPEG frames with headless Chrome (no installs:
 // Node 22's built-in WebSocket talks to Chrome's DevTools protocol).
-//   node motion/traveling-ledger/render.mjs <outDir> [fps]
+//   node motion/traveling-ledger/render.mjs <sceneDir> <outDir> [fps]
 // Writes <outDir>/panel-<n>/ (one clip per carousel slide, starting as Ledger enters it)
 // and <outDir>/reel/ (camera follows Ledger). Encode with encode.swift.
 import { spawn } from 'node:child_process';
@@ -9,8 +9,9 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const out = resolve(process.argv[2] || 'assets/renders/traveling-ledger');
-const fps = Number(process.argv[3] || 30);
+const sceneDir = resolve(process.argv[2]);
+const out = resolve(process.argv[3] || 'assets/renders/traveling-ledger');
+const fps = Number(process.argv[4] || 30);
 const port = 9333;
 const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
   '--headless=new', `--remote-debugging-port=${port}`, '--hide-scrollbars', '--disable-gpu',
@@ -39,7 +40,8 @@ await sleep(1500);
 await evaluate('READY');
 const logo = readFileSync(join(here, '../../assets/brand/edlintics-logo.svg'), 'utf8');
 await evaluate(`loadLogo(${JSON.stringify(logo)})`);
-const meta = await evaluate('META');
+const scene = JSON.parse(readFileSync(join(sceneDir, 'scene.json'), 'utf8'));
+const meta = await evaluate(`setScene(${JSON.stringify(scene)}, ${JSON.stringify('file://' + sceneDir + '/')})`);
 console.log('scene', meta);
 
 async function shoot(dir, t0, t1, mode, panel) {

@@ -1,0 +1,12 @@
+{
+  "name": "5-accounting-concepts",
+  "moves": ["start", "up", "loop", "up", "down", "end"],
+  "panels": [
+    {"title": "5 accounting concepts you should know", "body": "Walk through them with Ledger."},
+    {"title": "1. Double-entry", "body": "Every transaction is recorded twice, as a debit and an equal credit, so the books always balance.", "ex": "Buy a $500 laptop with cash: equipment up $500, cash down $500.", "image": "concept-1.png"},
+    {"title": "2. Accrual accounting", "body": "Revenue and expenses are recorded when they are earned or incurred, not when the cash moves.", "ex": "A $2,000 job finished in March and paid in April is March revenue.", "image": "concept-2.png"},
+    {"title": "3. Matching principle", "body": "An expense is recorded in the same period as the revenue it helps to earn.", "ex": "Stock bought for $600 in April and sold in May: the $600 cost goes in May.", "image": "concept-3.png"},
+    {"title": "4. Depreciation", "body": "The cost of a long-lived asset is spread over the years the business uses it.", "ex": "A $30,000 van used for 5 years with no resale value: $6,000 a year.", "image": "concept-4.png"},
+    {"title": "5. Working capital", "body": "Current assets minus current liabilities: the cushion for day-to-day running.", "ex": "$80,000 of current assets minus $50,000 of current liabilities = $30,000.", "image": "concept-5.png"}
+  ]
+}

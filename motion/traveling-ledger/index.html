@@ -12,41 +12,49 @@
 // Traveling Ledger: one continuous scene across N panels (each 1080x1350).
 // render(t, mode, panel) draws frame at time t (seconds).
 //   mode "panel": camera fixed on panel `panel`; mode "follow": camera follows Ledger.
-const C = window.SCENE = window.SCENE || {};
 const W = 1080, H = 1350;
 const INK = '#0D1523', BLUE = '#2960C7', LIGHT = '#C9D8F5', GOLD = '#C2922F', GREY = '#5B6475';
 const NS = 'http://www.w3.org/2000/svg';
 const svg = document.getElementById('svg');
 
-// ---- scene config (overridable via window.SCENE before load) ----
-const panels = C.panels || [
-  {title: '5 accounting concepts you should know', body: 'Walk through them with Ledger.'},
-  {title: '1. Double-entry', body: 'Every transaction is recorded twice, as a debit and an equal credit, so the books always balance.', ex: 'Buy a $500 laptop with cash: equipment up $500, cash down $500.'},
-  {title: '2. Accrual accounting', body: 'Revenue and expenses are recorded when they are earned or incurred, not when the cash moves.', ex: 'A $2,000 job finished in March and paid in April is March revenue.'},
-  {title: '3. Matching principle', body: 'An expense is recorded in the same period as the revenue it helps to earn.', ex: 'Stock bought for $600 in April and sold in May: the $600 cost goes in May.'},
-  {title: '4. Depreciation', body: 'The cost of a long-lived asset is spread over the years the business uses it.', ex: 'A $30,000 van used for 5 years with no resale value: $6,000 a year.'},
-  {title: '5. Working capital', body: 'Current assets minus current liabilities: the cushion for day-to-day running.', ex: '$80,000 of current assets minus $50,000 of current liabilities = $30,000.'},
-];
-const LOW = 1080, MID = 900, HIGH = 720, R = 40;
-// Route from Hoang's sketch: start, step up, loop, climb a wall, come down, end.
-const ROUTE = C.route || [
-  `M 180 ${LOW} L 1500 ${LOW}`,
-  `Q 1560 ${LOW} 1560 ${LOW-R} L 1560 ${MID+R} Q 1560 ${MID} 1620 ${MID} L 2560 ${MID}`,
-  `C 2800 ${MID} 2820 ${MID-330} 2660 ${MID-330} C 2500 ${MID-330} 2520 ${MID} 2760 ${MID} L 3700 ${MID}`,
-  `Q 3760 ${MID} 3760 ${MID-R} L 3760 ${HIGH+R} Q 3760 ${HIGH} 3820 ${HIGH} L 4780 ${HIGH}`,
-  `Q 4840 ${HIGH} 4840 ${HIGH+R} L 4840 ${MID-R} Q 4840 ${MID} 4900 ${MID} L 6000 ${MID}`,
-].join(' ');
-const SPEED = C.speed || 360;        // px per second along the path
-const STEP_HZ = 2.2;                 // steps per second
-const LEDGER_SCALE = 0.85;
-const DOT_GAP = 30, DOT_R = 6, LEAD = 0;
-
+// ---- scene: set with setScene(scene, baseUrl) before rendering (see scenes/*/scene.json) ----
+let panels = [], BASE = '';
+const LOW = 1210, MID = 1130, HIGH = 1050, R = 30, LOOP_H = 200;
+const LEVELS = [LOW, MID, HIGH];
+// Build the route from one move per panel: start | flat | up | down | loop | end.
+function buildRoute(moves) {
+  let lvl = 0, d = `M 180 ${LOW}`;
+  moves.forEach((m, i) => {
+    const x0 = i * W, y = LEVELS[lvl];
+    if (m === 'up' || m === 'down') {
+      const nl = Math.max(0, Math.min(2, lvl + (m === 'up' ? 1 : -1))), ny = LEVELS[nl], sx = x0 + 480, dir = ny < y ? -1 : 1;
+      d += ` L ${sx - R} ${y} Q ${sx} ${y} ${sx} ${y + dir * R} L ${sx} ${ny - dir * R} Q ${sx} ${ny} ${sx + R} ${ny}`;
+      lvl = nl;
+    } else if (m === 'loop') {
+      const lx = x0 + 820, top = y - LOOP_H;
+      d += ` L ${lx} ${y} C ${lx + 170} ${y} ${lx + 190} ${top} ${lx + 60} ${top} C ${lx - 70} ${top} ${lx - 50} ${y} ${lx + 120} ${y}`;
+    }
+    if (m === 'end') { d += ` L ${x0 + 600} ${LEVELS[lvl]}`; }
+    else d += ` L ${x0 + W} ${LEVELS[lvl]}`;
+  });
+  return d;
+}
 const routePath = document.createElementNS(NS, 'path');
-routePath.setAttribute('d', ROUTE);
-const total = routePath.getTotalLength();
-const WALK = total / SPEED;
-const DURATION = WALK + (C.hold ?? 1.5);
-window.META = {total, walk: WALK, duration: DURATION, panels: panels.length};
+let total = 0, WALK = 0, DURATION = 0, xs = [];
+window.setScene = (scene, baseUrl) => {
+  panels = scene.panels; BASE = baseUrl;
+  routePath.setAttribute('d', buildRoute(scene.moves || panels.map((_, i) => i ? 'flat' : 'start')));
+  total = routePath.getTotalLength(); WALK = total / SPEED; DURATION = WALK + (scene.hold ?? 1.5);
+  xs = []; for (let d = 0; d <= total; d += 4) xs.push([d, routePath.getPointAtLength(d).x]);
+  window.META = {total, walk: WALK, duration: DURATION, panels: panels.length};
+  // preload images so frames never render without them
+  return Promise.all(panels.filter(p => p.image).map(p => new Promise(r => { const im = new Image(); im.onload = im.onerror = r; im.src = BASE + p.image; })))
+    .then(() => window.META);
+};
+const SPEED = 360;        // px per second along the path
+const STEP_HZ = 2.2;                 // steps per second
+const LEDGER_SCALE = 0.6;
+const DOT_GAP = 30, DOT_R = 6, LEAD = 0;
 
 function el(tag, attrs, parent) {
   const e = document.createElementNS(NS, tag);
@@ -130,19 +138,20 @@ window.render = function (t, mode, panel) {
     const o = ease((t - arrive) / 0.6);
     const g = el('g', {opacity: o, transform: `translate(0 ${(1 - o) * 24})`}, world);
     if (i === 0) {
-      textBlock(g, cx, 330, wrap(pn.title, 18), 92, {'font-family': "'Source Serif 4', Georgia, serif", 'font-weight': 700, fill: INK});
-      textBlock(g, cx, 640, [pn.body], 40, {'font-family': "'Source Serif 4', Georgia, serif", fill: BLUE});
+      textBlock(g, cx, 360, wrap(pn.title, 18), 92, {'font-family': "'Source Serif 4', Georgia, serif", 'font-weight': 700, fill: INK});
+      textBlock(g, cx, 680, [pn.body], 40, {'font-family': "'Source Serif 4', Georgia, serif", fill: BLUE});
     } else {
-      textBlock(g, cx, 160, [pn.title], 68, {'font-family': "'Source Serif 4', Georgia, serif", 'font-weight': 700, fill: BLUE});
-      textBlock(g, cx, 260, wrap(pn.body, 40), 42, {'font-family': "'Source Serif 4', Georgia, serif", fill: INK});
-      if (pn.ex) textBlock(g, cx, 470, wrap(pn.ex, 52), 32, {'font-family': 'Inter, sans-serif', fill: GREY});
+      textBlock(g, cx, 130, [pn.title], 62, {'font-family': "'Source Serif 4', Georgia, serif", 'font-weight': 700, fill: BLUE});
+      textBlock(g, cx, 210, wrap(pn.body, 44), 38, {'font-family': "'Source Serif 4', Georgia, serif", fill: INK});
+      if (pn.ex) textBlock(g, cx, 375, wrap(pn.ex, 60), 28, {'font-family': 'Inter, sans-serif', fill: GREY});
+      if (pn.image) el('image', {href: BASE + pn.image, x: cx - 220, y: 440, width: 440, height: 440, style: 'mix-blend-mode:multiply'}, g);
     }
     // logo
     if (LOGO) world.insertAdjacentHTML('beforeend', LOGO.replace('<svg', `<svg x="${cx - 110}" y="1262"`));
   });
 
   // start dot
-  el('circle', {cx: 180, cy: LOW, r: 12, fill: 'none', stroke: BLUE, 'stroke-width': 4}, world);
+  el('circle', {cx: 180, cy: LOW, r: 10, fill: 'none', stroke: BLUE, 'stroke-width': 4}, world);
   // dotted path, drawn up to Ledger
   for (let d = 18; d <= len + LEAD; d += DOT_GAP) {
     const q = routePath.getPointAtLength(d);
@@ -160,7 +169,6 @@ window.render = function (t, mode, panel) {
 };
 
 // x -> first path length reaching that x (for text reveal timing)
-const xs = []; for (let d = 0; d <= total; d += 4) xs.push([d, routePath.getPointAtLength(d).x]);
 function routeLenAtX(x) { for (const [d, px] of xs) if (px >= x) return d; return total; }
 window.panelWindow = i => {
   const enter = i === 0 ? 0 : routeLenAtX(i * W - 140) / SPEED;
