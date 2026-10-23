@@ -1,0 +1,7 @@
+{
+  "name": "5-accounting-concepts-walker",
+  "walkerOnly": true,
+  "layout": {"low": 1215, "mid": 1150, "high": 1085, "loopH": 120, "scale": 0.55},
+  "moves": ["start", "up", "loop", "up", "down", "end"],
+  "panels": [{}, {}, {}, {}, {}, {}]
+}

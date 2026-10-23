@@ -19,8 +19,7 @@ const svg = document.getElementById('svg');
 
 // ---- scene: set with setScene(scene, baseUrl) before rendering (see scenes/*/scene.json) ----
 let panels = [], BASE = '';
-const LOW = 1210, MID = 1130, HIGH = 1050, R = 30, LOOP_H = 200;
-const LEVELS = [LOW, MID, HIGH];
+let LOW = 1210, MID = 1130, HIGH = 1050, R = 30, LOOP_H = 200, LEVELS = [LOW, MID, HIGH], WALKER_ONLY = false;
 // Build the route from one move per panel: start | flat | up | down | loop | end.
 function buildRoute(moves) {
   let lvl = 0, d = `M 180 ${LOW}`;
@@ -31,8 +30,8 @@ function buildRoute(moves) {
       d += ` L ${sx - R} ${y} Q ${sx} ${y} ${sx} ${y + dir * R} L ${sx} ${ny - dir * R} Q ${sx} ${ny} ${sx + R} ${ny}`;
       lvl = nl;
     } else if (m === 'loop') {
-      const lx = x0 + 820, top = y - LOOP_H;
-      d += ` L ${lx} ${y} C ${lx + 170} ${y} ${lx + 190} ${top} ${lx + 60} ${top} C ${lx - 70} ${top} ${lx - 50} ${y} ${lx + 120} ${y}`;
+      const lx = x0 + 820, top = y - LOOP_H, k = LOOP_H / 200;
+      d += ` L ${lx} ${y} C ${lx + 170 * k} ${y} ${lx + 190 * k} ${top} ${lx + 60 * k} ${top} C ${lx - 70 * k} ${top} ${lx - 50 * k} ${y} ${lx + 120 * k} ${y}`;
     }
     if (m === 'end') { d += ` L ${x0 + 600} ${LEVELS[lvl]}`; }
     else d += ` L ${x0 + W} ${LEVELS[lvl]}`;
@@ -43,6 +42,11 @@ const routePath = document.createElementNS(NS, 'path');
 let total = 0, WALK = 0, DURATION = 0, xs = [];
 window.setScene = (scene, baseUrl) => {
   panels = scene.panels; BASE = baseUrl;
+  // walkerOnly: the video carries only the path and Ledger; copy, images and logo are Canva elements on top
+  WALKER_ONLY = !!scene.walkerOnly;
+  const L = scene.layout || {};
+  LOW = L.low ?? LOW; MID = L.mid ?? MID; HIGH = L.high ?? HIGH; LOOP_H = L.loopH ?? LOOP_H; LEVELS = [LOW, MID, HIGH];
+  if (L.scale) LEDGER_SCALE = L.scale;
   routePath.setAttribute('d', buildRoute(scene.moves || panels.map((_, i) => i ? 'flat' : 'start')));
   total = routePath.getTotalLength(); WALK = total / SPEED; DURATION = WALK + (scene.hold ?? 1.5);
   xs = []; for (let d = 0; d <= total; d += 4) xs.push([d, routePath.getPointAtLength(d).x]);
@@ -53,7 +57,7 @@ window.setScene = (scene, baseUrl) => {
 };
 const SPEED = 360;        // px per second along the path
 const STEP_HZ = 2.2;                 // steps per second
-const LEDGER_SCALE = 0.6;
+let LEDGER_SCALE = 0.6;
 const DOT_GAP = 30, DOT_R = 6, LEAD = 0;
 
 function el(tag, attrs, parent) {
@@ -133,7 +137,7 @@ window.render = function (t, mode, panel) {
   // panel copy
   panels.forEach((pn, i) => {
     const x0 = i * W, cx = x0 + W / 2;
-    if (x0 > camX + W || x0 + W < camX) return;
+    if (WALKER_ONLY || x0 > camX + W || x0 + W < camX) return;
     const arrive = i === 0 ? -1 : (Math.max(0, routeLenAtX(x0 + 160)) / SPEED);
     const o = ease((t - arrive) / 0.6);
     const g = el('g', {opacity: o, transform: `translate(0 ${(1 - o) * 24})`}, world);
