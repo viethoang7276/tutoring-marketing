@@ -48,10 +48,13 @@ Per post:
 5. To schedule instead: `find` "Schedule post button in the compose dialog toolbar" and click it (click again if the hashtag list swallowed the first click). Set the selects with `form_input`: day, hour (1–12), minutes (`0`), AM/PM (`pm`). The times are Indochina Time. Zoom on "Will send on …" to check, click **Confirm** at (979,57), then `find` the "Schedule" submit button and click it, twice if needed. The toast "Your post will be sent on …" confirms it.
 6. A notice "Unlock more on X" can appear (the account is new). `find` "Got it" and click it.
 
-## 2c. Threads (@edlintics)
-1. Go to `https://www.threads.com/@edlintics` and check that the profile shows "Edit profile". Click "New thread".
-2. Type the caption, keeping only #edlintics (Threads takes one topic tag), then `file_upload` the slides into the composer's file input.
-3. Open the composer's "…" menu › **Schedule**, set the date and time, then post. (Not yet run here: verify each step with a screenshot the first time, then record what worked here.)
+## 2c. Threads (@edlintics) (proven 23 Oct 2026)
+1. Go to `https://www.threads.com/@edlintics`, `find` "New thread button in main navigation", click it and wait 3 s.
+2. Click the text box at about (640,308), **wait 1 s** (typing straight away loses the first words), then type. Use `shift+Enter` for line breaks.
+3. End the last line with ` #edlintics`, then click the "edlintics" suggestion so it becomes the topic. The header should read "edlintics › edlintics". Leave out the other hashtags.
+4. `find` "file input in the new thread composer dialog" and `file_upload` the slides.
+5. Post now: click **Post**. To schedule: `find` the "More" button in the dialog header › **Schedule…**. Click the day in the calendar, then triple-click the `hh` and `mm` fields and type a 24-hour time, e.g. `23` and `00`. Click **Done** and check the banner ("Posting tomorrow at 15:00 GMT+7"). Then `find` the "Schedule" submit button and click it once. If the dialog stays open, check again before clicking a second time.
+6. Check: New thread › **Drafts** lists the scheduled posts with their times.
 
 ## 3. First comment, self-like, self-repost (a few minutes after each slot)
 Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Everything is done as the Edlintics page, never as Hoang personally. Comment text = `k<n>` in `posts/copy.json`. Never reveal the answer.
@@ -82,7 +85,9 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 3. On the post page, `find` the inline "Post text" reply box, click it, wait 1 s, and type with Enter Enter between paragraphs.
 4. X counts edlintics.com as 23 characters. If the ring turns red, drop the final full stop or shorten the reply. `find` "Reply submit button" and click it. Check that the post shows 1 reply, 1 repost and 1 like.
 
-**E. Threads:** open `https://www.threads.com/@edlintics` and open the newest thread. Like it, then use the repost icon › **Repost**. Reply with the `k<n>` text. (First run: verify, then record what worked here.)
+**E. Threads:**
+1. Open `https://www.threads.com/@edlintics` and `find` "Like, Reply, Repost buttons of the newest thread". Click Like, then Repost › **Repost** (the toast says "Reposted").
+2. Click Reply. It opens the thread page with a "Reply to edlintics…" box. Click it, wait 1 s, type with `shift+Enter` between paragraphs, then click the round send arrow. Our own reply appears as part 2 of 2 of the thread.
 
 **Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. Don't substitute a story share.
 
