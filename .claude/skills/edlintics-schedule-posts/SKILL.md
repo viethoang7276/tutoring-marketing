@@ -37,17 +37,30 @@ Per post:
 3. **Type the caption after setting the schedule.** Text typed before the schedule step is lost. Find "Text editor for creating content", click it, then type.
 4. Click Schedule. Check the list via clock › "View all scheduled posts".
 
-## 3. First comments (after each post is live)
-- These need a running Claude session. Create one-shot CronCreate jobs a few minutes after each slot. Each job confirms the post is live, then on Facebook, Instagram and LinkedIn, acting as the Edlintics page (never as Hoang personally):
-  1. **Post the first comment** with the matching `k<n>` text.
-  2. **Self-like** the post (agreed 23 Oct 2026).
-  3. **Self-repost** it (agreed 23 Oct 2026). LinkedIn: Repost › "Repost" (instant, no added text). Instagram: the Repost button if the app offers it on our own post. Facebook: Share › "Share now" to the page feed. If a platform doesn't offer a repost of our own post, skip it and say so in the report; don't substitute a story share or anything else without asking.
-- **Where (proven 23 Oct 2026):**
-  - Facebook: the extension can't act on facebook.com. Use Business Suite › Content › **Feed & grid** (`/latest/posts/feed_and_grid?business_id=110625140398351&asset_id=108471317472449`). The left column is the page feed: "Comment as Edlintics", the Like button and Share › "Share now" (Feed, Public) all act as the page. Shift+Enter makes line breaks.
-  - Instagram: in the same view, the right column's "Comment" button opens a comments panel that posts as edlintics. **Shift+Enter submits there**, so type the whole comment as one line, with paragraphs joined by spaces. The heart in that preview does nothing, and Chrome's instagram.com is logged into Hoang's personal account. So Instagram self-like and repost can't be done as the page from here: skip them and report it.
-  - LinkedIn: the page's published list (`/company/31541400/admin/page-posts/published/`) shows "Comment as Edlintics" and an identity switcher showing the page logo. Shift+Enter makes line breaks. Repost › "Repost" works instantly.
-- Check the identity switcher before each click: a like, comment or repost made as Hoang's personal profile is the wrong one; undo it and redo as the page.
-- First-comment rules: `docs/content-workflow/weekly-content-process.md`. Never reveal the answer.
+## 3. First comment, self-like, self-repost (a few minutes after each slot)
+Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Everything is done as the Edlintics page, never as Hoang personally. Comment text = `k<n>` in `posts/copy.json`. Never reveal the answer.
+
+**Save tokens:** load all the Chrome tools in one ToolSearch call. Use `find` for buttons instead of full screenshots, take screenshots at `scale` 0.5, use `zoom` to check typed text, and put routine clicks in one `browser_batch`. Read `get_page_text` only to verify. Don't explore: the routes below are proven (23 Oct 2026).
+
+**A. Facebook:** facebook.com is blocked for the extension, so use Business Suite.
+1. Go to `https://business.facebook.com/latest/posts/feed_and_grid?business_id=110625140398351&asset_id=108471317472449`. The left column is the page feed.
+2. `find` "Like, Comment, Share buttons under the first Facebook post". Click Comment. The box must read "Comment as Edlintics".
+3. Type the paragraphs, with `shift+Enter shift+Enter` between them. Click the send arrow.
+4. Click Like. Then Share › **Share now** (Feed, Public, as Edlintics). The toast "successfully shared" confirms it.
+
+**B. Instagram:** use instagram.com.
+1. Go to `https://www.instagram.com/`. The top-right account must be **edlintics**. If it isn't, click **Switch** and choose edlintics (Hoang is logged in on both accounts). Never type a password.
+2. Go to `https://www.instagram.com/edlintics/` and `find` the first grid post link, then open `/p/<code>/`.
+3. Comment: **Enter and shift+Enter both submit**, so type the whole `k<n>` as **one line** (paragraphs joined by a space), then press Enter.
+4. Click the heart, then the Repost icon (next to the comment count). Leave "Add a thought" empty. Check that "Liked by edlintics" and the repost count show.
+
+**C. LinkedIn**
+1. Go to `https://www.linkedin.com/company/31541400/admin/page-posts/published/` and wait about 4 s. The first post is the newest.
+2. `find` "Like, Comment, Repost buttons under the first post". The identity switcher must show the Edlintics logo and the box must read "Comment as Edlintics".
+3. Type the paragraphs with `shift+Enter` between them. Click **Comment**.
+4. Click Like. Then Repost › **Repost** (the instant one, not "with your thoughts"). The toast "Repost successful" confirms it.
+
+**Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. Don't substitute a story share.
 
 ## Never
 - Boost, change page settings, choose "Always share stories", or post anything Hoang has not approved in chat.
