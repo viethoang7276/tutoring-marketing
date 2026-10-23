@@ -1,6 +1,6 @@
 ---
 name: edlintics-schedule-posts
-description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Business Suite) and the LinkedIn company page through Claude in Chrome, then post first comments after they go live. Use when Hoang says "go" on an approved batch.
+description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Business Suite), the LinkedIn company page, X and Threads through Claude in Chrome, then post first comments after they go live. Use when Hoang says "go" on an approved batch.
 ---
 
 # Schedule Edlintics posts (Meta + LinkedIn)
@@ -37,6 +37,18 @@ Per post:
 3. **Type the caption after setting the schedule.** Text typed before the schedule step is lost. Find "Text editor for creating content", click it, then type.
 4. Click Schedule. Check the list via clock › "View all scheduled posts".
 
+## 2b. X (@edlintics)
+1. Go to `https://x.com/compose/post` and wait 3 s. The bottom-left account must read Edlintics @edlintics.
+2. Click into the text box and type the caption (`caption_x` if there is one; 280 characters at most). Enter makes a line break; press Escape after hashtags to close the suggestions.
+3. **Then** `find` "file input inside the open compose dialog" and `file_upload` the slides, 4 at most. A file input found before the dialog is fully open doesn't attach anything.
+4. `find` "Schedule post button in the compose toolbar" and click it. Set the selects with `form_input`: month, day, year, hour (1–12), minutes (`0` = 00), AM/PM (`am`/`pm`). Times are Indochina Time, so no conversion beyond Madrid → Vietnam.
+5. Check the line "Will send on …", click **Confirm**, then click **Schedule**. Check it under the "Scheduled posts" link.
+
+## 2c. Threads (@edlintics)
+1. Go to `https://www.threads.com/@edlintics` and check that the profile shows "Edit profile". Click "New thread".
+2. Type the caption, keeping only #edlintics (Threads takes one topic tag), then `file_upload` the slides into the composer's file input.
+3. Open the composer's "…" menu › **Schedule**, set the date and time, then post. (Not yet run here: verify each step with a screenshot the first time, then record what worked here.)
+
 ## 3. First comment, self-like, self-repost (a few minutes after each slot)
 Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Everything is done as the Edlintics page, never as Hoang personally. Comment text = `k<n>` in `posts/copy.json`. Never reveal the answer.
 
@@ -59,6 +71,10 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 2. `find` "Like, Comment, Repost buttons under the first post". The identity switcher must show the Edlintics logo and the box must read "Comment as Edlintics".
 3. Type the paragraphs with `shift+Enter` between them. Click **Comment**.
 4. Click Like. Then Repost › **Repost** (the instant one, not "with your thoughts"). The toast "Repost successful" confirms it.
+
+**D. X:** open `https://x.com/edlintics` and click the newest post. Like it (heart), then Repost › **Repost**. Reply with the `k<n>` text; Enter makes line breaks and the **Reply** button sends it.
+
+**E. Threads:** open `https://www.threads.com/@edlintics` and open the newest thread. Like it, then use the repost icon › **Repost**. Reply with the `k<n>` text. (First run: verify, then record what worked here.)
 
 **Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. Don't substitute a story share.
 

@@ -13,6 +13,7 @@ Read these before any Edlintics social content work:
 - **Canva brand graphics folder:** FAHYugebSqU
 - **Canva post folder:** Edlintics › Social media posts `FAHYcHrS5PE`. File every saved post design here.
 - **Posting (option A, Chrome):** Meta Business Suite, business_id 110625140398351, asset_id 108471317472449 (Facebook + Instagram). LinkedIn company page admin: https://www.linkedin.com/company/31541400/admin/
+- **X and Threads (added 23 Oct 2026):** https://x.com/edlintics and https://www.threads.com/@edlintics. Chrome is logged in as Edlintics on both. Schedule with each site's own web composer.
 - **Scheduled task:** "Edlintics weekly content plan", Thursdays 07:59 Vietnam time. It plans content only.
 
 ## Hard rules

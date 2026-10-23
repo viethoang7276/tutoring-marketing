@@ -8,6 +8,11 @@
 **Hub page:** the Post Review page, https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6, shows the 30-day calendar with text and image readiness per post (`slots` collection), takes post requests (`requests` collection) and stores approvals (`reviews` collection).
 **Fix loop (agreed 22 Oct 2026):** on the hub page Hoang marks a post "Request changes" with a note, then presses "Send to Claude to fix". That posts a comment on the post and sends it to any Claude session watching the page; if none is open it is queued (`reviews/<id>.fix = "queued"`) for the next session. Claude edits a copy, shows the new preview, and saves only after Hoang approves.
 **Posting route (agreed 22 Oct 2026, option A):** once a batch is approved and Hoang says go, Claude schedules it in Meta Business Suite (Facebook and Instagram) and LinkedIn's own scheduler through Chrome. No third-party scheduler, no new credentials. Each batch still needs Hoang's explicit go.
+**Platforms (added 23 Oct 2026):** Facebook, Instagram, LinkedIn, X (@edlintics) and Threads (@edlintics). Each post goes to all five at the same slot, using X's and Threads' own web schedulers. Platform limits:
+- X: 280 characters and 4 images at most. A carousel gets a 4-slide cut, and a caption over 280 characters gets a shorter X version written in the Thursday plan (`caption_x`).
+- Threads: 500 characters and up to 20 images. Threads takes one topic tag, so keep only #edlintics there.
+- First comment, self-like and self-repost run on all five. On X and Threads the first comment is a reply to our own post.
+
 **Publishing and scheduling stay disabled** until Hoang separately authorises platforms, accounts, content, assets and times.
 
 ## What a week contains
