@@ -68,10 +68,10 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 4. Click Like. Then Share › **Share now** (Feed, Public, as Edlintics). The toast "successfully shared" confirms it.
 
 **B. Instagram:** use instagram.com.
-1. Go to `https://www.instagram.com/`. The top-right account must be **edlintics**. If it isn't, click **Switch** and choose edlintics (Hoang is logged in on both accounts). Never type a password.
+1. Go to `https://www.instagram.com/`. The top-right account must be **edlintics**. If it isn't, click **Switch** and choose edlintics (Hoang is logged in on both accounts; the active account can revert to his personal one between runs, so check every time). Never type a password.
 2. Go to `https://www.instagram.com/edlintics/` and `find` the first grid post link, then open `/p/<code>/`.
 3. Comment: **Enter and shift+Enter both submit**, so type the whole `k<n>` as **one line** (paragraphs joined by a space), then press Enter.
-4. Click the heart, then the Repost icon (next to the comment count). Leave "Add a thought" empty. Check that "Liked by edlintics" and the repost count show.
+4. After commenting, the layout shifts, so reload the post and `find` "Like button and Repost button in the action row" before clicking (clicking by position opened Insights once). Click the heart, then the Repost icon (next to the comment count). Leave "Add a thought" empty. Check that "Liked by edlintics" and the repost count show.
 
 **C. LinkedIn**
 1. Go to `https://www.linkedin.com/company/31541400/admin/page-posts/published/` and wait about 4 s. The first post is the newest.
