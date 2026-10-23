@@ -172,6 +172,13 @@ export const characterSystem = {
   approvedMarketingExceptions: [
     {
       date: "2026-10-23",
+      surface: "\"5 [category] concepts you should know\" carousels (Canva proposal DAHY0JdFOLM): Ledger walks a dotted path across the slides",
+      characters: ["Ledger"],
+      rationale: "Hoang asked for Ledger to walk through each slide (traveling-icon carousel). Decorative only, no voice. Walking art: Canva media MAHY0KC6fFo.",
+      status: "APPROVED for preparation and design use; the template awaits Hoang's approval, and publishing each post still requires approval.",
+    },
+    {
+      date: "2026-10-23",
       surface: "meme comic social posts (Canva template proposal DAHYz_I2pNE): finance, accounting, economics, statistics",
       characters: ["Ledger"],
       rationale:
