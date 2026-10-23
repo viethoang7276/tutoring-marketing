@@ -113,6 +113,8 @@ General rules:
 3. **Resource drop:** plain-text edlintics.com (carousels: the "Learn" free-course call to action).
 Optional for posts likely to reach new viewers: a one-line intro ("In case you're new here: Edlintics posts one business puzzle every day."). About 300 characters, no emoji, no exclamation points. Claude posts it from Hoang's Chrome right after the post goes live.
 
+**When the first comment goes up (agreed 23 Oct 2026),** Claude also self-likes and self-reposts the post on each platform, always as the Edlintics page, never as Hoang personally. Where a platform doesn't offer a repost of our own post, Claude skips it and reports that. Steps: skill `edlintics-schedule-posts`, section 3.
+
 **Carousel caption:**
 - Line 1 is the misconception.
 - Then 2–3 lines on what the carousel shows.
@@ -122,7 +124,7 @@ Optional for posts likely to reach new viewers: a one-line intro ("In case you'r
 ## After Thursday approval
 
 - **Once content is approved,** Hoang says "build the week". Designs are built from template copies (Canva or Claude Design), with graphics reused from the brand graphics catalog first. Save each Canva draft straight away and file it in the Social media posts folder, so Hoang can open and fix it in Canva (agreed 23 Oct 2026). Design approval still happens on the hub page; a rejected design is deleted in Canva.
-- **Once the design is approved,** Hoang approves the time. Nothing is posted while publishing is disabled. Once scheduling is authorised, the caption goes with the post and the first comment is posted right after it goes live.
+- **Once the design is approved,** Hoang approves the time. Nothing is posted while publishing is disabled. Once scheduling is authorised, the caption goes with the post and the first comment is posted right after it goes live, together with a self-like and a self-repost.
 - **7 days after a post goes live,** Hoang enters its results, and the next Thursday run learns from them.
 
 ## Approvals

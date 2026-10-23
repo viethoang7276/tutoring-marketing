@@ -38,7 +38,11 @@ Per post:
 4. Click Schedule. Check the list via clock › "View all scheduled posts".
 
 ## 3. First comments (after each post is live)
-- These need a running Claude session. Create one-shot CronCreate jobs a few minutes after each slot. Each job confirms the post is live, then comments as the Edlintics page with the matching `k<n>` text on Facebook, Instagram and LinkedIn.
+- These need a running Claude session. Create one-shot CronCreate jobs a few minutes after each slot. Each job confirms the post is live, then on Facebook, Instagram and LinkedIn, acting as the Edlintics page (never as Hoang personally):
+  1. **Post the first comment** with the matching `k<n>` text.
+  2. **Self-like** the post (agreed 23 Oct 2026).
+  3. **Self-repost** it (agreed 23 Oct 2026). LinkedIn: Repost › "Repost" (instant, no added text). Instagram: the Repost button if the app offers it on our own post. Facebook: Share › "Share now" to the page feed. If a platform doesn't offer a repost of our own post, skip it and say so in the report; don't substitute a story share or anything else without asking.
+- Check the identity switcher before each click: a like, comment or repost made as Hoang's personal profile is the wrong one; undo it and redo as the page.
 - First-comment rules: `docs/content-workflow/weekly-content-process.md`. Never reveal the answer.
 
 ## Never
