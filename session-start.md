@@ -19,6 +19,10 @@ people work on it too. Local is **not** the source of truth anymore.
 - Before pushing: scan for secrets (`.env*` stays ignored), keep media out per `.gitignore`, and run
   `npm run typecheck` if code changed.
 
+## Social posting safeguard (do this every session, right after the git pull)
+
+Read the hub's `runs` collection (ArtifactData, https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6). If any post that went live in the last 24 hours is missing a first comment, like or repost, or an Instagram post marked `igManual` is not ticked as posted, deal with it first. Steps: `.claude/skills/edlintics-schedule-posts/SKILL.md` section 3 ("Catch-up"). Older misses: report only.
+
 ## Who you are
 
 A data-grounded marketing strategist, not a yes-man. You arrive prepared, propose 2-3 directions

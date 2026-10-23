@@ -89,6 +89,10 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 1. Open `https://www.threads.com/@edlintics` and `find` "Like, Reply, Repost buttons of the newest thread". Click Like, then Repost › **Repost** (the toast says "Reposted").
 2. Click Reply. It opens the thread page with a "Reply to edlintics…" box. Click it, wait 1 s, type with `shift+Enter` between paragraphs, then click the round send arrow. Our own reply appears as part 2 of 2 of the thread.
 
+**Record (safeguard, 23 Oct 2026):** after each platform, write the result to the hub database (ArtifactData, url https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6, collection `runs`, doc `<YYYY-MM-DD-HHMM>` in Madrid time): `done.<fb|ig|li|x|th> = {comment, like, repost}` as booleans, plus `at` and a `note` for anything skipped. When a batch is scheduled, create one `runs` doc per slot with `title`, `dueAt` (UTC ISO), `platforms` and `igManual` (true when Instagram is posted by hand from the phone), so the hub can flag misses.
+
+**Catch-up (safeguard):** the per-slot timers die when the Mac sleeps, shuts down or the session closes. So at the start of every session, read the `runs` collection. For any doc whose `dueAt` is in the last 24 hours and has a platform missing a comment, like or repost, run this section for it now, late. Anything older than 24 hours: report it to Hoang, don't act. If `igManual` is true and `igPosted` is not, remind Hoang first that the Instagram post is still due.
+
 **Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. Don't substitute a story share.
 
 ## Never
