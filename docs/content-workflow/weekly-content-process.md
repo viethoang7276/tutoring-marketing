@@ -121,7 +121,7 @@ Optional for posts likely to reach new viewers: a one-line intro ("In case you'r
 
 ## After Thursday approval
 
-- **Once content is approved,** Hoang says "build the week". Designs are built from template copies (Canva or Claude Design), with graphics reused from the brand graphics catalog first. Show previews, and save only after design approval.
+- **Once content is approved,** Hoang says "build the week". Designs are built from template copies (Canva or Claude Design), with graphics reused from the brand graphics catalog first. Save each Canva draft straight away and file it in the Social media posts folder, so Hoang can open and fix it in Canva (agreed 23 Oct 2026). Design approval still happens on the hub page; a rejected design is deleted in Canva.
 - **Once the design is approved,** Hoang approves the time. Nothing is posted while publishing is disabled. Once scheduling is authorised, the caption goes with the post and the first comment is posted right after it goes live.
 - **7 days after a post goes live,** Hoang enters its results, and the next Thursday run learns from them.
 

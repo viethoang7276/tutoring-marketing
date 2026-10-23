@@ -17,7 +17,8 @@ Read these before any Edlintics social content work:
 
 ## Hard rules
 - Money in every exercise, puzzle, carousel, caption and first comment is in US dollars ($1.80, $3,000). Never use euros unless Hoang asks for a specific post.
-- Show planned external writes before making them. Save designs only after Hoang approves the preview.
+- Show planned external writes before making them.
+- Canva designs: always save (commit) a draft as soon as it is built and file it in the post folder, so Hoang can open and fix it in Canva. Never leave edits in an open transaction; they expire. If Hoang rejects a design, delete it in Canva. (Agreed 23 Oct 2026; replaces "save only after approval".)
 - Content, design and publishing approval are separate. Publishing and scheduling stay off until Hoang explicitly authorises them.
 - Never put secrets in chat, code or logs. Ask before creating credentials, OAuth access, installs or permission changes.
 - A timeout is not proof that nothing happened.
