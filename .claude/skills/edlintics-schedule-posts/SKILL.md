@@ -37,12 +37,16 @@ Per post:
 3. **Type the caption after setting the schedule.** Text typed before the schedule step is lost. Find "Text editor for creating content", click it, then type.
 4. Click Schedule. Check the list via clock › "View all scheduled posts".
 
-## 2b. X (@edlintics)
-1. Go to `https://x.com/compose/post` and wait 3 s. The bottom-left account must read Edlintics @edlintics.
-2. Click into the text box and type the caption (`caption_x` if there is one; 280 characters at most). Enter makes a line break; press Escape after hashtags to close the suggestions.
-3. **Then** `find` "file input inside the open compose dialog" and `file_upload` the slides, 4 at most. A file input found before the dialog is fully open doesn't attach anything.
-4. `find` "Schedule post button in the compose toolbar" and click it. Set the selects with `form_input`: month, day, year, hour (1–12), minutes (`0` = 00), AM/PM (`am`/`pm`). Times are Indochina Time, so no conversion beyond Madrid → Vietnam.
-5. Check the line "Will send on …", click **Confirm**, then click **Schedule**. Check it under the "Scheduled posts" link.
+## 2b. X (@edlintics) (proven 23 Oct 2026)
+1. Go to `https://x.com/compose/post` and wait 3 s.
+2. **Images first:** `find` "file input inside the open compose dialog (modal), not the home timeline composer", then `file_upload` up to 4 slides. A file input from the home timeline composer attaches the images to the wrong box.
+3. Click the text box at about (720,105) and type the caption. Enter makes a line break.
+   - No trailing space after the hashtags, because X counts it.
+   - **Never press Escape and never click outside the text**: either closes the composer.
+   - The limit is 280 characters, and the ring at the bottom shows what's left.
+4. Post now: click **Post** twice. The first click only closes the hashtag suggestion list.
+5. To schedule instead: `find` "Schedule post button in the compose dialog toolbar" and click it (click again if the hashtag list swallowed the first click). Set the selects with `form_input`: day, hour (1–12), minutes (`0`), AM/PM (`pm`). The times are Indochina Time. Zoom on "Will send on …" to check, click **Confirm** at (979,57), then `find` the "Schedule" submit button and click it, twice if needed. The toast "Your post will be sent on …" confirms it.
+6. A notice "Unlock more on X" can appear (the account is new). `find` "Got it" and click it.
 
 ## 2c. Threads (@edlintics)
 1. Go to `https://www.threads.com/@edlintics` and check that the profile shows "Edit profile". Click "New thread".
@@ -72,7 +76,11 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 3. Type the paragraphs with `shift+Enter` between them. Click **Comment**.
 4. Click Like. Then Repost › **Repost** (the instant one, not "with your thoughts"). The toast "Repost successful" confirms it.
 
-**D. X:** open `https://x.com/edlintics` and click the newest post. Like it (heart), then Repost › **Repost**. Reply with the `k<n>` text; Enter makes line breaks and the **Reply** button sends it.
+**D. X:**
+1. Open `https://x.com/edlintics` and `find` "Reply, Repost and Like buttons of the newest post". Click Like, then Repost › **Repost**. Dismiss the "Got it" notice if it appears.
+2. For the reply, **open the post's own page**: `find` its timestamp link, then go to `/edlintics/status/<id>`. The Reply button on the timeline can open a new standalone post instead of a reply.
+3. On the post page, `find` the inline "Post text" reply box, click it, wait 1 s, and type with Enter Enter between paragraphs.
+4. X counts edlintics.com as 23 characters. If the ring turns red, drop the final full stop or shorten the reply. `find` "Reply submit button" and click it. Check that the post shows 1 reply, 1 repost and 1 like.
 
 **E. Threads:** open `https://www.threads.com/@edlintics` and open the newest thread. Like it, then use the repost icon › **Repost**. Reply with the `k<n>` text. (First run: verify, then record what worked here.)
 
