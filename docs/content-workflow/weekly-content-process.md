@@ -48,6 +48,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - The two puzzles on the same day differ in family and in trap.
    - Concept carousels explain a concept behind that week's puzzles.
 7. **Write captions and first comments** for every post, following the rules below.
+   Then run the **full-sentence check** on all slide text (see the benchmark gate) and rewrite any fragment before the plan goes out. Record it on each post as `text_check`.
 8. **Write the plan to the desk.**
    - One week document: `weeks/<YYYY-Www>`, status `awaiting_approval`.
    - One post document per slot: `posts/<id>` (`2026W45-<day>-<HHMM>`). Each holds the question, answer, takeaway, explanation, assumptions, trap, visual brief, `caption`, `first_comment`, `hashtags`, sources, simulated review, maths check, score, `version: 1` and empty approvals.
@@ -81,6 +82,7 @@ The target: easy to understand, interesting to attempt, but not trivial to solve
 - **Non-trivial:** it teaches a useful business insight. Recalling a definition or substituting into a formula is not enough.
 - **Two slides:** it works visually as a question slide, then an answer-and-explanation slide.
 - **Original:** it doesn't repeat another question's underlying trick.
+- **Full sentences (agreed 23 Oct 2026):** every sentence on a slide (question, answer, takeaway, definitions, examples) has a subject and a verb. No fragments such as "Price $40, unit cost $30." or "C) About 8%." Essential assumptions go inside the question sentences, never in a footnote. Diagram labels, option letters and short kickers may stay as labels.
 
 **Score out of 100.** The provisional threshold is 70.
 
@@ -129,6 +131,7 @@ Optional for posts likely to reach new viewers: a one-line intro ("In case you'r
 
 ## After Thursday approval
 
+- **Before building,** run the full-sentence check again on every line that will appear on a slide.
 - **Once content is approved,** Hoang says "build the week". Designs are built from template copies (Canva or Claude Design), with graphics reused from the brand graphics catalog first. Save each Canva draft straight away and file it in the Social media posts folder, so Hoang can open and fix it in Canva (agreed 23 Oct 2026). Design approval still happens on the hub page; a rejected design is deleted in Canva.
 - **Once the design is approved,** Hoang approves the time. Nothing is posted while publishing is disabled. Once scheduling is authorised, the caption goes with the post and the first comment is posted right after it goes live, together with a self-like and a self-repost.
 - **7 days after a post goes live,** Hoang enters its results, and the next Thursday run learns from them.
