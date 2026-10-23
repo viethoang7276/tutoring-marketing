@@ -13,6 +13,8 @@
 - Threads: 500 characters and up to 20 images. Threads takes one topic tag, so keep only #edlintics there.
 - First comment, self-like and self-repost run on all five. On X and Threads the first comment is a reply to our own post.
 
+**Instagram route (decided 23 Oct 2026, not yet tested):** Instagram posts need music, and Meta Business Suite's composer has no music option for feed posts. So Instagram moves to the native app. Two routes will be tested: (1) iPhone Mirroring on Hoang's Mac, driven by Claude with computer use from the Claude desktop app, scheduling in the app with Advanced settings › Schedule; (2) a rented Android cloud phone in Spain, which Hoang signs up for, pays for and logs in to himself. Risk noted: logins from a Spanish data centre can trigger Instagram security checks. Facebook, LinkedIn, X and Threads stay on the current route. Until a route is proven, Instagram posts are not scheduled through Business Suite.
+
 **Publishing and scheduling stay disabled** until Hoang separately authorises platforms, accounts, content, assets and times.
 
 ## What a week contains
