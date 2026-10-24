@@ -99,5 +99,12 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 
 **Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. A story share never replaces the comment, like or repost.
 
+## Platform limits and gotchas (learned 24 Oct 2026)
+- **Threads** holds at most 25 scheduled threads. Schedule the nearest posts first. For the rest, leave a session cron (or a note in status.md) to add them once earlier ones go live.
+- **X** takes at most 4 images per post. Carousels with more pages go to X with pages 1 to 4, and the slot's statusNote says so.
+- **5-concepts format test (Instagram only, until 21 Nov):** on carousel days, export each Canva page as its own MP4 and post the clips as an Instagram carousel. Facebook, LinkedIn, X and Threads get the full MP4. If Business Suite creates the Instagram copy of the long video, move it to Drafts.
+- **Instagram** often switches back to hoang.vtrg between runs: always check the account first.
+- **Speed:** batch predictable clicks in one browser_batch, use find instead of screenshots, export a day's media at once, and update `slots` and `runs` right after each slot so a stopped run can resume.
+
 ## Never
 - Boost, change page settings, choose "Always share stories", or post anything Hoang has not approved in chat.

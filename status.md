@@ -3,7 +3,41 @@
 The cross-session memory for this repo. Read after `session-start.md`. Update it at the end of any
 session that changes state (append to the session log; revise "Now" / "Next").
 
-_Last updated: 2026-10-22_
+_Last updated: 2026-10-24_
+
+## Social posting engine: handover (read first, updated 2026-10-24)
+
+Any session can take over from here. Do these in order:
+1. `git pull`.
+2. Run the posting safeguard and change-request checks in `session-start.md`. This means reading `runs` and `slots` in the hub, catching up missed first comments from the last 24 h, and applying, generalising and sweeping every "Request change".
+
+**Systems**
+- **Hub** (system of record for approvals, schedule and the Performance tab): https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6. Page source: the scratchpad `post-review.html`. If it is missing, rebuild from the published version with the Artifact read action.
+  - DB collections: `slots` (one per post: status proposal/approved/scheduled/posted, statusNote = Hoang's instruction or our note), `runs` (first-comment results per platform), `perf/latest` (Performance tab data, weekly review and next-week list), `requests`, `reviews`.
+- **Full dashboard:** https://claude.ai/artifact/2QsDUdLpSPuzWrzn7AznSa. Refresh steps: `docs/content-workflow/performance-review.md`.
+- **Daily cloud check** (runs even when the laptop is off): routine `trig_01CD3Zj6BoqtbE3EU5TxPmCY`, 08:00 Vietnam, Opus 5.5. It applies change requests, adds rules, sweeps and reports first-comment misses. Tested OK on 24 Oct.
+- **Rules:**
+  - `docs/content-workflow/weekly-content-process.md`: the week's formats and slots, the "Rules learned so far" list, and the running tests.
+  - `.claude/skills/edlintics-schedule-posts/SKILL.md`: how to schedule and do first comments per platform.
+  - `docs/content-workflow/skills/` for visuals.
+
+**Week of 24 Oct to 1 Nov: all 29 approved posts scheduled (24 Oct)**
+- Puzzles at 10:00 and 18:00, carousels and videos at 13:00, and comics Mon/Wed/Fri/Sun at 16:00 (Madrid; Vietnam = Madrid + 6 h).
+- Every post is on Facebook, Instagram, LinkedIn, X and Threads, with a Facebook Story.
+- **Gap:** Threads for the four 1 Nov posts (Threads holds max 25 scheduled). A session cron at 00:20 Vietnam on 26 Oct should add them; if it did not fire, schedule them by hand (the espresso thread is in Threads Drafts).
+- **First-comment crons are session-only** (CronCreate). After any restart they are gone: recreate them for every scheduled slot still ahead (4 minutes after each slot), or rely on catch-up. Each run posts the slot's `first_comment` and likes, reposts on IG/X/Threads only, hides the IG like count and tries the IG Story (phone fallback). Results go in `runs`.
+
+**Running tests**
+- **Ledger walk "5 concepts", 24 Oct to 21 Nov, Instagram only:** alternate a 7-clip carousel and one long video. Other platforms always get the long video. On carousel days the long-video IG reel sits in Business Suite Drafts. Slots carry `test: "5c-format"` and `variant`. Decide on 21 Nov.
+- **Threads topics and communities:** research is in progress. The output will be `docs/research/2026-10-24-threads-topics-communities.md`, plus a mapping to apply to Threads posts.
+
+**Waiting on Hoang**
+- **Instagram Stories:** share each post's Story from the phone (desktop cannot).
+- **Instagram account:** it keeps reverting to hoang.vtrg. Suggest logging the personal account out of that Chrome profile.
+- **Puzzle subject label:** should the big subject label at the top of puzzles go, like the comic tags did?
+- **Definition template:** should it be updated to the key-terms-map structure?
+- **Instagram bio:** it has "!!" (breaks the brand rule); a new line needs his OK.
+- **Postiz:** a scheduler trial to replace slow Chrome scheduling (would also need him to connect accounts). Not started.
 
 ## Now (what exists and works)
 
@@ -66,6 +100,30 @@ _Last updated: 2026-10-22_
 - `/api/v1` endpoint shapes are **assumed**; the app may differ. Reconcile when launch nears.
 
 ## Session log
+
+### 2026-10-24 (long session)
+- **Captions:** general-audience rule (no exam-only wording).
+- **Meme comics:**
+  - Pain-point research.
+  - Scripts v1 and v2 (spreadsheet jokes, Introverted Attorney style).
+  - 4-panel template as the default; 2-panel only as an option.
+  - Speech bubbles, no topic tag.
+  - 4 comics built and scheduled; new flow Mon/Wed/Fri/Sun at 16:00.
+- **Puzzles:**
+  - Hoang's 7 change requests fixed.
+  - The 1 Nov puzzle was replaced three times; final pick: café espresso machine depreciation.
+  - "Learning from change requests" process added (fix, then a new rule, then a sweep); the sweep fixed 20 posts.
+- **Definition carousels:** rebuilt as definition, key-terms map, then one slide per term. This is a standing design principle.
+- **Music:** on all 5 "5 concepts" videos and on template DAHY0pRBfnM; rule: every video carousel gets music.
+- **Performance:** dashboard built and made the hub's first tab, with a weekly review and a next-week list; the hub was rebranded to Edlintics tokens.
+- **Daily cloud check routine created and tested.**
+- **Story and Instagram rules:**
+  - Facebook Story kept.
+  - Instagram Story added (phone fallback).
+  - IG like count hidden on every post.
+  - Check IG like and repost state before clicking.
+- **Scheduling:** all 29 approved posts scheduled; Instagram-only 5-concepts format test started.
+
 
 - **2026-10-19** — Daily visual quiz pilot requested by Hoang, adapting two Brilliant Instagram examples (2020) to the existing Canva top/bottom question templates. Prepared four original two-slide drafts: accounting (cash vs profit), finance (successive percentage moves), economics (comparative advantage), statistics (weighted averages). Eight cleaned Canva previews inspected, four answers independently checked. `calendar/quiz-samples.json` records captions, answers, template/design/transaction IDs and pending review; diagram SVGs in `assets/quiz-samples/`; renderer at `scripts/build_quiz_samples.py`; workflow and limitations appended to `docs/social-post-process.md`. Canva edits remain **uncommitted pending explicit preview approval**, required by the connector. No source-template changes, scheduling or posting. Typecheck and diagram renderer pass.
 
