@@ -59,7 +59,7 @@ Do not call a verdict before the judge date, or with fewer than 4 posts per arm.
 
 Running now:
 - **5c-format:** Instagram carousel vs long video, until 21 Nov.
-- **threads-topic:** H1 to H5, until 8 Nov.
+- **threads-topic:** H1 to H6, until 8 Nov.
 
 Per Threads post, track views, the share of views from non-followers (Threads Insights), replies, reposts and follows, with `threadsTopic` and `threadsTopicVariant`.
 

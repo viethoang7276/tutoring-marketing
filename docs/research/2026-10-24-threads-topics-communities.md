@@ -99,7 +99,7 @@ So, as of today, **there is no finance, accounting or economics community**, and
 | Finance puzzles (discounts, NPV, loans, returns) | Finance | Financial Literacy, or Personal Finance for household-money puzzles | none |
 | Economics puzzles and definitions | Economics | Finance | none |
 | Statistics puzzles (base rates, R-squared, expected value) | Statistics | Data Analytics | Science Threads, only if a post is about the method itself |
-| Marketing puzzles (pricing, customer value) | Marketing (unverified) | Business | not Business Threads (promo-heavy) |
+| Marketing puzzles (pricing, customer value) | Marketing community (verified 24 Oct: 114K members, 11.3K recent posts) | Business | not Business Threads (promo-heavy) |
 | Management and operations puzzles (bottleneck, expected value) | Business (topic) | Finance | none |
 | Workplace and spreadsheet comics | Spreadsheets | Excel | none |
 | Study-pain comics (exams, group projects) | Study Threads (community) | Statistics or Accounting by subject | **Study Threads**, if Hoang approves joining |

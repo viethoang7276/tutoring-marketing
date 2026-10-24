@@ -36,6 +36,7 @@
 - **H3:** at least one primary topic beats its alternate by 1.5 times or more in median views per post. Keep the winner per subject.
 - **H4:** money-led puzzles in Finance or Personal Finance get more replies than process puzzles (baseline: coffee 22 views vs sequencing 7).
 - **H5:** a comic posted in Study Threads gets more likes than the same style posted with a topic only.
+- **H6:** Marketing posts placed in the Marketing community (114K members) get more views per post than the median topic-tagged puzzle in the same week. Slots: `threadsTopicKind: "community"`.
 Judge on 8 Nov in the weekly review, using median views, replies and follows per post, by topic.
 
 Every post gets a **caption**, a **first comment** and, for Threads, a **`threadsTopic`** (or a `threadsCommunity` such as Study Threads for study-pain comics), chosen at planning time from `docs/research/2026-10-24-threads-topics-communities.md` and the current test arm. No hashtags in Threads text.

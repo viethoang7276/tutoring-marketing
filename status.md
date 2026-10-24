@@ -29,7 +29,8 @@ Any session can take over from here. Do these in order:
 
 **Running tests**
 - **Ledger walk "5 concepts", 24 Oct to 21 Nov, Instagram only:** alternate a 7-clip carousel and one long video. Other platforms always get the long video. On carousel days the long-video IG reel sits in Business Suite Drafts. Slots carry `test: "5c-format"` and `variant`. Decide on 21 Nov.
-- **Threads topics and communities:** research is in progress. The output will be `docs/research/2026-10-24-threads-topics-communities.md`, plus a mapping to apply to Threads posts.
+- **Threads topics, 25 Oct to 7 Nov (H1 to H6 in weekly-content-process.md, judge 8 Nov):** done 24 Oct. All 25 scheduled Threads posts (24 Oct 23:00 to 1 Nov 00:00 Vietnam) now carry a subject topic instead of "edlintics": Statistics 5, Finance 5, Economics 4, Accounting 3, Business 3, Marketing 3, Spreadsheets 2. Marketing posts go into the Marketing community (114K members, 11.3K recent posts), not a plain topic. The Threads texts had no hashtags. Every slot has `threadsTopic`, `threadsTopicVariant` (primary/alternate) and `threadsTopicKind` (topic/community). Edlintics joined **Study Threads** on 24 Oct.
+  - **1 Nov posts use the alternate arm and no hashtags:** espresso puzzle = Financial Literacy, management 5c = Finance, economics comic = Finance, expected-value puzzle = Finance. These slots carry `threadsTopicPending: true`; clear it once scheduled. The espresso thread is an unscheduled draft in Threads Drafts and still shows "edlintics", so set the topic when scheduling.
 
 **Waiting on Hoang**
 - **Instagram Stories:** share each post's Story from the phone (desktop cannot).
