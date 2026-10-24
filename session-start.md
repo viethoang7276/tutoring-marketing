@@ -23,6 +23,10 @@ people work on it too. Local is **not** the source of truth anymore.
 
 Read the hub's `runs` collection (ArtifactData, https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6). If any post that went live in the last 24 hours is missing a first comment, like or repost, or an Instagram post marked `igManual` is not ticked as posted, deal with it first. Steps: `.claude/skills/edlintics-schedule-posts/SKILL.md` section 3 ("Catch-up"). Older misses: report only.
 
+## Daily metrics catch-up
+
+If `runs/daily-<yesterday>` is missing in the hub, run the "Daily metrics refresh" in docs/content-workflow/performance-review.md once now.
+
 ## Hoang's review requests (do this every session, after the safeguard)
 
 Query the hub's `slots` collection for `status == "changes"`. Each one is a "Request change" Hoang clicked in the Review tab; his instruction is in `statusNote`. Apply each change (Canva design, caption, first comment; keep every content rule), commit the Canva transaction, then set the slot back to `status: "proposal"` with a `statusNote` that starts "Revised <date>:" and says what changed. Then follow "Learning from change requests" in docs/content-workflow/weekly-content-process.md: turn each note into a general rule in that list, and sweep the other upcoming posts for the same problem. Report the fixes, the new rules and the sweep to Hoang. Clicking the button does not notify any running session; this check is how the requests get picked up.

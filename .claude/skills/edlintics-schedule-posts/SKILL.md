@@ -97,6 +97,8 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 
 **Catch-up (safeguard):** the per-slot timers die when the Mac sleeps, shuts down or the session closes. So at the start of every session, read the `runs` collection. For any doc whose `dueAt` is in the last 24 hours and has a platform missing a comment, like or repost, run this section for it now, late. Anything older than 24 hours: report it to Hoang, don't act. If `igManual` is true and `igPosted` is not, remind Hoang first that the Instagram post is still due.
 
+**Daily metrics refresh (24 Oct 2026):** if this run is for the day's last post (the 18:00 Madrid slot), straight after the first comment run the "Daily metrics refresh" in docs/content-workflow/performance-review.md for the last 7 days of posts, then add its summary under the report table.
+
 **Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. A story share never replaces the comment, like or repost.
 
 ## Platform limits and gotchas (learned 24 Oct 2026)

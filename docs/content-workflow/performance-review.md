@@ -62,3 +62,25 @@ Running now:
 - **threads-topic:** H1 to H5, until 8 Nov.
 
 Per Threads post, track views, the share of views from non-followers (Threads Insights), replies, reposts and follows, with `threadsTopic` and `threadsTopicVariant`.
+
+## Daily metrics refresh (added 24 Oct 2026)
+
+Run this every day straight after the first-comment run of the day's last post (the 18:00 Madrid slot, about 00:04 Vietnam). The first-comment skill triggers it.
+
+1. **Scope:** every post that went live in the last 7 days (Madrid dates). Older posts keep their last figures; don't re-read them.
+2. **Read** (read only) each post's metrics per platform, from the sources listed above:
+   - Business Suite Insights › Content for Facebook and Instagram;
+   - LinkedIn page analytics › Updates;
+   - X post analytics;
+   - Threads Insights.
+   Record views, reach, likes, comments, shares or reposts, saves, link clicks, follows, the share of views from non-followers where shown, and video watch time where shown. Record only what the platform shows: `null` = not shown.
+3. **Update** `perf/latest` in the hub (ArtifactData, if_version from a fresh read):
+   - replace or add those posts' rows in `posts`, keeping the own like, comment and repost counts so "engagement from others" stays correct;
+   - refresh `channels` follower counts;
+   - set `readAt`;
+   - update each `tests[].current` and `n`.
+   Leave `review` alone except on the weekly review day.
+4. **Update** each slot that went live today to `status: "posted"`, with a one-line `statusNote` (for example "Posted 25 Oct; 24 h: IG 31 reach, Threads 40 views").
+5. **Log the refresh** in `runs/daily-<YYYY-MM-DD>` with `{at, postsUpdated, problems}`.
+
+If the Mac was asleep and the refresh was missed, the next session's start check runs it once for the missed days.
