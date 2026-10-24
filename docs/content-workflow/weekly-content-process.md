@@ -38,6 +38,8 @@
 - **H5:** a comic posted in Study Threads gets more likes than the same style posted with a topic only.
 Judge on 8 Nov in the weekly review, using median views, replies and follows per post, by topic.
 
+Every post gets a **caption**, a **first comment** and, for Threads, a **`threadsTopic`** (or a `threadsCommunity` such as Study Threads for study-pain comics), chosen at planning time from `docs/research/2026-10-24-threads-topics-communities.md` and the current test arm. No hashtags in Threads text.
+
 Every post gets a **caption** and a **first comment**, and both are part of the content Hoang approves.
 
 ## The Thursday run, step by step

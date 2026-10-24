@@ -7,6 +7,18 @@ description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Busi
 
 Only run on an approved batch: content, design and time approved, and Hoang said "go" in chat.
 
+
+## 0. Identity check before every automated action (Hoang, 24 Oct 2026)
+Before posting, scheduling, commenting, liking, reposting or editing on any platform, confirm the active identity is Edlintics. If it isn't, switch to it. Never type a password. If switching would need one, stop for that platform and tell Hoang.
+- **Meta Business Suite:** the top-left asset is "Edlintics" (Facebook page and edlintics Instagram), and comment boxes read "Comment as Edlintics".
+- **Instagram web:** the left-nav Profile link points to `/edlintics/`. It often switches back to `hoang.vtrg`; use Switch › edlintics.
+- **LinkedIn:** you are on the page admin `/company/31541400/admin/`, the identity switcher shows the Edlintics logo, and boxes read "Comment as Edlintics".
+- **X:** the account menu at bottom left shows `@edlintics`.
+- **Threads:** the profile is `@edlintics`, and the composer header starts "edlintics".
+- **YouTube:** Studio shows the channel `UCUx_KFGdEVdBoKvCS3BxYRA` (Edlintics). See `.claude/skills/edlintics-youtube-upload/SKILL.md`.
+- **Canva:** the Edlintics team, with posts in folder FAHYcHrS5PE.
+Re-check after any account switch, reload or logout prompt. Record the identity in `runs` notes if anything was off.
+
 ## 0. Prepare (no browser)
 - Export each Canva design as PNG 1080x1350 (`export-design`, all pages), download with curl into `<scratchpad>/posts/`. Name files `<MMDD>-<HHMM>-<slug>-<n>.png`.
 - Claude Design posts: render each artboard with headless Chrome at 1080x1350 (replace `{{accent}}` with `#2960C7`, logo blob with the local copy of the canvas asset). Puzzles end with the CTA slide.
@@ -51,7 +63,12 @@ Per post:
 ## 2c. Threads (@edlintics) (proven 23 Oct 2026)
 1. Go to `https://www.threads.com/@edlintics`, `find` "New thread button in main navigation", click it and wait 3 s.
 2. Click the text box at about (640,308), **wait 1 s** (typing straight away loses the first words), then type. Use `shift+Enter` for line breaks.
-3. End the last line with ` #edlintics`, then click the "edlintics" suggestion so it becomes the topic. The header should read "edlintics › edlintics". Leave out the other hashtags.
+3. **Choose where the thread goes (every post, from 24 Oct 2026).** Never end with `#edlintics`, and put no hashtags in the Threads text.
+   - **Topic:** use the slot's `threadsTopic`. If it is empty, use `docs/research/2026-10-24-threads-topics-communities.md` for the subject, and the current test arm (primary or alternate) in weekly-content-process.md. Then write the chosen topic and `threadsTopicVariant` back to the slot.
+     - Click "Add a topic" in the composer header, type the topic (for example `Accounting`) and click the exact match.
+     - The header must read "edlintics › <Topic>". If the exact topic doesn't exist, pick the closest real one and note it in the slot's statusNote.
+   - **Community:** if the slot has `threadsCommunity` (for example "Study Threads" for study-pain comics), choose that community in the composer's audience or post-to selector instead of a topic. Edlintics must already be a member (Study Threads joined 24 Oct).
+   - A topic or community cannot be changed after posting, so check the header before scheduling.
 4. `find` "file input in the new thread composer dialog" and `file_upload` the slides.
 5. Post now: click **Post**. To schedule: `find` the "More" button in the dialog header › **Schedule…**. Click the day in the calendar, then triple-click the `hh` and `mm` fields and type a 24-hour time, e.g. `23` and `00`. Click **Done** and check the banner ("Posting tomorrow at 15:00 GMT+7"). Then `find` the "Schedule" submit button and click it once. If the dialog stays open, check again before clicking a second time.
 6. Check: New thread › **Drafts** lists the scheduled posts with their times.
