@@ -124,7 +124,7 @@ General rules:
 3. **Resource drop:** plain-text edlintics.com (carousels: the "Learn" free-course call to action).
 Optional for posts likely to reach new viewers: a one-line intro ("In case you're new here: Edlintics posts one business puzzle every day."). About 300 characters, no emoji, no exclamation points. Claude posts it from Hoang's Chrome right after the post goes live.
 
-**When the first comment goes up (agreed 23 Oct 2026),** Claude also self-likes and self-reposts the post on each platform, always as the Edlintics page, never as Hoang personally. Where a platform doesn't offer a repost of our own post, Claude skips it and reports that. Steps: skill `edlintics-schedule-posts`, section 3.
+**When the first comment goes up (agreed 23 Oct 2026; Facebook and LinkedIn reposts stopped 24 Oct 2026),** Claude also self-likes the post on each platform and self-reposts it on Instagram, X and Threads only, always as the Edlintics page, never as Hoang personally. Where a platform doesn't offer a repost of our own post, Claude skips it and reports that. Steps: skill `edlintics-schedule-posts`, section 3.
 
 **Carousel caption:**
 - Line 1 is the misconception.

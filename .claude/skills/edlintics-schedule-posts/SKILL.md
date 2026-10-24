@@ -57,6 +57,7 @@ Per post:
 6. Check: New thread › **Drafts** lists the scheduled posts with their times.
 
 ## 3. First comment, self-like, self-repost (a few minutes after each slot)
+**24 Oct 2026: no reshare or repost on Facebook or LinkedIn.** Comment and like only there; Instagram, X and Threads still get a repost. In `runs`, record `repost: null` (not applicable) for fb and li.
 Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Everything is done as the Edlintics page, never as Hoang personally. Comment text = `k<n>` in `posts/copy.json`. Never reveal the answer.
 
 **Save tokens:** load all the Chrome tools in one ToolSearch call. Use `find` for buttons instead of full screenshots, take screenshots at `scale` 0.5, use `zoom` to check typed text, and put routine clicks in one `browser_batch`. Read `get_page_text` only to verify. Don't explore: the routes below are proven (23 Oct 2026).
@@ -65,7 +66,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 1. Go to `https://business.facebook.com/latest/posts/feed_and_grid?business_id=110625140398351&asset_id=108471317472449`. The left column is the page feed.
 2. `find` "Like, Comment, Share buttons under the first Facebook post". Click Comment. The box must read "Comment as Edlintics".
 3. Type the paragraphs, with `shift+Enter shift+Enter` between them. Click the send arrow.
-4. Click Like. Then Share › **Share now** (Feed, Public, as Edlintics). The toast "successfully shared" confirms it.
+4. Click Like. **No share/repost on Facebook** (Hoang stopped it on 24 Oct 2026).
 
 **B. Instagram:** use instagram.com.
 1. Go to `https://www.instagram.com/`. The top-right account must be **edlintics**. If it isn't, click **Switch** and choose edlintics (Hoang is logged in on both accounts; the active account can revert to his personal one between runs, so check every time). Never type a password. If switching logs the browser out and Instagram shows "Continue as hoang.vtrg" or a login page, stop: don't continue as Hoang, skip Instagram and ask him to log edlintics back in (seen 23 Oct 2026).
@@ -77,7 +78,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 1. Go to `https://www.linkedin.com/company/31541400/admin/page-posts/published/` and wait about 4 s. The first post is the newest.
 2. `find` "Like, Comment, Repost buttons under the first post". The identity switcher must show the Edlintics logo and the box must read "Comment as Edlintics".
 3. Type the paragraphs with `shift+Enter` between them. Click **Comment**.
-4. Click Like. Then Repost › **Repost** (the instant one, not "with your thoughts"). The toast "Repost successful" confirms it.
+4. Click Like. **No repost on LinkedIn** (Hoang stopped it on 24 Oct 2026).
 
 **D. X:**
 1. Open `https://x.com/edlintics` and `find` "Reply, Repost and Like buttons of the newest post". Click Like, then Repost › **Repost**. Dismiss the "Got it" notice if it appears.
