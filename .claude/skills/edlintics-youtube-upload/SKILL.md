@@ -56,7 +56,7 @@ Right after each success, `update` the slot in the hub: `youtube: {status: "sche
 Check at the end: Scheduled tab count and Studio › Content › Shorts.
 
 ## Pitfalls (learned 24 Oct 2026)
-- **Rate limit on Posts.** After about 14 posts in about 1.5 hours, `create_post` returned HTTP 429 `posts_soft_rate_limit`, and it was still in force 45+ minutes later (24 Oct). The UI shows NO error for this, so only trust the status from the fetch hook in `post-compose.js`. The reset window is unknown: it was still active more than 1 hour later on 24 Oct. Pace posts: schedule about 5 at a time, then wait an hour or more. **Probe first:** start each run with the item that has the fewest slides; if that returns 429, stop and report, so you don't waste uploads. better, schedule YouTube posts in the daily run, 2–3 days ahead. Shorts use a different endpoint and were not limited.
+- **Rate limit on Posts.** After about 14 posts in about 1.5 hours, `create_post` returned HTTP 429 `posts_soft_rate_limit`, and it was still in force 45+ minutes later (24 Oct). The UI shows NO error for this, so only trust the status from the fetch hook in `post-compose.js`. The reset window is unknown: it was still active more than 1 hour later on 24 Oct. Pace posts: schedule about 5 at a time, then wait an hour or more. **Probe first:** start each run with the pending item that has the fewest slides; if that returns 429, stop and report, so you don't waste uploads. If the probe returns 200, continue with the rest in date order (the probe rule only picks the first item). The 429 lasted at least about 3 hours on 24-25 Oct and may be a 24-hour window: after a 429, wait until about 24 hours after the first 429 before probing again. better, schedule YouTube posts in the daily run, 2–3 days ahead. Shorts use a different endpoint and were not limited.
 - The composer placeholder text changes ("What's on your mind?", "Share a sneak peek…"). Always click `#commentbox-placeholder`, never by text.
 - Typing into the posts page before the editor is focused triggers YouTube keyboard shortcuts. Use `post-compose.js`.
 - The first click on Post right after `file_upload` failed with 400 when the images had not finished uploading. The scripts wait for 2 upload requests per image.
@@ -66,3 +66,8 @@ Check at the end: Scheduled tab count and Studio › Content › Shorts.
 - Do not post first comments on YouTube yet (not part of the routine).
 
 - **Caption length check:** `post-compose.js` may report a few characters more than expected (for example 405/402) because the editor counts line breaks differently. A difference under 10 is fine; a big difference means the caption was cut or doubled.
+- **Work in your own new tab**, never in tabs other sessions left open.
+- **Comics have 6 images:** the 4-panel comic posts are 6-page carousels in Canva (the PNGs `-comic-1` to `-comic-6` all belong to the post, matching the slot's `previews`). Upload all of them, in order.
+- **Slot files:** `ArtifactData` list files keep fields either at the top level or under `data`; `build_items.py` handles both.
+- **Navigate between items** (reload the Posts page) before each compose: `post-compose.js` installs a fetch hook, and running it twice on one page stacks hooks and double-counts.
+- **Reading a 429:** the response body in `window.__cp` is base64 (`cG9zdHNfc29mdF9y…` = `posts_soft_rate_limit`); rely on the status number 429.
