@@ -87,6 +87,7 @@ Rules learned so far:
 - **Vary the illustrations.** Two posts in a week must not reuse the same illustration style for the same idea (margin vs turnover, 24 Oct).
 - **Practical questions over textbook traps.** Hoang rejected a regression-to-the-mean puzzle and then a survivorship-bias fund puzzle for the same slot; prefer everyday business decisions with money in them (1 Nov slot, 24 Oct).
 - **No exam-only wording; the audience includes business people** (captions, 24 Oct).
+- **After two rejections of the same slot, offer 2-3 options before building.** Show each question with its answer in chat and let Hoang pick (1 Nov slot rejected three times on 24 Oct; he picked the cafe espresso machine depreciation puzzle). Mean vs median on salaries was also rejected: avoid stock textbook examples.
 - **Comics: 4 panels by default, speech bubbles, no small topic tag on the slides** (24 Oct).
 - **Every video carousel gets music** from Canva's free library (24 Oct).
 
