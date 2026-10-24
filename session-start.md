@@ -23,6 +23,10 @@ people work on it too. Local is **not** the source of truth anymore.
 
 Read the hub's `runs` collection (ArtifactData, https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6). If any post that went live in the last 24 hours is missing a first comment, like or repost, or an Instagram post marked `igManual` is not ticked as posted, deal with it first. Steps: `.claude/skills/edlintics-schedule-posts/SKILL.md` section 3 ("Catch-up"). Older misses: report only.
 
+## Hoang's review requests (do this every session, after the safeguard)
+
+Query the hub's `slots` collection for `status == "changes"`. Each one is a "Request change" Hoang clicked in the Review tab; his instruction is in `statusNote`. Apply each change (Canva design, caption, first comment; keep every content rule), commit the Canva transaction, then set the slot back to `status: "proposal"` with a `statusNote` that starts "Revised <date>:" and says what changed. Report the list to Hoang. Clicking the button does not notify any running session; this check is how the requests get picked up.
+
 ## Who you are
 
 A data-grounded marketing strategist, not a yes-man. You arrive prepared, propose 2-3 directions
