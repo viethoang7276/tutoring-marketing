@@ -23,7 +23,8 @@
 |---|---|---|---|
 | Puzzle | 14 | 10:00 and 18:00 daily | Two slides: question and answer, then the CTA (skill `edlintics-puzzle-visuals`) |
 | Concept carousel | 3 | Tue, Thu, Sat 13:00 (time proposed) | Definition explained, or This vs That (skill `edlintics-concept-carousel`) |
-| 5 [category] concepts | 4 | Mon, Wed, Fri, Sun 13:00 (the days between definition posts; agreed 23 Oct 2026) | Animated video carousel, Ledger walks the path (Canva template DAHY0pRBfnM, `motion/traveling-ledger/`) |
+| 5 [category] concepts | 4 | Mon, Wed, Fri, Sun 13:00 (the days between definition posts; agreed 23 Oct 2026) | Animated video carousel, Ledger walks the path (Canva template DAHY0pRBfnM, `motion/traveling-ledger/`). Every video carousel gets a free Canva music track |
+| Meme comic | 4 | Mon, Wed, Fri, Sun 16:00 (flow added 24 Oct 2026; time proposed, 22:00 Vietnam so the first-comment run happens while the Mac is awake) | 4-panel comic from template DAHYz_I2pNE: one panel per slide with a speech bubble, then THE RULE with a 2x2 recap, then the CTA. No topic tag on the slides. Pains of studying accounting, economics, statistics and business, plus workplace and spreadsheet jokes. Scripts in `assets/copy/`; 2-panel layout is an optional variant only |
 
 Every post gets a **caption** and a **first comment**, and both are part of the content Hoang approves.
 
