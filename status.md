@@ -36,7 +36,7 @@ Any session can take over from here. Do these in order:
 - **Instagram account:** it keeps reverting to hoang.vtrg. Suggest logging the personal account out of that Chrome profile.
 - **Puzzle subject label:** should the big subject label at the top of puzzles go, like the comic tags did?
 - **Definition template:** should it be updated to the key-terms-map structure?
-- **Instagram bio:** it has "!!" (breaks the brand rule); a new line needs his OK.
+- **Bios updated 24 Oct** to the Brilliant-style two lines ("Your entrance into the language of business. / Accounting, Finance, Economics, and Statistics.") on Instagram, Threads, X, LinkedIn (tagline and overview) and Facebook. Links are set on all five. There is no Edlintics TikTok; TikTok in Chrome is the restaurant account.
 - **Postiz:** a scheduler trial to replace slow Chrome scheduling (would also need him to connect accounts). Not started.
 
 ## Now (what exists and works)
