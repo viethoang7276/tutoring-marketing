@@ -56,7 +56,7 @@ Right after each success, `update` the slot in the hub: `youtube: {status: "sche
 Check at the end: Scheduled tab count and Studio › Content › Shorts.
 
 ## Pitfalls (learned 24 Oct 2026)
-- **Rate limit on Posts.** After about 14 posts in about 1.5 hours, `create_post` returned HTTP 429 `posts_soft_rate_limit`. The UI shows NO error for this, so only trust the status from the fetch hook in `post-compose.js`. Pace posts: schedule about 5 at a time, then wait an hour; better, schedule YouTube posts in the daily run, 2–3 days ahead. Shorts use a different endpoint and were not limited.
+- **Rate limit on Posts.** After about 14 posts in about 1.5 hours, `create_post` returned HTTP 429 `posts_soft_rate_limit`, and it was still in force 45+ minutes later (24 Oct). The UI shows NO error for this, so only trust the status from the fetch hook in `post-compose.js`. Pace posts: schedule about 5 at a time, then wait an hour; better, schedule YouTube posts in the daily run, 2–3 days ahead. Shorts use a different endpoint and were not limited.
 - The composer placeholder text changes ("What's on your mind?", "Share a sneak peek…"). Always click `#commentbox-placeholder`, never by text.
 - Typing into the posts page before the editor is focused triggers YouTube keyboard shortcuts. Use `post-compose.js`.
 - The first click on Post right after `file_upload` failed with 400 when the images had not finished uploading. The scripts wait for 2 upload requests per image.

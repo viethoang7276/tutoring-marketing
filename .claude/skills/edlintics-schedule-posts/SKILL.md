@@ -128,3 +128,6 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 
 ## Never
 - Boost, change page settings, choose "Always share stories", or post anything Hoang has not approved in chat.
+
+## 2d. YouTube (added 24 Oct 2026)
+After the other platforms, add each scheduled slot to YouTube with `.claude/skills/edlintics-youtube-upload/SKILL.md`: five-concepts videos as Shorts, everything else as channel Posts. Record the result in the slot's `youtube` field. Mind the posts rate limit (about 5 per hour).

@@ -33,11 +33,11 @@ Any session can take over from here. Do these in order:
 - Every new post must propose its Threads destination in the slot (`threadsTopic`/`threadsTopicVariant`/`threadsCommunity`/`threadsReason`). The hub Review card shows it.
 - The 1 Nov Threads posts are still unscheduled because of the 25-limit; they use the alternate topics.
 
-**YouTube (added 24 Oct, in progress)**
-- Channel: UCUx_KFGdEVdBoKvCS3BxYRA.
-- Video posts go up as Shorts (full MP4); all others as channel Posts with the slides.
-- Old posts are being uploaded and 25 Oct to 1 Nov scheduled. The slot field is `youtube`.
-- Skill: `.claude/skills/edlintics-youtube-upload/SKILL.md`, written for a cheaper model.
+**YouTube (added 24 Oct)**
+- Channel: UCUx_KFGdEVdBoKvCS3BxYRA. Five-concepts videos go up as Shorts (full MP4); all others as channel Posts with the slides.
+- Done 24 Oct: 6 Shorts (accounting published; finance, economics, statistics, marketing, management scheduled 19:00 Vietnam) and 13 Posts (5 old ones published; 25-1000, 25-1800, 26-1000, 26-1600, 26-1800, 27-1000, 30-1000, 01-1800 scheduled). Each slot's `youtube` field has status and URL.
+- **To do:** 15 Posts are `youtube.status: "pending"` (27-1300 through 01-1600). YouTube returned HTTP 429 `posts_soft_rate_limit` after about 14 posts in 90 minutes, and it still held 45+ minutes later. Schedule them in batches of about 5, an hour or more apart, earliest date first, before their slot time. 27-1300 (Oct 27 19:00 Vietnam) is the first.
+- Skill: `.claude/skills/edlintics-youtube-upload/SKILL.md` (scripts in its `scripts/`), written for a cheaper model. The UI shows no error on a 429; only the script's status is reliable.
 
 **Daily routine**
 - After the first comment on the day's last post (18:00 Madrid), run the daily metrics refresh (performance-review.md): last-7-day posts, plus posts in running tests until their judge date.
