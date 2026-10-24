@@ -25,32 +25,35 @@ Claude Design canvas: https://claude.ai/artifact/7yg3KS9LosoEoZEqEP2GAp. It is a
 The gold-standard samples are DAHYuQbDjXA (Definition, Opportunity cost) and DAHYubD8sQY (This vs That, Markup vs margin).
 
 ## Definition format: 8 pages, in this order
-1. **Cover:** "[Term] is ——". The line continues onto page 2.
-2. **Fan tree:** the term with the 5 idea titles as branches.
-3. **Idea 1**
-4. **Idea 2**
-5. **Idea 3**
-6. **CTA, mid-carousel.** Logo, "Learn business concepts the clear way", "Visit www.edlintics.com", the "Comment 'Learn' and we will send you a free course" bubble, and the desk illustration. In the top right, the swipe cue: "Swipe for 2 more ideas" (bold 28px #2960C7, aligned to the end, at about left 560, top 52, width 366), next to a 64px #2960C7 circle at 944,40 holding a white arrow. The arrow is the path `M2 10H14V5L22 12L14 19V14H2Z` in a 24×24 viewBox, drawn at 32px at 960,56.
-7. **Idea 4**
-8. **Idea 5.** The footer reads "Save this for your next exam", not "Swipe for the next idea".
+
+A definition carousel is the concept plus its key terms (Hoang, 24 Oct 2026, from a reference carousel that maps one subject to its numbered key terms). The branches and the pages after the map are **key terms that belong to the concept**, such as elastic demand or present value, never generic angles such as "What it measures" or "How it is used".
+
+1. **Cover:** "[Concept] is ——". The line continues onto page 2.
+2. **Key-terms map (fan tree):** the definition finishes at the top, and the tree fans out to 5 numbered key terms of the concept.
+3. **Term 1**
+4. **Term 2**
+5. **Term 3**
+6. **CTA, mid-carousel.** Logo, "Learn business concepts the clear way", "Visit www.edlintics.com", the "Comment 'Learn' and we will send you a free course" bubble, and the desk illustration. In the top right, the swipe cue: "Swipe for 2 more terms" (bold 28px #2960C7, aligned to the end, at about left 560, top 52, width 366), next to a 64px #2960C7 circle at 944,40 holding a white arrow. The arrow is the path `M2 10H14V5L22 12L14 19V14H2Z` in a 24×24 viewBox, drawn at 32px at 960,56.
+7. **Term 4**
+8. **Term 5.** If the template footer is used, it is general, for example "Save this for your next investment decision.", never exam-only.
 
 In Canva the template has a single idea page and the CTA at the end, so:
 1. Copy the whole design (copy-design fails when `page_numbers` has duplicates).
 2. Add pages with `merge-designs insert_pages`.
 3. Move the CTA after idea 3 with `reorder_page`.
 
-### Idea page layout (1080×1350)
-- **Kicker:** "[TERM] · N OF 5" at top 88, grey, 26px, bold.
-- **Title:** "N. Short title" at top 146, serif 68px. It must fit on one line, so about 26 characters at most.
+### Term page layout (1080×1350)
+- **No kicker:** delete the small "[TERM] · N OF 5" tag at the top (no topic tags, 24 Oct 2026).
+- **Title:** "N. Key term" at top 146, serif 68px. It must fit on one line, so about 26 characters at most.
 - **Body:** at top 296, 42px, 3 lines at most, one plain-language explanation.
 - **Example:** starts with "Example:" and uses a concrete US dollar ($) scenario, 3 lines at most. Place it at about top 494 when the body runs to 3 lines, or 466 when it runs to 2.
 - **Illustration:** delete the old diagram first, then `insert_fill` at top 680, left 88, 640×360.
 - **Template elements:** the Sigma mascot (bottom right) and the footer come with the template.
 
 ### Copy rules
-- Short sentences, everyday words, one idea per page.
+- Short sentences, everyday words, one key term per page: a one-sentence definition, then a dollar example.
 - Examples use real numbers. Check the arithmetic.
-- The 5 ideas build on each other: what it is, how to count it, where it hides, what it is not, how it is used.
+- Pick the 5 key terms a student or manager meets alongside the concept, ordered so each builds on the last (for NPV: cash flow, present value, discount rate, accounting profit, NPV rule).
 
 ## This vs That format: 3 pages
 1. **Cover:** "[THIS] VS [THAT]".

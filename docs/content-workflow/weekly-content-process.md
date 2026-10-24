@@ -89,6 +89,7 @@ Rules learned so far:
 - **No exam-only wording; the audience includes business people** (captions, 24 Oct).
 - **After two rejections of the same slot, offer 2-3 options before building.** Show each question with its answer in chat and let Hoang pick (1 Nov slot rejected three times on 24 Oct; he picked the cafe espresso machine depreciation puzzle). Mean vs median on salaries was also rejected: avoid stock textbook examples.
 - **Comics: 4 panels by default, speech bubbles, no small topic tag on the slides** (24 Oct).
+- **Definition carousels are a concept plus its key terms** (price elasticity and NPV posts, 24 Oct). Page 2 maps the concept to 5 numbered key terms, and each later page defines one key term with a dollar example. Never use generic angles such as "What it measures" or "How it is used" as the branches. No small kicker tag on the term pages. See the concept-carousel skill.
 - **Every video carousel gets music** from Canva's free library (24 Oct).
 - **Stories:** every post is shared to the Facebook Story (when scheduling) and to the Instagram Story (with the first comment). Do it by hand each time, never with an automatic "always share" setting (Hoang, 24 Oct; this keeps Stories despite 0 views so far).
 
