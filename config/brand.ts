@@ -179,11 +179,12 @@ export const characterSystem = {
     },
     {
       date: "2026-10-23",
-      surface: "meme comic social posts (Canva template proposal DAHYz_I2pNE): finance, accounting, economics, statistics",
+      surface: "meme comic social posts (Canva template proposal DAHYz_I2pNE): finance, accounting, economics, statistics, business and workplace",
       characters: ["Ledger"],
       rationale:
         "Hoang: 'We will use ledger in different clothes to reflect' the roles. Ledger plays every role " +
-        "(tutor, student, manager...) told apart by clothes, and its lines appear as comic dialogue. " +
+        "(tutor, student, manager...) told apart by clothes, and its lines appear as comic dialogue in speech bubbles " +
+        "(Hoang, 2026-10-24: 'speech bubble is better'; workplace and business jokes added the same day). " +
         "This overrides `voice` and `decorativeOnly` for this surface only. Panel art is generated per " +
         "post from the Ledger reference (Canva media MAHYzySXLrM); the printed tie stays visible and unrecolored.",
       status: "APPROVED for preparation and design use; the template itself awaits Hoang's approval, and publishing each post still requires approval.",
