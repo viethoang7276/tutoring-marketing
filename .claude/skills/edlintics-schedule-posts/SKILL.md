@@ -8,7 +8,7 @@ description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Busi
 Only run on an approved batch: content, design and time approved, and Hoang said "go" in chat.
 
 
-## 0. Identity check before every automated action (Hoang, 24 Oct 2026)
+## 0a. Identity check before every automated action (Hoang, 24 Oct 2026)
 Before posting, scheduling, commenting, liking, reposting or editing on any platform, confirm the active identity is Edlintics. If it isn't, switch to it. Never type a password. If switching would need one, stop for that platform and tell Hoang.
 - **Meta Business Suite:** the top-left asset is "Edlintics" (Facebook page and edlintics Instagram), and comment boxes read "Comment as Edlintics".
 - **Instagram web:** the left-nav Profile link points to `/edlintics/`. It often switches back to `hoang.vtrg`; use Switch › edlintics.
@@ -19,7 +19,7 @@ Before posting, scheduling, commenting, liking, reposting or editing on any plat
 - **Canva:** the Edlintics team, with posts in folder FAHYcHrS5PE.
 Re-check after any account switch, reload or logout prompt. Record the identity in `runs` notes if anything was off.
 
-## 0. Prepare (no browser)
+## 0b. Prepare (no browser)
 - Export each Canva design as PNG 1080x1350 (`export-design`, all pages), download with curl into `<scratchpad>/posts/`. Name files `<MMDD>-<HHMM>-<slug>-<n>.png`.
 - Claude Design posts: render each artboard with headless Chrome at 1080x1350 (replace `{{accent}}` with `#2960C7`, logo blob with the local copy of the canvas asset). Puzzles end with the CTA slide.
 - Captions and first comments come from the hub page (`<pre id="c1..">`, `k1..`) into `posts/copy.json`.
