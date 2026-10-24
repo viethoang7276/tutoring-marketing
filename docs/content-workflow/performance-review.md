@@ -67,7 +67,12 @@ Per Threads post, track views, the share of views from non-followers (Threads In
 
 Run this every day straight after the first-comment run of the day's last post (the 18:00 Madrid slot, about 00:04 Vietnam). The first-comment skill triggers it.
 
-1. **Scope:** every post that went live in the last 7 days (Madrid dates). Older posts keep their last figures; don't re-read them.
+1. **Scope:**
+   - every post that went live in the last 7 days (Madrid dates);
+   - every older post that belongs to a running test (slot fields such as `test`, `threadsTopicVariant`, or listed in `perf/latest.tests`). Keep re-reading it until that test's judge date, so each hypothesis is measured on data up to the moment it is checked;
+   - any post a hypothesis or measurement names explicitly (for example "30-day saves").
+
+   All other older posts keep their last figures; don't re-read them. When a test is judged, do one last full read of all its posts that day before writing the verdict.
 2. **Read** (read only) each post's metrics per platform, from the sources listed above:
    - Business Suite Insights › Content for Facebook and Instagram;
    - LinkedIn page analytics › Updates;
