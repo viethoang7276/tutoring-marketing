@@ -37,3 +37,13 @@ Every Monday morning, before the Thursday content plan. Read figures for every p
 - **Saves and shares by others matter most** for puzzles and carousels. Comments count next, and likes last.
 - **Don't decide anything on fewer than 10 posts of a format or time slot.** Until then, label a finding as a hypothesis and name the test that would settle it.
 - **Watch the funnel:** profile visits, link clicks and new followers per channel are what turn views into students.
+
+## Weekly review in the hub (added 24 Oct 2026)
+
+The hub's first tab, Performance (https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6), reads the document `perf/latest` in the hub database. After each weekly refresh, write the whole document with ArtifactData using the current version as if_version. It has these fields:
+- `readAt`, `channels`, `posts`, `suggestions`, `fullUrl`: the figures and the dashboard link.
+- `review.week`: the week covered.
+- `review.text`: one short paragraph covering what happened, which channel and format did best, and what is still uncertain. Use engagement from other people, not totals.
+- `review.next`: 4 to 6 concrete changes for next week, each one sentence and each tied to a number above.
+
+Do not republish the page for a data refresh.
