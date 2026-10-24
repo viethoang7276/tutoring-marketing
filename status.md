@@ -27,6 +27,22 @@ Any session can take over from here. Do these in order:
 - **Gap:** Threads for the four 1 Nov posts (Threads holds max 25 scheduled). A session cron at 00:20 Vietnam on 26 Oct should add them; if it did not fire, schedule them by hand (the espresso thread is in Threads Drafts).
 - **First-comment crons are session-only** (CronCreate). After any restart they are gone: recreate them for every scheduled slot still ahead (4 minutes after each slot), or rely on catch-up. Each run posts the slot's `first_comment` and likes, reposts on IG/X/Threads only, hides the IG like count and tries the IG Story (phone fallback). Results go in `runs`.
 
+**Threads (24 Oct)**
+- All 25 scheduled Threads posts are retagged to subject topics: Statistics 5, Finance 5, Economics 4, Accounting 3, Business 3, Spreadsheets 2. The 3 marketing posts went to the Marketing community.
+- Edlintics joined Study Threads.
+- Every new post must propose its Threads destination in the slot (`threadsTopic`/`threadsTopicVariant`/`threadsCommunity`/`threadsReason`). The hub Review card shows it.
+- The 1 Nov Threads posts are still unscheduled because of the 25-limit; they use the alternate topics.
+
+**YouTube (added 24 Oct, in progress)**
+- Channel: UCUx_KFGdEVdBoKvCS3BxYRA.
+- Video posts go up as Shorts (full MP4); all others as channel Posts with the slides.
+- Old posts are being uploaded and 25 Oct to 1 Nov scheduled. The slot field is `youtube`.
+- Skill: `.claude/skills/edlintics-youtube-upload/SKILL.md`, written for a cheaper model.
+
+**Daily routine**
+- After the first comment on the day's last post (18:00 Madrid), run the daily metrics refresh (performance-review.md): last-7-day posts, plus posts in running tests until their judge date.
+- Before any automated action, check the active account is Edlintics on that platform (skill section 0a).
+
 **Running tests**
 - **Ledger walk "5 concepts", 24 Oct to 21 Nov, Instagram only:** alternate a 7-clip carousel and one long video. Other platforms always get the long video. On carousel days the long-video IG reel sits in Business Suite Drafts. Slots carry `test: "5c-format"` and `variant`. Decide on 21 Nov.
 - **Threads topics, 25 Oct to 7 Nov (H1 to H6 in weekly-content-process.md, judge 8 Nov):** done 24 Oct. All 25 scheduled Threads posts (24 Oct 23:00 to 1 Nov 00:00 Vietnam) now carry a subject topic instead of "edlintics": Statistics 5, Finance 5, Economics 4, Accounting 3, Business 3, Marketing 3, Spreadsheets 2. Marketing posts go into the Marketing community (114K members, 11.3K recent posts), not a plain topic. The Threads texts had no hashtags. Every slot has `threadsTopic`, `threadsTopicVariant` (primary/alternate) and `threadsTopicKind` (topic/community). Edlintics joined **Study Threads** on 24 Oct.

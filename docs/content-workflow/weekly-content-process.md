@@ -39,6 +39,8 @@
 - **H6:** Marketing posts placed in the Marketing community (114K members) get more views per post than the median topic-tagged puzzle in the same week. Slots: `threadsTopicKind: "community"`.
 Judge on 8 Nov in the weekly review, using median views, replies and follows per post, by topic.
 
+**Threads destination is part of every new post's proposal (Hoang, 24 Oct 2026).** When a post is created (Thursday plan, a request, a comic or a replacement), propose its Threads destination in the slot: `threadsTopic` plus `threadsTopicVariant` (primary or alternate per the running test), or `threadsCommunity` (for example Study Threads or Marketing). Add a one-line reason in `threadsReason`. The hub's Review card shows it as "Threads destination", and Hoang approves it with the content. A post without a proposed destination is not ready for review.
+
 Every post gets a **caption**, a **first comment** and, for Threads, a **`threadsTopic`** (or a `threadsCommunity` such as Study Threads for study-pain comics), chosen at planning time from `docs/research/2026-10-24-threads-topics-communities.md` and the current test arm. No hashtags in Threads text.
 
 Every post gets a **caption** and a **first comment**, and both are part of the content Hoang approves.
