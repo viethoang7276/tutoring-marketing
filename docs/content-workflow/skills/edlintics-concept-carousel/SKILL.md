@@ -29,7 +29,7 @@ The gold-standard samples are DAHYuQbDjXA (Definition, Opportunity cost) and DAH
 A definition carousel is the concept plus its key terms (Hoang, 24 Oct 2026, from a reference carousel that maps one subject to its numbered key terms). The branches and the pages after the map are **key terms that belong to the concept**, such as elastic demand or present value, never generic angles such as "What it measures" or "How it is used".
 
 1. **Cover:** "[Concept] is ——". The line continues onto page 2.
-2. **Key-terms map (fan tree):** the definition finishes at the top, and the tree fans out to 5 numbered key terms of the concept.
+2. **Key-terms map (fan tree):** the definition finishes at the top, and the tree fans out to 5 to 8 numbered key terms of the concept (the current Canva tree has 5 branches; add branches and term pages when the concept needs more). This is a standing design principle (Hoang, 24 Oct 2026).
 3. **Term 1**
 4. **Term 2**
 5. **Term 3**
