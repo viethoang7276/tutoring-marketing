@@ -90,6 +90,7 @@ Rules learned so far:
 - **After two rejections of the same slot, offer 2-3 options before building.** Show each question with its answer in chat and let Hoang pick (1 Nov slot rejected three times on 24 Oct; he picked the cafe espresso machine depreciation puzzle). Mean vs median on salaries was also rejected: avoid stock textbook examples.
 - **Comics: 4 panels by default, speech bubbles, no small topic tag on the slides** (24 Oct).
 - **Every video carousel gets music** from Canva's free library (24 Oct).
+- **Stories:** every post is shared to the Facebook Story (when scheduling) and to the Instagram Story (with the first comment). Do it by hand each time, never with an automatic "always share" setting (Hoang, 24 Oct; this keeps Stories despite 0 views so far).
 
 ## Currency
 

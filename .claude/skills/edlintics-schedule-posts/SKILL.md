@@ -73,6 +73,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 2. Go to `https://www.instagram.com/edlintics/` and `find` the first grid post link, then open `/p/<code>/`.
 3. Comment: **Enter and shift+Enter both submit**, so type the whole `k<n>` as **one line** (paragraphs joined by a space), then press Enter.
 4. After commenting, the layout shifts, so reload the post and `find` "Like button and Repost button in the action row" before clicking (clicking by position opened Insights once). Click the heart, then the Repost icon (next to the comment count). Leave "Add a thought" empty. Check that "Liked by edlintics" and the repost count show.
+5. **Instagram Story share (Hoang, 24 Oct 2026):** share the post to the edlintics Story every time, as the page, once per post. First try the post's Share (paper plane) menu on instagram.com for "Add post to your story". The desktop web often lacks it. If so, use Meta Business Suite › Create story › Instagram only, with slide 1 of the post (export from Canva as PNG), and publish the story. If neither route works as the page, record `story: false` with a note, and ask Hoang to share it from the phone. Never turn on any automatic "always share" setting.
 
 **C. LinkedIn**
 1. Go to `https://www.linkedin.com/company/31541400/admin/page-posts/published/` and wait about 4 s. The first post is the newest.
@@ -90,11 +91,11 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 1. Open `https://www.threads.com/@edlintics` and `find` "Like, Reply, Repost buttons of the newest thread". Click Like, then Repost › **Repost** (the toast says "Reposted").
 2. Click Reply. It opens the thread page with a "Reply to edlintics…" box. Click it, wait 1 s, type with `shift+Enter` between paragraphs, then click the round send arrow. Our own reply appears as part 2 of 2 of the thread.
 
-**Record (safeguard, 23 Oct 2026):** after each platform, write the result to the hub database (ArtifactData, url https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6, collection `runs`, doc `<YYYY-MM-DD-HHMM>` in Madrid time): `done.<fb|ig|li|x|th> = {comment, like, repost}` as booleans, plus `at` and a `note` for anything skipped. When a batch is scheduled, create one `runs` doc per slot with `title`, `dueAt` (UTC ISO), `platforms` and `igManual` (true when Instagram is posted by hand from the phone), so the hub can flag misses.
+**Record (safeguard, 23 Oct 2026):** after each platform, write the result to the hub database (ArtifactData, url https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6, collection `runs`, doc `<YYYY-MM-DD-HHMM>` in Madrid time): `done.<fb|ig|li|x|th> = {comment, like, repost}` as booleans, plus `done.ig.story` and `done.fb.story` (true once the post is on the Story), plus `at` and a `note` for anything skipped. When a batch is scheduled, create one `runs` doc per slot with `title`, `dueAt` (UTC ISO), `platforms` and `igManual` (true when Instagram is posted by hand from the phone), so the hub can flag misses.
 
 **Catch-up (safeguard):** the per-slot timers die when the Mac sleeps, shuts down or the session closes. So at the start of every session, read the `runs` collection. For any doc whose `dueAt` is in the last 24 hours and has a platform missing a comment, like or repost, run this section for it now, late. Anything older than 24 hours: report it to Hoang, don't act. If `igManual` is true and `igPosted` is not, remind Hoang first that the Instagram post is still due.
 
-**Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. Don't substitute a story share.
+**Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. A story share never replaces the comment, like or repost.
 
 ## Never
 - Boost, change page settings, choose "Always share stories", or post anything Hoang has not approved in chat.
