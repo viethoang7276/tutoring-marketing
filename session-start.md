@@ -25,7 +25,7 @@ Read the hub's `runs` collection (ArtifactData, https://claude.ai/artifact/HbKxz
 
 ## Hoang's review requests (do this every session, after the safeguard)
 
-Query the hub's `slots` collection for `status == "changes"`. Each one is a "Request change" Hoang clicked in the Review tab; his instruction is in `statusNote`. Apply each change (Canva design, caption, first comment; keep every content rule), commit the Canva transaction, then set the slot back to `status: "proposal"` with a `statusNote` that starts "Revised <date>:" and says what changed. Report the list to Hoang. Clicking the button does not notify any running session; this check is how the requests get picked up.
+Query the hub's `slots` collection for `status == "changes"`. Each one is a "Request change" Hoang clicked in the Review tab; his instruction is in `statusNote`. Apply each change (Canva design, caption, first comment; keep every content rule), commit the Canva transaction, then set the slot back to `status: "proposal"` with a `statusNote` that starts "Revised <date>:" and says what changed. Then follow "Learning from change requests" in docs/content-workflow/weekly-content-process.md: turn each note into a general rule in that list, and sweep the other upcoming posts for the same problem. Report the fixes, the new rules and the sweep to Hoang. Clicking the button does not notify any running session; this check is how the requests get picked up.
 
 ## Who you are
 

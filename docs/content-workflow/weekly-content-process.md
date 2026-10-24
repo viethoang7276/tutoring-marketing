@@ -71,6 +71,25 @@ Every week (proposed: Wednesday, before planning) Claude scans Instagram in Hoan
 - **Rules:** take the format and the topic, never the wording, artwork or data. No logos of other companies on our slides. Count engagement only as shown publicly; never estimate.
 - **Output:** 5 to 15 finds a week. The best 3 to 5 go into `requests` as ideas marked "from trend scan", so they enter the monthly plan through the benchmark and scoring like any other idea. New formats that keep appearing become template proposals.
 
+## Learning from change requests (added 24 Oct 2026)
+
+Every time a "Request change" is processed (session start, or the daily cloud check), do three things, not one:
+1. **Fix the post** Hoang flagged.
+2. **Turn the note into a general rule** and add it to the list below (and to the matching skill in `docs/content-workflow/skills/` when it is about visuals), so future posts are built right the first time. Write the rule in plain words with the date and the post it came from.
+3. **Sweep the other upcoming posts** (status `proposal` or `approved`, not yet posted) for the same problem and fix them too. Note the sweep in each touched slot's `statusNote`. A fixed post that was `approved` goes back to `proposal`, because the approval no longer matches what Hoang saw.
+
+Rules learned so far:
+- **Concrete setting, in full sentences.** Every puzzle names who and where: a company, a bank, a city, a country (tax puzzle and fraud puzzle, 24 Oct). Never an abstract "a market" or "a test".
+- **Say what a model is for.** A statistics question about a model states what it predicts from what, for example "predicts a store's monthly sales from ad spend" (R-squared puzzle, 24 Oct).
+- **A picture a student reads in 3 seconds.** If the diagram needs explaining, redraw it as a simpler tree, bar or scene (fraud puzzle grid replaced by a tree, 24 Oct).
+- **Prefer friendly scenes with the Ledger cast** (a shop, a store, an office) over abstract charts when the puzzle is about a business (price and revenue puzzle, 24 Oct).
+- **Colour-code each item distinctly.** Two products or lots must never share a colour (FIFO/LIFO $7 units, 24 Oct).
+- **Vary the illustrations.** Two posts in a week must not reuse the same illustration style for the same idea (margin vs turnover, 24 Oct).
+- **Practical questions over textbook traps.** Hoang rejected a regression-to-the-mean puzzle and then a survivorship-bias fund puzzle for the same slot; prefer everyday business decisions with money in them (1 Nov slot, 24 Oct).
+- **No exam-only wording; the audience includes business people** (captions, 24 Oct).
+- **Comics: 4 panels by default, speech bubbles, no small topic tag on the slides** (24 Oct).
+- **Every video carousel gets music** from Canva's free library (24 Oct).
+
 ## Currency
 
 All amounts in questions, slides, captions and first comments are in US dollars, written with a $ sign ($1.80, $3,000). This is the default for every exercise (agreed 22 Oct 2026).
