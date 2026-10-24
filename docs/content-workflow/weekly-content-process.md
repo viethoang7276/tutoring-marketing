@@ -29,6 +29,15 @@
 
 **Test running (24 Oct to 21 Nov 2026): Ledger walk format.** Alternate the "5 concepts" posts between a multi-clip carousel (one MP4 per page, swipeable) and one long video (the full MP4). Start with the carousel on 24 Oct, then long, carousel, long, and so on. The test is Instagram only: Facebook, Threads, LinkedIn and X always get the long video. Tag each slot `test: "5c-format"` and `variant: "carousel"` or `"long"`. In the weekly review, compare the two variants on Instagram by reach, reach from non-followers, watch time, shares and saves. Decide on 21 Nov.
 
+
+**Test running (25 Oct to 7 Nov 2026): Threads topics.** Threads distributes mainly through the one topic tag per post. The old "edlintics" tag reached nobody. Each Threads post now gets a subject topic: the primary topic for 25 to 31 Oct, then the alternate for 1 to 7 Nov. The mapping is in `docs/research/2026-10-24-threads-topics-communities.md`, and the slot fields are `threadsTopic` and `threadsTopicVariant`. No hashtags in Threads text. Study-pain comics also go to the Study Threads community (joined 24 Oct).
+- **H1:** subject topics raise Threads views per post at least 3 times versus the "edlintics" tag (baseline: 7 to 22 views).
+- **H2:** most Threads views keep coming from non-followers (baseline 24 of 25), and follows from Threads rise above 0.
+- **H3:** at least one primary topic beats its alternate by 1.5 times or more in median views per post. Keep the winner per subject.
+- **H4:** money-led puzzles in Finance or Personal Finance get more replies than process puzzles (baseline: coffee 22 views vs sequencing 7).
+- **H5:** a comic posted in Study Threads gets more likes than the same style posted with a topic only.
+Judge on 8 Nov in the weekly review, using median views, replies and follows per post, by topic.
+
 Every post gets a **caption** and a **first comment**, and both are part of the content Hoang approves.
 
 ## The Thursday run, step by step

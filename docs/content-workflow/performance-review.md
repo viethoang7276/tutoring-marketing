@@ -47,3 +47,18 @@ The hub's first tab, Performance (https://claude.ai/artifact/HbKxzWUcWhaBaaNb9bu
 - `review.next`: 4 to 6 concrete changes for next week, each one sentence and each tied to a number above.
 
 Do not republish the page for a data refresh.
+
+## Hypotheses and tracking (added 24 Oct 2026)
+
+Every running test is listed in weekly-content-process.md with numbered hypotheses (H1, H2...) and a judge date. In each weekly review:
+- Record the numbers per test in `perf/latest.tests`, as `{id, hypothesis, metric, baseline, current, n, verdict: pending|supported|rejected, note}`.
+- Write the verdicts into the review paragraph.
+- Turn supported results into rules in "Rules learned so far".
+
+Do not call a verdict before the judge date, or with fewer than 4 posts per arm.
+
+Running now:
+- **5c-format:** Instagram carousel vs long video, until 21 Nov.
+- **threads-topic:** H1 to H5, until 8 Nov.
+
+Per Threads post, track views, the share of views from non-followers (Threads Insights), replies, reposts and follows, with `threadsTopic` and `threadsTopicVariant`.

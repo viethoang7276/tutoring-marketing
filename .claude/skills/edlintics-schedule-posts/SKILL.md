@@ -100,6 +100,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 **Report** one table: platform × comment, like, repost. Close the tabs you opened. If something can't be done as the page, skip it and say so. A story share never replaces the comment, like or repost.
 
 ## Platform limits and gotchas (learned 24 Oct 2026)
+- **Threads topic:** never let `#edlintics` become the topic. Remove all hashtags from the Threads text, then set the topic chip from the slot's `threadsTopic`. If it is empty, use the subject mapping in docs/research/2026-10-24-threads-topics-communities.md and the current test arm in weekly-content-process.md. A topic cannot be changed after posting.
 - **Threads** holds at most 25 scheduled threads. Schedule the nearest posts first. For the rest, leave a session cron (or a note in status.md) to add them once earlier ones go live.
 - **X** takes at most 4 images per post. Carousels with more pages go to X with pages 1 to 4, and the slot's statusNote says so.
 - **5-concepts format test (Instagram only, until 21 Nov):** on carousel days, export each Canva page as its own MP4 and post the clips as an Instagram carousel. Facebook, LinkedIn, X and Threads get the full MP4. If Business Suite creates the Instagram copy of the long video, move it to Drafts.
