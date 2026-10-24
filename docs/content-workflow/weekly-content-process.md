@@ -111,11 +111,12 @@ General rules:
 - **Hashtags:** 3–5 at the end of the caption. Always #edlintics and #businessstudents, plus 1–3 from #accounting #finance #economics #CFA #ACCA #statistics #marketing #management.
 - **Links:** write edlintics.com as plain text. Links aren't clickable in Instagram captions or comments.
 
-**Puzzle caption:**
-- Line 1 is the question as a hook.
-- Then 1–2 lines on why it matters.
-- End with "Comment your answer before you swipe."
-- Never give the answer away.
+**Puzzle caption (updated 24 Oct 2026, modelled on how Brilliant structured its 2019–2020 daily challenges; structure only, never their wording):** the caption is the puzzle itself, so it can be solved in the feed.
+1. The setup and question in full sentences, with every number and assumption the reader needs (usually the slide question, word for word).
+2. The options on separate lines: "A. …", "B. …". Word choices still get letters. Ranking puzzles have no options; ask for an order, and never use the real answer as the example order.
+3. One "Hint:" line that nudges without giving the answer away.
+4. "Swipe for the answer, and tell us your letter in the comments first. More puzzles at edlintics.com." (Ranking: "Reply with your order in the comments, for example B, C, A, then swipe for the answer.")
+5. 3–5 hashtags. On X: question, options and "Reply with your letter, then check the answer slide. #edlintics" within 280 characters. On Threads: no hashtag line, because the topic tag is set separately.
 
 **First comment (every post, updated 22 Oct 2026):** it drives replies and never reveals the answer, the trap or the reasoning; the answer stays on slide 2. Build it in this order:
 1. **Conversation starter:** a question to answer before swiping, e.g. Reply "sell" or "refuse" with one line on why.
