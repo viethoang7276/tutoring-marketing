@@ -77,7 +77,8 @@ Run this every day straight after the first-comment run of the day's last post (
    - Business Suite Insights › Content for Facebook and Instagram;
    - LinkedIn page analytics › Updates;
    - X post analytics;
-   - Threads Insights.
+   - Threads Insights;
+   - TikTok Studio › Posts (`tiktok.com/tiktokstudio/content`: views, likes, comments per post) and each post's Analytics page; the counts there lag the public page by a few minutes. Skill: `.claude/skills/edlintics-tiktok-upload/SKILL.md`.
    Record views, reach, likes, comments, shares or reposts, saves, link clicks, follows, the share of views from non-followers where shown, and video watch time where shown. Record only what the platform shows: `null` = not shown.
 3. **Update** `perf/latest` in the hub (ArtifactData, if_version from a fresh read):
    - replace or add those posts' rows in `posts`, keeping the own like, comment and repost counts so "engagement from others" stays correct;

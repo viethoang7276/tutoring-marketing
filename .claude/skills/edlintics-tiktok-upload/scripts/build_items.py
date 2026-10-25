@@ -3,14 +3,15 @@
 
 Usage:
   python3 build_items.py <slots_dir> <posts_dir> <out_dir> [--from 2026-10-22] [--to 2026-11-01]
-                         [--copy <posts_dir>/copy.json] [--lead 20]
+                         [--copy <posts_dir>/copy.json] [--lead 20] [--only 0,3,4]
 
 <slots_dir>  slot JSON files saved by ArtifactData list/query (collection "slots").
 <posts_dir>  exported media. Looked up in this order:
                <posts_dir>/<slot id>/fixed/   (corrected exports: 01.png.. or <subject>.mp4)
                <posts_dir>/<slot id>/*.mp4     (explainer reels)
                <posts_dir>/<MMDD>-<HHMM>-<slug>-<n>.png / <MMDD>-<HHMM>-<subject>.mp4
-<out_dir>    gets items.json (queue with absolute paths) and prints the queue.
+<out_dir>    gets items.json (queue with absolute paths) and inject.js (run once on tiktok.com:
+             stores titles, captions, tags and times in localStorage 'edl_tt'), and prints the queue.
 
 Rules baked in:
 - format five-concepts / explainer-reel (any .mp4) -> TikTok video. Everything else -> TikTok photo post.
@@ -21,6 +22,7 @@ Rules baked in:
   from its suggestion list).
 - five-concepts captions: "This carousel" -> "This video", "Swipe through and note" -> "Watch and note".
 - when: the slot's time_vietnam if it is more than --lead minutes in the future, else "now".
+- The queue skips slots whose tiktok.status is scheduled/published, so re-running is safe.
 """
 import datetime
 import glob
@@ -109,6 +111,12 @@ def main():
     items.sort(key=lambda x: x['sort'])
     os.makedirs(out_dir, exist_ok=True)
     json.dump(items, open(os.path.join(out_dir, 'items.json'), 'w'), indent=1, ensure_ascii=False)
+    only = set(opt('--only', '').split(',')) - {''}
+    store = {str(i): dict({k: x[k] for k in ('slot', 'body', 'tags', 'when')}, title=x['title'][:90])
+             for i, x in enumerate(items) if not only or str(i) in only}
+    open(os.path.join(out_dir, 'inject.js'), 'w').write(
+        "localStorage.setItem('edl_tt'," + json.dumps(json.dumps(store, ensure_ascii=False), ensure_ascii=False)
+        + ");'stored '+Object.keys(JSON.parse(localStorage.getItem('edl_tt'))).length;\n")
     for i, x in enumerate(items):
         print(i, x['slot'], x['type'], x['when'], len(x['files']), 'tags', len(x['tags']), 'chars', len(x['body']))
 
