@@ -1,0 +1,302 @@
+[
+ {
+  "img": "s7",
+  "focus": [
+   300,
+   860,
+   560,
+   640
+  ],
+  "focus_end": [
+   330,
+   890,
+   500,
+   580
+  ],
+  "text": "Why do smart people keep paying for bad decisions?",
+  "chunks": [
+   {
+    "text": "Why do smart people"
+   },
+   {
+    "text": "keep paying",
+    "key": "paying"
+   },
+   {
+    "text": "for bad decisions?",
+    "key": "bad decisions?"
+   }
+  ]
+ },
+ {
+  "img": "s1",
+  "focus": [
+   220,
+   860,
+   700,
+   640
+  ],
+  "text": "Ledger paid sixty dollars for a concert ticket.",
+  "chunks": [
+   {
+    "text": "Ledger paid $60",
+    "key": "$60"
+   },
+   {
+    "text": "for a concert ticket"
+   }
+  ]
+ },
+ {
+  "img": "s2",
+  "focus": [
+   200,
+   600,
+   690,
+   900
+  ],
+  "focus_end": [
+   300,
+   880,
+   500,
+   620
+  ],
+  "text": "On the night, it is pouring with rain, and Ledger feels ill.",
+  "chunks": [
+   {
+    "text": "On the night"
+   },
+   {
+    "text": "it is pouring with rain",
+    "key": "pouring"
+   },
+   {
+    "text": "and Ledger feels ill",
+    "key": "ill"
+   }
+  ]
+ },
+ {
+  "img": "s3",
+  "focus": [
+   120,
+   520,
+   620,
+   980
+  ],
+  "text": "But Ledger thinks, I already paid, so I have to go.",
+  "chunks": [
+   {
+    "text": "But Ledger thinks"
+   },
+   {
+    "text": "I already paid",
+    "key": "already paid"
+   },
+   {
+    "text": "so I have to go"
+   }
+  ]
+ },
+ {
+  "img": "s4",
+  "focus": [
+   120,
+   700,
+   880,
+   800
+  ],
+  "text": "The sixty dollars is gone either way.",
+  "chunks": [
+   {
+    "text": "The $60 is gone",
+    "key": "gone"
+   },
+   {
+    "text": "either way"
+   }
+  ],
+  "focus_end": [
+   300,
+   960,
+   480,
+   540
+  ]
+ },
+ {
+  "img": "s5",
+  "focus": [
+   30,
+   830,
+   780,
+   880
+  ],
+  "text": "That is a sunk cost: money already spent that no decision can recover.",
+  "chunks": [
+   {
+    "text": "That is a sunk cost",
+    "key": "sunk cost"
+   },
+   {
+    "text": "money already spent"
+   },
+   {
+    "text": "that no decision"
+   },
+   {
+    "text": "can recover",
+    "key": "recover"
+   }
+  ]
+ },
+ {
+  "img": "s6",
+  "focus": [
+   80,
+   570,
+   910,
+   920
+  ],
+  "focus_end": [
+   400,
+   900,
+   560,
+   600
+  ],
+  "text": "Companies do it too. Ledger's company spent two million dollars on an app with no users.",
+  "chunks": [
+   {
+    "text": "Companies do it too"
+   },
+   {
+    "text": "Ledger's company spent"
+   },
+   {
+    "text": "$2 million on an app",
+    "key": "$2 million"
+   },
+   {
+    "text": "with no users",
+    "key": "no users"
+   }
+  ]
+ },
+ {
+  "img": "s7",
+  "focus": [
+   290,
+   860,
+   580,
+   660
+  ],
+  "text": "Ledger says, we have already spent too much to stop now.",
+  "chunks": [
+   {
+    "text": "Ledger says"
+   },
+   {
+    "text": "we have spent too much"
+   },
+   {
+    "text": "to stop now",
+    "key": "stop now"
+   }
+  ]
+ },
+ {
+  "img": "s8",
+  "focus": [
+   220,
+   880,
+   750,
+   620
+  ],
+  "text": "The better question: will the next five hundred thousand dollars pay off?",
+  "chunks": [
+   {
+    "text": "The better question"
+   },
+   {
+    "text": "will the next $500,000",
+    "key": "$500,000"
+   },
+   {
+    "text": "pay off?",
+    "key": "pay off?"
+   }
+  ]
+ },
+ {
+  "img": "s8",
+  "focus": [
+   60,
+   1000,
+   560,
+   500
+  ],
+  "text": "The two million does not count either way.",
+  "chunks": [
+   {
+    "text": "The $2 million"
+   },
+   {
+    "text": "does not count",
+    "key": "not count"
+   },
+   {
+    "text": "either way"
+   }
+  ]
+ },
+ {
+  "img": "s9",
+  "focus": [
+   80,
+   540,
+   990,
+   950
+  ],
+  "text": "The past is spent. Good decisions weigh only what comes next.",
+  "chunks": [
+   {
+    "text": "The past is spent",
+    "key": "spent"
+   },
+   {
+    "text": "Good decisions weigh"
+   },
+   {
+    "text": "only what comes next",
+    "key": "what comes next"
+   }
+  ],
+  "focus_end": [
+   400,
+   950,
+   500,
+   560
+  ]
+ },
+ {
+  "img": "s7",
+  "focus": [
+   300,
+   860,
+   560,
+   640
+  ],
+  "text": "So before you pay again, ask what the next dollar will buy.",
+  "chunks": [
+   {
+    "text": "Before you pay again"
+   },
+   {
+    "text": "ask what the next dollar",
+    "key": "next dollar"
+   },
+   {
+    "text": "will buy"
+   }
+  ]
+ }
+]
