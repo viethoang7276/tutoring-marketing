@@ -74,3 +74,6 @@ Check at the end: Scheduled tab count and Studio › Content › Shorts.
 - **Captions:** use the slot's `caption` exactly as stored. UTM tags are added in the slot caption at approval time, never by this skill.
 - **After a 429:** close your tab without saving the draft. Nothing was created, and the hub slot stays `pending`.
 - **Placeholders:** `__I__` in the scripts is replaced with the queue index before each run (for example with `sed 's/__I__/3/'`).
+- **429 cleared on 25 Oct 2026** (after YouTube approved advanced features): the probe returned 200 and 10 posts went through in about 25 minutes with no 429. Stopped at 10 on purpose, to stay under the ~14 that tripped it before. Pace: about 10 per run, then wait.
+- **Speed-up:** store `post-compose.js` and `post-schedule.js` in `localStorage` (`edl_c`, `edl_s`, bodies using `return`, index as parameter `I`) and run them with `new (Object.getPrototypeOf(async function(){}).constructor)('I', localStorage.getItem('edl_c'))(idx)`. Eval is allowed on the Posts page. Each batch then ends one item (schedule) and starts the next (navigate, compose, find), so it is 2 calls per post.
+- **Post URLs:** on `?pvf=CAE%253D` the cards are lazy-loaded (about 10 at a time) and listed newest first; read `a[href*="/post/"]` and match by the "Scheduled for" text inside `ytd-backstage-post-thread-renderer`.
