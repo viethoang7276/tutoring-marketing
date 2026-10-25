@@ -40,6 +40,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - **Ledger:** `{"p": "ledger", "id": "led", "x": 540, "y": 1470, "s": 2.2, "mood": "smile", "arm": "down", "outfit": "suit"}`. (x, y) is between his feet, and the ground is at y 1480. Use `"flip": true` to make him face left.
    - **Other props:** (x, y) is the centre. Give an `id` to anything the frame should show.
    - **`frame`:** leave it out. The default auto-fits the drawn scene to about 70% of the frame width without clipping Ledger. Only add one (`ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`) for a deliberate close-up. There are no camera moves.
+   - **Keep Ledger big:** auto-fit sizes the whole drawing to 70% of the width, so wide props (desk, scale, `people_group`, `building`) shrink him. Use Ledger `s` 2.4-2.6 with one or two small props (scale `s` 0.7 with its pivot y about 1270, `person` `s` 1.5), not a desk or `people_group`.
    - **One clear action per scene, and no text inside the art.** Reuse a scene for two beats if it fits; it stays the same frame.
 4. **Validate and build.** Run `$E/make_reel.sh $W <slug>`. It stops at the first problem with clear `FAIL` lines; fix the script and run it again. WARN lines are advice.
    - Output in `$W`:
@@ -56,14 +57,14 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    If a scene looks wrong, move the items (x, y, s), or add a `frame` override, then rebuild.
 6. **Canva draft with music.** In Chrome, in your own new tab:
    1. Run `copy-design` on the latest reel design, `DAHZALJdKoM` (sunk cost v5, which carries the free Canva track "Light Minimal Ambient"). Open the copy at `https://www.canva.com/design/<id>/edit`.
-   2. Uploads › `find` the "file input" › `file_upload` `<slug>-canva-upload.mp4`. The Chrome bridge takes at most 10 MB. Wait until the thumbnail shows its length.
+   2. Uploads › `find` the "file input" › `file_upload` `<slug>-canva-upload.mp4`. The Chrome bridge takes at most 10 MB. The copy opens already in timeline view, with the old video and the music on it; other agents' uploads share the Videos list, so pick the thumbnail whose length matches yours. Wait until the thumbnail shows its length.
    3. Click the video on the page (the old background) to select it, click **Replace** in the toolbar, then click the new thumbnail. The background swaps in place and the music stays. Do NOT click the thumbnail with nothing selected: that appends a second clip and doubles the length (if it happens, press cmd+z).
-   4. **Remove any old video.** In the page ⋯ menu, choose **Edit as video**. The timeline must show only the new video and the music. Delete any other video layer (an old reel left on top) and any extra clip after the new one. The total at the bottom right must equal the video length (for example 0:36); the music trims itself to the page.
+   4. **Remove any old video.** If the timeline is not already showing, use the page ⋯ menu › **Edit as video**. The timeline must show only the new video and the music. Delete any other video layer (an old reel left on top) and any extra clip after the new one. The total at the bottom right must equal the video length (for example 0:36); the music trims itself to the page.
    5. Rename it: File › pencil › "Explainer reel - <Term> (Ledger) v1". Check it says "All changes saved".
    6. Run `move-item-to-folder` with the design id to `FAHYcHrS5PE`. Close your tab.
 7. **Upload the video to the hub so it plays on Hoang's phone.** Use the Artifact tool, publish with `asset: true`:
    - `url` `https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6`;
-   - `file_paths`: `<slug>.mp4` and a poster JPEG (make it from the first still: `$PY -c "from PIL import Image; Image.open('<first still>').convert('RGB').resize((540,960)).save('$W/poster.jpg', quality=85)"`).
+   - `file_paths`: `<slug>.mp4` and a poster JPEG (make it from the first still by time, `ls $W/stills | sort -V | head -1` (plain `ls` sorts 11.37 before 2.17): `$PY -c "from PIL import Image; Image.open('<first still>').convert('RGB').resize((540,960)).save('$W/poster.jpg', quality=85)"`).
    - Keep the returned `/_blob/...` URLs.
 8. **Hub proposal card.** Use ArtifactData `set` on `slots/<slot id>`. The slot id is `reel-<slug>`, or the date-time id Hoang gives. Copy the field names of `explainer-sunk-cost`:
    - **Basics:** `format: "explainer-reel"`, `reelType: "definition"`, `kind: "video"`, `status: "proposal"`, `title`, `family_or_category`.

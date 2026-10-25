@@ -6,7 +6,7 @@ description: Make one Edlintics "A day in the life of a [role]" reel (9:16, 30-4
 # Edlintics "life of" reel
 
 You produce one reel and one `status: "proposal"` card in the hub. Nothing is posted; Hoang approves on the Review board.
-- **Worked example:** `example-accountant.json` ("An accountant at month-end", teaching accruals).
+- **Worked example:** `example-accountant.json` ("An accountant at month-end", teaching accruals; validates with no WARN, 38 s).
 - **Blank to fill:** `template.json`.
 - **Engine:** `.claude/skills/edlintics-explainer-reel/scripts/` (called `$E` below).
 
@@ -57,6 +57,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
      - `calendar` (`mark` circles a day), `clock` (`hour`), `invoice`, `coffee`, `bed`, `school_desk`, `whiteboard`, `funnel` (`top`/`bottom` dots), `handshake`;
      - `chart` (`trend`), `check` and `cross`.
    - **Placement:** Ledger's (x, y) is between his feet, and the ground is at y 1480. Every other prop's (x, y) is its centre. Give an `id` to anything the frame should show.
+   - **Keep Ledger big (auto-fit shrinks wide scenes):** do not use `desk`, a laptop on a desk or props spread across the frame; stand Ledger at y 1470, s 2.2-2.4, with props at s 0.8-1.0 close beside him. Keep tall props (clock, calendar) at y 1000 or lower so they stay out of the caption band. No food props exist (use moods, `check`, `coins`, `chart`).
    - **`frame`:** leave it out. The default auto-fits the drawn scene to about 70% of the frame width without clipping Ledger. Only add one (`ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`) for a deliberate close-up. There are no camera moves.
 4. **Validate and build.** Run `$E/make_reel.sh $W <slug>`. Fix any `FAIL` line and run it again. Output: `<slug>.mp4`, `<slug>-voice-only.mp4`, `<slug>-canva-upload.mp4` and `<slug>-contact-sheet.png`.
 5. **Check by eye.** Use the contact sheet:
@@ -64,12 +65,14 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - Ledger is big and recognisable;
    - no art sits under the captions;
    - the end card reads well.
+   If Ledger is small or a prop hides under the captions, fix the scene (see Compose) and rebuild (about 2 min).
 6. **Canva draft with music:** follow edlintics-definition-reel step 6 exactly:
-   - copy `DAHZALJdKoM`, upload `<slug>-canva-upload.mp4` (10 MB cap), set it as background;
+   - `copy-design` `DAHZALJdKoM`, open `/design/<id>/edit`, click Uploads, then `find` "file input button" (the first `find` may return the search box; ask again) and upload `<slug>-canva-upload.mp4` (10 MB cap), open the Videos tab, wait for the thumbnail to show its length, then click the old video on the page, **Replace**, and your thumbnail. The upload library is shared, so pick the thumbnail whose length matches your video;
    - Edit as video, delete any old video layer, and check the total equals the video length;
-   - rename it "Explainer reel - Life of <role> (Ledger) v1", then move it to `FAHYcHrS5PE`.
-7. **Upload the video to the hub:** follow edlintics-definition-reel step 7 (Artifact publish, `asset: true`, the MP4 plus a poster JPEG).
+   - rename it "Explainer reel - Life of <role> (Ledger) v1" (File menu, the name field at the top), check "All changes saved", then `move-item-to-folder` to `FAHYcHrS5PE`.
+7. **Upload the video to the hub:** follow edlintics-definition-reel step 7 (Artifact publish, `asset: true`, the MP4 plus a poster JPEG). Make the poster from the still with the lowest time in `$W/stills/` (sort numerically, not alphabetically) and name it `<slug>-poster.jpg`.
 8. **Hub proposal card:** follow edlintics-definition-reel step 8, with these differences:
+   - slot id = the slot id you were given (else `lifeof-<slug>`); also set `id`, `reviewId` (= slot id), `image: "draft"`, `text: "ready"`;
    - `reelType: "life-of"`;
    - `test: "H14"`, plus `test2: "H12"`;
    - `title` "A day in the life of <role>: <concept>".
@@ -77,6 +80,8 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - the slot id, Canva id and length;
    - the contact sheet path;
    - any WARN lines left.
+
+Threads topic: use the primary arm in week 1 (mapping in `docs/research/2026-10-24-threads-topics-communities.md`). A sales or marketing reel maps to the Marketing community, which needs Hoang's approval to join, so use the topic Business and say so in `threadsReason`.
 
 ## Topic bank (one concept each; none duplicates a carousel, puzzle or definition reel up to 1 Nov 2026)
 | Role and moment | Concept | The turning moment |

@@ -3,7 +3,7 @@
   "type": "life-of",
   "term": "Accrual",
   "title": "A day in the life of an accountant: accruals",
-  "slug": "life-of-accountant",
+  "slug": "lifeof-accountant-accruals",
   "family_or_category": "accounting",
   "caption": "Month-end is when accountants make sure every cost lands in the right month\n\nThe October electricity bill arrives on 3 November. It still belongs to October, because that is when the power was used. That is an accrual: you record a cost when it happens, not when the cash moves\n\nSave this for your next month-end close\n\n#edlintics #businessstudents #accounting #finance",
   "caption_x": "A day in the life of an accountant: the October bill arrives in November, and it still belongs to October. That is an accrual. edlintics.com #edlintics",
@@ -26,47 +26,36 @@
    "bg": "office",
    "items": [
     {
-     "p": "ledger",
-     "id": "led",
-     "x": 560,
-     "y": 1268,
-     "s": 1.7,
-     "mood": "worried"
-    },
-    {
-     "p": "desk",
-     "x": 540,
-     "y": 1250
-    },
-    {
      "p": "invoice",
-     "x": 230,
-     "y": 1120,
-     "s": 0.7,
+     "x": 220,
+     "y": 1330,
+     "s": 0.9,
      "rot": -10
     },
     {
      "p": "invoice",
-     "x": 300,
-     "y": 1100,
-     "s": 0.7,
+     "x": 290,
+     "y": 1300,
+     "s": 0.9,
      "rot": 5
     },
     {
-     "p": "laptop",
-     "id": "lap",
-     "x": 820,
-     "y": 1150,
-     "s": 0.75,
-     "screen": "sheet"
+     "p": "clock",
+     "x": 250,
+     "y": 1020,
+     "s": 0.8,
+     "hour": 7,
+     "id": "clk"
     },
     {
-     "p": "clock",
-     "id": "clk",
-     "x": 300,
-     "y": 700,
-     "s": 0.9,
-     "hour": 7
+     "p": "ledger",
+     "id": "led",
+     "x": 640,
+     "y": 1470,
+     "s": 2.3,
+     "mood": "worried",
+     "arm": "down",
+     "outfit": "suit"
     }
    ]
   },
@@ -75,11 +64,11 @@
    "items": [
     {
      "p": "clock",
-     "id": "clk",
-     "x": 280,
-     "y": 720,
-     "s": 1.0,
-     "hour": 8
+     "x": 290,
+     "y": 1100,
+     "s": 0.8,
+     "hour": 8,
+     "id": "clk"
     },
     {
      "p": "ledger",
@@ -88,14 +77,15 @@
      "y": 1470,
      "s": 2.3,
      "mood": "tired",
-     "arm": "hold"
+     "arm": "hold",
+     "outfit": "suit"
     },
     {
      "p": "coffee",
-     "id": "cup",
-     "x": 770,
-     "y": 1270,
-     "s": 0.85
+     "x": 800,
+     "y": 1330,
+     "s": 0.8,
+     "id": "cup"
     }
    ]
   },
@@ -103,46 +93,35 @@
    "bg": "office",
    "items": [
     {
-     "p": "ledger",
-     "id": "led",
-     "x": 560,
-     "y": 1268,
-     "s": 1.7,
-     "mood": "tired"
-    },
-    {
-     "p": "desk",
-     "x": 540,
-     "y": 1250
-    },
-    {
      "p": "invoice",
-     "x": 220,
-     "y": 1130,
-     "s": 0.8,
+     "x": 250,
+     "y": 1330,
+     "s": 1.0,
      "rot": -10
     },
     {
      "p": "invoice",
-     "x": 260,
-     "y": 1100,
-     "s": 0.8,
+     "x": 300,
+     "y": 1300,
+     "s": 1.0,
      "rot": 4
     },
     {
      "p": "invoice",
-     "id": "inv",
-     "x": 300,
-     "y": 1080,
-     "s": 0.8
+     "x": 350,
+     "y": 1280,
+     "s": 1.0,
+     "id": "inv"
     },
     {
-     "p": "laptop",
-     "id": "lap",
-     "x": 830,
-     "y": 1150,
-     "s": 0.75,
-     "screen": "sheet"
+     "p": "ledger",
+     "id": "led",
+     "x": 660,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "tired",
+     "arm": "down",
+     "outfit": "suit"
     }
    ]
   },
@@ -151,34 +130,30 @@
    "items": [
     {
      "p": "calendar",
-     "id": "cal",
-     "x": 280,
-     "y": 820,
-     "s": 1.0,
-     "mark": 2
-    },
-    {
-     "p": "envelope",
-     "x": 820,
-     "y": 760,
-     "s": 0.8
+     "x": 270,
+     "y": 1000,
+     "s": 0.9,
+     "mark": 2,
+     "id": "cal"
     },
     {
      "p": "invoice",
-     "id": "bill",
-     "x": 820,
+     "x": 830,
      "y": 1000,
-     "s": 1.0,
+     "s": 0.9,
      "stamp": true,
-     "rot": 8
+     "rot": 8,
+     "id": "bill"
     },
     {
      "p": "ledger",
      "id": "led",
-     "x": 520,
+     "x": 540,
      "y": 1470,
-     "s": 2.0,
-     "mood": "o"
+     "s": 2.2,
+     "mood": "o",
+     "arm": "down",
+     "outfit": "suit"
     }
    ]
   },
@@ -190,25 +165,27 @@
      "id": "col",
      "x": 290,
      "y": 1470,
-     "s": 2.0,
+     "s": 2.1,
      "mood": "smile",
      "color": "#F3D9A6"
     },
     {
      "p": "speech",
-     "id": "say",
      "x": 380,
-     "y": 880,
-     "s": 0.9,
-     "side": "left"
+     "y": 1000,
+     "s": 0.8,
+     "side": "left",
+     "id": "say"
     },
     {
      "p": "ledger",
      "id": "led",
-     "x": 770,
+     "x": 720,
      "y": 1470,
-     "s": 2.0,
+     "s": 2.2,
      "mood": "flat",
+     "arm": "down",
+     "outfit": "suit",
      "flip": true
     }
    ]
@@ -218,25 +195,26 @@
    "items": [
     {
      "p": "calendar",
-     "id": "cal",
-     "x": 330,
-     "y": 930,
-     "s": 1.1
+     "x": 290,
+     "y": 1050,
+     "s": 0.9,
+     "id": "cal"
     },
     {
      "p": "check",
-     "x": 330,
-     "y": 700,
-     "s": 1.2
+     "x": 310,
+     "y": 1330,
+     "s": 0.9
     },
     {
      "p": "ledger",
      "id": "led",
      "x": 720,
      "y": 1470,
-     "s": 2.1,
+     "s": 2.2,
      "mood": "smile",
      "arm": "point",
+     "outfit": "suit",
      "flip": true
     }
    ]
@@ -246,40 +224,41 @@
    "items": [
     {
      "p": "calendar",
-     "id": "cal",
-     "x": 300,
-     "y": 880,
-     "s": 1.0
+     "x": 250,
+     "y": 1060,
+     "s": 0.8,
+     "id": "cal"
     },
     {
      "p": "check",
-     "x": 300,
-     "y": 1150,
-     "s": 1.0
+     "x": 260,
+     "y": 1330,
+     "s": 0.8
     },
     {
      "p": "bills",
-     "id": "cash",
-     "x": 790,
-     "y": 1000,
-     "s": 1.0,
-     "n": 3
+     "x": 830,
+     "y": 1170,
+     "s": 0.8,
+     "n": 3,
+     "id": "cash"
     },
     {
      "p": "cross",
-     "x": 800,
-     "y": 950,
-     "w": 260,
-     "h": 240
+     "x": 830,
+     "y": 1150,
+     "w": 200,
+     "h": 190
     },
     {
      "p": "ledger",
      "id": "led",
      "x": 540,
      "y": 1470,
-     "s": 1.6,
+     "s": 2.1,
      "mood": "smile",
-     "arm": "up"
+     "arm": "up",
+     "outfit": "suit"
     }
    ]
   },
@@ -288,20 +267,21 @@
    "items": [
     {
      "p": "chart",
-     "id": "ch",
-     "x": 400,
-     "y": 880,
-     "s": 1.15,
-     "trend": "up"
+     "x": 340,
+     "y": 1050,
+     "s": 0.9,
+     "trend": "up",
+     "id": "ch"
     },
     {
      "p": "ledger",
      "id": "led",
-     "x": 790,
+     "x": 740,
      "y": 1470,
-     "s": 2.0,
+     "s": 2.2,
      "mood": "worried",
      "arm": "point",
+     "outfit": "suit",
      "flip": true
     }
    ]
@@ -311,16 +291,16 @@
    "items": [
     {
      "p": "books",
-     "x": 220,
-     "y": 1470,
-     "s": 1.0,
+     "x": 190,
+     "y": 1370,
+     "s": 0.8,
      "n": 4
     },
     {
      "p": "check",
-     "x": 850,
-     "y": 980,
-     "s": 1.4
+     "x": 880,
+     "y": 1050,
+     "s": 1.1
     },
     {
      "p": "ledger",
@@ -329,7 +309,8 @@
      "y": 1470,
      "s": 2.4,
      "mood": "happy",
-     "arm": "wave"
+     "arm": "wave",
+     "outfit": "suit"
     }
    ]
   }
@@ -442,7 +423,7 @@
   {
    "role": "concept",
    "img": "accrual",
-   "text": "That is an accrual. You record a cost when it happens, not when the cash moves.",
+   "text": "That is an accrual. You record a cost when it happens.",
    "chunks": [
     {
      "text": "That is an accrual",
@@ -454,9 +435,17 @@
     {
      "text": "when it happens",
      "key": "happens"
-    },
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "accrual",
+   "text": "Not when the cash moves.",
+   "chunks": [
     {
-     "text": "not when the cash moves"
+     "text": "Not when the cash moves",
+     "key": "cash"
     }
    ]
   },
@@ -480,7 +469,7 @@
   {
    "role": "lesson",
    "img": "good",
-   "text": "Good books show when money is earned and spent, not just when it moves.",
+   "text": "Good books show when money is earned and spent.",
    "chunks": [
     {
      "text": "Good books show"
@@ -491,9 +480,6 @@
     },
     {
      "text": "and spent"
-    },
-    {
-     "text": "not just when it moves"
     }
    ]
   },
