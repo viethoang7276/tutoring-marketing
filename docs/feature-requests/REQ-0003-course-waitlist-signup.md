@@ -69,6 +69,27 @@ The waitlist promises "a weekly business puzzle", so the list needs a weekly sen
 
 **Success signal:** at least 40% open rate, at least 8% click to the answer, and unsubscribes under 1% per send.
 
+## Part 3: /waitlist version B with interactive exercises, and a 50/50 test (added 25 Oct 2026, Hoang approved "build")
+Mockups (layout and wording only): `assets/REQ-0003/versionB-desktop.png`, `versionB-phone.png`, `versionB-mockup.html`, `user-flow.png`.
+- **Version A:** the plain /waitlist from the spec.
+- **Version B:**
+  - **Hero, left:** the headline "Learn the language of business by doing". The line under it reads "Accounting, mathematics, statistics and economics courses, built from short interactive exercises · Join the waitlist for early access and a weekly business puzzle". Then the email form and the consent line.
+  - **Hero, right:** an interactive exercise card with subject tabs for Accounting, Mathematics, Statistics and Economics. Each tab loads one real exercise; the defaults come from the home page exercises (the balance-sheet equation, the break-even dial, and so on). Under the card: "Like this? Get one every week · Join the waitlist".
+  - **"Courses opening soon":** four subject cards listing the real courses, with the real course cover images.
+  - **Bottom:** a dark band, "Be first in when the courses open", with a second form.
+- **Removed at Hoang's request:** the course badge, the stats row, the "Try a question" label, the lesson label, and the "?" in the empty slot. The page covers all courses, not one.
+- **Real assets in the build:**
+  - the real Ledger mascot;
+  - the real interactive exercise components;
+  - real course covers, and the site's own components and styles.
+  - The mockup's drawings are placeholders.
+- **Test:** split /waitlist visitors 50/50 between A and B, with the variant recorded on the signup row and in GA. Judge on confirmed signups per visitor after about 2 weeks.
+- **Copy rule:** no full stop at the end of any sentence in page copy. Use " · " between phrases.
+- **Also:**
+  - On phones, the form comes before the exercise (home hero too).
+  - A waitlist email that later creates an account merges into one record, with no second confirmation email.
+  - The course pages' existing "Notify me at launch" form joins the same waitlist, with course interest set automatically.
+
 ## Success signal
 Over the first 4 weeks: at least 5% of social visitors who land on the page confirm a signup, fewer than 2% of pending addresses look like bots, and the list reaches 300 confirmed signups by course launch.
 
@@ -78,4 +99,5 @@ No accounts, payments or community features. No referral leaderboard in v1; that
 ## Decision log
 - 2026-10-25: proposed by the CMO after Hoang asked for a waitlist and raised bot signups. Relayed to the tutoring-web session for a homepage proposal.
 - 2026-10-25: Hoang kept sign-up (needed to book tutoring). The hero shows the waitlist first, then "or Create a free account", and the header keeps "Get started". Hoang kept the weekly puzzle promise, which added Part 2.
+- 2026-10-25: Hoang approved the build, including version B (all courses, interactive exercises) and the 50/50 test. tutoring-web's preview with real assets is still the sign-off step.
 - _(Hoang: approve / defer / reject + reason here.)_
