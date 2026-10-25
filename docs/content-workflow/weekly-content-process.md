@@ -21,7 +21,8 @@
 
 | Kind | Count | Slots (Madrid) | Format |
 |---|---|---|---|
-| Puzzle | 14 | 10:00 and 18:00 daily | Two slides: question and answer, then the CTA (skill `edlintics-puzzle-visuals`) |
+| Puzzle | 7 | 10:00 daily (cut from 2 a day to 1 by Hoang on 25 Oct 2026, from the week of 2 Nov) | Two slides: question and answer, then the CTA (skill `edlintics-puzzle-visuals`) |
+| Explainer reel | 7 | 18:00 daily, alternating a definition reel and a "life of…" reel (added 25 Oct 2026, from the week of 2 Nov) | 9:16 hand-drawn Ledger reel, about 40–50 s, Kokoro US female voice, free Canva music (skill `edlintics-explainer-reel`). Definition reel: hook, everyday story, definition, business example, takeaway. "Life of…" reel: a relatable day of an accountant, a salesperson, an economics student, a business administration student and so on, with one named concept as the punchline |
 | Concept carousel | 3 | Tue, Thu, Sat 13:00 (time proposed) | Definition explained, or This vs That (skill `edlintics-concept-carousel`) |
 | 5 [category] concepts | 4 | Mon, Wed, Fri, Sun 13:00 (the days between definition posts; agreed 23 Oct 2026) | Animated video carousel, Ledger walks the path (Canva template DAHY0pRBfnM, `motion/traveling-ledger/`). Every video carousel gets a free Canva music track |
 | Meme comic | 4 | Mon, Wed, Fri, Sun 16:00 (flow added 24 Oct 2026; time proposed, 22:00 Vietnam so the first-comment run happens while the Mac is awake) | 4-panel comic from template DAHYz_I2pNE: one panel per slide with a speech bubble, then THE RULE with a 2x2 recap, then the CTA. No topic tag on the slides. Pains of studying accounting, economics, statistics and business, plus workplace and spreadsheet jokes. Scripts in `assets/copy/`; 2-panel layout is an optional variant only |
@@ -45,7 +46,8 @@ Judge on 8 Nov in the weekly review, using median views, replies and follows per
 - **ga-H8:** puzzles bring more site sessions per 1,000 views than definitions, comics or five-concepts videos.
 - **ga-H9:** LinkedIn visitors engage and convert better than Instagram visitors. Baseline: the returns puzzle got 9 clicks from 24 LinkedIn impressions.
 - **ga-H10:** a first comment offering "the full worked explanation on edlintics.com" beats a plain "more at edlintics.com". Alternate the two by slot.
-- **ga-H11:** 10:00 Madrid posts bring more site sessions than 18:00 posts.
+- **ga-H11 (changed 25 Oct 2026):** the 10:00 puzzle brings more site sessions per 1,000 views than the 18:00 explainer reel (the 18:00 puzzle no longer exists from 2 Nov).
+- **H14:** "life of…" reels earn more shares and follows per 1,000 views than definition reels. Judge after 4 of each.
 - **H12:** explainer reels reach more non-followers per post than Ledger walk videos. Starts with the first explainer reel.
 - **H13:** comics get more shares per view than puzzles but fewer site sessions.
 
