@@ -1,0 +1,492 @@
+{
+ "meta": {
+  "type": "definition",
+  "term": "Sunk cost",
+  "title": "Sunk cost, explained by Ledger",
+  "slug": "sunk-cost",
+  "family_or_category": "economics",
+  "caption": "You paid for it, so you have to use it. Or do you?\n\nA sunk cost is money already spent that no decision can recover. In this short video, Ledger meets one twice: a $60 concert ticket on a rainy night, and a company that has spent $2 million on an app nobody uses. In both cases, the money already spent should not decide what happens next\n\nGood decisions weigh only future costs and benefits. More at edlintics.com\n\n#edlintics #businessstudents #economics #finance",
+  "caption_x": "Sunk cost in 40 seconds: a $60 ticket, a $2 million app, and why neither should decide what comes next. edlintics.com #edlintics",
+  "first_comment": "Where have you seen a sunk cost decide something it should not have, such as a gym membership, a course or a project at work? Reply with one example. Bonus challenge: a firm has spent $300,000 on a product, finishing it costs $100,000 more, and it would bring in $80,000. Should the firm finish it? The full worked explanation is on edlintics.com",
+  "maths_check": "Bonus: $80,000 future benefit < $100,000 future cost, so do not finish; the $300,000 is sunk.",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents",
+   "#economics",
+   "#finance"
+  ],
+  "threadsTopic": "Economics",
+  "threadsReason": "Sunk cost is a core economics decision concept; the Economics topic matches the primary arm of the Threads topic test.",
+  "utm": {
+   "template": "https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=explainer-reel&utm_content=<slot id>"
+  }
+ },
+ "scenes": {
+  "throw": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "phone",
+     "id": "app",
+     "x": 800,
+     "y": 880,
+     "s": 1.0,
+     "screen": "empty"
+    },
+    {
+     "p": "arrow",
+     "x": 560,
+     "y": 990,
+     "dx": 150,
+     "dy": -110,
+     "color": "green",
+     "dashed": true
+    },
+    {
+     "p": "bills",
+     "x": 620,
+     "y": 950,
+     "s": 0.7,
+     "n": 2
+    },
+    {
+     "p": "bills",
+     "x": 260,
+     "y": 1440,
+     "s": 1.0,
+     "n": 4
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 480,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "angry",
+     "arm": "up"
+    }
+   ],
+   "frame": "items:led,app"
+  },
+  "ticket": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 470,
+     "y": 1460,
+     "s": 2.6,
+     "mood": "smile",
+     "arm": "hold"
+    },
+    {
+     "p": "ticket",
+     "id": "tk",
+     "x": 760,
+     "y": 1030,
+     "s": 1.15,
+     "rot": -12
+    }
+   ],
+   "frame": "ledger"
+  },
+  "rain": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "window",
+     "id": "win",
+     "x": 600,
+     "y": 860,
+     "s": 0.9,
+     "weather": "rain"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 560,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "sad",
+     "tilt": 4
+    }
+   ],
+   "frame": "wide"
+  },
+  "think": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "door",
+     "x": 830,
+     "y": 1120,
+     "s": 1.0
+    },
+    {
+     "p": "thought",
+     "id": "th",
+     "x": 330,
+     "y": 700,
+     "s": 1.0,
+     "inner": "ticket"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 470,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "frown"
+    }
+   ],
+   "frame": "items:th,led"
+  },
+  "either": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "door",
+     "x": 240,
+     "y": 1000,
+     "s": 0.9
+    },
+    {
+     "p": "sofa",
+     "x": 840,
+     "y": 1100,
+     "s": 1.0
+    },
+    {
+     "p": "ticket",
+     "x": 540,
+     "y": 760,
+     "s": 1.1,
+     "faded": true
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.0,
+     "mood": "flat",
+     "arm": "shrug"
+    }
+   ],
+   "frame": "wide"
+  },
+  "pit": {
+   "bg": "none",
+   "items": [
+    {
+     "p": "pit",
+     "id": "hole",
+     "x": 600,
+     "y": 1180,
+     "s": 1.0,
+     "item": "ticket"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 200,
+     "y": 1170,
+     "s": 1.6,
+     "mood": "o",
+     "tilt": -6
+    }
+   ],
+   "frame": "wide"
+  },
+  "app": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "phone",
+     "id": "app",
+     "x": 300,
+     "y": 880,
+     "s": 1.05,
+     "screen": "empty"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 600,
+     "y": 1268,
+     "s": 1.7,
+     "mood": "flat"
+    },
+    {
+     "p": "desk",
+     "x": 540,
+     "y": 1250
+    },
+    {
+     "p": "bills",
+     "id": "cash",
+     "x": 800,
+     "y": 1210,
+     "s": 0.95,
+     "n": 5
+    },
+    {
+     "p": "coins",
+     "x": 640,
+     "y": 1236,
+     "s": 1.0,
+     "n": 6
+    }
+   ],
+   "frame": "wide"
+  },
+  "weigh": {
+   "bg": "paper",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "coins",
+     "id": "old",
+     "x": 150,
+     "y": 1460,
+     "s": 1.0,
+     "n": 8
+    },
+    {
+     "p": "cross",
+     "x": 150,
+     "y": 1270,
+     "w": 170,
+     "h": 240
+    },
+    {
+     "p": "scale",
+     "id": "sc",
+     "x": 780,
+     "y": 1170,
+     "s": 1.0,
+     "left": "coins",
+     "right": "arrow"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 390,
+     "y": 1470,
+     "s": 1.6,
+     "mood": "flat",
+     "arm": "hold"
+    }
+   ]
+  },
+  "next": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "building",
+     "x": 270,
+     "y": 1170,
+     "s": 1.0
+    },
+    {
+     "p": "sun_arrow",
+     "x": 860,
+     "y": 700,
+     "s": 1.0
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 640,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "up"
+    }
+   ],
+   "frame": "wide"
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "throw",
+   "text": "Why do smart people keep paying for bad decisions?",
+   "chunks": [
+    {
+     "text": "Why do smart people"
+    },
+    {
+     "text": "keep paying",
+     "key": "paying"
+    },
+    {
+     "text": "for bad decisions?",
+     "key": "bad decisions?"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "ticket",
+   "text": "Ledger paid sixty dollars for a concert ticket.",
+   "chunks": [
+    {
+     "text": "Ledger paid $60",
+     "key": "$60"
+    },
+    {
+     "text": "for a concert ticket"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "rain",
+   "text": "On the night, it is pouring, and Ledger feels ill.",
+   "chunks": [
+    {
+     "text": "On the night"
+    },
+    {
+     "text": "it is pouring",
+     "key": "pouring"
+    },
+    {
+     "text": "and Ledger feels ill",
+     "key": "ill"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "think",
+   "text": "But Ledger thinks, I already paid, so I have to go.",
+   "chunks": [
+    {
+     "text": "But Ledger thinks"
+    },
+    {
+     "text": "I already paid",
+     "key": "already paid"
+    },
+    {
+     "text": "so I have to go"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "either",
+   "text": "The sixty dollars is gone either way.",
+   "chunks": [
+    {
+     "text": "The $60 is gone",
+     "key": "gone"
+    },
+    {
+     "text": "either way"
+    }
+   ]
+  },
+  {
+   "role": "definition",
+   "img": "pit",
+   "text": "That is a sunk cost: money already spent that no decision can recover.",
+   "chunks": [
+    {
+     "text": "That is a sunk cost",
+     "key": "sunk cost"
+    },
+    {
+     "text": "money already spent"
+    },
+    {
+     "text": "that no decision"
+    },
+    {
+     "text": "can recover",
+     "key": "recover"
+    }
+   ]
+  },
+  {
+   "role": "example",
+   "img": "app",
+   "text": "Companies do it too. Ledger's company spent two million dollars on an app nobody uses.",
+   "chunks": [
+    {
+     "text": "Companies do it too"
+    },
+    {
+     "text": "Ledger's company spent"
+    },
+    {
+     "text": "$2 million on an app",
+     "key": "$2 million"
+    },
+    {
+     "text": "nobody uses",
+     "key": "nobody"
+    }
+   ]
+  },
+  {
+   "role": "example",
+   "img": "throw",
+   "text": "We have spent too much to stop now, Ledger says.",
+   "chunks": [
+    {
+     "text": "We have spent too much"
+    },
+    {
+     "text": "to stop now",
+     "key": "stop now"
+    },
+    {
+     "text": "Ledger says"
+    }
+   ]
+  },
+  {
+   "role": "example",
+   "img": "weigh",
+   "text": "The better question: will the next five hundred thousand dollars pay off?",
+   "chunks": [
+    {
+     "text": "The better question"
+    },
+    {
+     "text": "will the next $500,000",
+     "key": "$500,000"
+    },
+    {
+     "text": "pay off?",
+     "key": "pay off?"
+    }
+   ]
+  },
+  {
+   "role": "takeaway",
+   "img": "next",
+   "text": "The past is spent. Weigh only what comes next.",
+   "chunks": [
+    {
+     "text": "The past is spent",
+     "key": "spent"
+    },
+    {
+     "text": "Weigh only what comes next",
+     "key": "what comes next"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "term": "Sunk cost",
+   "keypoint": "Money already spent should not change your next decision",
+   "text": "Sunk cost. Money already spent should not change your next decision."
+  }
+ ]
+}

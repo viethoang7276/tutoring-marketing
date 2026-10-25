@@ -16,8 +16,8 @@ def tick(at):
     i = int(at * sr); fx[i:i + n] += 0.5 * x[:N - i]
 prev = None
 for k, b in enumerate(T.get("beats", [])):
-    if k == 0: prev = b["img"]; continue
-    (whoosh if b["img"] != prev else tick)(b["start"] - 0.08); prev = b["img"]
+    if k == 0: prev = b.get("img"); continue
+    (whoosh if b.get("img") != prev else tick)(b["start"] - 0.08); prev = b.get("img")
 fx *= 0.1 * np.abs(vo).max() / (np.abs(fx).max() + 1e-9)
 voice = vo + fx; voice /= max(1.0, np.abs(voice).max() / 0.98)
 sf.write(f"{d}/audio-voice.wav", voice, sr)

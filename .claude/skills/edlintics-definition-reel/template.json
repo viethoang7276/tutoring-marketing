@@ -1,0 +1,301 @@
+{
+ "meta": {
+  "type": "definition",
+  "term": "<Term, as it appears on the end card>",
+  "title": "<Short title, e.g. Sunk cost, explained by Ledger>",
+  "slug": "<kebab-case, e.g. sunk-cost>",
+  "family_or_category": "<accounting | finance | economics | statistics | management | marketing>",
+  "caption": "<Hook line ending with a question or a plain statement>\n\n<2-4 sentences: the term in one sentence, the story, the business example. No full stop at the end of the paragraph>\n\n<One line to save or share. More at edlintics.com>\n\n#edlintics #businessstudents #<subject> #<subject>",
+  "caption_x": "<Under 240 characters, no full stop at the end. edlintics.com #edlintics>",
+  "first_comment": "<A reply prompt about the viewer's own experience>. Bonus question: <a numeric or yes/no question with US dollar amounts>? <Reply with ...> (never give the answer here)",
+  "maths_check": "<The bonus answer and the working, for the hub only>",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents",
+   "#<subject>",
+   "#<subject>"
+  ],
+  "threadsTopic": "<Accounting | Finance | Economics | Statistics | Business | Marketing | ... from docs/research/2026-10-24-threads-topics-communities.md>",
+  "threadsReason": "<One line: why this topic>",
+  "utm": {
+   "template": "https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=explainer-reel&utm_content=<slot id>"
+  }
+ },
+ "scenes": {
+  "hook": {
+   "bg": "office",
+   "frame": "items:led,<prop id>",
+   "items": [
+    {
+     "p": "<prop>",
+     "id": "<prop id>",
+     "x": 800,
+     "y": 880,
+     "s": 1.0
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "<mood>",
+     "arm": "<arm>",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "story1": {
+   "bg": "paper",
+   "frame": "ledger",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "story2": {
+   "bg": "paper",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "story3": {
+   "bg": "paper",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "define": {
+   "bg": "paper",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 1.6,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "biz1": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 600,
+     "y": 1268,
+     "s": 1.7,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    },
+    {
+     "p": "desk",
+     "x": 540,
+     "y": 1250
+    }
+   ]
+  },
+  "biz2": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "takeaway": {
+   "bg": "paper",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "up",
+     "outfit": "suit"
+    },
+    {
+     "p": "sun_arrow",
+     "x": 860,
+     "y": 700
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "hook",
+   "text": "<A question the viewer has felt, about 8-10 words>?",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key word>"
+    },
+    {
+     "text": "<2-5 words>?",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "story1",
+   "text": "<Ledger in a concrete everyday moment with a US dollar amount, spelled out in words for the voice>.",
+   "chunks": [
+    {
+     "text": "<2-5 words with $ amount>",
+     "key": "<$ amount>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "story2",
+   "text": "<What happens next, one short sentence>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "story",
+   "img": "story3",
+   "text": "<The mistake or the surprise, in Ledger's words>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "definition",
+   "img": "define",
+   "text": "That is <a/an> <term>: <the definition in one plain sentence>.",
+   "chunks": [
+    {
+     "text": "That is <a term>",
+     "key": "<term>"
+    },
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "example",
+   "img": "biz1",
+   "text": "<The same idea in a company, with dollar amounts>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words with $>",
+     "key": "<$>"
+    }
+   ]
+  },
+  {
+   "role": "example",
+   "img": "biz2",
+   "text": "<What the company should ask or do instead>?",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>?",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "takeaway",
+   "img": "takeaway",
+   "text": "<One-line lesson>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "term": "<Term>",
+   "keypoint": "<One line to remember, 4-12 words, no full stop>",
+   "text": "<Term>. <The key point as a sentence>."
+  }
+ ]
+}

@@ -1,126 +1,65 @@
 ---
 name: edlintics-explainer-reel
-description: Make an Edlintics definition explainer reel (9:16, 30–40 s, short-form): a Ledger picture story drawn in a hand-drawn pencil style with draw-on and line boil, Kokoro voiceover, short captions, the Canva logo, and free Canva music. Covers script, scene layout, build commands, the Canva upload and the hub proposal. Written so a cheaper model can follow it. First used for "Sunk cost" (25 Oct 2026).
+description: Shared engine for Edlintics explainer reels (9:16, 30-40 s, hand-drawn Ledger picture stories with Kokoro voice, chunked captions, an end card and Canva music). Holds the scene library, validator, renderer and the one build command used by the edlintics-definition-reel and edlintics-life-of-reel skills. To make a reel, use one of those two skills; read this file only to change the engine.
 ---
 
-# Edlintics explainer reel
+# Edlintics explainer reel engine
 
-Output: a 1080x1920, 24 fps MP4 of 30–40 s and a Canva draft with Canva music, plus a `status: "proposal"` slot in the hub. Nothing is published until Hoang approves.
-Reference build: the sunk-cost reel v4, hub slot `explainer-sunk-cost`, Canva `DAHZAC3sKDI`, script `scripts/script_example.json`.
+To make a reel, use one of these skills:
+- **edlintics-definition-reel:** hook, everyday story, definition, business example, takeaway, end card.
+- **edlintics-life-of-reel:** "A day in the life of a [role]", relatable moments, the turning moment, the concept, the lesson, end card.
 
-## 1. Script (write this first; Hoang approves the words)
-Short-form defaults (Hoang, 25 Oct 2026: "make it bigger and optimise for short form"):
-- **Length 30–40 s**, about 100–115 words, voice at speed 1.08.
-- **10–12 beats of 2–4 s.** A beat is one voice line on one framing. A cut or strong visual change every 2–3 s; split a long scene into 2 beats with a reframe.
-- **Hook in the first 1–2 s:** open on the most striking image of the story (not an intro), with the hook question on screen from frame 1.
-- **Loop:** the last beat reuses the hook image and framing and ends on a line that leads back into the hook question, so the replay feels continuous.
-
-Structure:
-1. **Hook:** a question the viewer has felt. Example: "Why do smart people keep paying for bad decisions?"
-2. **Everyday story (3–4 beats):** Ledger in a concrete situation with US dollar amounts.
-3. **Definition (1 beat):** the term in one plain sentence.
-4. **Business example (3–4 beats):** the same idea in a company, with dollar amounts.
-5. **Takeaway (1–2 beats)** and the loop line.
-
-Write it the Feynman way: explain to a smart 15-year-old, no jargon without a plain meaning, and no formulas on screen.
-
-Voice rules (house rules, all apply):
-- Calm and expert, full sentences.
-- No exclamation points and no emoji.
-- US dollars only.
-- General audience; no exam-only framing.
-- Never mention tutoring.
-
-Caption rules:
-- **On-screen captions follow the voice in chunks of 2–5 words**, one chunk at a time, with one key word or amount per beat marked `key` (it gets a yellow highlighter). The chunks are the voice's own words, so together they form its full sentences.
-- **No paragraph ends with a full stop** (Hoang, 25 Oct 2026). This covers on-screen captions, the post caption, caption_x and the first comment. Full stops between sentences inside a paragraph are fine; only the last one in each paragraph goes. Question marks stay.
-- **First comment:** a reply prompt plus a bonus question. It **never reveals the answer**; store the maths in `maths_check`.
-
-`<work>/script.json` (example: `scripts/script_example.json`):
-`[{"img": "s1", "focus": [x, y, w, h], "focus_end"?: [x, y, w, h], "text": "voice line", "chunks": [{"text": "Ledger paid $60", "key"?: "$60"}, …]}, …]`
-- `focus` is the part of the 1080x1920 scene art to frame, in art coordinates. The renderer fits it into the box x 40–1040, y 530–1310, so a box about 600–700 wide makes Ledger fill 60–70% of the frame. Frame the action, not the whole room.
-- `focus_end` (optional): where the camera ends. Use it for a strong push-in from a wide establishing frame to the subject. Without it, the camera pushes in 7% with a small pan.
-- Reusing the same `img` in the next beat gives a quick reframe instead of a cut.
-
-## 2. Scenes (art)
-Copy `scripts/scenes_example.py` into the work folder and edit the scene list. Its `ledger(x, y, scale, mood, tilt, arm)` helper draws the real mascot from `assets/brand/ledger.svg`:
-- moods: smile, frown, sad, flat, o;
-- arms: hold, up.
-
-It writes `s1.svg … sN.svg` (1080x1920).
-
-Art rules:
-- No text inside the art (captions are separate layers).
-- Brand colours from config/brand.ts: ink #0F172A, blue #467DE3, navy #222C3D, gold #C2922F.
-- One clear action per scene. Ledger is always recognisable.
-- Draw the ground line at y=1480. Any art scale works: each beat's `focus` box decides the framing. To pick boxes, render the scene PNGs on a 100 px grid and read the coordinates.
-
-## 3. Layout and safe zones (1080x1920)
-- **Clear areas:** Reels, Shorts and TikTok cover the bottom ~670 px (name, caption, audio) and the right ~120 px (buttons). Keep everything that matters between y 262 and y 1360, and x 70 to 960.
-- **Caption:** a 236 px band from y 262. Inter 900 at 92 px, 2 lines at most, ink #0F172A, with a yellow highlighter on the key word. Each chunk pops in (scale 0.88 to 1 in 0.16 s).
-- **Art:** each beat's focus box fills x 40–1040, y 530–1310. Art fades out above y ~490, so it never runs under the caption.
-- **Logo:** the Canva template logo, `scripts/logo/edlintics-logo.png`, 210 px wide at y 1338, opacity 0.72, small and quiet. It's the same logo as on the post templates (DAHYuGZYL_E). To refresh it, export page 1 of that template as a transparent PNG at 3240 px wide and crop the bottom logo.
-
-## 4. Hand-drawn style (what the renderer does, and why)
-The reference (evanbode, "TIME FLIES") gets its feel from:
-- graphite strokes drawn several times, loose and slightly off each other;
-- frame-by-frame line boil at about 12 drawings a second;
-- strokes that appear as if drawn;
-- visible paper grain;
-- a mostly locked camera.
-
-`scripts/render.html` imitates that in the browser:
-- **Line boil:** an SVG displacement filter whose noise seed changes every 2 frames (12 fps boil), cycling through 3 seeds.
-- **Pencil grain:** a high-frequency noise mask that knocks small gaps out of strokes and fills.
-- **Ghost pass:** a second copy of the art at 30% opacity, offset 2.5 px with its own wobble, so lines look drawn twice.
-- **Draw-on:** on every new scene, each shape's stroke draws in order through `stroke-dashoffset`; the whole scene is drawn in about 0.5 s, so it never delays information. Fills fade in behind the lines. Beat 1 opens fully drawn, so the hook frame reads at once.
-- **Paper:** an off-white base with fibre and grain noise.
-- **Camera:** each beat frames its `focus` box and pushes in (7% with a small pan, or to `focus_end`). A new scene cuts in with a quick pop (scale 0.9 to 1 with overshoot, 0.32 s). The same scene in the next beat reframes in 0.35 s.
-- **Captions:** 2–5 word chunks at the times vo.py estimates. The key word gets a highlighter sweep.
-- **Sound:** mix_audio.py adds a soft generated whoosh on each new scene and a light tick on each reframe, about 20 dB under the voice. No licensed audio.
-
-Considered but not used:
-- **rough.js and perfect-freehand:** they would mean redrawing the Ledger art as generated strokes, losing the exact mascot shape.
-- **Remotion's official agent skills** (`npx skills add remotion-dev/skills`): a heavier React toolchain with no gain for still-based scenes.
-- **The whiteboard-animation skill** (yangagent): it turns photos into whiteboard sketches, which isn't our look.
-
-## 5. Build
-Tools (no system installs):
-- Kokoro and imageio-ffmpeg in `tools/tts/.venv`;
-- Node with puppeteer-core in `scripts/`, which uses the installed Google Chrome.
+Both write a `script.json` and build it with this engine:
 ```
-cd tools/tts && .venv/bin/python ../../.claude/skills/edlintics-explainer-reel/scripts/vo.py <work> 1.08 0.2   # speed, gap between lines -> voiceover.wav + timing.json (beat and chunk times)
-tools/tts/.venv/bin/python .claude/skills/edlintics-explainer-reel/scripts/mix_audio.py <work>        # audio-voice.wav + audio.wav
-python3 <work>/scenes.py                                                                             # s1..sN.svg
-python3 .claude/skills/edlintics-explainer-reel/scripts/make_scenes_json.py <work> .claude/skills/edlintics-explainer-reel/scripts
-cd .claude/skills/edlintics-explainer-reel/scripts && node render.js stills 2,10,25                 # check stills in out/
-./build.sh <work> <slug>     # <slug>.mp4 (voice + pad), <slug>-voice-only.mp4, <slug>-canva-upload.mp4 (<10 MB)
+.claude/skills/edlintics-explainer-reel/scripts/make_reel.sh <workdir> <slug> [speed=1.08]
 ```
-Rendering takes about 1 minute for 40 s. If you change a `focus` box after vo.py, copy it into timing.json too (or rerun vo.py).
+Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKoM`). It was built from `.claude/skills/edlintics-definition-reel/example-sunk-cost.json`.
 
-Check before moving on:
-- the stills show the subject at 60–70% of the frame width and no art behind the caption;
-- the first frame already shows the hook image and question, and the last frame matches it (loop);
-- the logo is clear in every scene;
-- the duration matches timing.json;
-- the video stream is `yuv420p(tv)`.
+## Standing rules (Hoang, 25 Oct 2026). The validator enforces them.
+1. **No camera moves.** There is no zoom, push-in, pan or reframe. Each beat shows its scene as one steady frame that fills the art box. The framing is set once per scene as `"frame"`. A new scene comes in with a 0.15 s fade and a fast draw-on (0.5 s). Line boil and objects drawing in are the only motion.
+2. **End card last.** The final beat has role `"endcard"`, with `"term"` and `"keypoint"`. It shows the term large, a one-line key point with a highlighter, and the logo, for about 3-4 s while the voice says both. A loop-back line before it is optional (role `"loop"`).
+3. **Captions** are chunks of 2-5 words in time with the voice, with one `key` word highlighted per beat.
+4. **No full stop at the end of any paragraph.** This covers captions, the key point, the post caption, caption_x and the first comment. Full stops between sentences are fine.
+5. **House rules:** US dollars, no exclamation points, no emoji, no tutoring, general audience. The first comment never reveals the answer.
+6. **Length** is 30-40 s, about 100-115 words, with 9-13 beats of 2-4 s. The voice is Kokoro `af_heart` at speed 1.08.
 
-## 6. Canva (music and the draft)
-The Canva connector rejects video uploads, so use the editor in Chrome:
-1. Copy the last reel design with `copy-design` (for example DAHY_xGsGFc) so the music track comes with it. Then open it in a new tab.
-2. Uploads › `find` the file input › `file_upload` `<slug>-canva-upload.mp4`. The bridge limit is 10 MB.
-3. Uploads › Videos › drag the new video onto the page. Then the element's ⋯ menu › **Replace background**.
-4. Music: keep the free track "Light Minimal Ambient" (makesoundmusic, volume 15), or pick another free Canva track. Never use a paid (crown) track.
-5. Rename it with File › title: "Explainer reel - <Term> (Ledger) vN".
-6. `move-item-to-folder` to FAHYcHrS5PE. Close your tab.
+## Files (scripts/)
+| File | What it does |
+|---|---|
+| `make_reel.sh` | The one command: validate, scenes, voice, audio mix, scene data, stills, video, then the checks and contact sheet |
+| `validate.py` | Checks script.json against the rules above and the beat structure for `meta.type` |
+| `scene_lib.py` | The scene library: Ledger (`mood`, `arm`, `outfit`, `flip`, `tilt`), about 35 props and 6 backgrounds. Run `python scene_lib.py --list` |
+| `build_scenes.py` | Turns scene presets into `s*.svg` and resolves each scene's `frame` into a box (`beats.json`) |
+| `vo.py` | Makes the Kokoro voiceover (`voiceover.wav`) and `timing.json` with beat and chunk times |
+| `mix_audio.py` | Makes `audio-voice.wav` (voice plus soft generated whoosh and tick) and `audio.wav` (adds a quiet pad for preview) |
+| `make_scenes_json.py` | Packs the art, beats and end card into `<work>/scenes.json` |
+| `render.html`, `render.js`, `build.sh` | The headless Chrome renderer at 24 fps, plus the H.264 encode, the voice-only cut and the Canva upload copy under 10 MB |
+| `postcheck.py` | Checks resolution, audio, length and the 10 MB limit, and makes `<slug>-contact-sheet.png` |
+| `logo/edlintics-logo.png` | The logo from the Canva post template DAHYuGZYL_E |
 
-## 7. Hub proposal
-Create or update the slot (ArtifactData `slots`, artifact HbKxzWUcWhaBaaNb9buZM6, pin writes with `if_version`):
-- **Basics:** `format: "explainer-reel"`, `status: "proposal"`, `kind: "video"`, `test: "H12"`.
-- **Copy:** `caption`, `caption_x`, `first_comment`, `hashtags`, `maths_check`.
-- **Threads:** `threadsTopic` and `threadsReason`.
-- **Links:** `utm.template` = `https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=explainer-reel&utm_content=<slot id>`.
-- **Media and script:** `canva`, `video`, `music`, `script` (captions with start times).
-- **Status note:** a `statusNote` saying what is new.
+Tools, with no system installs:
+- Kokoro, imageio-ffmpeg and Pillow in `tools/tts/.venv`;
+- Node with puppeteer-core in `scripts/` (installed on first run) and the installed Google Chrome.
 
-Leave the date empty for Hoang. Show Hoang the MP4 and a contact sheet.
+Each reel builds in its own work folder, so several can build at once.
+
+## Layout (1080x1920)
+- **Caption band:** y 262-498, Inter 900 at 92 px, 2 lines at most.
+- **Art box:** x 40-1040, y 530-1310.
+- **Logo:** 210 px wide at y 1338, opacity 0.72.
+- **Clear areas:** the bottom ~670 px and right ~120 px are covered by the Reels, Shorts and TikTok buttons.
+- **End card:** the term at 132 px, a blue rule, the key point at 64 px, and the logo at 330 px.
+
+## Hand-drawn look
+It is modelled on the pencil reference (evanbode, "TIME FLIES"):
+- **Line boil:** the displacement noise seed changes every 2 frames, so lines move at 12 fps.
+- **Pencil grain:** a noise mask breaks up strokes.
+- **Ghost pass:** a second copy at 30% opacity, so lines look drawn twice.
+- **Paper:** grain and fibre texture.
+- **Draw-on:** strokes draw in with stroke-dashoffset.
+
+We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing Ledger and lose the exact mascot.
+
+## Changing the engine
+- **New prop:** add a function to `scene_lib.py`, register it in `PRESETS` (and `HALF` for its size), give it a one-line docstring, and test with the two examples.
+- After any engine change, rebuild both examples and look at the contact sheets.

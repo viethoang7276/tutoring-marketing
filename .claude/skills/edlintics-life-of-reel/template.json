@@ -1,0 +1,304 @@
+{
+ "meta": {
+  "type": "life-of",
+  "term": "<Term, as it appears on the end card>",
+  "title": "<Short title, e.g. Sunk cost, explained by Ledger>",
+  "slug": "<kebab-case, e.g. sunk-cost>",
+  "family_or_category": "<accounting | finance | economics | statistics | management | marketing>",
+  "caption": "<Hook line ending with a question or a plain statement>\n\n<2-4 sentences: the term in one sentence, the story, the business example. No full stop at the end of the paragraph>\n\n<One line to save or share. More at edlintics.com>\n\n#edlintics #businessstudents #<subject> #<subject>",
+  "caption_x": "<Under 240 characters, no full stop at the end. edlintics.com #edlintics>",
+  "first_comment": "<A reply prompt about the viewer's own experience>. Bonus question: <a numeric or yes/no question with US dollar amounts>? <Reply with ...> (never give the answer here)",
+  "maths_check": "<The bonus answer and the working, for the hub only>",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents",
+   "#<subject>",
+   "#<subject>"
+  ],
+  "threadsTopic": "<Accounting | Finance | Economics | Statistics | Business | Marketing | ... from docs/research/2026-10-24-threads-topics-communities.md>",
+  "threadsReason": "<One line: why this topic>",
+  "utm": {
+   "template": "https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=explainer-reel&utm_content=<slot id>"
+  }
+ },
+ "scenes": {
+  "hook": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 560,
+     "y": 1268,
+     "s": 1.7,
+     "mood": "worried",
+     "arm": "down",
+     "outfit": "<suit | student | casual | sales>"
+    },
+    {
+     "p": "desk",
+     "x": 540,
+     "y": 1250
+    }
+   ]
+  },
+  "m1": {
+   "bg": "office",
+   "frame": "ledger",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "tired",
+     "arm": "hold",
+     "outfit": "suit"
+    },
+    {
+     "p": "coffee",
+     "x": 770,
+     "y": 1270,
+     "s": 0.85
+    }
+   ]
+  },
+  "m2": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "m3": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "m4": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "down",
+     "outfit": "suit"
+    },
+    {
+     "p": "person",
+     "x": 290,
+     "y": 1470,
+     "s": 2.0
+    }
+   ]
+  },
+  "turn": {
+   "bg": "office",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "smile",
+     "arm": "point",
+     "outfit": "suit",
+     "flip": true
+    }
+   ]
+  },
+  "concept": {
+   "bg": "paper",
+   "frame": "wide",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 1.6,
+     "mood": "smile",
+     "arm": "up",
+     "outfit": "suit"
+    }
+   ]
+  },
+  "lesson": {
+   "bg": "paper",
+   "frame": "ledger",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.2,
+     "mood": "happy",
+     "arm": "wave",
+     "outfit": "suit"
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "hook",
+   "text": "A day in the life of <a role>, <when: at month-end, before the exam, on launch day>.",
+   "chunks": [
+    {
+     "text": "A day in the life"
+    },
+    {
+     "text": "of <a role>",
+     "key": "<role>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "m1",
+   "text": "<A relatable, specific moment of the day, short sentences>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "m2",
+   "text": "<A second moment, with a number if possible>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "m3",
+   "text": "<The moment the problem shows up>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "m4",
+   "text": "<Someone suggests the wrong move, in their words>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "turn",
+   "img": "turn",
+   "text": "<Ledger's turning moment: why that is wrong>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "concept",
+   "text": "That is <the concept>. <It in one plain sentence>.",
+   "chunks": [
+    {
+     "text": "That is <concept>",
+     "key": "<concept>"
+    },
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "lesson",
+   "img": "lesson",
+   "text": "<What it changes in business, one sentence>.",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>",
+     "key": "<key>"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "term": "<Concept>",
+   "keypoint": "<One line to remember, 4-12 words, no full stop>",
+   "text": "<Concept>. <The key point as a sentence>."
+  }
+ ]
+}

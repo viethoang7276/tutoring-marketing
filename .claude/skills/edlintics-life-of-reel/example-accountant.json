@@ -1,0 +1,516 @@
+{
+ "meta": {
+  "type": "life-of",
+  "term": "Accrual",
+  "title": "A day in the life of an accountant: accruals",
+  "slug": "life-of-accountant",
+  "family_or_category": "accounting",
+  "caption": "Month-end is when accountants make sure every cost lands in the right month\n\nThe October electricity bill arrives on 3 November. It still belongs to October, because that is when the power was used. That is an accrual: you record a cost when it happens, not when the cash moves\n\nSave this for your next month-end close\n\n#edlintics #businessstudents #accounting #finance",
+  "caption_x": "A day in the life of an accountant: the October bill arrives in November, and it still belongs to October. That is an accrual. edlintics.com #edlintics",
+  "first_comment": "Which month-end task takes you the longest? Reply below. Bonus question: a shop pays its December rent of $3,000 on 2 January. In which month does the rent expense belong? Reply with the month",
+  "maths_check": "Bonus: December. The rent is for December, so the expense is recorded in December (an accrued expense), even though the cash leaves in January.",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents",
+   "#accounting",
+   "#finance"
+  ],
+  "threadsTopic": "Accounting",
+  "threadsReason": "Accruals and month-end close are core accounting topics; Accounting is the primary arm of the Threads topic test.",
+  "utm": {
+   "template": "https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=explainer-reel&utm_content=<slot id>"
+  }
+ },
+ "scenes": {
+  "desk": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 560,
+     "y": 1268,
+     "s": 1.7,
+     "mood": "worried"
+    },
+    {
+     "p": "desk",
+     "x": 540,
+     "y": 1250
+    },
+    {
+     "p": "invoice",
+     "x": 230,
+     "y": 1120,
+     "s": 0.7,
+     "rot": -10
+    },
+    {
+     "p": "invoice",
+     "x": 300,
+     "y": 1100,
+     "s": 0.7,
+     "rot": 5
+    },
+    {
+     "p": "laptop",
+     "id": "lap",
+     "x": 820,
+     "y": 1150,
+     "s": 0.75,
+     "screen": "sheet"
+    },
+    {
+     "p": "clock",
+     "id": "clk",
+     "x": 300,
+     "y": 700,
+     "s": 0.9,
+     "hour": 7
+    }
+   ],
+   "frame": "wide"
+  },
+  "coffee": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "clock",
+     "id": "clk",
+     "x": 280,
+     "y": 720,
+     "s": 1.0,
+     "hour": 8
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 560,
+     "y": 1470,
+     "s": 2.3,
+     "mood": "tired",
+     "arm": "hold"
+    },
+    {
+     "p": "coffee",
+     "id": "cup",
+     "x": 770,
+     "y": 1270,
+     "s": 0.85
+    }
+   ],
+   "frame": "ledger"
+  },
+  "invoices": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 560,
+     "y": 1268,
+     "s": 1.7,
+     "mood": "tired"
+    },
+    {
+     "p": "desk",
+     "x": 540,
+     "y": 1250
+    },
+    {
+     "p": "invoice",
+     "x": 220,
+     "y": 1130,
+     "s": 0.8,
+     "rot": -10
+    },
+    {
+     "p": "invoice",
+     "x": 260,
+     "y": 1100,
+     "s": 0.8,
+     "rot": 4
+    },
+    {
+     "p": "invoice",
+     "id": "inv",
+     "x": 300,
+     "y": 1080,
+     "s": 0.8
+    },
+    {
+     "p": "laptop",
+     "id": "lap",
+     "x": 830,
+     "y": 1150,
+     "s": 0.75,
+     "screen": "sheet"
+    }
+   ],
+   "frame": "wide"
+  },
+  "bill": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "calendar",
+     "id": "cal",
+     "x": 280,
+     "y": 820,
+     "s": 1.0,
+     "mark": 2
+    },
+    {
+     "p": "envelope",
+     "x": 820,
+     "y": 760,
+     "s": 0.8
+    },
+    {
+     "p": "invoice",
+     "id": "bill",
+     "x": 820,
+     "y": 1000,
+     "s": 1.0,
+     "stamp": true,
+     "rot": 8
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 520,
+     "y": 1470,
+     "s": 2.0,
+     "mood": "o"
+    }
+   ],
+   "frame": "wide"
+  },
+  "colleague": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "person",
+     "id": "col",
+     "x": 290,
+     "y": 1470,
+     "s": 2.0,
+     "mood": "smile",
+     "color": "#F3D9A6"
+    },
+    {
+     "p": "speech",
+     "id": "say",
+     "x": 380,
+     "y": 880,
+     "s": 0.9,
+     "side": "left"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 770,
+     "y": 1470,
+     "s": 2.0,
+     "mood": "flat",
+     "flip": true
+    }
+   ],
+   "frame": "wide"
+  },
+  "october": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "calendar",
+     "id": "cal",
+     "x": 330,
+     "y": 930,
+     "s": 1.1
+    },
+    {
+     "p": "check",
+     "x": 330,
+     "y": 700,
+     "s": 1.2
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.1,
+     "mood": "smile",
+     "arm": "point",
+     "flip": true
+    }
+   ],
+   "frame": "wide"
+  },
+  "accrual": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "calendar",
+     "id": "cal",
+     "x": 300,
+     "y": 880,
+     "s": 1.0
+    },
+    {
+     "p": "check",
+     "x": 300,
+     "y": 1150,
+     "s": 1.0
+    },
+    {
+     "p": "bills",
+     "id": "cash",
+     "x": 790,
+     "y": 1000,
+     "s": 1.0,
+     "n": 3
+    },
+    {
+     "p": "cross",
+     "x": 800,
+     "y": 950,
+     "w": 260,
+     "h": 240
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 1.6,
+     "mood": "smile",
+     "arm": "up"
+    }
+   ],
+   "frame": "wide"
+  },
+  "profit": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "chart",
+     "id": "ch",
+     "x": 400,
+     "y": 880,
+     "s": 1.15,
+     "trend": "up"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 790,
+     "y": 1470,
+     "s": 2.0,
+     "mood": "worried",
+     "arm": "point",
+     "flip": true
+    }
+   ],
+   "frame": "wide"
+  },
+  "good": {
+   "bg": "paper",
+   "items": [
+    {
+     "p": "books",
+     "x": 220,
+     "y": 1470,
+     "s": 1.0,
+     "n": 4
+    },
+    {
+     "p": "check",
+     "x": 850,
+     "y": 980,
+     "s": 1.4
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "happy",
+     "arm": "wave"
+    }
+   ],
+   "frame": "ledger"
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "desk",
+   "text": "A day in the life of an accountant at month-end.",
+   "chunks": [
+    {
+     "text": "A day in the life"
+    },
+    {
+     "text": "of an accountant"
+    },
+    {
+     "text": "at month-end",
+     "key": "month-end"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "coffee",
+   "text": "Eight in the morning. Coffee number one. The books close on Friday.",
+   "chunks": [
+    {
+     "text": "Eight in the morning"
+    },
+    {
+     "text": "Coffee number one",
+     "key": "one"
+    },
+    {
+     "text": "The books close on Friday",
+     "key": "Friday"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "invoices",
+   "text": "Ledger checks two hundred invoices, line by line.",
+   "chunks": [
+    {
+     "text": "Ledger checks"
+    },
+    {
+     "text": "200 invoices",
+     "key": "200 invoices"
+    },
+    {
+     "text": "line by line"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "bill",
+   "text": "Then on the third of November, the October electricity bill finally arrives.",
+   "chunks": [
+    {
+     "text": "On the third of November"
+    },
+    {
+     "text": "the October electricity bill",
+     "key": "October"
+    },
+    {
+     "text": "finally arrives"
+    }
+   ]
+  },
+  {
+   "role": "moment",
+   "img": "colleague",
+   "text": "A colleague says, just put it in November, when we pay.",
+   "chunks": [
+    {
+     "text": "A colleague says"
+    },
+    {
+     "text": "put it in November",
+     "key": "November"
+    },
+    {
+     "text": "when we pay"
+    }
+   ]
+  },
+  {
+   "role": "turn",
+   "img": "october",
+   "text": "But the power was used in October, so the cost belongs to October.",
+   "chunks": [
+    {
+     "text": "But the power was used"
+    },
+    {
+     "text": "in October",
+     "key": "October"
+    },
+    {
+     "text": "the cost belongs to October",
+     "key": "October"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "accrual",
+   "text": "That is an accrual. You record a cost when it happens, not when the cash moves.",
+   "chunks": [
+    {
+     "text": "That is an accrual",
+     "key": "accrual"
+    },
+    {
+     "text": "You record a cost"
+    },
+    {
+     "text": "when it happens",
+     "key": "happens"
+    },
+    {
+     "text": "not when the cash moves"
+    }
+   ]
+  },
+  {
+   "role": "lesson",
+   "img": "profit",
+   "text": "Without it, October would look twelve hundred dollars too profitable.",
+   "chunks": [
+    {
+     "text": "Without it"
+    },
+    {
+     "text": "October would look"
+    },
+    {
+     "text": "$1,200 too profitable",
+     "key": "$1,200"
+    }
+   ]
+  },
+  {
+   "role": "lesson",
+   "img": "good",
+   "text": "Good books show when money is earned and spent, not just when it moves.",
+   "chunks": [
+    {
+     "text": "Good books show"
+    },
+    {
+     "text": "when money is earned",
+     "key": "earned"
+    },
+    {
+     "text": "and spent"
+    },
+    {
+     "text": "not just when it moves"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "term": "Accrual",
+   "keypoint": "Record a cost when it happens, not when the cash moves",
+   "text": "Accrual. Record a cost when it happens, not when the cash moves."
+  }
+ ]
+}

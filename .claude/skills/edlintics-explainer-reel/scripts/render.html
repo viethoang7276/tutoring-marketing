@@ -10,6 +10,12 @@ svg{position:absolute;inset:0}
 #cap .k{position:relative;padding:0 8px;background-image:linear-gradient(transparent 55%, #FFD45C 55%, #FFD45C 93%, transparent 93%);
   background-repeat:no-repeat;background-size:var(--w,0%) 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 #logo{position:absolute;left:50%;top:1338px;width:210px;transform:translateX(-50%);opacity:0.72}
+#card{position:absolute;left:70px;right:70px;top:330px;height:1000px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:56px;text-align:center}
+#card .term{font:900 132px/1.02 Inter,sans-serif;color:#0F172A;letter-spacing:-0.02em;text-wrap:balance}
+#card .kp{font:800 64px/1.18 Inter,sans-serif;color:#0F172A;text-wrap:balance;max-width:900px}
+#card .kp span{background-image:linear-gradient(transparent 58%, #FFD45C 58%, #FFD45C 94%, transparent 94%);background-repeat:no-repeat;background-size:var(--w,0%) 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#card .rule{width:140px;height:10px;border-radius:5px;background:#467DE3}
+#card img{width:330px;margin-top:20px}
 </style></head><body>
 <div id="stage">
 <svg id="paper" width="1080" height="1920" viewBox="0 0 1080 1920">
@@ -50,11 +56,14 @@ svg{position:absolute;inset:0}
 </svg>
 <div id="cap"><div class="c"></div></div>
 <img id="logo" src="logo/edlintics-logo.png">
+<div id="card"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><img src="logo/edlintics-logo.png"></div>
 </div>
 <script>
-// Beat-based renderer. Each beat frames part of a scene (focus = [x,y,w,h] in the 1080x1920 art) into the box
-// x 40-1040, y 530-1310, so the subject fills about 60-70% of the width. New scene = cut with pop + fast draw-on;
-// same scene = quick reframe. Captions show 2-5 word chunks timed to the voice, key word highlighted.
+// Beat-based renderer, NO camera moves (Hoang, 25 Oct 2026): each beat shows its scene as one steady frame
+// (focus = [x,y,w,h] in the 1080x1920 art, fitted into the box x 40-1040, y 530-1310, so the subject fills
+// 60-70% of the width). A new scene comes in with a quick 0.15 s fade and a fast draw-on; no zoom, pan or reframe.
+// Captions show 2-5 word chunks timed to the voice, key word highlighted. The last beat (role "endcard") hides
+// the art and shows the term, a one-line key point and the logo.
 let D=null, curImg=null, els=[], cut=0;
 const BX=40, BW=1000, BY=530, BH=780;
 const artBody=document.getElementById('artBody'), capC=document.querySelector('#cap .c');
@@ -74,8 +83,17 @@ function load(img){
 }
 function fit(r){ const s=Math.min(BW/r[2],BH/r[3]); return {s,cx:r[0]+r[2]/2,cy:r[1]+r[3]/2}; }
 function render(t){
-  const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08), e=(i===B.length-1?D.duration:B[i+1].start-0.08);
-  const lt=t-a, len=e-a;
+  const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08);
+  const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
+  if(b.role==='endcard'){
+    const ct=t-a; art.style.opacity=0; cap.style.display='none'; logo.style.display='none'; card.style.display='flex';
+    const term=card.querySelector('.term'), kp=card.querySelector('.kp span');
+    if(term.textContent!==b.term){ term.textContent=b.term; kp.textContent=b.keypoint; }
+    term.style.opacity=clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;
+    card.querySelector('.kp').style.opacity=clamp((ct-0.35)/0.2); kp.style.setProperty('--w',(ease(clamp((ct-0.6)/0.5))*100)+'%');
+    return;
+  }
+  card.style.display='none'; cap.style.display='flex'; logo.style.display='block';
   if(b.img!==curImg){ load(b.img); curImg=b.img; cut=a; }
   const sceneT=(i===0?99:t-cut), newScene=(Math.abs(cut-a)<1e-6)&&i>0;  // beat 0 opens fully drawn: the hook frame must read at once
   // line boil: new drawing every 2 frames at 24 fps
@@ -85,16 +103,13 @@ function render(t){
     if(el._draw) el.setAttribute('stroke-dashoffset',String(el._L*(1-p)));
     const pf=clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));
     if(!el._draw) el.setAttribute('stroke-opacity',String(p)); }
-  // camera: reframe from the previous beat (same scene) in 0.35 s, then push in (or move to focus_end)
-  let r0=b.focus, r1=b.focus_end||[b.focus[0]+b.focus[2]*0.035+(i%2?14:-14), b.focus[1]+b.focus[3]*0.035, b.focus[2]*0.93, b.focus[3]*0.93];
-  let r=mix(r0,r1,ease(clamp(lt/len)));
-  if(!newScene && i>0){ const prev=B[i-1], pe=prev.focus_end||prev.focus; r=mix(pe,r,ease(clamp(lt/0.35))); }
-  const F=fit(r); const pop=newScene?(0.9+0.1*back(clamp(sceneT/0.32))):1;
+  // steady frame: no push-in, pan or reframe
+  const F=fit(b.focus);
   document.getElementById('cam').setAttribute('transform',`translate(${BX+BW/2} ${BY+BH/2}) scale(${F.s}) translate(${-F.cx} ${-F.cy})`);
-  document.getElementById('pop').setAttribute('transform',`translate(${F.cx} ${F.cy}) scale(${pop}) translate(${-F.cx} ${-F.cy})`);
-  document.getElementById('art').style.opacity=newScene?clamp(sceneT/0.08):1;
+  document.getElementById('pop').setAttribute('transform','');
+  art.style.opacity=newScene?clamp(sceneT/0.15):1;
   // captions: current chunk of the current beat
-  let c=b.chunks[0], ci=0; b.chunks.forEach((x,k)=>{ if(t>=x.t||k===0) {c=x; ci=k;} }); if(i===0&&ci===0&&t<b.chunks[0].t) c=b.chunks[0];
+  let c=b.chunks[0], ci=0; b.chunks.forEach((x,k)=>{ if(t>=x.t||k===0) {c=x; ci=k;} });
   const key=c.key||'', txt=c.text, html=key&&txt.includes(key)?txt.replace(key,`<span class="k">${key}</span>`):txt;
   if(capC.dataset.v!==txt){ capC.innerHTML=html; capC.dataset.v=txt; capC._t=Math.max(0,c.t); }
   const ct=t-capC._t; capC.style.transform=`scale(${0.88+0.12*back(clamp(ct/0.16))})`; capC.style.opacity=(i===0&&ci===0)?1:clamp(ct/0.06);

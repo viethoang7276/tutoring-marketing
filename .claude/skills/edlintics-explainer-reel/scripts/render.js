@@ -7,9 +7,12 @@ const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const FF = process.env.FFMPEG; // path to ffmpeg (imageio-ffmpeg binary)
 const FPS = 24;
 const types = { '.html': 'text/html', '.json': 'application/json', '.png': 'image/png', '.js': 'text/javascript' };
+const SCENES = process.env.SCENES; // optional: a work folder's scenes.json (lets several reels build at once)
+const OUT = process.env.OUT || path.join(D, 'out');
 const srv = http.createServer((q, r) => {
-  const f = path.join(D, decodeURIComponent(q.url.split('?')[0]));
-  if (!f.startsWith(D) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); }
+  const u = decodeURIComponent(q.url.split('?')[0]);
+  const f = (u === '/scenes.json' && SCENES) ? SCENES : path.join(D, u);
+  if ((!f.startsWith(D) && f !== SCENES) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); }
   r.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(r);
 });
 (async () => {
@@ -22,10 +25,10 @@ const srv = http.createServer((q, r) => {
   const dur = await p.evaluate(() => window.init());
   const mode = process.argv[2];
   if (mode === 'stills') {
-    fs.mkdirSync(path.join(D, 'out'), { recursive: true });
+    fs.mkdirSync(OUT, { recursive: true });
     for (const t of process.argv[3].split(',').map(Number)) {
       await p.evaluate(t => window.render(t), t);
-      await p.screenshot({ path: path.join(D, 'out', `still-${t}.png`) });
+      await p.screenshot({ path: path.join(OUT, `still-${t}.png`) });
     }
   } else {
     const out = process.argv[3], audio = process.argv[4];

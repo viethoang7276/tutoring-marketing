@@ -6,7 +6,7 @@ import json, re, sys
 d, out = sys.argv[1], sys.argv[2]
 T = json.load(open(f"{d}/timing.json")); scenes = {}
 for b in T["beats"]:
-    if b["img"] in scenes: continue
+    if not b.get("img") or b["img"] in scenes: continue
     svg = open(f"{d}/{b['img']}.svg").read()
     a = svg.find('<g filter="url(#r)">') + len('<g filter="url(#r)">'); z = svg.rfind('</g></svg>')
     body = svg[a:z]; wall = False
@@ -14,5 +14,5 @@ for b in T["beats"]:
     if m: wall, body = True, body[m.end():]
     scenes[b["img"]] = {"body": body, "wall": wall}
 data = {"duration": T["duration"], "scenes": scenes,
-        "beats": [{k: b[k] for k in ("img", "focus", "focus_end", "start", "end", "chunks") if k in b} for b in T["beats"]]}
+        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint") if k in b} for b in T["beats"]]}
 json.dump(data, open(f"{out}/scenes.json", "w")); print(len(data["beats"]), "beats,", len(scenes), "scenes")
