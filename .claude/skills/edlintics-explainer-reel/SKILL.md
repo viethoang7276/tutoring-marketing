@@ -74,3 +74,8 @@ We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing L
 - **Hands proportional:** Ledger's hands and arms match the brand proportions (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time)
 - No text inside the art, and nothing sits under the caption band
 - The end card shows the term and the key point
+
+## Notes from batch runs (25 Oct 2026)
+- `people_group` doesn't work under Ledger-first framing: it gets cropped or hidden behind Ledger. Use one `person` (plus a `check`, `bills` and so on) to show "the others".
+- Canva Replace keeps the old clip's trim. If the new video is longer, extend the clip: click its duration and type the new length. Then check that the page total equals the video length.
+- Study Threads is already joined (24 Oct), so study-pain reels can go there.
