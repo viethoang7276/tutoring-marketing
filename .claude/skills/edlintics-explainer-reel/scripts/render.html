@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap">
+<style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#FBFAF6}
+#stage{position:absolute;inset:0}
+svg{position:absolute;inset:0}
+#cap{position:absolute;top:262px;left:70px;right:70px;text-align:center;text-wrap:balance;font:800 74px/1.22 Inter,sans-serif;color:#0F172A}
+#cap .t{position:relative;display:inline;padding:0 10px;
+  background-image:linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%);
+  background-repeat:no-repeat;background-size:var(--w) 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#logo{position:absolute;left:50%;top:1300px;width:300px;transform:translateX(-50%)}
+</style></head><body>
+<div id="stage">
+<svg id="paper" width="1080" height="1920" viewBox="0 0 1080 1920">
+ <defs>
+  <filter id="paperTex" x="0" y="0" width="100%" height="100%">
+   <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+   <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.33  0 0 0 0 0.28  0 0 0 0.10 0"/>
+  </filter>
+  <filter id="fibers" x="0" y="0" width="100%" height="100%">
+   <feTurbulence type="fractalNoise" baseFrequency="0.004 0.02" numOctaves="3" seed="3" result="n"/>
+   <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.42  0 0 0 0 0.36  0 0 0 0.12 -0.02"/>
+  </filter>
+  <radialGradient id="vig" cx="50%" cy="45%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#3a2f1a" stop-opacity="0.10"/></radialGradient>
+ </defs>
+ <rect width="1080" height="1920" fill="#FBFAF6"/>
+ <g id="wallLayer"></g>
+ <rect width="1080" height="1920" filter="url(#fibers)"/>
+ <rect width="1080" height="1920" filter="url(#paperTex)"/>
+</svg>
+<svg id="art" width="1080" height="1920" viewBox="0 0 1080 1920">
+ <defs>
+  <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
+   <feTurbulence id="t1" type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="1" result="n"/>
+   <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+   <feTurbulence id="t2" type="fractalNoise" baseFrequency="0.75" numOctaves="1" seed="11" result="g"/>
+   <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.55" result="ga"/>
+   <feComposite in="d" in2="ga" operator="in" result="tex"/>
+   <feComposite in="d" in2="tex" operator="arithmetic" k1="0" k2="0.45" k3="0.6" k4="0"/>
+  </filter>
+  <filter id="ghost" x="-5%" y="-5%" width="110%" height="110%">
+   <feTurbulence id="t3" type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5" result="n"/>
+   <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="G" yChannelSelector="R"/>
+  </filter>
+ </defs>
+ <g id="cam">
+  <g filter="url(#ghost)" opacity="0.3" transform="translate(2.5 -2)"><use href="#artBody"/></g>
+  <g filter="url(#pencil)"><g id="artBody"></g></g>
+ </g>
+</svg>
+<div id="cap"><span class="t"></span></div>
+<img id="logo" src="logo/edlintics-logo.png">
+</div>
+<script>
+let DATA=null, cur=-1, els=[];
+const S=0.8, GROUND_IN=1480, GROUND_OUT=1215;
+const artBody=document.getElementById('artBody'), wall=document.getElementById('wallLayer');
+const capT=document.querySelector('#cap .t');
+async function init(){ DATA=await (await fetch('scenes.json')).json(); await document.fonts.ready; return DATA.duration; }
+function bounds(i){ const sc=DATA.scenes; const a=i===0?0:sc[i].start-0.25; const b=i===sc.length-1?DATA.duration:sc[i+1].start-0.25; return [a,b]; }
+function load(i){
+  const s=DATA.scenes[i];
+  const dy=(s.dy||0); artBody.setAttribute('transform',`translate(540 ${GROUND_OUT+dy}) scale(${S}) translate(-540 -${GROUND_IN})`);
+  artBody.innerHTML=s.body;
+  wall.innerHTML=s.wall?`<rect x="0" y="0" width="1080" height="${GROUND_OUT}" fill="#E8F0FC" opacity="0.55"/>`:'';
+  els=[...artBody.querySelectorAll('path,line,rect,circle,ellipse,polygon,polyline')];
+  const n=els.length;
+  els.forEach((e,k)=>{
+    const cs=getComputedStyle(e);
+    const st=e.getAttribute('stroke'); const dashed=e.getAttribute('stroke-dasharray');
+    let L=0; try{L=e.getTotalLength();}catch(_){}
+    e._L=L; e._draw= st && st!=='none' && !dashed && L>0;
+    e._fo=parseFloat(e.getAttribute('fill-opacity')||'1');
+    e._t0=0.05+1.15*(k/n); e._dur=Math.min(0.45,0.15+L/2500);
+    if(e._draw){e.setAttribute('stroke-dasharray',`${L} ${L}`);}
+  });
+}
+function clamp(x){return Math.max(0,Math.min(1,x));}
+function ease(x){return 1-Math.pow(1-x,3);}
+function render(t){
+  const sc=DATA.scenes; let i=0; for(let k=0;k<sc.length;k++){ if(t>=bounds(k)[0]) i=k; }
+  if(i!==cur){ load(i); cur=i; }
+  const [a,b]=bounds(i); const lt=t-a; const len=b-a;
+  // boil: new drawing every 2 frames at 24 fps, cycling 3 seeds
+  const f=Math.floor(t*12)%3;
+  document.getElementById('t1').setAttribute('seed',String(1+f));
+  document.getElementById('t2').setAttribute('seed',String(11+f));
+  document.getElementById('t3').setAttribute('seed',String(5+f));
+  // draw-on
+  for(const e of els){
+    const p=ease(clamp((lt-e._t0)/e._dur));
+    if(e._draw){ e.setAttribute('stroke-dashoffset',String(e._L*(1-p))); }
+    const pf=clamp((lt-e._t0-e._dur*0.5)/0.3);
+    e.setAttribute('fill-opacity',String(e._fo*(e._draw?pf:p)));
+    if(!e._draw) e.setAttribute('stroke-opacity',String(p));
+  }
+  // camera: slow push-in, slight drift
+  const z=1+0.045*clamp(lt/len);
+  document.getElementById('cam').setAttribute('transform',`translate(540 820) scale(${z}) translate(-540 -820)`);
+  // fade out last 0.18 s
+  const out=clamp((b-t)/0.18); document.getElementById('art').style.opacity=(i===sc.length-1)?1:out;
+  // caption: hook first, then scene caption; highlighter sweeps in
+  let cap=sc[i].cap, ct=lt;
+  if(i===0 && DATA.hook){ if(t<DATA.hook.until){cap=DATA.hook.cap;} else {ct=t-DATA.hook.until;} }
+  if(capT.textContent!==cap) capT.textContent=cap;
+  const hp=ease(clamp((ct-0.15)/0.45));
+  capT.style.setProperty('--w',(hp*100)+'%');
+  capT.style.setProperty('--hl','#FFE08A');
+  document.getElementById('cap').style.opacity=clamp(ct/0.15)*((i===sc.length-1)?1:clamp((b-t)/0.18));
+}
+window.init=init; window.render=render;
+</script></body></html>
