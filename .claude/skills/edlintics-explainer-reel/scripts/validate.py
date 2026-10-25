@@ -15,7 +15,7 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     "life-of": {"order": ["hook", "moment", "turn", "concept", "lesson", "loop", "endcard"],
                 "min": {"hook": 1, "moment": 3, "turn": 1, "concept": 1, "lesson": 1, "endcard": 1}},
 }
-FRAMES = ("auto", "ledger", "ledger-close", "wide")
+FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF️]")
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
 NOT_USD = re.compile(r"[€£¥₫]|\b(euros?|eur|pounds? sterling|gbp|dong|vnd)\b", re.I)
@@ -34,6 +34,8 @@ def main(path):
     if t not in ROLES:
         E.append('meta.type must be "definition" or "life-of"'); t = "definition"
     beats, scenes = S.get("beats", []), S.get("scenes", {})
+    # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
+    for e in L.check_proportions(): E.append(f"scene_lib: {e}")
     # scenes and presets
     for name, sp in scenes.items():
         if sp.get("bg", "paper") not in L.BACKGROUNDS: E.append(f"scene {name}: unknown bg {sp.get('bg')!r} (use {', '.join(L.BACKGROUNDS)})")
@@ -85,7 +87,9 @@ def main(path):
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
         ch = b.get("chunks") or []
         if not ch: E.append(f"{where}: no caption chunks")
-        if not any(c.get("key") for c in ch) and b.get("role") != "loop": W.append(f"{where}: no key word highlighted")
+        if not any(str(c.get("key") or "").strip() for c in ch) and b.get("role") != "loop": W.append(f"{where}: no key word highlighted (give one chunk a \"key\")")
+        for c in ch:
+            if "key" in c and not str(c.get("key") or "").strip(): W.append(f'{where}: chunk "{c.get("text", "")}" has an empty key; remove "key" or fill it')
         for c in ch:
             ct = c.get("text", ""); n = len(words(ct))
             if not 2 <= n <= 5: E.append(f'{where}: caption chunk "{ct}" has {n} words (2-5)')
@@ -94,6 +98,9 @@ def main(path):
         dur = len(words(tx)) / WPS
         if dur > 4.6: W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
     est = total / WPS
+    target = {"definition": (100, 115), "life-of": (95, 115)}[t]
+    if total < target[0]: W.append(f"voice has {total} words; the {t} target is {target[0]}-{target[1]} (add a beat or a few words)")
+    if total > target[1]: W.append(f"voice has {total} words; the {t} target is {target[0]}-{target[1]}")
     if not 85 <= total <= 125: E.append(f"voice has {total} words; aim for 95-115 (85-125 allowed)")
     if not 29 <= est <= 41: E.append(f"estimated length {est:.1f} s; must be 30-40 s")
     # house rules on every piece of text

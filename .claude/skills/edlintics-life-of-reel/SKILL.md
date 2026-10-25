@@ -54,18 +54,21 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - **Useful props:**
      - `person` (a colleague, customer or classmate; `color` sets their shirt), `people_group` (a group project; `busy` = how many do all the work);
      - `speech`, `thought` (with `inner`), `phone` (screen `call`/`chat`), `laptop` (screen `sheet`);
-     - `calendar` (`mark` circles a day), `clock` (`hour`), `invoice`, `coffee`, `bed`, `school_desk`, `whiteboard`, `funnel` (`top`/`bottom` dots), `handshake`;
+     - `calendar` (`mark` circles a day), `clock` (`hour`), `invoice`, `coffee`, `bed`, `school_desk`, `whiteboard`, `funnel` (`top`/`bottom` dots); never `handshake` next to Ledger (its small drawn hands never match his; show a deal with `invoice` `stamp: true` or a `check`);
      - `chart` (`trend`), `check` and `cross`.
    - **Placement:** Ledger's (x, y) is between his feet, and the ground is at y 1480. Every other prop's (x, y) is its centre. Give an `id` to anything the frame should show.
-   - **Keep Ledger big (auto-fit shrinks wide scenes):** do not use `desk`, a laptop on a desk or props spread across the frame; stand Ledger at y 1470, s 2.2-2.4, with props at s 0.8-1.0 close beside him. Keep tall props (clock, calendar) at y 1000 or lower so they stay out of the caption band. No food props exist (use moods, `check`, `coins`, `chart`).
-   - **`frame`:** leave it out. The default auto-fits the drawn scene to about 70% of the frame width without clipping Ledger. Only add one (`ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`) for a deliberate close-up. There are no camera moves.
+   - **Ledger size is automatic (Ledger-first framing, 25 Oct 2026):** stand Ledger anywhere on the ground (y 1470) at any `s`; the build sizes the frame from Ledger so he fills 74-88% of the frame height, then nudges or shrinks props that would fall outside. You do not need to hand-tune `s` or y. A `desk` (set `w`, default 880; 360 = a short desk) may run off the frame edges as a cropped desk edge. Props never go under the caption band.
+   - **Held props:** put a prop at Ledger's hand at about 0.5-1.2x his body width (for Ledger `s` 2.3: prop `s` 0.6-0.8). The build WARNs if a held prop would make the hand look tiny or the prop a speck.
+   - **Food and everyday props:** `pizza` (`slices` left, 0-8), `pizza_slice` (`bite`, `rot`), `sandwich`, `burger`, `plate` (`item` none/slice/crumbs), `lemonade_cup`, `lemonade_stand`, `groceries_bag`, `receipt`, `gym`, `bus` (`flip`).
+   - **`frame`:** leave it out (Ledger-first is the default). Overrides: `content` (fit everything, Ledger may get small), `ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`. There are no camera moves.
 4. **Validate and build.** Run `$E/make_reel.sh $W <slug>`. Fix any `FAIL` line and run it again. Output: `<slug>.mp4`, `<slug>-voice-only.mp4`, `<slug>-canva-upload.mp4` and `<slug>-contact-sheet.png`.
 5. **Check by eye.** Use the contact sheet:
    - the role is clear from the first frame;
    - Ledger is big and recognisable;
+   - **hands proportional:** in every scene Ledger's hands and arms match the brand proportions (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time);
    - no art sits under the captions;
    - the end card reads well.
-   If Ledger is small or a prop hides under the captions, fix the scene (see Compose) and rebuild (about 2 min).
+   If a prop hides under the captions or a hand looks off, fix the scene (see Compose) and rebuild (about 2 min; add `REUSE_AUDIO=1` before the command when only the pictures changed).
 6. **Canva draft with music:** follow edlintics-definition-reel step 6 exactly:
    - `copy-design` `DAHZALJdKoM`, open `/design/<id>/edit`, click Uploads, then `find` "file input button" (the first `find` may return the search box; ask again) and upload `<slug>-canva-upload.mp4` (10 MB cap), open the Videos tab, wait for the thumbnail to show its length, then click the old video on the page, **Replace**, and your thumbnail. The upload library is shared, so pick the thumbnail whose length matches your video;
    - Edit as video, delete any old video layer, and check the total equals the video length;

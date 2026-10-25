@@ -82,26 +82,14 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         head = (f'<path d="M58 70 Q120 6 182 70" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
                 f'<rect x="48" y="64" width="16" height="30" rx="7" fill="{INK}"/><path d="M58 92 Q66 128 98 130" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
                 f'<circle cx="100" cy="130" r="5" fill="{INK}"/>')
-    # arms
-    left = _arm("M62 152 Q50 172 54 188", (54, 190))
-    right = _arm("M178 152 Q190 172 186 188", (186, 190))
+    # arms: every pose keeps the brand proportions (assets/brand/ledger.svg): shoulder-to-hand 38-48 units,
+    # arm stroke 13/8, hand r 9, so hands never look tiny or huge next to the body. See ARM_POSES and check_proportions().
+    pose = ARM_POSES.get(arm, ARM_POSES["down"])
+    right = _arm(*pose["R"]); left = _arm(*pose.get("L", ARM_POSES["down"]["L"]))
     prop = ""
-    if arm == "hold":
-        right = _arm("M180 152 Q200 170 206 152", (207, 149))
-    elif arm == "up":
-        right = _arm("M180 150 Q205 132 222 112", (224, 109))
-    elif arm == "both_up":
-        right = _arm("M180 150 Q205 132 222 112", (224, 109)); left = _arm("M60 150 Q35 132 18 112", (16, 109))
-    elif arm == "wave":
-        right = _arm("M180 150 Q214 120 210 84", (210, 80))
-    elif arm == "point":
-        right = _arm("M180 152 Q215 146 248 140", (251, 139))
-    elif arm == "shrug":
-        right = _arm("M180 152 Q214 150 212 124", (212, 120)); left = _arm("M60 152 Q26 150 28 124", (28, 120))
-    elif arm == "phone":
-        right = _arm("M180 152 Q214 132 192 100", (190, 96))
-        prop = (f'<g transform="rotate(-18 196 88)"><rect x="182" y="58" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
-                f'<rect x="187" y="66" width="20" height="38" rx="3" fill="{LB}"/></g>')
+    if arm == "phone":
+        prop = (f'<g transform="rotate(-14 200 92)"><rect x="185" y="60" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
+                f'<rect x="190" y="68" width="20" height="38" rx="3" fill="{LB}"/></g>')
     body = (f'<g transform="rotate({tilt} 120 198)">'
             f'<rect x="52" y="38" width="136" height="154" rx="18" fill="{PAPER}" stroke="{INK}" stroke-width="5"/>'
             f'<line x1="70" y1="46" x2="70" y2="184" stroke="{INK}" stroke-width="3.5" opacity="0.45"/><line x1="74" y1="46" x2="74" y2="184" stroke="{INK}" stroke-width="1.5" opacity="0.25"/>'
@@ -114,7 +102,35 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
             f'<rect x="88" y="208" width="29" height="14" rx="7" fill="{INK}"/><rect x="123" y="208" width="29" height="14" rx="7" fill="{INK}"/>')
     fl = " scale(-1 1) translate(-240 0)" if flip else ""
     return (f'<g transform="translate({_f(x)} {_f(y)}) scale({s}) translate(-120 -230){fl}">'
-            f'{behind}{legs}{left}{body}{right}{prop}</g>')
+            f'{behind}{legs}{left}{body}{prop}{right}</g>')
+
+
+# Arm poses, all measured against the brand file: shoulders at (62,152) and (178,152), hand r 9, arm 38-48 units long.
+ARM_POSES = {
+    "down":    {"R": ("M178 152 Q190 172 186 188", (186, 190)), "L": ("M62 152 Q50 172 54 188", (54, 190))},
+    "hold":    {"R": ("M180 152 Q206 168 214 150", (215, 147))},
+    "up":      {"R": ("M180 150 Q202 142 207 113", (208, 109))},
+    "both_up": {"R": ("M180 150 Q202 142 207 113", (208, 109)), "L": ("M60 150 Q38 142 33 113", (32, 109))},
+    "point":   {"R": ("M180 152 Q202 152 224 143", (227, 142))},
+    "phone":   {"R": ("M180 152 Q208 140 198 116", (197, 112))},
+    "shrug":   {"R": ("M180 152 Q212 150 210 124", (210, 120)), "L": ("M60 152 Q28 150 30 124", (30, 120))},
+    "wave":    {"R": ("M180 152 Q207 144 204 116", (204, 112))},
+}
+HAND_R, BODY_W = 9, 136
+
+
+def check_proportions():
+    """Return a list of problems if any arm pose breaks the brand proportions (run by validate.py on every build)."""
+    import re as _re
+    bad = []
+    for name, pose in ARM_POSES.items():
+        for side, (path, hand) in pose.items():
+            sx, sy = map(float, _re.match(r"M([\d.]+) ([\d.]+)", path).groups())
+            L = math.hypot(hand[0] - sx, hand[1] - sy)
+            if not 30 <= L <= 50: bad.append(f"arm pose {name} {side}: shoulder-to-hand {L:.0f} units (brand 38-48)")
+            if abs(sx - (62 if side == "L" else 178)) > 4: bad.append(f"arm pose {name} {side}: shoulder at x {sx:.0f}, not at the body edge")
+    if not 0.06 <= HAND_R / BODY_W <= 0.075: bad.append("hand radius out of proportion with the body")
+    return bad
 
 
 def ledger_box(x, y, s=1.0, **_):
@@ -363,14 +379,16 @@ def whiteboard(x, y, s=1.0, drawing="graph", **_):
     return _g(x, y, s, inner)
 
 
-def desk(x, y, s=1.0, **_):
-    """Office desk, 880 wide; (x, y) = centre of the desktop surface."""
-    return _g(x, y, s, (f'<rect x="-440" y="-17" width="880" height="34" rx="8" fill="{NAVY}"/>'
-                        f'<rect x="-400" y="17" width="26" height="196" fill="{NAVY}"/><rect x="374" y="17" width="26" height="196" fill="{NAVY}"/>'))
+def desk(x, y, s=1.0, w=880, **_):
+    """Office desk; (x, y) = centre of the desktop surface. w = width (default 880; 360 = a short desk segment).
+    With Ledger in the scene the desk may run off the frame edges (a cropped desk edge) instead of shrinking him."""
+    h = w / 2
+    return _g(x, y, s, (f'<rect x="{-h}" y="-17" width="{w}" height="34" rx="8" fill="{NAVY}"/>'
+                        f'<rect x="{-h + 40}" y="17" width="26" height="196" fill="{NAVY}"/><rect x="{h - 66}" y="17" width="26" height="196" fill="{NAVY}"/>'))
 
 
-def desk_box(x, y, s=1.0, **_):
-    return [x - 440 * s, y - 20 * s, 880 * s, 235 * s]
+def desk_box(x, y, s=1.0, w=880, **_):
+    return [x - w / 2 * s, y - 20 * s, w * s, 235 * s]
 
 
 def school_desk(x, y, s=1.0, **_):
@@ -501,6 +519,157 @@ def check(x, y, s=1.0, **_):
     return _g(x, y, s, f'<path d="M-60 0 L-15 45 L70 -50" fill="none" stroke="{GREEN}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>')
 
 
+# ---------------------------------------------------------------- food and everyday props (added 25 Oct 2026)
+CRUST = "#D9A04A"; CHEESE = "#F6D27A"; BREAD = "#E8C27E"; LETT = "#7FBF6A"; LEMON = "#F2D64B"
+
+
+def _wedge(r, a0, a1):
+    p0 = (r * math.cos(math.radians(a0)), r * math.sin(math.radians(a0)))
+    p1 = (r * math.cos(math.radians(a1)), r * math.sin(math.radians(a1)))
+    return f"M0 0 L{_f(p0[0])} {_f(p0[1])} A{r} {r} 0 0 1 {_f(p1[0])} {_f(p1[1])} Z"
+
+
+def pizza(x, y, s=1.0, slices=8, **_):
+    """A whole round pizza seen from above, 8 slices; slices = how many are left (0-8; eaten ones show as a dashed outline)."""
+    r = 150; n = max(0, min(8, int(slices)))
+    out = f'<circle r="{r + 6}" fill="none" stroke="{GREY}" stroke-width="4" stroke-dasharray="14 12"/>'
+    for i in range(n):
+        a0 = -90 + 45 * i; a1 = a0 + 45; am = math.radians(a0 + 22.5); rc = r - 9
+        out += (f'<path d="{_wedge(r, a0, a1)}" fill="{CHEESE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                f'<path d="M{_f(rc * math.cos(math.radians(a0 + 3)))} {_f(rc * math.sin(math.radians(a0 + 3)))} A{rc} {rc} 0 0 1 '
+                f'{_f(rc * math.cos(math.radians(a1 - 3)))} {_f(rc * math.sin(math.radians(a1 - 3)))}" fill="none" stroke="{CRUST}" stroke-width="14" stroke-linecap="round"/>'
+                f'<circle cx="{_f(88 * math.cos(am))}" cy="{_f(88 * math.sin(am))}" r="15" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>')
+    return _g(x, y, s, out)
+
+
+def pizza_slice(x, y, s=1.0, bite=False, rot=0, **_):
+    """One pizza slice, tip down; bite = true takes a bite out of the tip; rot = degrees."""
+    tip = "L0 150" if not bite else "L22 118 Q8 108 0 126 Q-8 108 -22 118"
+    inner = (f'<path d="M-95 -120 Q0 -150 95 -120 {tip} Z" fill="{CHEESE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+             f'<path d="M-92 -122 Q0 -152 92 -122" fill="none" stroke="{CRUST}" stroke-width="22" stroke-linecap="round"/>'
+             f'<path d="M-95 -132 Q0 -164 95 -132" fill="none" stroke="{INK}" stroke-width="4"/>'
+             f'<circle cx="-30" cy="-60" r="16" fill="{CORAL}" stroke="{INK}" stroke-width="3"/><circle cx="26" cy="-30" r="14" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>'
+             f'<circle cx="-4" cy="40" r="11" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>')
+    return _g(x, y, s, inner, rot)
+
+
+def sandwich(x, y, s=1.0, **_):
+    """A stacked sandwich, side view."""
+    inner = (f'<rect x="-130" y="30" width="260" height="46" rx="18" fill="{BREAD}" stroke="{INK}" stroke-width="5"/>'
+             f'<path d="M-140 30 q20 -22 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" fill="{LETT}" stroke="{INK}" stroke-width="4"/>'
+             f'<rect x="-120" y="2" width="240" height="20" rx="8" fill="{CORAL}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-126 2 L126 2 L100 -16 L-100 -16 Z" fill="{CHEESE}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+             f'<path d="M-134 -16 Q-134 -70 0 -76 Q134 -70 134 -16 Z" fill="{BREAD}" stroke="{INK}" stroke-width="5"/>'
+             f'<path d="M-60 -50 l8 -4 M10 -58 l8 -3 M70 -46 l8 -4" stroke="{INK}" stroke-width="4" stroke-linecap="round" opacity="0.5"/>')
+    return _g(x, y, s, inner)
+
+
+def lemonade_cup(x, y, s=1.0, **_):
+    """A cup of lemonade with a straw and a lemon slice."""
+    spokes = "".join(f'<path d="M-56 -110 l{_f(24 * math.cos(math.radians(a)))} {_f(24 * math.sin(math.radians(a)))}" stroke="{INK}" stroke-width="2.5" opacity="0.6"/>' for a in range(0, 360, 60))
+    inner = (f'<path d="M14 -110 L40 -190 L66 -190" fill="none" stroke="{CORAL}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>'
+             f'<path d="M-62 -110 L62 -110 L46 110 L-46 110 Z" fill="{WHITE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+             f'<path d="M-56 -70 L56 -70 L45 104 L-45 104 Z" fill="{LEMON}" opacity="0.85"/>'
+             f'<circle cx="-56" cy="-110" r="34" fill="{LEMON}" stroke="{INK}" stroke-width="4"/>{spokes}')
+    return _g(x, y, s, inner)
+
+
+def lemonade_stand(x, y, s=1.0, **_):
+    """A small street stall with a striped awning, a counter and a pitcher (no sign text). (x, y) = centre bottom of the counter."""
+    stripes = "".join(f'<path d="M{-230 + 46 * i} -420 L{-184 + 46 * i} -420 L{-184 + 46 * i} -360 Q{-207 + 46 * i} -340 {-230 + 46 * i} -360 Z" '
+                      f'fill="{BLUE if i % 2 == 0 else WHITE}" stroke="{INK}" stroke-width="4"/>' for i in range(10))
+    inner = (f'<rect x="-214" y="-420" width="14" height="420" fill="{NAVY}"/><rect x="200" y="-420" width="14" height="420" fill="{NAVY}"/>'
+             f'{stripes}<rect x="-240" y="-200" width="480" height="200" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="6"/>'
+             f'<rect x="-250" y="-214" width="500" height="22" rx="8" fill="{NAVY}"/>'
+             f'<rect x="-150" y="-150" width="300" height="90" rx="10" fill="{PAPER}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M120 -214 L120 -300 Q150 -310 180 -300 L176 -214 Z" fill="{LEMON}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M180 -290 q26 6 18 34 q-6 18 -22 20" fill="none" stroke="{INK}" stroke-width="4"/>')
+    return _g(x, y, s, inner)
+
+
+def lemonade_stand_box(x, y, s=1.0, **_):
+    return [x - 255 * s, y - 425 * s, 510 * s, 430 * s]
+
+
+def plate(x, y, s=1.0, item="none", **_):
+    """A round plate, side view; item = none, slice (a pizza slice on it) or crumbs."""
+    top = ""
+    if item == "slice":
+        top = (f'<path d="M-80 -26 Q0 -44 80 -26 L0 0 Z" fill="{CHEESE}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+               f'<path d="M-78 -28 Q0 -46 78 -28" fill="none" stroke="{CRUST}" stroke-width="12" stroke-linecap="round"/>')
+    elif item == "crumbs":
+        top = "".join(f'<circle cx="{cx}" cy="{cy}" r="5" fill="{CRUST}"/>' for cx, cy in ((-40, -6), (-10, -10), (24, -5), (50, -9), (6, -3)))
+    inner = (f'<ellipse cx="0" cy="0" rx="150" ry="34" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+             f'<ellipse cx="0" cy="-4" rx="100" ry="18" fill="none" stroke="{GREY}" stroke-width="3"/>{top}')
+    return _g(x, y, s, inner)
+
+
+def burger(x, y, s=1.0, **_):
+    """A burger, side view."""
+    inner = (f'<path d="M-130 40 L130 40 Q130 84 96 84 L-96 84 Q-130 84 -130 40 Z" fill="{BREAD}" stroke="{INK}" stroke-width="5"/>'
+             f'<rect x="-140" y="8" width="280" height="34" rx="16" fill="#7A4A2A" stroke="{INK}" stroke-width="5"/>'
+             f'<path d="M-140 8 L140 8 L110 30 L80 10 L40 32 L0 10 L-40 32 L-80 10 L-110 30 Z" fill="{CHEESE}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+             f'<path d="M-146 4 q24 -20 48 0 t48 0 t48 0 t48 0 t48 0 t48 0" fill="{LETT}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-136 0 Q-136 -96 0 -100 Q136 -96 136 0 Z" fill="{BREAD}" stroke="{INK}" stroke-width="5"/>'
+             f'<path d="M-50 -60 l8 -4 M10 -72 l8 -3 M60 -56 l8 -4" stroke="{INK}" stroke-width="4" stroke-linecap="round" opacity="0.5"/>')
+    return _g(x, y, s, inner)
+
+
+def groceries_bag(x, y, s=1.0, **_):
+    """A paper grocery bag with a baguette and greens poking out."""
+    folds = " ".join(f"L{-120 + 20 * i} {-150 if i % 2 == 0 else -120}" for i in range(13))
+    inner = (f'<path d="M30 -150 L70 -250 Q82 -262 92 -248 L60 -150 Z" fill="{BREAD}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-60 -150 Q-80 -230 -40 -240 Q-30 -190 -20 -150 Z" fill="{LETT}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-20 -150 Q-10 -220 20 -226 Q20 -180 10 -150 Z" fill="{LETT}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-120 -150 L120 -150 L104 160 L-104 160 Z" fill="#C9A06A" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+             f'<path d="M{folds[1:]}" fill="none" stroke="{INK}" stroke-width="3" opacity="0.5"/>')
+    return _g(x, y, s, inner)
+
+
+def receipt(x, y, s=1.0, rot=-4, **_):
+    """A long till receipt with blank lines and a bold total line (no text)."""
+    zig = "".join(f" L{80 - 20 * (i + 1)} {170 if i % 2 == 0 else 186}" for i in range(8))
+    lines = "".join(f'<rect x="-56" y="{-140 + 30 * i}" width="{60 + (i * 37) % 50}" height="8" rx="4" fill="#D9D5CA"/>'
+                    f'<rect x="34" y="{-140 + 30 * i}" width="24" height="8" rx="4" fill="#D9D5CA"/>' for i in range(8))
+    inner = (f'<path d="M-80 -180 L80 -180 L80 186{zig} L-80 186 Z" fill="{WHITE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+             f'{lines}<rect x="-56" y="112" width="112" height="14" rx="5" fill="{INK}"/>')
+    return _g(x, y, s, inner, rot)
+
+
+def gym(x, y, s=1.0, **_):
+    """Gym kit: a weight bench with a barbell on its rack and a dumbbell on the floor. (x, y) = centre of the floor line."""
+    inner = (f'<rect x="-200" y="-90" width="320" height="34" rx="12" fill="{NAVY}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-170 -56 L-170 0 M90 -56 L90 0" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>'
+             f'<path d="M150 -230 L150 0 M190 -230 L190 0" stroke="{INK}" stroke-width="8" stroke-linecap="round"/>'
+             f'<path d="M-40 -226 L340 -226" stroke="{GREY}" stroke-width="10" stroke-linecap="round"/>'
+             f'<rect x="-30" y="-276" width="34" height="100" rx="8" fill="{BLUE}" stroke="{INK}" stroke-width="4"/>'
+             f'<rect x="290" y="-276" width="34" height="100" rx="8" fill="{BLUE}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M-290 -22 L-210 -22" stroke="{GREY}" stroke-width="10" stroke-linecap="round"/>'
+             f'<rect x="-306" y="-48" width="26" height="52" rx="6" fill="{CORAL}" stroke="{INK}" stroke-width="4"/>'
+             f'<rect x="-220" y="-48" width="26" height="52" rx="6" fill="{CORAL}" stroke="{INK}" stroke-width="4"/>')
+    return _g(x, y, s, inner)
+
+
+def gym_box(x, y, s=1.0, **_):
+    return [x - 310 * s, y - 280 * s, 650 * s, 290 * s]
+
+
+def bus(x, y, s=1.0, flip=False, **_):
+    """A city bus, side view; (x, y) = centre of the road under its wheels; flip = true faces left."""
+    win = "".join(f'<rect x="{-250 + 92 * i}" y="-240" width="72" height="70" rx="8" fill="{SKY}" stroke="{INK}" stroke-width="4"/>' for i in range(5))
+    inner = (f'<rect x="-290" y="-270" width="580" height="230" rx="30" fill="{BLUE}" stroke="{INK}" stroke-width="6"/>'
+             f'{win}<rect x="216" y="-240" width="54" height="170" rx="8" fill="{SKY}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M243 -240 V-70" stroke="{INK}" stroke-width="3"/><rect x="-290" y="-110" width="580" height="18" fill="{WHITE}" opacity="0.8"/>'
+             f'<circle cx="-170" cy="-40" r="40" fill="{INK}"/><circle cx="-170" cy="-40" r="15" fill="{GREY}"/>'
+             f'<circle cx="170" cy="-40" r="40" fill="{INK}"/><circle cx="170" cy="-40" r="15" fill="{GREY}"/>')
+    if flip: inner = f'<g transform="scale(-1 1)">{inner}</g>'
+    return _g(x, y, s, inner)
+
+
+def bus_box(x, y, s=1.0, **_):
+    return [x - 295 * s, y - 275 * s, 590 * s, 275 * s]
+
+
 # ---------------------------------------------------------------- backgrounds
 def ground(y=1480):
     return f'<path d="M60 {y} Q540 {y - 14} 1020 {y}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
@@ -547,13 +716,18 @@ PRESETS = {
     "speech": (speech, None), "building": (building, building_box), "clock": (clock, None), "umbrella": (umbrella, None),
     "books": (books, None), "price_tag": (price_tag, None), "funnel": (funnel, funnel_box), "envelope": (envelope, None),
     "arrow": (arrow, arrow_box), "cross": (cross, cross_box), "check": (check, None),
+    "pizza": (pizza, None), "pizza_slice": (pizza_slice, None), "sandwich": (sandwich, None), "lemonade_cup": (lemonade_cup, None),
+    "lemonade_stand": (lemonade_stand, lemonade_stand_box), "plate": (plate, None), "burger": (burger, None),
+    "groceries_bag": (groceries_bag, None), "receipt": (receipt, None), "gym": (gym, gym_box), "bus": (bus, bus_box),
 }
 # half-sizes at s=1 for props that use the default box (centre +- these)
 HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
         "invoice": (115, 155), "chart": (205, 155), "coffee": (95, 160), "window": (345, 265), "door": (130, 365),
         "sofa": (165, 105), "bed": (225, 90), "sun_arrow": (270, 220), "handshake": (305, 75), "whiteboard": (355, 225),
         "school_desk": (175, 185), "ticket": (115, 60), "speech": (205, 145), "clock": (115, 115), "umbrella": (145, 245),
-        "books": (125, 110), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55)}
+        "books": (125, 110), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55),
+        "pizza": (160, 160), "pizza_slice": (100, 165), "sandwich": (145, 90), "lemonade_cup": (100, 200), "plate": (155, 50),
+        "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 

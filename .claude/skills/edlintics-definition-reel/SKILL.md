@@ -39,8 +39,9 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - Run `$PY $E/scene_lib.py --list` to see every preset and option.
    - **Ledger:** `{"p": "ledger", "id": "led", "x": 540, "y": 1470, "s": 2.2, "mood": "smile", "arm": "down", "outfit": "suit"}`. (x, y) is between his feet, and the ground is at y 1480. Use `"flip": true` to make him face left.
    - **Other props:** (x, y) is the centre. Give an `id` to anything the frame should show.
-   - **`frame`:** leave it out. The default auto-fits the drawn scene to about 70% of the frame width without clipping Ledger. Only add one (`ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`) for a deliberate close-up. There are no camera moves.
-   - **Keep Ledger big:** auto-fit sizes the whole drawing to 70% of the width, so wide props (desk, scale, `people_group`, `building`) shrink him. Use Ledger `s` 2.4-2.6 with one or two small props (scale `s` 0.7 with its pivot y about 1270, `person` `s` 1.5), not a desk or `people_group`.
+   - **`frame`:** leave it out. The default is Ledger-first framing (25 Oct 2026): the frame is sized from Ledger so he fills 74-88% of the frame height, and props that would fall outside are nudged in or shrunk, never Ledger. You do not need to hand-tune `s` or y. Wide props (`desk` with `w`, `building`, `whiteboard`, `window`, `people_group`) may run off the left and right edges. Overrides: `content` (fit everything, Ledger may get small), `ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`. There are no camera moves.
+   - **Held props:** a prop at Ledger's hand should be about 0.5-1.2x his body width (Ledger `s` 2.3: prop `s` 0.6-0.8). The build WARNs when a held prop is out of scale with the hand. Never put `handshake` next to Ledger (its small drawn hands never match his); show a deal with `invoice` (`stamp: true`) or a `check`.
+   - **Food and everyday props:** `pizza` (`slices` left), `pizza_slice`, `sandwich`, `burger`, `plate`, `lemonade_cup`, `lemonade_stand`, `groceries_bag`, `receipt`, `gym`, `bus`.
    - **One clear action per scene, and no text inside the art.** Reuse a scene for two beats if it fits; it stays the same frame.
 4. **Validate and build.** Run `$E/make_reel.sh $W <slug>`. It stops at the first problem with clear `FAIL` lines; fix the script and run it again. WARN lines are advice.
    - Output in `$W`:
@@ -51,10 +52,11 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - The build takes about 75 s.
 5. **Check by eye.** Open the contact sheet and check each of these:
    - Ledger is recognisable and big in every scene, and nothing important is cut off at the frame edge;
+   - **hands proportional:** Ledger's hands and arms match the brand proportions in every scene (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time);
    - no art sits under the caption;
    - the end card reads well;
    - each caption matches its picture.
-   If a scene looks wrong, move the items (x, y, s), or add a `frame` override, then rebuild.
+   If a scene looks wrong, move the items (x, y, s), or add a `frame` override, then rebuild. When only the pictures changed, run `REUSE_AUDIO=1 $E/make_reel.sh $W <slug>` to keep the voice and timings.
 6. **Canva draft with music.** In Chrome, in your own new tab:
    1. Run `copy-design` on the latest reel design, `DAHZALJdKoM` (sunk cost v5, which carries the free Canva track "Light Minimal Ambient"). Open the copy at `https://www.canva.com/design/<id>/edit`.
    2. Uploads › `find` the "file input" › `file_upload` `<slug>-canva-upload.mp4`. The Chrome bridge takes at most 10 MB. The copy opens already in timeline view, with the old video and the music on it; other agents' uploads share the Videos list, so pick the thumbnail whose length matches yours. Wait until the thumbnail shows its length.
@@ -64,7 +66,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    6. Run `move-item-to-folder` with the design id to `FAHYcHrS5PE`. Close your tab.
 7. **Upload the video to the hub so it plays on Hoang's phone.** Use the Artifact tool, publish with `asset: true`:
    - `url` `https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6`;
-   - `file_paths`: `<slug>.mp4` and a poster JPEG (make it from the first still by time, `ls $W/stills | sort -V | head -1` (plain `ls` sorts 11.37 before 2.17): `$PY -c "from PIL import Image; Image.open('<first still>').convert('RGB').resize((540,960)).save('$W/poster.jpg', quality=85)"`).
+   - `file_paths`: `<slug>.mp4` and `<slug>-poster.jpg` (make_reel.sh writes the poster from the first still by time; never pick it by hand).
    - Keep the returned `/_blob/...` URLs.
 8. **Hub proposal card.** Use ArtifactData `set` on `slots/<slot id>`. The slot id is `reel-<slug>`, or the date-time id Hoang gives. Copy the field names of `explainer-sunk-cost`:
    - **Basics:** `format: "explainer-reel"`, `reelType: "definition"`, `kind: "video"`, `status: "proposal"`, `title`, `family_or_category`.

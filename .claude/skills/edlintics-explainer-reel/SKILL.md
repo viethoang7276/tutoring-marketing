@@ -46,8 +46,11 @@ Each reel builds in its own work folder, so several can build at once.
 ## Layout (1080x1920)
 - **Caption band:** y 262-498, Inter 900 at 92 px, 2 lines at most.
 - **Art box:** x 40-1040, y 530-1310.
-- **Auto framing (the default, 25 Oct 2026):** the renderer measures everything drawn in the scene (people and props, not the background) and scales it so it spans about 70% of the frame width. Ledger is never clipped. A scene too tall for the box sits its bottom on the box bottom, and tall props (a window, a door) run up under the caption fade. Leave `frame` out unless a scene needs something else.
-- **Override:** set `"frame"` on the scene to `ledger`, `ledger-close`, `wide`, `item:<id>`, `items:<id>,<id>` or `[x, y, w, h]`. Use it only for a deliberate close-up or crop.
+- **Ledger-first framing (the default, 25 Oct 2026):** in any scene with Ledger, `build_scenes.py` sizes the frame from Ledger's own height, so he fills 74-88% of the art-box height (about 74% in a busy scene) whatever his `s`. Props that would fall outside are nudged in, then scaled down if still too big; Ledger is never shrunk or moved. Wide "bleed" props (`desk`, `building`, `whiteboard`, `window`, `people_group`) may run off the left and right edges instead of shrinking. Nothing goes above the frame top, so nothing sits under the caption band. Scenes without Ledger fall back to the renderer's fit (the drawn subject at ~70% of the width).
+- **Override:** set `"frame"` on the scene to `content` (old fit-everything), `ledger`, `ledger-close`, `wide`, `item:<id>`, `items:<id>,<id>` or `[x, y, w, h]`. Use it only for a deliberate close-up or crop.
+- **Hands and arms:** every arm pose in `scene_lib.ARM_POSES` keeps the brand proportions (shoulder-to-hand 38-48 units, hand r 9 against a 136-wide body). `validate.py` fails the build if a pose drifts (`check_proportions()`), and `build_scenes.py` WARNs when a prop at Ledger's hand is out of scale with it. The contact-sheet review always includes "hands proportional".
+- **Rebuild pictures only:** `REUSE_AUDIO=1 make_reel.sh <workdir> <slug>` keeps voiceover.wav, the mix and the timings, and only redraws scenes.
+- **Poster:** make_reel.sh writes `<slug>-poster.jpg` from the first still by time.
 - **Logo:** 210 px wide at y 1338, opacity 0.72.
 - **Clear areas:** the bottom ~670 px and right ~120 px are covered by the Reels, Shorts and TikTok buttons.
 - **End card:** the term at 132 px, a blue rule, the key point at 64 px, and the logo at 330 px.
@@ -65,3 +68,9 @@ We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing L
 ## Changing the engine
 - **New prop:** add a function to `scene_lib.py`, register it in `PRESETS` (and `HALF` for its size), give it a one-line docstring, and test with the two examples.
 - After any engine change, rebuild both examples and look at the contact sheets.
+
+## Contact-sheet review checklist (every reel, every build)
+- Ledger is accurate to assets/brand/ledger.svg and fills at least 70% of the art-box height in every scene
+- **Hands proportional:** Ledger's hands and arms match the brand proportions (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time)
+- No text inside the art, and nothing sits under the caption band
+- The end card shows the term and the key point
