@@ -15,7 +15,7 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     "life-of": {"order": ["hook", "moment", "turn", "concept", "lesson", "loop", "endcard"],
                 "min": {"hook": 1, "moment": 3, "turn": 1, "concept": 1, "lesson": 1, "endcard": 1}},
 }
-FRAMES = ("ledger", "ledger-close", "wide")
+FRAMES = ("auto", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF️]")
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
 NOT_USD = re.compile(r"[€£¥₫]|\b(euros?|eur|pounds? sterling|gbp|dong|vnd)\b", re.I)
@@ -61,7 +61,7 @@ def main(path):
     for name, sp in scenes.items():
         fr = sp.get("frame")
         if fr is not None and not (isinstance(fr, list) and len(fr) == 4) and fr not in FRAMES and not (isinstance(fr, str) and fr.startswith(("item:", "items:"))):
-            E.append(f"scene {name}: frame {fr!r}; use ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h]")
+            E.append(f"scene {name}: frame {fr!r}; omit it (auto-fit, the default) or use auto, ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h]")
     if t == "life-of" and beats and "day in the life" not in beats[0].get("text", "").lower():
         E.append('life-of hook must say "a day in the life of ..."')
     total = 0; texts_extra = []

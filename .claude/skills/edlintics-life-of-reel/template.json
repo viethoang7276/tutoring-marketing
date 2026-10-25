@@ -24,7 +24,6 @@
  "scenes": {
   "hook": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -45,7 +44,6 @@
   },
   "m1": {
    "bg": "office",
-   "frame": "ledger",
    "items": [
     {
      "p": "ledger",
@@ -67,7 +65,6 @@
   },
   "m2": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -83,7 +80,6 @@
   },
   "m3": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -99,7 +95,6 @@
   },
   "m4": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -121,7 +116,6 @@
   },
   "turn": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -138,7 +132,6 @@
   },
   "concept": {
    "bg": "paper",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -154,7 +147,6 @@
   },
   "lesson": {
    "bg": "paper",
-   "frame": "ledger",
    "items": [
     {
      "p": "ledger",

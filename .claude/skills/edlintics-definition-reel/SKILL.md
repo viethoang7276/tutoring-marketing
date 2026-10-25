@@ -35,11 +35,11 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
      - `"text"` is "<Term>. <Key point as a sentence>.";
      - the voice must say the term.
    - **Totals:** about 100-115 words, 9-13 beats, and 2-4 s of voice per beat (12 words or fewer).
-3. **Compose the scenes.** Each scene is `{"bg", "frame", "items": [...]}`, built from presets only. Never write SVG.
+3. **Compose the scenes.** Each scene is `{"bg", "items": [...]}` (an optional `"frame"`), built from presets only. Never write SVG.
    - Run `$PY $E/scene_lib.py --list` to see every preset and option.
    - **Ledger:** `{"p": "ledger", "id": "led", "x": 540, "y": 1470, "s": 2.2, "mood": "smile", "arm": "down", "outfit": "suit"}`. (x, y) is between his feet, and the ground is at y 1480. Use `"flip": true` to make him face left.
    - **Other props:** (x, y) is the centre. Give an `id` to anything the frame should show.
-   - **`frame`:** one of `ledger` (the default), `ledger-close`, `wide`, `item:<id>` or `items:<id>,<id>`. One frame per scene: there are no camera moves.
+   - **`frame`:** leave it out. The default auto-fits the drawn scene to about 70% of the frame width without clipping Ledger. Only add one (`ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`) for a deliberate close-up. There are no camera moves.
    - **One clear action per scene, and no text inside the art.** Reuse a scene for two beats if it fits; it stays the same frame.
 4. **Validate and build.** Run `$E/make_reel.sh $W <slug>`. It stops at the first problem with clear `FAIL` lines; fix the script and run it again. WARN lines are advice.
    - Output in `$W`:
@@ -53,11 +53,11 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - no art sits under the caption;
    - the end card reads well;
    - each caption matches its picture.
-   If a scene looks wrong, move the items (x, y, s) or change `frame`, then rebuild.
+   If a scene looks wrong, move the items (x, y, s), or add a `frame` override, then rebuild.
 6. **Canva draft with music.** In Chrome, in your own new tab:
    1. Run `copy-design` on the latest reel design, `DAHZALJdKoM` (sunk cost v5, which carries the free Canva track "Light Minimal Ambient"). Open the copy at `https://www.canva.com/design/<id>/edit`.
    2. Uploads › `find` the "file input" › `file_upload` `<slug>-canva-upload.mp4`. The Chrome bridge takes at most 10 MB. Wait until the thumbnail shows its length.
-   3. Click the new thumbnail to add it to the page. In the element's ⋯ menu, choose **Set video as background**.
+   3. Click the video on the page (the old background) to select it, click **Replace** in the toolbar, then click the new thumbnail. The background swaps in place and the music stays. Do NOT click the thumbnail with nothing selected: that appends a second clip and doubles the length (if it happens, press cmd+z).
    4. **Remove any old video.** In the page ⋯ menu, choose **Edit as video**. The timeline must show only the new video and the music. Delete any other video layer (an old reel left on top) and any extra clip after the new one. The total at the bottom right must equal the video length (for example 0:36); the music trims itself to the page.
    5. Rename it: File › pencil › "Explainer reel - <Term> (Ledger) v1". Check it says "All changes saved".
    6. Run `move-item-to-folder` with the design id to `FAHYcHrS5PE`. Close your tab.

@@ -573,7 +573,8 @@ def item_box(it):
 
 
 def scene_body(spec):
-    return bg_svg(spec.get("bg", "paper")) + "".join(item_svg(it) for it in spec.get("items", []))
+    # items sit in <g class="content"> so the renderer can auto-fit the frame to the drawn subject (not the background)
+    return bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g data-p="{it["p"]}">{item_svg(it)}</g>' for it in spec.get("items", [])) + '</g>'
 
 
 def scene_svg(spec):

@@ -16,7 +16,7 @@ Both write a `script.json` and build it with this engine:
 Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKoM`). It was built from `.claude/skills/edlintics-definition-reel/example-sunk-cost.json`.
 
 ## Standing rules (Hoang, 25 Oct 2026). The validator enforces them.
-1. **No camera moves.** There is no zoom, push-in, pan or reframe. Each beat shows its scene as one steady frame that fills the art box. The framing is set once per scene as `"frame"`. A new scene comes in with a 0.15 s fade and a fast draw-on (0.5 s). Line boil and objects drawing in are the only motion.
+1. **No camera moves.** There is no zoom, push-in, pan or reframe. Each beat shows its scene as one steady frame. By default the frame auto-fits (see Layout); a scene may override it once with `"frame"`. A new scene comes in with a 0.15 s fade and a fast draw-on (0.5 s). Line boil and objects drawing in are the only motion.
 2. **End card last.** The final beat has role `"endcard"`, with `"term"` and `"keypoint"`. It shows the term large, a one-line key point with a highlighter, and the logo, for about 3-4 s while the voice says both. A loop-back line before it is optional (role `"loop"`).
 3. **Captions** are chunks of 2-5 words in time with the voice, with one `key` word highlighted per beat.
 4. **No full stop at the end of any paragraph.** This covers captions, the key point, the post caption, caption_x and the first comment. Full stops between sentences are fine.
@@ -29,7 +29,7 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 | `make_reel.sh` | The one command: validate, scenes, voice, audio mix, scene data, stills, video, then the checks and contact sheet |
 | `validate.py` | Checks script.json against the rules above and the beat structure for `meta.type` |
 | `scene_lib.py` | The scene library: Ledger (`mood`, `arm`, `outfit`, `flip`, `tilt`), about 35 props and 6 backgrounds. Run `python scene_lib.py --list` |
-| `build_scenes.py` | Turns scene presets into `s*.svg` and resolves each scene's `frame` into a box (`beats.json`) |
+| `build_scenes.py` | Turns scene presets into `s*.svg` and resolves each scene's optional `frame` (default `auto`) into `beats.json` |
 | `vo.py` | Makes the Kokoro voiceover (`voiceover.wav`) and `timing.json` with beat and chunk times |
 | `mix_audio.py` | Makes `audio-voice.wav` (voice plus soft generated whoosh and tick) and `audio.wav` (adds a quiet pad for preview) |
 | `make_scenes_json.py` | Packs the art, beats and end card into `<work>/scenes.json` |
@@ -46,6 +46,8 @@ Each reel builds in its own work folder, so several can build at once.
 ## Layout (1080x1920)
 - **Caption band:** y 262-498, Inter 900 at 92 px, 2 lines at most.
 - **Art box:** x 40-1040, y 530-1310.
+- **Auto framing (the default, 25 Oct 2026):** the renderer measures everything drawn in the scene (people and props, not the background) and scales it so it spans about 70% of the frame width. Ledger is never clipped. A scene too tall for the box sits its bottom on the box bottom, and tall props (a window, a door) run up under the caption fade. Leave `frame` out unless a scene needs something else.
+- **Override:** set `"frame"` on the scene to `ledger`, `ledger-close`, `wide`, `item:<id>`, `items:<id>,<id>` or `[x, y, w, h]`. Use it only for a deliberate close-up or crop.
 - **Logo:** 210 px wide at y 1338, opacity 0.72.
 - **Clear areas:** the bottom ~670 px and right ~120 px are covered by the Reels, Shorts and TikTok buttons.
 - **End card:** the term at 132 px, a blue rule, the key point at 64 px, and the logo at 330 px.

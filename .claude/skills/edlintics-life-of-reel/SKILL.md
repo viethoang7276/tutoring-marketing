@@ -57,7 +57,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
      - `calendar` (`mark` circles a day), `clock` (`hour`), `invoice`, `coffee`, `bed`, `school_desk`, `whiteboard`, `funnel` (`top`/`bottom` dots), `handshake`;
      - `chart` (`trend`), `check` and `cross`.
    - **Placement:** Ledger's (x, y) is between his feet, and the ground is at y 1480. Every other prop's (x, y) is its centre. Give an `id` to anything the frame should show.
-   - **`frame`:** one per scene: `ledger`, `ledger-close`, `wide`, `item:<id>` or `items:<id>,<id>`. There are no camera moves.
+   - **`frame`:** leave it out. The default auto-fits the drawn scene to about 70% of the frame width without clipping Ledger. Only add one (`ledger-close`, `item:<id>`, `items:<id>,<id>`, `wide`, `ledger` or `[x, y, w, h]`) for a deliberate close-up. There are no camera moves.
 4. **Validate and build.** Run `$E/make_reel.sh $W <slug>`. Fix any `FAIL` line and run it again. Output: `<slug>.mp4`, `<slug>-voice-only.mp4`, `<slug>-canva-upload.mp4` and `<slug>-contact-sheet.png`.
 5. **Check by eye.** Use the contact sheet:
    - the role is clear from the first frame;

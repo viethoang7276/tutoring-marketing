@@ -24,7 +24,6 @@
  "scenes": {
   "hook": {
    "bg": "office",
-   "frame": "items:led,<prop id>",
    "items": [
     {
      "p": "<prop>",
@@ -47,7 +46,6 @@
   },
   "story1": {
    "bg": "paper",
-   "frame": "ledger",
    "items": [
     {
      "p": "ledger",
@@ -63,7 +61,6 @@
   },
   "story2": {
    "bg": "paper",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -79,7 +76,6 @@
   },
   "story3": {
    "bg": "paper",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -95,7 +91,6 @@
   },
   "define": {
    "bg": "paper",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -111,7 +106,6 @@
   },
   "biz1": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -132,7 +126,6 @@
   },
   "biz2": {
    "bg": "office",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",
@@ -148,7 +141,6 @@
   },
   "takeaway": {
    "bg": "paper",
-   "frame": "wide",
    "items": [
     {
      "p": "ledger",

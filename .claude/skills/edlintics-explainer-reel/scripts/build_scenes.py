@@ -6,7 +6,9 @@ Writes <workdir>/<scene>.svg for every scene and <workdir>/beats.json (beats wit
 
 No camera moves (Hoang, 25 Oct 2026): the framing belongs to the SCENE, set once as "frame", and every beat on
 that scene shows the same steady frame. Beats never carry focus or focus_end. A scene's "frame" may be:
-  "ledger"            Ledger (the first ledger item) with a little room around him (the default)
+  (omitted) / "auto"  THE DEFAULT: the renderer fits the frame to the bounding box of everything drawn in the scene
+                      (people and props, not the background), so the subject fills about 70% of the art-box width
+  "ledger"            Ledger (the first ledger item) with a little room around him
   "ledger-close"      a tight close-up on Ledger's face and hands
   "item:<id>"         one item, by its "id"
   "items:<id>,<id>"   several items together
@@ -43,7 +45,9 @@ def resolve(f, spec, where):
     led = [it for it in items if it["p"] == "ledger"]
     if isinstance(f, list) and len(f) == 4:
         return [round(v) for v in f]
-    if f in (None, "ledger"):
+    if f in (None, "auto"):
+        return "auto"
+    if f == "ledger":
         if not led:
             f = "wide"
         else:
@@ -62,7 +66,7 @@ def resolve(f, spec, where):
             if not m: raise SystemExit(f"{where}: no item with id '{i.strip()}' in this scene")
             boxes.append(L.item_box(m[0]))
         return shape(union(boxes), pad=0.12)
-    raise SystemExit(f"{where}: unknown focus {f!r} (use ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h])")
+    raise SystemExit(f"{where}: unknown focus {f!r} (use auto, ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h])")
 
 
 def main(d):

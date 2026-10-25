@@ -60,8 +60,8 @@ svg{position:absolute;inset:0}
 </div>
 <script>
 // Beat-based renderer, NO camera moves (Hoang, 25 Oct 2026): each beat shows its scene as one steady frame
-// (focus = [x,y,w,h] in the 1080x1920 art, fitted into the box x 40-1040, y 530-1310, so the subject fills
-// 60-70% of the width). A new scene comes in with a quick 0.15 s fade and a fast draw-on; no zoom, pan or reframe.
+// (focus = "auto" by default: the drawn subject is fitted to ~70% of the art-box width; or an explicit [x,y,w,h]
+// in the 1080x1920 art, fitted into the box x 40-1040, y 530-1310). A new scene comes in with a quick 0.15 s fade and a fast draw-on; no zoom, pan or reframe.
 // Captions show 2-5 word chunks timed to the voice, key word highlighted. The last beat (role "endcard") hides
 // the art and shows the term, a one-line key point and the logo.
 let D=null, curImg=null, els=[], cut=0;
@@ -82,6 +82,20 @@ function load(img){
     e._t0=0.32*(k/n); e._dur=Math.min(0.2,0.07+L/4000); if(e._draw) e.setAttribute('stroke-dasharray',`${L} ${L}`); });
 }
 function fit(r){ const s=Math.min(BW/r[2],BH/r[3]); return {s,cx:r[0]+r[2]/2,cy:r[1]+r[3]/2}; }
+// "auto" frame (the default): fit the drawn subject (the .content group, not the background) so it fills
+// about 70% of the frame width, never clipping Ledger (tall props may run up under the caption fade)
+let autoFit=null;
+function fitAuto(){ const c=artBody.querySelector('.content'); if(!c) return fit([40,530,1000,780]);
+  const bb=c.getBBox(); if(!bb.width||!bb.height) return fit([40,530,1000,780]);
+  const bottom=bb.y+bb.height, L=c.querySelector('[data-p="ledger"]'), lb=L?L.getBBox():null;
+  // width first: the drawn subject spans ~76% of the art box = ~70% of the frame width
+  let s=Math.min(0.76*BW/bb.width, 2.4);
+  // never clip Ledger: from his top to the scene's bottom must fit inside the box
+  if(lb) s=Math.min(s,(BH-24)/(bottom-lb.y));
+  const cx=bb.x+bb.width/2;
+  // whole scene fits: centre it; too tall: sit its bottom on the box bottom, tall props run up under the caption fade
+  if(bb.height*s<=BH-24) return {s,cx,cy:bb.y+bb.height/2};
+  return {s,cx,cy:bottom-(BH/2-12)/s}; }
 function render(t){
   const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08);
   const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
@@ -94,7 +108,7 @@ function render(t){
     return;
   }
   card.style.display='none'; cap.style.display='flex'; logo.style.display='block';
-  if(b.img!==curImg){ load(b.img); curImg=b.img; cut=a; }
+  if(b.img!==curImg){ load(b.img); curImg=b.img; cut=a; autoFit=fitAuto(); }
   const sceneT=(i===0?99:t-cut), newScene=(Math.abs(cut-a)<1e-6)&&i>0;  // beat 0 opens fully drawn: the hook frame must read at once
   // line boil: new drawing every 2 frames at 24 fps
   const f=Math.floor(t*12)%3;
@@ -104,7 +118,7 @@ function render(t){
     const pf=clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));
     if(!el._draw) el.setAttribute('stroke-opacity',String(p)); }
   // steady frame: no push-in, pan or reframe
-  const F=fit(b.focus);
+  const F=(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
   document.getElementById('cam').setAttribute('transform',`translate(${BX+BW/2} ${BY+BH/2}) scale(${F.s}) translate(${-F.cx} ${-F.cy})`);
   document.getElementById('pop').setAttribute('transform','');
   art.style.opacity=newScene?clamp(sceneT/0.15):1;

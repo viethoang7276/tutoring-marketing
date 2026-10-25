@@ -68,8 +68,7 @@
      "s": 0.9,
      "hour": 7
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "coffee": {
    "bg": "office",
@@ -98,8 +97,7 @@
      "y": 1270,
      "s": 0.85
     }
-   ],
-   "frame": "ledger"
+   ]
   },
   "invoices": {
    "bg": "office",
@@ -146,8 +144,7 @@
      "s": 0.75,
      "screen": "sheet"
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "bill": {
    "bg": "office",
@@ -183,8 +180,7 @@
      "s": 2.0,
      "mood": "o"
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "colleague": {
    "bg": "office",
@@ -215,8 +211,7 @@
      "mood": "flat",
      "flip": true
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "october": {
    "bg": "office",
@@ -244,8 +239,7 @@
      "arm": "point",
      "flip": true
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "accrual": {
    "bg": "paper",
@@ -287,8 +281,7 @@
      "mood": "smile",
      "arm": "up"
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "profit": {
    "bg": "office",
@@ -311,8 +304,7 @@
      "arm": "point",
      "flip": true
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "good": {
    "bg": "paper",
@@ -339,8 +331,7 @@
      "mood": "happy",
      "arm": "wave"
     }
-   ],
-   "frame": "ledger"
+   ]
   }
  },
  "beats": [

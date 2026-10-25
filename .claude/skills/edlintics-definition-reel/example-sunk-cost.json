@@ -65,8 +65,7 @@
      "mood": "angry",
      "arm": "up"
     }
-   ],
-   "frame": "items:led,app"
+   ]
   },
   "ticket": {
    "bg": "paper",
@@ -88,8 +87,7 @@
      "s": 1.15,
      "rot": -12
     }
-   ],
-   "frame": "ledger"
+   ]
   },
   "rain": {
    "bg": "paper",
@@ -111,8 +109,7 @@
      "mood": "sad",
      "tilt": 4
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "think": {
    "bg": "paper",
@@ -139,8 +136,7 @@
      "s": 2.4,
      "mood": "frown"
     }
-   ],
-   "frame": "items:th,led"
+   ]
   },
   "either": {
    "bg": "paper",
@@ -173,8 +169,7 @@
      "mood": "flat",
      "arm": "shrug"
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "pit": {
    "bg": "none",
@@ -196,8 +191,7 @@
      "mood": "o",
      "tilt": -6
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "app": {
    "bg": "office",
@@ -238,12 +232,10 @@
      "s": 1.0,
      "n": 6
     }
-   ],
-   "frame": "wide"
+   ]
   },
   "weigh": {
    "bg": "paper",
-   "frame": "wide",
    "items": [
     {
      "p": "coins",
@@ -304,8 +296,7 @@
      "mood": "smile",
      "arm": "up"
     }
-   ],
-   "frame": "wide"
+   ]
   }
  },
  "beats": [
