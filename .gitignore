@@ -44,3 +44,6 @@ logs/*.log
 # Only the README in that folder is tracked.
 data/contacts/*
 !data/contacts/README.md
+
+# local text-to-speech tools and models
+tools/tts/
