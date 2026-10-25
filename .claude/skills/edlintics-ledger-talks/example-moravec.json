@@ -1,0 +1,464 @@
+{
+ "meta": {
+  "type": "ledger-talks",
+  "term": "Moravec's paradox",
+  "title": "Ledger talks: the skills that pay are flipping",
+  "slug": "test-ledger-talks-moravec",
+  "family_or_category": "business",
+  "caption": "For twenty years, hard skills like coding and data analysis paid the most. That is starting to flip\n\nMoravec's paradox explains why: what is hard for people is often easy for machines, and the reverse. AI now writes code, but reading a room, earning trust and negotiating a deal are still human skills, and in business they close sales and keep clients\n\nSave this for your next career decision. More at edlintics.com\n\n#edlintics #businessstudents #careers #business",
+  "caption_x": "Hard skills are getting easier for machines, and soft skills are worth more. Moravec's paradox in 35 seconds. edlintics.com #edlintics",
+  "first_comment": "Which skill do you think machines will master last: negotiating, managing a team or selling? Reply with one. More short business explainers at edlintics.com",
+  "maths_check": "No calculation in this reel. Fact check: Hans Moravec and others described the paradox in the 1980s (Moravec, Mind Children, 1988). Computers handle formal reasoning such as logic tests and chess, while perception and movement that a one-year-old manages are hard for machines.",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents",
+   "#careers",
+   "#business"
+  ],
+  "threadsTopic": "Business",
+  "threadsReason": "A careers and business-skills argument fits the Business topic, the primary arm for business posts in the Threads topic test",
+  "utm": {
+   "template": "https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=ledger-talks&utm_content=test-ledger-talks-moravec"
+  }
+ },
+ "scenes": {
+  "hook": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "open_l",
+     "outfit": "casual"
+    }
+   ]
+  },
+  "hard": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "point_l",
+     "outfit": "casual"
+    },
+    {
+     "p": "laptop",
+     "x": 800,
+     "y": 880,
+     "s": 0.45,
+     "screen": "chart"
+    }
+   ]
+  },
+  "flip": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "shrug_l",
+     "outfit": "casual"
+    }
+   ]
+  },
+  "name": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "up_l",
+     "outfit": "casual"
+    }
+   ]
+  },
+  "y1980": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "down",
+     "outfit": "casual"
+    },
+    {
+     "p": "books",
+     "x": 805,
+     "y": 880,
+     "s": 0.55
+    }
+   ]
+  },
+  "logic": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "open_l",
+     "outfit": "casual"
+    },
+    {
+     "p": "check",
+     "x": 805,
+     "y": 870,
+     "s": 0.8
+    }
+   ]
+  },
+  "toddler": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "shrug_l",
+     "outfit": "casual"
+    }
+   ]
+  },
+  "flipback": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "point_l",
+     "outfit": "casual"
+    }
+   ]
+  },
+  "ai": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "open_l",
+     "outfit": "casual"
+    },
+    {
+     "p": "laptop",
+     "x": 800,
+     "y": 880,
+     "s": 0.45,
+     "screen": "sheet"
+    }
+   ]
+  },
+  "human": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "up_l",
+     "outfit": "casual"
+    },
+    {
+     "p": "speech",
+     "x": 800,
+     "y": 860,
+     "s": 0.5
+    }
+   ]
+  },
+  "biz": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "point_l",
+     "outfit": "casual"
+    },
+    {
+     "p": "invoice",
+     "x": 805,
+     "y": 880,
+     "s": 0.5,
+     "stamp": true
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "hook",
+   "text": "The skills that pay are flipping.",
+   "chunks": [
+    {
+     "text": "The skills"
+    },
+    {
+     "text": "that pay"
+    },
+    {
+     "text": "are flipping",
+     "key": "flipping"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "hard",
+   "text": "For twenty years, hard skills like coding paid best.",
+   "chunks": [
+    {
+     "text": "For 20 years"
+    },
+    {
+     "text": "hard skills",
+     "key": "hard skills"
+    },
+    {
+     "text": "like coding"
+    },
+    {
+     "text": "paid best"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "flip",
+   "text": "Now machines are learning hard skills, and soft skills are worth more.",
+   "chunks": [
+    {
+     "text": "Now machines"
+    },
+    {
+     "text": "are learning"
+    },
+    {
+     "text": "hard skills"
+    },
+    {
+     "text": "and soft skills"
+    },
+    {
+     "text": "are worth more",
+     "key": "worth more"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "name",
+   "text": "The reason is Moravec's paradox.",
+   "chunks": [
+    {
+     "text": "The reason is"
+    },
+    {
+     "text": "Moravec's paradox",
+     "key": "Moravec's paradox"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "y1980",
+   "text": "In the 1980s, researcher Hans Moravec noticed something odd.",
+   "chunks": [
+    {
+     "text": "In the 1980s"
+    },
+    {
+     "text": "researcher"
+    },
+    {
+     "text": "Hans Moravec",
+     "key": "Hans Moravec"
+    },
+    {
+     "text": "noticed"
+    },
+    {
+     "text": "something odd"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "logic",
+   "text": "Computers beat adults at logic tests.",
+   "chunks": [
+    {
+     "text": "Computers"
+    },
+    {
+     "text": "beat adults",
+     "key": "beat"
+    },
+    {
+     "text": "at logic tests"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "toddler",
+   "text": "But they could not see or move like a toddler.",
+   "chunks": [
+    {
+     "text": "But they"
+    },
+    {
+     "text": "could not"
+    },
+    {
+     "text": "see or move"
+    },
+    {
+     "text": "like a toddler",
+     "key": "toddler"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "flipback",
+   "text": "What is hard for people is easy for machines.",
+   "chunks": [
+    {
+     "text": "What is hard"
+    },
+    {
+     "text": "for people"
+    },
+    {
+     "text": "is easy",
+     "key": "easy"
+    },
+    {
+     "text": "for machines"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "ai",
+   "text": "AI writes code and solves competition math.",
+   "chunks": [
+    {
+     "text": "AI"
+    },
+    {
+     "text": "writes code",
+     "key": "code"
+    },
+    {
+     "text": "and solves"
+    },
+    {
+     "text": "competition math"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "human",
+   "text": "Reading a room, earning trust and negotiating a deal are still human.",
+   "chunks": [
+    {
+     "text": "Reading a room"
+    },
+    {
+     "text": "earning trust",
+     "key": "trust"
+    },
+    {
+     "text": "and negotiating"
+    },
+    {
+     "text": "a deal"
+    },
+    {
+     "text": "are still human",
+     "key": "human"
+    }
+   ]
+  },
+  {
+   "role": "takeaway",
+   "img": "biz",
+   "text": "In business, they close sales and keep clients.",
+   "chunks": [
+    {
+     "text": "In business"
+    },
+    {
+     "text": "they close sales"
+    },
+    {
+     "text": "and keep clients",
+     "key": "keep clients"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "text": "Moravec's paradox. Hard for humans is easy for machines, and the reverse.",
+   "term": "Moravec's paradox",
+   "keypoint": "Hard for humans is easy for machines, and the reverse"
+  }
+ ]
+}

@@ -150,11 +150,26 @@ def resolve(f, spec, where):
     raise SystemExit(f"{where}: unknown focus {f!r} (use auto, ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h])")
 
 
+def talk_frame(spec):
+    """ledger-talks layout: the art fills the whole screen; Ledger faces the viewer at about 80% of the screen width,
+    his feet at screen y 1360, so his mouth (~y 1010) stays above the captions (y 1110-1340). Props sit beside his head. The frame is the same for every scene,
+    so jump cuts between poses never move him."""
+    led = next((it for it in spec.get("items", []) if it["p"] == "ledger"), None)
+    if not led: return "auto"
+    lb = L.item_box(led)
+    w = 1080 * lb[2] / 864.0; h = w * 1920 / 1080.0; k = 1080 / w   # the frame is the whole 1080x1920 screen
+    top = (lb[1] + lb[3]) - 1360 / k                                  # his feet land at screen y 1360 (mouth ~y 1010, above the captions)
+    return [round(led["x"] - w / 2), round(top), round(w), round(h)]
+
+
 def main(d):
     S = json.load(open(os.path.join(d, "script.json")))
     frames = {}
+    talk = S.get("meta", {}).get("type") == "ledger-talks"
     for name, spec in S["scenes"].items():
-        if spec.get("frame") in (None, "auto") and any(it["p"] == "ledger" for it in spec.get("items", [])):
+        if talk and spec.get("frame") in (None, "auto"):
+            frames[name] = talk_frame(spec)
+        elif spec.get("frame") in (None, "auto") and any(it["p"] == "ledger" for it in spec.get("items", [])):
             frames[name] = ledger_first(spec)   # props are nudged/scaled before the art is drawn
         for w in hand_check(name, spec): print("WARN ", w)
         open(os.path.join(d, f"{name}.svg"), "w").write(L.scene_svg(spec))

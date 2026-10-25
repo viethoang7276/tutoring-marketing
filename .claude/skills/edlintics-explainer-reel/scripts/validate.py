@@ -14,7 +14,14 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
                    "min": {"hook": 1, "story": 2, "definition": 1, "example": 2, "takeaway": 1, "endcard": 1}},
     "life-of": {"order": ["hook", "moment", "turn", "concept", "lesson", "loop", "endcard"],
                 "min": {"hook": 1, "moment": 3, "turn": 1, "concept": 1, "lesson": 1, "endcard": 1}},
+    # Ledger talks to camera (edlintics-ledger-talks): a hook, the points of the argument, a business takeaway, the end card
+    "ledger-talks": {"order": ["hook", "point", "takeaway", "loop", "endcard"],
+                     "min": {"hook": 1, "point": 3, "takeaway": 1, "endcard": 1}},
 }
+# per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
+SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
+        "life-of": dict(chunk=(2, 5), beats=(9, 13), target=(95, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
+        "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05)}
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF️]")
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
@@ -32,7 +39,8 @@ def main(path):
     for k in REQ_META:
         if not m.get(k): E.append(f"meta.{k} is missing")
     if t not in ROLES:
-        E.append('meta.type must be "definition" or "life-of"'); t = "definition"
+        E.append('meta.type must be "definition", "life-of" or "ledger-talks"'); t = "definition"
+    P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
     for e in L.check_proportions(): E.append(f"scene_lib: {e}")
@@ -46,9 +54,10 @@ def main(path):
             if p == "ledger":
                 if it.get("mood", "smile") not in L.MOODS: E.append(f"scene {name}: ledger mood {it.get('mood')!r} not in {L.MOODS}")
                 if it.get("arm", "down") not in L.ARMS: E.append(f"scene {name}: ledger arm {it.get('arm')!r} not in {L.ARMS}")
+                if it.get("larm") and it["larm"] not in L.LARMS: E.append(f"scene {name}: ledger larm {it.get('larm')!r} not in {L.LARMS}")
                 if it.get("outfit", "suit") not in L.OUTFITS: E.append(f"scene {name}: ledger outfit {it.get('outfit')!r} not in {L.OUTFITS}")
     # beats
-    if not 9 <= len(beats) <= 13: E.append(f"{len(beats)} beats; use 9-13 beats of 2-4 s")
+    if not P["beats"][0] <= len(beats) <= P["beats"][1]: E.append(f"{len(beats)} beats; use {P['beats'][0]}-{P['beats'][1]} beats of 2-4 s")
     roles = [b.get("role") for b in beats]
     R = ROLES[t]
     for r, n in R["min"].items():
@@ -80,8 +89,8 @@ def main(path):
             if kp and not 4 <= len(words(kp)) <= 12: E.append(f"{where}: key point has {len(words(kp))} words (4-12)")
             if kp.rstrip().endswith("."): E.append(f"{where}: key point ends with a full stop")
             if term and term.lower() not in tx.lower(): E.append(f"{where}: the voice must say the term on the end card")
-            sec = len(words(tx)) / WPS
-            if not 2.2 <= sec <= 4.2: E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
+            sec = len(words(tx)) / WPS_T
+            if not 2.2 <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
             continue
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
@@ -92,17 +101,18 @@ def main(path):
             if "key" in c and not str(c.get("key") or "").strip(): W.append(f'{where}: chunk "{c.get("text", "")}" has an empty key; remove "key" or fill it')
         for c in ch:
             ct = c.get("text", ""); n = len(words(ct))
-            if not 2 <= n <= 5: E.append(f'{where}: caption chunk "{ct}" has {n} words (2-5)')
+            lo, hi = P["chunk"]
+            if not lo <= n <= hi: E.append(f'{where}: caption chunk "{ct}" has {n} words ({lo}-{hi})')
             if ct.rstrip().endswith("."): E.append(f'{where}: caption chunk "{ct}" ends with a full stop')
             if c.get("key") and c["key"] not in ct: E.append(f'{where}: key "{c["key"]}" is not inside chunk "{ct}"')
-        dur = len(words(tx)) / WPS
+        dur = len(words(tx)) / WPS_T
         if dur > 4.6: W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
-    est = total / WPS
-    target = {"definition": (100, 115), "life-of": (95, 115)}[t]
+    est = total / WPS_T
+    target = P["target"]
     if total < target[0]: W.append(f"voice has {total} words; the {t} target is {target[0]}-{target[1]} (add a beat or a few words)")
     if total > target[1]: W.append(f"voice has {total} words; the {t} target is {target[0]}-{target[1]}")
-    if not 85 <= total <= 125: E.append(f"voice has {total} words; aim for 95-115 (85-125 allowed)")
-    if not 29 <= est <= 41: E.append(f"estimated length {est:.1f} s; must be 30-40 s")
+    if not P["allowed"][0] <= total <= P["allowed"][1]: E.append(f"voice has {total} words; aim for {target[0]}-{target[1]} ({P['allowed'][0]}-{P['allowed'][1]} allowed)")
+    if not P["secs"][0] <= est <= P["secs"][1]: E.append(f"estimated length {est:.1f} s; must be {P['secs'][0] + 1}-{P['secs'][1] - 1} s")
     # house rules on every piece of text
     texts = [("voice", b.get("text", "")) for b in beats] + [("caption", c.get("text", "")) for b in beats for c in b.get("chunks", [])]
     texts += [(f"meta.{k}", str(m.get(k, ""))) for k in ("caption", "caption_x", "first_comment", "title")] + texts_extra

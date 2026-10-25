@@ -13,6 +13,18 @@ for b in T["beats"]:
     m = re.match(r'\s*(<rect x="0" y="0" width="1080" height="1480"[^>]*/>)', body)
     if m: wall, body = True, body[m.end():]
     scenes[b["img"]] = {"body": body, "wall": wall}
-data = {"duration": T["duration"], "scenes": scenes,
+layout = "reel"; env = []
+try:
+    if json.load(open(f"{d}/script.json")).get("meta", {}).get("type") == "ledger-talks": layout = "talk"
+except Exception: pass
+if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (lip sync for mood "talk")
+    import numpy as np, soundfile as sf
+    a, sr = sf.read(f"{d}/voiceover.wav", dtype="float32"); hop = sr // 12
+    r = np.array([np.sqrt(np.mean(a[i:i + hop] ** 2)) if len(a[i:i + hop]) else 0 for i in range(0, len(a), hop)])
+    thr = 0.35 * np.percentile(r[r > 0], 90) if (r > 0).any() else 1
+    env = [int(v > thr) for v in r]
+    for k in range(1, len(env) - 1):   # a mouth that flaps every frame looks jittery: hold open frames for 2
+        if env[k - 1] and not env[k] and env[k + 1]: env[k] = 1
+data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env,
         "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint") if k in b} for b in T["beats"]]}
 json.dump(data, open(f"{out}/scenes.json", "w")); print(len(data["beats"]), "beats,", len(scenes), "scenes")

@@ -53,6 +53,15 @@ Judge on 8 Nov in the weekly review, using median views, replies and follows per
 
 Judge on 6 Dec 2026 (H13 on 22 Nov). The daily metrics refresh reads GA for each post's utm_content.
 
+**Idea tests from Hoang's references (added 25 Oct 2026).** Hoang sometimes sends a link to a video he likes and wants a test post inspired by it. When he does:
+1. **Analyse what makes it work:** format, hook, captions, pacing, length, sound, and the save and share ratio (saves divided by likes is a good signal for advice content).
+2. **Adapt it to Edlintics without Hoang's face:** Ledger stands in for any person on camera. Keep the house rules (US dollars, no exclamation points or emoji, no tutoring, no full stop at the end of a paragraph, the end card with term and key point).
+3. **Build it** with the closest skill (edlintics-definition-reel, edlintics-life-of-reel, edlintics-ledger-talks), or create a new skill if the format is new.
+4. **Credit and copy:** take only the format, and the argument when Hoang asks for it ("paraphrased"). Never copy the creator's sentences, script or visuals. Check the facts and put the credit and sources in the slot `sources`. Don't name the creator in the public caption unless Hoang decides to.
+5. **Place it in any free slot of the day** as an extra post, tagged `test: "T<n>-<name>"` with a one-line hypothesis, as a proposal on the Review board.
+6. **Judge it** in the weekly review against similar posts (same platform, same week), by saves, shares, follows and reach from non-followers per 1,000 views.
+- **T1 (Ledger talks):** an advice or opinion reel by Ledger gets a higher save rate than definition reels. First test: `test-ledger-talks-moravec`.
+
 **Links carry UTM tags (25 Oct 2026).** Any edlintics.com link in a caption or first comment uses the UTM convention in performance-review.md ("Website analytics (GA4) and UTM links"), with utm_content = the slot id. Bio links use utm_medium=social-bio and utm_content=bio.
 
 **Threads destination is part of every new post's proposal (Hoang, 24 Oct 2026).** When a post is created (Thursday plan, a request, a comic or a replacement), propose its Threads destination in the slot: `threadsTopic` plus `threadsTopicVariant` (primary or alternate per the running test), or `threadsCommunity` (for example Study Threads or Marketing). Add a one-line reason in `threadsReason`. The hub's Review card shows it as "Threads destination", and Hoang approves it with the content. A post without a proposed destination is not ready for review.

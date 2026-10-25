@@ -8,6 +8,7 @@ description: Shared engine for Edlintics explainer reels (9:16, 30-40 s, hand-dr
 To make a reel, use one of these skills:
 - **edlintics-definition-reel:** hook, everyday story, definition, business example, takeaway, end card.
 - **edlintics-life-of-reel:** "A day in the life of a [role]", relatable moments, the turning moment, the concept, the lesson, end card.
+- **edlintics-ledger-talks:** Ledger talks to camera with a mic (test format T1). `meta.type: "ledger-talks"` switches the engine to the talk layout: full-screen art, a fixed frame, lip sync (mood `talk`), jump cuts, 1-3 word karaoke captions over his chest, voice only. New presets: mood `talk`, arm `mic`, `larm` (`up_l`, `point_l`, `open_l`, `shrug_l`) and background `campus`.
 
 Both write a `script.json` and build it with this engine:
 ```

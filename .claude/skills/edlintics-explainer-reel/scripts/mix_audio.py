@@ -19,6 +19,11 @@ for k, b in enumerate(T.get("beats", [])):
     if k == 0: prev = b.get("img"); continue
     (whoosh if b.get("img") != prev else tick)(b["start"] - 0.08); prev = b.get("img")
 fx *= 0.1 * np.abs(vo).max() / (np.abs(fx).max() + 1e-9)
+import os
+TALK = False
+try: TALK = json.load(open(f"{d}/script.json")).get("meta", {}).get("type") == "ledger-talks"
+except Exception: pass
+if TALK: fx[:] = 0   # ledger-talks: voice only, like a talking-head video (jump cuts, no whoosh, no music)
 voice = vo + fx; voice /= max(1.0, np.abs(voice).max() / 0.98)
 sf.write(f"{d}/audio-voice.wav", voice, sr)
 chords = [[220, 277.18, 329.63], [196, 246.94, 293.66], [174.61, 220, 261.63], [196, 246.94, 293.66]]
@@ -28,6 +33,6 @@ for k in range(int(dur // 4) + 1):
     env = np.clip(tt / 1.2, 0, 1) * np.clip((4.6 - tt) / 1.4, 0, 1)
     for f in chords[k % 4]: pad[m] += env * (0.5 * np.sin(2 * np.pi * f * tt) + 0.15 * np.sin(2 * np.pi * 2.002 * f * tt))
 pad /= np.abs(pad).max() + 1e-9
-mix = voice + 0.06 * pad * np.clip(t / 1.0, 0, 1) * np.clip((dur - t) / 1.0, 0, 1)
+mix = voice + (0 if TALK else 0.06) * pad * np.clip(t / 1.0, 0, 1) * np.clip((dur - t) / 1.0, 0, 1)
 sf.write(f"{d}/audio.wav", mix / max(1.0, np.abs(mix).max() / 0.98), sr)
 print("ok", dur)

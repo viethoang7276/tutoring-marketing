@@ -1,0 +1,109 @@
+{
+ "meta": {
+  "type": "ledger-talks",
+  "term": "<term or list title shown on the end card>",
+  "title": "Ledger talks: <topic>",
+  "slug": "<slot id>",
+  "family_or_category": "<business|accounting|finance|economics|careers>",
+  "caption": "<hook line, no full stop>\n\n<2-3 sentences of the argument; full stops between sentences, none at the end>\n\nSave this for <reason>. More at edlintics.com\n\n#edlintics #businessstudents #<topic> #<topic>",
+  "caption_x": "<under 280 characters, no full stop at the end> edlintics.com #edlintics",
+  "first_comment": "<a question for replies; never reveals an answer; under 280 characters or add first_comment_x> More at edlintics.com",
+  "maths_check": "<the calculation, or 'No calculation' plus the fact check and its source>",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents"
+  ],
+  "threadsTopic": "<topic>",
+  "threadsReason": "<one line why>",
+  "utm": {
+   "template": "https://edlintics.com/?utm_source=<platform>&utm_medium=social-post&utm_campaign=ledger-talks&utm_content=<slot id>"
+  }
+ },
+ "scenes": {
+  "hook": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "open_l",
+     "outfit": "casual"
+    }
+   ]
+  },
+  "p1": {
+   "bg": "campus",
+   "items": [
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 540,
+     "y": 1470,
+     "s": 2.4,
+     "mood": "talk",
+     "arm": "mic",
+     "larm": "point_l",
+     "outfit": "casual"
+    },
+    {
+     "p": "<optional small prop: laptop, books, check, speech, invoice, price_tag, chart>",
+     "x": 800,
+     "y": 880,
+     "s": 0.5
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "hook",
+   "text": "<5-8 word hook sentence.>",
+   "chunks": [
+    {
+     "text": "<1-3 words>"
+    },
+    {
+     "text": "<1-3 words>",
+     "key": "<word in this chunk>"
+    }
+   ]
+  },
+  {
+   "role": "point",
+   "img": "p1",
+   "text": "<one idea, 6-12 words.>",
+   "chunks": [
+    {
+     "text": "<1-3 words>"
+    },
+    {
+     "text": "<1-3 words>",
+     "key": "<word>"
+    }
+   ]
+  },
+  {
+   "role": "takeaway",
+   "img": "p1",
+   "text": "<what it means in business, 6-10 words.>",
+   "chunks": [
+    {
+     "text": "<1-3 words>",
+     "key": "<word>"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "text": "<Term>. <Key point as a sentence.>",
+   "term": "<Term>",
+   "keypoint": "<4-12 words, no full stop>"
+  }
+ ]
+}

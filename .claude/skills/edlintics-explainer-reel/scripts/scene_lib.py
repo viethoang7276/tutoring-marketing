@@ -20,8 +20,9 @@ def _f(v):
 
 
 # ---------------------------------------------------------------- Ledger (from assets/brand/ledger.svg)
-MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry"]
-ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave"]
+MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk"]
+ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
+LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
 OUTFITS = ["suit", "student", "casual", "sales"]
 
 
@@ -32,16 +33,21 @@ def _arm(path, hand):
             f'<circle cx="{hx}" cy="{hy}" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="3"/>')
 
 
-def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, **_):
-    """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip."""
+def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, **_):
+    """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip, larm (left-arm gesture). mood "talk" lip-syncs to the voice; arm "mic" holds a small handheld mic."""
     mouth = {
         "smile": "M106 134 Q120 146 134 134", "happy": "M104 130 Q120 150 136 130",
         "frown": "M107 140 Q120 130 133 140", "sad": "M107 140 Q120 131 133 140",
         "flat": "M108 137 L132 137", "worried": "M108 139 Q114 134 120 138 Q126 142 132 137",
         "tired": "M110 138 L130 138", "angry": "M108 139 L132 139",
     }
-    m = (f'<ellipse cx="120" cy="137" rx="6" ry="7" fill="{INK}"/>' if mood == "o" else
-         f'<path d="{mouth.get(mood, mouth["smile"])}" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
+    if mood == "talk":  # two mouths: the renderer shows "mo" (open) while the voice is loud and "mc" (closed) in pauses
+        m = (f'<g class="mc"><path d="M108 136 Q120 145 132 136" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/></g>'
+             f'<g class="mo" style="display:none"><path d="M108 133 Q120 131 132 133 Q131 148 120 149 Q109 148 108 133 Z" fill="{INK}"/>'
+             f'<path d="M113 144 Q120 140 127 144 Q124 148 120 148 Q116 148 113 144 Z" fill="{CORAL}"/></g>')
+    else:
+        m = (f'<ellipse cx="120" cy="137" rx="6" ry="7" fill="{INK}"/>' if mood == "o" else
+             f'<path d="{mouth.get(mood, mouth["smile"])}" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
     if mood == "happy":  # closed happy eyes
         eyes = (f'<path d="M95 112 Q102 103 109 112" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>'
                 f'<path d="M131 112 Q138 103 145 112" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
@@ -56,7 +62,7 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         brows = f'<path d="M93 96 L109 101 M147 96 L131 101" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
     elif mood in ("sad", "worried"):
         brows = f'<path d="M93 101 L109 95 M147 101 L131 95" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
-    elif mood in ("flat", "o", "tired"):
+    elif mood in ("flat", "o", "tired", "talk"):
         brows = f'<path d="M93 99 Q101 94 109 98 M131 98 Q139 94 147 99" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
     extra = ""
     if mood == "worried":  # sweat drop
@@ -86,7 +92,13 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     # arm stroke 13/8, hand r 9, so hands never look tiny or huge next to the body. See ARM_POSES and check_proportions().
     pose = ARM_POSES.get(arm, ARM_POSES["down"])
     right = _arm(*pose["R"]); left = _arm(*pose.get("L", ARM_POSES["down"]["L"]))
+    if larm and larm != "down":
+        left = _arm(*ARM_POSES.get(larm, ARM_POSES["down"]).get("L", ARM_POSES["down"]["L"]))
     prop = ""
+    if arm == "mic":  # small handheld mic with a fuzzy windscreen, held at cheek height (drawn under the hand)
+        fuzz = "".join(f'<path d="M{163 + 9 * math.cos(a):.1f} {139 + 9 * math.sin(a):.1f} l{3 * math.cos(a):.1f} {3 * math.sin(a):.1f}" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>' for a in [k * math.pi / 6 for k in range(12)])
+        prop = (f'<path d="M199 122 L172 135" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+                f'<circle cx="163" cy="139" r="11" fill="#6B7280" stroke="{INK}" stroke-width="3"/>{fuzz}')
     if arm == "phone":
         prop = (f'<g transform="rotate(-14 200 92)"><rect x="185" y="60" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
                 f'<rect x="190" y="68" width="20" height="38" rx="3" fill="{LB}"/></g>')
@@ -115,6 +127,12 @@ ARM_POSES = {
     "phone":   {"R": ("M180 152 Q208 140 198 116", (197, 112))},
     "shrug":   {"R": ("M180 152 Q212 150 210 124", (210, 120)), "L": ("M60 152 Q28 150 30 124", (30, 120))},
     "wave":    {"R": ("M180 152 Q207 144 204 116", (204, 112))},
+    "mic":     {"R": ("M178 152 Q208 152 199 122", (198, 118))},
+    # left-arm gestures (larm); mirrors of the right poses, same lengths
+    "up_l":    {"L": ("M60 150 Q38 142 33 113", (32, 109))},
+    "point_l": {"L": ("M60 152 Q38 152 16 143", (13, 142))},
+    "open_l":  {"L": ("M60 152 Q34 168 26 150", (25, 147))},
+    "shrug_l": {"L": ("M60 152 Q28 150 30 124", (30, 120))},
 }
 HAND_R, BODY_W = 9, 136
 
@@ -698,12 +716,25 @@ def bg_svg(name):
                 f'<line x1="220" y1="560" x2="220" y2="880" stroke="{INK}" stroke-width="5"/><line x1="90" y1="720" x2="350" y2="720" stroke="{INK}" stroke-width="5"/>')
     if name == "street":
         return wall("#EAF1FB", 0.6) + ground() + f'<path d="M0 1480 H1080" stroke="{GREY}" stroke-width="3"/>'
+    if name == "campus":
+        # outdoor campus for ledger-talks: sky, a college hall behind Ledger, a tree left, a flagpole right, grass.
+        # Placed for the talk frame (Ledger centred at x 540, feet at y 1470, s 2.4): visible art is about x 190-890, y 760-1490
+        win = "".join(f'<rect x="{x}" y="{y}" width="34" height="48" rx="4" fill="{SKY}" stroke="{INK}" stroke-width="3"/>' for y in (900, 990) for x in (250, 310, 370, 690, 750, 810))
+        return (wall("#DCEAFB", 0.9) +
+                f'<path d="M0 1080 Q540 1050 1080 1080 L1080 1480 L0 1480 Z" fill="#DDEFD9"/>'
+                f'<path d="M210 1100 V880 L540 790 L870 880 V1100 Z" fill="#F4ECDD" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                f'<path d="M190 885 L540 780 L890 885" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>' + win +
+                f'<circle cx="150" cy="900" r="70" fill="#9CCB8F" stroke="{INK}" stroke-width="4"/><circle cx="205" cy="960" r="55" fill="#8BBE7E" stroke="{INK}" stroke-width="4"/>'
+                f'<path d="M170 1010 V1110" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>'
+                f'<path d="M930 1110 V800" stroke="{INK}" stroke-width="5"/><path d="M930 805 L985 820 L930 838 Z" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>'
+                f'<path d="M0 1090 Q540 1060 1080 1090" fill="none" stroke="{INK}" stroke-width="4" opacity="0.6"/>'
+                f'<rect x="-200" y="1478" width="1480" height="700" fill="#DDEFD9"/><rect x="-200" y="-400" width="1480" height="400" fill="#DCEAFB" opacity="0.9"/>' + ground())
     if name == "none":
         return ""
     return ground()  # paper
 
 
-BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "none"]
+BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "none"]
 
 # name -> (draw function, box function or None = default box from size)
 PRESETS = {
@@ -761,6 +792,6 @@ def scene_svg(spec):
 
 if __name__ == "__main__" and "--list" in sys.argv:
     print("Backgrounds (scene 'bg'):", ", ".join(BACKGROUNDS))
-    print("Ledger: mood", MOODS, "| arm", ARMS, "| outfit", OUTFITS, "| tilt (deg), flip (true faces left)")
+    print("Ledger: mood", MOODS, "| arm", ARMS, "| larm", LARMS, "| outfit", OUTFITS, "| tilt (deg), flip (true faces left)")
     for k, v in PRESET_HELP.items():
         print(f"- {k}: {v.splitlines()[0] if v else ''}")
