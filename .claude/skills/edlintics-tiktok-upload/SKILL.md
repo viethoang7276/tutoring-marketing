@@ -100,3 +100,4 @@ Do this for every post once it is live (now posts straight away; scheduled posts
 - Likes are soft-limited after about 8 quick likes: a like looks red, then reverts on reload. Space likes 20–30 s apart and verify each one after a reload.
 - Never click a like or save that is already active, because a second click undoes it.
 - Comment pinning may not be offered on our own posts (the menu shows only Delete). If so, record pin: false and move on.
+- New-account soft limit: on 25 Oct, likes on @edlintics kept reverting for hours. Retry at most once, several hours later. If a like reverts twice, skip self-likes for that day; the save and comment matter more. Clicking during an auto-advancing slideshow can land a like on another creator's video, so always pause first.
