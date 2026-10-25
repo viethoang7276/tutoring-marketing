@@ -78,3 +78,8 @@ End every assignment with exactly this block:
 - Needs a decision: <CMO/Hoang calls, or "none">
 - Next: <the next visual gap in the calendar if asked>
 ```
+
+
+## Exceptions approved by Hoang (25 Oct 2026)
+- **Puzzle posts may be colourful:** the two-accent rule does not apply to puzzles. They may use 2–4 extra flat colours, but Edlintics blue #2960c7 must always be present and remain the main colour. No gradients.
+- **Ledger in reels:** the Ledger mascot is approved as the character in explainer reels (definition, life-of and Ledger-talks formats).

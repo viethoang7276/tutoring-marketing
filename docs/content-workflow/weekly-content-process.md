@@ -176,6 +176,7 @@ General rules:
 - **Hashtags:** 3–5 at the end of the caption. Always #edlintics and #businessstudents, plus 1–3 from #accounting #finance #economics #CFA #ACCA #statistics #marketing #management.
 - **Links:** write edlintics.com as plain text. Links aren't clickable in Instagram captions or comments.
 - **No tutoring in organic posts (25 Oct 2026):** posts, captions, first comments and bios never offer tutoring or show Hoang's face. Edlintics is a learning brand, not a tutoring platform. Tutoring is sold only through separate paid ads. Before launch the call to action is the course waitlist (REQ-0003), once it is live.
+- **Colourful puzzles (25 Oct 2026):** puzzle visuals may use a lively palette beyond the brand colours. Edlintics blue #2960c7 is always present and remains the main colour. Rules are in skills/edlintics-puzzle-visuals.
 - **X first comment fits 280 characters (25 Oct 2026):** if the first comment is longer than 280 characters, write a `first_comment_x` version for X at planning time, so the first-comment run never has to cut text itself.
 - **No full stop at the end of a paragraph (25 Oct 2026):** captions, X captions and first comments never end a paragraph with ".". Full stops between sentences inside a paragraph stay. The same rule applies to all web page copy and on-screen video captions. It does not apply to sentences on slide images.
 - **All six platforms stay (25 Oct 2026):** Hoang wants every platform tested. Judge them with the hypotheses; don't cut one without his decision.

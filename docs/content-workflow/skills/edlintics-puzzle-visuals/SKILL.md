@@ -14,7 +14,7 @@ Goal: the picture IS the puzzle. A student should understand the question from t
 
 ## Diagram style
 - Thin ink line art: #0d1523 strokes, 3-4px. Flat fills only.
-- Max 2 accent colours plus ink (template blue #2960c7 first; one warm accent only if it carries meaning, e.g. the unknown).
+- Colour (changed 25 Oct 2026, Hoang): puzzles may be colourful and are no longer limited to brand colours. Edlintics blue #2960c7 must always be present and stay the main colour, for example the key shape, the unknown or the answer highlight. Add a lively palette of 2–4 more flat colours (for example coral, amber, teal, green, violet) that give each item, option or category its own colour. Keep colours meaningful and consistent within a post, with enough contrast for text on fills. No gradients.
 - Numbers and labels sit ON the geometry (on a bar, beside an edge, inside a box). No separate legend when a label can sit on the shape.
 - Mark the unknown clearly, e.g. a single highlighted shape or a "?".
 - Forbidden: rounded tinted panels holding text, drop shadows, gradients, decorative icon rows, bold everywhere, emoji, stock art, mascots unless the brief asks for one.
@@ -37,7 +37,7 @@ Goal: the picture IS the puzzle. A student should understand the question from t
 - Text covers more than about 30% of the canvas.
 - Any tinted rounded box exists only to hold text.
 - The question appears twice.
-- More than 3 font sizes or more than 3 colours (plus ink and grey).
+- More than 3 font sizes, more than 5 colours (plus ink and grey), or no Edlintics blue.
 - A legend explains something a label could show.
 - The answer is readable on slide 1.
 - The diagram would still be confusing with the text removed.
