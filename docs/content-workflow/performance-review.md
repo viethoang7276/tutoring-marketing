@@ -89,3 +89,23 @@ Run this every day straight after the first-comment run of the day's last post (
 5. **Log the refresh** in `runs/daily-<YYYY-MM-DD>` with `{at, postsUpdated, problems}`.
 
 If the Mac was asleep and the refresh was missed, the next session's start check runs it once for the missed days.
+
+## Website analytics (GA4) and UTM links (agreed with tutoring-web, 25 Oct 2026)
+
+**GA4 property:** a190808750p263808863, stream 2345294407, measurement ID G-KT16RP1WLE. Treat all GA data from before the prod deploy that follows release PR #95 as unreliable. Do not add GA to the Performance tab until tutoring-web confirms the events are live on prod.
+
+**UTM convention (every link we post):** lowercase, hyphens, no spaces.
+- `utm_source` = platform: instagram, facebook, linkedin, x, threads, youtube, tiktok, newsletter, email, or partner-<name>.
+- `utm_medium` = where the link sits: social-post (caption or first comment), social-bio, social-story, email, referral, or paid-social (reserved).
+- `utm_campaign` = content stream or named campaign: puzzle, definition, this-vs-that, five-concepts, comic, explainer-reel, bio, or a named campaign such as oct-exam-2026 or launch-v1.
+- `utm_content` = hub slot id (for example 2026-10-24-1800); bio links use "bio".
+
+Example: `https://edlintics.com/?utm_source=instagram&utm_medium=social-post&utm_campaign=puzzle&utm_content=2026-10-24-1800`
+
+**What the Performance tab will read from GA4:**
+- Sessions, engaged sessions, engagement rate and new users by source, medium, campaign, utm_content and channel group.
+- Key events (generate_lead, sign_up, begin_checkout, purchase, booking) on the same dimensions, plus conversion rate.
+- Sessions and key events per landing page.
+- purchaseRevenue in EUR by source and campaign.
+
+**How:** read analytics.google.com in Chrome for now. The GA4 Data API with a service account is pending Hoang's decision.
