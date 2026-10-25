@@ -131,3 +131,5 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 
 ## 2d. YouTube (added 24 Oct 2026)
 After the other platforms, add each scheduled slot to YouTube with `.claude/skills/edlintics-youtube-upload/SKILL.md`: five-concepts videos as Shorts, everything else as channel Posts. Record the result in the slot's `youtube` field. Mind the posts rate limit (about 5 per hour).
+
+**First comment format (25 Oct 2026):** post the slot `first_comment` exactly as stored on every platform, including X and TikTok. It is 1–2 sentences ending with emojis, so no separate versions are needed. If it contains `utm_source=SOURCE`, replace SOURCE with the platform name (facebook, instagram, linkedin, x, threads, tiktok, youtube). If the slot has `pinFirstComment: true`, pin the comment wherever the platform allows (Instagram, Facebook, TikTok, YouTube, X profile pin is not needed).
