@@ -228,6 +228,11 @@ def laptop(x, y, s=1.0, screen="chart", **_):
              f'<path d="M-230 80 H230 L210 110 H-210 Z" fill="{GREY}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>')
     if screen == "chart":
         inner += f'<path d="M-130 30 L-60 -20 L0 0 L70 -70 L130 -100" fill="none" stroke="{GREEN}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>'
+    elif screen == "filled":
+        cs = [BLUE, GREEN, GOLD, CORAL, LB]
+        for r in range(5):
+            for c in range(4):
+                inner += f'<rect x="{-156 + c * 80}" y="{-128 + r * 38}" width="72" height="30" rx="3" fill="{cs[(r * 3 + c * 2) % 5]}" opacity="0.8"/>'
     elif screen == "sheet":
         inner += "".join(f'<line x1="-160" y1="{yy}" x2="160" y2="{yy}" stroke="{INK}" stroke-width="2" opacity="0.4"/>' for yy in range(-100, 60, 32))
         inner += "".join(f'<line x1="{xx}" y1="-132" x2="{xx}" y2="60" stroke="{INK}" stroke-width="2" opacity="0.4"/>' for xx in (-80, 0, 80))
@@ -703,6 +708,118 @@ def bus_box(x, y, s=1.0, **_):
 
 
 # ---------------------------------------------------------------- backgrounds
+# ---------------------------------------------------------------- scenario graphics (added 25 Oct 2026, Ledger not required in every scene)
+def code_screen(x, y, s=1.0, trend="none", **_):
+    """Big desktop monitor showing abstract code lines (no words). (x, y) = centre of the monitor. trend: none, down (falling line) or up."""
+    cols = [BLUE, GREEN, CORAL, LB, GOLD]
+    inner = (f'<rect x="-290" y="-200" width="580" height="380" rx="20" fill="{NAVY}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<rect x="-266" y="-176" width="532" height="332" rx="8" fill="#16203A"/>'
+             f'<path d="M-40 180 L-60 240 H60 L40 180 Z" fill="{GREY}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+             f'<rect x="-130" y="240" width="260" height="22" rx="10" fill="{GREY}" stroke="{INK}" stroke-width="{SW}"/>')
+    rows = [(0, 190, 0), (40, 260, 1), (40, 150, 2), (80, 300, 3), (80, 200, 0), (40, 230, 4), (0, 120, 1), (0, 250, 2), (40, 170, 3)]
+    for k, (ind, ln, c) in enumerate(rows):
+        yy = -145 + k * 34
+        inner += f'<line x1="{-240 + ind}" y1="{yy}" x2="{-240 + ind + ln}" y2="{yy}" stroke="{cols[c]}" stroke-width="12" stroke-linecap="round"/>'
+    if trend in ("down", "up"):
+        pts = "M120 -40 L170 -10 L215 30 L250 100" if trend == "down" else "M120 100 L170 60 L215 20 L250 -50"
+        inner += f'<rect x="100" y="-80" width="160" height="200" rx="8" fill="#16203A"/><path d="{pts}" fill="none" stroke="{CORAL if trend == "down" else GREEN}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>'
+    return _g(x, y, s, inner)
+
+
+def chessboard(x, y, s=1.0, **_):
+    """Chessboard seen from above with a few abstract pieces (a logic game). (x, y) = centre."""
+    inner = f'<rect x="-210" y="-210" width="420" height="420" rx="8" fill="{PAPER}" stroke="{INK}" stroke-width="{SW}"/>'
+    for r in range(8):
+        for c in range(8):
+            if (r + c) % 2:
+                inner += f'<rect x="{-200 + c * 50}" y="{-200 + r * 50}" width="50" height="50" fill="{BLUE}" opacity="0.55"/>'
+    def piece(cx, cy, kind, col):
+        base = f'<path d="M{cx - 16} {cy + 22} H{cx + 16} L{cx + 10} {cy + 4} H{cx - 10} Z" fill="{col}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+        if kind == "pawn":
+            return base + f'<circle cx="{cx}" cy="{cy - 6}" r="11" fill="{col}" stroke="{INK}" stroke-width="3"/>'
+        if kind == "king":
+            return base + (f'<path d="M{cx - 11} {cy + 6} L{cx - 14} {cy - 14} H{cx + 14} L{cx + 11} {cy + 6} Z" fill="{col}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+                           f'<path d="M{cx} {cy - 14} V{cy - 30} M{cx - 7} {cy - 23} H{cx + 7}" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/>')
+        return base + f'<path d="M{cx - 10} {cy + 6} L{cx - 12} {cy - 16} L{cx - 4} {cy - 8} L{cx} {cy - 20} L{cx + 4} {cy - 8} L{cx + 12} {cy - 16} L{cx + 10} {cy + 6} Z" fill="{col}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+    for cx, cy, k, col in [(-125, 125, "pawn", WHITE), (-25, 125, "pawn", WHITE), (75, 125, "pawn", WHITE), (-75, 175, "king", WHITE), (125, 175, "queen", WHITE),
+                           (-125, -75, "pawn", GOLD), (-25, -75, "pawn", GOLD), (75, -125, "pawn", GOLD), (125, -175, "king", GOLD), (-75, -25, "queen", GOLD)]:
+        inner += piece(cx, cy, k, col)
+    return _g(x, y, s, inner)
+
+
+def robot_arm(x, y, s=1.0, hold="none", drop=False, flip=False, **_):
+    """Industrial robot arm on a base with a two-finger claw. hold: none, block or piece. drop=True opens the claw and lets the block fall. flip faces left. (x, y) = centre."""
+    gap = 52 if drop else 30
+    inner = (f'<rect x="-90" y="190" width="180" height="34" rx="10" fill="{NAVY}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<rect x="-40" y="140" width="80" height="55" rx="8" fill="{GREY}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<path d="M0 140 L-110 10" stroke="{INK}" stroke-width="46" stroke-linecap="round"/><path d="M0 140 L-110 10" stroke="{BLUE}" stroke-width="34" stroke-linecap="round"/>'
+             f'<path d="M-110 10 L90 -90" stroke="{INK}" stroke-width="40" stroke-linecap="round"/><path d="M-110 10 L90 -90" stroke="{LB}" stroke-width="28" stroke-linecap="round"/>'
+             f'<circle cx="0" cy="140" r="24" fill="{GOLD}" stroke="{INK}" stroke-width="{SW}"/><circle cx="-110" cy="10" r="22" fill="{GOLD}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<circle cx="90" cy="-90" r="20" fill="{GOLD}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<rect x="{90 - gap - 10}" y="-78" width="{2 * gap + 20}" height="14" rx="6" fill="{NAVY}" stroke="{INK}" stroke-width="4"/>'
+             f'<path d="M{90 - gap} -66 V-10" stroke="{INK}" stroke-width="14" stroke-linecap="round"/><path d="M{90 + gap} -66 V-10" stroke="{INK}" stroke-width="14" stroke-linecap="round"/>'
+             f'<path d="M{90 - gap} -66 V-10" stroke="{GREY}" stroke-width="7" stroke-linecap="round"/><path d="M{90 + gap} -66 V-10" stroke="{GREY}" stroke-width="7" stroke-linecap="round"/>')
+    if hold == "block" and not drop:
+        inner += f'<g transform="translate(90 -22)"><rect x="-28" y="-28" width="56" height="56" rx="6" fill="{CORAL}" stroke="{INK}" stroke-width="4"/></g>'
+    elif hold == "piece" and not drop:
+        inner += f'<path d="M80 -2 L76 -34 L84 -24 L90 -42 L96 -24 L104 -34 L100 -2 Z" fill="{WHITE}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+    elif drop:
+        inner += f'<g transform="translate(70 120) rotate(24)"><rect x="-28" y="-28" width="56" height="56" rx="6" fill="{CORAL}" stroke="{INK}" stroke-width="4"/></g>'
+    if flip:
+        inner = f'<g transform="scale(-1 1)">{inner}</g>'
+    return _g(x, y, s, inner)
+
+
+def robot_arm_box(x, y, s=1.0, **_):
+    return [x - 150 * s, y - 115 * s, 300 * s, 340 * s]
+
+
+def toddler(x, y, s=1.0, reach=True, **_):
+    """A small child (big head, short body) reaching up to place a block. (x, y) = between the feet."""
+    arms = (f'<path d="M-38 -70 L-62 -130 M38 -70 L62 -130" stroke="{INK}" stroke-width="16" stroke-linecap="round"/>'
+            f'<path d="M-38 -70 L-62 -130 M38 -70 L62 -130" stroke="{PAPER}" stroke-width="10" stroke-linecap="round"/>'
+            f'<circle cx="-62" cy="-132" r="12" fill="{PAPER}" stroke="{INK}" stroke-width="3.5"/><circle cx="62" cy="-132" r="12" fill="{PAPER}" stroke="{INK}" stroke-width="3.5"/>') if reach else ""
+    inner = (f'<ellipse cx="0" cy="4" rx="44" ry="7" fill="{INK}" opacity="0.10"/>'
+             f'<path d="M-40 0 V-50 Q-40 -88 0 -88 Q40 -88 40 -50 V0 Z" fill="{GOLD}" stroke="{INK}" stroke-width="{SW}"/>' + arms +
+             f'<circle cx="0" cy="-140" r="48" fill="{PAPER}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<path d="M-22 -184 Q0 -200 22 -184" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
+             f'<circle cx="-16" cy="-142" r="5.5" fill="{INK}"/><circle cx="16" cy="-142" r="5.5" fill="{INK}"/>'
+             f'<path d="M-14 -122 Q0 -110 14 -122" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>')
+    return _g(x, y, s, inner)
+
+
+def toddler_box(x, y, s=1.0, **_):
+    return [x - 75 * s, y - 192 * s, 150 * s, 196 * s]
+
+
+def meeting_table(x, y, s=1.0, deal=True, **_):
+    """Two people facing each other across a table, a speech bubble over each and (deal=True) a handshake between them. No words. (x, y) = centre of the table top."""
+    inner = (person(-290, 250 - 10, 1.0, mood="smile", color=BLUE) + person(290, 250 - 10, 1.0, mood="smile", color="#F3D9A6") +
+             f'<rect x="-190" y="-14" width="380" height="30" rx="8" fill="{GOLD}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<rect x="-160" y="16" width="24" height="230" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><rect x="136" y="16" width="24" height="230" fill="{GOLD}" stroke="{INK}" stroke-width="5"/>'
+             + speech(-260, -150, 0.55, side="left") + speech(260, -150, 0.55, side="right"))
+    if deal:
+        inner += handshake(0, -70, 0.45)
+    return _g(x, y, s, inner)
+
+
+def meeting_table_box(x, y, s=1.0, **_):
+    return [x - 345 * s, y - 245 * s, 690 * s, 500 * s]
+
+
+def whiteboard_team(x, y, s=1.0, **_):
+    """A whiteboard with a diagram and three people in front: the middle one points at it with a stick (leading a team). No words. (x, y) = centre of the board."""
+    inner = whiteboard(0, 0, 1.0, drawing="boxes")
+    inner += person(-250, 440, 0.95, mood="smile", color=BLUE) + person(250, 440, 0.95, mood="smile", color="#CFE9D9")
+    inner += person(0, 440, 1.1, mood="smile", color="#F3D9A6")
+    inner += f'<path d="M45 330 L150 80" stroke="{INK}" stroke-width="9" stroke-linecap="round"/><circle cx="150" cy="80" r="9" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>'
+    return _g(x, y, s, inner)
+
+
+def whiteboard_team_box(x, y, s=1.0, **_):
+    return [x - 360 * s, y - 215 * s, 720 * s, 665 * s]
+
+
 def ground(y=1480):
     return f'<path d="M60 {y} Q540 {y - 14} 1020 {y}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
 
@@ -764,6 +881,8 @@ PRESETS = {
     "pizza": (pizza, None), "pizza_slice": (pizza_slice, None), "sandwich": (sandwich, None), "lemonade_cup": (lemonade_cup, None),
     "lemonade_stand": (lemonade_stand, lemonade_stand_box), "plate": (plate, None), "burger": (burger, None),
     "groceries_bag": (groceries_bag, None), "receipt": (receipt, None), "gym": (gym, gym_box), "bus": (bus, bus_box),
+    "code_screen": (code_screen, None), "chessboard": (chessboard, None), "robot_arm": (robot_arm, robot_arm_box), "toddler": (toddler, toddler_box),
+    "meeting_table": (meeting_table, meeting_table_box), "whiteboard_team": (whiteboard_team, whiteboard_team_box),
 }
 # half-sizes at s=1 for props that use the default box (centre +- these)
 HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
@@ -772,7 +891,8 @@ HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": 
         "school_desk": (175, 185), "ticket": (115, 60), "speech": (205, 145), "clock": (115, 115), "umbrella": (145, 245),
         "books": (125, 110), "blocks": (130, 125), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55),
         "pizza": (160, 160), "pizza_slice": (100, 165), "sandwich": (145, 90), "lemonade_cup": (100, 200), "plate": (155, 50),
-        "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195)}
+        "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195),
+        "code_screen": (290, 262), "chessboard": (210, 210)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 

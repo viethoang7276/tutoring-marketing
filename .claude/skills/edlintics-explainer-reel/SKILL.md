@@ -83,3 +83,5 @@ We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing L
 
 ## Ledger is not required in every scene (Hoang, 25 Oct 2026)
 Use scenario graphics that show the idea directly: a computer, code on a screen, a robot arm, a chessboard, a toddler with blocks, a meeting table, a store, a chart. Ledger appears where a character helps the story, typically the hook, a story beat and the takeaway, but scenes without Ledger are welcome. Scenes without Ledger use the renderer's content fit and still keep the art big. Add simple hand-drawn presets when a scenario needs one.
+
+New scenario presets (25 Oct 2026): `code_screen` (trend none/down/up), `chessboard`, `robot_arm` (hold none/block/piece, drop, flip), `toddler`, `meeting_table` (deal), `whiteboard_team`; `laptop` has `screen: "filled"`. For scenes without Ledger, set `"frame": "wide"` and `"bg": "none"` (or `"paper"` when something stands on the ground) so the art fills the frame.
