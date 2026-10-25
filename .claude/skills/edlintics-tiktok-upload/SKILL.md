@@ -94,3 +94,9 @@ Do this for every post once it is live (now posts straight away; scheduled posts
 - The schedule pickers list only valid hours for today; pick the date first, then the time (`edl_sched` does).
 - A photo post's "Favourites" label always reads "Add to Favourites…"; it does not flip when saved. Judge by the yellow icon, the toast "Added to Favourites" or the count. Never click save twice (it un-saves).
 - 25 Oct: the free-rider test reel was scheduled with the IE location before the no-location rule; it cannot be edited (see Hard rules).
+
+## Pitfalls from the first engagement run (25 Oct 2026)
+- Photo posts auto-advance. Click the image to pause before commenting, and check `location.href` and focus on the comment box before typing. Stray keys trigger shortcuts ("L" toggles the like) or move to other creators' videos.
+- Likes are soft-limited after about 8 quick likes: a like looks red, then reverts on reload. Space likes 20–30 s apart and verify each one after a reload.
+- Never click a like or save that is already active, because a second click undoes it.
+- Comment pinning may not be offered on our own posts (the menu shows only Delete). If so, record pin: false and move on.
