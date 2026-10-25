@@ -23,6 +23,8 @@ Every Monday morning, before the Thursday content plan. Read figures for every p
 | LinkedIn | `linkedin.com/company/31541400/admin/analytics/updates/` › Content engagement table | Impressions, clicks, CTR, reactions, comments, reposts, engagement rate. Rows showing only dashes are duplicates; use the row with numbers. Followers and new followers are under the Followers tab. Don't copy follower names. |
 | X | Open each post and add `/analytics` to its URL. | Impressions, engagements, detail expands, profile visits. Followers are on the profile. |
 | Threads | `threads.com/insights` | Views per latest post, then 30-day views, viewers, interactions, net followers and follower vs non-follower viewers. |
+| TikTok | TikTok Studio › Analytics for each post: `tiktok.com/tiktokstudio/analytics/<post id>` (the id is the end of the slot's `tiktok.url`) | The five icons under the caption are views, likes, comments, shares, saves; "New followers" is below. Followers are on `tiktok.com/@edlintics`. |
+| YouTube | Studio › Content › Shorts and Posts tabs (open Studio from `studio.youtube.com/channel/UCUx_KFGdEVdBoKvCS3BxYRA`, then click Content; a direct content URL can show "Oops") | Shorts: views and comments (likes column not shown). Posts: comments and likes, no views. The Dashboard shows current subscribers and "Top content, last 48 hours" views, which are fresher than the Content list. |
 
 ## Refreshing the dashboard
 
@@ -46,6 +48,8 @@ The hub's first tab, Performance (https://claude.ai/artifact/HbKxzWUcWhaBaaNb9bu
 - `review.text`: one short paragraph covering what happened, which channel and format did best, and what is still uncertain. Use engagement from other people, not totals.
 - `review.next`: 4 to 6 concrete changes for next week, each one sentence and each tied to a number above.
 
+Hoang reviews the tab every morning on his phone (25 Oct 2026). From the top it shows: last refreshed, Yesterday, Last 7 days per post (one column per platform), Tests, then the weekly review and the totals. All of it renders from `perf/latest`, so a daily refresh that fills the fields in step 3 below is enough.
+
 Do not republish the page for a data refresh.
 
 ## Hypotheses and tracking (added 24 Oct 2026)
@@ -57,9 +61,14 @@ Every running test is listed in weekly-content-process.md with numbered hypothes
 
 Do not call a verdict before the judge date, or with fewer than 4 posts per arm.
 
-Running now:
+Running now (each entry in `tests` also has `status`: running, not started, waiting approval or judged, and `judgeDate`):
+- **H12:** explainer reels vs Ledger walk videos, non-follower reach. Judge 6 Dec.
+- **H14:** life-of vs definition reels, shares and follows per 1,000 views. Judge after 4 of each (2 Nov).
+- **H15:** first-comment type vs replies, link clicks and saves per post (slot `firstCommentType`). Judge 8 Nov.
+- **T1:** the Moravec idea reel vs definition reels, save rate. Judge in the weekly review after it posts.
 - **5c-format:** Instagram carousel vs long video, until 21 Nov.
 - **threads-topic:** H1 to H6, until 8 Nov.
+- **H13** (comics) from 26 Oct, and **ga-H7 to ga-H11** once GA events are live.
 
 Per Threads post, track views, the share of views from non-followers (Threads Insights), replies, reposts and follows, with `threadsTopic` and `threadsTopicVariant`.
 
@@ -76,16 +85,19 @@ Run this every day straight after the first-comment run of the day's last post (
 2. **Read** (read only) each post's metrics per platform, from the sources listed above:
    - Business Suite Insights › Content for Facebook and Instagram;
    - LinkedIn page analytics › Updates;
-   - X post analytics;
+   - X: the views on each post in the profile timeline (`x.com/edlintics`); open `/analytics` only for posts in a test;
    - Threads Insights;
-   - TikTok Studio › Posts (`tiktok.com/tiktokstudio/content`: views, likes, comments per post) and each post's Analytics page; the counts there lag the public page by a few minutes. Skill: `.claude/skills/edlintics-tiktok-upload/SKILL.md`.
-   Record views, reach, likes, comments, shares or reposts, saves, link clicks, follows, the share of views from non-followers where shown, and video watch time where shown. Record only what the platform shows: `null` = not shown.
-3. **Update** `perf/latest` in the hub (ArtifactData, if_version from a fresh read):
-   - replace or add those posts' rows in `posts`, keeping the own like, comment and repost counts so "engagement from others" stays correct;
-   - refresh `channels` follower counts;
-   - set `readAt`;
-   - update each `tests[].current` and `n`.
-   Leave `review` alone except on the weekly review day.
+   - TikTok Studio › Posts (`tiktok.com/tiktokstudio/content`: views, likes, comments per post) and each post's Analytics page for views, likes, comments, shares, saves and new followers; the counts there lag the public page by a few minutes. Skill: `.claude/skills/edlintics-tiktok-upload/SKILL.md`;
+   - YouTube Studio: Shorts views and comments, Posts likes and comments, Dashboard subscribers (see the table above).
+   Record views, reach, likes, comments, shares or reposts, saves, link clicks, follows, the share of views from non-followers where shown, and video watch time where shown. Record only what the platform shows: `null` = not shown. When a number the tab needs is missing, add `na: "<reason>"` to the row (for example "YouTube Posts show no views"). Never guess.
+3. **Update** `perf/latest` in the hub (ArtifactData `set`, if_version from a fresh read). Write the whole document; keep `review` and `suggestions` as they are except on the weekly review day.
+   - **Rows** in `posts`, one per post per platform: `key` (`<slot>|<Platform>|<kind>`), `slot`, `post` (short title), `format` (Puzzle, Carousel, Five concepts, Comic, Definition, Explainer reel), `date` and `time_madrid` (when it went live), `platform` (Facebook, Instagram, LinkedIn, X, Threads, TikTok or YouTube), `kind` (post, story or reshare), `posted_vn`, the metrics, and from the slot `reelType`, `firstCommentType` and `test` when set.
+   - **Own engagement:** `own_likes`, `own_comments`, `own_shares` (and `own_saves` on TikTok) from the `runs` doc and the slot's `tiktok.engaged`, so "from others" stays correct.
+   - **Metric per platform:** `views` for Facebook, Instagram, Threads, TikTok and YouTube; on LinkedIn and X put impressions in `reach` and leave `views` null (LinkedIn video views go in `video_views`).
+   - **Followers:** refresh `channels` for all 7 platforms (YouTube = subscribers).
+   - **Freshness:** set `readAt` (text, Vietnam time), `refreshedAt` (ISO time) and `windowEnd` (today's Madrid date). The 7-day table shows posts from `windowEnd` minus 6 days.
+   - **Yesterday** (the Madrid day that just ended): `yesterday = {date, label, posts: [{slot, time, title, format, reelType, views}], postsNote, totalViews, viewsNote, best: {title, platform, views, why}, worst: {...}, followers: [{platform, followers, change, note}], needsHoang: [{kind, text}]}`. Pick best and worst by total views across platforms. `change` is today's followers minus the last refresh (`null` with a note on a first reading). `needsHoang` lists phone tasks (Instagram Stories still missing in `runs`), first comments marked missed (✗) in `runs`, proposals waiting on the Review tab, and anything a platform asked for (login, 2FA). Use `kind` Phone, Missed, Review or Login. Write an "Info" entry saying nothing is missed when that is true.
+   - **Tests:** update each `tests[].current`, `n` and `status`.
 4. **Update** each slot that went live today to `status: "posted"`, with a one-line `statusNote` (for example "Posted 25 Oct; 24 h: IG 31 reach, Threads 40 views").
 5. **Website traffic (once GA events are live):** in analytics.google.com, read sessions, engaged sessions and key events for the last 7 days by session source, medium, campaign and manual ad content (utm_content). Use the property that matches the date (see "Website analytics"). Add `site: {sessions, engaged, keyEvents, byEvent}` to each post row whose utm_content matches, plus a `siteTotals` block by channel. Untagged visits stay under their channel group.
 6. **Log the refresh** in `runs/daily-<YYYY-MM-DD>` with `{at, postsUpdated, problems}`.
