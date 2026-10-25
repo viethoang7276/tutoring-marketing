@@ -50,6 +50,25 @@ We believe that **an email-only course waitlist on the home page, linked from ev
 **Storage and sending**
 - The CTO decides: app database (a schema change, strictly in the cto lane) or the email provider's audience list (Resend, Loops or similar) behind our own endpoint.
 
+## Part 2: weekly puzzle email to the confirmed list (added 25 Oct 2026, Hoang: keep the puzzle promise)
+The waitlist promises "a weekly business puzzle", so the list needs a weekly send. The puzzle comes from what we already post daily.
+
+**Who does what**
+- **Marketing (this repo, weekly):** picks the week's best puzzle from the daily posts (by saves, shares and comments in perf/latest). Writes the email: subject, the question in full sentences, the options, one line of context, and a "See the answer" button. Hoang approves it, like the posts. Marketing then enters the draft through the app's admin screen in Chrome, the same way content is published. There is no import and no write API.
+- **App (CTO lane):** an admin "Weekly puzzle email" composer with these parts:
+  - fields for subject, image, body and an answer link;
+  - a preview and a test send to Hoang;
+  - scheduling;
+  - a send through Resend to confirmed waitlist members only;
+  - a one-click unsubscribe header and link;
+  - per-send counts (sent, opened, clicked, unsubscribed) exposed through /api/v1 for the daily metrics refresh.
+
+**The answer link:** "See the answer" goes to the puzzle page on edlintics.com (REQ-0002), so every email brings people to the site. Until REQ-0002 exists, the answer appears in the next week's email instead.
+
+**Cadence:** one email a week, Tuesday morning Madrid time (marketing default; adjust from the data). If a week is missed, skip it; never send two.
+
+**Success signal:** at least 40% open rate, at least 8% click to the answer, and unsubscribes under 1% per send.
+
 ## Success signal
 Over the first 4 weeks: at least 5% of social visitors who land on the page confirm a signup, fewer than 2% of pending addresses look like bots, and the list reaches 300 confirmed signups by course launch.
 
@@ -58,4 +77,5 @@ No accounts, payments or community features. No referral leaderboard in v1; that
 
 ## Decision log
 - 2026-10-25: proposed by the CMO after Hoang asked for a waitlist and raised bot signups. Relayed to the tutoring-web session for a homepage proposal.
+- 2026-10-25: Hoang kept sign-up (needed to book tutoring). The hero shows the waitlist first, then "or Create a free account", and the header keeps "Get started". Hoang kept the weekly puzzle promise, which added Part 2.
 - _(Hoang: approve / defer / reject + reason here.)_
