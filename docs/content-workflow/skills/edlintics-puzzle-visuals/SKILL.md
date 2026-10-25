@@ -46,3 +46,6 @@ Goal: the picture IS the puzzle. A student should understand the question from t
 - The Canva connector cannot set fonts: added text uses Canva's default sans. Prefer reusing the template's own serif text boxes; ask the person to add spare serif label boxes to the template, or flag the font gap.
 - Build the diagram with native shapes (insert_shape paths) and native text, never a flattened image.
 - Workflow: sketch as SVG first, render and run the anti-slop review, then build in Canva, then preview both slides at phone width before asking for approval.
+
+## No full stop at the end of a paragraph (Hoang, 25 Oct 2026)
+Every text block on a slide (question, answer sentence, takeaway, labels, CTA) ends without a final ".". Keep full sentences, and keep full stops between sentences inside a block. This applies to captions and first comments too.

@@ -109,3 +109,6 @@ Use this when Hoang says "build the week", or after he approves content.
 - **`add_text`** adds 16px black text, so follow it with `format_text` (a second call, using the new IDs).
 - **Saving:** commit only after approval, with `finalize: commit` and no operations. Cancel read-only transactions.
 - **Naming:** "SAMPLE · [Format] · [Term]" for samples, "[date time] · [Format] · [Term]" for real posts.
+
+## No full stop at the end of a paragraph (Hoang, 25 Oct 2026)
+Every text block on a slide (question, answer sentence, takeaway, labels, CTA) ends without a final ".". Keep full sentences, and keep full stops between sentences inside a block. This applies to captions and first comments too.
