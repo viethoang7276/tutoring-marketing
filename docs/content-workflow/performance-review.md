@@ -92,7 +92,14 @@ If the Mac was asleep and the refresh was missed, the next session's start check
 
 ## Website analytics (GA4) and UTM links (agreed with tutoring-web, 25 Oct 2026)
 
-**GA4 property:** a190808750p263808863, stream 2345294407, measurement ID G-KT16RP1WLE. Treat all GA data from before the prod deploy that follows release PR #95 as unreliable. Do not add GA to the Performance tab until tutoring-web confirms the events are live on prod.
+**Two GA4 properties, split by date (Hoang's decision, 25 Oct 2026; GA4 cannot merge properties):**
+- **Before the switch date:** property 405129152 ("Edlintics", G-3XS7G1QBFT, account 190808750, authuser=1). About 134 days of history, with page views and enhanced measurement only, and no custom events.
+- **From the switch date** (the first prod deploy after release PR #95; tutoring-web will send the exact date): property 263808863 ("Website", G-KT16RP1WLE, stream 2345294407).
+- **Combining them in the Performance tab:**
+  - Join by date.
+  - Week-over-week across the switch compares sessions, users and channel or source figures only, because key events exist only in the new property.
+  - Mark the switch date with a "property switch" annotation.
+- **Data API:** if it is approved later, the service account needs Viewer on both properties. Do not add GA to the Performance tab until tutoring-web confirms the events are live on prod.
 
 **UTM convention (every link we post):** lowercase, hyphens, no spaces.
 - `utm_source` = platform: instagram, facebook, linkedin, x, threads, youtube, tiktok, newsletter, email, or partner-<name>.
