@@ -360,3 +360,23 @@ Any session can take over from here. Do these in order:
     record AI-label results after posting.
 
 - **2026-10-22 (night) — Hub page, fixes, first scheduled batch.** Review page (https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6) became the hub: 30-day calendar with text/image readiness (`slots`), post requests with Claude drafting (`requests`), Research and Templates tabs, full-size slide pop-ups, and a "Send to Claude to fix" button on change requests. Process changes recorded in `docs/content-workflow/weekly-content-process.md`: question benchmark (mandatory gates + 100-point score), USD default, monthly batch, engagement-style first comments that never reveal the answer, fix loop, posting route A. Fixes: sequencing puzzle restyled (`DAHYvZ57YiY`, CTA added), coffee puzzle got line-art cups (`DAHYv972lE0`), Friday puzzles redrawn on the Claude Design canvas (jars, student figures, balance beam) with CTA artboards; CTA added to the canvas Puzzle and This vs That templates; all amounts switched to $. Saved designs filed in Canva "Social media posts" `FAHYcHrS5PE`. **Scheduled (Hoang's go):** 5 posts on Facebook + Instagram (Meta Business Suite) and the LinkedIn page, Fri 23 Oct 10:00/13:00/18:00 and Sat 24 Oct 10:00/18:00 Madrid; Facebook Story on 4 of 5 (not the coffee post). First comments queued as session-only check-ins. New skill `.claude/skills/edlintics-schedule-posts/`. Open: weekly cleanup rule for old Canva posts; AI-label test confounded by the CTA desk illustration; Thursday task's own copy of the process doc needs the new sections.
+
+## 25 Oct 2026 (later): reels, waitlist, rules
+- **Explainer reels are live in the mix.**
+  - Skills: edlintics-explainer-reel (engine), edlintics-definition-reel and edlintics-life-of-reel. edlintics-ledger-talks exists but Hoang rejected the mic format.
+  - Look: Ledger, Kokoro af_heart, Canva music, no camera moves, an end card with the term and the key point, brand-proportional hands, Ledger-first framing.
+  - Scheduled on all 6 platforms: sunk cost (25 Oct, 14:30 Madrid), free rider (26 Oct), and 6 reels (27 Oct to 1 Nov, 08:30 Madrid).
+  - Proposal waiting for Hoang: test-ledger-talks-moravec (illustrated, 27 Oct 12:00 Madrid).
+  - From 2 Nov: 1 puzzle a day at 10:00, and an explainer reel at 18:00 that alternates definition and life-of (H14).
+- **Threads:** the 25-thread cap leaves a backlog (5 reels and the four 1 Nov slots, flagged thPending/threadsPending). A daily session cron at 09:07 VN adds them.
+- **Rules added:**
+  - No full stop at the end of any paragraph anywhere: captions, comments, slides, web copy and video captions. All 26 upcoming captions on every platform are fixed, and so are the Canva designs. Hoang chose NOT to replace the media on scheduled posts (option C), so the fixed slides apply from the next plan.
+  - Colourful puzzles, always with Edlintics blue.
+  - first_comment_x is needed when a first comment is over 280 characters.
+  - No tutoring in organic posts.
+  - No reference-creator credit in public captions.
+- **REQ-0003 waitlist:**
+  - Hoang approved the WL001 pages and the SEO/GEO work. tutoring-web built it on branch feat/wl-launch-waitlist.
+  - Open with Hoang: keep the AI training-bot block (recommended), and whether tutoring-web may run the dev DB migration.
+- **YouTube:** the 429 cleared after advanced features were approved. All pending Posts are scheduled.
+- **Phone tasks for Hoang:** Instagram Stories for the 25 Oct posts.
