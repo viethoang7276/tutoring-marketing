@@ -39,6 +39,18 @@
 - **H6:** Marketing posts placed in the Marketing community (114K members) get more views per post than the median topic-tagged puzzle in the same week. Slots: `threadsTopicKind: "community"`.
 Judge on 8 Nov in the weekly review, using median views, replies and follows per post, by topic.
 
+
+**Tests planned (website traffic, from 25 Oct 2026).** Hoang wants the Performance tab to use edlintics.com Google Analytics to check whether posts work. The tests start once GA events are live on prod and posts carry tagged links (UTM convention in performance-review.md). They need at least 3 weeks of data per arm.
+- **ga-H7:** a tagged link in the first comment brings more site sessions per 1,000 views than the bio link alone.
+- **ga-H8:** puzzles bring more site sessions per 1,000 views than definitions, comics or five-concepts videos.
+- **ga-H9:** LinkedIn visitors engage and convert better than Instagram visitors. Baseline: the returns puzzle got 9 clicks from 24 LinkedIn impressions.
+- **ga-H10:** a first comment offering "the full worked explanation on edlintics.com" beats a plain "more at edlintics.com". Alternate the two by slot.
+- **ga-H11:** 10:00 Madrid posts bring more site sessions than 18:00 posts.
+- **H12:** explainer reels reach more non-followers per post than Ledger walk videos. Starts with the first explainer reel.
+- **H13:** comics get more shares per view than puzzles but fewer site sessions.
+
+Judge on 6 Dec 2026 (H13 on 22 Nov). The daily metrics refresh reads GA for each post's utm_content.
+
 **Links carry UTM tags (25 Oct 2026).** Any edlintics.com link in a caption or first comment uses the UTM convention in performance-review.md ("Website analytics (GA4) and UTM links"), with utm_content = the slot id. Bio links use utm_medium=social-bio and utm_content=bio.
 
 **Threads destination is part of every new post's proposal (Hoang, 24 Oct 2026).** When a post is created (Thursday plan, a request, a comic or a replacement), propose its Threads destination in the slot: `threadsTopic` plus `threadsTopicVariant` (primary or alternate per the running test), or `threadsCommunity` (for example Study Threads or Marketing). Add a one-line reason in `threadsReason`. The hub's Review card shows it as "Threads destination", and Hoang approves it with the content. A post without a proposed destination is not ready for review.

@@ -86,7 +86,8 @@ Run this every day straight after the first-comment run of the day's last post (
    - update each `tests[].current` and `n`.
    Leave `review` alone except on the weekly review day.
 4. **Update** each slot that went live today to `status: "posted"`, with a one-line `statusNote` (for example "Posted 25 Oct; 24 h: IG 31 reach, Threads 40 views").
-5. **Log the refresh** in `runs/daily-<YYYY-MM-DD>` with `{at, postsUpdated, problems}`.
+5. **Website traffic (once GA events are live):** in analytics.google.com, read sessions, engaged sessions and key events for the last 7 days by session source, medium, campaign and manual ad content (utm_content). Use the property that matches the date (see "Website analytics"). Add `site: {sessions, engaged, keyEvents, byEvent}` to each post row whose utm_content matches, plus a `siteTotals` block by channel. Untagged visits stay under their channel group.
+6. **Log the refresh** in `runs/daily-<YYYY-MM-DD>` with `{at, postsUpdated, problems}`.
 
 If the Mac was asleep and the refresh was missed, the next session's start check runs it once for the missed days.
 
