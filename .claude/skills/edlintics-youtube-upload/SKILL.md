@@ -63,7 +63,7 @@ Check at the end: Scheduled tab count and Studio › Content › Shorts.
 - Times in pickers use a narrow no-break space ("7:00 PM"); scripts normalise whitespace.
 - Links (edlintics.com) in post text are allowed.
 - Community "Turn on my Community" banner: leave it alone (it is a channel setting).
-- Do not post first comments on YouTube yet (not part of the routine).
+- After a YouTube item goes live: like, save and first comment (see the section at the end)
 
 - **Caption length check:** `post-compose.js` may report a few characters more than expected (for example 405/402) because the editor counts line breaks differently. A difference under 10 is fine; a big difference means the caption was cut or doubled.
 - **Work in your own new tab**, never in tabs other sessions left open.
