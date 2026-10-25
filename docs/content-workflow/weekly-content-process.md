@@ -188,11 +188,7 @@ General rules:
 4. "Swipe for the answer, and tell us your letter in the comments first. More puzzles at edlintics.com." (Ranking: "Reply with your order in the comments, for example B, C, A, then swipe for the answer.")
 5. 3–5 hashtags. On X: question, options and "Reply with your letter, then check the answer slide. #edlintics" within 280 characters. On Threads: no hashtag line, because the topic tag is set separately.
 
-**First comment (every post, updated 22 Oct 2026):** it drives replies and never reveals the answer, the trap or the reasoning; the answer stays on slide 2. Build it in this order:
-1. **Conversation starter:** a question to answer before swiping, e.g. Reply "sell" or "refuse" with one line on why.
-2. **Bonus value:** one short tip or challenge that adds depth without giving the answer away, often ending "Save this for your next exam."
-3. **Resource drop:** plain-text edlintics.com (carousels: the "Learn" free-course call to action).
-Optional for posts likely to reach new viewers: a one-line intro ("In case you're new here: Edlintics posts one business puzzle every day."). About 300 characters, no emoji, no exclamation points. Claude posts it from Hoang's Chrome right after the post goes live.
+**First comment (every post, updated 25 Oct 2026, Hoang):** short on every platform: 1–2 sentences, ending with 1–2 emojis. Sentence 1 is a conversation starter (a question to answer before swiping, for example 'Reply sell or refuse with one line on why'). An optional sentence 2 adds a tiny bonus or plain edlintics.com. It never reveals the answer, the trap or the reasoning. No exclamation points, no full stop before the emojis, and under 150 characters, so the same text works on X and TikTok (no separate first_comment_x or first_comment_tiktok needed). Emojis are allowed ONLY at the end of first comments; captions, slides and videos stay emoji-free. Claude posts it right after the post goes live.
 
 **When the first comment goes up (agreed 23 Oct 2026; Facebook and LinkedIn reposts stopped 24 Oct 2026),** Claude also self-likes the post on each platform and self-reposts it on Instagram, X and Threads only, always as the Edlintics page, never as Hoang personally. Where a platform doesn't offer a repost of our own post, Claude skips it and reports that. Steps: skill `edlintics-schedule-posts`, section 3.
 

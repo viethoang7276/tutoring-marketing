@@ -83,3 +83,4 @@ End every assignment with exactly this block:
 ## Exceptions approved by Hoang (25 Oct 2026)
 - **Puzzle posts may be colourful:** the two-accent rule does not apply to puzzles. They may use 2–4 extra flat colours, but Edlintics blue #2960c7 must always be present and remain the main colour. No gradients.
 - **Ledger in reels:** the Ledger mascot is approved as the character in explainer reels (definition, life-of and Ledger-talks formats).
+- **First comments may end with 1–2 emojis** (25 Oct 2026): they are 1–2 sentences, under 150 characters. Everything else stays emoji-free.

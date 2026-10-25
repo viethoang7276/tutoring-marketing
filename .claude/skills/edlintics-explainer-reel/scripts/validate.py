@@ -118,7 +118,11 @@ def main(path):
     texts += [(f"meta.{k}", str(m.get(k, ""))) for k in ("caption", "caption_x", "first_comment", "title")] + texts_extra
     for where, s in texts:
         if "!" in s: E.append(f"{where}: exclamation point in {s[:60]!r}")
-        if EMOJI.search(s): E.append(f"{where}: emoji in {s[:60]!r}")
+        if EMOJI.search(s):
+            # emojis are allowed only as the closing characters of the first comment
+            body = re.sub("[\\s" + EMOJI.pattern[1:-1] + "]+$", "", s)
+            if where != "meta.first_comment" or EMOJI.search(body):
+                E.append(f"{where}: emoji in {s[:60]!r} (emojis are allowed only at the end of first_comment)")
         if TUTOR.search(s): E.append(f"{where}: mentions tutoring: {s[:60]!r}")
         if NOT_USD.search(s): E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
     for k in ("caption", "caption_x", "first_comment"):
