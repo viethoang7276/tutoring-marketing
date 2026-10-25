@@ -174,7 +174,7 @@ General rules:
 - **Style:** plain English, short sentences, at most 1 emoji.
 - **Length:** 300–600 characters, and never more than 2,200.
 - **Hashtags:** 3–5 at the end of the caption. Always #edlintics and #businessstudents, plus 1–3 from #accounting #finance #economics #CFA #ACCA #statistics #marketing #management.
-- **Links:** write edlintics.com as plain text. Links aren't clickable in Instagram captions or comments.
+- **Links (25 Oct 2026, Hoang):** captions carry NO edlintics.com link. When a post needs a link, it goes in the first comment (the link-drop type), tagged with UTM; Instagram and TikTok show it as plain text. Posters replace SOURCE in a stored link with the platform name (facebook, instagram, linkedin, x, threads, tiktok, youtube).
 - **No tutoring in organic posts (25 Oct 2026):** posts, captions, first comments and bios never offer tutoring or show Hoang's face. Edlintics is a learning brand, not a tutoring platform. Tutoring is sold only through separate paid ads. Before launch the call to action is the course waitlist (REQ-0003), once it is live.
 - **Colourful puzzles (25 Oct 2026):** puzzle visuals may use a lively palette beyond the brand colours. Edlintics blue #2960c7 is always present and remains the main colour. Rules are in skills/edlintics-puzzle-visuals.
 - **X first comment fits 280 characters (25 Oct 2026):** if the first comment is longer than 280 characters, write a `first_comment_x` version for X at planning time, so the first-comment run never has to cut text itself.

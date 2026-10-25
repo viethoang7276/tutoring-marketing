@@ -102,3 +102,6 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
 | Sampling bias | Asking only friends if your app is good | A survey sent only to happy customers |
 | Moral hazard | Driving carelessly with full insurance | Banks taking risks they expect to be bailed out of |
 | Accounts receivable | A friend who owes you $50 | Sales on credit that are not cash yet |
+
+## Ledger is not required in every scene (Hoang, 25 Oct 2026)
+Use scenario graphics that show the idea directly: a computer, code on a screen, a robot arm, a chessboard, a toddler with blocks, a meeting table, a store, a chart. Ledger appears where a character helps the story, typically the hook, a story beat and the takeaway, but scenes without Ledger are welcome. Scenes without Ledger use the renderer's content fit and still keep the art big. Add simple hand-drawn presets when a scenario needs one.

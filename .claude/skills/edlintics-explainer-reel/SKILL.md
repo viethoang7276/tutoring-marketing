@@ -80,3 +80,6 @@ We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing L
 - `people_group` doesn't work under Ledger-first framing: it gets cropped or hidden behind Ledger. Use one `person` (plus a `check`, `bills` and so on) to show "the others".
 - Canva Replace keeps the old clip's trim. If the new video is longer, extend the clip: click its duration and type the new length. Then check that the page total equals the video length.
 - Study Threads is already joined (24 Oct), so study-pain reels can go there.
+
+## Ledger is not required in every scene (Hoang, 25 Oct 2026)
+Use scenario graphics that show the idea directly: a computer, code on a screen, a robot arm, a chessboard, a toddler with blocks, a meeting table, a store, a chart. Ledger appears where a character helps the story, typically the hook, a story beat and the takeaway, but scenes without Ledger are welcome. Scenes without Ledger use the renderer's content fit and still keep the art big. Add simple hand-drawn presets when a scenario needs one.

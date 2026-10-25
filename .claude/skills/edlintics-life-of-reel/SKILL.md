@@ -102,3 +102,6 @@ Threads topic: use the primary arm in week 1 (mapping in `docs/research/2026-10-
 | A marketing intern testing two emails | A/B testing | Change one thing at a time |
 | A café owner looking at the electricity bill | Fixed vs variable costs | Rent stays, milk grows with sales |
 | A data analyst at a team meeting | Correlation vs causation | Ice cream sales and sunburn |
+
+## Ledger is not required in every scene (Hoang, 25 Oct 2026)
+Use scenario graphics that show the idea directly: a computer, code on a screen, a robot arm, a chessboard, a toddler with blocks, a meeting table, a store, a chart. Ledger appears where a character helps the story, typically the hook, a story beat and the takeaway, but scenes without Ledger are welcome. Scenes without Ledger use the renderer's content fit and still keep the art big. Add simple hand-drawn presets when a scenario needs one.
