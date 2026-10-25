@@ -164,6 +164,8 @@ General rules:
 - **Length:** 300–600 characters, and never more than 2,200.
 - **Hashtags:** 3–5 at the end of the caption. Always #edlintics and #businessstudents, plus 1–3 from #accounting #finance #economics #CFA #ACCA #statistics #marketing #management.
 - **Links:** write edlintics.com as plain text. Links aren't clickable in Instagram captions or comments.
+- **No tutoring in organic posts (25 Oct 2026):** posts, captions, first comments and bios never offer tutoring or show Hoang's face. Edlintics is a learning brand, not a tutoring platform. Tutoring is sold only through separate paid ads. Before launch the call to action is the course waitlist (REQ-0003), once it is live.
+- **All six platforms stay (25 Oct 2026):** Hoang wants every platform tested. Judge them with the hypotheses; don't cut one without his decision.
 
 **Puzzle caption (updated 24 Oct 2026, modelled on how Brilliant structured its 2019–2020 daily challenges; structure only, never their wording):** the caption is the puzzle itself, so it can be solved in the feed.
 1. The setup and question in full sentences, with every number and assumption the reader needs (usually the slide question, word for word).
