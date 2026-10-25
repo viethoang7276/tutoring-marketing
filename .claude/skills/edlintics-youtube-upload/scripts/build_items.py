@@ -2,7 +2,7 @@
 """Build the YouTube upload queue (step P0 / S0 of the edlintics-youtube-upload skill).
 
 Usage:
-  python3 build_items.py <slots_dir> <posts_dir> <out_dir> [--from 2026-10-25] [--to 2026-11-01]
+  python3 build_items.py <slots_dir> <posts_dir> <out_dir> [--from 2026-10-25] [--to 2026-11-01] [--only 0,3,4]
 
 <slots_dir>  folder of slot JSON files saved by ArtifactData query (collection "slots").
 <posts_dir>  folder with the exported media, named <MMDD>-<HHMM>-<slug>-<n>.png / .mp4.
@@ -67,10 +67,11 @@ def main():
         items.append(it)
     os.makedirs(out_dir, exist_ok=True)
     json.dump(items, open(os.path.join(out_dir, 'items.json'), 'w'), indent=1, ensure_ascii=False)
-    store = {str(i): {k: v for k, v in x.items() if k != 'files'} for i, x in enumerate(items)}
+    only = set(args[args.index('--only') + 1].split(',')) if '--only' in args else None
+    store = {str(i): {k: v for k, v in x.items() if k != 'files'} for i, x in enumerate(items) if only is None or str(i) in only}
     open(os.path.join(out_dir, 'inject.js'), 'w').write(
         "localStorage.setItem('edl_items'," + json.dumps(json.dumps(store, ensure_ascii=False), ensure_ascii=False)
-        + ");'stored '+Object.keys(JSON.parse(localStorage.getItem('edl_items'))).length")
+        + ");'stored '+Object.keys(JSON.parse(localStorage.getItem('edl_items'))).length;\n")
     for i, x in enumerate(items):
         print(i, x['slot'], x['type'], x.get('date', 'now'), x.get('time', ''), x.get('ap', ''), x['n'])
 
