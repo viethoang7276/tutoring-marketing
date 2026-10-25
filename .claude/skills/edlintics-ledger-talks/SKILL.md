@@ -3,6 +3,8 @@ name: edlintics-ledger-talks
 description: Make one "Ledger talks" reel, Edlintics' face-free version of the creator talking-to-camera format. Ledger faces the viewer holding a small mic, lip-synced to the Kokoro voice, on a campus backdrop, with big 1-3 word karaoke captions and jump cuts between gestures. The end card shows the term and the key point. Used for advice, opinion and "here is an idea" posts. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
 ---
 
+> Hoang rejected this format on 25 Oct 2026. Don't use it unless he asks for it again; use the illustrated definition or life-of style.
+
 # Ledger talks (test format T1, 25 Oct 2026)
 
 **What it copies from the reference:** the format only, never the words or visuals. The reference is a creator outdoors with a lapel mic, captions of 1-2 words at a time low on screen, no music and a high save rate.

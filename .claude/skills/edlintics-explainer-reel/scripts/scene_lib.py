@@ -478,6 +478,20 @@ def umbrella(x, y, s=1.0, **_):
     return _g(x, y, s, f'<path d="M-140 0 q140 -150 280 0 z" fill="{BLUE}" stroke="{INK}" stroke-width="{SW}"/><line x1="0" y1="-20" x2="0" y2="220" stroke="{INK}" stroke-width="7"/><path d="M0 220 q0 30 -26 24" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>')
 
 
+def blocks(x, y, s=1.0, n=3, fallen=False, **_):
+    """Toy building blocks. A tower of n cubes (default 3); fallen=True shows a small stack with two blocks tumbled on the floor. (x, y) = centre."""
+    cols = [BLUE, GOLD, GREEN, CORAL, LB]
+    def cube(cx, cy, c, rot=0):
+        return (f'<g transform="translate({cx} {cy}) rotate({rot})"><rect x="-40" y="-40" width="80" height="80" rx="8" fill="{c}" stroke="{INK}" stroke-width="5"/>'
+                f'<circle cx="0" cy="0" r="14" fill="{PAPER}" stroke="{INK}" stroke-width="4"/></g>')
+    if fallen:
+        inner = cube(-60, 40, cols[0]) + cube(-60, -40, cols[1]) + cube(50, 54, cols[2], 25) + cube(125, 48, cols[3], -18)
+    else:
+        n = int(n)
+        inner = "".join(cube((k % 2) * 8 - 4, 40 * (n - 1) - 80 * k, cols[k % 5]) for k in range(n))
+    return _g(x, y, s, inner)
+
+
 def books(x, y, s=1.0, n=4, **_):
     """A stack of n books."""
     cols = [BLUE, GOLD, GREEN, CORAL, LB]
@@ -745,7 +759,7 @@ PRESETS = {
     "pit": (pit, pit_box), "sun_arrow": (sun_arrow, None), "handshake": (handshake, None), "whiteboard": (whiteboard, None),
     "desk": (desk, desk_box), "school_desk": (school_desk, None), "ticket": (ticket, None), "thought": (thought, thought_box),
     "speech": (speech, None), "building": (building, building_box), "clock": (clock, None), "umbrella": (umbrella, None),
-    "books": (books, None), "price_tag": (price_tag, None), "funnel": (funnel, funnel_box), "envelope": (envelope, None),
+    "books": (books, None), "blocks": (blocks, None), "price_tag": (price_tag, None), "funnel": (funnel, funnel_box), "envelope": (envelope, None),
     "arrow": (arrow, arrow_box), "cross": (cross, cross_box), "check": (check, None),
     "pizza": (pizza, None), "pizza_slice": (pizza_slice, None), "sandwich": (sandwich, None), "lemonade_cup": (lemonade_cup, None),
     "lemonade_stand": (lemonade_stand, lemonade_stand_box), "plate": (plate, None), "burger": (burger, None),
@@ -756,7 +770,7 @@ HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": 
         "invoice": (115, 155), "chart": (205, 155), "coffee": (95, 160), "window": (345, 265), "door": (130, 365),
         "sofa": (165, 105), "bed": (225, 90), "sun_arrow": (270, 220), "handshake": (305, 75), "whiteboard": (355, 225),
         "school_desk": (175, 185), "ticket": (115, 60), "speech": (205, 145), "clock": (115, 115), "umbrella": (145, 245),
-        "books": (125, 110), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55),
+        "books": (125, 110), "blocks": (130, 125), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55),
         "pizza": (160, 160), "pizza_slice": (100, 165), "sandwich": (145, 90), "lemonade_cup": (100, 200), "plate": (155, 50),
         "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
