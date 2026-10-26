@@ -5,7 +5,7 @@ session that changes state (append to the session log; revise "Now" / "Next").
 
 _Last updated: 2026-10-24_
 
-## Social posting engine: handover (read first, updated 2026-10-24)
+## Social posting engine: handover (read first, updated 2026-10-24; current rules: see "Rules: current state" at the end)
 
 Any session can take over from here. Do these in order:
 1. `git pull`.
@@ -380,3 +380,85 @@ Any session can take over from here. Do these in order:
   - Open with Hoang: keep the AI training-bot block (recommended), and whether tutoring-web may run the dev DB migration.
 - **YouTube:** the 429 cleared after advanced features were approved. All pending Posts are scheduled.
 - **Phone tasks for Hoang:** Instagram Stories for the 25 Oct posts.
+
+## Rules: current state (checked 26 Oct 2026; this list wins over older entries above)
+**Approvals and safety**
+- Show planned external writes before making them. Content, design and publishing approvals are separate; scheduling or posting needs Hoang's explicit go (an "approve" on the hub Review card counts as approval of the content and its proposed slot).
+- Act only as Edlintics, never as Hoang. Never type passwords. Stop on Instagram if it shows "Continue as hoang.vtrg" or a login page. Never Boost; never "Always share stories". No reshare or repost on Facebook or LinkedIn.
+- Never put secrets in chat, code or logs. Ask before credentials, OAuth, installs or permission changes. Don't change Chrome or system settings (Hoang can "Mute site" himself).
+- The repo remote is PUBLIC: never commit data/contacts/ PII, never bulk-message.
+- If the permission system blocks an action (for example editing a published LinkedIn post), don't work around it; hand it to Hoang.
+- A timeout is not proof that nothing happened: check before retrying. When a run is interrupted, the next run checks each platform and only does what's missing (no double likes or comments).
+
+**Copy**
+- No full stop at the end of any paragraph anywhere: captions, first comments, slides, image text, video captions and web copy.
+- No exclamation points. No emoji, except at the end of first comments.
+- USD by default ($1.80, $3,000).
+- Every slide line is a full sentence; the audience is general (students and business people), not exam-only.
+- No tutoring in organic posts; Hoang's face is never shown.
+- Never promise what we can't deliver. The 13:00 caption line is now "Comment 'Learn' and we will tell you first when the courses open" (26 Oct, option A; the old "free course" promise is gone from every scheduled post).
+- No reference-creator credit in public captions. Ideas from Hoang's references are paraphrased, fact-checked, and unverifiable claims dropped.
+- Captions carry no link. Links go in the first comment (the link-drop type) with UTM, and SOURCE is replaced with the platform name.
+- First comments: 1–2 sentences, under 150 characters, ending with emojis, and one of 5 types (link drop, question, hashtag stash, bonus, pinned CTA), stored in `firstCommentType`. They never reveal a puzzle answer.
+- Every post proposes its Threads topic or community, with a reason. Threads posts carry no hashtags.
+
+**Design and video**
+- Puzzles may be colourful, but Edlintics blue must be present and main.
+- Canva: save (commit) every draft at once and file it in Social media posts FAHYcHrS5PE. Never leave an open transaction. Delete rejected designs.
+- Explainer reels:
+  - Ledger with the Kokoro af_heart voice; hand-drawn style; the Edlintics logo at the bottom; no zoom cuts.
+  - An end card with the term and the key point.
+  - Hands in brand proportion, checked in every contact sheet.
+  - Ledger is optional per scene; the talking-to-a-mic format was rejected.
+  - Skills: edlintics-definition-reel, edlintics-life-of-reel, engine edlintics-explainer-reel.
+- **Background music is very quiet (26 Oct):** in every video, the Canva music track Volume is 8 and the voice/video stays at 100. The local preview pad is 0.025. Every scheduled video was re-exported and swapped on all 7 platforms on 26 Oct, except the free-rider reel, which was already live.
+- **Reel covers (26 Oct):** every reel gets a cover from `make_cover.js`:
+  - a kicker ("Explained in 40 seconds" or "A day in the life") plus a 3–6 word title with one highlighted keyword;
+  - laid out for the 3:4 grid crop.
+  - The editable Canva template is "Shorts cover template - explainer reels", DAHZGJ1m_8E.
+  - Applying covers to the platforms waits for Hoang's edits ("covers ready"). On TikTok, the cover goes up together with the caption fix as one re-post per video.
+
+**Platforms**
+- Seven platforms: Facebook, Instagram, LinkedIn, X, Threads, YouTube and TikTok, all kept.
+- **TikTok:**
+  - Uploads go through TikTok Studio (skill edlintics-tiktok-upload). Scheduled posts can't be edited, so they are re-posted, and the old one is deleted only after the new one is checked.
+  - Scheduled posts carry NO location; live uploads get "IE Tower - IE University".
+  - **No self-likes from 26 Oct:** the likes reverted under the new-account limit, and a stray like hit another creator. Only save and first comment; never click a heart.
+  - Reach is very low (0–1 views per post); judge it on 2 Nov.
+- **YouTube:**
+  - After a post goes live: like it, save Shorts to "Edlintics saves", and post the first comment (pinned when pinFirstComment is set).
+  - Scheduled Shorts are swapped by re-uploading.
+  - A Content ID claim on Canva music is expected and harmless.
+- **Always mute (26 Oct):** on TikTok and YouTube, run the persistent muter (it mutes and pauses, and survives auto-advance) right after every page load. Never press keys on the page, close the tab when done, and check things in Studio pages where possible. Hoang may be using the laptop during runs.
+- **Threads:** the 25-scheduled-thread cap applies. The daily 09:07 VN run (cron fee9d397, session-only) adds pending posts using only the quiet-music files (music8/) and fixed images. Deskilling and the 29 Oct–1 Nov reels are pending.
+- **Instagram:** desktop can't share to a Story, so Stories are phone tasks for Hoang. Hide the like count after a post goes live. Scheduled reels can only have their caption edited, so a media change means recreating them.
+- **LinkedIn:** the edit dialog can change the text of scheduled posts but not their media. Use the open-and-check-before-delete order when recreating.
+
+**Operations**
+- First-comment runs are one-shot session crons about 4 minutes after each slot. The 07:13 VN morning Performance refresh is cron 9ec74f4e. All crons are session-only and need recreating after a restart.
+- The hub first-comment tracker (version 32) checks each platform for its own steps:
+  - Instagram, X and Threads: comment, like, repost;
+  - Facebook, LinkedIn and YouTube: comment, like;
+  - TikTok: comment, save.
+- When Hoang says "pause", stop the Chrome agents and hold the crons until he says resume.
+
+## 26 Oct 2026: session log
+- **Morning refresh:** perf/latest was already fresh.
+- **Threads backlog:** at cap, nothing added.
+- **TikTok likes:** Hoang liked the coffee and cake puzzles himself. The no-self-like rule was added.
+- **Deskilling reel:**
+  - Idea test T2 from Hoang's reference; studies fact-checked.
+  - Approved and scheduled for 28 Oct, 12:00 Madrid, on 6 platforms; Threads is pending.
+  - Canva DAHZFddgpwY.
+- **Quiet-music swap:** 11 scheduled videos replaced on 7 platforms; the rule was saved.
+- **"Free course" caption line:** replaced everywhere it could be edited. Two posts are left for Hoang by hand: the LinkedIn live 25 Oct post (the edit was blocked) and possibly the Facebook live 25 Oct reel (it showed a "Failed to publish" badge, but the stats and new caption look fine).
+- **Reel covers:** a draft sheet and a Canva template were made.
+- **Free-rider reel:** the TikTok comment was posted on the second try. The hub tracker was fixed.
+- **Hoang's open items:**
+  - the LinkedIn 25 Oct post edit;
+  - "covers ready";
+  - Instagram Stories (free rider, sunk cost, fraud, finance video, cake, 26 Oct 10:00);
+  - whether to switch YouTube to watch-page URLs and Studio checks;
+  - "Mute site" in Chrome (optional);
+  - turning puzzles into short Instagram Reels (proposal).
+- **Correction to the 25 Oct entry above:** Hoang finally chose B, so the media WAS replaced on all 26 scheduled posts.
