@@ -104,3 +104,5 @@ Do this for every post once it is live (now posts straight away; scheduled posts
 - Check likes on the profile's Liked tab (tiktok.com/@edlintics → Liked), not by reloading the post. On 26 Oct it showed 8 of our posts liked and no other creators' posts. Opening a /photo/ link can drop you into the For You feed after a few seconds, so take a screenshot right before any click.
 - Studio and the player show 0 comments even when our first comment exists. Check comments in Studio → Comments.
 - **No self-likes from 26 Oct 2026.** After repeated reverts, and a stray like that landed on another creator's video during an auto-advance, TikTok runs only save and first-comment. Hoang likes from his phone if he wants a like. Never click a heart on TikTok.
+
+**Always mute (Hoang, 26 Oct 2026):** on TikTok and YouTube (and any page that plays video), mute every time a page loads or auto-advances, because the sound plays on Hoang's computer while he works. Run `document.querySelectorAll('video,audio').forEach(v=>{v.muted=true;v.volume=0})` with javascript_tool. Never press the "m" key or other keys on the page.

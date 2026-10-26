@@ -81,3 +81,5 @@ Check at the end: Scheduled tab count and Studio › Content › Shorts.
 
 ## After it goes live: like, save, first comment (Hoang, 25 Oct 2026)
 This replaces any earlier note that YouTube comments are skipped. As the Edlintics channel: like the Post or Short; save Shorts to the playlist "Edlintics saves" (Posts can't be saved); post the slot's first_comment exactly as stored (replace SOURCE with youtube); pin it if pinFirstComment is true. Record it in the runs doc as yt: {like, save, comment, pin}.
+
+**Always mute (Hoang, 26 Oct 2026):** on TikTok and YouTube (and any page that plays video), mute every time a page loads or auto-advances, because the sound plays on Hoang's computer while he works. Run `document.querySelectorAll('video,audio').forEach(v=>{v.muted=true;v.volume=0})` with javascript_tool. Never press the "m" key or other keys on the page.
