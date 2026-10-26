@@ -72,6 +72,11 @@ Replace `<i>`, the file paths and the hashtags (from the queue's `tags`, in orde
 **Read the result:** `NOT POSTED: …` means the guard stopped it: fix what the check shows (tags mismatch, location, sound, time) and run `edl_go` again. `CLICKED … -> /tiktokstudio/content` means done. Past posts: about one every 3 minutes is fine.
 
 ## 5. After a post is live: like, save, first comment (Hoang, 25 Oct 2026)
+**Studio first (Hoang, 27 Oct 2026; proven on 2026-10-26-1800).** Work from TikTok Studio, not the public post or feed pages, so nothing plays sound and nothing auto-advances. No self-likes (26 Oct), so only the comment and the save remain:
+- **Live check:** `tiktokstudio/content` row shows "Public" with a date. The list is virtualised and starts at the latest scheduled rows; scroll its container by script to reach the row.
+- **First comment:** click the row's comment icon to open `/tiktokstudio/comment/<id>`. Its "Reply to comment" box at the top posts a TOP-LEVEL comment on our post (150 characters). Check the thread for an existing Edlintics comment first. Focus the textarea, insert the text with `document.execCommand('insertText', false, text)`, and click the red send arrow. Expect the toast "Comment posted". Studio has no pin.
+- **Save:** Studio cannot save, and its save count does not say who saved. Check the profile's Favourites tab (`tiktok.com/@edlintics`, muter on). Only if our post is missing there, open that single public post URL with the muter on, check `location.href`, and click the bookmark. No keystrokes.
+- Steps 2, 3 and 5 below are the old public-site fallback; use them only when Studio cannot do a step.
 Do this for every post once it is live (now posts straight away; scheduled posts in the first-comment run after their time). Identity check first.
 1. **Confirm it is live:** `tiktokstudio/content` shows the row as "Public" with a date (no blue clock badge).
 2. **Photo posts:** `navigate` `https://www.tiktok.com/@edlintics/photo/<id>` and run `edl_eng('<i>')` straight away (the photo page auto-advances to other people's posts after the slides; `edl_eng` finds our post by its caption). Expect `like false->true … | fav [Add to Favourites …]`.
