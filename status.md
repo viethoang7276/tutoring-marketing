@@ -462,3 +462,13 @@ Any session can take over from here. Do these in order:
   - "Mute site" in Chrome (optional);
   - turning puzzles into short Instagram Reels (proposal).
 - **Correction to the 25 Oct entry above:** Hoang finally chose B, so the media WAS replaced on all 26 scheduled posts.
+
+## Next session: start here (26 Oct 2026)
+1. Run git pull, then read this file's "Rules: current state" and "26 Oct session log" sections.
+2. **Recreate the session crons** (they die with the session). Times are Vietnam:
+   - **First-comment runs**, 4 minutes after every slot still ahead. Puzzles, five-concepts and comics go at 16:04, 19:04, 22:04 and 00:04. Reels go at 14:34 (accruals 27 Oct, break-even 28, salesperson 29, working capital 30, economics student 31, diminishing returns 1 Nov). Moravec is 27 Oct 18:04; deskilling is 28 Oct 18:04.
+   - **Daily Threads backlog** at 09:07, using music8/ media only.
+   - **Morning Performance refresh** at 07:13.
+   - Every run follows the mute rule and the TikTok no-like rule.
+3. Catch up on anything the hub tracker shows as missed, checking first so nothing is doubled.
+4. Ask Hoang about the open items in the 26 Oct log.
