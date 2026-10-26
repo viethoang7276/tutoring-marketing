@@ -133,6 +133,7 @@ Rules learned so far:
 - **Comics: 4 panels by default, speech bubbles, no small topic tag on the slides** (24 Oct).
 - **Definition carousels are a concept plus its key terms** (price elasticity and NPV posts, 24 Oct). Page 2 maps the concept to 5 numbered key terms, and each later page defines one key term with a dollar example. Never use generic angles such as "What it measures" or "How it is used" as the branches. No small kicker tag on the term pages. See the concept-carousel skill.
 - **Every video carousel gets music** from Canva's free library (24 Oct).
+- **Background music is very quiet (26 Oct 2026, Hoang):** in every video (explainer reels, five-concepts videos, video carousels), set the Canva music track Volume to 8 and keep the video or voice at 100. Check it before every export
 - **Stories:** every post is shared to the Facebook Story (when scheduling) and to the Instagram Story (with the first comment). Do it by hand each time, never with an automatic "always share" setting (Hoang, 24 Oct; this keeps Stories despite 0 views so far).
 
 ## Currency
