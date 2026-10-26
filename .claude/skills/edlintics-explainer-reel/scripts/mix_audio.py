@@ -33,6 +33,6 @@ for k in range(int(dur // 4) + 1):
     env = np.clip(tt / 1.2, 0, 1) * np.clip((4.6 - tt) / 1.4, 0, 1)
     for f in chords[k % 4]: pad[m] += env * (0.5 * np.sin(2 * np.pi * f * tt) + 0.15 * np.sin(2 * np.pi * 2.002 * f * tt))
 pad /= np.abs(pad).max() + 1e-9
-mix = voice + (0 if TALK else 0.06) * pad * np.clip(t / 1.0, 0, 1) * np.clip((dur - t) / 1.0, 0, 1)
+mix = voice + (0 if TALK else 0.025) * pad * np.clip(t / 1.0, 0, 1) * np.clip((dur - t) / 1.0, 0, 1)
 sf.write(f"{d}/audio.wav", mix / max(1.0, np.abs(mix).max() / 0.98), sr)
 print("ok", dur)

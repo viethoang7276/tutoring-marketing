@@ -72,6 +72,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
 6. **Canva draft with music:** follow edlintics-definition-reel step 6 exactly:
    - `copy-design` `DAHZALJdKoM`, open `/design/<id>/edit`, click Uploads, then `find` "file input button" (the first `find` may return the search box; ask again) and upload `<slug>-canva-upload.mp4` (10 MB cap), open the Videos tab, wait for the thumbnail to show its length, then click the old video on the page, **Replace**, and your thumbnail. The upload library is shared, so pick the thumbnail whose length matches your video;
    - Edit as video, delete any old video layer, and check the total equals the video length;
+   - if the total is short, extend the clip with the scissors trim; set the music Volume to 8 (video stays at 100);
    - rename it "Explainer reel - Life of <role> (Ledger) v1" (File menu, the name field at the top), check "All changes saved", then `move-item-to-folder` to `FAHYcHrS5PE`.
 7. **Upload the video to the hub:** follow edlintics-definition-reel step 7 (Artifact publish, `asset: true`, the MP4 plus a poster JPEG). Make the poster from the still with the lowest time in `$W/stills/` (sort numerically, not alphabetically) and name it `<slug>-poster.jpg`.
 8. **Hub proposal card:** follow edlintics-definition-reel step 8, with these differences:

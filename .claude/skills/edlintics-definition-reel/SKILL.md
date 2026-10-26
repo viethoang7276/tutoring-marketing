@@ -62,8 +62,9 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    2. Uploads › `find` the "file input" › `file_upload` `<slug>-canva-upload.mp4`. The Chrome bridge takes at most 10 MB. The copy opens already in timeline view, with the old video and the music on it; other agents' uploads share the Videos list, so pick the thumbnail whose length matches yours. Wait until the thumbnail shows its length.
    3. Click the video on the page (the old background) to select it, click **Replace** in the toolbar, then click the new thumbnail. The background swaps in place and the music stays. Do NOT click the thumbnail with nothing selected: that appends a second clip and doubles the length (if it happens, press cmd+z).
    4. **Remove any old video.** If the timeline is not already showing, use the page ⋯ menu › **Edit as video**. The timeline must show only the new video and the music. Delete any other video layer (an old reel left on top) and any extra clip after the new one. The total at the bottom right must equal the video length (for example 0:36); the music trims itself to the page.
-   5. Rename it: File › pencil › "Explainer reel - <Term> (Ledger) v1". Check it says "All changes saved".
-   6. Run `move-item-to-folder` with the design id to `FAHYcHrS5PE`. Close your tab.
+   5. **Length and music volume.** If the new clip kept the old trim (the total is shorter than your video), select the clip, open the scissors trim and type the full length (for example 39.1). Then select the music track and set its Volume to 8, keeping the video at 100 (Hoang, 26 Oct 2026: background music very low).
+   6. Rename it: File › pencil › "Explainer reel - <Term> (Ledger) v1". Check it says "All changes saved".
+   7. Run `move-item-to-folder` with the design id to `FAHYcHrS5PE`. Close your tab.
 7. **Upload the video to the hub so it plays on Hoang's phone.** Use the Artifact tool, publish with `asset: true`:
    - `url` `https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6`;
    - `file_paths`: `<slug>.mp4` and `<slug>-poster.jpg` (make_reel.sh writes the poster from the first still by time; never pick it by hand).
