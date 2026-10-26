@@ -85,3 +85,11 @@ We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing L
 Use scenario graphics that show the idea directly: a computer, code on a screen, a robot arm, a chessboard, a toddler with blocks, a meeting table, a store, a chart. Ledger appears where a character helps the story, typically the hook, a story beat and the takeaway, but scenes without Ledger are welcome. Scenes without Ledger use the renderer's content fit and still keep the art big. Add simple hand-drawn presets when a scenario needs one.
 
 New scenario presets (25 Oct 2026): `code_screen` (trend none/down/up), `chessboard`, `robot_arm` (hold none/block/piece, drop, flip), `toddler`, `meeting_table` (deal), `whiteboard_team`; `laptop` has `screen: "filled"`. For scenes without Ledger, set `"frame": "wide"` and `"bg": "none"` (or `"paper"` when something stands on the ground) so the art fills the frame.
+
+## Cover (thumbnail), added 26 Oct 2026
+Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<slug>-cover.png "<kicker>" "<title with one *keyword*>"`.
+- Kicker: "Explained in 40 seconds" (definition reels) or "A day in the life" ("life of…" reels).
+- Title: 3-6 words, a question or a claim that matches the reel's hook, with one keyword in *stars* (highlighted in yellow). No full stop at the end.
+- `<t>`: a time inside a scene whose art matches the title (usually the hook, about 2 s).
+- The layout is centred for the 3:4 grid crop (y 240-1680), which Instagram and TikTok profiles show.
+- Use the cover wherever the platform allows: the Instagram and Facebook reel cover, the YouTube Short thumbnail, the TikTok cover (choose it at upload) and the LinkedIn video thumbnail.
