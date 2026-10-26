@@ -33,6 +33,8 @@ const srv = http.createServer((q, r) => {
     document.getElementById('stage').style.transform = 'translateY(110px)';   // centre the cover in the 3:4 grid crop
   }, kicker, title);
   await p.evaluate(() => document.fonts.ready);
-  await p.screenshot({ path: out });
+  if (out.endsWith('.pdf')) await p.evaluate(() => { const pp = document.getElementById('paper'); if (pp) pp.style.display = 'none'; });   // the paper texture rasterises huge in PDF
+  if (out.endsWith('.pdf')) await p.pdf({ path: out, width: '1080px', height: '1920px', printBackground: true, pageRanges: '1' });   // vector text, editable after a Canva import
+  else await p.screenshot({ path: out });
   await b.close(); srv.close();
 })();
