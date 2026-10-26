@@ -101,3 +101,5 @@ Do this for every post once it is live (now posts straight away; scheduled posts
 - Never click a like or save that is already active, because a second click undoes it.
 - Comment pinning may not be offered on our own posts (the menu shows only Delete). If so, record pin: false and move on.
 - New-account soft limit: on 25 Oct, likes on @edlintics kept reverting for hours. Retry at most once, several hours later. If a like reverts twice, skip self-likes for that day; the save and comment matter more. Clicking during an auto-advancing slideshow can land a like on another creator's video, so always pause first.
+- Check likes on the profile's Liked tab (tiktok.com/@edlintics → Liked), not by reloading the post. On 26 Oct it showed 8 of our posts liked and no other creators' posts. Opening a /photo/ link can drop you into the For You feed after a few seconds, so take a screenshot right before any click.
+- Studio and the player show 0 comments even when our first comment exists. Check comments in Studio → Comments.
