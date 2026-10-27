@@ -495,6 +495,10 @@ Any session can take over from here. Do these in order:
   - simplifying H16 to Meta-only labels;
   - plus every item still open from the 26 Oct log (covers ready, Instagram Stories including the comic and the 00:00 puzzle, the LinkedIn 25 Oct edit, the Facebook 25 Oct badge).
 
+- **Afternoon 27 Oct:** Threads backlog: 5 of 9 scheduled (deskilling 28 Oct, salesperson 29, working capital 30, marginal utility 31, diminishing returns 1 Nov); the four 1 Nov slots wait for the 25-thread cap (cron fee9d397 stays). First comments done for the accruals reel and the 27 Oct 10:00 café puzzle (Hoang: Instagram Stories from the phone; TikTok save of the café post not done)
+- **Puzzle reels (Hoang, 27 Oct):** approved the voiced format, then v3 with a hand tap and the end card "Follow Edlintics to learn business concepts interactively". Skill `edlintics-puzzle-reel` (commit 50d6354). All 11 scheduled puzzles 27 Oct 18:00 to 1 Nov 18:00 built as reels (videos in assets/renders/puzzle-reels/, gitignored) and put on the Review tab as `reel-puzzle-<slot>` cards (status proposal). If approved they replace the image post on Facebook, Instagram, YouTube Shorts and TikTok; Threads, X and LinkedIn keep the images. Test H17 added to perf/latest (v14, judge 17 Nov). Hub v34 shows "Puzzle reel" cards. Weekly process updated: every puzzle gets a reel
+- **REQ-0005** interactive puzzle exercise relayed to the CTO (backlog, after video engine Phase 2) and COO (FYI)
+- **LinkedIn:** two runs opened Hoang's personal Notifications by a stray click; skill rule added (never coordinate clicks near the top bar)
 ## Next session: start here (27 Oct 2026)
 1. Run git pull, then read this file's "Rules: current state" and the 26 and 27 Oct session logs.
 2. **Recreate the session crons** (they die with the session). Times are Vietnam:
