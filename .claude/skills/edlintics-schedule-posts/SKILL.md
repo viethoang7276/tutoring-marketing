@@ -99,6 +99,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 2. `find` "Like, Comment, Repost buttons under the first post". The identity switcher must show the Edlintics logo and the box must read "Comment as Edlintics".
 3. Type the paragraphs with `shift+Enter` between them. Click **Comment**.
 4. Click Like. **No repost on LinkedIn** (Hoang stopped it on 24 Oct 2026).
+5. **Never open Hoang's personal pages (27 Oct 2026).** Layout shifts twice sent a click to his personal Notifications. Use `find` refs or the post's own URL, never coordinate clicks near the top bar, and if a personal page opens, navigate straight back to the admin URL without reading or clicking anything
 
 **D. X:**
 1. Open `https://x.com/edlintics` and `find` "Reply, Repost and Like buttons of the newest post". Click Like, then Repost › **Repost**. Dismiss the "Got it" notice if it appears.
