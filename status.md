@@ -485,6 +485,7 @@ Any session can take over from here. Do these in order:
   - Build order is editor-first; marketing's dates were dropped.
   - Mockups: the CMO's template canvas https://claude.ai/artifact/1wEyHdXGe6fZBs84hqjA4j, the CTO's animated player https://claude.ai/artifact/CZqaU4vXCDBHTaZox6eHMs, and the CTO's editor mockup https://claude.ai/artifact/PRRu2xvr3Es2aEMFFBbdjZ.
   - Marketing input sent: templates work-chat, then messenger, then assistant, then email; inserts are the file card, spreadsheet cell change, notification, end card and cursor with zoom; CLI needs, house-style lints, and a per-slot export folder with a manifest; Canva stays the last step. Music risk: Canva tracks can't be taken out of Canva.
+- **Morning refresh (07:45-08:25 VN):** perf/latest v13, 118 rows, windowEnd 26 Oct; runs/daily-2026-10-27. Yesterday 699 views across 5 posts (best: economics five-concepts, 372; worst: profit-vs-cash comic, 34). 7 days: 2,518 views. Followers unchanged. Threads topic posts: median 4 views against 10 before the test. TikTok Studio shows 0 comments even where first comments exist.
 - **Hoang's open items:**
   - approve the editor mockup;
   - the chat panel crossing the right-hand button column (CMO recommends narrowing it);
