@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 335" width="900" height="335">
+  <!-- v2 (phone size): question state of the bottleneck diagram. Elements draw in in document order.
+       ids are referenced by the puzzle JSON (reveal ops). class="reveal-show" = hidden until the reveal. -->
+  <g font-family="Inter, sans-serif" text-anchor="middle">
+    <g id="st-cut">
+      <rect x="3" y="3" width="244" height="207" fill="#ffffff" stroke="#0d1523" stroke-width="5"/>
+      <text x="125" y="62" font-size="42" fill="#5b6472">cutting</text>
+      <text x="125" y="148" font-size="80" font-weight="700" fill="#0d1523">60/h</text>
+    </g>
+    <g class="arrow"><line x1="257" y1="107" x2="296" y2="107" stroke="#0d1523" stroke-width="6"/><polygon points="294,91 318,107 294,123" fill="#0d1523"/></g>
+
+    <g id="st-sew">
+      <rect id="sew-box" x="328" y="3" width="244" height="207" fill="#ffffff" stroke="#0d1523" stroke-width="5"/>
+      <text id="sew-name" x="450" y="62" font-size="42" fill="#5b6472">sewing</text>
+      <text id="sew-rate" x="450" y="148" font-size="80" font-weight="700" fill="#0d1523">40/h</text>
+    </g>
+    <g class="arrow"><line x1="582" y1="107" x2="621" y2="107" stroke="#0d1523" stroke-width="6"/><polygon points="619,91 643,107 619,123" fill="#0d1523"/></g>
+
+    <g id="st-pack">
+      <rect x="653" y="3" width="244" height="207" fill="#ffffff" stroke="#0d1523" stroke-width="5"/>
+      <text x="775" y="62" font-size="42" fill="#5b6472">packing</text>
+      <text id="pack-rate" x="775" y="148" font-size="76" font-weight="700" fill="#0d1523">100/h</text>
+      <text id="pack-note" x="775" y="192" font-size="32" fill="#2960c7">was 50/h</text>
+    </g>
+    <g class="arrow"><line x1="775" y1="220" x2="775" y2="252" stroke="#0d1523" stroke-width="6"/><polygon points="759,250 775,274 791,250" fill="#0d1523"/></g>
+
+    <text x="728" y="322" font-size="40" fill="#5b6472" text-anchor="end">output</text>
+    <text id="out-val" x="744" y="326" font-size="64" font-weight="700" fill="#2960c7" text-anchor="start">?</text>
+
+    <text id="bn-label" class="reveal-show" x="450" y="262" font-size="42" font-weight="700" fill="#2960c7">bottleneck</text>
+  </g>
+</svg>

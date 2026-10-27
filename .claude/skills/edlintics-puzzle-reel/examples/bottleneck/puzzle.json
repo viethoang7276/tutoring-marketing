@@ -1,0 +1,25 @@
+{
+  "slug": "bottleneck",
+  "suffix": "",
+  "question": "A workshop cuts 60 shirts an hour, sews 40 and packs 50. If packing doubles to 100, what happens to *output*?",
+  "diagram": "diagram-v2.svg",
+  "options": ["Rises to 100", "Rises a little", "Stays the same", "Falls"],
+  "answer": "C",
+  "prompt_text": "Pause and think, then comment your answer",
+  "prompt_say": "Pause and think before the timer ends.",
+  "countdown": { "voice": 5, "novoice": 6 },
+  "reveal": [
+    { "sel": "#sew-box", "attr": { "fill": "#2960c7" } },
+    { "sel": "#sew-name", "attr": { "fill": "#ffffff" } },
+    { "sel": "#sew-rate", "attr": { "fill": "#ffffff" } },
+    { "sel": "#out-val", "text": "40/h" }
+  ],
+  "pulse": "#st-sew",
+  "explanation": [
+    { "text": "Output stays at *40 shirts* an hour, because sewing is still the slowest step" },
+    { "text": "Packing can handle 100, but sewing only sends it 40" },
+    { "text": "Speeding up anything other than the bottleneck adds no output", "style": "takeaway" }
+  ],
+  "end_text": "Follow Edlintics to learn business concepts interactively",
+  "end_say": "Follow Edlintics to learn business concepts interactively."
+}

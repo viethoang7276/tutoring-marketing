@@ -1,0 +1,164 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{--blue:#2960c7;--blue2:#467DE3;--ink:#0d1523;--grey:#5b6472}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;background:#fff;overflow:hidden}
+/* Safe band (v2, phone size): content x 80-960 (right ~120 px clear), y ~255-1250 (top UI above, buttons below) */
+.abs{position:absolute}
+#main{position:absolute;inset:0}
+.serif{font-family:'Source Serif 4',Georgia,serif}
+.k{color:var(--blue)}
+#q{left:80px;width:880px;top:248px;height:300px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:66px;line-height:1.13;color:var(--ink);text-wrap:balance}
+#diag{left:60px;top:596px;width:900px}
+#opts{left:84px;top:950px;width:560px;display:grid;grid-template-columns:1fr;row-gap:10px}
+.opt{display:flex;align-items:center;gap:22px;font:500 48px/1 Inter,sans-serif;color:var(--ink);height:56px}
+.opt .c{position:relative;width:60px;height:60px;border:4px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 32px/1 Inter,sans-serif;flex:none}
+#timer{left:676px;top:948px;width:260px;height:260px}
+#num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 140px/1 Inter,sans-serif;color:var(--ink);padding-top:6px}
+#prompt{left:80px;width:880px;top:1210px;text-align:center;font:600 38px/1.2 Inter,sans-serif;color:#2b3445}
+#ans{left:80px;width:880px;top:248px;height:300px}
+#ans p{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:62px;line-height:1.14;color:var(--ink);text-wrap:balance}
+#ans p.takeaway{color:var(--blue);font-weight:600}
+#logo{left:410px;top:1290px;width:220px;opacity:.8}
+#end{position:absolute;inset:0;opacity:0}
+#end img{position:absolute;left:170px;top:420px;width:700px}
+#end .t{position:absolute;left:80px;width:880px;top:690px;text-align:center;font-size:86px;line-height:1.12;font-weight:600;color:var(--ink);text-wrap:balance}
+#end .rule{position:absolute;left:430px;top:1030px;width:180px;height:10px;background:var(--blue2);border-radius:5px}
+.opt .c .ck{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;opacity:0}
+#handlayer{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+</style></head><body>
+<div id="main">
+  <div id="q" class="abs serif"></div>
+  <div id="diag" class="abs"></div>
+  <div id="opts" class="abs"></div>
+  <div id="timer" class="abs"><svg width="260" height="260" viewBox="0 0 260 260">
+    <circle cx="130" cy="130" r="116" fill="none" stroke="#e3e8f1" stroke-width="20"/>
+    <circle id="ring" cx="130" cy="130" r="116" fill="none" stroke="#2960c7" stroke-width="20" stroke-linecap="round" transform="rotate(-90 130 130)"/>
+  </svg><div id="num"></div></div>
+  <div id="prompt" class="abs"></div>
+  <div id="ans" class="abs serif"></div>
+  <img id="logo" class="abs" src="edlintics-logo.png">
+  <!-- tap hand: flat line-art pointing hand (drawn pointing up, fingertip at 44,2; mirrored and tilted 20 deg in render) -->
+  <svg id="handlayer" viewBox="0 0 1080 1920">
+    <circle id="ripple" cx="0" cy="0" r="0" fill="none" stroke="#2960c7" stroke-width="7" opacity="0"/>
+    <g id="hand" opacity="0" stroke="#0d1523" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="40" y="152" width="64" height="28" rx="4" fill="#2960c7"/>
+      <path fill="#ffffff" d="M30 96 L30 16 A14 14 0 0 1 58 16 L58 72 A9 9 0 0 1 76 74 A9 9 0 0 1 93 78 A8 8 0 0 1 108 84 L108 130 Q108 156 82 158 L52 158 Q30 156 24 136 L10 108 A10 10 0 0 1 26 96 L30 100 Z"/>
+      <path fill="none" d="M58 72 L58 98 M76 74 L76 96 M93 78 L93 96"/>
+    </g>
+  </svg>
+</div>
+<div id="end"><img src="edlintics-logo.png"><div class="t serif"></div><div class="rule"></div></div>
+<script>
+let T, optC = [], els = [], ops = [], showEls = [], pulseEl = null, pulseBox = null, optEls = [], ansEls = [];
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ramp = (t, a, b) => clamp((t - a) / (b - a));
+const ease = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const mark = s => esc(s).replace(/\*([^*]+)\*/g, '<span class="k">$1</span>');   // *word* = brand blue
+const hex = c => { c = c.replace('#', ''); if (c.length === 3) c = [...c].map(x => x + x).join(''); return [0, 2, 4].map(i => parseInt(c.substr(i, 2), 16)); };
+const mix = (a, b, p) => { const A = hex(a), B = hex(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * p)).join(',') + ')'; };
+const RING = 2 * Math.PI * 116;
+
+async function init() {
+  T = await (await fetch('timeline.json')).json();
+  $('#q').innerHTML = `<div>${mark(T.question)}</div>`;
+  $('#diag').innerHTML = T.diagram_svg;
+  const svg = $('#diag svg'); const vb = svg.viewBox.baseVal; svg.style.overflow = 'visible'; svg.setAttribute('width', 900); svg.setAttribute('height', 900 * vb.height / vb.width);
+  $('#opts').innerHTML = T.options.map((o, i) => `<div class="opt"><div class="c"><span class="l">${'ABCD'[i]}</span><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${esc(o)}</span></div>`).join('');
+  optEls = [...document.querySelectorAll('.opt')];
+  optC = optEls.map(o => { const r = o.querySelector('.c').getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
+  $('#prompt').textContent = T.prompt_text;
+  $('#ans').innerHTML = T.explanation.map(e => `<p class="${e.style || ''}"><span>${mark(e.text)}</span></p>`).join('');
+  ansEls = [...document.querySelectorAll('#ans p')];
+  $('#end .t').textContent = T.end_text;
+  await document.fonts.ready;
+  // Draw-in list: leaf shapes and texts in document order (answer-only elements excluded)
+  const leaves = [...svg.querySelectorAll('rect,line,polyline,path,circle,ellipse,polygon,text')];
+  showEls = [...svg.querySelectorAll('.reveal-show')];
+  const hidden = e => showEls.some(s => s === e || s.contains(e));
+  els = leaves.filter(e => !hidden(e)).map(e => {
+    const stroked = e.tagName !== 'text' && e.tagName !== 'polygon' && e.getAttribute('stroke') && e.getAttribute('stroke') !== 'none';
+    const len = stroked && e.getTotalLength ? e.getTotalLength() : 0;
+    if (len) e.style.strokeDasharray = len;
+    return { e, len };
+  });
+  ops = (T.reveal || []).map(o => {
+    const e = svg.querySelector(o.sel); if (!e) throw new Error('reveal selector not found: ' + o.sel);
+    const orig = {}; for (const k in (o.attr || {})) orig[k] = e.getAttribute(k) || '#000000';
+    return { ...o, e, orig, origText: e.textContent };
+  });
+  if (T.pulse) { pulseEl = svg.querySelector(T.pulse); const b = pulseEl.getBBox(); pulseBox = [b.x + b.width / 2, b.y + b.height / 2]; }
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  return T.dur;
+}
+
+function render(t) {
+  const R = T.reveal_t, P = ramp(t, R, R + 0.5), endP = ramp(t, T.end_t, T.end_t + 0.35);
+  $('#main').style.opacity = 1 - endP;
+  $('#q').style.opacity = ease(ramp(t, 0, 0.6)) * (1 - ramp(t, R, R + 0.3));
+  // diagram draw-in
+  const [d0, d1] = T.draw, n = els.length, step = n > 1 ? (d1 - d0 - 0.5) / (n - 1) : 0;
+  els.forEach(({ e, len }, i) => {
+    const p = ease(ramp(t, d0 + i * step, d0 + i * step + 0.5));
+    if (len) { e.style.strokeDashoffset = len * (1 - p); e.style.fillOpacity = p; }
+    else e.style.opacity = p;
+  });
+  // reveal: the same diagram changes
+  ops.forEach(o => {
+    for (const k in (o.attr || {})) o.e.setAttribute(k, mix(o.orig[k], o.attr[k], ease(P)));
+    if (o.text) { o.e.textContent = P < .5 ? o.origText : o.text; o.e.style.opacity = P === 0 ? '' : Math.abs(1 - 2 * P); }
+    if (o.hide) o.e.style.opacity = P === 0 ? '' : 1 - P;
+  });
+  showEls.forEach(e => e.style.opacity = ease(ramp(t, R + 0.25, R + 0.75)));
+  if (pulseEl) { const q = ramp(t, R + 0.05, R + 0.75), s = 1 + 0.07 * Math.sin(Math.PI * q);
+    pulseEl.setAttribute('transform', `translate(${pulseBox[0]} ${pulseBox[1]}) scale(${s}) translate(${-pulseBox[0]} ${-pulseBox[1]})`); }
+  // options
+  const oIn = ease(ramp(t, T.opt_t, T.opt_t + 0.5)), ci = 'ABCD'.indexOf(T.answer);
+  const F = T.tap_t ? ease(ramp(t, T.tap_t + 0.02, T.tap_t + 0.22)) : P;   // the tapped option fills blue with a check
+  optEls.forEach((o, i) => {
+    o.style.opacity = oIn * (i === ci ? 1 : 1 - 0.62 * P);
+    const c = o.querySelector('.c');
+    if (i === ci) { c.style.background = mix('#ffffff', '#2960c7', F); c.style.borderColor = mix('#0d1523', '#2960c7', F);
+      c.querySelector('.l').style.opacity = 1 - F; const ck = c.querySelector('.ck'); ck.style.opacity = F; ck.style.transform = `scale(${0.6 + 0.4 * F})`; }
+  });
+  if (T.tap_t && ci >= 0) renderHand(t, ci, R);
+  // countdown
+  const cd = T.countdown, CE = T.cd_end || R, tv = ease(ramp(t, T.prompt_t, T.prompt_t + 0.4)) * (1 - ramp(t, CE - 0.02, CE + 0.3));
+  $('#timer').style.opacity = tv; $('#prompt').style.opacity = tv;
+  const rem = clamp(cd.n - (t - cd.t0), 0, cd.n);
+  $('#ring').style.strokeDasharray = RING; $('#ring').style.strokeDashoffset = RING * (1 - rem / cd.n);
+  const num = Math.max(1, Math.ceil(rem - 1e-6)); $('#num').textContent = num;
+  const since = t >= cd.t0 ? (t - cd.t0) % 1 : 1, pop = 1 + 0.16 * (1 - ease(clamp(since / 0.25)));
+  $('#num').style.transform = `scale(${t >= cd.t0 && t < cd.t0 + cd.n ? pop : 1})`;
+  // explanation sentences, in sequence
+  ansEls.forEach((a, i) => {   // one sentence at a time in the top slot; each replaces the previous
+    const p = ease(ramp(t, T.ans_t[i], T.ans_t[i] + 0.3)), nx = T.ans_t[i + 1];
+    const o = nx === undefined ? 1 : 1 - ease(ramp(t, nx - 0.25, nx + 0.05));
+    a.style.opacity = p * o; a.style.transform = `translateY(${16 * (1 - p)}px)`; });
+  // end card, then a fade to white so the loop runs back into the opening frame (white, question fading in)
+  $('#end').style.opacity = ease(ramp(t, T.end_t + 0.15, T.end_t + 0.55)) * (1 - ease(ramp(t, T.dur - 0.4, T.dur)));
+  document.body.offsetHeight;
+}
+// Hand: comes up from below after the countdown, hovers over a decoy option, moves to the answer and taps its letter circle.
+// It points up (tilted 20 deg to the right) with the body below-left of the circle, so the option text stays readable
+function renderHand(t, ci, R) {
+  const C = T.cd_end, tp = T.tap_t, hand = $('#hand'), rip = $('#ripple');
+  const di = ci === 1 ? 0 : 1, tip = i => [optC[i][0] + 4, optC[i][1] + 8];
+  const A = tip(di), B = tip(ci), off = [A[0] - 40, 1520];
+  const p = ease(ramp(t, C + 0.05, C + 0.7));
+  let x = off[0] + (A[0] - off[0]) * p, y = off[1] + (A[1] - off[1]) * p;
+  const hv = ramp(t, C + 0.7, C + 1.05); x += 10 * Math.sin(Math.PI * hv); y -= 6 * Math.sin(Math.PI * hv);   // brief hover
+  const m = ease(ramp(t, C + 1.05, tp - 0.12)); x += (B[0] - A[0]) * m; y += (B[1] - A[1]) * m;
+  const ex = ease(ramp(t, R + 0.3, R + 0.75)); x -= 30 * ex; y += 320 * ex;
+  const press = 1 - 0.13 * Math.sin(Math.PI * ramp(t, tp - 0.12, tp + 0.18));
+  hand.setAttribute('transform', `translate(${x} ${y}) rotate(20) scale(${-0.85 * press} ${0.85 * press}) translate(-44 -2)`);
+  hand.setAttribute('opacity', ramp(t, C + 0.05, C + 0.3) * (1 - ex));
+  const q = ramp(t, tp, tp + 0.55);
+  rip.setAttribute('cx', optC[ci][0]); rip.setAttribute('cy', optC[ci][1]);
+  rip.setAttribute('r', 34 + 62 * ease(q)); rip.setAttribute('opacity', q > 0 && q < 1 ? 1 - q : 0);
+}
+window.init = init; window.render = render;
+</script></body></html>
