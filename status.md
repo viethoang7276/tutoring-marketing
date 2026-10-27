@@ -381,7 +381,7 @@ Any session can take over from here. Do these in order:
 - **YouTube:** the 429 cleared after advanced features were approved. All pending Posts are scheduled.
 - **Phone tasks for Hoang:** Instagram Stories for the 25 Oct posts.
 
-## Rules: current state (checked 26 Oct 2026; this list wins over older entries above)
+## Rules: current state (checked 27 Oct 2026; this list wins over older entries above)
 **Approvals and safety**
 - Show planned external writes before making them. Content, design and publishing approvals are separate; scheduling or posting needs Hoang's explicit go (an "approve" on the hub Review card counts as approval of the content and its proposed slot).
 - Act only as Edlintics, never as Hoang. Never type passwords. Stop on Instagram if it shows "Continue as hoang.vtrg" or a login page. Never Boost; never "Always share stories". No reshare or repost on Facebook or LinkedIn.
@@ -423,16 +423,24 @@ Any session can take over from here. Do these in order:
 - **TikTok:**
   - Uploads go through TikTok Studio (skill edlintics-tiktok-upload). Scheduled posts can't be edited, so they are re-posted, and the old one is deleted only after the new one is checked.
   - Scheduled posts carry NO location; live uploads get "IE Tower - IE University".
-  - **No self-likes from 26 Oct:** the likes reverted under the new-account limit, and a stray like hit another creator. Only save and first comment; never click a heart.
+  - **No self-likes from 26 Oct:** the likes reverted under the new-account limit. Only save and first comment on OUR posts; never click a heart on them. Likes on other creators' videos are fine (Hoang, 27 Oct): no undo or report needed, but always recognise which posts are ours (URL id and caption match the slot) before acting.
+  - **Studio first (27 Oct):** do engagement from TikTok Studio. `/tiktokstudio/comment/<id>` posts a top-level comment (insert the text by script, click send). Studio can't save, so check the profile Favourites tab and only open the single public post if the save is missing.
   - Reach is very low (0–1 views per post); judge it on 2 Nov.
 - **YouTube:**
   - After a post goes live: like it, save Shorts to "Edlintics saves", and post the first comment (pinned when pinFirstComment is set).
   - Scheduled Shorts are swapped by re-uploading.
   - A Content ID claim on Canva music is expected and harmless.
-- **Always mute (26 Oct):** on TikTok and YouTube, run the persistent muter (it mutes and pauses, and survives auto-advance) right after every page load. Never press keys on the page, close the tab when done, and check things in Studio pages where possible. Hoang may be using the laptop during runs.
+- **Always mute (26 Oct):** on TikTok and YouTube, run the persistent muter (it mutes and pauses, and survives auto-advance) right after every page load. Close the tab when done, and check things in Studio pages where possible. Hoang may be using the laptop during runs. The half-second of sound before the muter runs can only be fixed by Hoang's Chrome "Mute site" (suggested to him 27 Oct).
+- **No typing on TikTok or YouTube pages (27 Oct):** never use computer type or key actions there (on 26 Oct, 75 keystrokes landed on a stranger's video after auto-advance). Insert text with javascript_tool (`execCommand('insertText')`), check the URL before every click, click Post instead of pressing Enter.
 - **Threads:** the 25-scheduled-thread cap applies. The daily 09:07 VN run (cron fee9d397, session-only) adds pending posts using only the quiet-music files (music8/) and fixed images. Deskilling and the 29 Oct–1 Nov reels are pending.
 - **Instagram:** desktop can't share to a Story, so Stories are phone tasks for Hoang. Hide the like count after a post goes live. Scheduled reels can only have their caption edited, so a media change means recreating them.
 - **LinkedIn:** the edit dialog can change the text of scheduled posts but not their media. Use the open-and-check-before-delete order when recreating.
+
+**AI labels (research 27 Oct, `reports/Chat videos and AI labels.md`)**
+- The auto AI labels come from Canva: designs containing Canva AI or AI-generated media (the five-concepts Ledger clips) get a signed C2PA manifest ("Canva AI", compositeWithTrainedAlgorithmicMedia). The Kokoro-voiced explainer reels carry none. Proposed rule, waiting on Hoang: no Canva AI media in post designs, and scan every export before upload. Never strip a manifest from an AI file.
+- Platform rules: YouTube exempts fully animated video; TikTok (rules in force 24 Sep 2026) only requires labels for realistic-looking scenes or people; Meta names "realistic-sounding audio", so switch on "AI info" for Kokoro reels on Facebook, Instagram and Threads.
+- Labels don't change ranking per YouTube (and reportedly TikTok); the best study shows about 7% fewer likes per view.
+- Test H16 (AI label effect) is in perf/latest `tests`, not started; the plan is being simplified to Meta-only labels (waiting on Hoang).
 
 **Operations**
 - First-comment runs are one-shot session crons about 4 minutes after each slot. The 07:13 VN morning Performance refresh is cron 9ec74f4e. All crons are session-only and need recreating after a restart.
@@ -440,7 +448,9 @@ Any session can take over from here. Do these in order:
   - Instagram, X and Threads: comment, like, repost;
   - Facebook, LinkedIn and YouTube: comment, like;
   - TikTok: comment, save.
-- When Hoang says "pause", stop the Chrome agents and hold the crons until he says resume.
+- When Hoang says "pause", stop the Chrome agents and hold the crons until he says resume. Run Chrome agents one at a time (parallel ones collapse the tab group); queue a cron that fires while another run is using Chrome.
+- The hub page is v33, titled "Edlintics Marketing Hub" (27 Oct). Its Performance tab reads perf/latest live; data updates need no republish.
+- If the Chrome extension shows as not connected, Hoang restarts Chrome (worked 27 Oct).
 
 ## 26 Oct 2026: session log
 - **Morning refresh:** perf/latest was already fresh.
@@ -463,12 +473,34 @@ Any session can take over from here. Do these in order:
   - turning puzzles into short Instagram Reels (proposal).
 - **Correction to the 25 Oct entry above:** Hoang finally chose B, so the media WAS replaced on all 26 scheduled posts.
 
-## Next session: start here (26 Oct 2026)
-1. Run git pull, then read this file's "Rules: current state" and "26 Oct session log" sections.
+## 27 Oct 2026: session log
+- **First comments:** the 22:00 comic (2026-10-26-1600) resumed after Hoang's pause, checking first; the 00:00 puzzle (2026-10-26-1800) done, TikTok through Studio. Both complete on all 7 platforms (runs v2).
+- **TikTok incident:** on 26 Oct, keystrokes landed on a stranger's video after auto-advance. The no-typing rule and Studio-first engagement were added to the skills.
+- **Hub:** title fixed to "Edlintics Marketing Hub" (v33).
+- **AI-label research:** report `reports/Chat videos and AI labels.md` (notes in `research_notes/`). The labels come from Canva AI clips, not the voice.
+- **Chat-story reels:** Hoang's reference is @orbi_the_alien "Corporate Life in 2026" (a Slack-style chat with the mascot as a user, voice-free). Fictional characters are fine; no testimonials or outcome claims about Edlintics; layouts only, never real app names, logos, colours or sounds; drawn avatars.
+- **Video engine software (REQ-0004):** Hoang wants a REUSABLE video editor app, not one-off videos. The tutoring-web CTO session owns it, in `tutoring/video-engine-software/` (spec on branch spec/editor, `docs/specs/video-engine/`).
+  - Screens: Projects, Media library, Templates, Exports, and an Editor (preview, inspector, six-track timeline, Script and Agent tabs).
+  - One JSON project format with a schema, shared by the editor, the `ve` CLI and the MCP tools. Its own engine (no Remotion).
+  - Build order is editor-first; marketing's dates were dropped.
+  - Mockups: the CMO's template canvas https://claude.ai/artifact/1wEyHdXGe6fZBs84hqjA4j, the CTO's animated player https://claude.ai/artifact/CZqaU4vXCDBHTaZox6eHMs, and the CTO's editor mockup https://claude.ai/artifact/PRRu2xvr3Es2aEMFFBbdjZ.
+  - Marketing input sent: templates work-chat, then messenger, then assistant, then email; inserts are the file card, spreadsheet cell change, notification, end card and cursor with zoom; CLI needs, house-style lints, and a per-slot export folder with a manifest; Canva stays the last step. Music risk: Canva tracks can't be taken out of Canva.
+- **Hoang's open items:**
+  - approve the editor mockup;
+  - the chat panel crossing the right-hand button column (CMO recommends narrowing it);
+  - BOARD.md and root AGENTS.md entries for the engine;
+  - separate repo or folder; the export folder; the music folder;
+  - the "no Canva AI in posts" rule;
+  - simplifying H16 to Meta-only labels;
+  - plus every item still open from the 26 Oct log (covers ready, Instagram Stories including the comic and the 00:00 puzzle, the LinkedIn 25 Oct edit, the Facebook 25 Oct badge).
+
+## Next session: start here (27 Oct 2026)
+1. Run git pull, then read this file's "Rules: current state" and the 26 and 27 Oct session logs.
 2. **Recreate the session crons** (they die with the session). Times are Vietnam:
-   - **First-comment runs**, 4 minutes after every slot still ahead. Puzzles, five-concepts and comics go at 16:04, 19:04, 22:04 and 00:04. Reels go at 14:34 (accruals 27 Oct, break-even 28, salesperson 29, working capital 30, economics student 31, diminishing returns 1 Nov). Moravec is 27 Oct 18:04; deskilling is 28 Oct 18:04.
+   - **First-comment runs**, 4 minutes after every slot still ahead: puzzles, five-concepts and comics at 16:04, 19:04, 22:04 and 00:04; reels at 14:34 (accruals 27 Oct, break-even 28, salesperson 29, working capital 30, economics student 31, diminishing returns 1 Nov); Moravec 27 Oct 18:04; deskilling 28 Oct 18:04.
    - **Daily Threads backlog** at 09:07, using music8/ media only.
    - **Morning Performance refresh** at 07:13.
-   - Every run follows the mute rule and the TikTok no-like rule.
+   - Every run follows the mute rule, the no-typing rule, Studio-first TikTok, and no likes on our own TikTok posts. Run one Chrome agent at a time.
 3. Catch up on anything the hub tracker shows as missed, checking first so nothing is doubled.
-4. Ask Hoang about the open items in the 26 Oct log.
+4. Check messages from the tutoring-web CTO session about the video engine, and relay them to Hoang.
+5. Ask Hoang about the open items in the 27 Oct log.
