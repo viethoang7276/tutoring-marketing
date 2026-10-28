@@ -47,3 +47,4 @@ data/contacts/*
 
 # local text-to-speech tools and models
 tools/tts/
+tools/tts-chatterbox/

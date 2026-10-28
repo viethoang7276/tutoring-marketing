@@ -3,7 +3,7 @@
 The cross-session memory for this repo. Read after `session-start.md`. Update it at the end of any
 session that changes state (append to the session log; revise "Now" / "Next").
 
-_Last updated: 2026-10-24_
+_Last updated: 2026-10-28_
 
 ## Social posting engine: handover (read first, updated 2026-10-24; current rules: see "Rules: current state" at the end)
 
@@ -509,3 +509,25 @@ Any session can take over from here. Do these in order:
 3. Catch up on anything the hub tracker shows as missed, checking first so nothing is doubled.
 4. Check messages from the tutoring-web CTO session about the video engine, and relay them to Hoang.
 5. Ask Hoang about the open items in the 27 Oct log.
+
+## 28 Oct 2026: session log
+- **First comments done (all platforms, runs docs written):** def-break-even, 2026-10-28-1000 (R-squared), reel-def-deskilling (7 platforms), 2026-10-28-1300 five-concepts statistics (5 platforms). Hoang phone tasks: Instagram Stories for break-even, R-squared, deskilling and statistics; confirm the Facebook Stories
+- **Link rule (Hoang approved):** no UTM tags in first comments; plain edlintics.com, "link in bio" on Instagram/TikTok (`first_comment_igtt`). Tagged links only in bios and Story stickers. ga-H7 paused. REQ-0006 owned short links (`/go/<code>`) proposed to the CTO (b80e001)
+- **Waitlist:** final URL https://edlintics.com/en/waitlist, merged into development, NOT on prod yet. Do not publish bio links until the CTO confirms prod
+- **Puzzle reel layout v4** (Hoang: use the screen height): from the 2 Nov puzzles; 27 Oct-1 Nov reels keep v3 (cedbd62). New diagrams about 900x500-540
+- **Threads:** first-comment runs never open Threads Drafts (b95b685). Pending Hoang: R-squared thread is an unscheduled draft ("post 20:30" or "skip"); AI-skills caption shortened to 455 characters ("ok caption", Business topic, 30 Oct 18:00 VN)
+- **Hub v35:** Performance split into sub-tabs (Overview, Posts, Platforms and formats, Tests, Review and ideas) with charts; Schedule split into Calendar, First comments, Request a post. Page file scratchpad post-review.html (backup .v34.bak)
+- **Research:** `docs/research/2026-10-28-week45-inspiration.md` (6852aa8) plus section 6 "From Hoang's videos" (347b6a3). Top 5 for week 45: automation bias puzzle reel, Simpson's paradox puzzle reel (Dana and Eli), five checks on AI output (five concepts), skill compression definition reel, operating leverage diagram reel (confirm formula source). Check whether the Microsoft/CMU survey is the deskilling reel's study before reuse. Open decisions: election week (neutral fictional tariff explainer or skip), chat-story test, logged-in Chrome trend scan
+- **Hoang's inspiration videos (new rule, 84efeca + cb9abf8):** every shared video is logged in hub `trends` with a `direction` and `directionStatus` (waiting / pending / proven / dropped). A direction steers research only after our version is published AND beats our platform median views on 2+ platforms (3 days, confirmed at 7). Now proven: AI and business skills (Moravec Instagram 1,114 vs median 42), twist stories (sunk cost), animated diagrams (puzzle reels). Pending: deskilling (check 31 Oct). Waiting: career lists, chat stories. 8 trend docs in the hub
+- **Female voice blind test (in progress, free tools only; Hoang said no Vercel AI Gateway and no paid voices):**
+  - Chatterbox installed locally in `tools/tts-chatterbox/` (gitignored; uv venv Python 3.11, `setuptools<81` needed for the watermarker, HF cache in `.cache`). Render per sentence to avoid truncation; MPS, a few minutes per reel
+  - Samples in the scratchpad `voicetest/blind/Voice-A..E.mp3` (sent to Hoang). Answer key in `voicetest/answer-key.json` (seed 7281). Same 13 s working-capital script, loudness -16 LUFS
+  - The 5 options: Kokoro af_heart 1.08 (current); Kokoro 70% af_heart + 30% af_bella at 1.0 with EQ/de-ess/compression polish; Chatterbox default; Chatterbox expressive (exaggeration 0.75, cfg 0.35); Chatterbox cloned from the tuned Kokoro sample
+  - Waiting on Hoang's pick (best and worst). Then reveal the key, and if he picks a new voice, update `edlintics-explainer-reel` vo.py (and the puzzle-reel voice) and the explainer-reel-choices memory. If the scratchpad is gone, regenerate with the settings above
+
+## Next session: start here (28 Oct 2026)
+1. git pull, read "Rules: current state" and the 27 and 28 Oct logs
+2. Recreate session crons if the session restarted (they die with it), Vietnam times: first comments 4 min after each slot through 2 Nov 00:04 (puzzles/five-concepts/comics at 16:04, 19:04, 22:04, 00:04; reels at 14:34 on 29 Oct-1 Nov; reel-talks-ai-skills 30 Oct 18:06; reel-talks-finance-interview-terms 31 Oct 18:06); Threads backlog daily 09:07 (delete when nothing is pending); morning Performance refresh 07:13. One Chrome agent at a time
+3. Ask Hoang: voice blind-test result; R-squared Threads ("post 20:30"/"skip"); "ok caption" for AI-skills Threads; the three research decisions
+4. Before the next Thursday plan: check that it reads proven directions from hub `trends`; update deskilling directionStatus on 31 Oct from perf
+5. Check Instagram and TikTok bios have a link before relying on "link in bio"; prepare tagged waitlist bio links for Hoang only after the CTO confirms prod
