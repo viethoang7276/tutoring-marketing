@@ -79,6 +79,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - For groups with fewer than 3 posts, shrink the result toward the overall mean.
    - Simulated reviews never count.
 4. **Research** 40–60 leads across eight families: economics, accounting, finance, statistics, econometrics, operations, management and marketing.
+   - Start from the directions of Hoang's inspiration videos (hub `trends`, `addedBy` Hoang, last 4 weeks): 2 to 3 new leads per direction. See "Hoang's inspiration videos steer the research" below.
    - Use official, academic and textbook sources.
    - Record the source, access date and reuse rights.
    - Copy no question text or artwork from any source.
@@ -112,6 +113,15 @@ Every week (proposed: Wednesday, before planning) Claude scans Instagram in Hoan
 - **What to record per find** (hub `trends` collection): week, source account and post URL, format (tier list, matrix, top-10 list, puzzle, definition, this vs that, meme, other), topic, visible engagement (likes, comments, shares if shown), why it works in one line, and "our version": how Edlintics could cover the same idea with its own question, templates, voice and US dollars.
 - **Rules:** take the format and the topic, never the wording, artwork or data. No logos of other companies on our slides. Count engagement only as shown publicly; never estimate.
 - **Output:** 5 to 15 finds a week. The best 3 to 5 go into `requests` as ideas marked "from trend scan", so they enter the monthly plan through the benchmark and scoring like any other idea. New formats that keep appearing become template proposals.
+
+## Hoang's inspiration videos steer the research (added 28 Oct 2026)
+
+Hoang, 28 Oct 2026: the research must take in the videos he shares in chat, so that new ideas come from the same direction as well.
+- **Log every video the day Hoang shares it** in hub `trends`, with `addedBy: "Hoang <date>"`. Record the URL, format, topic, the engagement visible when seen, why it works, our version, a `status` of idea or used, and a `direction`. The direction is the broader lane the video points to, for example "AI and the future of business skills", "office-life chat stories that land a business concept" or "'looks right, but...' twist stories".
+- **Every research run starts from these directions.** That covers the Thursday plan (step 4), the weekly trend scan and any research agent. It reads the `trends` docs added by Hoang from the last 4 weeks and, for each direction, finds 2 to 3 new topics in the same lane. It also searches for similar posts and accounts that work now. It does not stop at the one video.
+- **The research report gets a section "From Hoang's videos"**, with one row per direction: the source video, the new ideas, and the format each would use.
+- **At least 2 posts a week come from these directions**, entered in `requests` as "from Hoang's videos". A single shared video still becomes its own version in the current week as before. The directions feed the weeks after that.
+- Take the format and the topic only, never the wording, artwork or data. Give no credit to the reference creator, and check every cited fact.
 
 ## Learning from change requests (added 24 Oct 2026)
 
