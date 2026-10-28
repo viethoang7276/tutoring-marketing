@@ -79,7 +79,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - For groups with fewer than 3 posts, shrink the result toward the overall mean.
    - Simulated reviews never count.
 4. **Research** 40–60 leads across eight families: economics, accounting, finance, statistics, econometrics, operations, management and marketing.
-   - Start from the directions of Hoang's inspiration videos (hub `trends`, `addedBy` Hoang, last 4 weeks): 2 to 3 new leads per direction. See "Hoang's inspiration videos steer the research" below.
+   - Start from the proven directions of Hoang's inspiration videos (hub `trends`, `addedBy` Hoang, `directionStatus: proven`): 2 to 3 new leads per direction. See "Hoang's inspiration videos steer the research" below.
    - Use official, academic and textbook sources.
    - Record the source, access date and reuse rights.
    - Copy no question text or artwork from any source.
@@ -118,9 +118,10 @@ Every week (proposed: Wednesday, before planning) Claude scans Instagram in Hoan
 
 Hoang, 28 Oct 2026: the research must take in the videos he shares in chat, so that new ideas come from the same direction as well.
 - **Log every video the day Hoang shares it** in hub `trends`, with `addedBy: "Hoang <date>"`. Record the URL, format, topic, the engagement visible when seen, why it works, our version, a `status` of idea or used, and a `direction`. The direction is the broader lane the video points to, for example "AI and the future of business skills", "office-life chat stories that land a business concept" or "'looks right, but...' twist stories".
-- **Every research run starts from these directions.** That covers the Thursday plan (step 4), the weekly trend scan and any research agent. It reads the `trends` docs added by Hoang from the last 4 weeks and, for each direction, finds 2 to 3 new topics in the same lane. It also searches for similar posts and accounts that work now. It does not stop at the one video.
+- **A direction steers research only once it is proven (Hoang, 28 Oct 2026: "only if it published and generate good views").** Our own version of the video has to be published, and it has to get good views: above our platform median (last 4 weeks of posts, from `perf/latest`) on at least 2 platforms, checked at 3 days and confirmed at 7 days. Until then, the video gets its one current-week version and nothing more. Record the state on the `trends` doc as `directionStatus`: `waiting` (not published), `pending` (published, under 3 days), `proven` (with the evidence numbers) or `dropped` (below median at 7 days). A dropped direction comes back only if a second version beats the median.
+- **Every research run starts from the proven directions.** That covers the Thursday plan (step 4), the weekly trend scan and any research agent. It reads the `trends` docs added by Hoang from the last 4 weeks and, for each direction, finds 2 to 3 new topics in the same lane. It also searches for similar posts and accounts that work now. It does not stop at the one video.
 - **The research report gets a section "From Hoang's videos"**, with one row per direction: the source video, the new ideas, and the format each would use.
-- **At least 2 posts a week come from these directions**, entered in `requests` as "from Hoang's videos". A single shared video still becomes its own version in the current week as before. The directions feed the weeks after that.
+- **At least 2 posts a week come from the proven directions** (when at least one exists), entered in `requests` as "from Hoang's videos". A single shared video still becomes its own version in the current week as before. The directions feed the weeks after that.
 - Take the format and the topic only, never the wording, artwork or data. Give no credit to the reference creator, and check every cited fact.
 
 ## Learning from change requests (added 24 Oct 2026)
