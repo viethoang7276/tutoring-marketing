@@ -30,7 +30,8 @@ Uses the explainer-reel tools: Kokoro `af_heart` at 1.08 in `tools/tts/.venv`, t
 `question` (with `*key*`), `diagram` (SVG in the question state, element ids for the reveal), `options` A-D, `answer`, `prompt_text` / `prompt_say`, `countdown` {voice, novoice}, `reveal` (list of `{sel, attr}` or `{sel, text}` changes), optional `pulse`, `explanation` (list of `{text, say?, style?}`), `end_text` / `end_say` (default end card: "Follow Edlintics to learn business concepts interactively")
 
 ## Rules
-- Layout: content from y ~250 to y 1250; the bottom ~670 px and right ~120 px are covered by platform buttons. Question 64-72 px, diagram ~900 px wide, options 48 px, explanation 60-64 px
+- Layout v4 (28 Oct 2026, Hoang: "use the height of the screen more"; applies from the 2 Nov puzzles, the 27 Oct-1 Nov reels keep v3): content from y ~190 to y 1560; only the bottom ~360 px (caption and username overlay) stays empty, and the right-hand buttons sit beside the options. Question 74 px in a 390 px block from y 190, diagram 1000 px wide from y 620, "Pause and think" line at y 1075, options 54 px with 72 px circles from y 1190, timer beside them at x 680, logo under the timer at y 1488, explanation 70 px in the question block
+- Diagrams: draw new puzzle diagrams taller, about 900x500-540 (viewBox), so the diagram fills the space down to the prompt line. The 27 Oct batch was 900x345, which leaves the frame looking flat
 - House rules: US dollars, full sentences, no exclamation points, no emoji, no full stop at the end of any line, brand blue #2960c7, ink #0d1523, white background
 - Diagram style follows the edlintics-puzzle-visuals skill
 - Sentences readable at 17 characters per second or slower

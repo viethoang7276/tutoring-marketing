@@ -4,23 +4,23 @@
 :root{--blue:#2960c7;--blue2:#467DE3;--ink:#0d1523;--grey:#5b6472}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;background:#fff;overflow:hidden}
-/* Safe band (v2, phone size): content x 80-960 (right ~120 px clear), y ~255-1250 (top UI above, buttons below) */
+/* Safe band (v4, 28 Oct 2026, Hoang: use more height): content x 60-960, y ~190-1560; bottom ~360 px left for the caption/username overlay, right buttons sit beside the options */
 .abs{position:absolute}
 #main{position:absolute;inset:0}
 .serif{font-family:'Source Serif 4',Georgia,serif}
 .k{color:var(--blue)}
-#q{left:80px;width:880px;top:248px;height:300px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:66px;line-height:1.13;color:var(--ink);text-wrap:balance}
-#diag{left:60px;top:596px;width:900px}
-#opts{left:84px;top:950px;width:560px;display:grid;grid-template-columns:1fr;row-gap:10px}
-.opt{display:flex;align-items:center;gap:22px;font:500 48px/1 Inter,sans-serif;color:var(--ink);height:56px}
-.opt .c{position:relative;width:60px;height:60px;border:4px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 32px/1 Inter,sans-serif;flex:none}
-#timer{left:676px;top:948px;width:260px;height:260px}
+#q{left:70px;width:900px;top:190px;height:390px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:74px;line-height:1.14;color:var(--ink);text-wrap:balance}
+#diag{left:40px;top:620px;width:1000px}
+#opts{left:70px;top:1190px;width:600px;display:grid;grid-template-columns:1fr;row-gap:22px}
+.opt{display:flex;align-items:center;gap:24px;font:500 54px/1 Inter,sans-serif;color:var(--ink);height:74px}
+.opt .c{position:relative;width:72px;height:72px;border:4px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 38px/1 Inter,sans-serif;flex:none}
+#timer{left:680px;top:1190px;width:260px;height:260px}
 #num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 140px/1 Inter,sans-serif;color:var(--ink);padding-top:6px}
-#prompt{left:80px;width:880px;top:1210px;text-align:center;font:600 38px/1.2 Inter,sans-serif;color:#2b3445}
-#ans{left:80px;width:880px;top:248px;height:300px}
-#ans p{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:62px;line-height:1.14;color:var(--ink);text-wrap:balance}
+#prompt{left:70px;width:900px;top:1075px;text-align:center;font:600 40px/1.2 Inter,sans-serif;color:#2b3445}
+#ans{left:70px;width:900px;top:190px;height:390px}
+#ans p{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:70px;line-height:1.15;color:var(--ink);text-wrap:balance}
 #ans p.takeaway{color:var(--blue);font-weight:600}
-#logo{left:410px;top:1290px;width:220px;opacity:.8}
+#logo{left:700px;top:1488px;width:220px;opacity:.8}
 #end{position:absolute;inset:0;opacity:0}
 #end img{position:absolute;left:170px;top:420px;width:700px}
 #end .t{position:absolute;left:80px;width:880px;top:690px;text-align:center;font-size:86px;line-height:1.12;font-weight:600;color:var(--ink);text-wrap:balance}
@@ -66,7 +66,7 @@ async function init() {
   T = await (await fetch('timeline.json')).json();
   $('#q').innerHTML = `<div>${mark(T.question)}</div>`;
   $('#diag').innerHTML = T.diagram_svg;
-  const svg = $('#diag svg'); const vb = svg.viewBox.baseVal; svg.style.overflow = 'visible'; svg.setAttribute('width', 900); svg.setAttribute('height', 900 * vb.height / vb.width);
+  const svg = $('#diag svg'); const vb = svg.viewBox.baseVal; svg.style.overflow = 'visible'; svg.setAttribute('width', 1000); svg.setAttribute('height', 1000 * vb.height / vb.width);
   $('#opts').innerHTML = T.options.map((o, i) => `<div class="opt"><div class="c"><span class="l">${'ABCD'[i]}</span><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${esc(o)}</span></div>`).join('');
   optEls = [...document.querySelectorAll('.opt')];
   optC = optEls.map(o => { const r = o.querySelector('.c').getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
@@ -147,7 +147,7 @@ function render(t) {
 function renderHand(t, ci, R) {
   const C = T.cd_end, tp = T.tap_t, hand = $('#hand'), rip = $('#ripple');
   const di = ci === 1 ? 0 : 1, tip = i => [optC[i][0] + 4, optC[i][1] + 8];
-  const A = tip(di), B = tip(ci), off = [A[0] - 40, 1520];
+  const A = tip(di), B = tip(ci), off = [A[0] - 40, 1800];
   const p = ease(ramp(t, C + 0.05, C + 0.7));
   let x = off[0] + (A[0] - off[0]) * p, y = off[1] + (A[1] - off[1]) * p;
   const hv = ramp(t, C + 0.7, C + 1.05); x += 10 * Math.sin(Math.PI * hv); y -= 6 * Math.sin(Math.PI * hv);   // brief hover
