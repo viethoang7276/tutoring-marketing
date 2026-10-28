@@ -74,7 +74,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
    - **Time:** `date` (YYYY-MM-DD), `time` and `time_madrid` (for example "08:30"), and `time_vietnam` (Madrid +6 in winter, so 08:30 becomes 14:30).
    - **Copy:** `caption`, `caption_x`, `first_comment`, `hashtags` and `maths_check`, from `meta`.
    - **Threads:** `threadsTopic`, `threadsTopicKind: "topic"`, `threadsTopicVariant` and `threadsReason`.
-   - **Link:** `utm.template` with `utm_content=<slot id>`.
+   - **Link:** no UTM tags in the first comment (28 Oct 2026). If `first_comment` mentions edlintics.com, write it plain and add `first_comment_igtt` (same text ending "link in bio") for Instagram and TikTok.
    - **Media:**
      - `videoUrl` and `posterUrl` (the `/_blob/` URLs) and `videoAssetId`;
      - `canva` (the design id);
