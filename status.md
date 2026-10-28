@@ -531,3 +531,8 @@ Any session can take over from here. Do these in order:
 3. Ask Hoang: voice blind-test result; R-squared Threads ("post 20:30"/"skip"); "ok caption" for AI-skills Threads; the three research decisions
 4. Before the next Thursday plan: check that it reads proven directions from hub `trends`; update deskilling directionStatus on 31 Oct from perf
 5. Check Instagram and TikTok bios have a link before relying on "link in bio"; prepare tagged waitlist bio links for Hoang only after the CTO confirms prod
+
+### 28 Oct 2026 (evening, 21:07 VN): session restart
+- Safeguard clean: every post live in the last 24 h has its first comment; no `changes` slots; runs/daily-2026-10-28 exists
+- Crons recreated (session-only): 22 one-shot first-comment runs from 28 Oct 22:04 to 2 Nov 00:04 VN (reels 14:34, talks reels 18:06, others +4 min); Threads backlog daily 09:07 (b668474a); morning refresh 07:13 (6101cbcc)
+- Still waiting on Hoang: voice blind-test pick, R-squared Threads ("post 20:30"/"skip"), "ok caption" for AI-skills Threads, the three research decisions (election week, chat-story test, logged-in trend scan)
