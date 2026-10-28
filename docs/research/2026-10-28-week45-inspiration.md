@@ -159,3 +159,103 @@ Check: 15,000 - 20,000 = -5,000. Correct. Zoe adds the cheaper-path option so th
 - University midterm and finals calendars; CPA exam windows; non-US exam calendars.
 - Hashtag and reach statistics for the week; the existing research in this folder covers earlier periods.
 - Whether the @orbi_the_alien "Corporate Life in 2026" series exists under that title. The account exists (217K followers shown); the series title did not turn up.
+
+## 6. From Hoang's videos (added 28 Oct 2026)
+
+Prepared for the Thursday plan for week 45 (2-8 Nov 2026), under "Hoang's inspiration videos steer the research" in docs/content-workflow/weekly-content-process.md. Evidence only; nothing here is a decision. Same method as above: public web search and public page fetches, no logins.
+
+Rules applied to every idea below: US dollars only, fictional people and companies only, no copied wording or artwork, no credit to the reference creator, neutral on politics, no tutoring pitch. Reference creators are named in this internal doc only so the CMO can trace the direction; they must not appear in any caption or visual.
+
+Already done and excluded: Moravec, deskilling, sunk cost, accruals, break-even, free rider, diminishing returns, working capital, R-squared, and the 20% discount and $12,000 deferred revenue chat stories. One overlap to watch: the Microsoft and Carnegie Mellon survey in 6.1 may be the same study as the deskilling reel of 28 Oct. I did not see that reel, so check before using it.
+
+How to read "public evidence": it is only what a public page displayed on 28 Oct 2026. No page showed like, view or save counts for the posts I could see, so I record none and estimate none. The 31.8K plays, 622 saves and 100K plays, 7.2K saves in the brief come from the hub log, not from my fetches.
+
+### 6.1 Direction 1: AI and the future of business skills
+
+Public evidence (28 Oct 2026)
+- Wall Street Prep, Instagram (28.3K followers shown), runs image graphics on AI and banking news; the Instagram page lists a 8 Sep 2026 post about UBS making AI proficiency a requirement for 2027 junior bankers. No counts shown. Source: https://www.instagram.com/wallstreetprep/
+- The UBS news itself: reported by the Financial Times in early September 2026 and covered at https://thenextweb.com/news/ubs-ai-skills-junior-bankers-2027-graduate-hiring and https://fstech.co.uk/fst/UBS_Makes_AI_Proficiency_A_Hiring_Requirement_For_Junior_Bankers.php. I did not read the FT piece; the requirement is described for the 2027 graduate and intern intake, and coverage disagrees on whether it reaches other roles
+- @andruyeung and @byjacobward: not retrievable by public fetch (the andruyeung page returned no content). I have only the hub log for these
+
+| # | New topic | Checkable facts and source | Our version (hook and format) |
+|---|---|---|---|
+| 1a | Automation bias: trusting the tool when it is wrong | Parasuraman and Manzey (2010), Human Factors 52(3), 381-410, DOI 10.1177/0018720810376055: automation bias produces omission and commission errors when decision aids are imperfect, and complacency appears in novices and experts (abstract; full text paywalled). https://journals.sagepub.com/doi/10.1177/0018720810376055 | Hook: "The tool said all 40 invoices matched. One was paid twice". Puzzle reel: fictional Harbor Supply's matching tool clears 40 invoices; one $4,800 duplicate sits among them; what should the controller check first? |
+| 1b | Skill compression: AI helps newer staff most | Brynjolfsson, Li and Raymond, "Generative AI at Work", Quarterly Journal of Economics 140(2), 889-942 (2025): study of 5,172 customer-support agents; average gain about 14-15% (14% in the 2023 NBER working paper, 15% in the published abstract); less experienced workers gained most, top performers little. The 34% novice figure is from the working paper only. https://www.nber.org/papers/w31161 and https://papers.ssrn.com/abstract=4426942. Limit: customer support, not finance, and not wages or hiring | Hook: "The newest hire gained the most from AI. So what is left for the experienced one to be paid for". Definition reel on "skill compression", with a fictional 2-person support desk shown as a before and after bar. Keep the claim to what the study measured |
+| 1c | The productivity J-curve: why new technology pays late | Brynjolfsson, Rock and Syverson (2021), American Economic Journal: Macroeconomics 13(1), 333-372, DOI 10.1257/mac.20180386: general purpose technologies need unmeasured complementary investments, so measured productivity dips first and overshoots later. https://www.aeaweb.org/doi/10.1257/mac.20180386 and https://www.nber.org/papers/w25148. I checked the abstract and summaries, not the full text | Hook: "You buy the tool in January and profit falls in March. That can be normal". Animated-diagram reel (also direction 5): fictional bakery buys a $30,000 ordering system, costs rise first, savings show up by month 9. Label the numbers as illustrative |
+
+Supporting hook, not a topic: the World Economic Forum Future of Jobs Report 2025 is cited by secondary sources as naming analytical thinking the top core skill (about 69-70% of employers) and expecting 39% of core skills to change by 2030. I could not open the WEF page (HTTP 403), so do not use these numbers until checked at https://www.weforum.org/publications/the-future-of-jobs-report-2025/
+
+### 6.2 Direction 2: saveable career lists for finance roles
+
+Public evidence (28 Oct 2026)
+- Chase Enloe, Instagram: verified, 75.6K followers shown; the bio pitches placement help into elite finance roles for students, which is a service we do not copy. The recent grid is mostly clips dated 26-27 Oct, with 3 carousels dated July and August. No counts shown. Source: https://www.instagram.com/chase_enloe/
+- General finance career guides exist in volume (for example https://corporatefinanceinstitute.com/resources/career/types-of-financial-analysts-careers/ and https://www.wallstreetcareers.com/blog/investment-banking-jobs-2026), but they are articles, not social posts. I found no public creator carousel with visible save counts
+- Caution for the list format: pay and hours claims in career guides are often anecdotal. Use the official numbers below
+
+| # | New topic | Checkable facts and source | Our version (hook and format) |
+|---|---|---|---|
+| 2a | Three desk roles side by side: financial analyst, accountant or auditor, budget analyst | US Bureau of Labor Statistics Occupational Outlook Handbook, median pay May 2025 and growth 2025-35 (fetched 28 Oct 2026): financial analysts $103,570, 7%; accountants and auditors $83,680, 5%; budget analysts $91,640, 2%; all three typically need a bachelor's degree. https://www.bls.gov/ooh/business-and-financial/financial-analysts.htm , https://www.bls.gov/ooh/business-and-financial/accountants-and-auditors.htm , https://www.bls.gov/ooh/business-and-financial/budget-analysts.htm . Medians are for all workers in the role, not starting pay | Hook: "Three finance jobs, three different questions you get paid to answer". Five-concepts or This vs That carousel, one slide per role with what it produces (a recommendation, a set of reliable accounts, a spending plan) and the BLS median and growth, dated |
+| 2b | Which finance paths need a licence | BLS accountants and auditors page: accountants who file reports with the SEC must be licensed CPAs; licensing is by state Board of Accountancy, with a national exam. https://www.bls.gov/ooh/business-and-financial/accountants-and-auditors.htm . Do not extend this to other roles without checking their BLS pages | Hook: "One finance path has a legal licence attached. The others do not, at least not by default". Saveable carousel checklist for accounting students: what the CPA route is and where state rules decide. Neutral to any exam body, no brand names in visuals |
+| 2c | What a financial analyst and a budget analyst each produce on a Monday | BLS descriptions: financial analysts study financial data and trends, forecast performance, examine statements and write recommendations; budget analysts prepare budget reports, monitor spending, combine department budgets and evaluate funding requests. Same BLS pages as 2a | Hook: "Same spreadsheet, different question: where to invest versus where to spend". Comic or chat story with Ledger in two desks, ending on one rule line. Uses fictional Brightwater Co |
+
+### 6.3 Direction 3: office-life chat stories that land a business concept
+
+Public evidence (28 Oct 2026)
+- @orbi_the_alien: account exists with 217K followers shown (checked earlier today, section 1.3 above); the "Corporate Life in 2026" series title was not found by search. No counts shown
+- Office content as a genre: Protein, 26 Feb 2026, https://www.protein.xyz/corporate-is-content-now/ , reports large office-satire tags on TikTok without exact figures
+- I found no public Slack-style chat story that teaches an accounting or finance concept. The lane looks open, which is also a risk: there is no public proof the format works for this topic. Treat the first one as a test, as in section 4
+- Scripts 1 to 5 in section 4 already cover accrual versus cash, depreciation, discount and margin, working capital and sunk cost. The two below are new
+
+| # | New topic | Checkable facts and source | Our version (hook and format) |
+|---|---|---|---|
+| 3a | Inventory write-down: the jackets that did not sell | IAS 2: "Inventories are measured at the lower of cost and net realisable value" (IFRS Foundation summary, fetched 28 Oct 2026). https://www.ifrs.org/issued-standards/list-of-standards/ias-2-inventories/ . Worked numbers (mine, checked): 500 jackets at cost $60; expected price $45 less $5 selling cost gives net realisable value $40; write down $20 a unit, $10,000 in total. US GAAP differs in detail for some methods; state "IFRS" on screen | Hook: "The jackets cost $60. They can only be sold for $40 net. The books must say so now". Chat story, channel #warehouse, fictional Northfield Outfitters: ops asks to keep them at $60 until the spring; finance explains lower of cost and net realisable value. On-screen rule: Stock is carried at cost or what it can fetch, whichever is lower |
+| 3b | Allowance for doubtful accounts: the invoice nobody expects to see paid | Textbook concept listed in OpenStax Principles of Financial Accounting, ch. 9 key terms: https://openstax.org/books/principles-financial-accounting/pages/9-key-terms . I could not fetch the chapter text, so confirm the aging method wording there before building. Worked numbers (mine, checked): current $40,000 at 1% = $400; 31-90 days $6,000 at 10% = $600; over 90 days $4,000 at 25% = $1,000; total receivables $50,000, allowance $2,000, net receivable $48,000 | Hook: "Sales say $50,000 is owed. Finance expects to collect $48,000". Chat story, channel #credit-control, fictional Harbor Ltd is 100 days late; sales argues the sale was booked, finance explains the allowance. On-screen rule: Expect the loss when you book the sale, not when the customer disappears |
+
+### 6.4 Direction 4: "Looks right, but..." twist stories that end in a named concept
+
+Public evidence (28 Oct 2026)
+- explained.by.vara, Instagram: 227K followers shown; bio lists Philosophy, Psychology, Science and History; two clips posted every day from 23 to 28 Oct, doodle and poster-style thumbnails. No counts shown. The page does not show clip titles, so I cannot confirm the Gettier reel from this fetch. Source: https://www.instagram.com/explained.by.vara/
+- No public business-finance account using the same hand-drawn twist format came up. Differentiator for us: money in every example, and the concept is a business-decision error
+
+| # | New topic | Checkable facts and source | Our version (hook and format) |
+|---|---|---|---|
+| 4a | Simpson's paradox | Bickel, Hammel and O'Connell, "Sex bias in graduate admissions: Data from Berkeley", Science 187(4175), 398-404 (1975): pooled rates pointed one way and department-level rates another because applicants were spread unevenly across departments. Summaries: https://www.refsmmat.com/posts/2016-05-08-simpsons-paradox-berkeley.html and https://stats.libretexts.org/Bookshelves/Applied_Statistics/Learning_Statistics_with_R_-_A_tutorial_for_Psychology_Students_and_other_Beginners_(Navarro)/01%3A_Why_Do_We_Learn_Statistics/1.02%3A_The_Cautionary_Tale_of_Simpsons_Paradox . Use only a sales example and do not mention the admissions case in the post, to stay neutral. Worked numbers (mine, checked): Dana closes 18 of 20 easy leads (90%) and 30 of 80 hard leads (37.5%), 48 of 100 overall; Eli closes 70 of 80 easy (87.5%) and 6 of 20 hard (30%), 76 of 100 overall; Dana is better in both groups and lower overall | Hook: "Dana beats Eli on easy leads and on hard leads. Eli still has the better total". Puzzle reel with two small tables and the question "who is the better closer"; answer names Simpson's paradox. The trap is new, not used in the last 4 weeks per section 4 and the log I have seen |
+| 4b | Winner's curse | Capen, Clapp and Campbell (1971), "Competitive Bidding in High-Risk Situations", Journal of Petroleum Technology 23(6), 641-653, the source usually credited for the term (Kagel and Levin encyclopedia entry, https://www.asc.ohio-state.edu/kagel.4/Encyclopedia_SS.pdf ; AAPG explainer, https://explorer.aapg.org/story/articleid/46487/-bid-winners-can-face-curse). Sources differ on the authors' employer, so do not name one. Worked numbers (mine, checked): five bidders estimate a warehouse lease's value at $0.8M, $0.9M, $1.0M, $1.1M and $1.3M; true value $1.0M; the highest estimate wins at $1.3M and loses $300,000 | Hook: "You won the bid. That may be the bad news". Twist story with hand-drawn style Ledger stills and on-screen text: five bids, one winner, the winner is the one who most overestimated. Definition reel works as the fallback format |
+| 4c | Goodhart's law (target distorts the measure) | Strathern (1997), "Improving ratings: audit in the British University system", European Review, is the source of the wording "when a measure becomes a target, it ceases to be a good measure"; Goodhart's 1975 remark is the origin of the idea; Wikipedia notes Campbell's law as a possible precedent. https://en.wikipedia.org/wiki/Goodhart%27s_law . I did not read the primary texts, so quote neither; paraphrase only | Hook: "The call centre hit its 4-minute target. Customers got worse service". Comic or twist story: fictional Alder Telecom pays agents a bonus for calls under 4 minutes, so agents end calls early and repeat calls rise. No figures claimed; state it as an illustration |
+
+### 6.5 Direction 5: animated-diagram explainers, one business idea in one picture
+
+Public evidence (28 Oct 2026)
+- Wall Street Prep, Instagram: image posts built around a single chart, for example a 14 Sep 2026 chart of the largest private equity firms by capital raised, credited on the page to PEI 300 (2026). No counts shown. https://www.instagram.com/wallstreetprep/
+- A third-party analytics page lists Casually Explained, an animated explainer channel, with about 4.2M subscribers and 531.5M total views; these are the analytics site's estimates, so treat them as unverified. https://outlierkit.com/channel/casuallyexplained
+- I could not fetch YouTube channel pages for Plain Bagel or Economics Explained (404 and empty result), so I cannot say what works on those channels this season
+
+| # | New topic | Checkable facts and source | Our version (hook and format) |
+|---|---|---|---|
+| 5a | Bullwhip effect | Lee, Padmanabhan and Whang, "The Bullwhip Effect in Supply Chains", Sloan Management Review, Spring 1997, 93-102; four causes: demand forecast updating, order batching, price fluctuation, rationing and shortage gaming; order variance grows upstream. https://sloanreview.mit.edu/article/understanding-the-bullwhip-effect-in-supply-chains/ (article page; I read summaries, not the full text) and the companion paper in Management Science 43(4), 546-558, https://ideas.repec.org/a/inm/ormnsc/v43y1997i4p546-558.html . Numbers below are illustrative, not data: shoppers' demand moves from 100 to 110 units a week (+10%), the store orders 130, the distributor orders 170, the factory builds 250 | Hook: "Shoppers asked for 10% more. The factory built 150% more". Animated-diagram reel: four boxes left to right, each arrow longer than the last, Ledger at the factory end. Label "illustrative numbers" on screen. Good Black Friday lead-in |
+| 5b | Operating leverage | Definition and formula (degree of operating leverage = contribution margin divided by operating income) in the UTS accounting open textbook, https://oer.pressbooks.pub/utsaccounting1/chapter/understanding-operating-leverage/ (page returned HTTP 403 to my fetch, so the formula comes from the search summary of that page; confirm before use). Worked numbers (mine, checked): sales $1,000,000, variable costs $200,000, fixed costs $600,000, operating income $200,000, contribution margin $800,000, degree 4. A 10% sales rise to $1,100,000 gives variable $220,000 and operating income $280,000, up 40% | Hook: "Sales up 10%. Profit up 40%. The same lever works downward". Animated-diagram reel: a seesaw with fixed costs as the heavy block; show the fall case too, sales down 10% to operating income $120,000, down 40% |
+| 5c | Rule of 72 and compounding | Rule of 72 estimates doubling time as 72 divided by the interest rate (Nasdaq glossary, https://www.nasdaq.com/glossary/r/rule-of-72 ; Investor.gov compound interest page, https://www.investor.gov/outreach/teachers/classroom-resources/what-compound-interest ). Worked numbers (mine, checked): at 6%, 72 / 6 = 12 years; $10,000 grows to about $20,122 in 12 years at 6% compounded annually, so the rule is close, not exact. The rule applies to compound growth only | Hook: "How long until $10,000 becomes $20,000. Divide 72 by the rate". Animated-diagram reel: a growth curve with a doubling marker at year 12, and a flat line for simple interest for contrast |
+
+### 6.6 Ranked top 5 for the week-45 plan (my proposal, not a decision)
+
+Ranked on source strength, how clearly the idea fits a format we can make now, and distance from topics already published. Picks 2, 3 and 4 come from directions 1 to 3.
+
+| Rank | Idea | Direction | Format | Why it ranks here |
+|---|---|---|---|---|
+| 1 | 4a Simpson's paradox: Dana and Eli | 4 | Puzzle reel | Numbers checked; one clear trap; a sourced named concept; fits the 10:00 puzzle slot |
+| 2 | 1a Automation bias: the invoice the tool cleared | 1 | Puzzle reel | Peer-reviewed source; keeps the AI-and-skills thread going after the 27 and 28 Oct reels without repeating either |
+| 3 | 3a Inventory write-down: the $60 jackets | 3 | Chat story | Official IFRS wording; checked numbers; slots into the Black Friday run-up and tests the new format on a topic with a standard source |
+| 4 | 2a Three desk roles on BLS figures | 2 | Five-concepts or This vs That carousel | Official, dated figures; saveable by design; no pay claims beyond BLS medians |
+| 5 | 5b Operating leverage seesaw | 5 | Animated-diagram reel | Checked numbers, both directions shown; the idea is one picture; confirm the formula source first |
+
+Runners-up if a slot opens: 4b winner's curse (strong hook, needs the twist-story format built), 5a bullwhip (best seasonal fit, illustrative numbers only), 1c J-curve (overlaps direction 5).
+
+### 6.7 What I did not investigate in this section
+
+- Post-level engagement for any reference video; no counts were visible on any page I could open, and I did not log in
+- The five source videos themselves, and the 27 and 28 Oct Edlintics reels, beyond what the brief states
+- Whether the Microsoft and Carnegie Mellon critical-thinking survey (319 knowledge workers, self-reported, cross-sectional; coverage at https://www.theregister.com/2025/02/11/microsoft_study_ai_critical_thinking/) was the basis of the 28 Oct deskilling reel; I left it out of the table for that reason
+- Primary texts for Goodhart (1975), Strathern (1997) and the full Parasuraman and Manzey paper; the WEF report page (HTTP 403)
+- Pay and outlook figures for investment banking and other roles outside the three BLS pages; I made no banking pay claims
+- Full-text checks of the OpenStax allowance chapter and the UTS operating leverage page
+- Politics: none of the ideas needs a position; 4a deliberately avoids the original admissions framing
