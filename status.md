@@ -398,7 +398,7 @@ Any session can take over from here. Do these in order:
 - No tutoring in organic posts; Hoang's face is never shown.
 - Never promise what we can't deliver. The 13:00 caption line is now "Comment 'Learn' and we will tell you first when the courses open" (26 Oct, option A; the old "free course" promise is gone from every scheduled post).
 - No reference-creator credit in public captions. Ideas from Hoang's references are paraphrased, fact-checked, and unverifiable claims dropped.
-- Captions carry no link. Links go in the first comment (the link-drop type) with UTM, and SOURCE is replaced with the platform name.
+- Captions carry no link. Links go in the first comment (link-drop type) as plain edlintics.com with no UTM tags; Instagram and TikTok say "link in bio" (`first_comment_igtt`). Tagged links only in bios and Story stickers (28 Oct)
 - First comments: 1–2 sentences, under 150 characters, ending with emojis, and one of 5 types (link drop, question, hashtag stash, bonus, pinned CTA), stored in `firstCommentType`. They never reveal a puzzle answer.
 - Every post proposes its Threads topic or community, with a reason. Threads posts carry no hashtags.
 
@@ -536,3 +536,12 @@ Any session can take over from here. Do these in order:
 - Safeguard clean: every post live in the last 24 h has its first comment; no `changes` slots; runs/daily-2026-10-28 exists
 - Crons recreated (session-only): 22 one-shot first-comment runs from 28 Oct 22:04 to 2 Nov 00:04 VN (reels 14:34, talks reels 18:06, others +4 min); Threads backlog daily 09:07 (b668474a); morning refresh 07:13 (6101cbcc)
 - Still waiting on Hoang: voice blind-test pick, R-squared Threads ("post 20:30"/"skip"), "ok caption" for AI-skills Threads, the three research decisions (election week, chat-story test, logged-in trend scan)
+
+## 29 Oct 2026: session log
+- **Catch-ups:** 00:04 puzzle first comments ran ~12 h late (Mac asleep), all 7 platforms done. The 28 Oct statistics five-concepts video's YouTube Short and TikTok had been skipped by the 13:00 run; done 29 Oct. Cause: runs `platforms` listed only 5 platforms; 18 upcoming runs docs now include yt and tt
+- **Metrics refresh (late, 12:35 VN):** perf/latest v16, runs/daily-2026-10-29. 28 Oct: 1,957 views across 6 posts (best deskilling reel 579, worst lookup comic 52). 7 days 7,243 (prev 4,702). Followers flat. H17 puzzle reels about 4.5x the image baseline on FB/IG; Threads topics median 4 vs 10 baseline. R-squared never went live on Threads
+- **Threads backlog:** the four 1 Nov slots were already scheduled 28 Oct; stale threadsTopicPending flags cleared. Only reel-talks-ai-skills is pending (waits on "ok caption")
+- **Voice round 2 (Hoang: all round-1 voices too flat):** directed delivery (per-clause rendering, punctuation pauses, `/` and `//` extra pauses, `*word*` emphasis). Files in `assets/renders/voicetest/round2/` (gitignored; listen.html, key answer-key-round2.json). Hoang picked F = Kokoro 70% af_heart + 30% af_bella, directed. He asked whether a paid model would be better; proposed a blind round 3 (ElevenLabs / OpenAI TTS vs F, under $1), waiting on his OK and his own API key in .env. Not yet applied to vo.py
+- **Week 45 plan:** the 07:59 scheduled task wrote an OUTDATED W45 plan to the Content Desk (two puzzles a day, euros, no reels/comics). Its instructions need updating. A planner wrote the current-format week to hub slots: 32 proposals (25 posts + 7 puzzle-reel cards), research in `docs/research/2026-10-29-week45-research-run.md`. Waiting on Hoang's review
+- **Early bird (Hoang: financial accounting course ready in about a week):** proposed a ~10-day plan (accounting-heavy W45 warm-up, waitlist CTA, "what's inside" post, open-day announcement, manual replies to "Learn" commenters). Blocked on: waitlist on prod, open date, offer terms, currency shown, course promos vs no-tutoring rule
+- **Stale rule text to fix:** the process doc puzzle captions still end "More puzzles at edlintics.com"; the carousel skill and Canva Definition template still say "free course"
