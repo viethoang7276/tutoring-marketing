@@ -117,6 +117,7 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 - **Sound-off rules (Hoang, 29 Oct 2026):** frame 1 is the hook (beat 1 opens fully drawn with its caption; no fade from blank, no logo intro), captions big and high-contrast, and nothing important in the Reels UI zones (bottom 20%, y over 1536, and the right 120 px). The ad layout keeps captions at y 300-520, the art at y 530-1310, the logo at y 1338 and the end card at y 330-1330, all inside the 4:5 safe area (y 285-1635)
 - **Ledger `tilt` rotates his arms with the body** (fixed 29 Oct 2026: a tilted body with untilted arms left a hand floating off the corner). `"anim": "wobble"` on an item (with optional `amp` degrees, default 4, and `hz`, default 1.1) sways it about its own feet from 0.2 s into the scene; used for the dizzy beat. Not a camera move
 - **Dizzy mood** has eye-sized spirals (readable on a phone) and the ring of stars; pair it with a small `tilt` and the wobble
+- **Ad end card box:** y 300-1360 with 36 px gaps and the term at 120 px (the reel card is y 330-1330), so term + key point + logo + cta pill + footnote fit without the flex column squashing the rule. Verified boxes for the tutoring ad: term y 307, rule 710, key point 756, logo 1038, cta 1160, footnote 1302
 
 ## Editable kit for Canva and CapCut (29 Oct 2026)
 Hoang assembles ads as layers, not as one flat MP4. After `make_reel.sh`, run

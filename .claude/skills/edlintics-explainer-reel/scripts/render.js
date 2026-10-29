@@ -30,6 +30,7 @@ const srv = http.createServer((q, r) => {
   const encode = (out, audio) => {
     const a = audio ? ['-i', audio] : [];
     const ff = spawn(FF, ['-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-', ...a,
+      '-vf', 'scale=in_range=pc:out_range=tv,format=yuv420p',   // same range conversion as build.sh, so clips match the preview
       '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', String(FPS),
       ...(audio ? ['-c:a', 'aac', '-ar', '48000', '-b:a', '160k'] : ['-an']), '-movflags', '+faststart', ...(audio ? ['-shortest'] : []), out], { stdio: ['pipe', 'ignore', 'pipe'] });
     let err = ''; ff.stderr.on('data', d => err = (err + d).slice(-2000));
@@ -62,7 +63,7 @@ const srv = http.createServer((q, r) => {
     const out = process.argv[3]; fs.mkdirSync(out, { recursive: true });
     for (const part of ['term', 'kp', 'rule', 'fn', 'logo', 'cta', 'all']) {
       const r = await p.evaluate(pt => window.cardPart(pt), part);
-      if (r.w < 10 || r.h < 10) continue;
+      if (r.w < 4 || r.h < 4) continue;
       await p.screenshot({ path: path.join(out, `endcard-${part}.png`), omitBackground: true, clip: { x: r.x, y: r.y, width: r.w, height: r.h } });
       console.log('part', part, JSON.stringify(r));
     }

@@ -24,13 +24,18 @@ body.talk #cap .k{background:none;color:#FFD45C;padding:0}
 body.talk #logo{top:262px;width:200px;opacity:0.8}
 /* ad layout (paid ads, 29 Oct 2026): caption band moved down into the central 4:5 safe area (y 285-1635) */
 body.ad #cap{top:300px;height:220px}
+/* ad end card: a taller box with smaller gaps so term + key point + logo + cta pill + footnote never overflow (an overflowing
+   flex column squashed the 10 px rule to nothing, 29 Oct 2026); children never shrink */
+body.ad #card{top:300px;height:1060px;gap:36px}
+body.ad #card .term{font-size:120px}
+#card>*{flex:none}
 #card .fn{font:600 30px/1.4 Inter,sans-serif;color:#475569;max-width:900px;display:none;white-space:pre-line}
 /* end-card CTA pill (ads, 29 Oct 2026): the "Start at edlintics.com" line as a button, so the CTA stays on screen with the card */
 #card .cta{display:none;font:800 46px/1 Inter,sans-serif;color:#FFFFFF;background:#467DE3;padding:30px 64px;border-radius:999px;letter-spacing:-0.01em;transform-origin:50% 50%}
 /* clean mode (29 Oct 2026, editable ads): art only, no captions, logo or end-card text; those become Canva/CapCut layers */
 body.clean #cap,body.clean #logo,body.clean #card{display:none !important}
 /* card parts (transparent PNG export of the end-card layers) */
-body.parts{background:transparent}body.parts #paper,body.parts #art,body.parts #stage>svg,body.parts #cap,body.parts #logo{display:none !important}
+html.parts,body.parts{background:transparent}body.parts #paper,body.parts #art,body.parts #stage>svg,body.parts #cap,body.parts #logo{display:none !important}
 body.parts #card{display:flex !important}
 </style></head><body>
 <div id="stage">
@@ -160,7 +165,7 @@ function render(t){
 }
 // end-card layers for the editable kit: show the finished card on a transparent page with only one part visible,
 // and return that part's box so the caller can screenshot it. part: term, kp, rule, fn, logo, all
-function cardPart(part){ document.body.classList.add('parts'); const b=D.beats[D.beats.length-1]; const card=document.getElementById('card');
+function cardPart(part){ document.body.classList.add('parts'); document.documentElement.classList.add('parts'); const b=D.beats[D.beats.length-1]; const card=document.getElementById('card');
   card.querySelector('.term').textContent=b.term||''; card.querySelector('.kp span').textContent=b.keypoint||'';
   const fn=card.querySelector('.fn'); fn.textContent=b.footnote||''; fn.style.display=b.footnote?'block':'none';
   const cta=card.querySelector('.cta'); cta.textContent=b.cta||''; cta.style.display=b.cta?'block':'none';
