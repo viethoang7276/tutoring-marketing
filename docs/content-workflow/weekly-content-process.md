@@ -95,6 +95,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - Concept carousels explain a concept behind that week's puzzles.
 7. **Write captions and first comments** for every post, following the rules below.
    Then run the **full-sentence check** on all slide text (see the benchmark gate) and rewrite any fragment before the plan goes out. Record it on each post as `text_check`.
+   Then run the **definition check** (see "Definition review" under Approvals) on every defined term and record it on each post as `definition_check`.
 8. **Write the plan to the desk.**
    - One week document: `weeks/<YYYY-Www>`, status `awaiting_approval`.
    - One post document per slot: `posts/<id>` (`2026W45-<day>-<HHMM>`). Each holds the question, answer, takeaway, explanation, assumptions, trap, visual brief, `caption`, `first_comment`, `hashtags`, sources, simulated review, maths check, score, `version: 1` and empty approvals.
@@ -146,6 +147,7 @@ Rules learned so far:
 - **Every video carousel gets music** from Canva's free library (24 Oct).
 - **Background music is very quiet (26 Oct 2026, Hoang):** in every video (explainer reels, five-concepts videos, video carousels), set the Canva music track Volume to 8 and keep the video or voice at 100. Check it before every export
 - **Titles name the field the post is about (29 Oct 2026, Hoang):** a title or cover line says the field or industry (finance, accounting, operations, marketing) instead of generic words such as "any", "your work" or "everything". "5 checks to run on any AI output" became "5 checks for AI output in finance" (2 Nov five-concepts post). Make the examples and the caption hook match the named field
+- **Every definition is checked online before Hoang sees it (29 Oct 2026, Hoang):** run the `definition-reviewer` agent on every defined term, and record its sources with the post. An end card shows a real definition, never only a takeaway (30 Oct compounding reel). See "Definition review" under Approvals
 - **Stories:** every post is shared to the Facebook Story (when scheduling) and to the Instagram Story (with the first comment). Do it by hand each time, never with an automatic "always share" setting (Hoang, 24 Oct; this keeps Stories despite 0 views so far).
 
 ## Currency
@@ -214,6 +216,7 @@ General rules:
 ## After Thursday approval
 
 - **Before building,** run the full-sentence check again on every line that will appear on a slide.
+- **Before building,** run the `definition-reviewer` on the script or slide text again if any definition changed since the content check.
 - **Once content is approved,** Hoang says "build the week". Designs are built from template copies (Canva or Claude Design), with graphics reused from the brand graphics catalog first. Save each Canva draft straight away and file it in the Social media posts folder, so Hoang can open and fix it in Canva (agreed 23 Oct 2026). Design approval still happens on the hub page; a rejected design is deleted in Canva.
 - **Once the design is approved,** Hoang approves the time. Nothing is posted while publishing is disabled. Once scheduling is authorised, the caption goes with the post and the first comment is posted right after it goes live, together with a self-like and a self-repost.
 - **7 days after a post goes live,** Hoang enters its results, and the next Thursday run learns from them.
@@ -221,3 +224,12 @@ General rules:
 ## Approvals
 
 Content, design and time are approved separately. Each approval is tied to a fingerprint of exactly what was approved. Any change to wording (caption and first comment included), visual or time clears that approval.
+
+### Definition review (Hoang, 29 Oct 2026)
+
+"On all the definitions there will be an agent to review with online data." Every definition in our content is checked by the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) **before Hoang sees the post**. That covers definition carousels (cover, page 2 and every key-term page), definition, life-of, highlighter and Ledger-talks reels (the definition or concept beat and the end card `term` and `keypoint`), five-concepts videos, This vs That cards, puzzle explanations that state a definition, and captions or first comments that define a term.
+
+- The reviewer checks each term against at least 2 reputable online sources (Investopedia, CFI, IFRS/FASB, central banks, regulators such as SEC Investor.gov, university or textbook pages), checks that it is a real definition and not a takeaway or an example, checks that the simplification is not misleading, and recomputes the example numbers. It returns PASS or FIX per term with a corrected wording and the source URLs.
+- The reviewer never edits. The owning role revises and the reviewer runs again until every term passes.
+- **Record the sources with the post:** the URLs go in the slot or post `sources`, and the result goes in `definition_check` (date, verdict per term, URLs). A post without a passing `definition_check` is not ready for review.
+- The end card shows the term and a real definition or a key point that follows one. A takeaway alone ("Most of the growth comes late") is not a definition. This started with the 30 Oct compounding reel.

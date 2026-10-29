@@ -27,6 +27,7 @@ Reference build: `examples/compounding/` (`make_sheet.py` → `sheet.svg`, `scri
    - `ledger` at the top level: `x`, `floor`, `s`, `outfit`, `start` (`arm`, `mood`, `coin`), `pile` (`stacks` x positions, `weights`, `max` coins at the top of the curve, `curve`, `y0`/`y1` = the $0 and top lines) and `end` (`arm`, `mood` on the end card). See `examples/compounding/script.json`
    - `endcard`: `term`, `keypoint`, `follow` (no full stop at the end) and `say` (what the voice reads)
    - 80-95 spoken words in total give 33-38 s
+3b. **Definition check (Hoang, 29 Oct 2026):** before step 4, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json` and the sheet text: every beat that says what a term is, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card shows a real definition (for compounding: earning returns on earlier returns, not only on the money put in), never only a takeaway such as "Most of the growth comes late". Put the source URLs in the slot `sources` and the result in `definition_check`
 4. **Quick check:** `STILLS_ONLY=1 .claude/skills/edlintics-highlighter-reel/scripts/build.sh examples/<slug>/script.json <workdir>`. Open `<workdir>/<slug>-contact-sheet.png` (one still just after each highlight)
 5. **Full build:** the same command without `STILLS_ONLY`. It ends with `CHECK OK` (1080x1920, audio, length, under 10 MB)
 5b. **Ledger overlap check:** `TIMELINE=<workdir>/timeline.json NODE_PATH=.claude/skills/edlintics-explainer-reel/scripts/node_modules node .claude/skills/edlintics-highlighter-reel/scripts/overlap.cjs 24`. It must end with `OVERLAP OK`: in no frame may Ledger or a coin touch any sheet text, the curve, the hand or the caption band. Then look at the reel at 1 fps yourself. (The explainer engine's `cutcheck.py` does not apply: this format is one continuous shot with no cuts)
@@ -35,6 +36,7 @@ Reference build: `examples/compounding/` (`make_sheet.py` → `sheet.svg`, `scri
 8. **Hub card:** a `slots` proposal like `reel-compounding-2026-10-30` (format `highlighter-reel`)
 
 ## Checklist (look at every still, every build)
+- The `definition-reviewer` passed every term (step 3b), and the end card states a real definition
 - The highlight lands on the right label, and the label is still readable under it
 - The hand keeps its size and shape, and never covers the label being highlighted
 - Ledger never covers a number, a label, the curve or a caption, and his acting matches the line (coin drops on the deposit words, pointing on the key line, pleased at the end)

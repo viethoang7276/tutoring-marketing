@@ -36,6 +36,7 @@ description: Make one "Ledger talks" reel, Edlintics' face-free version of the c
    - **Voice:** full sentences, US dollars spelled out, about 80-105 words in total (validator target; 25-36 s at speed 1.12). Keep each beat to 12 words or fewer.
    - **Caption chunks:** **1-3 words** each, one `key` per beat, no full stop.
    - **End card:** `term` is the idea's name or the list title; `keypoint` is 4-12 words with no full stop; the voice says the term.
+   - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the any beat that says what a term is or means, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.
 3. **Scenes:** every scene uses `bg: "campus"` and Ledger at x 540, y 1470, s 2.4, `mood: "talk"`, `arm: "mic"`, outfit `casual` (or the outfit that fits the speaker).
    - **Vary the left arm (`larm`) each beat** for natural gestures: `open_l` (explaining), `point_l` (pointing), `up_l` (an idea or number one), `shrug_l` (a surprise), `down`.
    - **Optional props:** one small prop per scene at x 800, y 860-880, s 0.45-0.8 (beside his head, top right): `laptop`, `books`, `check`, `speech`, `invoice` (stamp), `price_tag`, `chart`. No other props: they get cut off.

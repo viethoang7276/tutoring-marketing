@@ -53,6 +53,7 @@ In Canva the template has a single idea page and the CTA at the end, so:
 ### Copy rules
 - Short sentences, everyday words, one key term per page: a one-sentence definition, then a dollar example.
 - Examples use real numbers. Check the arithmetic.
+- **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on the slide text: the cover and page 2 definition, every key-term page (body and example), the This vs That rules and examples, and any definition in the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. Record the source URLs in the post `sources` and the result in `definition_check`.
 - Pick the 5 key terms a student or manager meets alongside the concept, ordered so each builds on the last (for NPV: cash flow, present value, discount rate, accounting profit, NPV rule).
 
 ## This vs That format: 3 pages

@@ -44,6 +44,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
      - one `key` per beat;
      - no full stop at the end.
    - **Totals:** about 100-115 words, 9-13 beats, and 12 words or fewer per beat.
+   - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the `concept` beat, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.
 3. **Compose the scenes.** Use presets only (`$PY $E/scene_lib.py --list`).
    - **Dress Ledger for the role** with `outfit`:
      - `suit` for an accountant, analyst or manager;

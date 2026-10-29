@@ -35,6 +35,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
      - `"text"` is "<Term>. <Key point as a sentence>.";
      - the voice must say the term.
    - **Totals:** about 100-115 words, 9-13 beats, and 2-4 s of voice per beat (12 words or fewer).
+   - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the `definition` beat, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.
 3. **Compose the scenes.** Each scene is `{"bg", "items": [...]}` (an optional `"frame"`), built from presets only. Never write SVG.
    - Run `$PY $E/scene_lib.py --list` to see every preset and option.
    - **Ledger:** `{"p": "ledger", "id": "led", "x": 540, "y": 1470, "s": 2.2, "mood": "smile", "arm": "down", "outfit": "suit"}`. (x, y) is between his feet, and the ground is at y 1480. Use `"flip": true` to make him face left.
