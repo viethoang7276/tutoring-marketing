@@ -38,3 +38,6 @@ Uses the explainer-reel tools: Kokoro `af_heart` at 1.08 in `tools/tts/.venv`, t
 - No AI images or clips. The Kokoro voice means Meta "AI info" may be needed (test H16)
 - The first comment never reveals the answer (the reel itself does)
 - Check the contact sheet at phone width before showing Hoang
+
+## Shell rule: never let `$` amounts expand
+When a shell command writes captions, JSON or hub docs that contain dollar amounts, quote the heredoc (`<<'EOF'`) and pass paths as arguments or env vars, or write the JSON from a file. An unquoted heredoc on 27 Oct turned "$3,000" into ",000" in two scheduled puzzle reels (found 29 Oct)
