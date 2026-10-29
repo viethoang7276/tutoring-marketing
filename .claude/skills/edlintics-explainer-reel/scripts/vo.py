@@ -6,6 +6,7 @@
 import json, re, sys, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 d = sys.argv[1]; speed = float(sys.argv[2]) if len(sys.argv) > 2 else 1.08; gap = float(sys.argv[3]) if len(sys.argv) > 3 else 0.2
+tail = float(sys.argv[4]) if len(sys.argv) > 4 else 0.5   # silence after the last line (the end card stays up this long after the voice)
 import os
 ELEVEN = os.environ.get("TTS_ENGINE", "eleven") == "eleven"  # ElevenLabs v3 by default (Hoang, 29 Oct 2026); TTS_ENGINE=kokoro for the old voice
 if ELEVEN:
@@ -29,7 +30,7 @@ for b in beats:
     ws = [w(c["text"]) for c in b.get("chunks", [])]; tot = sum(ws) or 1; acc = 0
     for c, x in zip(b.get("chunks", []), ws): c["t"] = round(t + dur * acc / tot - 0.08, 3); acc += x
     out.append(a); t += dur; out.append(np.zeros(int(gap * sr), dtype=np.float32)); t += gap
-out.append(np.zeros(int(0.5 * sr), dtype=np.float32)); t += 0.5
+out.append(np.zeros(int(tail * sr), dtype=np.float32)); t += tail
 sf.write(d + "/voiceover.wav", np.concatenate(out), sr)
 json.dump({"duration": round(t, 2), "speed": speed, "beats": beats}, open(d + "/timing.json", "w"), indent=1)
 print("duration", round(t, 2), [b["start"] for b in beats])

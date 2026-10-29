@@ -25,6 +25,13 @@ body.talk #logo{top:262px;width:200px;opacity:0.8}
 /* ad layout (paid ads, 29 Oct 2026): caption band moved down into the central 4:5 safe area (y 285-1635) */
 body.ad #cap{top:300px;height:220px}
 #card .fn{font:600 30px/1.4 Inter,sans-serif;color:#475569;max-width:900px;display:none;white-space:pre-line}
+/* end-card CTA pill (ads, 29 Oct 2026): the "Start at edlintics.com" line as a button, so the CTA stays on screen with the card */
+#card .cta{display:none;font:800 46px/1 Inter,sans-serif;color:#FFFFFF;background:#467DE3;padding:30px 64px;border-radius:999px;letter-spacing:-0.01em;transform-origin:50% 50%}
+/* clean mode (29 Oct 2026, editable ads): art only, no captions, logo or end-card text; those become Canva/CapCut layers */
+body.clean #cap,body.clean #logo,body.clean #card{display:none !important}
+/* card parts (transparent PNG export of the end-card layers) */
+body.parts{background:transparent}body.parts #paper,body.parts #art,body.parts #stage>svg,body.parts #cap,body.parts #logo{display:none !important}
+body.parts #card{display:flex !important}
 </style></head><body>
 <div id="stage">
 <svg id="paper" width="1080" height="1920" viewBox="0 0 1080 1920">
@@ -65,7 +72,7 @@ body.ad #cap{top:300px;height:220px}
 </svg>
 <div id="cap"><div class="c"></div></div>
 <img id="logo" src="logo/edlintics-logo.png">
-<div id="card"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><img src="logo/edlintics-logo.png"><div class="fn"></div></div>
+<div id="card"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><img src="logo/edlintics-logo.png"><div class="cta"></div><div class="fn"></div></div>
 </div>
 <script>
 // Beat-based renderer, NO camera moves (Hoang, 25 Oct 2026): each beat shows its scene as one steady frame
@@ -78,6 +85,7 @@ let BX=40, BW=1000, BY=530, BH=780;
 const artBody=document.getElementById('artBody'), capC=document.querySelector('#cap .c');
 async function init(){ D=await (await fetch('scenes.json')).json(); await document.fonts.ready;
   if(D.layout==='ad') document.body.classList.add('ad');
+  if(D.clean) document.body.classList.add('clean');
   if(D.layout==='talk'){ TALK=true; document.body.classList.add('talk'); BX=0; BW=1080; BY=0; BH=1920; }
   return D.duration; }
 const clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>1-Math.pow(1-x,3), mix=(a,b,p)=>a.map((v,i)=>v+(b[i]-v)*p);
@@ -91,7 +99,8 @@ function load(img){
   els.forEach((e,k)=>{ const st=e.getAttribute('stroke'), dashed=e.getAttribute('stroke-dasharray');
     let L=0; try{L=e.getTotalLength();}catch(_){}
     e._L=L; e._draw=st&&st!=='none'&&!dashed&&L>0; e._fo=parseFloat(e.getAttribute('fill-opacity')||'1');
-    e._t0=0.32*(k/n); e._dur=Math.min(0.2,0.07+L/4000); if(e._draw) e.setAttribute('stroke-dasharray',`${L} ${L}`); });
+    const AD=D.layout==='ad';   // ad (29 Oct 2026): everything is drawn by ~0.35 s so a 2 s hook never shows an empty scene
+    e._t0=(AD?0.18:0.32)*(k/n); e._dur=Math.min(AD?0.15:0.2,0.07+L/4000); if(e._draw) e.setAttribute('stroke-dasharray',`${L} ${L}`); });
 }
 function fit(r){ const s=Math.min(BW/r[2],BH/r[3]); return {s,cx:r[0]+r[2]/2,cy:r[1]+r[3]/2}; }
 // "auto" frame (the default): fit the drawn subject (the .content group, not the background) so it fills
@@ -116,6 +125,7 @@ function render(t){
     const term=card.querySelector('.term'), kp=card.querySelector('.kp span');
     if(term.textContent!==b.term){ term.textContent=b.term; kp.textContent=b.keypoint; }
     const fn=card.querySelector('.fn'); if(b.footnote){ fn.textContent=b.footnote; fn.style.display='block'; fn.style.opacity=clamp((ct-0.6)/0.3); }
+    const cta=card.querySelector('.cta'); if(b.cta){ cta.textContent=b.cta; cta.style.display='block'; cta.style.opacity=clamp((ct-0.7)/0.15); cta.style.transform=`scale(${0.9+0.1*back(clamp((ct-0.7)/0.3))})`; }
     term.style.opacity=clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;
     card.querySelector('.kp').style.opacity=clamp((ct-0.35)/0.2); kp.style.setProperty('--w',(ease(clamp((ct-0.6)/0.5))*100)+'%');
     return;
@@ -130,20 +140,34 @@ function render(t){
     if(el._draw) el.setAttribute('stroke-dashoffset',String(el._L*(1-p)));
     const pf=clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));
     if(!el._draw) el.setAttribute('stroke-opacity',String(p)); }
+  // item animation (anim "wobble"): a small sway about the item's own feet, +-amp degrees at hz; no camera move
+  artBody.querySelectorAll('[data-anim="wobble"]').forEach(g=>{ const A=+g.dataset.amp, H=+g.dataset.hz, on=clamp((sceneT-0.2)/0.5);
+    g.setAttribute('transform',`rotate(${(A*on*Math.sin(2*Math.PI*H*Math.max(0,sceneT-0.2))).toFixed(2)} ${g.dataset.ax} ${g.dataset.ay})`); });
   // steady frame: no push-in, pan or reframe
   const F=(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
   document.getElementById('cam').setAttribute('transform',`translate(${BX+BW/2} ${BY+BH/2}) scale(${F.s}) translate(${-F.cx} ${-F.cy})`);
   document.getElementById('pop').setAttribute('transform','');
-  art.style.opacity=newScene?clamp(sceneT/0.15):1;
+  art.style.opacity=newScene?clamp((sceneT+1/24)/0.15):1;   // +1 frame: the first frame of a cut is never blank paper
   if(TALK){ const on=(D.env||[])[Math.floor(t*12)]===1;
     artBody.querySelectorAll('.mo').forEach(e=>e.style.display=on?'inline':'none'); artBody.querySelectorAll('.mc').forEach(e=>e.style.display=on?'none':'inline'); }
   // captions: current chunk of the current beat
   let c=b.chunks[0], ci=0; b.chunks.forEach((x,k)=>{ if(t>=x.t||k===0) {c=x; ci=k;} });
   const key=c.key||'', txt=c.text, html=key&&txt.includes(key)?txt.replace(key,`<span class="k">${key}</span>`):txt;
   if(capC.dataset.v!==txt){ capC.innerHTML=html; capC.dataset.v=txt; capC._t=Math.max(0,c.t); }
-  const ct=t-capC._t; capC.style.transform=`scale(${0.88+0.12*back(clamp(ct/0.16))})`; capC.style.opacity=(i===0&&ci===0)?1:clamp(ct/0.06);
+  const ct=t-capC._t; capC.style.transform=`scale(${0.88+0.12*back(clamp(ct/0.16))})`; capC.style.opacity=(i===0&&ci===0)?1:clamp((ct+1/24)/0.06);
   if(i===0&&ci===0) capC.style.transform='scale(1)';
   const k=capC.querySelector('.k'); if(k) k.style.setProperty('--w',(ease(clamp((ct-0.08)/0.28))*100)+'%');
 }
-window.init=init; window.render=render;
+// end-card layers for the editable kit: show the finished card on a transparent page with only one part visible,
+// and return that part's box so the caller can screenshot it. part: term, kp, rule, fn, logo, all
+function cardPart(part){ document.body.classList.add('parts'); const b=D.beats[D.beats.length-1]; const card=document.getElementById('card');
+  card.querySelector('.term').textContent=b.term||''; card.querySelector('.kp span').textContent=b.keypoint||'';
+  const fn=card.querySelector('.fn'); fn.textContent=b.footnote||''; fn.style.display=b.footnote?'block':'none';
+  const cta=card.querySelector('.cta'); cta.textContent=b.cta||''; cta.style.display=b.cta?'block':'none';
+  card.querySelector('.kp span').style.setProperty('--w','100%');
+  const map={term:'.term',kp:'.kp',rule:'.rule',fn:'.fn',logo:'img',cta:'.cta'};
+  [...card.children].forEach(e=>{ e.style.opacity=1; e.style.transform='none'; e.style.visibility=(part==='all'||e.matches(map[part]))?'visible':'hidden'; });
+  const r=(part==='all'?card:card.querySelector(map[part])).getBoundingClientRect();
+  return {x:Math.floor(r.x)-4,y:Math.floor(r.y)-4,w:Math.ceil(r.width)+8,h:Math.ceil(r.height)+8}; }
+window.init=init; window.render=render; window.cardPart=cardPart;
 </script></body></html>

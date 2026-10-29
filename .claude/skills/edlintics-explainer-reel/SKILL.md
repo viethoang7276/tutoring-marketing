@@ -36,6 +36,7 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 | `make_scenes_json.py` | Packs the art, beats and end card into `<work>/scenes.json` |
 | `render.html`, `render.js`, `build.sh` | The headless Chrome renderer at 24 fps, plus the H.264 encode, the voice-only cut and the Canva upload copy under 10 MB |
 | `postcheck.py` | Checks resolution, audio, length and the 10 MB limit, and makes `<slug>-contact-sheet.png` |
+| `canva_kit.py` | After the build: the editable kit (per-beat clean clips, voice and per-line files, SRT, end-card PNGs, previews, README) for Canva or CapCut |
 | `logo/edlintics-logo.png` | The logo from the Canva post template DAHYuGZYL_E |
 
 Tools, with no system installs:
@@ -111,3 +112,18 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 - Pace: build with `ELEVEN_TEMPO=1.24 VO_GAP=0.1 make_reel.sh ...` (`VO_GAP` is the pause between beats, default 0.2). At the default 1.12 the 80-word tutoring ad ran 34.8 s
 - New presets: Ledger mood `dizzy` (spiral eyes, wavy mouth, a ring of three stars over his head; body and arms unchanged), `chip` (labelled pill; the one prop with text in the art, for subject chips), `exam_sheet`, `cost_pools` (ABC costing), `scatter_plot` (regression), whiteboard drawing `shift` (supply curve moves), laptop screens `call` (generic online lesson: a student tile and a shared board, no real app UI) and `lesson` (interactive lesson card)
 - Wide props next to Ledger got cropped by Ledger-first framing; set `"frame": "wide"` on those scenes and check the contact sheet
+- **Pace (29 Oct 2026, Hoang):** cut words rather than speeding up; keep `ELEVEN_TEMPO` at 1.15 or lower. The ad voice is `ELEVEN_VOICE=dfeOmy6Uay63tNhyO99j` (set it only for ads; the reel default stays). It speaks about 2.3 words a second at 1.15 and reads lists slowly (a colon costs about a second), so an ad holds about 65 spoken words. Measure first: build the voice at `ELEVEN_TEMPO=1.0` (cached, so later tempos cost nothing) and pick the tempo from timing.json
+- **End-card CTA pill:** an ad's end card may carry `"cta": "Start at edlintics.com"` (32 characters at most). It shows as a blue button under the logo from 0.7 s, and the end card's voice line may then be the CTA ("Start at edlintics dot com") instead of the term, so no separate cta beat is needed. Tutoring ad: `VO_GAP=0.1 VO_TAIL=0.6` (`VO_TAIL` is the silence after the last line, so the card stays up about 3 s)
+- **Sound-off rules (Hoang, 29 Oct 2026):** frame 1 is the hook (beat 1 opens fully drawn with its caption; no fade from blank, no logo intro), captions big and high-contrast, and nothing important in the Reels UI zones (bottom 20%, y over 1536, and the right 120 px). The ad layout keeps captions at y 300-520, the art at y 530-1310, the logo at y 1338 and the end card at y 330-1330, all inside the 4:5 safe area (y 285-1635)
+- **Ledger `tilt` rotates his arms with the body** (fixed 29 Oct 2026: a tilted body with untilted arms left a hand floating off the corner). `"anim": "wobble"` on an item (with optional `amp` degrees, default 4, and `hz`, default 1.1) sways it about its own feet from 0.2 s into the scene; used for the dizzy beat. Not a camera move
+- **Dizzy mood** has eye-sized spirals (readable on a phone) and the ring of stars; pair it with a small `tilt` and the wobble
+
+## Editable kit for Canva and CapCut (29 Oct 2026)
+Hoang assembles ads as layers, not as one flat MP4. After `make_reel.sh`, run
+```
+tools/tts/.venv/bin/python .claude/skills/edlintics-explainer-reel/scripts/canva_kit.py <workdir> <slug> <outdir>
+```
+It writes the building blocks (see the docstring in `canva_kit.py`): `clips/clip-NN-<scene>.mp4` (art only, no captions or logo, cut on the same frames as the full video, so clip NN = that beat's voice line plus its gap), `clips-4x5/` (the same cropped to y 285-1635), `clean-9x16.mp4` and `clean-4x5.mp4` (clips joined with the voice), `voice/voice.wav|mp3`, `voice/line-NN.wav` (one window per beat, for re-voicing one line), `captions.srt` (the chunks as shown) and `lines.srt` (one line per beat), `endcard/endcard-*.png` (term, kp, rule, logo, cta, fn, all; transparent), `logo/`, the previews with burned-in captions, `kit.json` (times, boxes and the caption style) and `README.md`.
+- Engine side: `CLEAN=1 node render.js clips <dir>` and `node render.js cardparts <dir>`; `CLEAN=1` hides captions, logo and end-card text in any render mode
+- Canva build (needs Chrome for the timeline and audio): one 1080x1920 page per clip, the clip as the page's background video, the caption as an editable text layer (Inter 900, 92 px, #0F172A, centred in x 60-1020, y 300-520, key word on a #FFD45C highlight), the logo PNG 210 px wide at y 1338 with opacity 72%, the end card from editable text and the PNG parts, the voice track once at the start of the timeline, a free Canva track at volume 8. Page durations must equal the clip lengths in `clips/clips.json`; check the total against `kit.json` duration
+- CapCut: import the clips in order, then `voice/voice.wav`, then `captions.srt`; `README.md` in the kit has the beat table and the caption style

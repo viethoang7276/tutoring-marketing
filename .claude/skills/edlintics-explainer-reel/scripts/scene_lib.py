@@ -51,8 +51,8 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
              f'<path d="{mouth.get(mood, mouth["smile"])}" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
     if mood == "dizzy":  # spiral eyes (29 Oct 2026, paid ad): same eye size and places as the brand eyes
         def _sp(cx, cy):
-            pts = " ".join(f"{cx + 0.75 * t * math.cos(t):.1f} {cy + 0.75 * t * math.sin(t):.1f}" for t in [k * 0.45 for k in range(0, 23)])
-            return f'<path d="M{pts}" fill="none" stroke="{INK}" stroke-width="2.6" stroke-linecap="round"/>'
+            pts = " ".join(f"{cx + 1.05 * t * math.cos(t):.1f} {cy + 1.05 * t * math.sin(t):.1f}" for t in [k * 0.45 for k in range(0, 23)])
+            return f'<path d="M{pts}" fill="none" stroke="{INK}" stroke-width="3.4" stroke-linecap="round"/>'
         eyes = _sp(102, 110) + _sp(138, 110)
     elif mood == "happy":  # closed happy eyes
         eyes = (f'<path d="M95 112 Q102 103 109 112" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>'
@@ -112,19 +112,20 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     if arm == "phone":
         prop = (f'<g transform="rotate(-14 200 92)"><rect x="185" y="60" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
                 f'<rect x="190" y="68" width="20" height="38" rx="3" fill="{LB}"/></g>')
-    body = (f'<g transform="rotate({tilt} 120 198)">'
-            f'<rect x="52" y="38" width="136" height="154" rx="18" fill="{PAPER}" stroke="{INK}" stroke-width="5"/>'
+    body = (f'<rect x="52" y="38" width="136" height="154" rx="18" fill="{PAPER}" stroke="{INK}" stroke-width="5"/>'
             f'<line x1="70" y1="46" x2="70" y2="184" stroke="{INK}" stroke-width="3.5" opacity="0.45"/><line x1="74" y1="46" x2="74" y2="184" stroke="{INK}" stroke-width="1.5" opacity="0.25"/>'
             f'<path d="M150 34 h18 v26 l-9 -7 -9 7 z" fill="{BLUE}"/>'
             f'<rect x="86" y="58" width="60" height="6" rx="3" fill="#E6E3DA"/><rect x="86" y="70" width="60" height="6" rx="3" fill="#E6E3DA"/><rect x="86" y="82" width="40" height="6" rx="3" fill="#E6E3DA"/>'
-            f'{band}{collar}{eyes}{brows}{m}{extra}{head}</g>')
+            f'{band}{collar}{eyes}{brows}{m}{extra}{head}')
     legs = (f'<ellipse cx="120" cy="236" rx="46" ry="7" fill="{INK}" opacity="0.10"/>'
             f'<line x1="102" y1="186" x2="102" y2="210" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
             f'<line x1="138" y1="186" x2="138" y2="210" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
             f'<rect x="88" y="208" width="29" height="14" rx="7" fill="{INK}"/><rect x="123" y="208" width="29" height="14" rx="7" fill="{INK}"/>')
     fl = " scale(-1 1) translate(-240 0)" if flip else ""
+    # tilt rotates the body WITH its arms and any held prop about the body's base (120,198), so the hands stay on the
+    # shoulders (29 Oct 2026: a tilted body with untilted arms left a hand floating off the corner); the legs stay put
     return (f'<g transform="translate({_f(x)} {_f(y)}) scale({s}) translate(-120 -230){fl}">'
-            f'{behind}{legs}{left}{body}{prop}{right}</g>')
+            f'{behind}{legs}<g transform="rotate({tilt} 120 198)">{left}{body}{prop}{right}</g></g>')
 
 
 # Arm poses, all measured against the brand file: shoulders at (62,152) and (178,152), hand r 9, arm 38-48 units long.
@@ -1008,7 +1009,11 @@ def item_box(it):
 
 def scene_body(spec):
     # items sit in <g class="content"> so the renderer can auto-fit the frame to the drawn subject (not the background)
-    return bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g data-p="{it["p"]}">{item_svg(it)}</g>' for it in spec.get("items", [])) + '</g>'
+    def _attrs(it):   # anim "wobble" (29 Oct 2026): the renderer sways the item +-amp degrees about its (x, y), hz times a second
+        a = f' data-p="{it["p"]}"'
+        if it.get("anim"): a += f' data-anim="{it["anim"]}" data-ax="{_f(it["x"])}" data-ay="{_f(it["y"])}" data-amp="{it.get("amp", 4)}" data-hz="{it.get("hz", 1.1)}"'
+        return a
+    return bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in spec.get("items", [])) + '</g>'
 
 
 def scene_svg(spec):

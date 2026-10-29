@@ -25,7 +25,7 @@ for t, b in zip(T["beats"], B):
 json.dump(T, open(f"{d}/timing.json", "w"), indent=1)
 PYEOF
 else
-echo "== 3/7 voiceover";     (cd "$REPO/tools/tts" && "$PY" "$HERE/vo.py" "$W" "$SPEED" "${VO_GAP:-0.2}")
+echo "== 3/7 voiceover";     (cd "$REPO/tools/tts" && "$PY" "$HERE/vo.py" "$W" "$SPEED" "${VO_GAP:-0.2}" "${VO_TAIL:-0.5}")
 echo "== 4/7 audio mix";     "$PY" "$HERE/mix_audio.py" "$W"
 fi
 echo "== 5/7 scene data";    "$PY" "$HERE/make_scenes_json.py" "$W" "$W"

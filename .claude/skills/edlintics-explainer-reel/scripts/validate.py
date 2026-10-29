@@ -27,9 +27,9 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
 SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
         "life-of": dict(chunk=(2, 5), beats=(9, 13), target=(95, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
-        # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; ElevenLabs v3 at ELEVEN_TEMPO 1.24 speaks
-        # about 2.7 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
-        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(60, 85), allowed=(45, 95), secs=(21, 31), wps=2.7)}
+        # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
+        # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
+        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(55, 75), allowed=(45, 85), secs=(21, 31), wps=2.3)}
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
@@ -69,7 +69,9 @@ def main(path):
     if not P["beats"][0] <= len(beats) <= P["beats"][1]: E.append(f"{len(beats)} beats; use {P['beats'][0]}-{P['beats'][1]} beats of 2-4 s")
     roles = [b.get("role") for b in beats]
     R = ROLES[t]
+    card_cta = t == "ad" and beats and bool(beats[-1].get("cta"))   # ad: the end card may carry the CTA as a button pill
     for r, n in R["min"].items():
+        if r == "cta" and card_cta: continue
         if roles.count(r) < n: E.append(f'needs at least {n} beat(s) with role "{r}" (has {roles.count(r)})')
     for r, n in R.get("max", {}).items():
         if roles.count(r) > n: E.append(f'at most {n} beat(s) with role "{r}" (has {roles.count(r)})')
@@ -100,13 +102,18 @@ def main(path):
             if kp and not 4 <= len(words(kp)) <= 12: E.append(f"{where}: key point has {len(words(kp))} words (4-12)")
             if kp.rstrip().endswith("."): E.append(f"{where}: key point ends with a full stop")
             _n = lambda z: re.sub(r"[/\-]", " ", z.lower())  # "A-B testing" says "A/B testing" (Kokoro reads "/" as "slash")
-            if term and _n(term) not in _n(tx): E.append(f"{where}: the voice must say the term on the end card")
+            cta = b.get("cta", "")
+            if cta and t != "ad": E.append(f"{where}: \"cta\" on the end card is for ads only")
+            if cta and (len(cta) > 32 or cta.rstrip().endswith(".")): E.append(f"{where}: cta pill text {cta!r}: 32 characters at most, no closing full stop")
+            if cta: texts_extra.append(("endcard cta", cta))
+            if term and _n(term) not in _n(tx) and not (cta and _n(cta.replace(".com", " dot com")) in _n(tx)):
+                E.append(f"{where}: the voice must say the term on the end card (or, for an ad with a cta pill, the cta line)")
             fn = b.get("footnote", "")
             for ln in [z for z in fn.split("\n") if z.strip()]:   # small print under the logo, 1-2 lines
                 if len(ln) > 90 or ln.rstrip().endswith("."): E.append(f"{where}: footnote line {ln[:40]!r}: 90 characters at most, no closing full stop")
             if fn: texts_extra.append(("footnote", fn))
             sec = len(words(tx)) / WPS_T
-            if not (1.8 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
+            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
             continue
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
