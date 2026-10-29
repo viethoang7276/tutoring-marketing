@@ -29,7 +29,7 @@ nums = {"months_to_milestone": cross, "years_to_milestone": [round(c / 12, 2) fo
 json.dump(nums, open(f"{HERE}/numbers.json", "w"), indent=1)
 
 # --- geometry (sheet coordinates)
-X0, X1, YRS = 110, 900, 35
+X0, X1, YRS = 440, 900, 35       # the chart sits on the right; x 0-430 is Ledger's stage (he and his coin pile stand there)
 Y0, Y1 = 945, 470                  # $0 and $1M
 sx = (X1 - X0) / YRS
 def X(months): return X0 + sx * months / 12
@@ -64,9 +64,8 @@ a(f'<line x1="{X0}" y1="{Y0}" x2="{X1+10}" y2="{Y0}" stroke="{INK}" stroke-width
 a(f'<line x1="{X0}" y1="{Y0}" x2="{X0}" y2="{Y1-30}" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>')
 for yr in (0, 10, 20, 30):
     a(f'<line x1="{X0+sx*yr:.1f}" y1="{Y0}" x2="{X0+sx*yr:.1f}" y2="{Y0+12}" stroke="{INK}" stroke-width="3"/>')
-    a(f'<text x="{X0+sx*yr:.1f}" y="{Y0+46}" text-anchor="middle" font-family="Lato" font-weight="700" font-size="28" fill="{MUTED}">{yr}</text>')
-a(f'<text x="{X1}" y="{Y0+46}" text-anchor="end" font-family="Lato" font-weight="700" font-size="28" fill="{MUTED}">years</text>')
-a(f'<text x="{X0-14}" y="{Y0+8}" text-anchor="end" font-family="Lato" font-weight="700" font-size="26" fill="{MUTED}">$0</text>')
+    a(f'<text x="{X0+sx*yr:.1f}" y="{Y0+46}" text-anchor="middle" font-family="Inter" font-weight="600" font-size="28" fill="{MUTED}">{yr if yr < 30 else "30 years"}</text>')
+a(f'<text x="{X0-14}" y="{Y0+8}" text-anchor="end" font-family="Inter" font-weight="700" font-size="26" fill="{MUTED}">$0</text>')
 for k, (x, y) in enumerate(dots, 1):
     a(f'<line x1="{x:.1f}" y1="{y+10:.1f}" x2="{x:.1f}" y2="{Y0-4}" stroke="#94A3B8" stroke-width="2.5" stroke-dasharray="3 7" stroke-linecap="round"/>')
     a(f'<circle cx="{x:.1f}" cy="{Y0}" r="5" fill="{BLUE}"/>')
@@ -74,9 +73,9 @@ a(f'<path id="curve" d="{curve}" fill="none" stroke="{BLUE}" stroke-width="7" st
 for k, (x, y) in enumerate(dots, 1):
     lab = "$1M" if k == K else f"${k}00K"
     a(f'<circle id="dot{k}" cx="{x:.1f}" cy="{y:.1f}" r="9" fill="#FFFFFF" stroke="{BLUE}" stroke-width="5"/>')
-    a(f'<text id="lab{k}" x="{x-18:.1f}" y="{y-10:.1f}" text-anchor="end" font-family="Lato" font-size="28" fill="{INK}">'
-      f'<tspan font-weight="900">{lab}</tspan> <tspan id="yrs{k}" font-weight="700" fill="{BLUE}">+{yrs[k-1]:.1f} yrs</tspan></text>')
-a(f'<text x="{X0+6}" y="{Y1-40}" font-family="Lato" font-weight="700" font-size="24" fill="{MUTED}">+ yrs is how long each $100K step takes</text>')
+    a(f'<text id="lab{k}" x="{x-18:.1f}" y="{y-10:.1f}" text-anchor="end" font-family="Inter" font-size="28" fill="{INK}" stroke="#FFFFFF" stroke-width="9" stroke-linejoin="round" paint-order="stroke">'
+      f'<tspan font-weight="800">{lab}</tspan> <tspan id="yrs{k}" font-weight="700" fill="{BLUE}">+{yrs[k-1]:.1f} yrs</tspan></text>')
+a(f'<text x="{X1}" y="{Y1-40}" text-anchor="end" font-family="Inter" font-weight="600" font-size="24" fill="{MUTED}">+ yrs is how long each $100K step takes</text>')
 # stat cards: number on top, two lines of text under it
 for j, (num, l1, l2, cx) in enumerate([("32%", "of the time goes to", "the first $100K", 60), ("80%", "of the $1M is growth,", "not your deposits", 495)], 1):
     a(f'<rect x="{cx}" y="1010" width="405" height="166" rx="18" fill="#F8FAFC" stroke="{GRID}" stroke-width="3"/>')

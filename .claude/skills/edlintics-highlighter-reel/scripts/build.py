@@ -12,6 +12,8 @@ REPO = "/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing"
 NODE_PATH = f"{REPO}/.claude/skills/edlintics-explainer-reel/scripts/node_modules"
 sys.path.insert(0, HERE)
 import tts_align, imageio_ffmpeg
+sys.path.insert(0, f"{REPO}/.claude/skills/edlintics-explainer-reel/scripts")
+import scene_lib   # Ledger is drawn by the explainer engine's scene library, never redrawn here
 FF = imageio_ffmpeg.get_ffmpeg_exe(); SR = 24000
 GAP = float(os.environ.get("VO_GAP", "0.25")); LEAD = 0.45
 norm = lambda w: re.sub(r"[^\w$%']", "", w).lower()
@@ -32,6 +34,15 @@ def validate(S):
             if len(c["text"].split()) > 4: E.append(f"caption chunk over 4 words: {c['text']}")
             if c.get("key") and c["key"] not in c["text"]: E.append(f"key '{c['key']}' not in chunk '{c['text']}'")
         if not b.get("do"): E.append(f"beat has no highlight: {b['text']}")
+    sheet = open(os.path.join(S["_base"], S["sheet"])).read()
+    fams = set(re.findall(r'font-family="([^"]+)"', sheet)) | set(re.findall(r"font-family:\s*([^;\"]+)", sheet))
+    if fams - {"Inter"}: E.append(f"sheet uses fonts other than Inter: {sorted(fams - {'Inter'})} (house style is Inter only)")
+    for b in S["beats"]:
+        for a in b.get("ledger", []):
+            for k in a:
+                if k not in ("at", "shift", "arm", "mood", "pick", "drop", "hop"): E.append(f"unknown ledger key '{k}' in: {b['text']}")
+            if a.get("arm") and a["arm"] not in scene_lib.ARM_POSES: E.append(f"unknown Ledger arm pose '{a['arm']}'")
+            if a.get("mood") and a["mood"] not in scene_lib.MOODS: E.append(f"unknown Ledger mood '{a['mood']}'")
     for k in ("term", "keypoint", "follow"):
         if S["endcard"][k].rstrip().endswith("."): E.append(f"end card {k} ends with a full stop")
     wc = sum(len(b["text"].split()) for b in S["beats"]) + len(S["endcard"]["say"].split())
@@ -42,9 +53,9 @@ def validate(S):
 
 
 def build(sp, out):
-    S = json.load(open(sp)); base = os.path.dirname(os.path.abspath(sp)); slug = S["slug"]
+    S = json.load(open(sp)); base = os.path.dirname(os.path.abspath(sp)); slug = S["slug"]; S["_base"] = base
     validate(S); os.makedirs(out, exist_ok=True)
-    clips, chunks, actions, beats = [], [], [], []
+    clips, chunks, actions, beats, lkeys = [], [], [], [], []
     t = LEAD
     for bi, b in enumerate(S["beats"]):
         a, words = tts_align.say_words(b["text"]); dur = len(a) / SR
@@ -70,6 +81,8 @@ def build(sp, out):
             if "until" in d: t1 = when(d["until"], None)
             else: t1 = t0 + d.get("dur", 0.55 if "mark" in d else 1.0)
             actions.append({**{k2: v for k2, v in d.items() if k2 not in ("at", "until", "dur", "shift")}, "t0": round(t0, 3), "t1": round(max(t1, t0 + 0.3), 3)})
+        for d in b.get("ledger", []):   # Ledger's acting, timed from the same real word times
+            lkeys.append({**{k2: v for k2, v in d.items() if k2 not in ("at", "shift")}, "t": round(when(d.get("at"), t) + d.get("shift", 0), 3)})
         t += dur + GAP
     # captions end where the next one starts (or at the end of their beat + 0.25 s)
     for i, c in enumerate(chunks):
@@ -86,6 +99,7 @@ def build(sp, out):
     dur = round(round((es + len(ea) / SR + 1.6) * 24) / 24, 4)
     T = {"dur": dur, "end_t": round(end_t, 3), "end_kp_t": round(es + 0.75, 3), "beats": beats, "chunks": chunks, "actions": actions,
          "endcard": S["endcard"], "sheet_svg": re.sub(r"<!--.*?-->", "", open(os.path.join(base, S["sheet"])).read(), flags=re.S)}
+    if S.get("ledger"): T["ledger"] = {**S["ledger"], "keys": sorted(lkeys, key=lambda k: k["t"]), "parts": ledger_parts(S["ledger"].get("outfit", "suit"))}
     tp = f"{out}/timeline.json"; json.dump(T, open(tp, "w"), indent=1)
     print(f"duration {dur} s, end card at {T['end_t']} s, {len(actions)} highlights")
     if not 30 <= dur <= 41: print(f"WARN duration {dur} s is outside 30-40 s; try ELEVEN_TEMPO=1.16 or trim words")
@@ -99,6 +113,20 @@ def build(sp, out):
     Image.open(f"{out}/stills/still-{times[0]:.2f}.png").convert("RGB").save(f"{out}/{slug}-poster.jpg", quality=90)
     if not os.environ.get("STILLS_ONLY"):
         mp4 = f"{out}/{slug}.mp4"; node(["video", mp4, audio], tp); check(mp4, dur)
+
+
+def ledger_parts(outfit):
+    """Ledger split into legs, one body per mood (face included) and the arm poses, all from scene_lib.ledger(), so the
+    renderer can move his arms smoothly between poses and cross-fade faces without redrawing him"""
+    L, R = scene_lib.ARM_POSES["down"]["L"], scene_lib.ARM_POSES["down"]["R"]
+    arms = scene_lib._arm(*L), scene_lib._arm(*R); legs, bodies = None, {}
+    for m in scene_lib.MOODS:
+        if m == "talk": continue
+        svg = scene_lib.ledger(0, 0, 1, mood=m, arm="down", outfit=outfit)
+        for a in arms: assert a in svg; svg = svg.replace(a, "")
+        head, rest = svg.split('<g transform="rotate(0 120 198)">', 1)
+        legs = head[head.index(">") + 1:]; bodies[m] = rest[:-len("</g></g>")]
+    return {"legs": legs, "bodies": bodies, "arms": scene_lib.ARM_POSES, "ink": scene_lib.INK, "paper": scene_lib.PAPER, "gold": scene_lib.GOLD}
 
 
 def marker_sound(buf, t0, t1, amp):

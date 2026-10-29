@@ -1,8 +1,10 @@
 <!doctype html><html><head><meta charset="utf-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lato:wght@400;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap">
 <style>
 /* Highlighter reel (1080x1920): a printed Edlintics sheet on a desk, a drawn hand highlights it step by step.
-   Safe areas: sheet y 96-1400, captions y 1425-1565 on the desk, bottom ~355 px left for the app overlay */
+   Safe areas: sheet y 96-1400, captions y 1425-1565 on the desk, bottom ~355 px left for the app overlay.
+   House type: Inter ONLY (900 captions and big titles, 800 headlines and end-card lines, 500-700 small sheet labels), as in
+   the explainer reels. Do not load or use any other font (Lato and Source Serif 4 were dropped 29 Oct 2026). */
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;background:#c8904f;overflow:hidden}
 #stage{position:absolute;left:0;top:0}
@@ -10,13 +12,14 @@ html,body{width:1080px;height:1920px;background:#c8904f;overflow:hidden}
 #cap .c{white-space:nowrap;font:900 98px/1 Inter,sans-serif;color:#FFFFFF;-webkit-text-stroke:16px #0F172A;paint-order:stroke fill;letter-spacing:-0.01em;transform-origin:50% 60%}
 #cap .k{color:#FFD45C}
 #end{position:absolute;inset:0;background:#FFFFFF;opacity:0}
-#end img{position:absolute;left:290px;top:330px;width:500px}
-#end .term{position:absolute;left:40px;right:40px;top:560px;text-align:center;font:800 132px/1.05 Inter,sans-serif;color:#0F172A;letter-spacing:-0.03em}
-#end .rule{position:absolute;left:450px;top:740px;width:180px;height:10px;background:linear-gradient(90deg,#467DE3,#60A5FA);border-radius:5px}
-#end .kp{position:absolute;left:70px;right:70px;top:800px;text-align:center;font:700 66px/1.2 Inter,sans-serif;color:#0F172A;text-wrap:balance}
+#end img{position:absolute;left:330px;top:190px;width:420px}
+#end .term{position:absolute;left:40px;right:40px;top:350px;text-align:center;font:900 132px/1.05 Inter,sans-serif;color:#0F172A;letter-spacing:-0.02em}
+#end .rule{position:absolute;left:470px;top:525px;width:140px;height:10px;background:#467DE3;border-radius:5px}
+#end .kp{position:absolute;left:70px;right:70px;top:575px;text-align:center;font:800 64px/1.18 Inter,sans-serif;color:#0F172A;text-wrap:balance}
 #end .kp span{-webkit-box-decoration-break:clone;box-decoration-break:clone}
 #end .kp span{background-image:linear-gradient(transparent 52%,#FFD45C 52%,#FFD45C 92%,transparent 92%);background-repeat:no-repeat;background-size:var(--w,0%) 100%;padding:0 6px}
-#end .fw{position:absolute;left:90px;right:90px;top:1060px;text-align:center;font:600 60px/1.2 'Source Serif 4',Georgia,serif;color:#334155;text-wrap:balance}
+#end .fw{position:absolute;left:90px;right:90px;top:790px;text-align:center;font:800 50px/1.2 Inter,sans-serif;color:#334155;text-wrap:balance}
+#end svg{position:absolute;left:0;top:0}
 </style></head><body>
 <svg id="stage" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -33,6 +36,7 @@ html,body{width:1080px;height:1920px;background:#c8904f;overflow:hidden}
     <radialGradient id="vig" cx=".5" cy=".42" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#2a1606" stop-opacity=".28"/></radialGradient>
     <filter id="papershadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#3b2208" flood-opacity=".35"/></filter>
     <filter id="handshadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow id="hsd" dx="12" dy="16" stdDeviation="7" flood-color="#2a1606" flood-opacity=".28"/></filter>
+    <filter id="ledshadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="5" dy="7" stdDeviation="4" flood-color="#2a1606" flood-opacity=".22"/></filter>
     <filter id="papergrain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="9"/>
       <feColorMatrix type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.5  0 0 0 0.10 0"/>
@@ -46,6 +50,9 @@ html,body{width:1080px;height:1920px;background:#c8904f;overflow:hidden}
     <g id="sheet"></g>
     <rect width="960" height="1300" filter="url(#papergrain)" style="mix-blend-mode:multiply" pointer-events="none"/>
     <g id="hl" style="mix-blend-mode:multiply"></g>
+    <!-- Ledger and his coin pile stand on the sheet (in sheet coordinates), drawn over the ink, under the hand -->
+    <g id="pile" filter="url(#ledshadow)"></g>
+    <g id="ledger" filter="url(#ledshadow)"></g>
   </g>
   <!-- Drawn hand with a highlighter. Local coords: nib tip at 0,0, marker along +x; flat line art, ink #0F172A 5 px, white fill, blue cuff -->
   <g id="hand" filter="url(#handshadow)" stroke="#0F172A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
@@ -63,7 +70,8 @@ html,body{width:1080px;height:1920px;background:#c8904f;overflow:hidden}
   </g>
 </svg>
 <div id="cap"><div class="c"></div></div>
-<div id="end"><img src="edlintics-logo.png"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><div class="fw"></div></div>
+<div id="end"><img src="edlintics-logo.png"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><div class="fw"></div>
+  <svg width="1080" height="1920" viewBox="0 0 1080 1920"><g id="endpile"></g><g id="endled"></g></svg></div>
 <script>
 let T, acts = [], capC, sheetG, hand, hsd;
 const $ = s => document.querySelector(s);
@@ -80,8 +88,7 @@ async function init() {
   const doc = new DOMParser().parseFromString(T.sheet_svg, 'image/svg+xml').documentElement;
   for (const n of [...doc.childNodes]) sheetG.appendChild(document.importNode(n, true));
   $('#end .term').textContent = T.endcard.term; $('#end .kp span').textContent = T.endcard.keypoint; $('#end .fw').textContent = T.endcard.follow;
-  await Promise.all(['800 78px Inter', '600 34px Inter', '700 28px Inter', '500 18px Inter', '900 98px Inter', '700 66px Inter',
-    '700 28px Lato', '900 28px Lato', '600 60px "Source Serif 4"'].map(f => document.fonts.load(f)));
+  await Promise.all(['500 19px Inter', '600 28px Inter', '700 28px Inter', '800 78px Inter', '900 98px Inter'].map(f => document.fonts.load(f)));
   await document.fonts.ready;
   const curveCache = {};
   const samplePath = sel => {   // dense points along a path, with cumulative length
@@ -115,8 +122,103 @@ async function init() {
     $('#hl').appendChild(path);
     return { ...a, pts, cum, len, path };
   });
+  if (T.ledger) initLedger();
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   return T.dur;
+}
+
+// ---------------------------------------------------------------- Ledger (the explainer engine's drawing, see build.py ledger_parts)
+// He stands on the sheet at (x, floor) in sheet coordinates, at scale s, beside a coin pile that follows the money:
+// his own coin drops (pick / drop), then "interest" coins that land as the highlighter traces the curve (pile = balance).
+let LG = null;
+const lerp = (a, b, f) => a + (b - a) * f;
+const armVec = (name, side) => { const P = T.ledger.parts.arms, q = (P[name] || P.down)[side] || P.down[side];
+  return [...q[0].match(/-?[\d.]+/g).map(Number), q[1][0], q[1][1]]; };   // sx sy cx cy ex ey hx hy
+function armSVG(v, P) { const d = `M${v[0]} ${v[1]} Q${v[2].toFixed(1)} ${v[3].toFixed(1)} ${v[4].toFixed(1)} ${v[5].toFixed(1)}`;
+  return `<path d="${d}" fill="none" stroke="${P.ink}" stroke-width="13" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${P.paper}" stroke-width="8" stroke-linecap="round"/>` +
+    `<circle cx="${v[6].toFixed(1)}" cy="${v[7].toFixed(1)}" r="9" fill="${P.paper}" stroke="${P.ink}" stroke-width="3"/>`; }
+const COIN = { rx: 25, ry: 8.5, step: 9.5, sw: 4 };
+const coinSVG = (x, y, k) => `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${COIN.rx}" ry="${COIN.ry}" fill="${T.ledger.parts.gold}" stroke="${T.ledger.parts.ink}" stroke-width="${COIN.sw}"/>` +
+  `<path d="M${(x - 11).toFixed(1)} ${(y - 1.5).toFixed(1)} q11 -4 22 0" fill="none" stroke="#E9C46A" stroke-width="2.5" stroke-linecap="round"/>`;
+
+function initLedger() {
+  const C = T.ledger, P = C.parts, K = C.keys;
+  // arm segments: each arm key blends from wherever the arm is at that moment to the new pose over 0.3 s (no jumps)
+  const segR = [{ t: -1e9, from: armVec(C.start.arm, 'R'), to: armVec(C.start.arm, 'R') }];
+  const segL = [{ t: -1e9, from: armVec(C.start.arm, 'L'), to: armVec(C.start.arm, 'L') }];
+  const evalSeg = (S, t) => { let g = S[0]; for (const x of S) if (x.t <= t) g = x; const f = ease(ramp(t, g.t, g.t + 0.3)); return g.from.map((v, i) => lerp(v, g.to[i], f)); };
+  const moods = [{ t: -1e9, m: C.start.mood }], picks = [], drops = [], hops = [];
+  if (C.start.coin) picks.push(-1e9);
+  for (const k of K) {
+    if (k.arm) { segR.push({ t: k.t, from: evalSeg(segR, k.t), to: armVec(k.arm, 'R') }); segL.push({ t: k.t, from: evalSeg(segL, k.t), to: armVec(k.arm, 'L') }); }
+    if (k.mood) moods.push({ t: k.t, m: k.mood });
+    if (k.pick) picks.push(k.t); if (k.drop) drops.push(k.t); if (k.hop) hops.push(k.t);
+  }
+  const g = $('#ledger');
+  g.innerHTML = `<g class="lt"><g class="legs">${P.legs}</g><g class="up"><g class="la"></g><g class="b0"></g><g class="b1"></g><g class="hc">${coinSVG(0, 0)}</g><g class="ra"></g></g></g>`;
+  LG = { C, P, segR, segL, evalSeg, moods, picks, drops, hops, g: g.firstChild, la: g.querySelector('.la'), ra: g.querySelector('.ra'),
+    b0: g.querySelector('.b0'), b1: g.querySelector('.b1'), hc: g.querySelector('.hc'), up: g.querySelector('.up') };
+  LG.hc.firstChild.setAttribute('transform', `scale(${1 / C.s})`); LG.hc.lastChild.setAttribute('transform', `scale(${1 / C.s})`);
+  // the pile: arrival time and source of every coin, then its stack position
+  const pile = C.pile, traces = acts.filter(a => a.trace === pile.curve);
+  const bal = t => { let y = pile.y0; for (const a of traces) if (t >= a.t0) { const f = ramp(t, a.t0, a.t1); y = at(a, 0.15 * f + 0.85 * ease(f))[1]; }
+    return clamp((pile.y0 - y) / (pile.y0 - pile.y1)); };
+  const lastTraceEnd = traces.length ? traces[traces.length - 1].t1 : 0;
+  const early = drops.filter(t => t < lastTraceEnd).length;   // Ledger's own coins before the curve is finished are part of the balance
+  const arr = drops.map(t => ({ t: t + 0.42, hand: t }));
+  let made = 0;
+  for (let t = 0; t <= T.end_t; t += 1 / 96) { const want = Math.max(0, Math.floor(pile.max * bal(t) + 1e-6) - early);
+    while (made < want) { arr.push({ t: t, hand: null }); made++; } }
+  arr.sort((a, b) => a.t - b.t);
+  const h = pile.stacks.map(() => 0), W = pile.weights || pile.stacks.map(() => 1);
+  arr.forEach((c, j) => { let best = 0; h.forEach((v, i) => { if ((v + 1) / W[i] < (h[best] + 1) / W[best] - 1e-9) best = i; });
+    c.x = pile.stacks[best] + 2.4 * Math.sin(j * 12.99); c.y = C.floor - COIN.ry - 2 - h[best] * COIN.step; h[best]++;
+    c.el = document.createElementNS(NS, 'g'); c.el.innerHTML = coinSVG(0, 0); c.el.style.opacity = 0; $('#pile').appendChild(c.el); });
+  LG.coins = arr;
+  if (C.end) drawEndLedger();
+}
+
+function ledgerAt(t) {   // arms, face, hop, breathing and held coin at time t; returns the right hand in sheet coords
+  const L = LG, C = L.C, s = C.s;
+  const R = L.evalSeg(L.segR, t), Lf = L.evalSeg(L.segL, t);
+  L.ra.innerHTML = armSVG(R, L.P); L.la.innerHTML = armSVG(Lf, L.P);
+  let cur = L.moods[0], prev = L.moods[0]; for (const m of L.moods) if (m.t <= t) { prev = cur; cur = m; }
+  const fa = ramp(t, cur.t, cur.t + 0.16);
+  if (L.b0.dataset.m !== prev.m) { L.b0.innerHTML = L.P.bodies[prev.m]; L.b0.dataset.m = prev.m; }
+  if (L.b1.dataset.m !== cur.m) { L.b1.innerHTML = L.P.bodies[cur.m]; L.b1.dataset.m = cur.m; }
+  L.b0.style.opacity = fa < 1 ? 1 : 0; L.b1.style.opacity = fa;
+  let hop = 0; for (const h of L.hops) hop += 26 * Math.sin(Math.PI * ramp(t, h, h + 0.42));
+  const br = 1 + 0.008 * Math.sin(2 * Math.PI * t / 2.6);
+  L.g.setAttribute('transform', `translate(${C.x} ${(C.floor - hop).toFixed(2)}) scale(${s}) translate(-120 -230)`);
+  L.up.setAttribute('transform', `translate(0 198) scale(1 ${br.toFixed(4)}) translate(0 -198)`);
+  const lp = Math.max(...L.picks.filter(x => x <= t), -1e10), ld = Math.max(...L.drops.filter(x => x <= t), -1e10);
+  L.hc.style.opacity = lp > ld ? ramp(t, lp, lp + 0.15) : 0;
+  L.hc.setAttribute('transform', `translate(${R[6].toFixed(1)} ${(R[7] - 9).toFixed(1)})`);
+  return [C.x + (R[6] - 120) * s, C.floor - hop + (R[7] - 9 - 230) * s];
+}
+
+function pileAt(t) {
+  for (const c of LG.coins) {
+    let x = c.x, y = c.y, o = 1;
+    if (c.hand !== null) {   // thrown from Ledger's hand: a short arc to its place on the pile
+      if (t < c.hand) o = 0;
+      else if (t < c.t) { const f = ramp(t, c.hand, c.t), e = ease(f), H = ledgerHand(c.hand);
+        x = lerp(H[0], c.x, e); y = lerp(H[1], c.y, e) - 46 * Math.sin(Math.PI * f); }
+    } else {                 // interest coin: drops in from just above its place, fading in (no popping)
+      const f = ramp(t, c.t - 0.3, c.t); if (t < c.t - 0.3) o = 0; else { y = c.y - 95 * (1 - f * f); o = clamp(f / 0.3); }
+    }
+    c.el.style.opacity = o; c.el.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+  }
+}
+function ledgerHand(t) { const R = LG.evalSeg(LG.segR, t), C = LG.C; return [C.x + (R[6] - 120) * C.s, C.floor + (R[7] - 9 - 230) * C.s]; }
+
+// end card: Ledger, pleased, on top of a big coin pile (static drawing, gentle breathing)
+function drawEndLedger() {
+  const C = T.ledger, P = C.parts, E = C.end, cx = 540, floor = 1530, hs = [5, 9, 13, 16, 16, 16, 13, 9, 5], mid = (hs.length - 1) / 2, H = Math.max(...hs);
+  let pile = ''; hs.forEach((n, i) => { for (let k = 0; k < n; k++) pile += coinSVG(cx + (i - mid) * 52 + 2.4 * Math.sin((i * 13 + k) * 12.99), floor - COIN.ry - 2 - k * COIN.step); });
+  $('#endpile').innerHTML = pile;
+  const top = floor - COIN.ry - 2 - (H - 1) * COIN.step - COIN.ry + 2;   // top face of the middle stacks, where he stands
+  $('#endled').innerHTML = `<g transform="translate(${cx} ${top + 8 * C.s}) scale(${C.s}) translate(-120 -230)">${P.legs}<g class="eup">${armSVG(armVec(E.arm, 'L'), P)}${P.bodies[E.mood]}${armSVG(armVec(E.arm, 'R'), P)}</g></g>`;
 }
 
 // point at fraction f of an action's polyline, in sheet coordinates
@@ -140,7 +242,9 @@ function handPos(t) {   // returns [x, y, lift] in screen coords
       const P0 = toScreen(at(a, 1)), P1 = toScreen(at(b, 0)), gap = b.t0 - a.t1, mv = Math.min(0.5, gap * 0.85);
       const m = ease(ramp(t, b.t0 - mv, b.t0 - 0.02)), lift = Math.sin(Math.PI * m) + (gap > 1.2 ? 0.25 * ramp(t, a.t1, a.t1 + 0.3) * (1 - m) : 0);
       const idle = gap > 1.0 ? 3 * Math.sin((t - a.t1) * 2.4) * (1 - m) : 0;
-      return [P0[0] + (P1[0] - P0[0]) * m + idle, P0[1] + (P1[1] - P0[1]) * m - 18 * Math.sin(Math.PI * m) + idle * 0.6, Math.min(1, lift)];
+      // long moves bow out towards the lower right, where the arm comes from, so the hand never sweeps across Ledger's stage
+      const bow = Math.hypot(P1[0] - P0[0], P1[1] - P0[1]) > 300 ? Math.sin(Math.PI * m) : 0;
+      return [P0[0] + (P1[0] - P0[0]) * m + idle + 50 * bow, P0[1] + (P1[1] - P0[1]) * m - 18 * Math.sin(Math.PI * m) + idle * 0.6 + 70 * bow, Math.min(1, lift)];
     }
   }
   const P = toScreen(at(last, 1)), ex = ease(ramp(t, last.t1 + 0.3, T.end_t + 0.1));
@@ -152,6 +256,8 @@ function render(t) {
   const tv = loop ? 0 : t;   // final 0.45 s: the end card fades out onto the clean opening frame (seamless loop)
   acts.forEach(a => { const f = a.mark ? ease(ramp(tv, a.t0, a.t1)) : ramp(tv, a.t0, a.t1); const g = a.mark ? f : 0.15 * f + 0.85 * ease(f);
     a.path.style.strokeDashoffset = (a.len + 1) * (1 - g); });
+  if (LG) { ledgerAt(tv); pileAt(tv);
+    const eu = $('#endled .eup'); if (eu) eu.setAttribute('transform', `translate(0 198) scale(1 ${(1 + 0.008 * Math.sin(2 * Math.PI * t / 2.6)).toFixed(4)}) translate(0 -198)`); }
   const [x, y, lift] = handPos(tv);
   const ang = 33 + clamp((560 - x) / 600, -0.6, 0.8) * 9;   // the wrist pivots a little as the hand moves across
   const s = 1 + 0.035 * lift;
@@ -178,6 +284,11 @@ function cover(kicker, title) {
   d.innerHTML = `<div style="font:800 40px/1.1 Inter,sans-serif;color:#467DE3;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px">${esc(kicker)}</div>` +
     `<div style="font:900 100px/1.04 Inter,sans-serif;color:#0F172A;letter-spacing:-0.02em;text-wrap:balance">${esc(title).replace(/\*(.+?)\*/g, '<span style="background-image:linear-gradient(transparent 55%,#FFD45C 55%,#FFD45C 93%,transparent 93%);padding:0 8px">$1</span>')}</div>`;
   document.body.appendChild(d);
+  // with Ledger on the sheet the panel must end above his head: shrink the title (and tighten the panel) until it does
+  if (LG) { const top = $('#ledger').getBoundingClientRect().top - 16, ti = d.lastChild; let fs = 100;
+    if (d.getBoundingClientRect().bottom > top) { d.style.top = '242px'; d.style.paddingTop = '26px'; d.style.paddingBottom = '30px'; }
+    while (d.getBoundingClientRect().bottom > top && fs > 64) { fs -= 2; ti.style.fontSize = fs + 'px'; }
+    if (d.getBoundingClientRect().bottom > top) console.error('cover title panel still covers Ledger: use a shorter title'); }
 }
 window.init = init; window.render = render; window.cover = cover;
 </script></body></html>

@@ -25,7 +25,9 @@ def say_words(text):
     d = _fetch(text)
     a = np.frombuffer(base64.b64decode(d["audio_base64"]), dtype="<i2").astype(np.float32) / 32768.0
     al = d.get("alignment") or d.get("normalized_alignment")
-    if E.TEMPO != 1.0: a = E._tempo(a)
+    if E.TEMPO != 1.0:   # _tempo(a) in older eleven_tts.py, _tempo(a, tempo) since 29 Oct 2026
+        import inspect
+        a = E._tempo(a, E.TEMPO) if len(inspect.signature(E._tempo).parameters) > 1 else E._tempo(a)
     nz = np.where(np.abs(a) > 0.01)[0]; s0 = max(0, nz[0] - 600) if len(nz) else 0
     a = a[s0: (nz[-1] + 1200) if len(nz) else len(a)]; off = s0 / E.SR
     words, cur, ws = [], "", None

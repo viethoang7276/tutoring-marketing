@@ -1,34 +1,359 @@
 {
-  "slug": "compounding",
-  "sheet": "sheet.svg",
-  "beats": [
-    {"text": "Your first hundred thousand dollars is the slowest one.",
-     "chunks": [{"text": "Your first $100K", "n": 5}, {"text": "is the slowest one", "key": "slowest"}],
-     "do": [{"mark": "#t-100k", "at": "first"}, {"mark": "#t-slowest", "at": "slowest"}]},
-    {"text": "Say you invest five hundred dollars a month, at eight percent a year.",
-     "chunks": [{"text": "Say you invest"}, {"text": "$500 a month", "n": 5, "key": "$500"}, {"text": "at 8% a year", "n": 5, "key": "8%"}],
-     "do": [{"mark": "#sub-500", "at": "five"}, {"mark": "#sub-8", "at": "eight"}]},
-    {"text": "The first hundred thousand takes almost eleven years.",
-     "chunks": [{"text": "The first $100K", "n": 4}, {"text": "takes almost"}, {"text": "11 years", "key": "11"}],
-     "do": [{"trace": "#curve", "to": "#dot1", "at": "The", "until": "almost"}, {"mark": "#yrs1", "at": "eleven"}]},
-    {"text": "The second takes under six years, and the third about four.",
-     "chunks": [{"text": "The second takes"}, {"text": "under six years", "key": "six"}, {"text": "and the third"}, {"text": "about four", "key": "four"}],
-     "do": [{"trace": "#curve", "to": "#dot2", "at": "The", "until": "under"}, {"mark": "#yrs2", "at": "six"},
-            {"trace": "#curve", "to": "#dot3", "at": "and", "until": "about"}, {"mark": "#yrs3", "at": "four"}]},
-    {"text": "The last one takes about fourteen months.",
-     "chunks": [{"text": "The last one"}, {"text": "takes about"}, {"text": "14 months", "key": "14"}],
-     "do": [{"trace": "#curve", "to": "#dot10", "at": "The", "until": "about"}, {"mark": "#yrs10", "at": "fourteen"}]},
-    {"text": "That first step is almost a third of the whole wait.",
-     "chunks": [{"text": "That first step"}, {"text": "is almost a third", "key": "third"}, {"text": "of the whole wait"}],
-     "do": [{"mark": "#s1num", "at": "third"}]},
-    {"text": "By one million, about eighty percent is growth, not your deposits.",
-     "chunks": [{"text": "By $1 million", "n": 3}, {"text": "about 80%", "n": 3, "key": "80%"}, {"text": "is growth", "key": "growth"}, {"text": "not your deposits"}],
-     "do": [{"mark": "#s2num", "at": "eighty"}]},
-    {"text": "A business that reinvests its profit compounds the same way.",
-     "chunks": [{"text": "A business that"}, {"text": "reinvests its profit", "key": "reinvests"}, {"text": "compounds the same way"}],
-     "do": [{"mark": "#biz", "at": "business"}]}
-  ],
-  "endcard": {"term": "Compounding", "keypoint": "Most of the growth comes late",
-              "follow": "Follow Edlintics to learn business concepts",
-              "say": "Compounding. Most of the growth comes late."}
+ "slug": "compounding",
+ "sheet": "sheet.svg",
+ "ledger": {
+  "x": 120,
+  "floor": 850,
+  "s": 1.85,
+  "outfit": "suit",
+  "start": {
+   "arm": "hold",
+   "mood": "smile",
+   "coin": true
+  },
+  "pile": {
+   "stacks": [
+    288,
+    340,
+    392
+   ],
+   "weights": [
+    0.6,
+    1.0,
+    1.4
+   ],
+   "max": 60,
+   "curve": "#curve",
+   "y0": 945,
+   "y1": 470
+  },
+  "end": {
+   "arm": "up",
+   "mood": "happy"
+  }
+ },
+ "beats": [
+  {
+   "text": "Your first hundred thousand dollars is the slowest one.",
+   "chunks": [
+    {
+     "text": "Your first $100K",
+     "n": 5
+    },
+    {
+     "text": "is the slowest one",
+     "key": "slowest"
+    }
+   ],
+   "do": [
+    {
+     "mark": "#t-100k",
+     "at": "first"
+    },
+    {
+     "mark": "#t-slowest",
+     "at": "slowest"
+    }
+   ],
+   "ledger": [
+    {
+     "drop": true,
+     "at": "slowest"
+    },
+    {
+     "arm": "down",
+     "mood": "flat",
+     "at": "slowest",
+     "shift": 0.4
+    }
+   ]
+  },
+  {
+   "text": "Say you invest five hundred dollars a month, at eight percent a year.",
+   "chunks": [
+    {
+     "text": "Say you invest"
+    },
+    {
+     "text": "$500 a month",
+     "n": 5,
+     "key": "$500"
+    },
+    {
+     "text": "at 8% a year",
+     "n": 5,
+     "key": "8%"
+    }
+   ],
+   "do": [
+    {
+     "mark": "#sub-500",
+     "at": "five"
+    },
+    {
+     "mark": "#sub-8",
+     "at": "eight"
+    }
+   ],
+   "ledger": [
+    {
+     "arm": "hold",
+     "mood": "smile",
+     "pick": true,
+     "at": "invest"
+    },
+    {
+     "drop": true,
+     "at": "month"
+    },
+    {
+     "arm": "up",
+     "at": "eight"
+    }
+   ]
+  },
+  {
+   "text": "The first hundred thousand takes almost eleven years.",
+   "chunks": [
+    {
+     "text": "The first $100K",
+     "n": 4
+    },
+    {
+     "text": "takes almost"
+    },
+    {
+     "text": "11 years",
+     "key": "11"
+    }
+   ],
+   "do": [
+    {
+     "trace": "#curve",
+     "to": "#dot1",
+     "at": "The",
+     "until": "almost"
+    },
+    {
+     "mark": "#yrs1",
+     "at": "eleven"
+    }
+   ],
+   "ledger": [
+    {
+     "arm": "hold",
+     "pick": true,
+     "at": "The"
+    },
+    {
+     "drop": true,
+     "at": "hundred"
+    },
+    {
+     "arm": "down",
+     "at": "takes"
+    },
+    {
+     "mood": "tired",
+     "at": "eleven"
+    }
+   ]
+  },
+  {
+   "text": "The second takes under six years, and the third about four.",
+   "chunks": [
+    {
+     "text": "The second takes"
+    },
+    {
+     "text": "under six years",
+     "key": "six"
+    },
+    {
+     "text": "and the third"
+    },
+    {
+     "text": "about four",
+     "key": "four"
+    }
+   ],
+   "do": [
+    {
+     "trace": "#curve",
+     "to": "#dot2",
+     "at": "The",
+     "until": "under"
+    },
+    {
+     "mark": "#yrs2",
+     "at": "six"
+    },
+    {
+     "trace": "#curve",
+     "to": "#dot3",
+     "at": "and",
+     "until": "about"
+    },
+    {
+     "mark": "#yrs3",
+     "at": "four"
+    }
+   ],
+   "ledger": [
+    {
+     "mood": "smile",
+     "at": "second"
+    },
+    {
+     "mood": "o",
+     "at": "four"
+    }
+   ]
+  },
+  {
+   "text": "The last one takes about fourteen months.",
+   "chunks": [
+    {
+     "text": "The last one"
+    },
+    {
+     "text": "takes about"
+    },
+    {
+     "text": "14 months",
+     "key": "14"
+    }
+   ],
+   "do": [
+    {
+     "trace": "#curve",
+     "to": "#dot10",
+     "at": "The",
+     "until": "about"
+    },
+    {
+     "mark": "#yrs10",
+     "at": "fourteen"
+    }
+   ],
+   "ledger": [
+    {
+     "arm": "up",
+     "mood": "happy",
+     "hop": true,
+     "at": "about"
+    }
+   ]
+  },
+  {
+   "text": "That first step is almost a third of the whole wait.",
+   "chunks": [
+    {
+     "text": "That first step"
+    },
+    {
+     "text": "is almost a third",
+     "key": "third"
+    },
+    {
+     "text": "of the whole wait"
+    }
+   ],
+   "do": [
+    {
+     "mark": "#s1num",
+     "at": "third"
+    }
+   ],
+   "ledger": [
+    {
+     "arm": "point",
+     "mood": "smile",
+     "at": "That"
+    }
+   ]
+  },
+  {
+   "text": "By one million, about eighty percent is growth, not your deposits.",
+   "chunks": [
+    {
+     "text": "By $1 million",
+     "n": 3
+    },
+    {
+     "text": "about 80%",
+     "n": 3,
+     "key": "80%"
+    },
+    {
+     "text": "is growth",
+     "key": "growth"
+    },
+    {
+     "text": "not your deposits"
+    }
+   ],
+   "do": [
+    {
+     "mark": "#s2num",
+     "at": "eighty"
+    }
+   ],
+   "ledger": [
+    {
+     "arm": "down",
+     "at": "By"
+    },
+    {
+     "arm": "hold",
+     "mood": "happy",
+     "at": "growth"
+    }
+   ]
+  },
+  {
+   "text": "A business that reinvests its profit compounds the same way.",
+   "chunks": [
+    {
+     "text": "A business that"
+    },
+    {
+     "text": "reinvests its profit",
+     "key": "reinvests"
+    },
+    {
+     "text": "compounds the same way"
+    }
+   ],
+   "do": [
+    {
+     "mark": "#biz",
+     "at": "business"
+    }
+   ],
+   "ledger": [
+    {
+     "arm": "hold",
+     "mood": "smile",
+     "pick": true,
+     "at": "business"
+    },
+    {
+     "drop": true,
+     "at": "compounds"
+    },
+    {
+     "arm": "point",
+     "mood": "happy",
+     "at": "same"
+    }
+   ]
+  }
+ ],
+ "endcard": {
+  "term": "Compounding",
+  "keypoint": "Most of the growth comes late",
+  "follow": "Follow Edlintics to learn business concepts",
+  "say": "Compounding. Most of the growth comes late."
+ }
 }
