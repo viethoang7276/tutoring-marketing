@@ -15,7 +15,7 @@ puzzle.json (paths relative to the JSON file):
   prompt_text / prompt_say, end_text / end_say, countdown {"voice": 5, "novoice": 6}
   Any line may carry "say" to change what the voice reads (for example to spell out a unit)
 
-The voice is Kokoro af_heart at speed 1.08 (same as the explainer reels). The novoice cut has ticks, chime and pad only.
+The voice is ElevenLabs v3 (voice gPiEpcKoaZywgOzc0Zn9) by default since 29 Oct 2026; TTS_ENGINE=kokoro gives Kokoro af_heart at speed 1.08. The novoice cut has ticks, chime and pad only.
 Audio is normalised to -14 LUFS integrated with a limiter at about -1.6 dBFS.
 """
 import hashlib, json, os, re, subprocess, sys
@@ -48,7 +48,7 @@ _kokoro = None
 def tts(text, cache):
     """Kokoro af_heart clip, trimmed of its own leading and trailing silence. Cached by text and speed."""
     global _kokoro
-    if os.environ.get("TTS_ENGINE") == "eleven":  # ElevenLabs v3, cached in tools/tts/cache-eleven/
+    if os.environ.get("TTS_ENGINE", "eleven") == "eleven":  # ElevenLabs v3 by default (29 Oct 2026); TTS_ENGINE=kokoro for the old voice
         sys.path.insert(0, f"{REPO}/.claude/skills/edlintics-explainer-reel/scripts"); import eleven_tts
         return eleven_tts.say(text)
     h = hashlib.sha1(f"{text}|{SPEED}".encode()).hexdigest()[:12]

@@ -97,6 +97,6 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 
 ## Voice engine: ElevenLabs v3 (Hoang, 29 Oct 2026)
 - Hoang picked ElevenLabs **eleven_v3** with voice `gPiEpcKoaZywgOzc0Zn9` over Kokoro (round-3 blind test, `assets/renders/voicetest/round3/`)
-- Switch: set `TTS_ENGINE=eleven` before `make_reel.sh` / the puzzle-reel `build.sh`. Code: `scripts/eleven_tts.py` (pcm 24 kHz, cached per line in `tools/tts/cache-eleven/`, key `ELEVEN_LABS_TOKEN` from env, repo `.env` or `../tutoring-content/.env.local`, never printed)
-- Kokoro stays the default until Hoang confirms an active paid ElevenLabs plan (the free plan has no commercial licence; Starter covers only audio made while subscribed). Then make `eleven` the default and re-voice queued reels
+- Switch: `TTS_ENGINE` (default `eleven`) read by `make_reel.sh` / the puzzle-reel `build.sh`. Code: `scripts/eleven_tts.py` (pcm 24 kHz, cached per line in `tools/tts/cache-eleven/`, key `ELEVEN_LABS_TOKEN` from env, repo `.env` or `../tutoring-content/.env.local`, never printed)
+- **ElevenLabs is the default since 29 Oct 2026** (Hoang: Creator plan, "use elevenlab"). `TTS_ENGINE=kokoro` brings back the old Kokoro af_heart voice. If ElevenLabs returns 401/402/429, stop and report; don't fall back silently
 - v3 sets its own pace, so the SPEED argument does nothing with ElevenLabs

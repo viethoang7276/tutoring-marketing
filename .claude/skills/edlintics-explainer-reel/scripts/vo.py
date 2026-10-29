@@ -7,7 +7,7 @@ import json, re, sys, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 d = sys.argv[1]; speed = float(sys.argv[2]) if len(sys.argv) > 2 else 1.08; gap = float(sys.argv[3]) if len(sys.argv) > 3 else 0.2
 import os
-ELEVEN = os.environ.get("TTS_ENGINE") == "eleven"  # ElevenLabs v3 (eleven_tts.py); default stays Kokoro until Hoang's plan is active
+ELEVEN = os.environ.get("TTS_ENGINE", "eleven") == "eleven"  # ElevenLabs v3 by default (Hoang, 29 Oct 2026); TTS_ENGINE=kokoro for the old voice
 if ELEVEN:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import eleven_tts
 else:

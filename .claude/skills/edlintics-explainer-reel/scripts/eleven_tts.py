@@ -8,6 +8,9 @@ import numpy as np
 VOICE = os.environ.get("ELEVEN_VOICE", "gPiEpcKoaZywgOzc0Zn9")
 MODEL = os.environ.get("ELEVEN_MODEL", "eleven_v3")
 SR = 24000
+# v3 ignores voice_settings.speed (tested 29 Oct 2026), so pace is set here with a pitch-preserving stretch.
+# 1.12 keeps explainer reels near 40-47 s. The cache holds the untouched audio, so changing it costs no credits
+TEMPO = float(os.environ.get("ELEVEN_TEMPO", "1.12"))
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
 CACHE = os.path.join(REPO, "tools/tts/cache-eleven")
 
@@ -18,6 +21,12 @@ def _key():
             m = re.search(r"^ELEVEN_LABS_TOKEN=(.*)$", open(p).read(), re.M)
             if m: return m.group(1).strip().strip("\"'")
     raise SystemExit("ELEVEN_LABS_TOKEN not found (env, .env or ../tutoring-content/.env.local)")
+
+def _tempo(a):
+    import subprocess, imageio_ffmpeg
+    p = subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
+                        "-af", f"atempo={TEMPO}", "-f", "f32le", "-"], input=a.tobytes(), capture_output=True, check=True)
+    return np.frombuffer(p.stdout, dtype=np.float32).copy()
 
 def say(text):
     """One line of voice as float32 at 24 kHz, trimmed of leading and trailing silence"""
@@ -33,5 +42,6 @@ def say(text):
             raise SystemExit(f"ElevenLabs {e.code}: {e.read()[:300].decode(errors='replace')}")
         open(f, "wb").write(data)
     a = np.frombuffer(open(f, "rb").read(), dtype="<i2").astype(np.float32) / 32768.0
+    if TEMPO != 1.0: a = _tempo(a)
     nz = np.where(np.abs(a) > 0.01)[0]
     return a[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else a
