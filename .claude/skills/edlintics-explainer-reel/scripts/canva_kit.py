@@ -43,6 +43,23 @@ def run(*a):
     subprocess.run([str(x) for x in a], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
 
 
+LN = "loudnorm=I=-14:TP=-1.5:LRA=11"
+
+
+def measure(src):
+    """First loudnorm pass: the measured integrated loudness, true peak, range and threshold of src's audio."""
+    r = subprocess.run([FF, "-hide_banner", "-i", src, "-af", LN + ":print_format=json", "-f", "null", "-"], capture_output=True, text=True).stderr
+    return json.loads(r[r.rfind("{"):r.rfind("}") + 1])
+
+
+def loudnorm(src, dst):
+    """Two-pass EBU R128 normalisation of src's audio to -14 LUFS integrated, -1.5 dBTP, written to dst at 48 kHz (wav)."""
+    m = measure(src)
+    af = (f"{LN}:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}"
+          f":offset={m['target_offset']}:linear=true")
+    run(FF, "-y", "-loglevel", "error", "-i", src, "-vn", "-af", af, "-ar", "48000", "-c:a", "pcm_s16le", dst)
+
+
 def srt_time(t):
     ms = int(round(t * 1000)); return f"{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d},{ms % 1000:03d}"
 
@@ -63,13 +80,16 @@ def main(w, slug, out):
         run(FF, "-y", "-loglevel", "error", "-i", f"{out}/clips/{c['file']}", "-vf", f"crop={CROP[2]}:{CROP[3]}:{CROP[0]}:{CROP[1]}", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", f"{out}/clips-4x5/{c['file']}")
         lst.append(f"file '{out}/clips/{c['file']}'")
     open(f"{out}/clips/concat.txt", "w").write("\n".join(lst) + "\n")
-    # voice: pure voice (voiceover.wav, 24 kHz) resampled to 48 kHz, plus the per-line windows and the fx version
-    a, sr = sf.read(f"{w}/voiceover.wav", dtype="float32"); N = int(round(T["duration"] * sr)); a = np.pad(a, (0, max(0, N - len(a))))[:N]
-    sf.write(f"{out}/voice/voice-24k.wav", a, sr)
-    run(FF, "-y", "-loglevel", "error", "-i", f"{out}/voice/voice-24k.wav", "-ar", "48000", f"{out}/voice/voice.wav")
-    run(FF, "-y", "-loglevel", "error", "-i", f"{out}/voice/voice-24k.wav", "-ar", "48000", "-b:a", "192k", f"{out}/voice/voice.mp3")
+    # voice: pure voice (voiceover.wav, 24 kHz) padded to the video length, normalised to -14 LUFS / -1.5 dBTP (two-pass
+    # loudnorm; Canva and CapCut do not normalise), written at 48 kHz, plus the per-line windows (cut from the normalised
+    # track, so every line carries the same gain) and the fx version
+    a0, sr0 = sf.read(f"{w}/voiceover.wav", dtype="float32"); N = int(round(T["duration"] * sr0)); a0 = np.pad(a0, (0, max(0, N - len(a0))))[:N]
+    sf.write(f"{out}/voice/voice-24k.wav", a0, sr0)
+    loudnorm(f"{out}/voice/voice-24k.wav", f"{out}/voice/voice.wav")
+    run(FF, "-y", "-loglevel", "error", "-i", f"{out}/voice/voice.wav", "-b:a", "192k", f"{out}/voice/voice.mp3")
     os.remove(f"{out}/voice/voice-24k.wav")
-    run(FF, "-y", "-loglevel", "error", "-i", f"{w}/audio-voice.wav", "-ar", "48000", f"{out}/voice/voice-with-fx.wav")
+    loudnorm(f"{w}/audio-voice.wav", f"{out}/voice/voice-with-fx.wav")
+    a, sr = sf.read(f"{out}/voice/voice.wav", dtype="float32")
     lines = []
     for c, b in zip(C["clips"], T["beats"]):
         seg = a[int(round(c["start"] * sr)):int(round(c["end"] * sr))]
@@ -92,10 +112,13 @@ def main(w, slug, out):
     open(f"{out}/captions.srt", "w").write("\n".join(srt) + "\n"); open(f"{out}/lines.srt", "w").write("\n".join(srt2) + "\n")
     json.dump({"style": STYLE["caption"], "captions": caps}, open(f"{out}/captions.json", "w"), indent=1)
     shutil.copy(f"{HERE}/logo/edlintics-logo.png", f"{out}/logo/edlintics-logo.png")
-    for f, dst in ((f"{w}/{slug}.mp4", "preview-9x16.mp4"),):
-        if os.path.exists(f): shutil.copy(f, f"{out}/{dst}")
-    if os.path.exists(f"{w}/{slug}.mp4"):
-        run(FF, "-y", "-loglevel", "error", "-i", f"{w}/{slug}.mp4", "-vf", f"crop={CROP[2]}:{CROP[3]}:{CROP[0]}:{CROP[1]}", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart", f"{out}/preview-4x5.mp4")
+    if os.path.exists(f"{w}/{slug}.mp4"):   # previews: same picture, the mix normalised to -14 LUFS
+        loudnorm(f"{w}/{slug}.mp4", f"{out}/preview-mix.wav")
+        run(FF, "-y", "-loglevel", "error", "-i", f"{w}/{slug}.mp4", "-i", f"{out}/preview-mix.wav", "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", f"{out}/preview-9x16.mp4")
+        os.remove(f"{out}/preview-mix.wav")
+        run(FF, "-y", "-loglevel", "error", "-i", f"{out}/preview-9x16.mp4", "-vf", f"crop={CROP[2]}:{CROP[3]}:{CROP[0]}:{CROP[1]}", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart", f"{out}/preview-4x5.mp4")
+    for f in ("voice/voice.wav", "voice/voice.mp3", "voice/voice-with-fx.wav", "clean-9x16.mp4", "preview-9x16.mp4"):
+        m = measure(f"{out}/{f}"); print(f"loudness {f}: {m['input_i']} LUFS, true peak {m['input_tp']} dBTP")
     parts = {p.replace("endcard-", "").replace(".png", ""): f"endcard/{p}" for p in sorted(os.listdir(f"{out}/endcard"))}
     kit = {"title": S["meta"].get("title"), "slug": slug, "duration": T["duration"], "fps": C["fps"], "style": STYLE, "lines": lines, "endcard_files": parts,
            "files": {"clean_9x16": "clean-9x16.mp4", "clean_4x5": "clean-4x5.mp4", "voice": "voice/voice.wav", "voice_mp3": "voice/voice.mp3", "voice_fx": "voice/voice-with-fx.wav",

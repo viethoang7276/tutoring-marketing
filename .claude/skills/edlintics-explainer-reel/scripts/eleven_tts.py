@@ -44,4 +44,4 @@ def say(text):
     a = np.frombuffer(open(f, "rb").read(), dtype="<i2").astype(np.float32) / 32768.0
     if TEMPO != 1.0: a = _tempo(a)
     nz = np.where(np.abs(a) > 0.01)[0]
-    return a[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else a
+    return a[max(0, nz[0] - 600): nz[-1] + 3600] if len(nz) else a   # 25 ms before, 150 ms after the voiced part

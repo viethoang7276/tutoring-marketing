@@ -26,8 +26,9 @@ body.talk #logo{top:262px;width:200px;opacity:0.8}
 body.ad #cap{top:300px;height:220px}
 /* ad end card: a taller box with smaller gaps so term + key point + logo + cta pill + footnote never overflow (an overflowing
    flex column squashed the 10 px rule to nothing, 29 Oct 2026); children never shrink */
-body.ad #card{top:300px;height:1060px;gap:36px}
+body.ad #card{top:300px;height:1090px;gap:34px}
 body.ad #card .term{font-size:120px}
+body.ad #card .fn{font:700 44px/1.3 Inter,sans-serif;color:#334155}
 #card>*{flex:none}
 #card .fn{font:600 30px/1.4 Inter,sans-serif;color:#475569;max-width:900px;display:none;white-space:pre-line}
 /* end-card CTA pill (ads, 29 Oct 2026): the "Start at edlintics.com" line as a button, so the CTA stays on screen with the card */
@@ -133,6 +134,10 @@ function render(t){
     const cta=card.querySelector('.cta'); if(b.cta){ cta.textContent=b.cta; cta.style.display='block'; cta.style.opacity=clamp((ct-0.7)/0.15); cta.style.transform=`scale(${0.9+0.1*back(clamp((ct-0.7)/0.3))})`; }
     term.style.opacity=clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;
     card.querySelector('.kp').style.opacity=clamp((ct-0.35)/0.2); kp.style.setProperty('--w',(ease(clamp((ct-0.6)/0.5))*100)+'%');
+    if(D.layout==='ad'){   // ad (reviewer, 29 Oct 2026): the card is complete on its first frame; a 0.12 s settle of the whole card, highlight wipes from 0.3 s
+      [term,card.querySelector('.kp'),cta,fn].forEach(e=>{ e.style.opacity=1; e.style.transform='none'; });
+      card.style.transform=`scale(${(0.97+0.03*ease(clamp(ct/0.12))).toFixed(4)})`; card.style.transformOrigin='50% 50%';
+      kp.style.setProperty('--w','100%'); }   // highlight already in place: the card is complete on its first frame
     return;
   }
   card.style.display='none'; cap.style.display='flex'; logo.style.display='block';
@@ -141,9 +146,10 @@ function render(t){
   // line boil: new drawing every 2 frames at 24 fps
   const f=Math.floor(t*12)%3;
   document.getElementById('t1').setAttribute('seed',String(1+f)); document.getElementById('t2').setAttribute('seed',String(11+f)); document.getElementById('t3').setAttribute('seed',String(5+f));
-  for(const el of els){ const p=ease(clamp((sceneT-el._t0)/el._dur));
+  const AD=D.layout==='ad';
+  for(const el of els){ const p=AD?1:ease(clamp((sceneT-el._t0)/el._dur));   // ad (reviewer, 29 Oct 2026): fully drawn at frame 1
     if(el._draw) el.setAttribute('stroke-dashoffset',String(el._L*(1-p)));
-    const pf=clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));
+    const pf=AD?1:clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));   // ad: fills too are full at frame 1
     if(!el._draw) el.setAttribute('stroke-opacity',String(p)); }
   // item animation (anim "wobble"): a small sway about the item's own feet, +-amp degrees at hz; no camera move
   artBody.querySelectorAll('[data-anim="wobble"]').forEach(g=>{ const A=+g.dataset.amp, H=+g.dataset.hz, on=clamp((sceneT-0.2)/0.5);
@@ -151,15 +157,18 @@ function render(t){
   // steady frame: no push-in, pan or reframe
   const F=(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
   document.getElementById('cam').setAttribute('transform',`translate(${BX+BW/2} ${BY+BH/2}) scale(${F.s}) translate(${-F.cx} ${-F.cy})`);
-  document.getElementById('pop').setAttribute('transform','');
-  art.style.opacity=newScene?clamp((sceneT+1/24)/0.15):1;   // +1 frame: the first frame of a cut is never blank paper
+  if(AD){ const k=0.97+0.03*ease(clamp(sceneT/0.12)), cx=BX+BW/2, cy=BY+BH/2;   // whole-group settle, no fade: ink is full from the first frame
+    document.getElementById('pop').setAttribute('transform',newScene?`translate(${cx} ${cy}) scale(${k.toFixed(4)}) translate(${-cx} ${-cy})`:''); art.style.opacity=1; }
+  else { document.getElementById('pop').setAttribute('transform','');
+    art.style.opacity=newScene?clamp((sceneT+1/24)/0.15):1; }   // +1 frame: the first frame of a cut is never blank paper
   if(TALK){ const on=(D.env||[])[Math.floor(t*12)]===1;
     artBody.querySelectorAll('.mo').forEach(e=>e.style.display=on?'inline':'none'); artBody.querySelectorAll('.mc').forEach(e=>e.style.display=on?'none':'inline'); }
   // captions: current chunk of the current beat
   let c=b.chunks[0], ci=0; b.chunks.forEach((x,k)=>{ if(t>=x.t||k===0) {c=x; ci=k;} });
-  const key=c.key||'', txt=c.text, html=key&&txt.includes(key)?txt.replace(key,`<span class="k">${key}</span>`):txt;
+  let key=c.key||''; const txt=c.text; if(key&&txt.includes(key)){ const m=txt.slice(txt.indexOf(key)+key.length).match(/^[,.;:?!]+/); if(m) key+=m[0]; }
+  const html=key&&txt.includes(key)?txt.replace(key,`<span class="k">${key}</span>`):txt;
   if(capC.dataset.v!==txt){ capC.innerHTML=html; capC.dataset.v=txt; capC._t=Math.max(0,c.t); }
-  const ct=t-capC._t; capC.style.transform=`scale(${0.88+0.12*back(clamp(ct/0.16))})`; capC.style.opacity=(i===0&&ci===0)?1:clamp((ct+1/24)/0.06);
+  const ct=t-capC._t; capC.style.transform=`scale(${(AD?0.94+0.06*back(clamp(ct/0.12)):0.88+0.12*back(clamp(ct/0.16)))})`; capC.style.opacity=(AD||(i===0&&ci===0))?1:clamp((ct+1/24)/0.06);
   if(i===0&&ci===0) capC.style.transform='scale(1)';
   const k=capC.querySelector('.k'); if(k) k.style.setProperty('--w',(ease(clamp((ct-0.08)/0.28))*100)+'%');
 }

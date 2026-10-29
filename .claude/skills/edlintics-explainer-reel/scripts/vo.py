@@ -26,10 +26,13 @@ for b in beats:
         a, sr = k.create(b["text"], voice="af_heart", speed=speed, lang="en-us")
         a = a.astype(np.float32); nz = np.where(np.abs(a) > 0.01)[0]
         a = a[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else a  # trim Kokoro's own silence
+    n = int(0.03 * sr)   # 30 ms fade in and out per line, so a final consonant never ends on a hard gate
+    if len(a) > 2 * n: a[:n] *= np.linspace(0, 1, n, dtype=np.float32); a[-n:] *= np.linspace(1, 0, n, dtype=np.float32)
     dur = len(a) / sr; b["start"] = round(t, 3); b["end"] = round(t + dur, 3)
     ws = [w(c["text"]) for c in b.get("chunks", [])]; tot = sum(ws) or 1; acc = 0
     for c, x in zip(b.get("chunks", []), ws): c["t"] = round(t + dur * acc / tot - 0.08, 3); acc += x
-    out.append(a); t += dur; out.append(np.zeros(int(gap * sr), dtype=np.float32)); t += gap
+    g = float(b.get("gap", gap))   # a beat may ask for more room after its line ("gap": seconds), e.g. short hooks
+    out.append(a); t += dur; out.append(np.zeros(int(g * sr), dtype=np.float32)); t += g
 out.append(np.zeros(int(tail * sr), dtype=np.float32)); t += tail
 sf.write(d + "/voiceover.wav", np.concatenate(out), sr)
 json.dump({"duration": round(t, 2), "speed": speed, "beats": beats}, open(d + "/timing.json", "w"), indent=1)
