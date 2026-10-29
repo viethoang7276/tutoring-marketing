@@ -28,5 +28,5 @@ if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (li
     for k in range(1, len(env) - 1):   # a mouth that flaps every frame looks jittery: hold open frames for 2
         if env[k - 1] and not env[k] and env[k + 1]: env[k] = 1
 data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env,
-        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "footnote", "cta") if k in b} for b in T["beats"]]}
+        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "footnote", "cta", "fx") if k in b} for b in T["beats"]]}
 json.dump(data, open(f"{out}/scenes.json", "w")); print(len(data["beats"]), "beats,", len(scenes), "scenes")

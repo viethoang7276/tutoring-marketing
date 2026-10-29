@@ -599,6 +599,49 @@ def chip(x, y, s=1.0, label="Accounting", color="blue", **_):
                         f'<text x="0" y="15" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="44" fill="{tc}">{label}</text>'))
 
 
+def bubble(x, y, s=1.0, label="Hello?", side="left", **_):
+    """Chat bubble with a short line of text (ads only): white rounded box, tail to the left, right or down. Pops in with "at": "chunk:N"."""
+    import html as _h
+    lines = [_h.escape(x.strip()) for x in label.split("|")]   # "Course|problem" = two lines, the first bold-blue
+    w = 48 + 22 * max(len(x) for x in label.split("|")); h = 56 + 44 * len(lines)
+    tail = {"left": f"M{-w / 2 + 40:.0f} {h / 2 - 2} L{-w / 2 + 10:.0f} {h / 2 + 46} L{-w / 2 + 92:.0f} {h / 2 - 2}",
+            "right": f"M{w / 2 - 40:.0f} {h / 2 - 2} L{w / 2 - 10:.0f} {h / 2 + 46} L{w / 2 - 92:.0f} {h / 2 - 2}",
+            "down": f"M-26 {h / 2 - 2} L0 {h / 2 + 46} L26 {h / 2 - 2}", "none": ""}[side]
+    return _g(x, y, s, (f'<rect x="{-w / 2:.0f}" y="{-h / 2}" width="{w:.0f}" height="{h}" rx="30" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+                        + (f'<path d="{tail}" fill="{WHITE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                           f'<rect x="{-w / 2 + 6:.0f}" y="{h / 2 - 8}" width="{w - 12:.0f}" height="12" fill="{WHITE}"/>' if tail else "")
+                        + "".join(f'<text x="0" y="{-h / 2 + 46 + 44 * k:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="{800 if k == 0 and len(lines) > 1 else 700}" font-size="36" fill="{BLUE if k == 0 and len(lines) > 1 else INK}">{ln}</text>' for k, ln in enumerate(lines))))
+
+
+def bubble_box(x, y, s=1.0, label="Hello?", **_):
+    w = 48 + 22 * max(len(x) for x in label.split("|")); h = 56 + 44 * len(label.split("|"))
+    return [x - w / 2 * s, y - h / 2 * s, w * s, (h + 50) * s]
+
+
+def lamp(x, y, s=1.0, on=True, **_):
+    """A desk lamp; (x, y) = centre of its base on the desk. on=True adds a warm glow cone under the shade."""
+    glow = f'<path d="M-150 -60 L-10 -250 L120 -250 L220 -60 Z" fill="{GOLD}" opacity="0.22"/>' if on else ""
+    return _g(x, y, s, (glow + f'<ellipse cx="0" cy="0" rx="90" ry="22" fill="{NAVY}" stroke="{INK}" stroke-width="5"/>'
+                        f'<path d="M0 -10 L40 -230" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>'
+                        f'<path d="M-30 -230 L110 -230 L140 -300 L-60 -300 Z" fill="{NAVY}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+                        + (f'<ellipse cx="40" cy="-228" rx="68" ry="12" fill="{GOLD}" opacity="0.9"/>' if on else "")))
+
+
+def stat_card(x, y, s=1.0, big="400+", small="students", **_):
+    """Proof card (ads only): a white card with a big blue number and a small label under it. (x, y) = centre."""
+    return _g(x, y, s, (f'<rect x="-230" y="-150" width="460" height="300" rx="28" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
+                        f'<text x="0" y="10" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="124" fill="{BLUE}">{big}</text>'
+                        f'<text x="0" y="90" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="44" fill="{INK}">{small}</text>'))
+
+
+def lightbulb(x, y, s=1.0, **_):
+    """A lit lightbulb with short rays: the moment it clicks. (x, y) = centre of the bulb."""
+    rays = "".join(f'<line x1="{_f(120 * math.cos(a))}" y1="{_f(120 * math.sin(a))}" x2="{_f(160 * math.cos(a))}" y2="{_f(160 * math.sin(a))}" stroke="{GOLD}" stroke-width="9" stroke-linecap="round"/>' for a in [k * math.pi / 4 for k in range(8)] if abs(math.sin(a)) < 0.95 or math.sin(a) < 0)
+    return _g(x, y, s, (rays + f'<circle cx="0" cy="0" r="80" fill="#FFE49A" stroke="{INK}" stroke-width="6"/>'
+                        f'<path d="M-30 70 L-24 118 H24 L30 70 Z" fill="{GREY}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                        f'<path d="M-18 30 L0 -10 L18 30" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'))
+
+
 def chip_box(x, y, s=1.0, label="Accounting", **_):
     w = 40 + 26 * len(label)
     return [x - w / 2 * s, y - 42 * s, w * s, 84 * s]
@@ -973,6 +1016,7 @@ PRESETS = {
     "speech": (speech, None), "building": (building, building_box), "clock": (clock, None), "umbrella": (umbrella, None),
     "books": (books, None), "blocks": (blocks, None), "price_tag": (price_tag, None), "funnel": (funnel, funnel_box), "envelope": (envelope, None),
     "arrow": (arrow, arrow_box), "cross": (cross, cross_box), "check": (check, None),
+    "bubble": (bubble, bubble_box), "lamp": (lamp, None), "stat_card": (stat_card, None), "lightbulb": (lightbulb, None),
     "pizza": (pizza, None), "pizza_slice": (pizza_slice, None), "sandwich": (sandwich, None), "lemonade_cup": (lemonade_cup, None),
     "lemonade_stand": (lemonade_stand, lemonade_stand_box), "plate": (plate, None), "burger": (burger, None),
     "groceries_bag": (groceries_bag, None), "receipt": (receipt, None), "gym": (gym, gym_box), "bus": (bus, bus_box),
@@ -988,7 +1032,8 @@ HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": 
         "books": (125, 110), "blocks": (130, 125), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55),
         "pizza": (160, 160), "pizza_slice": (100, 165), "sandwich": (145, 90), "lemonade_cup": (100, 200), "plate": (155, 50),
         "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195),
-        "code_screen": (290, 262), "chessboard": (210, 210), "cost_pools": (315, 255), "scatter_plot": (275, 205)}
+        "code_screen": (290, 262), "chessboard": (210, 210), "cost_pools": (315, 255), "scatter_plot": (275, 205),
+        "lamp": (230, 160), "stat_card": (235, 155), "lightbulb": (165, 165)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 
@@ -1011,9 +1056,13 @@ def scene_body(spec):
     # items sit in <g class="content"> so the renderer can auto-fit the frame to the drawn subject (not the background)
     def _attrs(it):   # anim "wobble" (29 Oct 2026): the renderer sways the item +-amp degrees about its (x, y), hz times a second
         a = f' data-p="{it["p"]}"'
-        if it.get("anim"): a += f' data-anim="{it["anim"]}" data-ax="{_f(it["x"])}" data-ay="{_f(it["y"])}" data-amp="{it.get("amp", 4)}" data-hz="{it.get("hz", 1.1)}"'
+        if it.get("anim") or it.get("at"): a += f' data-ax="{_f(it["x"])}" data-ay="{_f(it["y"])}"'
+        if it.get("anim"): a += f' data-anim="{it["anim"]}" data-amp="{it.get("amp", 4)}" data-hz="{it.get("hz", 1.1)}"'
+        if it.get("at"): a += f' data-at="{it["at"]}"'   # "chunk:N": pops in when caption chunk N of this scene starts
         return a
-    return bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in spec.get("items", [])) + '</g>'
+    tint = spec.get("tint")   # {"color", "opacity"}: a wash over the whole scene (dim cool night, warm morning); drawn over the content
+    tint_svg = f'<rect class="tint" x="-3000" y="-3000" width="7080" height="7840" fill="{tint["color"]}" fill-opacity="{tint.get("opacity", 0.3)}" stroke="none"/>' if tint else ""
+    return bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in spec.get("items", [])) + '</g>' + tint_svg
 
 
 def scene_svg(spec):

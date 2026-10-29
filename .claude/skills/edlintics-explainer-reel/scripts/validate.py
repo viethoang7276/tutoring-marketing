@@ -21,7 +21,7 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
                      "min": {"hook": 1, "point": 3, "takeaway": 1, "endcard": 1}},
     # paid ad (29 Oct 2026): a hook, 2-3 selling points, one call to action, the end card
     "ad": {"order": ["hook", "point", "cta", "endcard"],
-           "min": {"hook": 1, "point": 2, "cta": 1, "endcard": 1}, "max": {"hook": 4, "point": 3, "cta": 1}},
+           "min": {"hook": 1, "point": 2, "cta": 1, "endcard": 1}, "max": {"hook": 5, "point": 5, "cta": 1}},   # 5 hooks: Hoang's urgent opener (29 Oct 2026)
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
@@ -29,7 +29,7 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allow
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
-        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(55, 75), allowed=(45, 85), secs=(21, 33), wps=2.3)}   # reviewer 29 Oct 2026: about 32 s at most
+        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(55, 75), allowed=(45, 85), secs=(21, 36), wps=2.3)}   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)

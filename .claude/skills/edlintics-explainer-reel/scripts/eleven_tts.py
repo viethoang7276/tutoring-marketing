@@ -22,14 +22,15 @@ def _key():
             if m: return m.group(1).strip().strip("\"'")
     raise SystemExit("ELEVEN_LABS_TOKEN not found (env, .env or ../tutoring-content/.env.local)")
 
-def _tempo(a):
+def _tempo(a, tempo):
     import subprocess, imageio_ffmpeg
     p = subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
-                        "-af", f"atempo={TEMPO}", "-f", "f32le", "-"], input=a.tobytes(), capture_output=True, check=True)
+                        "-af", f"atempo={tempo}", "-f", "f32le", "-"], input=a.tobytes(), capture_output=True, check=True)
     return np.frombuffer(p.stdout, dtype=np.float32).copy()
 
-def say(text):
-    """One line of voice as float32 at 24 kHz, trimmed of leading and trailing silence"""
+def say(text, tempo=None):
+    """One line of voice as float32 at 24 kHz, trimmed of leading and trailing silence. tempo overrides ELEVEN_TEMPO for this line"""
+    tp = TEMPO if tempo is None else float(tempo)
     os.makedirs(CACHE, exist_ok=True)
     f = os.path.join(CACHE, hashlib.sha1(f"{MODEL}|{VOICE}|{text}".encode()).hexdigest()[:16] + ".pcm")
     if not os.path.exists(f):
@@ -42,6 +43,6 @@ def say(text):
             raise SystemExit(f"ElevenLabs {e.code}: {e.read()[:300].decode(errors='replace')}")
         open(f, "wb").write(data)
     a = np.frombuffer(open(f, "rb").read(), dtype="<i2").astype(np.float32) / 32768.0
-    if TEMPO != 1.0: a = _tempo(a)
+    if tp != 1.0: a = _tempo(a, tp)
     nz = np.where(np.abs(a) > 0.01)[0]
     return a[max(0, nz[0] - 600): nz[-1] + 3600] if len(nz) else a   # 25 ms before, 150 ms after the voiced part

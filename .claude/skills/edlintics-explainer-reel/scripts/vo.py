@@ -21,7 +21,7 @@ def w(s):  # spoken weight of a caption chunk: letters, numbers read as words
     return max(1, len(re.sub(r"[^A-Za-z]", "", s)))
 for b in beats:
     if ELEVEN:
-        a, sr = eleven_tts.say(b["text"]), eleven_tts.SR  # already trimmed; speed is the voice's own
+        a, sr = eleven_tts.say(b.get("say") or b["text"], b.get("tempo")), eleven_tts.SR   # "tempo": per-beat pace (struggle lines slower)  # "say": TTS spelling override (e.g. Ed-lin-tics); captions and checks use "text"
     else:
         a, sr = k.create(b["text"], voice="af_heart", speed=speed, lang="en-us")
         a = a.astype(np.float32); nz = np.where(np.abs(a) > 0.01)[0]

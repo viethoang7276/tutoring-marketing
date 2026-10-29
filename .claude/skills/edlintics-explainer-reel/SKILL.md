@@ -123,6 +123,16 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 - **Dizzy mood** has eye-sized spirals (readable on a phone) and the ring of stars; pair it with a small `tilt` and the wobble
 - **Ad end card box:** y 300-1360 with 36 px gaps and the term at 120 px (the reel card is y 330-1330), so term + key point + logo + cta pill + footnote fit without the flex column squashing the rule. Verified boxes for the tutoring ad: term y 307, rule 710, key point 756, logo 1038, cta 1160, footnote 1302
 
+## Story ads (emotional arc, 29 Oct 2026)
+The tutoring ad v4 follows a struggle → turn → help → joy → CTA arc (Hoang's reference: the Tutorful TV ad). Engine pieces added for it, all ad-only unless noted:
+- **Scene `tint`:** `"tint": {"color": "#17315F", "opacity": 0.4}` washes the whole scene (dim cool night; `#FFD27A` at 0.08-0.18 for warm scenes). Drawn over the content, inside the art
+- **Pop-in on a caption chunk:** `"at": "chunk:N"` on any item shows it (0.2 s fade, small overshoot) when chunk N starts, where N counts chunks across the consecutive beats that share the scene (a scene used by two beats keeps counting). Used for the chat bubbles, the proof cards and the lightbulb
+- **Beat `fx: "wipe"`:** a #467DE3 sweep that covers the frame at that beat's cut (0.28 s in, 0.28 s out), the light switching on at the turn
+- **Per-beat voice:** `"tempo"` (1.05 for the struggle lines, 1.12 elsewhere) and `"say"` (the text sent to the voice when it must differ from the caption line: v3 audio tags like `[softly]`, `[sighs]`, `[warmly]`, `[cheerfully]`, or the spelling `Ed-lin-tics` so the name is read ED-lin-tiks). The validator checks `text`; `say` may add at most two words. Ellipses in `say` cost about a second each with this voice; use commas for short pauses
+- **New props:** `bubble` (chat bubble with text; `"Course|problem"` makes two lines, course bold-blue; side left/right/down), `lamp` (on/off, with a glow), `stat_card` (big blue number + label), `lightbulb`. `window` has weather night/clear, `clock` takes a float hour (0.5 = just past midnight)
+- **Pronunciation listen-check:** no local Whisper and the ElevenLabs key has no speech-to-text permission, so variants are generated into `video/pronunciation/` and put in `preview.html` for Hoang to hear
+- **No exams anywhere** in this ad (voice, captions, bubbles, props); courses are named as on the students' timetable, never the school
+
 ## Editable kit for Canva and CapCut (29 Oct 2026)
 Hoang assembles ads as layers, not as one flat MP4. After `make_reel.sh`, run
 ```
