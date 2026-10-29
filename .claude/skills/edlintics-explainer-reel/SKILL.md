@@ -94,3 +94,9 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 - The layout is centred for the 3:4 grid crop (y 240-1680), which Instagram and TikTok profiles show.
 - Use the cover wherever the platform allows: the Instagram and Facebook reel cover, the YouTube Short thumbnail, the TikTok cover (choose it at upload) and the LinkedIn video thumbnail.
 - **Editable Canva template (26 Oct 2026):** "Shorts cover template - explainer reels", design `DAHZGJ1m_8E` (folder FAHYcHrS5PE). It has one 1080x1920 page per reel: the art PNG as the background (made by `make_cover.js <t> art.png "" ""`), with the kicker (40 px bold #467DE3) and the title (100 px bold #0F172A) as editable text boxes at top 372 and 430, left 60, width 960. For a new reel, upload the art with create-upload-url, add_page, update_fill the background and add the two texts. Hoang may edit the covers in Canva; export them from there when he has.
+
+## Voice engine: ElevenLabs v3 (Hoang, 29 Oct 2026)
+- Hoang picked ElevenLabs **eleven_v3** with voice `gPiEpcKoaZywgOzc0Zn9` over Kokoro (round-3 blind test, `assets/renders/voicetest/round3/`)
+- Switch: set `TTS_ENGINE=eleven` before `make_reel.sh` / the puzzle-reel `build.sh`. Code: `scripts/eleven_tts.py` (pcm 24 kHz, cached per line in `tools/tts/cache-eleven/`, key `ELEVEN_LABS_TOKEN` from env, repo `.env` or `../tutoring-content/.env.local`, never printed)
+- Kokoro stays the default until Hoang confirms an active paid ElevenLabs plan (the free plan has no commercial licence; Starter covers only audio made while subscribed). Then make `eleven` the default and re-voice queued reels
+- v3 sets its own pace, so the SPEED argument does nothing with ElevenLabs

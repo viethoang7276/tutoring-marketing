@@ -48,6 +48,9 @@ _kokoro = None
 def tts(text, cache):
     """Kokoro af_heart clip, trimmed of its own leading and trailing silence. Cached by text and speed."""
     global _kokoro
+    if os.environ.get("TTS_ENGINE") == "eleven":  # ElevenLabs v3, cached in tools/tts/cache-eleven/
+        sys.path.insert(0, f"{REPO}/.claude/skills/edlintics-explainer-reel/scripts"); import eleven_tts
+        return eleven_tts.say(text)
     h = hashlib.sha1(f"{text}|{SPEED}".encode()).hexdigest()[:12]
     f = f"{cache}/vo-{h}.wav"
     if os.path.exists(f):
