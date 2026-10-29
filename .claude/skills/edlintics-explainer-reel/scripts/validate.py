@@ -23,7 +23,7 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allow
         "life-of": dict(chunk=(2, 5), beats=(9, 13), target=(95, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05)}
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
-EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF️]")
+EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
 NOT_USD = re.compile(r"[€£¥₫]|\b(euros?|eur|pounds? sterling|gbp|dong|vnd)\b", re.I)
 REQ_META = ["type", "term", "title", "slug", "caption", "caption_x", "first_comment", "threadsTopic", "threadsReason", "maths_check"]
@@ -88,7 +88,8 @@ def main(path):
             if term and m.get("term") and term.lower().rstrip("s") != str(m["term"]).lower().rstrip("s"): E.append(f'{where}: end card term "{term}" differs from meta.term "{m.get("term")}"')
             if kp and not 4 <= len(words(kp)) <= 12: E.append(f"{where}: key point has {len(words(kp))} words (4-12)")
             if kp.rstrip().endswith("."): E.append(f"{where}: key point ends with a full stop")
-            if term and term.lower() not in tx.lower(): E.append(f"{where}: the voice must say the term on the end card")
+            _n = lambda z: re.sub(r"[/\-]", " ", z.lower())  # "A-B testing" says "A/B testing" (Kokoro reads "/" as "slash")
+            if term and _n(term) not in _n(tx): E.append(f"{where}: the voice must say the term on the end card")
             sec = len(words(tx)) / WPS_T
             if not 2.2 <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
