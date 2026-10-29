@@ -1,0 +1,183 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Lato:wght@400;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Highlighter reel (1080x1920): a printed Edlintics sheet on a desk, a drawn hand highlights it step by step.
+   Safe areas: sheet y 96-1400, captions y 1425-1565 on the desk, bottom ~355 px left for the app overlay */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;background:#c8904f;overflow:hidden}
+#stage{position:absolute;left:0;top:0}
+#cap{position:absolute;left:30px;right:30px;top:1425px;height:140px;display:flex;align-items:center;justify-content:center}
+#cap .c{white-space:nowrap;font:900 98px/1 Inter,sans-serif;color:#FFFFFF;-webkit-text-stroke:16px #0F172A;paint-order:stroke fill;letter-spacing:-0.01em;transform-origin:50% 60%}
+#cap .k{color:#FFD45C}
+#end{position:absolute;inset:0;background:#FFFFFF;opacity:0}
+#end img{position:absolute;left:290px;top:330px;width:500px}
+#end .term{position:absolute;left:40px;right:40px;top:560px;text-align:center;font:800 132px/1.05 Inter,sans-serif;color:#0F172A;letter-spacing:-0.03em}
+#end .rule{position:absolute;left:450px;top:740px;width:180px;height:10px;background:linear-gradient(90deg,#467DE3,#60A5FA);border-radius:5px}
+#end .kp{position:absolute;left:70px;right:70px;top:800px;text-align:center;font:700 66px/1.2 Inter,sans-serif;color:#0F172A;text-wrap:balance}
+#end .kp span{-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#end .kp span{background-image:linear-gradient(transparent 52%,#FFD45C 52%,#FFD45C 92%,transparent 92%);background-repeat:no-repeat;background-size:var(--w,0%) 100%;padding:0 6px}
+#end .fw{position:absolute;left:90px;right:90px;top:1060px;text-align:center;font:600 60px/1.2 'Source Serif 4',Georgia,serif;color:#334155;text-wrap:balance}
+</style></head><body>
+<svg id="stage" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="woodbase" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#DDAE72"/><stop offset=".55" stop-color="#D19B5C"/><stop offset="1" stop-color="#C38849"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0022 0.085" numOctaves="4" seed="11" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.24  0 0 0 0 0.09  1.6 0 0 0 -0.62" result="streaks"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="f"/>
+      <feColorMatrix in="f" type="matrix" values="0 0 0 0 0.3  0 0 0 0 0.18  0 0 0 0 0.06  0 0 0 0.35 -0.08" result="fine"/>
+      <feMerge><feMergeNode in="streaks"/><feMergeNode in="fine"/></feMerge>
+    </filter>
+    <radialGradient id="vig" cx=".5" cy=".42" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#2a1606" stop-opacity=".28"/></radialGradient>
+    <filter id="papershadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#3b2208" flood-opacity=".35"/></filter>
+    <filter id="handshadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow id="hsd" dx="12" dy="16" stdDeviation="7" flood-color="#2a1606" flood-opacity=".28"/></filter>
+    <filter id="papergrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="9"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.5  0 0 0 0.10 0"/>
+    </filter>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#woodbase)"/>
+  <rect width="1080" height="1920" filter="url(#grain)"/>
+  <rect width="1080" height="1920" fill="url(#vig)"/>
+  <g id="sheetg" transform="translate(60 96) rotate(-0.7 480 650)">
+    <rect width="960" height="1300" fill="#fff" filter="url(#papershadow)"/>
+    <g id="sheet"></g>
+    <rect width="960" height="1300" filter="url(#papergrain)" style="mix-blend-mode:multiply" pointer-events="none"/>
+    <g id="hl" style="mix-blend-mode:multiply"></g>
+  </g>
+  <!-- Drawn hand with a highlighter. Local coords: nib tip at 0,0, marker along +x; flat line art, ink #0F172A 5 px, white fill, blue cuff -->
+  <g id="hand" filter="url(#handshadow)" stroke="#0F172A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="244" y="-82" width="1300" height="96" fill="#DCE6F7"/>
+    <rect x="208" y="-88" width="40" height="108" rx="6" fill="#467DE3"/>
+    <rect x="98" y="-96" width="122" height="124" rx="46" fill="#FFFFFF"/>
+    <path d="M150 -88 q10 8 0 18 M176 -84 q10 8 0 18" fill="none" stroke-width="4"/>
+    <path d="M0 -9 L24 -15 L24 15 L6 10 Z" fill="#E9B200"/>
+    <rect x="22" y="-19" width="20" height="38" rx="3" fill="#E5E9F0"/>
+    <rect x="40" y="-23" width="252" height="46" rx="7" fill="#FFD45C"/>
+    <line x1="62" y1="-10" x2="278" y2="-10" stroke="#FFF0B3" stroke-width="6"/>
+    <rect x="290" y="-21" width="24" height="42" rx="8" fill="#E9B200"/>
+    <rect x="58" y="8" width="84" height="32" rx="16" fill="#FFFFFF" transform="rotate(8 58 8)"/>
+    <rect x="50" y="-48" width="92" height="32" rx="16" fill="#FFFFFF"/>
+  </g>
+</svg>
+<div id="cap"><div class="c"></div></div>
+<div id="end"><img src="edlintics-logo.png"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><div class="fw"></div></div>
+<script>
+let T, acts = [], capC, sheetG, hand, hsd;
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ramp = (t, a, b) => clamp((t - a) / (b - a));
+const ease = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+const back = x => 1 + 2.2 * Math.pow(x - 1, 3) + 1.2 * Math.pow(x - 1, 2);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const NS = 'http://www.w3.org/2000/svg';
+
+async function init() {
+  T = await (await fetch('timeline.json')).json();
+  sheetG = $('#sheet'); hand = $('#hand'); hsd = $('#hsd'); capC = $('#cap .c');
+  const doc = new DOMParser().parseFromString(T.sheet_svg, 'image/svg+xml').documentElement;
+  for (const n of [...doc.childNodes]) sheetG.appendChild(document.importNode(n, true));
+  $('#end .term').textContent = T.endcard.term; $('#end .kp span').textContent = T.endcard.keypoint; $('#end .fw').textContent = T.endcard.follow;
+  await Promise.all(['800 78px Inter', '600 34px Inter', '700 28px Inter', '500 18px Inter', '900 98px Inter', '700 66px Inter',
+    '700 28px Lato', '900 28px Lato', '600 60px "Source Serif 4"'].map(f => document.fonts.load(f)));
+  await document.fonts.ready;
+  const curveCache = {};
+  const samplePath = sel => {   // dense points along a path, with cumulative length
+    if (curveCache[sel]) return curveCache[sel];
+    const p = sheetG.querySelector(sel); if (!p) throw new Error('not found: ' + sel);
+    const L = p.getTotalLength(), N = Math.ceil(L / 3), pts = [];
+    for (let k = 0; k <= N; k++) { const q = p.getPointAtLength(L * k / N); pts.push([q.x, q.y, L * k / N]); }
+    return curveCache[sel] = { L, pts };
+  };
+  const center = sel => { const e = sheetG.querySelector(sel); if (!e) throw new Error('not found: ' + sel); const b = e.getBBox(); return [b.x + b.width / 2, b.y + b.height / 2]; };
+  const traced = {};
+  acts = T.actions.map(a => {
+    let pts, width;
+    if (a.mark) {
+      const e = sheetG.querySelector(a.mark); if (!e) throw new Error('mark target not found: ' + a.mark);
+      const b = e.getBBox(), pad = a.pad ?? 8, h = b.height * 0.78, y = b.y + b.height * 0.56, n = 24;
+      pts = []; for (let k = 0; k <= n; k++) { const x = b.x - pad + (b.width + 2 * pad) * k / n; pts.push([x, y + 1.6 * Math.sin(k * 0.9)]); }
+      width = h;
+    } else {
+      const P = samplePath(a.trace), to = center(a.to);
+      let best = 0, bd = 1e9; P.pts.forEach((q, k) => { const d = (q[0] - to[0]) ** 2 + (q[1] - to[1]) ** 2; if (d < bd) { bd = d; best = k; } });
+      const from = a.from ? (() => { const c = center(a.from); let b2 = 0, d2 = 1e9; P.pts.forEach((q, k) => { const d = (q[0] - c[0]) ** 2 + (q[1] - c[1]) ** 2; if (d < d2) { d2 = d; b2 = k; } }); return b2; })() : (traced[a.trace] || 0);
+      pts = P.pts.slice(from, best + 1).map(q => [q[0], q[1]]); traced[a.trace] = best; width = a.width || 30;
+    }
+    let len = 0; const cum = [0]; for (let k = 1; k < pts.length; k++) { len += Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]); cum.push(len); }
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L'));
+    path.setAttribute('fill', 'none'); path.setAttribute('stroke', '#FFD84A'); path.setAttribute('stroke-opacity', '.85');
+    path.setAttribute('stroke-width', width); path.setAttribute('stroke-linecap', a.mark ? 'butt' : 'round'); path.setAttribute('stroke-linejoin', 'round');
+    path.style.strokeDasharray = `${len + 1} ${len + 1}`; path.style.strokeDashoffset = len + 1;
+    $('#hl').appendChild(path);
+    return { ...a, pts, cum, len, path };
+  });
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  return T.dur;
+}
+
+// point at fraction f of an action's polyline, in sheet coordinates
+function at(a, f) {
+  const d = a.len * f; let k = 1; while (k < a.cum.length - 1 && a.cum[k] < d) k++;
+  const s = (d - a.cum[k - 1]) / ((a.cum[k] - a.cum[k - 1]) || 1), p = a.pts[k - 1], q = a.pts[k] || p;
+  return [p[0] + (q[0] - p[0]) * s, p[1] + (q[1] - p[1]) * s];
+}
+function toScreen(p) { const m = $('#sheetg').getCTM(); return [m.a * p[0] + m.c * p[1] + m.e, m.b * p[0] + m.d * p[1] + m.f]; }
+
+function handPos(t) {   // returns [x, y, lift] in screen coords
+  const A = acts, first = A[0], last = A[A.length - 1];
+  const start = toScreen(at(first, 0)), REST = [935, 1425];   // the hand rests low on the right in the opening frame, clear of the title
+  if (t <= first.t0) { const m = ease(ramp(t, first.t0 - 0.45, first.t0 - 0.02));
+    return [REST[0] + (start[0] - REST[0]) * m, REST[1] + (start[1] - REST[1]) * m - 18 * Math.sin(Math.PI * m), m < 1 ? 0.6 + 0.4 * Math.sin(Math.PI * m) : 0]; }
+  for (let k = 0; k < A.length; k++) {
+    const a = A[k];
+    if (t >= a.t0 && t <= a.t1) { const f = a.mark ? ease(ramp(t, a.t0, a.t1)) : ramp(t, a.t0, a.t1); return [...toScreen(at(a, a.mark ? f : 0.15 * f + 0.85 * ease(f))), 0]; }
+    const b = A[k + 1];
+    if (b && t > a.t1 && t < b.t0) {
+      const P0 = toScreen(at(a, 1)), P1 = toScreen(at(b, 0)), gap = b.t0 - a.t1, mv = Math.min(0.5, gap * 0.85);
+      const m = ease(ramp(t, b.t0 - mv, b.t0 - 0.02)), lift = Math.sin(Math.PI * m) + (gap > 1.2 ? 0.25 * ramp(t, a.t1, a.t1 + 0.3) * (1 - m) : 0);
+      const idle = gap > 1.0 ? 3 * Math.sin((t - a.t1) * 2.4) * (1 - m) : 0;
+      return [P0[0] + (P1[0] - P0[0]) * m + idle, P0[1] + (P1[1] - P0[1]) * m - 18 * Math.sin(Math.PI * m) + idle * 0.6, Math.min(1, lift)];
+    }
+  }
+  const P = toScreen(at(last, 1)), ex = ease(ramp(t, last.t1 + 0.3, T.end_t + 0.1));
+  return [P[0] + 520 * ex, P[1] + 760 * ex, Math.min(1, ramp(t, last.t1, last.t1 + 0.2))];
+}
+
+function render(t) {
+  const endIn = ease(ramp(t, T.end_t, T.end_t + 0.4)), loop = t > T.dur - 0.45;
+  const tv = loop ? 0 : t;   // final 0.45 s: the end card fades out onto the clean opening frame (seamless loop)
+  acts.forEach(a => { const f = a.mark ? ease(ramp(tv, a.t0, a.t1)) : ramp(tv, a.t0, a.t1); const g = a.mark ? f : 0.15 * f + 0.85 * ease(f);
+    a.path.style.strokeDashoffset = (a.len + 1) * (1 - g); });
+  const [x, y, lift] = handPos(tv);
+  const ang = 33 + clamp((560 - x) / 600, -0.6, 0.8) * 9;   // the wrist pivots a little as the hand moves across
+  const s = 1 + 0.035 * lift;
+  hand.setAttribute('transform', `translate(${(x - 10 * lift).toFixed(1)} ${(y - 12 * lift).toFixed(1)}) rotate(${ang.toFixed(2)}) scale(${s})`);
+  hsd.setAttribute('dx', 12 + 14 * lift); hsd.setAttribute('dy', 16 + 18 * lift); hsd.setAttribute('stdDeviation', 7 + 5 * lift);
+  // captions: current chunk
+  let cur = null; for (const c of T.chunks) if (tv >= c.t && tv < c.t_end) cur = c;
+  if (tv >= T.end_t || !cur) { capC.style.opacity = 0; }
+  else {
+    const html = cur.key ? esc(cur.text).replace(esc(cur.key), `<span class="k">${esc(cur.key)}</span>`) : esc(cur.text);
+    if (capC.dataset.v !== cur.text) { capC.innerHTML = html; capC.dataset.v = cur.text; const w = capC.scrollWidth; capC.style.fontSize = w > 1000 ? (98 * 1000 / w) + 'px' : ''; }
+    const ct = tv - cur.t; capC.style.opacity = clamp(ct / 0.05); capC.style.transform = `scale(${0.86 + 0.14 * back(clamp(ct / 0.16))})`;
+  }
+  $('#end').style.opacity = endIn * (loop ? 1 - ease(ramp(t, T.dur - 0.45, T.dur)) : 1);
+  $('#end .kp span').style.setProperty('--w', (ease(ramp(t, T.end_kp_t, T.end_kp_t + 0.6)) * 100) + '%');
+  document.body.offsetHeight;
+}
+
+// cover: frame at time t with a title panel over the sheet head, inside the 3:4 grid crop (y 240-1680)
+function cover(kicker, title) {
+  capC.style.opacity = 0; $('#end').style.opacity = 0;
+  const d = document.createElement('div');
+  d.style.cssText = 'position:absolute;left:60px;right:60px;top:250px;padding:34px 40px 40px;background:#fff;border-radius:28px;box-shadow:0 14px 40px rgba(40,20,5,.35);text-align:center';
+  d.innerHTML = `<div style="font:800 40px/1.1 Inter,sans-serif;color:#467DE3;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px">${esc(kicker)}</div>` +
+    `<div style="font:900 100px/1.04 Inter,sans-serif;color:#0F172A;letter-spacing:-0.02em;text-wrap:balance">${esc(title).replace(/\*(.+?)\*/g, '<span style="background-image:linear-gradient(transparent 55%,#FFD45C 55%,#FFD45C 93%,transparent 93%);padding:0 8px">$1</span>')}</div>`;
+  document.body.appendChild(d);
+}
+window.init = init; window.render = render; window.cover = cover;
+</script></body></html>
