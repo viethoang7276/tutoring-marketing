@@ -100,3 +100,14 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 - Switch: `TTS_ENGINE` (default `eleven`) read by `make_reel.sh` / the puzzle-reel `build.sh`. Code: `scripts/eleven_tts.py` (pcm 24 kHz, cached per line in `tools/tts/cache-eleven/`, key `ELEVEN_LABS_TOKEN` from env, repo `.env` or `../tutoring-content/.env.local`, never printed)
 - **ElevenLabs is the default since 29 Oct 2026** (Hoang: Creator plan, "use elevenlab"). `TTS_ENGINE=kokoro` brings back the old Kokoro af_heart voice. If ElevenLabs returns 401/402/429, stop and report; don't fall back silently
 - v3 sets its own pace, so the SPEED argument does nothing with ElevenLabs
+
+## Paid ads: `meta.type: "ad"` (29 Oct 2026)
+- For paid Meta ad creatives only (first use: `assets/renders/ads/tutoring-2026-10/video/script.json`). The other types are unchanged
+- Roles in order: `hook` (1-4, short questions work as a problem montage), `point` (2-3), `cta` (exactly 1), `endcard` (required, last). 5-10 beats, 22-30 s, 45-95 words, caption chunks 2-5 words. A point may run 5-7 s (one line, one scene)
+- Only `type`, `term`, `title` and `slug` are required in meta: the ad text lives in Ads Manager, not in caption or first comment
+- Tutoring and "book a session" are allowed in ads (the organic no-tutoring rule stays for every other type). No price, no outcome promises, no exclamation points, no trailing full stops, US dollars
+- End card: optional `"footnote"` (1-2 lines split by `\n`, at most 90 characters each, no closing full stop), shown small under the logo, for example the IE independence line or "Interactive courses opening soon"
+- Layout `ad`: the caption band moves down to y 300-520 so the captions, art and end card all sit inside the central 4:5 safe area (y 285-1635) that Meta's feed crop keeps
+- Pace: build with `ELEVEN_TEMPO=1.24 VO_GAP=0.1 make_reel.sh ...` (`VO_GAP` is the pause between beats, default 0.2). At the default 1.12 the 80-word tutoring ad ran 34.8 s
+- New presets: Ledger mood `dizzy` (spiral eyes, wavy mouth, a ring of three stars over his head; body and arms unchanged), `chip` (labelled pill; the one prop with text in the art, for subject chips), `exam_sheet`, `cost_pools` (ABC costing), `scatter_plot` (regression), whiteboard drawing `shift` (supply curve moves), laptop screens `call` (generic online lesson: a student tile and a shared board, no real app UI) and `lesson` (interactive lesson card)
+- Wide props next to Ledger got cropped by Ledger-first framing; set `"frame": "wide"` on those scenes and check the contact sheet

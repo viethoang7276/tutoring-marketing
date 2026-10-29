@@ -22,6 +22,9 @@ body.talk #cap{top:1110px;height:230px;left:40px;right:40px}
 body.talk #cap .c{font:900 112px/1.05 Inter,sans-serif;color:#FFFFFF;-webkit-text-stroke:16px #0F172A;paint-order:stroke fill;letter-spacing:0}
 body.talk #cap .k{background:none;color:#FFD45C;padding:0}
 body.talk #logo{top:262px;width:200px;opacity:0.8}
+/* ad layout (paid ads, 29 Oct 2026): caption band moved down into the central 4:5 safe area (y 285-1635) */
+body.ad #cap{top:300px;height:220px}
+#card .fn{font:600 30px/1.4 Inter,sans-serif;color:#475569;max-width:900px;display:none;white-space:pre-line}
 </style></head><body>
 <div id="stage">
 <svg id="paper" width="1080" height="1920" viewBox="0 0 1080 1920">
@@ -62,7 +65,7 @@ body.talk #logo{top:262px;width:200px;opacity:0.8}
 </svg>
 <div id="cap"><div class="c"></div></div>
 <img id="logo" src="logo/edlintics-logo.png">
-<div id="card"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><img src="logo/edlintics-logo.png"></div>
+<div id="card"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><img src="logo/edlintics-logo.png"><div class="fn"></div></div>
 </div>
 <script>
 // Beat-based renderer, NO camera moves (Hoang, 25 Oct 2026): each beat shows its scene as one steady frame
@@ -74,6 +77,7 @@ let D=null, curImg=null, els=[], cut=0, TALK=false;
 let BX=40, BW=1000, BY=530, BH=780;
 const artBody=document.getElementById('artBody'), capC=document.querySelector('#cap .c');
 async function init(){ D=await (await fetch('scenes.json')).json(); await document.fonts.ready;
+  if(D.layout==='ad') document.body.classList.add('ad');
   if(D.layout==='talk'){ TALK=true; document.body.classList.add('talk'); BX=0; BW=1080; BY=0; BH=1920; }
   return D.duration; }
 const clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>1-Math.pow(1-x,3), mix=(a,b,p)=>a.map((v,i)=>v+(b[i]-v)*p);
@@ -82,7 +86,7 @@ function beatAt(t){ let i=0; D.beats.forEach((b,k)=>{ if(t>=(k===0?0:b.start-0.0
 function load(img){
   const s=D.scenes[img];
   artBody.innerHTML=(s.wall?'<rect x="-3000" y="-3000" width="7080" height="4480" fill="#E8F0FC" opacity="0.55"/>':'')+s.body;
-  els=[...artBody.querySelectorAll('path,line,rect,circle,ellipse,polygon,polyline')].filter((e,k)=>!(s.wall&&k===0));
+  els=[...artBody.querySelectorAll('path,line,rect,circle,ellipse,polygon,polyline,text')].filter((e,k)=>!(s.wall&&k===0));
   const n=els.length;
   els.forEach((e,k)=>{ const st=e.getAttribute('stroke'), dashed=e.getAttribute('stroke-dasharray');
     let L=0; try{L=e.getTotalLength();}catch(_){}
@@ -111,6 +115,7 @@ function render(t){
     const ct=t-a; art.style.opacity=0; cap.style.display='none'; logo.style.display='none'; card.style.display='flex';
     const term=card.querySelector('.term'), kp=card.querySelector('.kp span');
     if(term.textContent!==b.term){ term.textContent=b.term; kp.textContent=b.keypoint; }
+    const fn=card.querySelector('.fn'); if(b.footnote){ fn.textContent=b.footnote; fn.style.display='block'; fn.style.opacity=clamp((ct-0.6)/0.3); }
     term.style.opacity=clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;
     card.querySelector('.kp').style.opacity=clamp((ct-0.35)/0.2); kp.style.setProperty('--w',(ease(clamp((ct-0.6)/0.5))*100)+'%');
     return;

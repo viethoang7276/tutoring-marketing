@@ -20,7 +20,7 @@ def _f(v):
 
 
 # ---------------------------------------------------------------- Ledger (from assets/brand/ledger.svg)
-MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk"]
+MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk", "dizzy"]
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
 OUTFITS = ["suit", "student", "casual", "sales"]
@@ -40,6 +40,7 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         "frown": "M107 140 Q120 130 133 140", "sad": "M107 140 Q120 131 133 140",
         "flat": "M108 137 L132 137", "worried": "M108 139 Q114 134 120 138 Q126 142 132 137",
         "tired": "M110 138 L130 138", "angry": "M108 139 L132 139",
+        "dizzy": "M106 139 Q111 133 116 139 Q121 145 126 139 Q131 133 134 138",
     }
     if mood == "talk":  # two mouths: the renderer shows "mo" (open) while the voice is loud and "mc" (closed) in pauses
         m = (f'<g class="mc"><path d="M108 136 Q120 145 132 136" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/></g>'
@@ -48,7 +49,12 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     else:
         m = (f'<ellipse cx="120" cy="137" rx="6" ry="7" fill="{INK}"/>' if mood == "o" else
              f'<path d="{mouth.get(mood, mouth["smile"])}" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
-    if mood == "happy":  # closed happy eyes
+    if mood == "dizzy":  # spiral eyes (29 Oct 2026, paid ad): same eye size and places as the brand eyes
+        def _sp(cx, cy):
+            pts = " ".join(f"{cx + 0.75 * t * math.cos(t):.1f} {cy + 0.75 * t * math.sin(t):.1f}" for t in [k * 0.45 for k in range(0, 23)])
+            return f'<path d="M{pts}" fill="none" stroke="{INK}" stroke-width="2.6" stroke-linecap="round"/>'
+        eyes = _sp(102, 110) + _sp(138, 110)
+    elif mood == "happy":  # closed happy eyes
         eyes = (f'<path d="M95 112 Q102 103 109 112" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>'
                 f'<path d="M131 112 Q138 103 145 112" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
     else:
@@ -67,6 +73,10 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     extra = ""
     if mood == "worried":  # sweat drop
         extra = f'<path d="M166 70 q8 14 0 20 q-8 -6 0 -20 z" fill="{LB}" stroke="{INK}" stroke-width="2.5"/>'
+    if mood == "dizzy":  # a ring of three small stars circling over his head
+        st = lambda cx, cy, r: "M" + " L".join(f"{cx + (r if k % 2 == 0 else r * 0.45) * math.cos(-math.pi / 2 + k * math.pi / 5):.1f} {cy + (r if k % 2 == 0 else r * 0.45) * math.sin(-math.pi / 2 + k * math.pi / 5):.1f}" for k in range(10)) + " Z"
+        extra = (f'<ellipse cx="120" cy="22" rx="62" ry="13" fill="none" stroke="{INK}" stroke-width="2.5" stroke-dasharray="7 7" opacity="0.7"/>'
+                 + "".join(f'<path d="{st(cx, cy, 11)}" fill="{GOLD}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>' for cx, cy in ((64, 24), (120, 9), (176, 24))))
     # body band, collar and tie by outfit
     band_col = {"suit": NAVY, "sales": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
     band = f'<path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="{band_col}"/>'
@@ -222,7 +232,7 @@ def phone(x, y, s=1.0, screen="empty", **_):
 
 
 def laptop(x, y, s=1.0, screen="chart", **_):
-    """Open laptop seen from the front. screen: chart, sheet (spreadsheet grid), empty."""
+    """Open laptop seen from the front. screen: chart, sheet (spreadsheet grid), call (online lesson: a student tile and a shared whiteboard), lesson (an interactive lesson card with a progress bar), empty."""
     inner = (f'<rect x="-180" y="-150" width="360" height="230" rx="16" fill="{NAVY}" stroke="{INK}" stroke-width="{SW}"/>'
              f'<rect x="-160" y="-132" width="320" height="192" rx="6" fill="{SKY}"/>'
              f'<path d="M-230 80 H230 L210 110 H-210 Z" fill="{GREY}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>')
@@ -233,6 +243,23 @@ def laptop(x, y, s=1.0, screen="chart", **_):
         for r in range(5):
             for c in range(4):
                 inner += f'<rect x="{-156 + c * 80}" y="{-128 + r * 38}" width="72" height="30" rx="3" fill="{cs[(r * 3 + c * 2) % 5]}" opacity="0.8"/>'
+    elif screen == "call":   # generic video-call layout, no real app UI: one student tile, one shared board
+        inner += (f'<rect x="-150" y="-122" width="120" height="110" rx="8" fill="{LB}" stroke="{INK}" stroke-width="3"/>'
+                  f'<circle cx="-90" cy="-78" r="20" fill="{PAPER}" stroke="{INK}" stroke-width="3"/><path d="M-122 -14 Q-122 -48 -90 -48 Q-58 -48 -58 -14 Z" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>'
+                  f'<rect x="-150" y="-2" width="120" height="54" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                  f'<path d="M-130 40 L-110 22 L-90 32 L-50 10" fill="none" stroke="{GREEN}" stroke-width="4" stroke-linecap="round"/>'
+                  f'<rect x="-20" y="-122" width="170" height="174" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                  f'<path d="M0 -100 V30 H135" fill="none" stroke="{INK}" stroke-width="3"/>'
+                  f'<path d="M10 -85 L125 20" stroke="{BLUE}" stroke-width="5" stroke-linecap="round"/><path d="M10 20 L125 -85" stroke="{GREEN}" stroke-width="5" stroke-linecap="round"/>'
+                  f'<circle cx="-110" cy="64" r="0" fill="none"/>')
+    elif screen == "lesson":  # an interactive lesson card: a diagram, answer options (one ticked), a progress bar
+        inner += (f'<rect x="-145" y="-120" width="290" height="70" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                  f'<path d="M-125 -66 L-80 -96 L-40 -78 L0 -108" fill="none" stroke="{BLUE}" stroke-width="5" stroke-linecap="round"/>'
+                  f'<rect x="20" y="-104" width="110" height="10" rx="5" fill="{GREY}"/><rect x="20" y="-84" width="80" height="10" rx="5" fill="{GREY}"/>'
+                  + "".join(f'<rect x="-145" y="{yy}" width="290" height="30" rx="8" fill="{"#CFE9D9" if k == 1 else WHITE}" stroke="{INK}" stroke-width="3"/>'
+                            f'<rect x="-125" y="{yy + 11}" width="{120 - 25 * k}" height="8" rx="4" fill="{GREY}"/>' for k, yy in enumerate((-40, -4)))
+                  + f'<path d="M110 {-4 + 15} l8 8 l16 -16" fill="none" stroke="{GREEN}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+                  f'<rect x="-145" y="40" width="290" height="12" rx="6" fill="{WHITE}" stroke="{INK}" stroke-width="2"/><rect x="-145" y="40" width="180" height="12" rx="6" fill="{BLUE}"/>')
     elif screen == "sheet":
         inner += "".join(f'<line x1="-160" y1="{yy}" x2="160" y2="{yy}" stroke="{INK}" stroke-width="2" opacity="0.4"/>' for yy in range(-100, 60, 32))
         inner += "".join(f'<line x1="{xx}" y1="-132" x2="{xx}" y2="60" stroke="{INK}" stroke-width="2" opacity="0.4"/>' for xx in (-80, 0, 80))
@@ -385,13 +412,20 @@ def handshake(x, y, s=1.0, **_):
 
 
 def whiteboard(x, y, s=1.0, drawing="graph", **_):
-    """Whiteboard on a stand or wall. drawing: graph (supply/demand cross), lines (notes), boxes (diagram)."""
+    """Whiteboard on a stand or wall. drawing: graph (supply/demand cross), shift (supply curve moves right: dashed old line, arrow), lines (notes), boxes (diagram)."""
     inner = (f'<rect x="-350" y="-210" width="700" height="420" rx="12" fill="{WHITE}" stroke="{INK}" stroke-width="7"/>'
              f'<rect x="-120" y="210" width="240" height="14" rx="7" fill="{GREY}"/>')
     if drawing == "graph":
         inner += (f'<path d="M-240 -150 V150 H250" fill="none" stroke="{INK}" stroke-width="5"/>'
                   f'<path d="M-200 -120 L200 120" stroke="{BLUE}" stroke-width="9" stroke-linecap="round"/><path d="M-200 120 L200 -120" stroke="{GREEN}" stroke-width="9" stroke-linecap="round"/>'
                   f'<circle cx="0" cy="0" r="14" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>')
+    elif drawing == "shift":
+        inner += (f'<path d="M-240 -150 V150 H250" fill="none" stroke="{INK}" stroke-width="5"/>'
+                  f'<path d="M-200 -120 L200 120" stroke="{BLUE}" stroke-width="9" stroke-linecap="round"/>'
+                  f'<path d="M-200 120 L120 -120" stroke="{GREEN}" stroke-width="7" stroke-linecap="round" stroke-dasharray="16 14" opacity="0.6"/>'
+                  f'<path d="M-90 120 L230 -120" stroke="{GREEN}" stroke-width="9" stroke-linecap="round"/>'
+                  f'<path d="M-40 -95 H50" stroke="{CORAL}" stroke-width="8" stroke-linecap="round"/><path d="M50 -95 L32 -110 M50 -95 L32 -80" stroke="{CORAL}" stroke-width="8" stroke-linecap="round"/>'
+                  f'<circle cx="43" cy="26" r="14" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>')
     elif drawing == "boxes":
         inner += (f'<rect x="-280" y="-60" width="150" height="110" rx="10" fill="{LB}" stroke="{INK}" stroke-width="5"/>'
                   f'<rect x="-60" y="-60" width="150" height="110" rx="10" fill="#F3D9A6" stroke="{INK}" stroke-width="5"/>'
@@ -554,6 +588,66 @@ def cross_box(x, y, s=1.0, w=200, h=200, **_):
 def check(x, y, s=1.0, **_):
     """A green tick: the right choice."""
     return _g(x, y, s, f'<path d="M-60 0 L-15 45 L70 -50" fill="none" stroke="{GREEN}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+# ---------------------------------------------------------------- ad props (paid ads, 29 Oct 2026)
+def chip(x, y, s=1.0, label="Accounting", color="blue", **_):
+    """Subject chip for paid ads: a rounded pill with a short label (the one place text is allowed in the art). color: blue, light."""
+    w = 40 + 26 * len(label); fill, tc = (BLUE, WHITE) if color == "blue" else (LB, INK)
+    return _g(x, y, s, (f'<rect x="{-w / 2:.0f}" y="-40" width="{w:.0f}" height="80" rx="40" fill="{fill}" stroke="{INK}" stroke-width="5"/>'
+                        f'<text x="0" y="15" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="44" fill="{tc}">{label}</text>'))
+
+
+def chip_box(x, y, s=1.0, label="Accounting", **_):
+    w = 40 + 26 * len(label)
+    return [x - w / 2 * s, y - 42 * s, w * s, 84 * s]
+
+
+def exam_sheet(x, y, s=1.0, rows=4, ticked=0, rot=0, **_):
+    """A past-exam paper: numbered question rows (bullets, no words); the first `ticked` rows carry a green tick."""
+    h = 70 + rows * 62
+    inner = f'<rect x="-130" y="{-h / 2:.0f}" width="260" height="{h}" rx="10" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+    inner += f'<line x1="-95" y1="{-h / 2 + 34:.0f}" x2="40" y2="{-h / 2 + 34:.0f}" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+    for k in range(rows):
+        yy = -h / 2 + 90 + k * 62
+        inner += (f'<circle cx="-92" cy="{yy:.0f}" r="10" fill="{BLUE}"/>'
+                  f'<line x1="-62" y1="{yy:.0f}" x2="{30 if k % 2 else 55}" y2="{yy:.0f}" stroke="{GREY}" stroke-width="8" stroke-linecap="round"/>')
+        if k < ticked:
+            inner += f'<path d="M62 {yy:.0f} L80 {yy + 18:.0f} L112 {yy - 16:.0f}" fill="none" stroke="{GREEN}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>'
+    return _g(x, y, s, inner, rot)
+
+
+def cost_pools(x, y, s=1.0, **_):
+    """ABC costing: one overhead pool (a box of coins) splits by arrows into three activity pools, then into two products. No text."""
+    inner = (f'<rect x="-120" y="-250" width="240" height="120" rx="16" fill="#F3D9A6" stroke="{INK}" stroke-width="{SW}"/>'
+             + "".join(f'<ellipse cx="{cx}" cy="-178" rx="26" ry="10" fill="{GOLD}" stroke="{INK}" stroke-width="3"/><ellipse cx="{cx}" cy="-192" rx="26" ry="10" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>' for cx in (-60, 0, 60)))
+    for k, cx in enumerate((-230, 0, 230)):
+        col = (LB, "#CFE9D9", "#F6D0CC")[k]
+        inner += (f'<path d="M{cx * 0.35:.0f} -128 L{cx:.0f} -50" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
+                  f'<path d="M{cx:.0f} -48 l-14 -20 h28 z" fill="{INK}"/>'
+                  f'<rect x="{cx - 80}" y="-40" width="160" height="90" rx="14" fill="{col}" stroke="{INK}" stroke-width="{SW}"/>'
+                  f'<circle cx="{cx}" cy="5" r="18" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>')
+    for k, cx in enumerate((-130, 130)):
+        for src in ((-230, 0) if k == 0 else (0, 230)):
+            inner += f'<path d="M{src} 52 L{cx} 128" stroke="{BLUE}" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 10"/>'
+        inner += (f'<path d="M{cx - 70} 135 h140 v100 h-140 z" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+                  f'<path d="M{cx - 70} 135 l70 -30 l70 30" fill="#E6E3DA" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>')
+    return _g(x, y, s, inner)
+
+
+def scatter_plot(x, y, s=1.0, line=True, **_):
+    """Regression: a framed scatter plot of dots with a fitted gold line (line=False hides it). No text."""
+    pts = [(-200, 110), (-160, 70), (-130, 95), (-90, 40), (-60, 60), (-20, 10), (10, 30), (50, -20), (80, 0), (120, -60), (150, -40), (190, -95)]
+    inner = (f'<rect x="-270" y="-200" width="540" height="400" rx="14" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<path d="M-230 -160 V160 H240" fill="none" stroke="{INK}" stroke-width="5"/>'
+             + "".join(f'<circle cx="{px}" cy="{py}" r="12" fill="{BLUE}" stroke="{INK}" stroke-width="2.5"/>' for px, py in pts))
+    if line: inner += f'<path d="M-220 120 L220 -110" stroke="{GOLD}" stroke-width="10" stroke-linecap="round"/>'
+    return _g(x, y, s, inner)
+
+
+def exam_sheet_box(x, y, s=1.0, rows=4, **_):
+    h = 70 + rows * 62
+    return [x - 135 * s, y - (h / 2 + 5) * s, 270 * s, (h + 10) * s]
 
 
 # ---------------------------------------------------------------- food and everyday props (added 25 Oct 2026)
@@ -883,6 +977,7 @@ PRESETS = {
     "groceries_bag": (groceries_bag, None), "receipt": (receipt, None), "gym": (gym, gym_box), "bus": (bus, bus_box),
     "code_screen": (code_screen, None), "chessboard": (chessboard, None), "robot_arm": (robot_arm, robot_arm_box), "toddler": (toddler, toddler_box),
     "meeting_table": (meeting_table, meeting_table_box), "whiteboard_team": (whiteboard_team, whiteboard_team_box),
+    "chip": (chip, chip_box), "exam_sheet": (exam_sheet, exam_sheet_box), "cost_pools": (cost_pools, None), "scatter_plot": (scatter_plot, None),
 }
 # half-sizes at s=1 for props that use the default box (centre +- these)
 HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
@@ -892,7 +987,7 @@ HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": 
         "books": (125, 110), "blocks": (130, 125), "price_tag": (125, 55), "envelope": (135, 90), "check": (75, 55),
         "pizza": (160, 160), "pizza_slice": (100, 165), "sandwich": (145, 90), "lemonade_cup": (100, 200), "plate": (155, 50),
         "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195),
-        "code_screen": (290, 262), "chessboard": (210, 210)}
+        "code_screen": (290, 262), "chessboard": (210, 210), "cost_pools": (315, 255), "scatter_plot": (275, 205)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 

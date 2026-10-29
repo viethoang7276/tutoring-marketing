@@ -3,6 +3,8 @@
 Usage: python validate.py <workdir>/script.json
 Checks the house rules (voice, captions, currency, no tutoring, no trailing full stop), the beat structure for
 meta.type "definition" or "life-of", the scene presets, and an estimated length of 30-40 s.
+meta.type "ad" (paid ad creatives, 29 Oct 2026): 1-4 hooks, 2-3 points, one cta, end card, 22-30 s; tutoring and "book a
+session" are allowed there (the organic no-tutoring rule does not apply to paid ads), and only type/term/title/slug are required in meta.
 """
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -17,16 +19,23 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     # Ledger talks to camera (edlintics-ledger-talks): a hook, the points of the argument, a business takeaway, the end card
     "ledger-talks": {"order": ["hook", "point", "takeaway", "loop", "endcard"],
                      "min": {"hook": 1, "point": 3, "takeaway": 1, "endcard": 1}},
+    # paid ad (29 Oct 2026): a hook, 2-3 selling points, one call to action, the end card
+    "ad": {"order": ["hook", "point", "cta", "endcard"],
+           "min": {"hook": 1, "point": 2, "cta": 1, "endcard": 1}, "max": {"hook": 4, "point": 3, "cta": 1}},
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
         "life-of": dict(chunk=(2, 5), beats=(9, 13), target=(95, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
-        "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05)}
+        "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
+        # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; ElevenLabs v3 at ELEVEN_TEMPO 1.24 speaks
+        # about 2.7 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
+        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(60, 85), allowed=(45, 95), secs=(21, 31), wps=2.7)}
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
 NOT_USD = re.compile(r"[€£¥₫]|\b(euros?|eur|pounds? sterling|gbp|dong|vnd)\b", re.I)
 REQ_META = ["type", "term", "title", "slug", "caption", "caption_x", "first_comment", "threadsTopic", "threadsReason", "maths_check"]
+REQ_META_AD = ["type", "term", "title", "slug"]  # an ad's text lives in Ads Manager, not in caption/first comment
 
 
 def words(s):
@@ -36,10 +45,10 @@ def words(s):
 def main(path):
     S = json.load(open(path)); E, W = [], []
     m = S.get("meta", {}); t = m.get("type")
-    for k in REQ_META:
+    for k in (REQ_META_AD if t == "ad" else REQ_META):
         if not m.get(k): E.append(f"meta.{k} is missing")
     if t not in ROLES:
-        E.append('meta.type must be "definition", "life-of" or "ledger-talks"'); t = "definition"
+        E.append('meta.type must be "definition", "life-of", "ledger-talks" or "ad"'); t = "definition"
     P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
@@ -62,6 +71,8 @@ def main(path):
     R = ROLES[t]
     for r, n in R["min"].items():
         if roles.count(r) < n: E.append(f'needs at least {n} beat(s) with role "{r}" (has {roles.count(r)})')
+    for r, n in R.get("max", {}).items():
+        if roles.count(r) > n: E.append(f'at most {n} beat(s) with role "{r}" (has {roles.count(r)})')
     bad = [r for r in roles if r not in R["order"]]
     if bad: E.append(f"unknown roles {sorted(set(map(str, bad)))}; {t} roles are {R['order']}")
     seq = [R["order"].index(r) for r in roles if r in R["order"]]
@@ -90,8 +101,12 @@ def main(path):
             if kp.rstrip().endswith("."): E.append(f"{where}: key point ends with a full stop")
             _n = lambda z: re.sub(r"[/\-]", " ", z.lower())  # "A-B testing" says "A/B testing" (Kokoro reads "/" as "slash")
             if term and _n(term) not in _n(tx): E.append(f"{where}: the voice must say the term on the end card")
+            fn = b.get("footnote", "")
+            for ln in [z for z in fn.split("\n") if z.strip()]:   # small print under the logo, 1-2 lines
+                if len(ln) > 90 or ln.rstrip().endswith("."): E.append(f"{where}: footnote line {ln[:40]!r}: 90 characters at most, no closing full stop")
+            if fn: texts_extra.append(("footnote", fn))
             sec = len(words(tx)) / WPS_T
-            if not 2.2 <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
+            if not (1.8 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
             continue
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
@@ -107,7 +122,7 @@ def main(path):
             if ct.rstrip().endswith("."): E.append(f'{where}: caption chunk "{ct}" ends with a full stop')
             if c.get("key") and c["key"] not in ct: E.append(f'{where}: key "{c["key"]}" is not inside chunk "{ct}"')
         dur = len(words(tx)) / WPS_T
-        if dur > 4.6: W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
+        if dur > (7.5 if t == "ad" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
     est = total / WPS_T
     target = P["target"]
     if total < target[0]: W.append(f"voice has {total} words; the {t} target is {target[0]}-{target[1]} (add a beat or a few words)")
@@ -124,7 +139,7 @@ def main(path):
             body = re.sub("[\\s" + EMOJI.pattern[1:-1] + "]+$", "", s)
             if where != "meta.first_comment" or EMOJI.search(body):
                 E.append(f"{where}: emoji in {s[:60]!r} (emojis are allowed only at the end of first_comment)")
-        if TUTOR.search(s): E.append(f"{where}: mentions tutoring: {s[:60]!r}")
+        if TUTOR.search(s) and t != "ad": E.append(f"{where}: mentions tutoring: {s[:60]!r}")
         if NOT_USD.search(s): E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
     for k in ("caption", "caption_x", "first_comment"):
         for para in [p for p in str(m.get(k, "")).split("\n") if p.strip()]:
