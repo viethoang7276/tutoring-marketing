@@ -335,7 +335,7 @@ def window(x, y, s=1.0, weather="clear", **_):
                   f'<path d="M60 -160 q20 -50 80 -40 q40 -40 100 0 q50 10 40 60 H60 q-40 -10 0 -20 z" fill="{GREY}" opacity="0.55" stroke="{INK}" stroke-width="5"/>'
                   + "".join(f'<line x1="{xx}" y1="{yy}" x2="{xx - 18}" y2="{yy + 60}" stroke="{BLUE}" stroke-width="6" stroke-linecap="round"/>' for xx in range(-280, 320, 70) for yy in (-20, 100, 180)))
     elif weather == "night":
-        inner = inner.replace(f'fill="{SKY}"', f'fill="{NAVY}"', 1) + f'<circle cx="170" cy="-140" r="50" fill="#F3E3B0" stroke="{INK}" stroke-width="5"/>'
+        inner = inner.replace(f'fill="{SKY}"', f'fill="{NAVY}"', 1).replace(f'stroke="{INK}"', f'stroke="{GREY}"') + f'<circle cx="170" cy="-140" r="50" fill="#F3E3B0" stroke="{INK}" stroke-width="5"/>'   # light frame strokes, so the frame shows on the dark glass
     else:
         inner += f'<circle cx="170" cy="-140" r="56" fill="{GOLD}" opacity="0.8" stroke="{INK}" stroke-width="5"/>'
     return _g(x, y, s, inner)
@@ -1062,7 +1062,9 @@ def scene_body(spec):
         return a
     tint = spec.get("tint")   # {"color", "opacity"}: a wash over the whole scene (dim cool night, warm morning); drawn over the content
     tint_svg = f'<rect class="tint" x="-3000" y="-3000" width="7080" height="7840" fill="{tint["color"]}" fill-opacity="{tint.get("opacity", 0.3)}" stroke="none"/>' if tint else ""
-    return bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in spec.get("items", [])) + '</g>' + tint_svg
+    items = spec.get("items", []); lit = [it for it in items if it.get("lit")]   # "lit": drawn above the tint (chat bubbles stay bright at night)
+    return (bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in items if not it.get("lit")) + '</g>'
+            + tint_svg + ('<g class="lit">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in lit) + '</g>' if lit else ""))
 
 
 def scene_svg(spec):

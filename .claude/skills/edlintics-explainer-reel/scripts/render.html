@@ -23,7 +23,9 @@ body.talk #cap .c{font:900 112px/1.05 Inter,sans-serif;color:#FFFFFF;-webkit-tex
 body.talk #cap .k{background:none;color:#FFD45C;padding:0}
 body.talk #logo{top:262px;width:200px;opacity:0.8}
 /* ad layout (paid ads, 29 Oct 2026): caption band moved down into the central 4:5 safe area (y 285-1635) */
-body.ad #cap{top:300px;height:220px}
+body.ad #cap{top:300px;height:220px;left:120px;right:120px}   /* a one-line caption never passes x 960 (Reels buttons) */
+body.ad #art{-webkit-mask-image:none;mask-image:none}   /* a scene tint reaches the top of the frame; ad frames keep their art below y 530 */
+body.ad #card .kp{max-width:840px}
 /* ad end card: a taller box with smaller gaps so term + key point + logo + cta pill + footnote never overflow (an overflowing
    flex column squashed the 10 px rule to nothing, 29 Oct 2026); children never shrink */
 body.ad #card{top:300px;height:1090px;gap:34px}

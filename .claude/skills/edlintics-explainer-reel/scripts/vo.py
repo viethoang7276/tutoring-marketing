@@ -16,6 +16,21 @@ else:
 src = d + "/beats.json" if os.path.exists(d + "/beats.json") else d + "/script.json"
 beats = json.load(open(src)); beats = beats["beats"] if isinstance(beats, dict) else beats; sr = 24000; lead = 0.15
 out = [np.zeros(int(lead * sr), dtype=np.float32)]; t = lead
+def speech_segments(a, sr, thr=0.02, gap=0.28):
+    """(start, end) seconds of the audible runs in a line, runs closer than `gap` merged"""
+    win = int(0.03 * sr); env = np.convolve(np.abs(a), np.ones(win) / win, mode="same") > thr
+    out = []; i = 0; n = len(env)
+    while i < n:
+        if env[i]:
+            j = i
+            while j < n and env[j]: j += 1
+            if out and (i - out[-1][1]) / sr < gap: out[-1][1] = j
+            else: out.append([i, j])
+            i = j
+        else: i += 1
+    return [(x / sr, y / sr) for x, y in out]
+
+
 def w(s):  # spoken weight of a caption chunk: letters, numbers read as words
     s = re.sub(r"\$?([\d,]+)", lambda m: "x" * (8 * len(m.group(1).replace(",", "")) // 3 + 6), s)
     return max(1, len(re.sub(r"[^A-Za-z]", "", s)))
@@ -31,6 +46,22 @@ for b in beats:
     dur = len(a) / sr; b["start"] = round(t, 3); b["end"] = round(t + dur, 3)
     ws = [w(c["text"]) for c in b.get("chunks", [])]; tot = sum(ws) or 1; acc = 0
     for c, x in zip(b.get("chunks", []), ws): c["t"] = round(t + dur * acc / tot - 0.08, 3); acc += x
+    # pause-aware timing (29 Oct 2026): when the line's speech segments (pauses >= 0.28 s) match the chunks grouped by
+    # sentence end (? . ! …), each group starts at its measured onset and spreads its chunks inside that segment
+    segs = speech_segments(a, sr, gap=0.15); ch = b.get("chunks", [])
+    groups, g = [], []
+    for c in ch:
+        g.append(c)
+        if re.search(r"[?.!…]$", c["text"].strip()): groups.append(g); g = []
+    if g: groups.append(g)
+    while groups and len(segs) > len(groups):
+        if any(e - s0 < 0.45 for s0, e in segs): segs.remove(min(segs, key=lambda q: q[1] - q[0]))   # a sigh or breath
+        else:   # a pause inside a sentence: merge the two segments closest together
+            k = min(range(len(segs) - 1), key=lambda i: segs[i + 1][0] - segs[i][1]); segs[k:k + 2] = [(segs[k][0], segs[k + 1][1])]
+    if groups and len(segs) == len(groups):
+        for (s0, e), grp in zip(segs, groups):
+            gw = [w(c["text"]) for c in grp]; gt = sum(gw) or 1; ga = 0
+            for c, x in zip(grp, gw): c["t"] = round(t + s0 + (e - s0) * ga / gt - 0.08, 3); ga += x
     g = float(b.get("gap", gap))   # a beat may ask for more room after its line ("gap": seconds), e.g. short hooks
     out.append(a); t += dur; out.append(np.zeros(int(g * sr), dtype=np.float32)); t += g
 out.append(np.zeros(int(tail * sr), dtype=np.float32)); t += tail

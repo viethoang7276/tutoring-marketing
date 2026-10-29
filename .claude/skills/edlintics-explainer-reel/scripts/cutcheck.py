@@ -37,7 +37,10 @@ def sheet(frames, labels, path, tw=216, th=384, per=8):
 def main(w, slug, fps=4):
     T = json.load(open(f"{w}/timing.json")); mp4 = f"{w}/{slug}.mp4"; os.makedirs(f"{w}/review", exist_ok=True)
     cuts = [int(np.ceil((b["start"] - 0.08) * FPS - 1e-6)) for b in T["beats"][1:]]
-    N = int(T["duration"] * FPS); bad = []
+    # the MP4 is cut to the mix (-shortest), so count its own frames, not timing.json's
+    r = subprocess.run([FF, "-hide_banner", "-i", mp4], capture_output=True, text=True).stderr
+    import re as _re; m = _re.search(r"Duration: (\d+):(\d+):([\d.]+)", r)
+    N = int((int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3])) * FPS) - 1 if m else int(T["duration"] * FPS) - 2; bad = []
     print("cut  frame   ink k / k+1 / k+2  vs steady (k+12)")
     pm = []; pml = []
     for k in cuts:
