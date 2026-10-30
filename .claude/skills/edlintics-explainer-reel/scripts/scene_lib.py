@@ -33,8 +33,11 @@ def _arm(path, hand):
             f'<circle cx="{hx}" cy="{hy}" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="3"/>')
 
 
-def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, **_):
-    """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip, larm (left-arm gesture). mood "talk" lip-syncs to the voice; arm "mic" holds a small handheld mic."""
+GAZES = {None: (0, 0, 0), "right": (6, 2, 0), "left": (-6, 2, 0), "down": (0, 7, 4), "up": (0, -5, 0)}   # eye dx, eye dy, mouth dy
+
+
+def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, gaze=None, **_):
+    """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip, larm (left-arm gesture), gaze (right, left, down, up: eyes look that way; down also lowers the mouth, head-down sad). mood "talk" lip-syncs to the voice; arm "mic" holds a small handheld mic."""
     mouth = {
         "smile": "M106 134 Q120 146 134 134", "happy": "M104 130 Q120 150 136 130",
         "frown": "M107 140 Q120 130 133 140", "sad": "M107 140 Q120 131 133 140",
@@ -77,6 +80,9 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         st = lambda cx, cy, r: "M" + " L".join(f"{cx + (r if k % 2 == 0 else r * 0.45) * math.cos(-math.pi / 2 + k * math.pi / 5):.1f} {cy + (r if k % 2 == 0 else r * 0.45) * math.sin(-math.pi / 2 + k * math.pi / 5):.1f}" for k in range(10)) + " Z"
         extra = (f'<ellipse cx="120" cy="22" rx="62" ry="13" fill="none" stroke="{INK}" stroke-width="2.5" stroke-dasharray="7 7" opacity="0.7"/>'
                  + "".join(f'<path d="{st(cx, cy, 11)}" fill="{GOLD}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>' for cx, cy in ((64, 24), (120, 9), (176, 24))))
+    gx, gy, my = GAZES.get(gaze, (0, 0, 0))   # gaze (30 Oct 2026, tutoring ad v5): shift eyes and brows (and the mouth for "down")
+    if gx or gy: eyes = f'<g transform="translate({gx} {gy})">{eyes}</g>'; brows = f'<g transform="translate({gx} {gy})">{brows}</g>' if brows else ""
+    if my: m = f'<g transform="translate(0 {my})">{m}</g>'
     # body band, collar and tie by outfit
     band_col = {"suit": NAVY, "sales": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
     band = f'<path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="{band_col}"/>'
@@ -594,9 +600,27 @@ def check(x, y, s=1.0, **_):
 # ---------------------------------------------------------------- ad props (paid ads, 29 Oct 2026)
 def chip(x, y, s=1.0, label="Accounting", color="blue", **_):
     """Subject chip for paid ads: a rounded pill with a short label (the one place text is allowed in the art). color: blue, light."""
+    import html as _h
     w = 40 + 26 * len(label); fill, tc = (BLUE, WHITE) if color == "blue" else (LB, INK)
     return _g(x, y, s, (f'<rect x="{-w / 2:.0f}" y="-40" width="{w:.0f}" height="80" rx="40" fill="{fill}" stroke="{INK}" stroke-width="5"/>'
-                        f'<text x="0" y="15" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="44" fill="{tc}">{label}</text>'))
+                        f'<text x="0" y="15" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="44" fill="{tc}">{_h.escape(label)}</text>'))
+
+
+def swirl(x, y, s=1.0, symbols="$ % ? 7 + 2 =", rx=200, ry=46, **_):
+    """Numbers and symbols orbiting on a flat ellipse (rx, ry) round (x, y): a head spinning with figures (ads; pair with mood dizzy over his head).
+    With "anim": "orbit" (and optional "hz", default 0.45) the renderer moves them round the ellipse; without it they stand still."""
+    import html as _h
+    syms = symbols.split(); n = len(syms); cols = (INK, BLUE, GOLD)
+    out = ""
+    for k, sym in enumerate(syms):
+        a = 2 * math.pi * k / n; px, py = rx * math.cos(a), ry * math.sin(a)
+        out += (f'<g class="orb" data-a0="{a:.4f}" data-rx="{rx}" data-ry="{ry}" transform="translate({px:.1f} {py:.1f})">'
+                f'<text x="0" y="20" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="60" fill="{cols[k % 3]}" stroke="{WHITE}" stroke-width="3" paint-order="stroke">{_h.escape(sym)}</text></g>')
+    return _g(x, y, s, out)
+
+
+def swirl_box(x, y, s=1.0, rx=200, ry=46, **_):
+    return [x - (rx + 40) * s, y - (ry + 40) * s, 2 * (rx + 40) * s, 2 * (ry + 40) * s]
 
 
 def bubble(x, y, s=1.0, label="Hello?", side="left", **_):
@@ -1003,6 +1027,87 @@ def bg_svg(name):
     return ground()  # paper
 
 
+# ---------------------------------------------------------------- course visuals and zone backdrops (tutoring ad v6, 30 Oct 2026)
+RED = "#D64545"
+
+
+def _t(x, y, txt, size=34, w=800, col=INK, anchor="middle", extra=""):
+    import html as _h
+    return f'<text x="{_f(x)}" y="{_f(y)}" text-anchor="{anchor}" font-family="Inter,sans-serif" font-weight="{w}" font-size="{size}" fill="{col}"{extra}>{_h.escape(txt)}</text>'
+
+
+def backdrop(x, y, s=1.0, w=1080, wall=SKY, floor="#F1ECE2", **_):
+    """A self-contained room panel for a scene made of several zones: a wall of colour `wall` w wide, a floor band below and the ground line. (x, y) = centre of the ground line."""
+    h = w / 2
+    return (f'<rect x="{_f(x - h)}" y="{_f(y - 1100)}" width="{_f(w)}" height="1100" fill="{wall}" stroke="none"/>'
+            f'<rect x="{_f(x - h)}" y="{_f(y)}" width="{_f(w)}" height="500" fill="{floor}" stroke="none"/>'
+            f'<path d="M{_f(x - h + 30)} {_f(y)} Q{_f(x)} {_f(y - 14)} {_f(x + h - 30)} {_f(y)}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>')
+
+
+def backdrop_box(x, y, s=1.0, w=1080, **_):
+    return [x - w / 2, y - 1100, w, 1600]
+
+
+def balance_sheet(x, y, s=1.0, left="$12,400", right="$11,900", **_):
+    """Financial accounting: a balance sheet card, Assets against Liabilities + Equity, whose totals do not match (red not-equal mark)."""
+    inner = (f'<rect x="-360" y="-250" width="720" height="500" rx="20" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
+             + _t(0, -168, "Balance sheet", 54, 900)
+             + f'<line x1="-320" y1="-132" x2="320" y2="-132" stroke="{INK}" stroke-width="4"/>'
+             + _t(-320, -58, "Assets", 48, 800, BLUE, "start") + _t(320, -58, left, 60, 900, INK, "end")
+             + f'<circle cx="200" cy="22" r="40" fill="{WHITE}" stroke="{RED}" stroke-width="7"/>'
+             f'<path d="M180 12 H220 M180 32 H220 M210 -6 L190 50" stroke="{RED}" stroke-width="7" stroke-linecap="round"/>'
+             + _t(-320, 108, "Liabilities + Equity", 46, 800, BLUE, "start") + _t(320, 200, right, 60, 900, RED, "end"))
+    return _g(x, y, s, inner)
+
+
+def abc_tangle(x, y, s=1.0, **_):
+    """Cost accounting (ABC costing): overhead flows to three activities (setups, orders, inspection), then by crossing, tangled arrows to two products, with a question mark."""
+    inner = f'<rect x="-360" y="-250" width="720" height="500" rx="20" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
+    inner += f'<rect x="-140" y="-228" width="280" height="80" rx="16" fill="#F3D9A6" stroke="{INK}" stroke-width="5"/>' + _t(0, -173, "Overhead", 44, 900)
+    acts = ((-232, "Setups", LB), (0, "Orders", "#CFE9D9"), (232, "Inspection", "#F6D0CC"))
+    for ax, lab, col in acts:
+        inner += (f'<path d="M{ax * 0.3:.0f} -146 L{ax} -84" stroke="{INK}" stroke-width="5" stroke-linecap="round"/><path d="M{ax} -74 l-12 -18 h24 z" fill="{INK}"/>'
+                  f'<rect x="{ax - 110}" y="-72" width="220" height="76" rx="14" fill="{col}" stroke="{INK}" stroke-width="5"/>' + _t(ax, -22, lab, 36, 800))
+    prods = (-150, 150)
+    for k, (ax, _l, _c) in enumerate(acts):   # every activity feeds every product: arrows cross and loop (the confusing part)
+        for j, px in enumerate(prods):
+            bend = (70 if (k + j) % 2 else -70)
+            inner += f'<path d="M{ax} 6 Q{(ax + px) / 2 + bend:.0f} 74 {px} 132" fill="none" stroke="{BLUE}" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 9"/>'
+    for px, lab in zip(prods, ("Product A", "Product B")):
+        inner += f'<rect x="{px - 130}" y="134" width="260" height="86" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>' + _t(px, 192, lab, 42, 800)
+    inner += _t(0, 122, "?", 92, 900, RED, extra=f' stroke="{WHITE}" stroke-width="8" paint-order="stroke"')
+    return _g(x, y, s, inner)
+
+
+def regression_guess(x, y, s=1.0, **_):
+    """Statistics (regression): a scatter plot of points on x and y axes with three dashed candidate lines and a big question mark (which line fits?)."""
+    pts = [(-200, 110), (-160, 70), (-130, 95), (-90, 40), (-60, 60), (-20, 10), (10, 30), (50, -20), (80, 0), (120, -60), (150, -40), (190, -95)]
+    inner = (f'<rect x="-300" y="-230" width="600" height="460" rx="20" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
+             f'<path d="M-240 -180 V160 H260" fill="none" stroke="{INK}" stroke-width="5"/>'
+             + _t(-266, -140, "y", 50, 900, INK) + _t(266, 215, "x", 50, 900, INK))
+    for (x0, y0, x1, y1), col in (((-230, 40, 230, 40), CORAL), ((-230, -120, 230, 150), GOLD), ((-230, 150, 200, -170), GREY)):
+        inner += f'<path d="M{x0} {y0} L{x1} {y1}" stroke="{col}" stroke-width="8" stroke-linecap="round" stroke-dasharray="18 12"/>'
+    inner += "".join(f'<circle cx="{px}" cy="{py}" r="12" fill="{BLUE}" stroke="{INK}" stroke-width="2.5"/>' for px, py in pts)
+    inner += _t(205, -100, "?", 120, 900, RED)
+    return _g(x, y, s, inner)
+
+
+def supply_shift(x, y, s=1.0, **_):
+    """Economics: supply and demand on Price and Quantity axes. Supply S shifts right to S′ (arrow); the old equilibrium is a dot, the new one is marked ?."""
+    D = lambda q: -150 + 0.7 * (q + 200); S0 = lambda q: 130 - 0.8 * (q + 200); S1 = lambda q: 130 - 0.8 * (q + 90)
+    e0 = (-20 / 1.5, D(-20 / 1.5)); e1 = (68 / 1.5, D(68 / 1.5))
+    inner = (f'<rect x="-320" y="-250" width="640" height="500" rx="20" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
+             f'<path d="M-240 -200 V170 H280" fill="none" stroke="{INK}" stroke-width="5"/>'
+             + _t(-226, -208, "Price", 42, 800, INK, "start") + _t(290, 226, "Quantity", 42, 800, INK, "end")
+             + f'<path d="M-200 {D(-200):.0f} L200 {D(200):.0f}" stroke="{BLUE}" stroke-width="9" stroke-linecap="round"/>' + _t(222, D(200) + 12, "D", 54, 900, BLUE, "start")
+             + f'<path d="M-200 {S0(-200):.0f} L150 {S0(150):.0f}" stroke="{NAVY}" stroke-width="9" stroke-linecap="round" opacity="0.55"/>' + _t(150, S0(150) - 16, "S", 54, 900, NAVY)
+             + f'<path d="M-90 {S1(-90):.0f} L260 {S1(260):.0f}" stroke="{GOLD}" stroke-width="9" stroke-linecap="round"/>' + _t(250, S1(260) - 16, "S′", 54, 900, GOLD)
+             + f'<path d="M126 -120 H196" stroke="{INK}" stroke-width="6" stroke-linecap="round"/><path d="M212 -120 l-20 -12 v24 z" fill="{INK}"/>'
+             + f'<circle cx="{e0[0]:.0f}" cy="{e0[1]:.0f}" r="13" fill="{INK}"/>'
+             + f'<circle cx="{e1[0]:.0f}" cy="{e1[1]:.0f}" r="16" fill="{WHITE}" stroke="{RED}" stroke-width="7"/>' + _t(e1[0] + 6, e1[1] + 82, "?", 90, 900, RED))
+    return _g(x, y, s, inner)
+
+
 BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "none"]
 
 # name -> (draw function, box function or None = default box from size)
@@ -1022,7 +1127,8 @@ PRESETS = {
     "groceries_bag": (groceries_bag, None), "receipt": (receipt, None), "gym": (gym, gym_box), "bus": (bus, bus_box),
     "code_screen": (code_screen, None), "chessboard": (chessboard, None), "robot_arm": (robot_arm, robot_arm_box), "toddler": (toddler, toddler_box),
     "meeting_table": (meeting_table, meeting_table_box), "whiteboard_team": (whiteboard_team, whiteboard_team_box),
-    "chip": (chip, chip_box), "exam_sheet": (exam_sheet, exam_sheet_box), "cost_pools": (cost_pools, None), "scatter_plot": (scatter_plot, None),
+    "chip": (chip, chip_box), "swirl": (swirl, swirl_box),
+    "backdrop": (backdrop, backdrop_box), "balance_sheet": (balance_sheet, None), "abc_tangle": (abc_tangle, None), "regression_guess": (regression_guess, None), "supply_shift": (supply_shift, None), "exam_sheet": (exam_sheet, exam_sheet_box), "cost_pools": (cost_pools, None), "scatter_plot": (scatter_plot, None),
 }
 # half-sizes at s=1 for props that use the default box (centre +- these)
 HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
@@ -1033,7 +1139,8 @@ HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": 
         "pizza": (160, 160), "pizza_slice": (100, 165), "sandwich": (145, 90), "lemonade_cup": (100, 200), "plate": (155, 50),
         "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195),
         "code_screen": (290, 262), "chessboard": (210, 210), "cost_pools": (315, 255), "scatter_plot": (275, 205),
-        "lamp": (230, 160), "stat_card": (235, 155), "lightbulb": (165, 165)}
+        "lamp": (230, 160), "stat_card": (235, 155), "lightbulb": (165, 165),
+        "balance_sheet": (362, 252), "abc_tangle": (332, 252), "regression_guess": (302, 232), "supply_shift": (322, 252)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 
@@ -1056,9 +1163,11 @@ def scene_body(spec):
     # items sit in <g class="content"> so the renderer can auto-fit the frame to the drawn subject (not the background)
     def _attrs(it):   # anim "wobble" (29 Oct 2026): the renderer sways the item +-amp degrees about its (x, y), hz times a second
         a = f' data-p="{it["p"]}"'
-        if it.get("anim") or it.get("at"): a += f' data-ax="{_f(it["x"])}" data-ay="{_f(it["y"])}"'
+        if it.get("anim") or it.get("at") or it.get("until"): a += f' data-ax="{_f(it["x"])}" data-ay="{_f(it["y"])}"'
         if it.get("anim"): a += f' data-anim="{it["anim"]}" data-amp="{it.get("amp", 4)}" data-hz="{it.get("hz", 1.1)}"'
         if it.get("at"): a += f' data-at="{it["at"]}"'   # "chunk:N": pops in when caption chunk N of this scene starts
+        if it.get("until"): a += f' data-until="{it["until"]}"'   # "chunk:N" (30 Oct 2026): hidden from the start of caption chunk N
+        if it.get("pop"): a += f' data-pop="{it["pop"]}"'   # "cut": appears at once on its chunk, no fade or scale (a state swap)
         return a
     tint = spec.get("tint")   # {"color", "opacity"}: a wash over the whole scene (dim cool night, warm morning); drawn over the content
     tint_svg = f'<rect class="tint" x="-3000" y="-3000" width="7080" height="7840" fill="{tint["color"]}" fill-opacity="{tint.get("opacity", 0.3)}" stroke="none"/>' if tint else ""
@@ -1077,6 +1186,6 @@ def scene_svg(spec):
 
 if __name__ == "__main__" and "--list" in sys.argv:
     print("Backgrounds (scene 'bg'):", ", ".join(BACKGROUNDS))
-    print("Ledger: mood", MOODS, "| arm", ARMS, "| larm", LARMS, "| outfit", OUTFITS, "| tilt (deg), flip (true faces left)")
+    print("Ledger: mood", MOODS, "| arm", ARMS, "| larm", LARMS, "| outfit", OUTFITS, "| tilt (deg), flip (true faces left), gaze", list(GAZES)[1:])
     for k, v in PRESET_HELP.items():
         print(f"- {k}: {v.splitlines()[0] if v else ''}")

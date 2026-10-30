@@ -127,6 +127,15 @@ function fitAuto(){ const c=artBody.querySelector('.content'); if(!c) return fit
   // whole scene fits: centre it; too tall: sit its bottom on the box bottom, tall props run up under the caption fade
   if(bb.height*s<=BH-24) return {s,cx,cy:bb.y+bb.height/2};
   return {s,cx,cy:bottom-(BH/2-12)/s}; }
+// camera keyframes (b.cam from build_scenes.cam_keys): times come from the caption chunks of the beats sharing the scene;
+// each move eases in and out (cubic) from wherever the camera is; zoom is interpolated in log scale so it feels even
+const inout=x=>x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+function camAt(t,b,B){ const ch=[]; for(let j=sceneBeat;j<B.length&&B[j].img===b.img;j++) ch.push(...B[j].chunks);
+  const K=b.cam, kt=K.map(k=>{ const n=+k.at.split(':')[1]; return (ch[n]?ch[n].t:0)+(k.delay||0); });
+  let f=fit(K[0].box);
+  for(let i=1;i<K.length;i++){ if(t<kt[i]) break; const g=fit(K[i].box), p=K[i].dur>0?inout(clamp((t-kt[i])/K[i].dur)):1;
+    f={s:Math.exp(Math.log(f.s)+(Math.log(g.s)-Math.log(f.s))*p), cx:f.cx+(g.cx-f.cx)*p, cy:f.cy+(g.cy-f.cy)*p}; }
+  return f; }
 function render(t){
   const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08);
   const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
@@ -145,7 +154,7 @@ function render(t){
     return;
   }
   card.style.display='none'; cap.style.display='flex'; logo.style.display='block';
-  if(b.img!==curImg){ load(b.img); curImg=b.img; cut=a; autoFit=fitAuto(); sceneBeat=i; }
+  if(b.img!==curImg){ load(b.img); curImg=b.img; cut=a; autoFit=fitAuto(); sceneBeat=i; while(sceneBeat>0&&B[sceneBeat-1].img===b.img) sceneBeat--; }   // first beat of this scene's run, so chunk counts hold when rendering out of order
   const sceneT=(i===0||TALK?99:t-cut), newScene=!TALK&&(Math.abs(cut-a)<1e-6)&&i>0;  // talk: jump cuts, like a talking-head edit  // beat 0 opens fully drawn: the hook frame must read at once
   // line boil: new drawing every 2 frames at 24 fps
   const f=Math.floor(t*12)%3;
@@ -158,13 +167,31 @@ function render(t){
   // item animation (anim "wobble"): a small sway about the item's own feet, +-amp degrees at hz; no camera move
   artBody.querySelectorAll('[data-anim="wobble"]').forEach(g=>{ const A=+g.dataset.amp, H=+g.dataset.hz, on=clamp((sceneT-0.2)/0.5);
     g.setAttribute('transform',`rotate(${(A*on*Math.sin(2*Math.PI*H*Math.max(0,sceneT-0.2))).toFixed(2)} ${g.dataset.ax} ${g.dataset.ay})`); });
+  // item animation (anim "orbit", 30 Oct 2026): the item's .orb children travel round their ellipse at hz turns a second
+  artBody.querySelectorAll('[data-anim="orbit"]').forEach(g=>{ const H=+(g.dataset.hz||0.45), w=2*Math.PI*H*sceneT;
+    g.querySelectorAll('.orb').forEach(o=>{ const a=+o.dataset.a0+w, sn=Math.sin(a), k=0.85+0.2*sn;
+      o.setAttribute('transform',`translate(${(+o.dataset.rx*Math.cos(a)).toFixed(1)} ${(+o.dataset.ry*sn).toFixed(1)}) scale(${k.toFixed(3)})`); o.setAttribute('opacity',(0.7+0.3*(sn+1)/2).toFixed(2)); }); });
   // chunk-timed pop-ins ("at": "chunk:N"): N counts caption chunks over the consecutive beats that share this scene
-  const pops=artBody.querySelectorAll('[data-at]');
+  // "until": "chunk:N" hides the item from chunk N's start; "pop": "cut" shows it at once (no fade, no scale), for a state swap (30 Oct 2026)
+  const pops=artBody.querySelectorAll('[data-at],[data-until]');
   if(pops.length){ const ch=[]; for(let j=sceneBeat;j<B.length&&B[j].img===b.img;j++) ch.push(...B[j].chunks);
-    pops.forEach(g=>{ const n=+g.dataset.at.split(':')[1], t0=ch[n]?ch[n].t:0, q=ease(clamp((t-t0)/0.2)), k=0.7+0.3*back(clamp((t-t0)/0.3));
-      g.setAttribute('opacity',String(q)); g.setAttribute('transform',`translate(${g.dataset.ax} ${g.dataset.ay}) scale(${k.toFixed(3)}) translate(${-g.dataset.ax} ${-g.dataset.ay})`); }); }
+    const tc=v=>{ const n=+v.split(':')[1]; return ch[n]?ch[n].t:0; };
+    pops.forEach(g=>{ const gone=g.dataset.until&&t>=tc(g.dataset.until);
+      if(!g.dataset.at){ g.setAttribute('opacity',gone?'0':'1'); return; }
+      const t0=tc(g.dataset.at);
+      if(g.dataset.pop==='cut'){ g.setAttribute('opacity',(t>=t0&&!gone)?'1':'0'); return; }
+      const q=ease(clamp((t-t0)/0.2)), k=0.7+0.3*back(clamp((t-t0)/0.3));
+      g.setAttribute('opacity',String(gone?0:q)); g.setAttribute('transform',`translate(${g.dataset.ax} ${g.dataset.ay}) scale(${k.toFixed(3)}) translate(${-g.dataset.ax} ${-g.dataset.ay})`); }); }
   // steady frame: no push-in, pan or reframe
-  const F=(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
+  const F=b.cam?camAt(t,b,B):(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
+  // camera scenes (paid ads, 30 Oct 2026): the art is clipped below the caption band and above the logo, and the pencil
+  // noise is scaled against the zoom so a close-up boils like a normal frame (no bigger wobble). Other scenes are untouched
+  document.getElementById('art').style.clipPath=b.cam?'inset(530px 0 584px 0)':'';
+  const zr=b.cam?F.s:1;
+  if(b.cam||document.body.dataset.camz){ document.body.dataset.camz=b.cam?'1':'';
+    document.querySelectorAll('#pencil feDisplacementMap').forEach(e=>e.setAttribute('scale',String(4/zr)));
+    document.querySelectorAll('#ghost feDisplacementMap').forEach(e=>e.setAttribute('scale',String(7/zr)));
+    document.getElementById('t1').setAttribute('baseFrequency',String(0.03*zr)); document.getElementById('t2').setAttribute('baseFrequency',String(0.75*zr)); document.getElementById('t3').setAttribute('baseFrequency',String(0.025*zr)); }
   document.getElementById('cam').setAttribute('transform',`translate(${BX+BW/2} ${BY+BH/2}) scale(${F.s}) translate(${-F.cx} ${-F.cy})`);
   if(AD){ const k=0.97+0.03*ease(clamp(sceneT/0.12)), cx=BX+BW/2, cy=BY+BH/2;   // whole-group settle, no fade: ink is full from the first frame
     document.getElementById('pop').setAttribute('transform',newScene?`translate(${cx} ${cy}) scale(${k.toFixed(4)}) translate(${-cx} ${-cy})`:''); art.style.opacity=1; }

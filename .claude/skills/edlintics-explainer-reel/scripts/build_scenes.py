@@ -24,7 +24,7 @@ that scene shows the same steady frame. Beats never carry focus or focus_end. A 
 Boxes are widened to the frame's 1000:780 shape, so the subject fills the frame as much as possible.
 The last beat (role "endcard") has no img: the renderer shows the term, key point and logo instead.
 """
-import json, os, sys
+import json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scene_lib as L
 
@@ -150,6 +150,21 @@ def resolve(f, spec, where):
     raise SystemExit(f"{where}: unknown focus {f!r} (use auto, ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h])")
 
 
+def cam_keys(spec, name):
+    """Scene "cam" (30 Oct 2026, tutoring ad v6; the only exception to the no-camera-moves rule, for paid ads):
+    a list of keyframes {"at": "chunk:N", "delay": s, "dur": s, "frame": <any frame value>}. At the start of chunk N
+    (counted over the consecutive beats that share the scene, like "at" on items) plus delay, the camera moves to the
+    frame over dur seconds with an ease in and out (dur 0 = a cut). The first keyframe is the opening frame."""
+    out = []
+    for k, c in enumerate(spec["cam"]):
+        at = str(c.get("at", "chunk:0"))
+        if not re.match(r"^chunk:\d+$", at): raise SystemExit(f"scene {name} cam {k}: at {at!r}; use chunk:N")
+        box = resolve(c.get("frame"), spec, f"scene {name} cam {k}")
+        if box == "auto": raise SystemExit(f"scene {name} cam {k}: give a frame (box, item:<id>, ledger, ledger-close, wide)")
+        out.append({"at": at, "delay": float(c.get("delay", 0)), "dur": float(c.get("dur", 0)), "box": box})
+    return out
+
+
 def talk_frame(spec):
     """ledger-talks layout: the art fills the whole screen; Ledger faces the viewer at about 80% of the screen width,
     his feet at screen y 1360, so his mouth (~y 1010) stays above the captions (y 1110-1340). Props sit beside his head. The frame is the same for every scene,
@@ -181,6 +196,8 @@ def main(d):
         else:
             spec = S["scenes"][b["img"]]
             nb["focus"] = frames.get(b["img"]) or resolve(spec.get("frame"), spec, f"scene {b['img']} frame")
+            if spec.get("cam"):   # camera keyframes (paid ads only, Hoang 30 Oct 2026); scenes without "cam" keep the steady frame
+                nb["cam"] = cam_keys(spec, b["img"])
         beats.append(nb)
     json.dump(beats, open(os.path.join(d, "beats.json"), "w"), indent=1)
     print("scenes", len(S["scenes"]), "beats", len(beats))
