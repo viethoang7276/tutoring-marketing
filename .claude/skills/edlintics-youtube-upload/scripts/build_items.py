@@ -14,7 +14,7 @@ Rules baked in:
 - everything else (puzzles, definitions, comics, carousels) -> image Post, PNGs in page order.
 - skip slots that already have youtube.status in ("scheduled", "published").
 - Post text = the approved caption as it is. Short description = caption with
-  "This carousel" -> "This short" and "Swipe through and note" -> "Watch and note", plus #Shorts.
+  "This carousel" -> "Ledger walks you through" and "Swipe through and note" -> "Walk through them with Ledger and note" (Hoang, 30 Oct 2026), plus #Shorts.
 - Time = the slot's time_vietnam (the browser runs on Asia/Saigon, GMT+7).
 """
 import datetime
@@ -54,8 +54,8 @@ def main():
                 continue
             it.update(type='short', files=[os.path.join(posts_dir, mp4[0])],
                       title=d['title'].split(' (')[0] + ' #Shorts',
-                      text=d['caption'].replace('This carousel', 'This short')
-                      .replace('Swipe through and note', 'Watch and note').rstrip() + ' #Shorts')
+                      text=d['caption'].replace('This carousel gives each one', 'Ledger walks you through each one with').replace('This carousel', 'Ledger walks you through').replace('This video walks through', 'Ledger walks you through')
+                      .replace('Swipe through and note', 'Walk through them with Ledger and note').rstrip() + ' #Shorts')
         else:
             pngs = sorted([x for x in files if x.startswith(key) and x.endswith('.png')],
                           key=lambda x: int(x.rsplit('-', 1)[1].split('.')[0]))

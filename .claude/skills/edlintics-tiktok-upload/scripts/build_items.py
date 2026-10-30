@@ -20,7 +20,7 @@ Rules baked in:
   with every line's trailing full stop removed. The last paragraph, if it is only #hashtags,
   is split off into `tags` so they can be typed one by one (TikTok only links tags picked
   from its suggestion list).
-- five-concepts captions: "This carousel" -> "This video", "Swipe through and note" -> "Watch and note".
+- five-concepts captions: "This carousel" -> "Ledger walks you through", "Swipe through and note" -> "Walk through them with Ledger and note" (Hoang, 30 Oct 2026).
 - when: the slot's time_vietnam if it is more than --lead minutes in the future, else "now".
 - The queue skips slots whose tiktok.status is scheduled/published, so re-running is safe.
 """
@@ -94,7 +94,7 @@ def main():
         if not cap:
             print('NO CAPTION', sid); continue
         if d.get('format') == 'five-concepts':
-            cap = cap.replace('This carousel', 'This video').replace('Swipe through and note', 'Watch and note')
+            cap = cap.replace('This carousel gives each one', 'Ledger walks you through each one with').replace('This carousel', 'Ledger walks you through').replace('This video walks through', 'Ledger walks you through').replace('Swipe through and note', 'Walk through them with Ledger and note')
         body, tags = clean(cap)
         typ, paths = media(sid, d, posts_dir, files)
         if not paths:

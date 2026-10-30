@@ -22,7 +22,7 @@ Only run on posts that are already approved and scheduled on the other platforms
 | `format: five-concepts` (video carousel) | **Short** | the long MP4 `<MMDD>-<HHMM>-<subject>.mp4` (not the `clip-n` files) |
 | puzzle, definition, comic, image carousel | **Post** with images | the PNG slides in page order, max 10 |
 
-Text: Posts use the approved caption unchanged (YouTube image posts swipe, so "Swipe for the answer" is fine). Shorts: title = slot title without the bracket part + ` #Shorts`; description = caption with "This carousel" → "This short" and "Swipe through and note" → "Watch and note", ending with `#Shorts`.
+Text: Posts use the approved caption unchanged (YouTube image posts swipe, so "Swipe for the answer" is fine). Shorts: title = slot title without the bracket part + ` #Shorts`; description = caption with "This carousel" → "Ledger walks you through" and "Swipe through and note" → "Walk through them with Ledger and note", ending with `#Shorts`.
 Time: use the slot's `time_vietnam` (that is the slot's Madrid time converted: CEST +5 h until 25 Oct, CET +6 h after; e.g. Madrid 13:00 on 27 Oct = 19:00 Vietnam). The browser and YouTube both use local time GMT+0700; the schedule pickers say "(GMT+0700) Local Time". Check this.
 
 ## 2. Prepare (no browser)
