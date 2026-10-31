@@ -83,6 +83,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - Use official, academic and textbook sources.
    - Record the source, access date and reuse rights.
    - Copy no question text or artwork from any source.
+4a. **Holiday check (Hoang, 31 Oct 2026).** Open `docs/content-workflow/holiday-calendar.md` and list every holiday whose content window or "plan by" date falls in the next 3 weeks. Make that week's content fit it: themed posts in the normal slots, each still teaching one business concept, with checked, recent market or price news in USD where possible. Christmas content starts 1–2 weeks before 25 Dec: the plan of 3 Dec drafts the whole 11–24 Dec run. Holiday videos use only copyright-safe music (see the calendar).
 5. **Validate** each candidate against the question benchmark below.
    - Solve it independently.
    - Run three blind simulated reviewers (university student, business professional, industry practitioner), labelled as simulations.

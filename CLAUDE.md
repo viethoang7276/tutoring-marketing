@@ -4,6 +4,7 @@
 Read these before any Edlintics social content work:
 - `docs/content-workflow/weekly-content-process.md`: the Thursday plan, caption and first-comment rules, and approvals.
 - `docs/content-workflow/brand-graphics.md`: reusable icons and illustrations. Check it before generating anything.
+- `docs/content-workflow/holiday-calendar.md`: every holiday with its content window. Make content fit upcoming holidays; Christmas content starts 1–2 weeks before 25 Dec.
 - Skills `edlintics-concept-carousel` and `edlintics-puzzle-visuals`: copies in `docs/content-workflow/skills/` (to load them as project skills, copy that folder to `.claude/skills/`).
 
 ## Systems
