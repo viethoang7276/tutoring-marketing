@@ -23,7 +23,7 @@ def _f(v):
 MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk", "dizzy"]
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
-OUTFITS = ["suit", "student", "casual", "sales"]
+OUTFITS = ["suit", "student", "casual", "sales", "vest"]
 
 
 def _arm(path, hand):
@@ -84,9 +84,9 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     if gx or gy: eyes = f'<g transform="translate({gx} {gy})">{eyes}</g>'; brows = f'<g transform="translate({gx} {gy})">{brows}</g>' if brows else ""
     if my: m = f'<g transform="translate(0 {my})">{m}</g>'
     # body band, collar and tie by outfit
-    band_col = {"suit": NAVY, "sales": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
+    band_col = {"suit": NAVY, "sales": NAVY, "vest": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
     band = f'<path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="{band_col}"/>'
-    if outfit in ("suit", "sales"):
+    if outfit in ("suit", "sales", "vest"):
         collar = (f'<path d="M108 150 L120 168 L116 173 L102 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
                   f'<path d="M132 150 L120 168 L124 173 L138 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
                   f'<path d="M114 152 L126 152 L129 161 L111 161 Z" fill="{BLUE}"/><path d="M112 162 L128 162 L124 184 L120 189 L116 184 Z" fill="{BLUE}"/>')
@@ -100,6 +100,12 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         behind = (f'<rect x="38" y="96" width="30" height="80" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>'
                   f'<rect x="172" y="96" width="30" height="80" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>')
     head = ""
+    if outfit == "vest":  # finance-bro look (31 Oct 2026): grey fleece vest over the shirt and tie, white earbuds
+        collar += (f'<path d="M57 124 L104 151 L110 189 L70 189 Q57 189 57 176 Z" fill="#4B5563" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                   f'<path d="M183 124 L136 151 L130 189 L170 189 Q183 189 183 176 Z" fill="#4B5563" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                   f'<path d="M66 146 L100 166 M174 146 L140 166" stroke="#6B7280" stroke-width="2.5"/>')
+        head = (f'<rect x="38" y="98" width="13" height="24" rx="6.5" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                f'<rect x="189" y="98" width="13" height="24" rx="6.5" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>')
     if outfit == "sales":  # headset
         head = (f'<path d="M58 70 Q120 6 182 70" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
                 f'<rect x="48" y="64" width="16" height="30" rx="7" fill="{INK}"/><path d="M58 92 Q66 128 98 130" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
@@ -217,7 +223,7 @@ def paper_stack_inner():
 
 
 def phone(x, y, s=1.0, screen="empty", **_):
-    """A big smartphone. screen: empty (no users, flat line), up (rising chart), call (call screen), chat."""
+    """A big smartphone. screen: empty (no users, flat line), up (rising chart), down (falling chart), call (call screen), chat."""
     inner = (f'<rect x="-150" y="-280" width="300" height="560" rx="40" fill="{WHITE}" stroke="{INK}" stroke-width="8"/>'
              f'<rect x="-125" y="-235" width="250" height="450" rx="12" fill="{SKY}"/>'
              f'<rect x="-30" y="232" width="60" height="10" rx="5" fill="{INK}" opacity="0.4"/>')
@@ -231,6 +237,9 @@ def phone(x, y, s=1.0, screen="empty", **_):
     elif screen == "call":
         inner += (f'<circle cx="0" cy="-90" r="56" fill="{LB}" stroke="{INK}" stroke-width="5"/>'
                   f'<circle cx="-60" cy="130" r="34" fill="{CORAL}" stroke="{INK}" stroke-width="5"/><circle cx="60" cy="130" r="34" fill="{GREEN}" stroke="{INK}" stroke-width="5"/>')
+    elif screen == "down":  # falling price chart (31 Oct 2026)
+        inner += (f'<path d="M-95 -160 V170 H100" fill="none" stroke="{INK}" stroke-width="4"/>'
+                  f'<path d="M-90 -140 L-50 -110 L-20 -40 L20 -20 L60 90 L95 130" fill="none" stroke="{CORAL}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>')
     else:  # chat
         inner += (f'<rect x="-100" y="-200" width="160" height="60" rx="18" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
                   f'<rect x="-40" y="-110" width="140" height="60" rx="18" fill="{LB}" stroke="{INK}" stroke-width="4"/>'
@@ -1108,6 +1117,60 @@ def supply_shift(x, y, s=1.0, **_):
     return _g(x, y, s, inner)
 
 
+
+# ---------------------------------------------------------------- Halloween (31 Oct 2026, finance-bro life-of reel)
+ORANGE = "#F08A24"
+
+
+def pumpkin(x, y, s=1.0, face=True, **_):
+    """A jack-o'-lantern pumpkin (no text). (x, y) = centre. face=False draws a plain pumpkin."""
+    inner = (f'<path d="M-6 -66 Q-4 -86 10 -92" fill="none" stroke="#3F6B2F" stroke-width="9" stroke-linecap="round"/>'
+             f'<ellipse cx="-38" cy="6" rx="52" ry="66" fill="{ORANGE}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<ellipse cx="38" cy="6" rx="52" ry="66" fill="{ORANGE}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<ellipse cx="0" cy="6" rx="46" ry="70" fill="{ORANGE}" stroke="{INK}" stroke-width="{SW}"/>')
+    if face:
+        inner += (f'<path d="M-40 -14 L-22 -34 L-6 -14 Z M6 -14 L22 -34 L40 -14 Z" fill="{INK}"/>'
+                  f'<path d="M-46 20 Q0 60 46 20 L30 26 L22 16 L10 30 L0 18 L-10 30 L-22 16 L-30 26 Z" fill="{INK}"/>')
+    return _g(x, y, s, inner)
+
+
+def candy_bowl(x, y, s=1.0, n=5, **_):
+    """A bowl of wrapped candies (no brands). (x, y) = centre. n = candies on top (0-6; 0 = empty bowl)."""
+    cols = [BLUE, GOLD, CORAL, GREEN, LB, BLUE]
+    pos = [(-56, -36), (-18, -46), (20, -42), (56, -32), (-36, -58), (36, -60)]
+    inner = ""
+    for k in range(min(n, 6)):
+        cx, cy = pos[k]
+        inner += (f'<path d="M{cx - 34} {cy - 10} L{cx - 20} {cy} L{cx - 34} {cy + 10} Z M{cx + 34} {cy - 10} L{cx + 20} {cy} L{cx + 34} {cy + 10} Z" fill="{cols[k]}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+                  f'<ellipse cx="{cx}" cy="{cy}" rx="22" ry="14" fill="{cols[k]}" stroke="{INK}" stroke-width="3.5"/>')
+    inner += (f'<path d="M-100 -26 H100 Q96 50 0 54 Q-96 50 -100 -26 Z" fill="{ORANGE}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+              f'<path d="M-70 4 Q0 18 70 4" fill="none" stroke="{INK}" stroke-width="3" opacity="0.35"/>')
+    return _g(x, y, s, inner)
+
+
+def ghost_kid(x, y, s=1.0, eyes="open", bucket=True, **_):
+    """A small trick-or-treater in a ghost sheet holding a pumpkin bucket. (x, y) = between the feet. eyes: open, hope, wide, flat."""
+    e = {"open": f'<ellipse cx="-20" cy="-176" rx="10" ry="14" fill="{INK}"/><ellipse cx="20" cy="-176" rx="10" ry="14" fill="{INK}"/>',
+         "hope": f'<ellipse cx="-20" cy="-178" rx="11" ry="16" fill="{INK}"/><ellipse cx="20" cy="-178" rx="11" ry="16" fill="{INK}"/>'
+                 f'<circle cx="-16" cy="-184" r="4" fill="{WHITE}"/><circle cx="24" cy="-184" r="4" fill="{WHITE}"/>',
+         "wide": f'<circle cx="-20" cy="-176" r="14" fill="{INK}"/><circle cx="20" cy="-176" r="14" fill="{INK}"/>',
+         "flat": f'<rect x="-32" y="-180" width="22" height="8" rx="4" fill="{INK}"/><rect x="10" y="-180" width="22" height="8" rx="4" fill="{INK}"/>'}.get(eyes)
+    inner = (f'<ellipse cx="0" cy="4" rx="66" ry="9" fill="{INK}" opacity="0.10"/>'
+             f'<path d="M-30 -6 v8 M30 -6 v8" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+             f'<path d="M-66 -4 Q-74 -140 -46 -204 Q0 -266 46 -204 Q74 -140 66 -4 Q50 -20 33 -4 Q17 -20 0 -4 Q-17 -20 -33 -4 Q-50 -20 -66 -4 Z" '
+             f'fill="{WHITE}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>{e}')
+    if bucket:
+        inner += (f'<path d="M52 -116 Q82 -128 92 -108" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
+                  f'<path d="M76 -96 Q76 -44 104 -44 Q132 -44 132 -96 Z" fill="{ORANGE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                  f'<path d="M76 -96 Q104 -136 132 -96" fill="none" stroke="{INK}" stroke-width="4"/>'
+                  f'<path d="M90 -80 l7 -7 7 7 M106 -80 l7 -7 7 7" fill="none" stroke="{INK}" stroke-width="3.5"/>'
+                  f'<path d="M92 -64 Q104 -54 116 -64" fill="none" stroke="{INK}" stroke-width="3.5"/>')
+    return _g(x, y, s, inner)
+
+
+def ghost_kid_box(x, y, s=1.0, **_):
+    return [x - 75 * s, y - 250 * s, 215 * s, 262 * s]
+
 BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "none"]
 
 # name -> (draw function, box function or None = default box from size)
@@ -1129,9 +1192,10 @@ PRESETS = {
     "meeting_table": (meeting_table, meeting_table_box), "whiteboard_team": (whiteboard_team, whiteboard_team_box),
     "chip": (chip, chip_box), "swirl": (swirl, swirl_box),
     "backdrop": (backdrop, backdrop_box), "balance_sheet": (balance_sheet, None), "abc_tangle": (abc_tangle, None), "regression_guess": (regression_guess, None), "supply_shift": (supply_shift, None), "exam_sheet": (exam_sheet, exam_sheet_box), "cost_pools": (cost_pools, None), "scatter_plot": (scatter_plot, None),
+    "pumpkin": (pumpkin, None), "candy_bowl": (candy_bowl, None), "ghost_kid": (ghost_kid, ghost_kid_box),
 }
 # half-sizes at s=1 for props that use the default box (centre +- these)
-HALF = {"phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
+HALF = {"pumpkin": (95, 100), "candy_bowl": (110, 85), "phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
         "invoice": (115, 155), "chart": (205, 155), "coffee": (95, 160), "window": (345, 265), "door": (130, 365),
         "sofa": (165, 105), "bed": (225, 90), "sun_arrow": (270, 220), "handshake": (305, 75), "whiteboard": (355, 225),
         "school_desk": (175, 185), "ticket": (115, 60), "speech": (205, 145), "clock": (115, 115), "umbrella": (145, 245),
