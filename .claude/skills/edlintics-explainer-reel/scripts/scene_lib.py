@@ -23,7 +23,7 @@ def _f(v):
 MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk", "dizzy"]
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
-OUTFITS = ["suit", "student", "casual", "sales", "vest"]
+OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula"]
 
 
 def _arm(path, hand):
@@ -84,9 +84,9 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     if gx or gy: eyes = f'<g transform="translate({gx} {gy})">{eyes}</g>'; brows = f'<g transform="translate({gx} {gy})">{brows}</g>' if brows else ""
     if my: m = f'<g transform="translate(0 {my})">{m}</g>'
     # body band, collar and tie by outfit
-    band_col = {"suit": NAVY, "sales": NAVY, "vest": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
+    band_col = {"suit": NAVY, "sales": NAVY, "vest": NAVY, "dracula": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
     band = f'<path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="{band_col}"/>'
-    if outfit in ("suit", "sales", "vest"):
+    if outfit in ("suit", "sales", "vest", "dracula"):
         collar = (f'<path d="M108 150 L120 168 L116 173 L102 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
                   f'<path d="M132 150 L120 168 L124 173 L138 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
                   f'<path d="M114 152 L126 152 L129 161 L111 161 Z" fill="{BLUE}"/><path d="M112 162 L128 162 L124 184 L120 189 L116 184 Z" fill="{BLUE}"/>')
@@ -100,6 +100,14 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         behind = (f'<rect x="38" y="96" width="30" height="80" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>'
                   f'<rect x="172" y="96" width="30" height="80" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>')
     head = ""
+    if outfit == "dracula":  # Halloween costume (31 Oct 2026): black cape with red lining and a tall stand-up collar behind the body, small fangs
+        behind = (f'<path d="M58 70 Q20 140 14 228 Q60 214 120 226 Q180 214 226 228 Q220 140 182 70 Z" fill="#B3262E" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                  f'<path d="M62 74 Q30 140 26 220 Q66 208 120 218 Q174 208 214 220 Q210 140 178 74 Z" fill="#1A1A22"/>'
+                  f'<path d="M66 120 L18 30 L44 52 L56 18 L82 96 Z" fill="#1A1A22" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                  f'<path d="M64 110 L30 46 L48 62 L58 36 L76 96 Z" fill="#B3262E"/>'
+                  f'<path d="M174 120 L222 30 L196 52 L184 18 L158 96 Z" fill="#1A1A22" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                  f'<path d="M176 110 L210 46 L192 62 L182 36 L164 96 Z" fill="#B3262E"/>')
+        extra += (f'<path d="M111 139 L114 149 L117 140 Z M123 140 L126 149 L129 139 Z" fill="{WHITE}" stroke="{INK}" stroke-width="1.8" stroke-linejoin="round"/>')
     if outfit == "vest":  # finance-bro look (31 Oct 2026): grey fleece vest over the shirt and tie, white earbuds
         collar += (f'<path d="M57 124 L104 151 L110 189 L70 189 Q57 189 57 176 Z" fill="#4B5563" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
                    f'<path d="M183 124 L136 151 L130 189 L170 189 Q183 189 183 176 Z" fill="#4B5563" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
