@@ -38,7 +38,7 @@
       {
         "slotId": "2026-11-08-1300",
         "date": "2026-11-08",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -61,7 +61,7 @@
       {
         "slotId": "2026-11-08-1300",
         "date": "2026-11-08",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -73,7 +73,8 @@
       "slope"
     ],
     "related": [
-      "regression-line"
+      "regression-line",
+      "dummy-variable"
     ],
     "themes": [
       "econometrics"
@@ -82,35 +83,7 @@
       {
         "slotId": "2026-11-08-1300",
         "date": "2026-11-08",
-        "format": "five-concepts"
-      }
-    ]
-  },
-  {
-    "id": "r-squared",
-    "term": "R-squared",
-    "aliases": [
-      "adjusted r-squared",
-      "coefficient of determination",
-      "goodness of fit",
-      "r2"
-    ],
-    "related": [
-      "regression-line"
-    ],
-    "themes": [
-      "statistics-traps"
-    ],
-    "uses": [
-      {
-        "slotId": "2026-10-28-1000",
-        "date": "2026-10-28",
-        "format": "puzzle"
-      },
-      {
-        "slotId": "2026-11-08-1300",
-        "date": "2026-11-08",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -133,7 +106,7 @@
       {
         "slotId": "2026-11-08-1300",
         "date": "2026-11-08",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -178,6 +151,28 @@
         "slotId": "2026-11-08-1600",
         "date": "2026-11-08",
         "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "dummy-variable",
+    "term": "Dummy variable",
+    "aliases": [
+      "indicator variable",
+      "binary variable",
+      "0/1 variable"
+    ],
+    "related": [
+      "regression-coefficient"
+    ],
+    "themes": [
+      "econometrics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1300",
+        "date": "2026-11-08",
+        "format": "list-reel"
       }
     ]
   },
@@ -300,7 +295,8 @@
       {
         "slotId": "2026-11-06-1300",
         "date": "2026-11-06",
-        "format": "five-concepts"
+        "format": "list-reel",
+        "pairedWith": "2026-11-06-1000"
       }
     ]
   },
@@ -342,7 +338,7 @@
       {
         "slotId": "2026-11-06-1300",
         "date": "2026-11-06",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -369,7 +365,8 @@
       {
         "slotId": "2026-11-06-1300",
         "date": "2026-11-06",
-        "format": "five-concepts"
+        "format": "list-reel",
+        "pairedWith": "2026-11-06-1000"
       }
     ]
   },
@@ -388,7 +385,7 @@
       {
         "slotId": "2026-11-06-1300",
         "date": "2026-11-06",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -570,7 +567,7 @@
       {
         "slotId": "2026-11-04-1300",
         "date": "2026-11-04",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -591,7 +588,7 @@
       {
         "slotId": "2026-11-04-1300",
         "date": "2026-11-04",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -610,7 +607,7 @@
       {
         "slotId": "2026-11-04-1300",
         "date": "2026-11-04",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -640,13 +637,16 @@
   },
   {
     "id": "capacity-utilisation",
-    "term": "Capacity utilisation",
+    "term": "Capacity utilization",
     "aliases": [
       "capacity utilization",
-      "utilisation rate"
+      "capacity utilisation",
+      "utilisation rate",
+      "utilization rate"
     ],
     "related": [
-      "bottleneck"
+      "bottleneck",
+      "throughput"
     ],
     "themes": [
       "capacity"
@@ -655,7 +655,7 @@
       {
         "slotId": "2026-11-04-1300",
         "date": "2026-11-04",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -681,15 +681,15 @@
     ]
   },
   {
-    "id": "bottleneck",
-    "term": "Bottleneck",
+    "id": "throughput",
+    "term": "Throughput",
     "aliases": [
-      "bottleneck station",
-      "constraint",
-      "slowest step",
-      "theory of constraints"
+      "output rate",
+      "throughput rate",
+      "units finished per period"
     ],
     "related": [
+      "bottleneck",
       "capacity-utilisation"
     ],
     "themes": [
@@ -697,14 +697,9 @@
     ],
     "uses": [
       {
-        "slotId": "2026-10-26-1800",
-        "date": "2026-10-26",
-        "format": "puzzle"
-      },
-      {
         "slotId": "2026-11-04-1300",
         "date": "2026-11-04",
-        "format": "five-concepts"
+        "format": "list-reel"
       }
     ]
   },
@@ -880,24 +875,127 @@
     ]
   },
   {
-    "id": "ai-output-checks",
-    "term": "Checking AI output (source, sum, sign, scale, sense)",
+    "id": "gross-pay",
+    "term": "Gross pay",
     "aliases": [
-      "ai output checks",
-      "sanity check ai",
-      "sense check"
+      "gross earnings",
+      "gross wages",
+      "pay before deductions"
     ],
     "related": [
-      "automation-bias"
+      "net-pay"
     ],
     "themes": [
-      "ai-and-skills"
+      "personal-finance",
+      "payroll"
     ],
     "uses": [
       {
         "slotId": "2026-11-02-1300",
         "date": "2026-11-02",
-        "format": "five-concepts"
+        "format": "list-reel",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "id": "pre-tax-deduction",
+    "term": "Pre-tax deduction",
+    "aliases": [
+      "pretax deduction",
+      "pre-tax contribution",
+      "401(k) contribution",
+      "salary sacrifice"
+    ],
+    "related": [
+      "gross-pay",
+      "tax-withholding"
+    ],
+    "themes": [
+      "personal-finance",
+      "payroll"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1300",
+        "date": "2026-11-02",
+        "format": "list-reel",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "id": "tax-withholding",
+    "term": "Withholding (payroll tax withholding)",
+    "aliases": [
+      "withholding",
+      "tax withheld",
+      "paye",
+      "w-4 withholding"
+    ],
+    "related": [
+      "pre-tax-deduction",
+      "marginal-tax-rate"
+    ],
+    "themes": [
+      "personal-finance",
+      "payroll",
+      "taxation"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1300",
+        "date": "2026-11-02",
+        "format": "list-reel",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "id": "net-pay",
+    "term": "Net pay",
+    "aliases": [
+      "take-home pay",
+      "net earnings",
+      "pay after deductions"
+    ],
+    "related": [
+      "gross-pay"
+    ],
+    "themes": [
+      "personal-finance",
+      "payroll"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1300",
+        "date": "2026-11-02",
+        "format": "list-reel",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "id": "year-to-date",
+    "term": "Year-to-date (YTD)",
+    "aliases": [
+      "ytd",
+      "year to date",
+      "ytd earnings"
+    ],
+    "related": [
+      "gross-pay"
+    ],
+    "themes": [
+      "personal-finance",
+      "payroll"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1300",
+        "date": "2026-11-02",
+        "format": "list-reel",
+        "status": "planned"
       }
     ]
   },
@@ -1813,6 +1911,29 @@
     ]
   },
   {
+    "id": "r-squared",
+    "term": "R-squared",
+    "aliases": [
+      "adjusted r-squared",
+      "coefficient of determination",
+      "goodness of fit",
+      "r2"
+    ],
+    "related": [
+      "regression-line"
+    ],
+    "themes": [
+      "statistics-traps"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1000",
+        "date": "2026-10-28",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
     "id": "standard-deviation",
     "term": "Standard deviation",
     "aliases": [
@@ -2174,6 +2295,30 @@
         "slotId": "lifeof-accountant-accruals",
         "date": "2026-10-27",
         "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "bottleneck",
+    "term": "Bottleneck",
+    "aliases": [
+      "bottleneck station",
+      "constraint",
+      "slowest step",
+      "theory of constraints"
+    ],
+    "related": [
+      "capacity-utilisation",
+      "throughput"
+    ],
+    "themes": [
+      "capacity"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1800",
+        "date": "2026-10-26",
+        "format": "puzzle"
       }
     ]
   },
@@ -2549,5 +2694,21 @@
         "format": "puzzle"
       }
     ]
+  },
+  {
+    "id": "ai-output-checks",
+    "term": "Checking AI output (source, sum, sign, scale, sense)",
+    "aliases": [
+      "ai output checks",
+      "sanity check ai",
+      "sense check"
+    ],
+    "related": [
+      "automation-bias"
+    ],
+    "themes": [
+      "ai-and-skills"
+    ],
+    "uses": []
   }
 ]
