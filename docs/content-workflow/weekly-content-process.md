@@ -83,6 +83,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - Use official, academic and textbook sources.
    - Record the source, access date and reuse rights.
    - Copy no question text or artwork from any source.
+   - **Check the concept registry before proposing (1 Nov 2026).** Read hub `concepts` (see "Concept registry" below) and drop or swap any lead whose main concept, a `related` concept or theme is blocked. Every lead names its main concept slug and themes.
 4a. **Holiday check (Hoang, 31 Oct 2026).** Open `docs/content-workflow/holiday-calendar.md` and list every holiday whose content window or "plan by" date falls in the next 3 weeks. Make that week's content fit it: themed posts in the normal slots, each still teaching one business concept, with checked, recent market or price news in USD where possible. Christmas content starts 1–2 weeks before 25 Dec: the plan of 3 Dec drafts the whole 11–24 Dec run. Holiday videos use only copyright-safe music (see the calendar).
 5. **Validate** each candidate against the question benchmark below.
    - Solve it independently.
@@ -92,6 +93,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - Each family appears 1–3 times a week.
    - No question type appears more than 3 times a week.
    - No reasoning trap repeats within 4 weeks.
+   - **No concept repeats across formats (1 Nov 2026).** Run the concept registry check on every post, not only puzzles: same main concept 90 days, a `related` concept 14 days, at most 2 posts per theme in any 7 days. Each post records `concept`, `themes` and the line "registry check: clear" or the conflict.
    - The two puzzles on the same day differ in family and in trap.
    - Concept carousels explain a concept behind that week's puzzles.
 7. **Write captions and first comments** for every post, following the rules below.
@@ -101,8 +103,26 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - One week document: `weeks/<YYYY-Www>`, status `awaiting_approval`.
    - One post document per slot: `posts/<id>` (`2026W45-<day>-<HHMM>`). Each holds the question, answer, takeaway, explanation, assumptions, trap, visual brief, `caption`, `first_comment`, `hashtags`, sources, simulated review, maths check, score, `version: 1` and empty approvals.
    - Never invent results.
+   - After Hoang approves or schedules a post, add its use to hub `concepts` (step "Log the use" in concept-registry.md).
 9. **Log** the run.
 10. **Stop.** The Thursday run makes no Canva edits and does no scheduling or posting.
+
+## Concept registry (added 1 Nov 2026)
+
+Hoang noticed repeated concepts: diminishing marginal utility (31 Oct life-of reel) and diminishing returns (1 Nov definition reel) one day apart, AI and skills 4 times in 8 days (Moravec's paradox 27 Oct, deskilling 28 Oct, cognitive offloading 30 Oct, skill compression 3 Nov), and working capital on 24 Oct and 30 Oct. The trap rule only covered puzzles, so the hub now keeps a `concepts` collection: one doc per concept with its aliases, related concepts, themes and every post that used it. Details and queries: `docs/content-workflow/concept-registry.md`. Repo mirror: `concept-registry.json`.
+
+Proposed defaults (Hoang can change them):
+- **Same concept as the main idea:** blocked for 90 days in any format. A five-concepts or This vs That post may reuse it as a supporting term after 30 days.
+- **A `related` concept as the main idea:** blocked for 14 days.
+- **One theme:** at most 2 posts in any 7 days (for example `ai-and-skills`).
+- **Holiday or news hooks** may reuse an old concept only with a new angle and when the old post is more than 30 days old. Log it as an exception on the use.
+- **A puzzle and the carousel that explains it** (`explainsPuzzle`, same week) count as one paired use.
+- **Planned posts count**, not only posted ones.
+
+The checks:
+- Every proposal (Thursday plan, request, replacement, test post, research lead) lists its main concept slug and its themes.
+- The researcher or planner queries `concepts` before proposing and writes "registry check: clear" or names the conflict.
+- Once a post is approved or scheduled, its `uses` entry is added. A rejected or deleted post's entry is removed.
 
 ## Workflow map
 

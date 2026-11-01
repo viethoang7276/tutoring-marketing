@@ -1,0 +1,2553 @@
+[
+  {
+    "id": "winners-curse",
+    "term": "Winner's curse",
+    "aliases": [
+      "common-value auction",
+      "overbidding in auctions",
+      "winner's curse"
+    ],
+    "related": [],
+    "themes": [
+      "auctions-and-bidding",
+      "cognitive-bias"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-propertymanager-winners-curse",
+        "date": "2026-11-08",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "reverse-causality",
+    "term": "Reverse causality",
+    "aliases": [
+      "reverse causation"
+    ],
+    "related": [
+      "correlation",
+      "omitted-variable-bias"
+    ],
+    "themes": [
+      "econometrics",
+      "correlation-vs-causation"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1300",
+        "date": "2026-11-08",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "regression-line",
+    "term": "Regression line",
+    "aliases": [
+      "line of best fit",
+      "linear regression",
+      "ols"
+    ],
+    "related": [
+      "r-squared",
+      "regression-coefficient"
+    ],
+    "themes": [
+      "econometrics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1300",
+        "date": "2026-11-08",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "regression-coefficient",
+    "term": "Regression coefficient",
+    "aliases": [
+      "coefficient",
+      "slope"
+    ],
+    "related": [
+      "regression-line"
+    ],
+    "themes": [
+      "econometrics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1300",
+        "date": "2026-11-08",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "r-squared",
+    "term": "R-squared",
+    "aliases": [
+      "adjusted r-squared",
+      "coefficient of determination",
+      "goodness of fit",
+      "r2"
+    ],
+    "related": [
+      "regression-line"
+    ],
+    "themes": [
+      "statistics-traps"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1000",
+        "date": "2026-10-28",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-08-1300",
+        "date": "2026-11-08",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "omitted-variable-bias",
+    "term": "Omitted variable bias",
+    "aliases": [
+      "confounder",
+      "confounding variable"
+    ],
+    "related": [
+      "correlation",
+      "reverse-causality"
+    ],
+    "themes": [
+      "econometrics",
+      "correlation-vs-causation"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1300",
+        "date": "2026-11-08",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "marginal-tax-rate",
+    "term": "Marginal tax rate",
+    "aliases": [
+      "marginal vs average tax rate",
+      "progressive tax",
+      "tax brackets"
+    ],
+    "related": [],
+    "themes": [
+      "personal-finance",
+      "taxation"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1000",
+        "date": "2026-11-08",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "hard-coded-inputs",
+    "term": "Hard-coded inputs in a model",
+    "aliases": [
+      "assumptions cell",
+      "hard-coded numbers",
+      "hardcoding",
+      "typed-in numbers in formulas"
+    ],
+    "related": [
+      "spreadsheet-lookup-columns"
+    ],
+    "themes": [
+      "spreadsheets"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-08-1600",
+        "date": "2026-11-08",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "operating-leverage",
+    "term": "Operating leverage",
+    "aliases": [
+      "degree of operating leverage",
+      "dol",
+      "fixed vs variable costs"
+    ],
+    "related": [
+      "break-even-point",
+      "contribution-margin",
+      "financial-leverage"
+    ],
+    "themes": [
+      "cost-behaviour"
+    ],
+    "uses": [
+      {
+        "slotId": "def-operating-leverage",
+        "date": "2026-11-07",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "mean-absolute-error",
+    "term": "Mean absolute error",
+    "aliases": [
+      "absolute forecast error",
+      "average size of a miss",
+      "mae"
+    ],
+    "related": [
+      "forecast-accuracy",
+      "forecast-bias"
+    ],
+    "themes": [
+      "forecasting"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-07-1000",
+        "date": "2026-11-07",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "forecast-bias",
+    "term": "Forecast bias",
+    "aliases": [
+      "errors that cancel out",
+      "mean error"
+    ],
+    "related": [
+      "forecast-accuracy",
+      "mean-absolute-error"
+    ],
+    "themes": [
+      "forecasting"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-07-1000",
+        "date": "2026-11-07",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-07-1300",
+        "date": "2026-11-07",
+        "format": "this-vs-that"
+      }
+    ]
+  },
+  {
+    "id": "forecast-accuracy",
+    "term": "Forecast accuracy",
+    "aliases": [
+      "accuracy measures",
+      "forecast error"
+    ],
+    "related": [
+      "forecast-bias",
+      "mean-absolute-error"
+    ],
+    "themes": [
+      "forecasting"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-07-1300",
+        "date": "2026-11-07",
+        "format": "this-vs-that"
+      }
+    ]
+  },
+  {
+    "id": "unemployment-rate",
+    "term": "Unemployment rate",
+    "aliases": [
+      "jobless rate",
+      "u-3"
+    ],
+    "related": [
+      "labor-force-participation",
+      "payroll-jobs"
+    ],
+    "themes": [
+      "labor-market"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-06-1000",
+        "date": "2026-11-06",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-06-1300",
+        "date": "2026-11-06",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "planning-fallacy",
+    "term": "Planning fallacy",
+    "aliases": [
+      "optimism bias in planning",
+      "underestimating how long tasks take"
+    ],
+    "related": [],
+    "themes": [
+      "cognitive-bias",
+      "study-life"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-06-1600",
+        "date": "2026-11-06",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "payroll-jobs",
+    "term": "Payroll jobs",
+    "aliases": [
+      "establishment survey",
+      "jobs report",
+      "nonfarm payrolls"
+    ],
+    "related": [
+      "unemployment-rate"
+    ],
+    "themes": [
+      "labor-market"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-06-1300",
+        "date": "2026-11-06",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "labor-force-participation",
+    "term": "Labor force and participation rate",
+    "aliases": [
+      "labor force",
+      "labour force",
+      "participation rate"
+    ],
+    "related": [
+      "unemployment-rate"
+    ],
+    "themes": [
+      "labor-market"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-06-1000",
+        "date": "2026-11-06",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-06-1300",
+        "date": "2026-11-06",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "average-hourly-earnings",
+    "term": "Average hourly earnings",
+    "aliases": [
+      "hourly pay",
+      "wage growth"
+    ],
+    "related": [],
+    "themes": [
+      "labor-market"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-06-1300",
+        "date": "2026-11-06",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "ab-testing",
+    "term": "A/B testing",
+    "aliases": [
+      "a/b test",
+      "change one variable at a time",
+      "randomised experiment",
+      "split test"
+    ],
+    "related": [
+      "conversion-rate"
+    ],
+    "themes": [
+      "marketing-experiments"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-marketer-ab-testing",
+        "date": "2026-11-06",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "layered-controls",
+    "term": "Layered controls (independent checks)",
+    "aliases": [
+      "defence in depth",
+      "independent events",
+      "layered checks",
+      "swiss cheese model",
+      "two-person check"
+    ],
+    "related": [
+      "automation-bias"
+    ],
+    "themes": [
+      "risk-and-probability",
+      "ai-and-skills"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-05-1000",
+        "date": "2026-11-05",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-05-1300",
+        "date": "2026-11-05",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "interest-rate-risk",
+    "term": "Interest rate risk",
+    "aliases": [
+      "bond price vs yield",
+      "bond prices fall when rates rise",
+      "duration risk"
+    ],
+    "related": [],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "def-interest-rate-risk",
+        "date": "2026-11-05",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "human-in-the-loop",
+    "term": "Human in the loop",
+    "aliases": [
+      "human oversight",
+      "human review"
+    ],
+    "related": [
+      "automation-bias"
+    ],
+    "themes": [
+      "ai-and-skills"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-05-1300",
+        "date": "2026-11-05",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "automation-bias",
+    "term": "Automation bias",
+    "aliases": [
+      "automation complacency",
+      "commission error",
+      "complacency",
+      "omission error",
+      "over-trusting a tool"
+    ],
+    "related": [
+      "ai-output-checks",
+      "cognitive-offloading",
+      "deskilling",
+      "human-in-the-loop",
+      "layered-controls"
+    ],
+    "themes": [
+      "ai-and-skills",
+      "cognitive-bias"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1300",
+        "date": "2026-11-02",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "2026-11-05-1000",
+        "date": "2026-11-05",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-05-1300",
+        "date": "2026-11-05",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "variance-analysis",
+    "term": "Variance analysis (volume vs price)",
+    "aliases": [
+      "budget variance",
+      "flexible budget variance",
+      "price variance",
+      "volume variance"
+    ],
+    "related": [],
+    "themes": [
+      "cost-behaviour",
+      "budgeting"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-04-1600",
+        "date": "2026-11-04",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "safety-stock",
+    "term": "Safety stock",
+    "aliases": [
+      "buffer stock",
+      "reserve inventory"
+    ],
+    "related": [
+      "lead-time",
+      "risk-pooling"
+    ],
+    "themes": [
+      "inventory"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1800",
+        "date": "2026-10-30",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-04-1300",
+        "date": "2026-11-04",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "lead-time",
+    "term": "Lead time",
+    "aliases": [
+      "delivery lead time",
+      "reorder point"
+    ],
+    "related": [
+      "safety-stock"
+    ],
+    "themes": [
+      "inventory"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-04-1300",
+        "date": "2026-11-04",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "inventory-turnover",
+    "term": "Inventory turnover",
+    "aliases": [
+      "inventory turns",
+      "stock turnover"
+    ],
+    "related": [],
+    "themes": [
+      "inventory"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-04-1300",
+        "date": "2026-11-04",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "incremental-profit",
+    "term": "Incremental profit (discount cannibalisation)",
+    "aliases": [
+      "cannibalisation",
+      "cannibalization",
+      "incrementality",
+      "subsidy cost of discounts",
+      "would have bought anyway"
+    ],
+    "related": [
+      "contribution-margin"
+    ],
+    "themes": [
+      "pricing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-04-1000",
+        "date": "2026-11-04",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "capacity-utilisation",
+    "term": "Capacity utilisation",
+    "aliases": [
+      "capacity utilization",
+      "utilisation rate"
+    ],
+    "related": [
+      "bottleneck"
+    ],
+    "themes": [
+      "capacity"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-04-1300",
+        "date": "2026-11-04",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "bullwhip-effect",
+    "term": "Bullwhip effect",
+    "aliases": [
+      "bullwhip",
+      "demand amplification",
+      "forrester effect"
+    ],
+    "related": [],
+    "themes": [
+      "inventory",
+      "forecasting"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-supplychain-bullwhip",
+        "date": "2026-11-04",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "bottleneck",
+    "term": "Bottleneck",
+    "aliases": [
+      "bottleneck station",
+      "constraint",
+      "slowest step",
+      "theory of constraints"
+    ],
+    "related": [
+      "capacity-utilisation"
+    ],
+    "themes": [
+      "capacity"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1800",
+        "date": "2026-10-26",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-04-1300",
+        "date": "2026-11-04",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "skill-compression",
+    "term": "Skill compression",
+    "aliases": [
+      "ai narrows the skill gap",
+      "skill gap compression"
+    ],
+    "related": [
+      "cognitive-offloading",
+      "deskilling",
+      "moravecs-paradox"
+    ],
+    "themes": [
+      "ai-and-skills",
+      "labor-market"
+    ],
+    "uses": [
+      {
+        "slotId": "def-skill-compression",
+        "date": "2026-11-03",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "double-entry",
+    "term": "Double-entry bookkeeping",
+    "aliases": [
+      "debits and credits",
+      "double entry",
+      "double-entry accounting"
+    ],
+    "related": [
+      "accounting-equation"
+    ],
+    "themes": [
+      "financial-statements"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-24-1300",
+        "date": "2026-10-24",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "2026-11-03-1300",
+        "date": "2026-11-03",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "balance-sheet",
+    "term": "Balance sheet",
+    "aliases": [
+      "statement of financial position"
+    ],
+    "related": [
+      "accounting-equation"
+    ],
+    "themes": [
+      "financial-statements"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-03-1300",
+        "date": "2026-11-03",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "accounting-equation",
+    "term": "Accounting equation",
+    "aliases": [
+      "assets",
+      "assets = liabilities + equity",
+      "balance sheet equation",
+      "equity",
+      "liabilities",
+      "owner's equity"
+    ],
+    "related": [
+      "balance-sheet",
+      "double-entry"
+    ],
+    "themes": [
+      "financial-statements"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-03-1000",
+        "date": "2026-11-03",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-11-03-1300",
+        "date": "2026-11-03",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "span-of-control",
+    "term": "Span of control",
+    "aliases": [
+      "flat vs tall structure",
+      "management layers",
+      "organisational layers"
+    ],
+    "related": [
+      "communication-channels"
+    ],
+    "themes": [
+      "team-and-org"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1000",
+        "date": "2026-11-02",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "goodharts-law",
+    "term": "Goodhart's law",
+    "aliases": [
+      "campbell's law",
+      "gaming the metric",
+      "goodhart's law",
+      "when a measure becomes a target"
+    ],
+    "related": [
+      "kpi"
+    ],
+    "themes": [
+      "metrics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1600",
+        "date": "2026-11-02",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "cash-runway",
+    "term": "Burn rate and runway",
+    "aliases": [
+      "burn rate",
+      "cash burn",
+      "cash runway",
+      "runway"
+    ],
+    "related": [
+      "cash-vs-profit",
+      "working-capital"
+    ],
+    "themes": [
+      "cash-vs-profit"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-founder-runway",
+        "date": "2026-11-02",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "ai-output-checks",
+    "term": "Checking AI output (source, sum, sign, scale, sense)",
+    "aliases": [
+      "ai output checks",
+      "sanity check ai",
+      "sense check"
+    ],
+    "related": [
+      "automation-bias"
+    ],
+    "themes": [
+      "ai-and-skills"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-02-1300",
+        "date": "2026-11-02",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "swot-analysis",
+    "term": "SWOT analysis",
+    "aliases": [
+      "swot"
+    ],
+    "related": [],
+    "themes": [
+      "strategy"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1300",
+        "date": "2026-11-01",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "pareto-principle",
+    "term": "Pareto principle",
+    "aliases": [
+      "80-20 rule",
+      "80/20 rule"
+    ],
+    "related": [],
+    "themes": [
+      "strategy"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1300",
+        "date": "2026-11-01",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "matching-principle",
+    "term": "Matching principle",
+    "aliases": [
+      "expense recognition",
+      "matching",
+      "matching concept"
+    ],
+    "related": [
+      "accrual",
+      "depreciation"
+    ],
+    "themes": [
+      "cash-vs-profit"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-24-1300",
+        "date": "2026-10-24",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "2026-11-01-1000",
+        "date": "2026-11-01",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "kpi",
+    "term": "Key performance indicator",
+    "aliases": [
+      "key metric",
+      "kpi",
+      "kpis"
+    ],
+    "related": [
+      "goodharts-law"
+    ],
+    "themes": [
+      "metrics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1300",
+        "date": "2026-11-01",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "inflation",
+    "term": "Inflation",
+    "aliases": [
+      "cost of living",
+      "cpi",
+      "price level"
+    ],
+    "related": [
+      "disinflation"
+    ],
+    "themes": [
+      "macroeconomics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1300",
+        "date": "2026-10-26",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "2026-11-01-1600",
+        "date": "2026-11-01",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "expected-value",
+    "term": "Expected value",
+    "aliases": [
+      "decision tree",
+      "ev",
+      "probability-weighted value"
+    ],
+    "related": [],
+    "themes": [
+      "risk-and-probability",
+      "decision-making"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1800",
+        "date": "2026-11-01",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "disinflation",
+    "term": "Disinflation vs deflation",
+    "aliases": [
+      "deflation",
+      "disinflation",
+      "slower inflation is not lower prices"
+    ],
+    "related": [
+      "inflation"
+    ],
+    "themes": [
+      "macroeconomics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1600",
+        "date": "2026-11-01",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "diminishing-returns",
+    "term": "Diminishing returns",
+    "aliases": [
+      "diminishing marginal productivity",
+      "diminishing marginal returns",
+      "law of diminishing returns",
+      "marginal product"
+    ],
+    "related": [
+      "diminishing-marginal-utility"
+    ],
+    "themes": [
+      "diminishing-returns"
+    ],
+    "uses": [
+      {
+        "slotId": "def-diminishing-returns",
+        "date": "2026-11-01",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "depreciation",
+    "term": "Depreciation",
+    "aliases": [
+      "depreciation expense",
+      "spreading an asset's cost",
+      "straight-line depreciation"
+    ],
+    "related": [
+      "matching-principle"
+    ],
+    "themes": [
+      "cash-vs-profit"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-24-1300",
+        "date": "2026-10-24",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "2026-11-01-1000",
+        "date": "2026-11-01",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "delegation",
+    "term": "Delegation",
+    "aliases": [
+      "delegating"
+    ],
+    "related": [],
+    "themes": [
+      "team-and-org"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1300",
+        "date": "2026-11-01",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "core-competency",
+    "term": "Core competency",
+    "aliases": [
+      "competitive advantage",
+      "core competence"
+    ],
+    "related": [],
+    "themes": [
+      "strategy"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-11-01-1300",
+        "date": "2026-11-01",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "tax-incidence",
+    "term": "Tax incidence",
+    "aliases": [
+      "economic incidence",
+      "tax burden",
+      "tax pass-through",
+      "who bears a tax"
+    ],
+    "related": [
+      "deadweight-loss",
+      "price-elasticity-of-demand"
+    ],
+    "themes": [
+      "pricing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-31-1000",
+        "date": "2026-10-31",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "simple-interest",
+    "term": "Simple interest",
+    "aliases": [
+      "interest on principal only"
+    ],
+    "related": [
+      "compound-interest"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-31-1300",
+        "date": "2026-10-31",
+        "format": "this-vs-that"
+      }
+    ]
+  },
+  {
+    "id": "return-on-assets",
+    "term": "Return on assets (DuPont)",
+    "aliases": [
+      "asset turnover",
+      "dupont analysis",
+      "margin times turnover",
+      "roa"
+    ],
+    "related": [],
+    "themes": [
+      "financial-ratios"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-31-1800",
+        "date": "2026-10-31",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "hedging",
+    "term": "Hedging",
+    "aliases": [
+      "cost pass-through lag",
+      "hedge",
+      "locking in a price"
+    ],
+    "related": [
+      "forward-contract"
+    ],
+    "themes": [
+      "commodities-and-hedging"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-31-2030-halloween",
+        "date": "2026-10-31",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "lifeof-financebro-halloween",
+        "date": "2026-10-31",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "free-cash-flow",
+    "term": "Free cash flow",
+    "aliases": [
+      "fcf"
+    ],
+    "related": [
+      "capex"
+    ],
+    "themes": [
+      "valuation"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-talks-finance-interview-terms",
+        "date": "2026-10-31",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "forward-contract",
+    "term": "Forward contract",
+    "aliases": [
+      "forward",
+      "forwards",
+      "futures",
+      "futures contract"
+    ],
+    "related": [
+      "hedging"
+    ],
+    "themes": [
+      "commodities-and-hedging"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-31-2030-halloween",
+        "date": "2026-10-31",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "lifeof-financebro-halloween",
+        "date": "2026-10-31",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "ev-ebitda",
+    "term": "EV/EBITDA multiple",
+    "aliases": [
+      "ebitda multiple",
+      "ev/ebitda"
+    ],
+    "related": [
+      "ebitda",
+      "enterprise-value"
+    ],
+    "themes": [
+      "valuation"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-talks-finance-interview-terms",
+        "date": "2026-10-31",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "enterprise-value",
+    "term": "Enterprise value",
+    "aliases": [
+      "ev (valuation)",
+      "firm value"
+    ],
+    "related": [
+      "ev-ebitda"
+    ],
+    "themes": [
+      "valuation"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-talks-finance-interview-terms",
+        "date": "2026-10-31",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "ebitda",
+    "term": "EBITDA",
+    "aliases": [],
+    "related": [
+      "ev-ebitda"
+    ],
+    "themes": [
+      "valuation"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-talks-finance-interview-terms",
+        "date": "2026-10-31",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "diminishing-marginal-utility",
+    "term": "Diminishing marginal utility",
+    "aliases": [
+      "law of diminishing marginal utility",
+      "marginal utility"
+    ],
+    "related": [
+      "diminishing-returns"
+    ],
+    "themes": [
+      "diminishing-returns"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-econstudent-marginal-utility",
+        "date": "2026-10-31",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "compound-interest",
+    "term": "Compound interest",
+    "aliases": [
+      "interest on interest"
+    ],
+    "related": [
+      "compounding",
+      "effective-annual-rate",
+      "simple-interest"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-31-1300",
+        "date": "2026-10-31",
+        "format": "this-vs-that"
+      }
+    ]
+  },
+  {
+    "id": "capex",
+    "term": "Capital expenditure",
+    "aliases": [
+      "capex",
+      "capital spending"
+    ],
+    "related": [
+      "free-cash-flow"
+    ],
+    "themes": [
+      "valuation"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-talks-finance-interview-terms",
+        "date": "2026-10-31",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "working-capital",
+    "term": "Working capital",
+    "aliases": [
+      "current assets minus current liabilities",
+      "net working capital",
+      "working capital cycle"
+    ],
+    "related": [
+      "cash-runway",
+      "cash-vs-profit"
+    ],
+    "themes": [
+      "cash-vs-profit"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-24-1300",
+        "date": "2026-10-24",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "def-working-capital",
+        "date": "2026-10-30",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "risk-pooling",
+    "term": "Risk pooling",
+    "aliases": [
+      "centralised inventory",
+      "demand pooling",
+      "inventory pooling",
+      "square root law"
+    ],
+    "related": [
+      "diversification",
+      "safety-stock"
+    ],
+    "themes": [
+      "inventory",
+      "risk-and-probability"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1800",
+        "date": "2026-10-30",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "price-anchoring",
+    "term": "Price anchoring",
+    "aliases": [
+      "anchor price",
+      "anchoring",
+      "decoy pricing"
+    ],
+    "related": [],
+    "themes": [
+      "pricing",
+      "cognitive-bias"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1300",
+        "date": "2026-10-30",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "positioning",
+    "term": "Positioning",
+    "aliases": [
+      "brand positioning"
+    ],
+    "related": [
+      "market-segmentation"
+    ],
+    "themes": [
+      "marketing-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1300",
+        "date": "2026-10-30",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "market-segmentation",
+    "term": "Market segmentation",
+    "aliases": [
+      "segmentation",
+      "target segments"
+    ],
+    "related": [
+      "positioning"
+    ],
+    "themes": [
+      "marketing-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1300",
+        "date": "2026-10-30",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "effective-annual-rate",
+    "term": "Effective annual rate",
+    "aliases": [
+      "annual percentage yield",
+      "apy",
+      "compounding frequency",
+      "ear",
+      "effective interest rate"
+    ],
+    "related": [
+      "compound-interest",
+      "compounding"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1000",
+        "date": "2026-10-30",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "conversion-rate",
+    "term": "Conversion rate",
+    "aliases": [
+      "conversion",
+      "funnel conversion",
+      "sales funnel"
+    ],
+    "related": [
+      "ab-testing"
+    ],
+    "themes": [
+      "sales-funnel"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-salesperson-conversion",
+        "date": "2026-10-29",
+        "format": "life-of-reel"
+      },
+      {
+        "slotId": "2026-10-30-1300",
+        "date": "2026-10-30",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "compounding",
+    "term": "Compounding",
+    "aliases": [
+      "compound growth",
+      "compounding returns",
+      "reinvested returns"
+    ],
+    "related": [
+      "compound-interest",
+      "effective-annual-rate",
+      "percentage-change-asymmetry"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-compounding-2026-10-30",
+        "date": "2026-10-30",
+        "format": "highlighter-reel"
+      }
+    ]
+  },
+  {
+    "id": "cognitive-offloading",
+    "term": "Cognitive offloading",
+    "aliases": [
+      "jagged frontier",
+      "outsourcing thinking to ai"
+    ],
+    "related": [
+      "automation-bias",
+      "deskilling",
+      "moravecs-paradox",
+      "skill-compression"
+    ],
+    "themes": [
+      "ai-and-skills"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-talks-ai-skills",
+        "date": "2026-10-30",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "brand-equity",
+    "term": "Brand equity",
+    "aliases": [
+      "brand premium",
+      "brand value"
+    ],
+    "related": [],
+    "themes": [
+      "marketing-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1300",
+        "date": "2026-10-30",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "autosave",
+    "term": "Save often (autosave)",
+    "aliases": [
+      "autosave",
+      "file recovery",
+      "lost work"
+    ],
+    "related": [],
+    "themes": [
+      "spreadsheets"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-30-1600",
+        "date": "2026-10-30",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "simpsons-paradox",
+    "term": "Simpson's paradox",
+    "aliases": [
+      "aggregation reversal",
+      "simpson's paradox",
+      "yule-simpson effect"
+    ],
+    "related": [
+      "weighted-average"
+    ],
+    "themes": [
+      "statistics-traps"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-29-1000",
+        "date": "2026-10-29",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "present-value",
+    "term": "Present value",
+    "aliases": [
+      "discounted value",
+      "discounting",
+      "pv",
+      "time value of money"
+    ],
+    "related": [
+      "discount-rate",
+      "net-present-value"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1000",
+        "date": "2026-10-26",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-10-29-1300",
+        "date": "2026-10-29",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "net-present-value",
+    "term": "Net present value",
+    "aliases": [
+      "dcf",
+      "discounted cash flow",
+      "npv",
+      "npv rule"
+    ],
+    "related": [
+      "discount-rate",
+      "present-value"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1000",
+        "date": "2026-10-26",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-10-29-1300",
+        "date": "2026-10-29",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "discount-rate",
+    "term": "Discount rate",
+    "aliases": [
+      "cost of capital",
+      "hurdle rate",
+      "required return"
+    ],
+    "related": [
+      "net-present-value",
+      "present-value"
+    ],
+    "themes": [
+      "time-value-of-money"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-29-1300",
+        "date": "2026-10-29",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "customer-lifetime-value",
+    "term": "Customer lifetime value",
+    "aliases": [
+      "cltv",
+      "clv",
+      "lifetime value",
+      "ltv"
+    ],
+    "related": [
+      "churn-rate"
+    ],
+    "themes": [
+      "customer-economics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-29-1800",
+        "date": "2026-10-29",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "churn-rate",
+    "term": "Churn rate",
+    "aliases": [
+      "attrition rate",
+      "cancel rate",
+      "customer churn"
+    ],
+    "related": [
+      "customer-lifetime-value"
+    ],
+    "themes": [
+      "customer-economics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-29-1800",
+        "date": "2026-10-29",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "standard-deviation",
+    "term": "Standard deviation",
+    "aliases": [
+      "sd",
+      "spread",
+      "volatility"
+    ],
+    "related": [],
+    "themes": [
+      "statistics-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1300",
+        "date": "2026-10-28",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "spreadsheet-lookup-columns",
+    "term": "Lookups that count columns",
+    "aliases": [
+      "index match",
+      "inserted column breaks a lookup",
+      "vlookup column index",
+      "xlookup"
+    ],
+    "related": [
+      "hard-coded-inputs"
+    ],
+    "themes": [
+      "spreadsheets"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1600",
+        "date": "2026-10-28",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "p-value",
+    "term": "P-value",
+    "aliases": [
+      "significance test",
+      "statistical significance"
+    ],
+    "related": [
+      "confidence-interval"
+    ],
+    "themes": [
+      "statistics-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1300",
+        "date": "2026-10-28",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "outlier",
+    "term": "Outlier",
+    "aliases": [
+      "mean vs median",
+      "outliers"
+    ],
+    "related": [],
+    "themes": [
+      "statistics-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1300",
+        "date": "2026-10-28",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "deskilling",
+    "term": "Deskilling",
+    "aliases": [
+      "losing skills to automation",
+      "skill atrophy"
+    ],
+    "related": [
+      "automation-bias",
+      "cognitive-offloading",
+      "moravecs-paradox",
+      "skill-compression"
+    ],
+    "themes": [
+      "ai-and-skills",
+      "labor-market"
+    ],
+    "uses": [
+      {
+        "slotId": "reel-def-deskilling",
+        "date": "2026-10-28",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "correlation",
+    "term": "Correlation",
+    "aliases": [
+      "correlation coefficient",
+      "correlation is not causation"
+    ],
+    "related": [
+      "omitted-variable-bias",
+      "reverse-causality"
+    ],
+    "themes": [
+      "statistics-basics",
+      "correlation-vs-causation"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1300",
+        "date": "2026-10-28",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "contribution-margin",
+    "term": "Contribution margin",
+    "aliases": [
+      "contribution per unit",
+      "discount break-even volume",
+      "profit per unit",
+      "unit contribution margin",
+      "unit margin"
+    ],
+    "related": [
+      "break-even-point",
+      "incremental-profit",
+      "marginal-cost",
+      "operating-leverage"
+    ],
+    "themes": [
+      "pricing",
+      "cost-behaviour"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1800",
+        "date": "2026-10-25",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "def-break-even",
+        "date": "2026-10-28",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "confidence-interval",
+    "term": "Confidence interval",
+    "aliases": [
+      "margin of error"
+    ],
+    "related": [
+      "p-value"
+    ],
+    "themes": [
+      "statistics-basics"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1300",
+        "date": "2026-10-28",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "communication-channels",
+    "term": "Communication channels n(n-1)/2",
+    "aliases": [
+      "brooks's law",
+      "communication paths",
+      "coordination cost of team size",
+      "n(n-1)/2"
+    ],
+    "related": [
+      "span-of-control"
+    ],
+    "themes": [
+      "team-and-org"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-28-1800",
+        "date": "2026-10-28",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "break-even-point",
+    "term": "Break-even point",
+    "aliases": [
+      "break-even",
+      "break-even analysis",
+      "breakeven",
+      "cost-volume-profit",
+      "cvp"
+    ],
+    "related": [
+      "contribution-margin",
+      "operating-leverage"
+    ],
+    "themes": [
+      "cost-behaviour"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1800",
+        "date": "2026-10-25",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "def-break-even",
+        "date": "2026-10-28",
+        "format": "definition-reel"
+      }
+    ]
+  },
+  {
+    "id": "substitute-goods",
+    "term": "Substitutes",
+    "aliases": [
+      "close substitutes",
+      "substitute goods"
+    ],
+    "related": [
+      "price-elasticity-of-demand"
+    ],
+    "themes": [
+      "pricing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-27-1300",
+        "date": "2026-10-27",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "price-elasticity-of-demand",
+    "term": "Price elasticity of demand",
+    "aliases": [
+      "elastic demand",
+      "elasticity",
+      "inelastic demand",
+      "ped",
+      "price sensitivity",
+      "unit elastic demand"
+    ],
+    "related": [
+      "substitute-goods",
+      "tax-incidence"
+    ],
+    "themes": [
+      "pricing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-27-1000",
+        "date": "2026-10-27",
+        "format": "puzzle"
+      },
+      {
+        "slotId": "2026-10-27-1300",
+        "date": "2026-10-27",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "moravecs-paradox",
+    "term": "Moravec's paradox",
+    "aliases": [
+      "easy things are hard for ai"
+    ],
+    "related": [
+      "cognitive-offloading",
+      "deskilling",
+      "skill-compression"
+    ],
+    "themes": [
+      "ai-and-skills"
+    ],
+    "uses": [
+      {
+        "slotId": "test-ledger-talks-moravec",
+        "date": "2026-10-27",
+        "format": "ledger-talks-reel"
+      }
+    ]
+  },
+  {
+    "id": "fifo-vs-lifo",
+    "term": "FIFO vs LIFO",
+    "aliases": [
+      "cost of goods sold",
+      "fifo",
+      "first in first out",
+      "inventory costing methods",
+      "last in first out",
+      "lifo"
+    ],
+    "related": [],
+    "themes": [
+      "inventory",
+      "financial-statements"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-27-1800",
+        "date": "2026-10-27",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "accrual",
+    "term": "Accrual accounting",
+    "aliases": [
+      "accrual",
+      "accrual basis",
+      "accruals",
+      "accrued expenses",
+      "accrued revenue"
+    ],
+    "related": [
+      "cash-vs-profit",
+      "matching-principle"
+    ],
+    "themes": [
+      "cash-vs-profit"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-24-1300",
+        "date": "2026-10-24",
+        "format": "five-concepts"
+      },
+      {
+        "slotId": "lifeof-accountant-accruals",
+        "date": "2026-10-27",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "sunk-cost",
+    "term": "Sunk cost",
+    "aliases": [
+      "concorde fallacy",
+      "sunk cost fallacy",
+      "sunk costs"
+    ],
+    "related": [
+      "opportunity-cost"
+    ],
+    "themes": [
+      "decision-making",
+      "cognitive-bias"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-22-1300",
+        "date": "2026-10-22",
+        "format": "definition-carousel"
+      },
+      {
+        "slotId": "explainer-sunk-cost",
+        "date": "2026-10-25",
+        "format": "definition-reel"
+      },
+      {
+        "slotId": "2026-10-26-1300",
+        "date": "2026-10-26",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "moral-hazard",
+    "term": "Moral hazard",
+    "aliases": [],
+    "related": [
+      "free-rider-problem"
+    ],
+    "themes": [
+      "incentives"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1300",
+        "date": "2026-10-26",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "free-rider-problem",
+    "term": "Free-rider problem",
+    "aliases": [
+      "free rider",
+      "free riding",
+      "social loafing"
+    ],
+    "related": [
+      "moral-hazard"
+    ],
+    "themes": [
+      "incentives",
+      "team-and-org"
+    ],
+    "uses": [
+      {
+        "slotId": "lifeof-bizstudent-free-rider",
+        "date": "2026-10-26",
+        "format": "life-of-reel"
+      }
+    ]
+  },
+  {
+    "id": "deadweight-loss",
+    "term": "Deadweight loss",
+    "aliases": [
+      "excess burden",
+      "welfare loss"
+    ],
+    "related": [
+      "consumer-surplus",
+      "tax-incidence"
+    ],
+    "themes": [
+      "market-welfare"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1300",
+        "date": "2026-10-26",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "consumer-surplus",
+    "term": "Consumer surplus",
+    "aliases": [
+      "buyer surplus"
+    ],
+    "related": [
+      "deadweight-loss"
+    ],
+    "themes": [
+      "market-welfare"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1300",
+        "date": "2026-10-26",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "cash-vs-profit",
+    "term": "Cash vs profit",
+    "aliases": [
+      "cash flow vs profit",
+      "operating cash flow vs net income",
+      "profit is not cash",
+      "profitable but out of cash"
+    ],
+    "related": [
+      "accrual",
+      "cash-runway",
+      "working-capital"
+    ],
+    "themes": [
+      "cash-vs-profit"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-26-1600",
+        "date": "2026-10-26",
+        "format": "comic"
+      }
+    ]
+  },
+  {
+    "id": "risk-premium",
+    "term": "Risk premium",
+    "aliases": [
+      "equity risk premium",
+      "extra return for risk"
+    ],
+    "related": [],
+    "themes": [
+      "investing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1300",
+        "date": "2026-10-25",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "liquidity",
+    "term": "Liquidity",
+    "aliases": [
+      "liquid assets",
+      "market liquidity"
+    ],
+    "related": [],
+    "themes": [
+      "investing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1300",
+        "date": "2026-10-25",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "financial-leverage",
+    "term": "Financial leverage",
+    "aliases": [
+      "borrowing to invest",
+      "gearing",
+      "leverage"
+    ],
+    "related": [
+      "operating-leverage"
+    ],
+    "themes": [
+      "investing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1300",
+        "date": "2026-10-25",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "dividend-yield",
+    "term": "Dividend yield",
+    "aliases": [
+      "yield on a share"
+    ],
+    "related": [],
+    "themes": [
+      "investing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1300",
+        "date": "2026-10-25",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "diversification",
+    "term": "Diversification",
+    "aliases": [
+      "don't put all your eggs in one basket",
+      "spreading investments"
+    ],
+    "related": [
+      "risk-pooling"
+    ],
+    "themes": [
+      "investing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1300",
+        "date": "2026-10-25",
+        "format": "five-concepts"
+      }
+    ]
+  },
+  {
+    "id": "base-rate-neglect",
+    "term": "Base-rate neglect",
+    "aliases": [
+      "base rate fallacy",
+      "bayes rule",
+      "bayes' theorem",
+      "false positive paradox"
+    ],
+    "related": [],
+    "themes": [
+      "risk-and-probability",
+      "cognitive-bias"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-25-1000",
+        "date": "2026-10-25",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "weighted-average",
+    "term": "Weighted average",
+    "aliases": [
+      "averaging averages",
+      "mix effect",
+      "weighted mean"
+    ],
+    "related": [
+      "simpsons-paradox"
+    ],
+    "themes": [
+      "statistics-traps"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-23-1800",
+        "date": "2026-10-23",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "percentage-change-asymmetry",
+    "term": "Percentage changes on different bases",
+    "aliases": [
+      "asymmetric returns",
+      "down 20% then up 20%",
+      "percentage change base effect",
+      "volatility drag"
+    ],
+    "related": [
+      "compounding"
+    ],
+    "themes": [
+      "investing"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-23-1000",
+        "date": "2026-10-23",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "opportunity-cost",
+    "term": "Opportunity cost",
+    "aliases": [
+      "cost of the forgone option",
+      "next best alternative"
+    ],
+    "related": [
+      "sunk-cost"
+    ],
+    "themes": [
+      "decision-making"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-22-1300",
+        "date": "2026-10-22",
+        "format": "definition-carousel"
+      }
+    ]
+  },
+  {
+    "id": "marginal-cost",
+    "term": "Marginal cost",
+    "aliases": [
+      "extra cost of one more unit",
+      "incremental cost",
+      "marginal cost pricing",
+      "spare capacity pricing"
+    ],
+    "related": [
+      "contribution-margin"
+    ],
+    "themes": [
+      "pricing",
+      "cost-behaviour"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-22-1000",
+        "date": "2026-10-22",
+        "format": "puzzle"
+      }
+    ]
+  },
+  {
+    "id": "job-sequencing",
+    "term": "Job sequencing (two-machine flow shop)",
+    "aliases": [
+      "johnson's rule",
+      "makespan",
+      "order sequencing",
+      "two-machine flow shop"
+    ],
+    "related": [],
+    "themes": [
+      "scheduling"
+    ],
+    "uses": [
+      {
+        "slotId": "2026-10-22-1800",
+        "date": "2026-10-22",
+        "format": "puzzle"
+      }
+    ]
+  }
+]
