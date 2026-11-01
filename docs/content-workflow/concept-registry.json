@@ -506,11 +506,6 @@
     ],
     "uses": [
       {
-        "slotId": "2026-11-02-1300",
-        "date": "2026-11-02",
-        "format": "five-concepts"
-      },
-      {
         "slotId": "2026-11-05-1000",
         "date": "2026-11-05",
         "format": "puzzle"
@@ -894,7 +889,7 @@
         "slotId": "2026-11-02-1300",
         "date": "2026-11-02",
         "format": "list-reel",
-        "status": "planned"
+        "status": "approved"
       }
     ]
   },
@@ -920,7 +915,7 @@
         "slotId": "2026-11-02-1300",
         "date": "2026-11-02",
         "format": "list-reel",
-        "status": "planned"
+        "status": "approved"
       }
     ]
   },
@@ -947,7 +942,7 @@
         "slotId": "2026-11-02-1300",
         "date": "2026-11-02",
         "format": "list-reel",
-        "status": "planned"
+        "status": "approved"
       }
     ]
   },
@@ -971,7 +966,7 @@
         "slotId": "2026-11-02-1300",
         "date": "2026-11-02",
         "format": "list-reel",
-        "status": "planned"
+        "status": "approved"
       }
     ]
   },
@@ -995,7 +990,7 @@
         "slotId": "2026-11-02-1300",
         "date": "2026-11-02",
         "format": "list-reel",
-        "status": "planned"
+        "status": "approved"
       }
     ]
   },
