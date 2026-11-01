@@ -26,7 +26,7 @@ A puzzle reel (`parentSlot`) is not a second post. Its use is logged under its p
 ## The rules (proposed 1 Nov 2026; Hoang can change them)
 
 1. **Same concept as the main idea: blocked for 90 days in any format.** A definition reel, a puzzle and a comic on the same concept count as repeats. Exception: a five-concepts or This vs That post may reuse a concept as a *supporting* term after 30 days.
-2. **A `related` concept as the main idea: blocked for 14 days.** Diminishing returns one day after diminishing marginal utility is the example.
+2. **A `related` concept as the main idea: blocked for 30 days** (Hoang, 1 Nov 2026: "no potential repetition within a month"; was 14 days). The same industry in the industry series is also blocked for 30 days. Diminishing returns one day after diminishing marginal utility is the example.
 3. **One theme: at most 2 posts in any 7 days**, for example `ai-and-skills`. Count main uses only.
 4. **Holiday or news hooks** may reuse an old concept only when the angle is new and the old post is more than 30 days old. Log it as an exception: put `exception: "holiday"` or `exception: "news"` and a one-line reason on the use entry.
 5. **Paired posts are one use.** Step 6 of the Thursday run has concept carousels explain a concept behind that week's puzzles. A carousel that explains a puzzle from the same week (slot field `explainsPuzzle`) is paired with it and does not break rules 1 to 3 against that puzzle. Log both uses and add `pairedWith: <slotId>` to the carousel's use. Pairing is one carousel per puzzle, not a third post.

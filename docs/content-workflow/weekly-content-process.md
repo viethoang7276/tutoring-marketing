@@ -93,7 +93,7 @@ Every post gets a **caption** and a **first comment**, and both are part of the 
    - Each family appears 1–3 times a week.
    - No question type appears more than 3 times a week.
    - No reasoning trap repeats within 4 weeks.
-   - **No concept repeats across formats (1 Nov 2026).** Run the concept registry check on every post, not only puzzles: same main concept 90 days, a `related` concept 14 days, at most 2 posts per theme in any 7 days. Each post records `concept`, `themes` and the line "registry check: clear" or the conflict.
+   - **No concept repeats across formats (1 Nov 2026).** Run the concept registry check on every post, not only puzzles: same main concept 90 days, a `related` concept 30 days (no potential repetition within a month), the same industry 30 days, at most 2 posts per theme in any 7 days. Each post records `concept`, `themes` and the line "registry check: clear" or the conflict.
    - The two puzzles on the same day differ in family and in trap.
    - Concept carousels explain a concept behind that week's puzzles.
 7. **Write captions and first comments** for every post, following the rules below.
@@ -113,7 +113,7 @@ Hoang noticed repeated concepts: diminishing marginal utility (31 Oct life-of re
 
 Proposed defaults (Hoang can change them):
 - **Same concept as the main idea:** blocked for 90 days in any format. A five-concepts or This vs That post may reuse it as a supporting term after 30 days.
-- **A `related` concept as the main idea:** blocked for 14 days.
+- **A `related` concept as the main idea:** blocked for 30 days (Hoang, 1 Nov 2026; was 14). The same industry in the industry series: also 30 days.
 - **One theme:** at most 2 posts in any 7 days (for example `ai-and-skills`).
 - **Holiday or news hooks** may reuse an old concept only with a new angle and when the old post is more than 30 days old. Log it as an exception on the use.
 - **A puzzle and the carousel that explains it** (`explainsPuzzle`, same week) count as one paired use.
