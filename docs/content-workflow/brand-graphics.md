@@ -58,3 +58,12 @@ The Canva folder **Edlintics · Brand graphics** (FAHYugebSqU) holds the generat
 | MAHZX667ygI | icon | Person turning a dial down | Correcting, adjusting down | adjust, correct, calibrate |
 | MAHZX-qOE4Q | icon | Stack of boxes with one small gold reserve box | Safety stock | safety stock, reserve, inventory |
 | MAHZX5U1GQg | icon | Line chart with two dashed forecast lines | Comparing forecasts | forecast methods, compare |
+| MAHZsMM4Awc | mascot | Ledger in a suit, arms down, smiling (transparent PNG; in Uploads, not yet in the folder) | Ledger standard pose | ledger, mascot, cover, transparent |
+| MAHZsOxFznQ | mascot | Ledger in a suit, one hand up (transparent PNG; Uploads) | Definition reel cover pose | ledger, definition, cover |
+| MAHZsBt4G5A | mascot | Ledger in a suit with a staff lanyard, waving (transparent PNG; Uploads) | Day in the life cover pose | ledger, lanyard, life-of, cover |
+| MAHZsBA-DRA | mascot | Ledger in a suit with a staff lanyard, pointing (transparent PNG; Uploads) | How-to cover pose | ledger, lanyard, how-to, pointing |
+| MAHZsCy1OHU | mascot | Ledger shrugging with an "o" mouth (transparent PNG; Uploads) | Puzzle cover pose | ledger, puzzle, shrug, cover |
+| MAHZsGdRR8g | mascot | Ledger presenting with one hand out (transparent PNG; Uploads) | List reel cover pose | ledger, list, presenting, cover |
+| MAHZsKWCpgI | mascot | Ledger holding a small mic, other hand open (transparent PNG; Uploads) | Ledger talks cover pose | ledger, mic, talks, cover |
+| MAHZsLVhfoc | mascot | Ledger cheering with both arms up (transparent PNG; Uploads) | Highlighter reel cover pose | ledger, cheer, highlighter, cover |
+| MAHZsKzh0fY | logo | Edlintics logo, wordmark and tie mark (transparent PNG; Uploads) | Logo | logo, brand, cover |

@@ -21,6 +21,11 @@ comes late") where the definition of compounding should have been.
   `keypoint`.
 - Highlighter and Ledger-talks reels: any beat that says "X is ..." or "X means ...", and the end card
   `term` and `keypoint`.
+- How-to reels ("How [role] in [industry] deals with [problem]"): the concept beat, the equation
+  scene, the summary diagram and the end card. **End card rule (Hoang, 1 Nov 2026): the end card
+  shows only the term, the one-sentence definition and the equation, never the worked example**
+  (no "120 ÷ 200 = 60%" or other example numbers). An end card with example numbers is a FIX
+  (MEDIUM). The example belongs in the equation scene earlier in the reel.
 - Five-concepts videos: each concept's one-line explanation.
 - This vs That: each card's name and one-line rule, and the worked example.
 - Puzzle explanations, captions and first comments that state what a term means.
