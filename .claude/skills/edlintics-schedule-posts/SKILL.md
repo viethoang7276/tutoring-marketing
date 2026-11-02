@@ -19,6 +19,9 @@ Before posting, scheduling, commenting, liking, reposting or editing on any plat
 - **Canva:** the Edlintics team, with posts in folder FAHYcHrS5PE.
 Re-check after any account switch, reload or logout prompt. Record the identity in `runs` notes if anything was off.
 
+## 0a2. Thumbnail at upload time (Hoang, 2 Nov 2026)
+Every video post needs its approved thumbnail (slot `thumbnail.png`, made from the Canva type template in Edlintics › Thumbnail template `FAHZvEuoTWo`) set while the post is created: Meta Reels composer (thumbnail/cover), LinkedIn video (thumbnail), TikTok Studio (Edit cover › upload). X and YouTube Shorts take none on the web. It cannot be added later: after scheduling or publishing, Business Suite, LinkedIn and TikTok offer no thumbnail edit (checked 2 Nov). No thumbnail on the slot = make and approve one before scheduling.
+
 ## 0b. Prepare (no browser)
 - Export each Canva design as PNG 1080x1350 (`export-design`, all pages), download with curl into `<scratchpad>/posts/`. Name files `<MMDD>-<HHMM>-<slug>-<n>.png`.
 - Claude Design posts: render each artboard with headless Chrome at 1080x1350 (replace `{{accent}}` with `#2960C7`, logo blob with the local copy of the canvas asset). Puzzles end with the CTA slide.
