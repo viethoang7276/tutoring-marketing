@@ -116,6 +116,7 @@ Every new concept also appears on edlintics.com.
   - `tags` (existing tag names only; unknown ones are dropped)
   - optional: `seoTitle` (≤200), `seoDescription` (≤500), `authorLabel`
 - Leave the cover and OG images empty. They're attached in the admin.
+- Quote (with double quotes) any title, excerpt, seoTitle or seoDescription value that contains ": " or starts with a quote, #, & or *.
 
 **Body rules**
 - At least about 300 characters of readable text.
