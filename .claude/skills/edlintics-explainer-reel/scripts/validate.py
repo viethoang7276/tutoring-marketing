@@ -29,9 +29,11 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
-        "life-of": dict(chunk=(2, 5), beats=(9, 13), target=(95, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
-        # howto: 60-90 s with the ElevenLabs v3 voice at tempo 1.12 (about 2.4 spoken words a second with gaps, measured 1 Nov 2026)
-        "howto": dict(chunk=(2, 5), beats=(14, 28), target=(130, 190), allowed=(110, 215), secs=(58, 92), wps=2.4),
+        # life-of: 30-60 s since 3 Nov 2026 (Hoang: "future reel have limit up to 1 min"; room for a connected story)
+        "life-of": dict(chunk=(2, 5), beats=(9, 15), target=(105, 150), allowed=(85, 165), secs=(29, 61), wps=2.95),
+        # howto: ElevenLabs v3 voice at tempo 1.12 (about 2.4 spoken words a second with gaps, measured 1 Nov 2026).
+        # Was 60-90 s; capped at 60 s from 3 Nov 2026 (Hoang: every future reel up to 1 min)
+        "howto": dict(chunk=(2, 5), beats=(12, 24), target=(115, 140), allowed=(100, 145), secs=(44, 61), wps=2.4),
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
@@ -98,8 +100,29 @@ def main(path):
         fr = sp.get("frame")
         if fr is not None and not (isinstance(fr, list) and len(fr) == 4) and fr not in FRAMES and not (isinstance(fr, str) and fr.startswith(("item:", "items:"))):
             E.append(f"scene {name}: frame {fr!r}; omit it (auto-fit, the default) or use auto, ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h]")
-    if t == "life-of" and beats and "day in the life" not in beats[0].get("text", "").lower():
-        E.append('life-of hook must say "a day in the life of ..."')
+    if t == "life-of" and beats and not any("day in the life" in b.get("text", "").lower() for b in beats[:2]):
+        E.append('life-of: beat 1 or 2 must say "a day in the life of ..." (beat 1 may lead with the number and stakes, 3 Nov 2026)')
+    # Ledger is never hidden (Hoang, 3 Nov 2026: "the desk cover ledger face"). Items draw in list order,
+    # so furniture listed after Ledger is painted over him.
+    for name, sp in scenes.items():
+        its = sp.get("items", []); li = next((i for i, it in enumerate(its) if it.get("p") == "ledger"), None)
+        if li is not None:
+            for it in its[li + 1:]:
+                if it.get("p") in ("desk", "school_desk", "whiteboard", "lemonade_stand", "people_group", "scale", "pit"):
+                    E.append(f'scene {name}: "{it.get("p")}" is listed after Ledger, so it is drawn over him; list it before Ledger (Hoang, 3 Nov 2026)')
+    # Story flow (Hoang, 3 Nov 2026: "no transitional words in a story"): story beats link to the one before
+    if t in ("life-of", "howto", "definition") and beats:
+        LINK = re.compile(r"^\W*(but|so|then|that means|that is|which means|now|first|next|after|still|because|and|until|meanwhile|here is|here's|this is|by|at the end|finally|later|soon|instead|yet|that's)\b", re.I)
+        story = [b for b in beats[2:] if b.get("role") not in ("endcard", "summary", "loop")]
+        linked = sum(1 for b in story if LINK.search(b.get("text", "")) or re.search(r"[.:]\s*(but|so|then|that means|now)\b", b.get("text", ""), re.I))
+        if story and linked / len(story) < 0.6:
+            W.append(f"story flow: only {linked} of {len(story)} story beats start with a linking word (But, So, Then, That means, Now...); link each beat to the one before (Hoang, 3 Nov 2026)")
+        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t != "definition":
+            W.append('story flow: the turn has no "But ..." (or Yet/Still/Instead); mark the turning point (Hoang, 3 Nov 2026)')
+    # Time frame matches the numbers (Hoang, 3 Nov 2026: a monthly example told as clock times in one day)
+    vtxt = " ".join(b.get("text", "") for b in beats).lower()
+    if re.search(r"\b(\w+ (a|p)\.m\.|noon|midnight|o'clock)", vtxt) and re.search(r"\b(a|per|each|every|this) (month|year|quarter)\b|\bmonthly\b|\byearly\b", vtxt):
+        W.append("time frame: clock times in one day but the numbers are per month/year; tell the story on the timescale of the numbers (Hoang, 3 Nov 2026)")
     if m.get("layout") not in (None, "reel", "full"): E.append('meta.layout must be "full" (full-frame layout, how-to reels) or left out')
     if t == "howto" and m.get("layout") != "full": W.append('howto without meta.layout "full": the old layout leaves the bottom half empty (Hoang, 1 Nov 2026)')
     if t == "howto":   # how-to card fields (edlintics-howto-reel step F)

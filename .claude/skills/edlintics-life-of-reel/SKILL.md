@@ -1,6 +1,6 @@
 ---
 name: edlintics-life-of-reel
-description: Make one Edlintics "A day in the life of a [role]" reel (9:16, 30-40 s) end to end. Covers the script from the template, the scene presets, a one-command build, the checks, the Canva draft with music and the hub proposal card. Structure is a hook, 3-4 relatable moments, the turning moment, one named concept, the business lesson and an end card. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
+description: Make one Edlintics "A day in the life of a [role]" reel (9:16, 30-60 s) end to end. Covers the script from the template, the scene presets, a one-command build, the checks, the Canva draft with music and the hub proposal card. Structure is a hook, 3-4 relatable moments, the turning moment, one named concept, the business lesson and an end card. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
 ---
 
 # Edlintics "life of" reel
@@ -18,6 +18,16 @@ PY=$REPO/tools/tts/.venv/bin/python
 W=<scratchpad>/reel/<slug>          # one folder per reel
 ```
 
+
+## Story rules for every reel (Hoang, 3 Nov 2026)
+Hoang rejected the posted founder-runway reel because it "doesn't have flow". Read `.claude/skills/storytelling-and-narrative` (the BEATS framework) before you write any script.
+1. **One story, not a list of facts.** Use setup, then tension, then the turn, then the payoff. One hero (Ledger in the role) wants something, a problem appears, and the concept resolves it.
+2. **Link every beat to the one before.** Start most beats with a linking word: First, Then, So, But, That means, Now. The turn always starts with "But" (or Yet, Still, Instead). The validator warns if fewer than 60% of story beats link.
+3. **Tell the story on the timescale of the numbers.** Monthly numbers get a monthly story, such as "today he checks the month", never clock times through one day. Yearly numbers get a year. The validator warns when clock times appear next to per-month or per-year numbers.
+4. **Never hide Ledger.** Items draw in list order, so put desks, whiteboards, stands and tables BEFORE Ledger in `items`. The validator fails otherwise. Check the contact sheet: nothing crosses his face.
+5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
+6. **Length:** every reel is 1 minute or less.
+
 ## What makes it work
 - **People recognise their own day.** Use real, specific details: the 8 a.m. coffee, 200 invoices, a group chat at midnight. That's why viewers tag a friend.
 - **Situational humour only.** The joke is the situation, never the person or the job. Never mock accountants, salespeople, students or any role.
@@ -27,7 +37,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
 1. **Pick the role and concept.** Take them from the topic bank below, or use the ones you were given. One concept per episode. If the hub already has a slot on the same concept, stop and report.
 2. **Write the script.** Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Copy the patterns in `example-accountant.json`.
    - **Beat roles, in order:** hook (1), moment (3-4), turn (1), concept (1), lesson (1-2), optional loop (1), endcard (1, always last).
-   - **The hook** must say "A day in the life of <a role>", plus when: at month-end, before the exam, on launch day.
+   - **The hook:** beat 1 leads with the number and the stakes, posed as a verdict question ("Three hundred thousand dollars in the bank. Safe for years?"). Beat 1 or 2 says "A day in the life of <a role>".
    - **Moments:** short, specific and relatable, ideally with a number. The last moment is where the problem appears, often someone suggesting the wrong move.
    - **Turn:** Ledger explains why the wrong move is wrong.
    - **Concept:** "That is <concept>. <It in one plain sentence>."
@@ -43,7 +53,7 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
      - 2-5 words each, with numbers as "$1,200";
      - one `key` per beat;
      - no full stop at the end.
-   - **Totals:** about 100-115 words, 9-13 beats, and 12 words or fewer per beat.
+   - **Totals:** 30-60 s, never over 1 minute (Hoang, 3 Nov 2026), about 105-150 words, 9-15 beats, and 12 words or fewer per beat.
    - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the `concept` beat, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.
 3. **Compose the scenes.** Use presets only (`$PY $E/scene_lib.py --list`).
    - **Dress Ledger for the role** with `outfit`:

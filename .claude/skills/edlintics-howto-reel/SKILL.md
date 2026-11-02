@@ -1,6 +1,6 @@
 ---
 name: edlintics-howto-reel
-description: Make one Edlintics "How [role] in [industry] deals with [problem]" reel (9:16, 60-90 s) end to end. Covers research and topic choice (holiday hooks, the concepts registry, authoritative sources), the script from the template, content safeguards, the full-frame layout, the equation scene, the 4-box summary diagram, a one-command build, the checks (contact sheet, frame fill, file size, caption sync) and the hub proposal card. Structure is hook question, the problem with one number, 3-4 steps, the named concept with its definition and equation, the summary diagram, the takeaway and an end card with term, definition and equation. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
+description: Make one Edlintics "How [role] in [industry] deals with [problem]" reel (9:16, 45-60 s; every reel is capped at 1 minute from 3 Nov 2026) end to end. Covers research and topic choice (holiday hooks, the concepts registry, authoritative sources), the script from the template, content safeguards, the full-frame layout, the equation scene, the 4-box summary diagram, a one-command build, the checks (contact sheet, frame fill, file size, caption sync) and the hub proposal card. Structure is hook question, the problem with one number, 3-4 steps, the named concept with its definition and equation, the summary diagram, the takeaway and an end card with term, definition and equation. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
 ---
 
 # Edlintics "how to" reel
@@ -18,6 +18,16 @@ E=$REPO/.claude/skills/edlintics-explainer-reel/scripts
 PY=$REPO/tools/tts/.venv/bin/python
 W=<scratchpad>/reel/<slug>          # one folder per reel
 ```
+
+
+## Story rules for every reel (Hoang, 3 Nov 2026)
+Hoang rejected the posted founder-runway reel because it "doesn't have flow". Read `.claude/skills/storytelling-and-narrative` (the BEATS framework) before you write any script.
+1. **One story, not a list of facts.** Use setup, then tension, then the turn, then the payoff. One hero (Ledger in the role) wants something, a problem appears, and the concept resolves it.
+2. **Link every beat to the one before.** Start most beats with a linking word: First, Then, So, But, That means, Now. The turn always starts with "But" (or Yet, Still, Instead). The validator warns if fewer than 60% of story beats link.
+3. **Tell the story on the timescale of the numbers.** Monthly numbers get a monthly story, such as "today he checks the month", never clock times through one day. Yearly numbers get a year. The validator warns when clock times appear next to per-month or per-year numbers.
+4. **Never hide Ledger.** Items draw in list order, so put desks, whiteboards, stands and tables BEFORE Ledger in `items`. The validator fails otherwise. Check the contact sheet: nothing crosses his face.
+5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
+6. **Length:** every reel is 1 minute or less.
 
 ## What makes it work
 - **A real job, a real problem.** Viewers see how a named role in a named industry handles something that actually happens: a ransomware attack at a hospital, staff quitting at a store, a restricted donation at a charity.
@@ -56,7 +66,7 @@ Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Cop
 - **Summary (Hoang, 2 Nov 2026):** the voice walks the diagram as a recap: "Let's revise the process. Step 1, measure it." then "Step 2, price it.", "Step 3, find the cause.", "Step 4, fix it and track it." One beat per box, `"gap": 0.45` each, 1.5 on the last. Say "the process" when the boxes are steps the role takes, and "the concept" when they explain how the idea works (the gas-station prisoner's dilemma: map the profits, see the trap, notice the cost, compete on something else). Chunks: `"Let's revise the process"` or `"Let's revise the concept"` (beat 1 only, no full stop), `"Step N"`, then the short step (2-5 words, lower case). Write `"say"` with the number in words ("Step one, …") and `text` with the digit. The validator FAILs a how-to summary without this.
 - **Takeaway:** one business lesson. No absolute words: "never", "always", "only", "every", "all", "guarantee" (the validator WARNs). Use rarely, usually, often, can.
 - **End card:** only the term, the one-sentence definition and the equation (Hoang, 1 Nov 2026). `"term"`, `"keypoint"` = the one-sentence definition (4-12 words, no full stop), `"text"` = "<Term>. <Definition as a sentence>." and, when there is one, `"equation": {"lhs", "num", "den"}` (each 34 characters at most; `den` empty for a one-line equation such as "Profit = Revenue − Costs"). No worked example or numbers line: the validator FAILs an `"example"` or an "=" inside lhs, num or den. The story's numbers stay in the equation scene. When the concept has no equation, set `meta.equation` to "none (...)" and leave `"equation"` out.
-- **Length:** 60-90 s, about 130-190 words, 14-28 beats. The voice is ElevenLabs `eleven_v3`, voice `gPiEpcKoaZywgOzc0Zn9`, tempo 1.12 (the defaults; never set another voice, never print the key).
+- **Length:** 45-60 s, never over 1 minute (Hoang, 3 Nov 2026), about 115-140 words, 12-24 beats. Use 3 steps, not 4, if it runs long. The voice is ElevenLabs `eleven_v3`, voice `gPiEpcKoaZywgOzc0Zn9`, tempo 1.12 (the defaults; never set another voice, never print the key).
 - **House rules:**
   - US dollars only ("four thousand dollars" in the voice, "$4,000" in captions); US spelling (labor, analyze, center);
   - voice lines are full sentences; caption chunks are 2-5 words with one `key` per beat and no full stop at the end;

@@ -18,6 +18,16 @@ PY=$REPO/tools/tts/.venv/bin/python
 W=<scratchpad>/reel/<slug>          # one folder per reel
 ```
 
+
+## Story rules for every reel (Hoang, 3 Nov 2026)
+Hoang rejected the posted founder-runway reel because it "doesn't have flow". Read `.claude/skills/storytelling-and-narrative` (the BEATS framework) before you write any script.
+1. **One story, not a list of facts.** Use setup, then tension, then the turn, then the payoff. One hero (Ledger in the role) wants something, a problem appears, and the concept resolves it.
+2. **Link every beat to the one before.** Start most beats with a linking word: First, Then, So, But, That means, Now. The turn always starts with "But" (or Yet, Still, Instead). The validator warns if fewer than 60% of story beats link.
+3. **Tell the story on the timescale of the numbers.** Monthly numbers get a monthly story, such as "today he checks the month", never clock times through one day. Yearly numbers get a year. The validator warns when clock times appear next to per-month or per-year numbers.
+4. **Never hide Ledger.** Items draw in list order, so put desks, whiteboards, stands and tables BEFORE Ledger in `items`. The validator fails otherwise. Check the contact sheet: nothing crosses his face.
+5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
+6. **Length:** every reel is 1 minute or less.
+
 ## Steps
 1. **Pick the topic.** Take it from the topic bank below, or use the one you were given. If the hub already has a slot on the same term (check `slots` titles), stop and report.
 2. **Write the script.** Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Copy the patterns in `example-sunk-cost.json`.
