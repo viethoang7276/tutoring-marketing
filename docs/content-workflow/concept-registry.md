@@ -128,3 +128,7 @@ Every new concept also appears on edlintics.com.
 - Marketing does not run edctl. Marketing only reads the app through its public API.
 - tutoring-web imports the files with `edctl blog import` (dev first) and runs `edctl blog validate`.
 - Hoang publishes.
+
+**Blog tags (live list, 2 Nov 2026):** Accounting, Cash flow, Cost accounting, Costing, Data analysis, Finance, Financial accounting, Financial statements, Managerial accounting, Pricing, Small business, Spreadsheets, Valuation, Working capital.
+- Use only these in the frontmatter.
+- If a post needs a new tag, name it as a "proposed tag" in the message to tutoring-web, not in the file. They'll take it to Hoang.
