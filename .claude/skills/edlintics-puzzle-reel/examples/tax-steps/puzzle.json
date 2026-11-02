@@ -40,37 +40,24 @@
  "pulse": "#chg",
  "steps": [
   {
-   "label": "At $29,000",
-   "text": "20% × $29,000 = $5,800 tax",
-   "say": "Twenty percent of twenty-nine thousand is fifty-eight hundred in tax."
+   "label": "Tax at $29,000",
+   "text": "20% × $29,000 = $5,800",
+   "say": "At twenty-nine thousand, the tax is fifty-eight hundred."
   },
   {
-   "text": "$29,000 − $5,800 = $23,200",
-   "say": "So she keeps twenty-three thousand two hundred.",
-   "label": "She keeps"
+   "label": "Tax at $31,000 (20% + 40%)",
+   "text": "$6,000 + $400 = $6,400",
+   "say": "At thirty-one thousand, it's six thousand plus four hundred at the higher rate: sixty-four hundred."
   },
   {
-   "label": "At $31,000",
-   "text": "20% × $30,000 = $6,000",
-   "say": "At thirty-one thousand, the first thirty thousand is taxed at twenty percent. Six thousand."
+   "label": "Extra tax",
+   "text": "$6,400 − $5,800 = $600",
+   "say": "So the raise adds six hundred in tax."
   },
   {
-   "text": "40% × $1,000 = $400",
-   "say": "Only the last thousand is taxed at forty percent. Four hundred."
-  },
-  {
-   "text": "Tax: $6,000 + $400 = $6,400",
-   "say": "Total tax, sixty-four hundred."
-  },
-  {
-   "text": "$31,000 − $6,400 = $24,600",
-   "say": "So she keeps twenty-four thousand six hundred.",
-   "label": "She keeps"
-  },
-  {
-   "label": "The change",
-   "text": "$24,600 − $23,200 = *$1,400* more",
-   "say": "That is fourteen hundred dollars more.",
+   "label": "Take-home change",
+   "text": "$2,000 − $600 = *$1,400* more",
+   "say": "Two thousand minus six hundred: she keeps fourteen hundred more.",
    "hl": "#chg"
   }
  ]

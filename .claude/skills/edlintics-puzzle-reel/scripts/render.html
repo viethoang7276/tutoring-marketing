@@ -27,13 +27,13 @@ html,body{width:1080px;height:1920px;background:#fff;overflow:hidden}
 #end .rule{position:absolute;left:430px;top:1030px;width:180px;height:10px;background:var(--blue2);border-radius:5px}
 .opt .c .ck{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;opacity:0}
 #handlayer{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
-/* worked steps (2 Nov 2026): lines in x 270-960 under the shrunk diagram; the professor Ledger stands left of them */
-#steps{position:absolute;left:270px;top:0;width:690px;height:1920px}
-#steps .st{position:absolute;left:0;width:690px;opacity:0}
-#steps .lb{font:600 32px/1.1 Inter,sans-serif;color:var(--grey);letter-spacing:.02em;margin-bottom:6px}
-#steps .tx{display:inline;font:700 58px/1.15 Inter,sans-serif;color:var(--ink);white-space:nowrap;
+/* worked steps (2 Nov 2026, v2): lines in x 372-960 once the diagram has faded; the guide Ledger stands left of them */
+#steps{position:absolute;left:372px;top:0;width:588px;height:1920px}
+#steps .st{position:absolute;left:0;width:588px;opacity:0}
+#steps .lb{font:600 36px/1.15 Inter,sans-serif;color:var(--grey);letter-spacing:.01em;margin-bottom:8px}
+#steps .tx{display:inline;font:700 70px/1.18 Inter,sans-serif;color:var(--ink);white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone;
   background:linear-gradient(#FFD45C,#FFD45C) no-repeat 0 82%/0% 42%;padding:0 4px}
-#steps .st.takeaway .tx{font:600 56px/1.16 'Source Serif 4',Georgia,serif;color:var(--blue);white-space:normal;background:none}
+#steps .st.takeaway .tx{font:600 64px/1.16 'Source Serif 4',Georgia,serif;color:var(--blue);white-space:normal;background:none}
 #proflayer{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
 </style></head><body>
 <div id="main">
@@ -48,7 +48,7 @@ html,body{width:1080px;height:1920px;background:#fff;overflow:hidden}
   <div id="ans" class="abs serif"></div>
   <img id="logo" class="abs" src="edlintics-logo.png">
   <div id="steps"></div>
-  <svg id="proflayer" viewBox="0 0 1080 1920"><defs><filter id="pr" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter></defs><g id="prof" opacity="0" filter="url(#pr)"></g></svg>
+  <svg id="proflayer" viewBox="0 0 1080 1920"><defs><filter id="pr" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter></defs><g id="prof" opacity="0"></g></svg>
   <!-- tap hand: flat line-art pointing hand (drawn pointing up, fingertip at 44,2; mirrored and tilted 20 deg in render) -->
   <svg id="handlayer" viewBox="0 0 1080 1920">
     <circle id="ripple" cx="0" cy="0" r="0" fill="none" stroke="#2960c7" stroke-width="7" opacity="0"/>
@@ -63,7 +63,8 @@ html,body{width:1080px;height:1920px;background:#fff;overflow:hidden}
 <script>
 let T, optC = [], els = [], ops = [], showEls = [], pulseEl = null, pulseBox = null, optEls = [], ansEls = [];
 let stEls = [], stY = [], hlEls = [], diagK = 1, diagH = 0;
-const PS = 0.9, TIP = [173, -118.5];   // professor Ledger scale; pointer tip relative to his feet (scene_lib.ledger, arm "point")
+const PS = 1.2, TIP = [173, -118.5];   // guide Ledger scale (about 250 px tall); pointer tip relative to his feet (scene_lib.ledger, arm "point")
+const SX = 372;   // left edge of the step lines
 const $ = s => document.querySelector(s);
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const ramp = (t, a, b) => clamp((t - a) / (b - a));
@@ -108,25 +109,29 @@ async function init() {
   return T.dur;
 }
 
-// Worked steps: the diagram shrinks to the top (height <= 330 px), the lines share the space below it (to y 1440),
-// each main line shrinks to fit 690 px; stY = the vertical centre of each main line (where the pointer tip goes)
+// Worked steps (v2): the diagram fades out and the lines share y 230-1440; a main line too wide for 588 px at 60 px
+// breaks before its "=", then shrinks to fit; stY = the vertical centre of each main line's first row (where the pointer tip goes)
 function layoutSteps(svg) {
-  diagH = $('#diag').getBoundingClientRect().height; diagK = Math.min(0.9, 330 / diagH);
-  const top = 190 + diagH * diagK + 60, bottom = 1440, n = T.steps.length;
+  const top = 230, bottom = 1440, n = T.steps.length;
   $('#steps').innerHTML = T.steps.map(e => `<div class="st ${e.style || ''}">${e.label ? `<div class="lb">${esc(e.label)}</div>` : ''}<span class="tx">${mark(e.text)}</span></div>`).join('');
   stEls = [...document.querySelectorAll('#steps .st')];
-  stEls.forEach(el => { const tx = el.querySelector('.tx'); if (!el.classList.contains('takeaway')) { let f = 58; while (tx.getBoundingClientRect().width > 690 && f > 40) { f -= 2; tx.style.fontSize = f + 'px'; } } });
+  const W = 588, fit = (tx, f0, fmin) => { let f = f0; tx.style.fontSize = f + 'px'; while (tx.scrollWidth > W && f > fmin) { f -= 2; tx.style.fontSize = f + 'px'; } return f; };
+  stEls.forEach(el => { const tx = el.querySelector('.tx'); if (el.classList.contains('takeaway')) return;
+    tx.style.display = 'inline-block'; let f = fit(tx, 70, 60);
+    if (tx.scrollWidth > W && / = /.test(tx.innerHTML)) { const i = tx.innerHTML.lastIndexOf(' = '); tx.innerHTML = tx.innerHTML.slice(0, i) + '<br>= ' + tx.innerHTML.slice(i + 3); f = fit(tx, 70, 44); }
+    else if (tx.scrollWidth > W) f = fit(tx, 60, 40);
+    tx.style.display = ''; el.dataset.f = f; });
   const hs = stEls.map(el => el.getBoundingClientRect().height), sum = hs.reduce((a, b) => a + b, 0);
-  const gap = n > 1 ? Math.max(14, Math.min(46, (bottom - top - sum) / (n - 1))) : 0;
-  let y = top; stY = [];
+  const gap = n > 1 ? Math.max(14, Math.min(80, (bottom - top - sum) / (n - 1))) : 0;
+  let y = top + Math.max(0, (bottom - top - sum - gap * (n - 1)) / 2); stY = [];
   stEls.forEach((el, i) => { el.style.top = y + 'px'; const r = el.querySelector('.tx').getBoundingClientRect(), b = el.getBoundingClientRect();
-    stY.push(y + (r.top - b.top) + Math.min(r.height, 66) / 2); y += hs[i] + gap; });
+    const f = +(el.dataset.f || 64); stY.push(y + (r.top - b.top) + f * 0.6); y += hs[i] + gap; });
   hlEls = T.steps.map(e => { if (!e.hl) return null; const el = svg.querySelector(e.hl); if (!el) throw new Error('step hl not found: ' + e.hl); const bb = el.getBBox(); return { el, c: [bb.x + bb.width / 2, bb.y + bb.height / 2] }; });
   $('#prof').innerHTML = T.prof_svg;
 }
 function renderSteps(t) {
   const S = ease(ramp(t, T.steps_in, T.steps_in + 0.6));
-  $('#diag').style.transformOrigin = '50% 0'; $('#diag').style.transform = `translateY(${(190 - 620) * S}px) scale(${1 - (1 - diagK) * S})`;
+  $('#diag').style.opacity = 1 - S;
   $('#opts').style.opacity = 1 - S; $('#logo').style.opacity = 0.8 * (1 - S);
   const st = T.step_t; let cur = -1; st.forEach((x, i) => { if (t >= x) cur = i; });
   stEls.forEach((el, i) => {
@@ -135,9 +140,9 @@ function renderSteps(t) {
     const tx = el.querySelector('.tx'); tx.style.backgroundSize = `${i === cur ? 100 * ease(ramp(t, st[i] + 0.15, st[i] + 0.6)) : 0}% 42%`; });
   hlEls.forEach((h, i) => { if (!h) return; const q = i === cur ? ramp(t, st[i], st[i] + 0.7) : 0, k = 1 + 0.08 * Math.sin(Math.PI * q);
     h.el.setAttribute('transform', `translate(${h.c[0]} ${h.c[1]}) scale(${k}) translate(${-h.c[0]} ${-h.c[1]})`); });
-  // the professor glides line to line: his pointer tip sits just left of the current line
+  // the guide Ledger glides line to line: his pointer tip sits just left of the current line
   const k = Math.max(0, cur), prev = Math.max(0, k - 1), g = cur <= 0 ? 1 : ease(ramp(t, st[k] - 0.05, st[k] + 0.3));
-  const ty = stY[prev] + (stY[k] - stY[prev]) * g, tx = 270 - 14;
+  const ty = stY[prev] + (stY[k] - stY[prev]) * g, tx = SX - 14;
   const bob = 3 * Math.sin(t * 2.4);
   $('#prof').setAttribute('transform', `translate(${tx - TIP[0] * PS} ${ty - TIP[1] * PS + bob}) scale(${PS})`);
   $('#prof').setAttribute('opacity', ease(ramp(t, T.steps_in + 0.3, T.steps_in + 0.8)));

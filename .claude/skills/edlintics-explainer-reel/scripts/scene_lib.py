@@ -23,7 +23,8 @@ def _f(v):
 MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk", "dizzy"]
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
-OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula", "professor"]
+OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula", "professor", "lecturer", "graduate", "mathprof"]
+PROF = ("professor", "lecturer", "graduate", "mathprof")   # puzzle-guide family (2 Nov 2026 design options)
 
 
 def _arm(path, hand):
@@ -36,7 +37,7 @@ def _arm(path, hand):
 GAZES = {None: (0, 0, 0), "right": (6, 2, 0), "left": (-6, 2, 0), "down": (0, 7, 4), "up": (0, -5, 0)}   # eye dx, eye dy, mouth dy
 
 
-def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, gaze=None, lanyard=False, **_):
+def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, gaze=None, lanyard=False, glasses=False, pointer=False, **_):
     """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip, larm (left-arm gesture), gaze (right, left, down, up: eyes look that way; down also lowers the mouth, head-down sad), lanyard (true: a staff lanyard with an ID badge, the job prop for a store manager or HR). mood "talk" lip-syncs to the voice; arm "mic" holds a small handheld mic."""
     mouth = {
         "smile": "M106 134 Q120 146 134 134", "happy": "M104 130 Q120 150 136 130",
@@ -84,7 +85,7 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     if gx or gy: eyes = f'<g transform="translate({gx} {gy})">{eyes}</g>'; brows = f'<g transform="translate({gx} {gy})">{brows}</g>' if brows else ""
     if my: m = f'<g transform="translate(0 {my})">{m}</g>'
     # body band, collar and tie by outfit
-    band_col = {"suit": NAVY, "sales": NAVY, "vest": NAVY, "dracula": NAVY, "student": BLUE, "casual": "#5B6B86"}.get(outfit, NAVY)
+    band_col = {"suit": NAVY, "sales": NAVY, "vest": NAVY, "dracula": NAVY, "student": BLUE, "casual": "#5B6B86", "lecturer": "#8B6B4A", "graduate": "#1A1A22"}.get(outfit, NAVY)
     band = f'<path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="{band_col}"/>'
     if outfit in ("suit", "sales", "vest", "dracula"):
         collar = (f'<path d="M108 150 L120 168 L116 173 L102 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
@@ -92,7 +93,7 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
                   f'<path d="M114 152 L126 152 L129 161 L111 161 Z" fill="{BLUE}"/><path d="M112 162 L128 162 L124 184 L120 189 L116 184 Z" fill="{BLUE}"/>')
     elif outfit == "casual":
         collar = (f'<path d="M106 150 L120 164 L134 150" fill="none" stroke="{WHITE}" stroke-width="5" stroke-linejoin="round"/>')
-    elif outfit == "professor":  # puzzle-reel guide (2 Nov 2026): white wing collar and a blue bow tie on the navy band
+    elif outfit in ("professor", "lecturer", "mathprof", "graduate"):  # puzzle-reel guide (2 Nov 2026): white wing collar and a blue bow tie on the navy band
         collar = (f'<path d="M106 150 L120 160 L112 164 L100 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
                   f'<path d="M134 150 L120 160 L128 164 L140 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
                   f'<path d="M120 166 L103 157 L103 175 Z M120 166 L137 157 L137 175 Z" fill="{BLUE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
@@ -100,6 +101,11 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     else:  # student hoodie: drawstrings
         collar = (f'<path d="M110 150 v22 M130 150 v22" stroke="{WHITE}" stroke-width="4" stroke-linecap="round"/>'
                   f'<circle cx="110" cy="174" r="3.5" fill="{WHITE}"/><circle cx="130" cy="174" r="3.5" fill="{WHITE}"/>')
+    if outfit == "graduate":  # gown band with a blue hood stripe in a V under the collar
+        collar = (f'<path d="M58 152 L104 176 M182 152 L136 176" stroke="{BLUE}" stroke-width="7" stroke-linecap="round"/>' + collar)
+    if outfit == "lecturer":  # tweed hint (a few short flecks) and brown elbow patches at the band's sides
+        collar = ("".join(f'<path d="M{x0} {y0} l5 3" stroke="#6B4F33" stroke-width="2" stroke-linecap="round"/>' for x0, y0 in ((64, 158), (78, 176), (90, 162), (150, 160), (164, 178), (172, 162)))
+                  + f'<ellipse cx="62" cy="172" rx="7" ry="11" fill="#5C4129" stroke="{INK}" stroke-width="2"/><ellipse cx="178" cy="172" rx="7" ry="11" fill="#5C4129" stroke="{INK}" stroke-width="2"/>' + collar)
     if lanyard:   # staff lanyard (1 Nov 2026, how-to reels): gold strap under the tie, a blank ID badge on his right side, clear of the tie
         collar = (f'<path d="M94 150 L158 170 M178 150 L160 170" fill="none" stroke="{GOLD}" stroke-width="4.5" stroke-linecap="round"/>' + collar +
                   f'<rect x="146" y="167" width="28" height="24" rx="3" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/>'
@@ -123,7 +129,14 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
                    f'<path d="M66 146 L100 166 M174 146 L140 166" stroke="#6B7280" stroke-width="2.5"/>')
         head = (f'<rect x="38" y="98" width="13" height="24" rx="6.5" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
                 f'<rect x="189" y="98" width="13" height="24" rx="6.5" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>')
-    if outfit == "professor":  # mortarboard with a gold tassel, small round glasses
+    GL = (f'<circle cx="102" cy="110" r="14" fill="none" stroke="{INK}" stroke-width="3.5"/><circle cx="138" cy="110" r="14" fill="none" stroke="{INK}" stroke-width="3.5"/>'
+          f'<path d="M116 108 Q120 104 124 108" fill="none" stroke="{INK}" stroke-width="3"/>')
+    if outfit in ("lecturer", "mathprof") or (glasses and outfit not in PROF): head = GL
+    if outfit == "mathprof":  # yellow pencil tucked behind the right side of the head
+        head += (f'<g transform="rotate(-35 196 64)"><rect x="180" y="58" width="44" height="11" rx="2" fill="{GOLD}" stroke="{INK}" stroke-width="2.5"/>'
+                 f'<path d="M224 58 L236 63.5 L224 69 Z" fill="#F5DEB3" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/><circle cx="234" cy="63.5" r="1.8" fill="{INK}"/>'
+                 f'<rect x="174" y="58" width="7" height="11" rx="2" fill="#E8A0A0" stroke="{INK}" stroke-width="2"/></g>')
+    if outfit in ("professor", "graduate"):  # mortarboard with a gold tassel, small round glasses
         head = (f'<path d="M84 40 L84 26 Q120 34 156 26 L156 40 Q120 48 84 40 Z" fill="#1A1A22" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
                 f'<path d="M120 2 L190 22 L120 42 L50 22 Z" fill="#1A1A22" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
                 f'<circle cx="120" cy="22" r="4" fill="{GOLD}" stroke="{INK}" stroke-width="1.5"/>'
@@ -146,10 +159,22 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         fuzz = "".join(f'<path d="M{163 + 9 * math.cos(a):.1f} {139 + 9 * math.sin(a):.1f} l{3 * math.cos(a):.1f} {3 * math.sin(a):.1f}" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>' for a in [k * math.pi / 6 for k in range(12)])
         prop = (f'<path d="M199 122 L172 135" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
                 f'<circle cx="163" cy="139" r="11" fill="#6B7280" stroke="{INK}" stroke-width="3"/>{fuzz}')
-    if arm == "point" and outfit == "professor":  # thin teaching pointer held in the pointing hand, tip up and to the right
+    if arm == "point" and (outfit in ("professor", "graduate", "mathprof") or pointer):  # thin teaching pointer held in the pointing hand, tip up and to the right
         prop = (f'<path d="M222 146 L292 112" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
                 f'<path d="M222 146 L292 112" stroke="#8A5A2B" stroke-width="3.5" stroke-linecap="round"/>'
                 f'<circle cx="293" cy="111.5" r="4.5" fill="{INK}"/>')
+    if arm == "point" and outfit == "lecturer":  # a long white chalk stick instead of the wooden pointer
+        prop = (f'<path d="M222 146 L280 118" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>'
+                f'<path d="M222 146 L280 118" stroke="{WHITE}" stroke-width="6" stroke-linecap="round"/>'
+                f'<path d="M272 122 L280 118" stroke="#D9D6CC" stroke-width="6" stroke-linecap="round"/>')
+    if outfit == "graduate" and (larm in (None, "down")):  # rolled diploma with a blue ribbon in the left hand
+        prop += (f'<g transform="rotate(-25 52 190)"><rect x="18" y="182" width="62" height="16" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                 f'<ellipse cx="22" cy="190" rx="4" ry="8" fill="#E6E3DA" stroke="{INK}" stroke-width="2"/>'
+                 f'<rect x="44" y="181" width="8" height="18" fill="{BLUE}" stroke="{INK}" stroke-width="2"/></g>')
+    if outfit == "mathprof" and (larm in (None, "down")):  # small calculator in the left hand
+        prop += (f'<g transform="rotate(-10 52 196)"><rect x="30" y="176" width="34" height="46" rx="5" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
+                 f'<rect x="35" y="181" width="24" height="10" rx="2" fill="{LB}"/>'
+                 + "".join(f'<rect x="{35 + 8.5 * (k % 3):.1f}" y="{195 + 8 * (k // 3)}" width="6" height="5" rx="1.2" fill="{WHITE}"/>' for k in range(9)) + '</g>')
     if arm == "phone":
         prop = (f'<g transform="rotate(-14 200 92)"><rect x="185" y="60" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
                 f'<rect x="190" y="68" width="20" height="38" rx="3" fill="{LB}"/></g>')

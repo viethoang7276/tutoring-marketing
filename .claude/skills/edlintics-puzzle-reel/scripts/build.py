@@ -12,10 +12,12 @@ puzzle.json (paths relative to the JSON file):
                 {"sel": "#id", "attr": {"fill": "#2960c7"}} colour change, {"sel","text"} text swap, {"sel","hide": true}
   pulse         optional selector that pulses once at the reveal
   explanation   2-3 lines [{"text", "say"?, "style"?: "takeaway"}], shown in sequence after the reveal
-  steps         optional worked calculation (Hoang, 2 Nov 2026): [{"text", "say"?, "label"?, "hl"?: "#id"}], 3-7 short lines.
-                After the reveal the options fade, the diagram shrinks to the top and the lines appear one by one under it,
-                each read by the voice, while a tiny professor Ledger points at the current line. The explanation lines
-                with style "takeaway" follow as the last line, in blue; the other explanation lines are skipped
+  steps         optional worked calculation (Hoang, 2 Nov 2026): [{"text", "say"?, "label"?, "hl"?: "#id"}], 3-5 short lines
+                (4-5 at most so the reel stays about 45-50 s; more than 5 prints a WARN). After the reveal the options and
+                the diagram fade, and the lines appear one by one, each read by the voice, while the guide Ledger (hand-drawn
+                suit Ledger with round glasses and a pointer, option F picked by Hoang 2 Nov) points at the current line.
+                A line too wide for one row breaks before its "=". The explanation lines with style "takeaway" follow as
+                the last line, in blue; the other explanation lines are skipped
   prompt_text / prompt_say, end_text / end_say, countdown {"voice": 5, "novoice": 6}
   Any line may carry "say" to change what the voice reads (for example to spell out a unit)
 
@@ -225,9 +227,13 @@ def build(pj, outdir, variant):
     svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
     T.update({k: P.get(k) for k in ("question", "options", "answer", "prompt_text", "reveal", "pulse", "explanation", "end_text")})
     T["options"] = T["options"] or []; T["diagram_svg"] = svg
-    if P.get("steps"):   # the professor Ledger, drawn by the explainer engine (feet at 0,0, scale 1)
-        sys.path.insert(0, f"{REPO}/.claude/skills/edlintics-explainer-reel/scripts"); import scene_lib
-        T["prof_svg"] = scene_lib.ledger(0, 0, 1.0, outfit="professor", arm="point")
+    if P.get("steps"):   # the guide Ledger (option F, 2 Nov 2026): the hand-drawn pencil pose PNG, feet at (130, 262) of its 320x280 box
+        if len(P["steps"]) > 5: print(f"WARN: {len(P['steps'])} steps; keep 4-5 so the reel stays about 45-50 s")
+        import base64, io
+        from PIL import Image
+        im = Image.open(f"{REPO}/assets/renders/cover-templates/ledger/ledger-guide-point.png"); im = im.resize((640, 560), Image.LANCZOS)
+        buf = io.BytesIO(); im.save(buf, "PNG", optimize=True)
+        T["prof_svg"] = f'<image href="data:image/png;base64,{base64.b64encode(buf.getvalue()).decode()}" x="-130" y="-262" width="320" height="280"/>'
         T["explanation"] = []   # the steps board replaces the sentence slot
     tp = f"{work}/timeline.json"; json.dump(T, open(tp, "w"), indent=1)
     print(variant, "duration", T["dur"], "reveal", T["reveal_t"], "answers", T["ans_t"], "end", T["end_t"])
