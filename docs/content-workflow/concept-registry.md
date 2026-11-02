@@ -104,3 +104,27 @@ Every new concept also appears on edlintics.com.
 - Sends back four lists: new, attach, flag and not-a-term.
 - Holds reel attachments until tutoring-web ships the structured reel field.
 
+
+### Blog drafts for non-term concepts (format from tutoring-web, 2 Nov 2026)
+
+**Where and how to write it**
+- One Markdown file per post: `assets/renders/blog/<slug>.md`.
+- Frontmatter:
+  - `slug`
+  - `title`
+  - `excerpt` (required, at most 1000 characters)
+  - `tags` (existing tag names only; unknown ones are dropped)
+  - optional: `seoTitle` (≤200), `seoDescription` (≤500), `authorLabel`
+- Leave the cover and OG images empty. They're attached in the admin.
+
+**Body rules**
+- At least about 300 characters of readable text.
+- At least one tag.
+- No affiliation or banned claims.
+- No trailing full stops, no emoji, minimal copy.
+- Put a reel's Short URL on its own line as a plain link. The Markdown importer doesn't make video blocks yet; the glossary-reels spec adds Shorts support.
+
+**Who does what**
+- Marketing does not run edctl. Marketing only reads the app through its public API.
+- tutoring-web imports the files with `edctl blog import` (dev first) and runs `edctl blog validate`.
+- Hoang publishes.
