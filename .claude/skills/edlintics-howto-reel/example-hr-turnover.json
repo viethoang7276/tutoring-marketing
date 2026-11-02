@@ -1,0 +1,805 @@
+{
+ "meta": {
+  "type": "howto",
+  "term": "Employee turnover rate",
+  "title": "How a department store's HR team deals with staff who keep quitting: employee turnover rate",
+  "slug": "howto-hr-turnover",
+  "family_or_category": "management",
+  "caption": "A store that averages 200 staff lost 120 in a year. 120 ÷ 200 = 60% turnover, high even for retail\n\nHR measures it, prices it at about $4,000 per replacement ($480,000 a year), finds the cause in exit interviews and fixes it, then tracks the rate every month\n\nTurnover rarely gets its own line on the income statement, but it costs real money\n\n#edlintics #business #management #humanresources",
+  "caption_x": "How a department store's HR team deals with staff who keep quitting: measure, price, find the cause, fix and track #edlintics",
+  "first_comment": "What makes people stay in a job longest, in your experience? 👇💬",
+  "maths_check": "120 / 200 = 0.60 = 60% turnover. 120 x $4,000 = $480,000 a year. BLS JOLTS retail separations about 3.8-4.0% a month (about 45-48% a year), so 60% is high. $4,000 is conservative against SHRM cost per hire ($4,700-$5,475). See assets/renders/howto-reels/w46/definition-check.md item 3",
+  "threadsTopic": "Business",
+  "threadsReason": "Staff turnover is a general business and management topic; no HR community is joined, so Business is the closest topic",
+  "sources": [
+   "https://corporatefinanceinstitute.com/resources/human-resources/employee-turnover/",
+   "https://www.bls.gov/jlt/jltdef.htm",
+   "https://www.bls.gov/news.release/jolts.t20.htm",
+   "https://www.shrm.org/topics-tools/news/talent-acquisition/real-costs-recruitment",
+   "https://www.bls.gov/news.release/jolts.tn.htm"
+  ],
+  "definition_check": "assets/renders/howto-reels/w46/definition-check.md item 3: definition PASS; takeaway changed to 'rarely'; 60% framed as high; v2 (1 Nov): 'averages about 200', the equation line and the end-card equation PASS (definition-reviewer, CFI + BLS JOLTS); the example states the period (in one year)",
+  "layout": "full",
+  "concept_id": "employee-turnover-rate",
+  "themes": [
+   "management",
+   "human resources"
+  ],
+  "industry": "retail",
+  "role": "HR team",
+  "equation": "Turnover rate = people who left ÷ average headcount (120 ÷ 200 = 60% a year)",
+  "registry_check": "registry check: clear (assets/renders/howto-reels/w46/proposals.md, 1 Nov 2026)",
+  "hook_reason": "none (test week 9-15 Nov, slot Fri 13 Nov)",
+  "hookStyle": "A"
+ },
+ "scenes": {
+  "door": {
+   "bg": "store",
+   "items": [
+    {
+     "p": "door",
+     "id": "door",
+     "x": 290,
+     "y": 1090,
+     "s": 0.9,
+     "ajar": true
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "o",
+     "flip": true,
+     "gaze": "right"
+    }
+   ]
+  },
+  "floor": {
+   "bg": "store",
+   "items": [
+    {
+     "p": "name_board",
+     "id": "board",
+     "x": 470,
+     "y": 760,
+     "s": 1.0,
+     "n": 12,
+     "filled": 5
+    },
+    {
+     "p": "clothes_rack",
+     "x": 250,
+     "y": 1470,
+     "s": 0.68
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "worried",
+     "flip": true,
+     "gaze": "right"
+    }
+   ]
+  },
+  "measure": {
+   "bg": "office",
+   "frame": [
+    40,
+    530,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "name_board",
+     "id": "board",
+     "x": 300,
+     "y": 720,
+     "s": 0.75,
+     "n": 12,
+     "filled": 5
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.6,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "flat",
+     "arm": "point",
+     "flip": true
+    },
+    {
+     "p": "desk",
+     "x": 450,
+     "y": 1330,
+     "w": 640
+    },
+    {
+     "p": "calculator",
+     "id": "calc",
+     "x": 290,
+     "y": 1133,
+     "s": 1.3,
+     "display": "120÷200",
+     "until": "chunk:2"
+    },
+    {
+     "p": "calculator",
+     "x": 290,
+     "y": 1133,
+     "s": 1.3,
+     "display": "60%",
+     "at": "chunk:2",
+     "pop": "cut"
+    }
+   ]
+  },
+  "price": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "job_ad",
+     "id": "ad",
+     "x": 250,
+     "y": 720,
+     "s": 1.45
+    },
+    {
+     "p": "manual",
+     "id": "man",
+     "x": 700,
+     "y": 720,
+     "s": 1.45
+    },
+    {
+     "p": "coins",
+     "x": 330,
+     "y": 1350,
+     "s": 2.5,
+     "n": 5
+    },
+    {
+     "p": "coins",
+     "x": 640,
+     "y": 1350,
+     "s": 2.5,
+     "n": 9,
+     "at": "chunk:3"
+    }
+   ]
+  },
+  "cause": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "person",
+     "id": "leaver",
+     "x": 270,
+     "y": 1470,
+     "s": 2.1,
+     "mood": "flat",
+     "color": "#F3D9A6",
+     "carry": "box"
+    },
+    {
+     "p": "speech",
+     "id": "say",
+     "x": 330,
+     "y": 760,
+     "s": 1.0,
+     "side": "left",
+     "inner": "calendar"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 730,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "flat",
+     "arm": "hold",
+     "flip": true,
+     "gaze": "right"
+    },
+    {
+     "p": "clipboard",
+     "x": 506,
+     "y": 1268,
+     "s": 0.55,
+     "rot": -8
+    }
+   ]
+  },
+  "fix": {
+   "bg": "office",
+   "items": [
+    {
+     "p": "calendar",
+     "id": "cal",
+     "x": 240,
+     "y": 1170,
+     "s": 1.05,
+     "weeks": 2
+    },
+    {
+     "p": "chart",
+     "id": "ch",
+     "x": 620,
+     "y": 720,
+     "s": 0.9,
+     "trend": "down",
+     "color": "green",
+     "at": "chunk:1"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 760,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "smile",
+     "arm": "point",
+     "flip": true
+    }
+   ]
+  },
+  "concept": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "headcount",
+     "id": "hc",
+     "x": 480,
+     "y": 690,
+     "s": 1.15,
+     "n": 10,
+     "left": 6
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 640,
+     "y": 1440,
+     "s": 2.25,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "smile",
+     "arm": "point",
+     "flip": true
+    }
+   ]
+  },
+  "equation": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "equation",
+     "id": "f",
+     "x": 490,
+     "y": 660,
+     "mode": "formula",
+     "lhs": "Turnover rate",
+     "num": "People who left",
+     "den": "Average headcount",
+     "w": 860
+    },
+    {
+     "p": "equation",
+     "id": "n",
+     "x": 490,
+     "y": 1170,
+     "mode": "numbers",
+     "num": "120",
+     "den": "200",
+     "result": "60%",
+     "note": "in one year",
+     "w": 800,
+     "at": "chunk:2"
+    }
+   ]
+  },
+  "summary": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 555,
+     "num": 1,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 555,
+     "num": 1,
+     "title": "Measure",
+     "sub": "left ÷ average headcount",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:1"
+    },
+    {
+     "p": "flow_arrow",
+     "x": 580,
+     "y": 659,
+     "dy": 40
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 815,
+     "num": 2,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 815,
+     "num": 2,
+     "title": "Price",
+     "sub": "cost per hire × leavers",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:3"
+    },
+    {
+     "p": "flow_arrow",
+     "x": 580,
+     "y": 919,
+     "dy": 40
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1075,
+     "num": 3,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1075,
+     "num": 3,
+     "title": "Find the cause",
+     "sub": "exit interviews",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:5"
+    },
+    {
+     "p": "flow_arrow",
+     "x": 580,
+     "y": 1179,
+     "dy": 40
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1335,
+     "num": 4,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1335,
+     "num": 4,
+     "title": "Fix and track",
+     "sub": "the monthly rate",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:7"
+    }
+   ],
+   "pointer": {
+    "outfit": "suit",
+    "lanyard": true
+   }
+  },
+  "full": {
+   "bg": "store",
+   "items": [
+    {
+     "p": "name_board",
+     "id": "board",
+     "x": 470,
+     "y": 760,
+     "s": 1.0,
+     "n": 12,
+     "filled": 12
+    },
+    {
+     "p": "clothes_rack",
+     "x": 250,
+     "y": 1470,
+     "s": 0.68
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "lanyard": true,
+     "mood": "happy",
+     "arm": "wave",
+     "flip": true
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "door",
+   "text": "How does a department store's HR team deal with staff who keep quitting?",
+   "chunks": [
+    {
+     "text": "How does a department store's"
+    },
+    {
+     "text": "HR team deal"
+    },
+    {
+     "text": "with staff who keep quitting?",
+     "key": "quitting?"
+    }
+   ],
+   "gap": 0.35
+  },
+  {
+   "role": "problem",
+   "img": "floor",
+   "text": "This store averages about two hundred staff.",
+   "chunks": [
+    {
+     "text": "This store averages"
+    },
+    {
+     "text": "about 200 staff",
+     "key": "200 staff"
+    }
+   ]
+  },
+  {
+   "role": "problem",
+   "img": "floor",
+   "text": "Last year, a hundred and twenty left.",
+   "chunks": [
+    {
+     "text": "Last year"
+    },
+    {
+     "text": "120 left",
+     "key": "120"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "measure",
+   "text": "First, measure it.",
+   "chunks": [
+    {
+     "text": "First, measure it",
+     "key": "measure"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "measure",
+   "text": "A hundred and twenty divided by two hundred is a sixty percent turnover rate.",
+   "chunks": [
+    {
+     "text": "120 divided by 200"
+    },
+    {
+     "text": "is a 60% turnover rate",
+     "key": "60%"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "measure",
+   "text": "That is high, even for retail.",
+   "chunks": [
+    {
+     "text": "That is high",
+     "key": "high"
+    },
+    {
+     "text": "even for retail"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "price",
+   "text": "Then price it.",
+   "chunks": [
+    {
+     "text": "Then price it",
+     "key": "price"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "price",
+   "text": "If replacing one worker costs about four thousand dollars, that's four hundred eighty thousand dollars a year.",
+   "chunks": [
+    {
+     "text": "If replacing one worker"
+    },
+    {
+     "text": "costs about $4,000"
+    },
+    {
+     "text": "that's $480,000 a year",
+     "key": "$480,000"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "cause",
+   "text": "Next, find the cause.",
+   "chunks": [
+    {
+     "text": "Next, find the cause",
+     "key": "cause"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "cause",
+   "text": "Exit interviews show last-minute schedule changes top the list.",
+   "chunks": [
+    {
+     "text": "Exit interviews show"
+    },
+    {
+     "text": "last-minute schedule changes",
+     "key": "schedule changes"
+    },
+    {
+     "text": "top the list"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "fix",
+   "text": "Finally, fix it and track it.",
+   "chunks": [
+    {
+     "text": "Finally, fix it",
+     "key": "fix it"
+    },
+    {
+     "text": "and track it"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "fix",
+   "text": "Schedules now go up two weeks ahead, and the rate is checked every month.",
+   "chunks": [
+    {
+     "text": "Schedules now go up"
+    },
+    {
+     "text": "two weeks ahead",
+     "key": "two weeks ahead"
+    },
+    {
+     "text": "and the rate"
+    },
+    {
+     "text": "is checked every month"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "concept",
+   "text": "That is the employee turnover rate.",
+   "chunks": [
+    {
+     "text": "That is the"
+    },
+    {
+     "text": "employee turnover rate",
+     "key": "turnover rate"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "concept",
+   "text": "It is the share of staff who leave in a period.",
+   "chunks": [
+    {
+     "text": "It is the share"
+    },
+    {
+     "text": "of staff who leave",
+     "key": "who leave"
+    },
+    {
+     "text": "in a period"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "equation",
+   "text": "You find it by dividing the people who left by average headcount.",
+   "chunks": [
+    {
+     "text": "You find it by dividing"
+    },
+    {
+     "text": "the people who left"
+    },
+    {
+     "text": "by average headcount",
+     "key": "average headcount"
+    }
+   ],
+   "gap": 1.1
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Let's revise the process. Step 1, measure it.",
+   "chunks": [
+    {
+     "text": "Let's revise the process"
+    },
+    {
+     "text": "Step 1"
+    },
+    {
+     "text": "measure it",
+     "key": "measure"
+    }
+   ],
+   "gap": 0.45,
+   "say": "Let's revise the process. Step one, measure it."
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Step 2, price it.",
+   "chunks": [
+    {
+     "text": "Step 2"
+    },
+    {
+     "text": "price it",
+     "key": "price"
+    }
+   ],
+   "gap": 0.45,
+   "say": "Step two, price it."
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Step 3, find the cause.",
+   "chunks": [
+    {
+     "text": "Step 3"
+    },
+    {
+     "text": "find the cause",
+     "key": "cause"
+    }
+   ],
+   "gap": 0.45,
+   "say": "Step three, find the cause."
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Step 4, fix it and track it.",
+   "chunks": [
+    {
+     "text": "Step 4"
+    },
+    {
+     "text": "fix it and track it",
+     "key": "track"
+    }
+   ],
+   "gap": 1.5,
+   "say": "Step four, fix it and track it."
+  },
+  {
+   "role": "takeaway",
+   "img": "full",
+   "text": "Turnover rarely gets its own line on the income statement, but it costs real money.",
+   "chunks": [
+    {
+     "text": "Turnover rarely gets"
+    },
+    {
+     "text": "its own line"
+    },
+    {
+     "text": "on the income statement"
+    },
+    {
+     "text": "but it costs real money",
+     "key": "real money"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "term": "Employee turnover rate",
+   "keypoint": "The share of staff who leave in a period",
+   "text": "Employee turnover rate. The share of staff who leave in a period.",
+   "equation": {
+    "lhs": "Turnover rate",
+    "num": "People who left",
+    "den": "Average headcount"
+   }
+  }
+ ]
+}

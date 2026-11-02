@@ -15,7 +15,7 @@ const srv = http.createServer((q, r) => {
   await new Promise(ok => srv.listen(0, '127.0.0.1', ok));
   const b = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--hide-scrollbars', '--force-color-profile=srgb'] });
   const p = await b.newPage(); await p.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
-  await p.goto(`http://127.0.0.1:${srv.address().port}/render.html`, { waitUntil: 'networkidle0' });
+  await p.goto(`http://127.0.0.1:${srv.address().port}/${process.env.RENDER_PAGE || 'render.html'}`, { waitUntil: 'networkidle0' });
   await p.evaluate(() => window.init()); await p.evaluate(t => window.render(t), Number(t));
   await p.evaluate((k, ti) => window.cover(k, ti), kicker, title); await p.evaluate(() => document.fonts.ready);
   await p.screenshot({ path: out }); await b.close(); srv.close();

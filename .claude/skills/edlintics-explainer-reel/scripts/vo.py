@@ -54,6 +54,9 @@ for b in beats:
         g.append(c)
         if re.search(r"[?.!…]$", c["text"].strip()): groups.append(g); g = []
     if g: groups.append(g)
+    # one sentence (2 Nov 2026): keep every segment, so a short opener before a pause ("Step four, ...") is not
+    # dropped as a breath, which pushed the caption and its pop-in 1.8 s late
+    if len(groups) == 1 and segs: segs = [(segs[0][0], segs[-1][1])]
     while groups and len(segs) > len(groups):
         if any(e - s0 < 0.45 for s0, e in segs): segs.remove(min(segs, key=lambda q: q[1] - q[0]))   # a sigh or breath
         else:   # a pause inside a sentence: merge the two segments closest together

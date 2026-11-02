@@ -61,7 +61,7 @@ const srv = http.createServer((q, r) => {
     fs.writeFileSync(path.join(out, 'clips.json'), JSON.stringify({ fps: FPS, duration: dur, clips: list }, null, 1));
   } else if (mode === 'cardparts') {
     const out = process.argv[3]; fs.mkdirSync(out, { recursive: true });
-    for (const part of ['term', 'kp', 'rule', 'fn', 'logo', 'cta', 'all']) {
+    for (const part of ['term', 'kp', 'rule', 'fn', 'logo', 'cta', 'eq', 'all']) {
       const r = await p.evaluate(pt => window.cardPart(pt), part);
       if (r.w < 4 || r.h < 4) continue;
       await p.screenshot({ path: path.join(out, `endcard-${part}.png`), omitBackground: true, clip: { x: r.x, y: r.y, width: r.w, height: r.h } });

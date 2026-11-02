@@ -18,6 +18,9 @@ try:
     _t = json.load(open(f"{d}/script.json")).get("meta", {}).get("type")
     if _t == "ledger-talks": layout = "talk"
     if _t == "ad": layout = "ad"   # paid ad: captions sit inside the central 4:5 safe area (Meta feed crop)
+    # full-frame layout (opt-in, how-to reels, 1 Nov 2026): captions y 228-438, art x 40-940 y 450-1440, logo y 1462,
+    # all inside the platform safe zones (top 220, bottom 380, right 140 px)
+    if json.load(open(f"{d}/script.json")).get("meta", {}).get("layout") == "full" and layout == "reel": layout = "full"
 except Exception: pass
 if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (lip sync for mood "talk")
     import numpy as np, soundfile as sf
@@ -28,5 +31,5 @@ if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (li
     for k in range(1, len(env) - 1):   # a mouth that flaps every frame looks jittery: hold open frames for 2
         if env[k - 1] and not env[k] and env[k + 1]: env[k] = 1
 data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env,
-        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "footnote", "cta", "fx", "cam") if k in b} for b in T["beats"]]}
+        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "footnote", "cta", "fx", "cam", "equation") if k in b} for b in T["beats"]]}
 json.dump(data, open(f"{out}/scenes.json", "w")); print(len(data["beats"]), "beats,", len(scenes), "scenes")

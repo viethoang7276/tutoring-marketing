@@ -19,6 +19,10 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     # Ledger talks to camera (edlintics-ledger-talks): a hook, the points of the argument, a business takeaway, the end card
     "ledger-talks": {"order": ["hook", "point", "takeaway", "loop", "endcard"],
                      "min": {"hook": 1, "point": 3, "takeaway": 1, "endcard": 1}},
+    # how-to reel (1 Nov 2026): "How [role] in [industry] deals with [problem]": hook question, the problem with a number,
+    # 4 steps (one scene each, a step may take 2 beats), the named concept, the held 4-box summary diagram, the takeaway, end card
+    "howto": {"order": ["hook", "problem", "step", "concept", "summary", "takeaway", "loop", "endcard"],
+              "min": {"hook": 1, "problem": 1, "step": 4, "concept": 1, "summary": 1, "takeaway": 1, "endcard": 1}},
     # paid ad (29 Oct 2026): a hook, 2-3 selling points, one call to action, the end card
     "ad": {"order": ["hook", "point", "cta", "endcard"],
            "min": {"hook": 1, "point": 2, "cta": 1, "endcard": 1}, "max": {"hook": 5, "point": 5, "cta": 1}},   # 5 hooks: Hoang's urgent opener (29 Oct 2026)
@@ -26,6 +30,8 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
         "life-of": dict(chunk=(2, 5), beats=(9, 13), target=(95, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
+        # howto: 60-90 s with the ElevenLabs v3 voice at tempo 1.12 (about 2.4 spoken words a second with gaps, measured 1 Nov 2026)
+        "howto": dict(chunk=(2, 5), beats=(14, 28), target=(130, 190), allowed=(110, 215), secs=(58, 92), wps=2.4),
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
@@ -48,7 +54,7 @@ def main(path):
     for k in (REQ_META_AD if t == "ad" else REQ_META):
         if not m.get(k): E.append(f"meta.{k} is missing")
     if t not in ROLES:
-        E.append('meta.type must be "definition", "life-of", "ledger-talks" or "ad"'); t = "definition"
+        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto" or "ad"'); t = "definition"
     P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
@@ -82,12 +88,42 @@ def main(path):
     if roles and roles[0] != "hook": E.append("beat 1 must be the hook")
     if roles and roles[-1] != "endcard": E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint")')
     if roles.count("endcard") > 1: E.append("only one end card")
+    for name, sp in scenes.items():   # summary pointer (Hoang, 1 Nov 2026): the boxes must leave the small Ledger room on the left
+        if sp.get("pointer"):
+            if t != "howto": W.append(f"scene {name}: \"pointer\" is meant for how-to summary scenes")
+            for it in sp.get("items", []):
+                if it.get("p") == "flow_box" and it["x"] - it.get("w", 860) * it.get("s", 1.0) / 2 < 220:
+                    E.append(f"scene {name}: with \"pointer\" every flow_box needs its left edge at x 220 or more (use w 700 at x 580) so the pointing Ledger does not cover box text"); break
     for name, sp in scenes.items():
         fr = sp.get("frame")
         if fr is not None and not (isinstance(fr, list) and len(fr) == 4) and fr not in FRAMES and not (isinstance(fr, str) and fr.startswith(("item:", "items:"))):
             E.append(f"scene {name}: frame {fr!r}; omit it (auto-fit, the default) or use auto, ledger, ledger-close, wide, item:<id>, items:<id>,<id> or [x,y,w,h]")
     if t == "life-of" and beats and "day in the life" not in beats[0].get("text", "").lower():
         E.append('life-of hook must say "a day in the life of ..."')
+    if m.get("layout") not in (None, "reel", "full"): E.append('meta.layout must be "full" (full-frame layout, how-to reels) or left out')
+    if t == "howto" and m.get("layout") != "full": W.append('howto without meta.layout "full": the old layout leaves the bottom half empty (Hoang, 1 Nov 2026)')
+    if t == "howto":   # how-to card fields (edlintics-howto-reel step F)
+        for k in ("concept_id", "themes", "industry", "role"):
+            if not m.get(k): W.append(f"meta.{k} is missing (needed for the hub card and the concepts registry)")
+    # hook test (Hoang, 1 Nov 2026): hookStyle "A" opens on the question; "B" opens on the problem (1-2 hook beats with the
+    # number) and asks the question second, so the question may sit in any of the first 3 beats, all with role "hook"
+    _hq = lambda b: re.match(r"^how (does|do)\b.*\bdeal with\b", b.get("text", ""), re.I)
+    if t == "howto" and m.get("hookStyle") not in (None, "A", "B"): E.append('meta.hookStyle must be "A" (question first) or "B" (problem first)')
+    if t == "howto" and beats and m.get("hookStyle") == "B":
+        lead = []
+        for b in beats[:3]:
+            if b.get("role") != "hook": break
+            lead.append(b)
+        if not any(_hq(b) for b in lead[1:]): E.append('hookStyle "B": open on the problem in a hook beat, then ask "How does <a role> ... deal with <a problem>?" in hook beat 2 or 3')
+    elif t == "howto" and beats and not _hq(beats[0]):
+        E.append('howto hook must ask "How does <a role> ... deal with <a problem>?"')
+    if t == "howto":   # recap (Hoang, 2 Nov 2026): the diagram is voiced "Let's revise the process (or the concept). Step 1, ... Step 2, ..."
+        rec = [b for b in beats if b.get("role") == "summary" and any(it.get("p") == "flow_box" for it in scenes.get(b.get("img"), {}).get("items", []))]
+        if rec and not rec[0].get("text", "").lower().startswith(("let's revise the process", "let's revise the concept")):
+            E.append('howto summary: the first diagram beat must start "Let\'s revise the process." or "Let\'s revise the concept." (Hoang, 2 Nov 2026)')
+        for n, b in enumerate(rec, 1):
+            if f"step {n}," not in b.get("text", "").lower():
+                E.append(f'howto summary beat {n}: say "Step {n}, <short step>." (caption "Step {n}" as its own chunk; "say" spells the number)')
     total = 0; texts_extra = []
     for k, b in enumerate(beats, 1):
         where = f"beat {k}"
@@ -109,12 +145,24 @@ def main(path):
             if cta: texts_extra.append(("endcard cta", cta))
             if term and _n(term) not in _n(tx) and not (cta and _n(cta.replace(".com", " dot com")) in _n(tx)):
                 E.append(f"{where}: the voice must say the term on the end card (or, for an ad with a cta pill, the cta line)")
+            q = b.get("equation")   # how-to end card (1 Nov 2026): the term's equation with the story's numbers
+            if q is not None:
+                if not isinstance(q, dict) or not q.get("lhs") or not q.get("num"): E.append(f'{where}: "equation" must be {{"lhs", "num", "den" (optional), "example" (optional)}}')
+                else:
+                    for kk in ("lhs", "num", "den", "example"):
+                        v = str(q.get(kk, ""))
+                        if v.rstrip().endswith("."): E.append(f"{where}: equation {kk} ends with a full stop")
+                        if len(v) > 34: E.append(f"{where}: equation {kk} {v[:30]!r}... is over 34 characters; shorten it to fit the card")
+                    texts_extra.append(("endcard equation", " ".join(str(q.get(kk, "")) for kk in ("lhs", "num", "den", "example"))))
+            if t == "howto" and isinstance(q, dict) and (str(q.get("example", "")).strip() or any("=" in str(q.get(kk, "")) for kk in ("lhs", "num", "den"))):
+                E.append(f'{where}: howto end card shows only the term, the definition and the equation; remove the worked example or numbers line ("example"); the numbers stay in the equation scene (Hoang, 1 Nov 2026)')
+            if t == "howto" and q is None and not str(m.get("equation", "")).lower().startswith("none"): W.append(f"{where}: no \"equation\" on the end card; add one when the definition has a formula (Hoang, 1 Nov 2026)")
             fn = b.get("footnote", "")
             for ln in [z for z in fn.split("\n") if z.strip()]:   # small print under the logo, 1-2 lines
                 if len(ln) > 90 or ln.rstrip().endswith("."): E.append(f"{where}: footnote line {ln[:40]!r}: 90 characters at most, no closing full stop")
             if fn: texts_extra.append(("footnote", fn))
             sec = len(words(tx)) / WPS_T
-            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
+            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 5.6 if t == "howto" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
             continue
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
@@ -130,7 +178,10 @@ def main(path):
             if ct.rstrip().endswith("."): E.append(f'{where}: caption chunk "{ct}" ends with a full stop')
             if c.get("key") and c["key"] not in ct: E.append(f'{where}: key "{c["key"]}" is not inside chunk "{ct}"')
         dur = len(words(tx)) / WPS_T
-        if dur > (7.5 if t == "ad" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
+        if dur > (7.5 if t == "ad" else 6.5 if t == "howto" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
+    for k, b in enumerate(beats, 1):   # takeaways and lessons avoid absolute claims (definition review, 1 Nov 2026)
+        if t == "howto" and b.get("role") == "takeaway" and re.search(r"\b(never|always|only|every|all|no one|nobody|guarantees?)\b", b.get("text", ""), re.I):
+            W.append(f"beat {k}: absolute word in the takeaway {b.get('text', '')[:60]!r}; prefer rarely, usually, often, can")
     est = total / WPS_T
     target = P["target"]
     if total < target[0]: W.append(f"voice has {total} words; the {t} target is {target[0]}-{target[1]} (add a beat or a few words)")

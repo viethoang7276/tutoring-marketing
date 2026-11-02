@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.edlintics.weekly-performance-review</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/ops/weekly-performance-review.sh</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/hoangtruong/.nvm/versions/node/v22.16.0/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+    <!-- Monday 01:13 local (Hoang, 2 Nov 2026). A run missed while the Mac sleeps fires on wake. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>1</integer>
+        <key>Hour</key>
+        <integer>1</integer>
+        <key>Minute</key>
+        <integer>13</integer>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/ops/weekly-performance-review.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/ops/weekly-performance-review.log</string>
+</dict>
+</plist>

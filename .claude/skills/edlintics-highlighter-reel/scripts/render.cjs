@@ -20,7 +20,7 @@ const srv = http.createServer((q, r) => {
   const p = await b.newPage();
   p.on('pageerror', e => console.error('page error:', e.message));
   await p.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
-  await p.goto(`http://127.0.0.1:${srv.address().port}/render.html`, { waitUntil: 'networkidle0' });
+  await p.goto(`http://127.0.0.1:${srv.address().port}/${process.env.RENDER_PAGE || 'render.html'}`, { waitUntil: 'networkidle0' });
   const dur = await p.evaluate(() => window.init());
   if (process.argv[2] === 'stills') {
     const out = process.argv[4]; fs.mkdirSync(out, { recursive: true });

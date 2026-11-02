@@ -20,6 +20,8 @@ const srv = http.createServer((q, r) => {
   await p.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
   await p.goto(`http://127.0.0.1:${srv.address().port}/render.html`, { waitUntil: 'networkidle0' });
   await p.evaluate(() => window.init());
+  // full-frame layout (how-to reels): the art starts at y 450, so fit it into a smaller box under the cover title
+  await p.evaluate(() => { if (document.body.classList.contains('full')) { BX = 90; BW = 800; BY = 565; BH = 880; } });
   await p.evaluate(t => window.render(t), Number(t));
   await p.evaluate((kicker, title) => {
     const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -29,7 +31,12 @@ const srv = http.createServer((q, r) => {
     cap.innerHTML = `<div style="font:800 40px/1.1 Inter,sans-serif;color:#467DE3;letter-spacing:.06em;text-transform:uppercase">${esc(kicker)}</div>` +
                     `<div class="c" style="font-size:104px;line-height:1.04;transform:none;opacity:1">${html}</div>`;
     document.getElementById('card').style.display = 'none';
-    const art = document.getElementById('art'); if (art) { art.style.webkitMaskImage = art.style.maskImage = 'linear-gradient(to bottom,transparent 575px,#000 630px)'; }
+    const art = document.getElementById('art');
+    if (art && document.body.classList.contains('full')) {   // full-frame layout (how-to reels): the art starts at y 450, so shrink it under the title
+      art.style.webkitMaskImage = art.style.maskImage = 'linear-gradient(to bottom,transparent 548px,#000 572px)';
+      cap.style.left = '60px'; cap.style.right = '160px';
+      document.getElementById('logo').style.display = 'none';
+    } else if (art) { art.style.webkitMaskImage = art.style.maskImage = 'linear-gradient(to bottom,transparent 575px,#000 630px)'; }
     document.getElementById('stage').style.transform = 'translateY(110px)';   // centre the cover in the 3:4 grid crop
   }, kicker, title);
   await p.evaluate(() => document.fonts.ready);

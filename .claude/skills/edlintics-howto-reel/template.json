@@ -1,0 +1,675 @@
+{
+ "meta": {
+  "type": "howto",
+  "layout": "full",
+  "term": "<Term>",
+  "title": "How <role> at <company type> deals with <problem>: <term>",
+  "slug": "howto-<short-slug>",
+  "family_or_category": "<economics|accounting|finance|statistics|econometrics|operations|management|marketing>",
+  "concept_id": "<registry slug, e.g. employee-turnover-rate>",
+  "themes": [
+   "<theme-tag>"
+  ],
+  "industry": "<industry>",
+  "role": "<role>",
+  "equation": "<the equation in words, with the story's numbers>",
+  "caption": "<Para 1: the problem with its number>\n\n<Para 2: the steps in one sentence>\n\n<Para 3: the takeaway>\n\n#edlintics #business #<family> #<topic>",
+  "caption_x": "<under 280 characters, ends with #edlintics>",
+  "first_comment": "<1-2 sentences, under 150 characters, a question, ending with 1-3 emojis>",
+  "maths_check": "<every sum written out, plus the benchmark that makes the number realistic>",
+  "threadsTopic": "<topic>",
+  "threadsReason": "<one line why>",
+  "sources": [
+   "<definition source 1>",
+   "<definition source 2>",
+   "<process source (NIST, FinCEN, BLS...)>"
+  ],
+  "definition_check": "<definition-reviewer verdict and where it is filed>",
+  "registry_check": "registry check: clear",
+  "hook_reason": "<holiday or news hook, or none>",
+  "hookStyle": "<A (question first) or B (problem first)>"
+ },
+ "scenes": {
+  "hook": {
+   "bg": "<office|store|street|...>",
+   "items": [
+    {
+     "p": "<scene prop that shows the problem>",
+     "id": "prop",
+     "x": 290,
+     "y": 1090,
+     "s": 0.9
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "mood": "o",
+     "flip": true
+    }
+   ]
+  },
+  "problem": {
+   "bg": "<bg>",
+   "items": [
+    {
+     "p": "<prop>",
+     "id": "prop",
+     "x": 470,
+     "y": 760,
+     "s": 1.0
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "mood": "worried",
+     "flip": true
+    }
+   ]
+  },
+  "step1": {
+   "bg": "<bg>",
+   "frame": [
+    40,
+    530,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "<prop above>",
+     "x": 300,
+     "y": 720,
+     "s": 0.75
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.6,
+     "outfit": "suit",
+     "mood": "flat",
+     "arm": "point",
+     "flip": true
+    },
+    {
+     "p": "<prop at his hand>",
+     "x": 290,
+     "y": 1133,
+     "s": 1.3
+    }
+   ]
+  },
+  "step2": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "<prop>",
+     "x": 250,
+     "y": 720,
+     "s": 1.45
+    },
+    {
+     "p": "<prop>",
+     "x": 700,
+     "y": 720,
+     "s": 1.45
+    },
+    {
+     "p": "<prop that pops in>",
+     "x": 490,
+     "y": 1300,
+     "s": 2.0,
+     "at": "chunk:2"
+    }
+   ]
+  },
+  "step3": {
+   "bg": "<bg>",
+   "items": [
+    {
+     "p": "person",
+     "x": 270,
+     "y": 1470,
+     "s": 2.1,
+     "mood": "flat"
+    },
+    {
+     "p": "speech",
+     "x": 330,
+     "y": 760,
+     "s": 1.0,
+     "inner": "<preset>"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 730,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "mood": "flat",
+     "arm": "hold",
+     "flip": true
+    }
+   ]
+  },
+  "step4": {
+   "bg": "<bg>",
+   "items": [
+    {
+     "p": "<prop>",
+     "x": 240,
+     "y": 1170,
+     "s": 1.05
+    },
+    {
+     "p": "chart",
+     "x": 620,
+     "y": 720,
+     "s": 0.9,
+     "trend": "down",
+     "color": "green",
+     "at": "chunk:1"
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 760,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "arm": "point",
+     "flip": true
+    }
+   ]
+  },
+  "concept": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "<diagram prop>",
+     "id": "d",
+     "x": 480,
+     "y": 690,
+     "s": 1.15
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 640,
+     "y": 1440,
+     "s": 2.25,
+     "outfit": "suit",
+     "arm": "point",
+     "flip": true
+    }
+   ]
+  },
+  "equation": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "equation",
+     "id": "f",
+     "x": 490,
+     "y": 660,
+     "mode": "formula",
+     "lhs": "<Left side>",
+     "num": "<Numerator words>",
+     "den": "<Denominator words, or empty>",
+     "w": 860
+    },
+    {
+     "p": "equation",
+     "id": "n",
+     "x": 490,
+     "y": 1170,
+     "mode": "numbers",
+     "num": "<120>",
+     "den": "<200>",
+     "result": "<60%>",
+     "note": "<in one year>",
+     "w": 800,
+     "at": "chunk:2"
+    }
+   ]
+  },
+  "summary": {
+   "bg": "none",
+   "frame": [
+    40,
+    450,
+    900,
+    990
+   ],
+   "items": [
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 555,
+     "num": 1,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 555,
+     "num": 1,
+     "title": "<Step 1: 1-3 words>",
+     "sub": "<key point, 2-4 words>",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:1"
+    },
+    {
+     "p": "flow_arrow",
+     "x": 580,
+     "y": 659,
+     "dy": 40
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 815,
+     "num": 2,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 815,
+     "num": 2,
+     "title": "<Step 2: 1-3 words>",
+     "sub": "<key point, 2-4 words>",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:3"
+    },
+    {
+     "p": "flow_arrow",
+     "x": 580,
+     "y": 919,
+     "dy": 40
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1075,
+     "num": 3,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1075,
+     "num": 3,
+     "title": "<Step 3: 1-3 words>",
+     "sub": "<key point, 2-4 words>",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:5"
+    },
+    {
+     "p": "flow_arrow",
+     "x": 580,
+     "y": 1179,
+     "dy": 40
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1335,
+     "num": 4,
+     "w": 700,
+     "h": 200,
+     "ghost": true
+    },
+    {
+     "p": "flow_box",
+     "x": 580,
+     "y": 1335,
+     "num": 4,
+     "title": "<Step 4: 1-3 words>",
+     "sub": "<key point, 2-4 words>",
+     "w": 700,
+     "h": 200,
+     "at": "chunk:7"
+    }
+   ],
+   "pointer": {
+    "outfit": "suit"
+   }
+  },
+  "takeaway": {
+   "bg": "<bg>",
+   "items": [
+    {
+     "p": "<prop: the problem solved>",
+     "x": 470,
+     "y": 760,
+     "s": 1.0
+    },
+    {
+     "p": "ledger",
+     "id": "led",
+     "x": 720,
+     "y": 1470,
+     "s": 2.3,
+     "outfit": "suit",
+     "mood": "happy",
+     "arm": "wave",
+     "flip": true
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "hook",
+   "img": "hook",
+   "text": "How does <a role> at <a company type> deal with <a problem>?",
+   "chunks": [
+    {
+     "text": "How does <role>"
+    },
+    {
+     "text": "at <company type>"
+    },
+    {
+     "text": "deal with <problem>?"
+    }
+   ],
+   "gap": 0.35
+  },
+  {
+   "role": "problem",
+   "img": "problem",
+   "text": "<The setting, with the base number, in a full sentence.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "problem",
+   "img": "problem",
+   "text": "<What went wrong, with one number.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step1",
+   "text": "First, <step one verb> it.",
+   "chunks": [
+    {
+     "text": "First, <verb> it"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step1",
+   "text": "<What they do, with the numbers.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step2",
+   "text": "Then <step two>.",
+   "chunks": [
+    {
+     "text": "Then <step two>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step2",
+   "text": "<Detail with a USD amount.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step3",
+   "text": "Next, <step three>.",
+   "chunks": [
+    {
+     "text": "Next, <step three>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step3",
+   "text": "<Detail.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step4",
+   "text": "Finally, <step four>.",
+   "chunks": [
+    {
+     "text": "Finally, <step four>"
+    }
+   ]
+  },
+  {
+   "role": "step",
+   "img": "step4",
+   "text": "<Detail.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "concept",
+   "text": "That is <the term>.",
+   "chunks": [
+    {
+     "text": "That is the"
+    },
+    {
+     "text": "<term>"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "concept",
+   "text": "It is <the one-sentence definition>.",
+   "chunks": [
+    {
+     "text": "It is <...>"
+    },
+    {
+     "text": "<...>"
+    },
+    {
+     "text": "<...>"
+    }
+   ]
+  },
+  {
+   "role": "concept",
+   "img": "equation",
+   "text": "You find it by dividing <numerator> by <denominator>.",
+   "chunks": [
+    {
+     "text": "You find it by dividing"
+    },
+    {
+     "text": "<numerator>"
+    },
+    {
+     "text": "by <denominator>"
+    }
+   ],
+   "gap": 1.1
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Let's revise the process. Step 1, <short step 1>.",
+   "chunks": [
+    {
+     "text": "Let's revise the process"
+    },
+    {
+     "text": "Step 1"
+    },
+    {
+     "text": "<short step 1>"
+    }
+   ],
+   "gap": 0.45,
+   "say": "Let's revise the process. Step one, <short step 1>."
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Step 2, <short step 2>.",
+   "chunks": [
+    {
+     "text": "Step 2"
+    },
+    {
+     "text": "<short step 2>"
+    }
+   ],
+   "gap": 0.45,
+   "say": "Step two, <short step 2>."
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Step 3, <short step 3>.",
+   "chunks": [
+    {
+     "text": "Step 3"
+    },
+    {
+     "text": "<short step 3>"
+    }
+   ],
+   "gap": 0.45,
+   "say": "Step three, <short step 3>."
+  },
+  {
+   "role": "summary",
+   "img": "summary",
+   "text": "Step 4, <short step 4>.",
+   "chunks": [
+    {
+     "text": "Step 4"
+    },
+    {
+     "text": "<short step 4>"
+    }
+   ],
+   "gap": 1.5,
+   "say": "Step four, <short step 4>."
+  },
+  {
+   "role": "takeaway",
+   "img": "takeaway",
+   "text": "<The business lesson, with no never/always/only.>",
+   "chunks": [
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    },
+    {
+     "text": "<2-5 words>"
+    }
+   ]
+  },
+  {
+   "role": "endcard",
+   "term": "<Term>",
+   "keypoint": "<The one-sentence definition, 4-12 words, no full stop>",
+   "text": "<Term>. <The definition as a sentence>.",
+   "equation": {
+    "lhs": "<Left side>",
+    "num": "<Numerator words>",
+    "den": "<Denominator words>"
+   }
+  }
+ ]
+}

@@ -30,6 +30,10 @@ import scene_lib as L
 
 ASPECT = 1000 / 780
 LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY = 0.74, 0.88, 0.74   # Ledger's share of the frame height
+# Full-frame layout (meta.layout "full", how-to reels, 1 Nov 2026): the art box is x 40-940, y 450-1440 (900x990), inside the
+# platform safe zones (top 220, bottom 380, right 140 px). The box is taller than wide, so Ledger takes a smaller share of
+# its height and the props get the room above and beside him
+FULL = {"aspect": 900 / 990, "ledger": (0.66, 0.78, 0.66)}
 BLEED = {"desk", "building", "whiteboard", "window", "people_group"}   # may run off the left/right edges
 HELD = {"ticket", "phone", "coins", "bills", "invoice", "coffee", "price_tag", "envelope", "books", "umbrella", "receipt",
         "pizza_slice", "sandwich", "burger", "lemonade_cup", "plate"}   # props Ledger can hold (checked against his hand)
@@ -178,7 +182,10 @@ def talk_frame(spec):
 
 
 def main(d):
+    global ASPECT, LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY
     S = json.load(open(os.path.join(d, "script.json")))
+    if S.get("meta", {}).get("layout") == "full":
+        ASPECT = FULL["aspect"]; LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY = FULL["ledger"]
     frames = {}
     talk = S.get("meta", {}).get("type") == "ledger-talks"
     for name, spec in S["scenes"].items():

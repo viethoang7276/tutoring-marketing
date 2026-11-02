@@ -36,8 +36,8 @@ def _arm(path, hand):
 GAZES = {None: (0, 0, 0), "right": (6, 2, 0), "left": (-6, 2, 0), "down": (0, 7, 4), "up": (0, -5, 0)}   # eye dx, eye dy, mouth dy
 
 
-def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, gaze=None, **_):
-    """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip, larm (left-arm gesture), gaze (right, left, down, up: eyes look that way; down also lowers the mouth, head-down sad). mood "talk" lip-syncs to the voice; arm "mic" holds a small handheld mic."""
+def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=False, larm=None, gaze=None, lanyard=False, **_):
+    """The Edlintics mascot (from assets/brand/ledger.svg). (x, y) = between his feet. mood, arm, outfit, tilt, flip, larm (left-arm gesture), gaze (right, left, down, up: eyes look that way; down also lowers the mouth, head-down sad), lanyard (true: a staff lanyard with an ID badge, the job prop for a store manager or HR). mood "talk" lip-syncs to the voice; arm "mic" holds a small handheld mic."""
     mouth = {
         "smile": "M106 134 Q120 146 134 134", "happy": "M104 130 Q120 150 136 130",
         "frown": "M107 140 Q120 130 133 140", "sad": "M107 140 Q120 131 133 140",
@@ -95,6 +95,10 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     else:  # student hoodie: drawstrings
         collar = (f'<path d="M110 150 v22 M130 150 v22" stroke="{WHITE}" stroke-width="4" stroke-linecap="round"/>'
                   f'<circle cx="110" cy="174" r="3.5" fill="{WHITE}"/><circle cx="130" cy="174" r="3.5" fill="{WHITE}"/>')
+    if lanyard:   # staff lanyard (1 Nov 2026, how-to reels): gold strap under the tie, a blank ID badge on his right side, clear of the tie
+        collar = (f'<path d="M94 150 L158 170 M178 150 L160 170" fill="none" stroke="{GOLD}" stroke-width="4.5" stroke-linecap="round"/>' + collar +
+                  f'<rect x="146" y="167" width="28" height="24" rx="3" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/>'
+                  f'<rect x="146" y="167" width="28" height="7" rx="2" fill="{BLUE}"/><path d="M151 180 h18 M151 186 h12" stroke="{GREY}" stroke-width="2.2" stroke-linecap="round"/>')
     behind = ""
     if outfit == "student":  # backpack peeking out on both sides
         behind = (f'<rect x="38" y="96" width="30" height="80" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>'
@@ -191,8 +195,8 @@ def _g(x, y, s, inner, rot=0):
     return f'<g transform="translate({_f(x)} {_f(y)}) rotate({rot}) scale({s})">{inner}</g>'
 
 
-def person(x, y, s=1.0, mood="smile", color=None, **_):
-    """A simple customer/classmate figure (round head, rounded body). (x, y) = between the feet."""
+def person(x, y, s=1.0, mood="smile", color=None, carry=None, **_):
+    """A simple customer/classmate figure (round head, rounded body). (x, y) = between the feet. carry="box": holds a cardboard box with a plant (an employee leaving)."""
     c = color or LB
     mouth = {"smile": "M-12 -168 Q0 -158 12 -168", "flat": "M-11 -164 H11", "sad": "M-12 -160 Q0 -170 12 -160"}.get(mood, "M-12 -168 Q0 -158 12 -168")
     inner = (f'<ellipse cx="0" cy="4" rx="44" ry="7" fill="{INK}" opacity="0.10"/>'
@@ -200,6 +204,11 @@ def person(x, y, s=1.0, mood="smile", color=None, **_):
              f'<circle cx="0" cy="-178" r="40" fill="{PAPER}" stroke="{INK}" stroke-width="{SW}"/>'
              f'<circle cx="-13" cy="-184" r="5" fill="{INK}"/><circle cx="13" cy="-184" r="5" fill="{INK}"/>'
              f'<path d="{mouth}" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>')
+    if carry == "box":   # leaving with a box (1 Nov 2026): plant leaves poking out, the box held in front of the body
+        inner += (f'<path d="M-30 -110 q-14 -24 -46 -26 M-20 -110 q-30 -6 -50 8 M32 -110 q14 -24 46 -26 M22 -110 q30 -6 50 8" fill="none" stroke="{GREEN}" stroke-width="7" stroke-linecap="round"/>'
+                  f'<path d="M-58 -112 H62 L56 -30 H-52 Z" fill="#D9B27C" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+                  f'<path d="M-58 -112 L-40 -96 H44 L62 -112" fill="none" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                  f'<circle cx="-56" cy="-70" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="3"/><circle cx="60" cy="-70" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="3"/>')
     return _g(x, y, s, inner)
 
 
@@ -231,7 +240,7 @@ def paper_stack_inner():
 
 
 def phone(x, y, s=1.0, screen="empty", **_):
-    """A big smartphone. screen: empty (no users, flat line), up (rising chart), down (falling chart), call (call screen), chat."""
+    """A big smartphone. screen: empty (no users, flat line), up (rising chart), down (falling chart), call (call screen), chat, pay (a generic send-money screen)."""
     inner = (f'<rect x="-150" y="-280" width="300" height="560" rx="40" fill="{WHITE}" stroke="{INK}" stroke-width="8"/>'
              f'<rect x="-125" y="-235" width="250" height="450" rx="12" fill="{SKY}"/>'
              f'<rect x="-30" y="232" width="60" height="10" rx="5" fill="{INK}" opacity="0.4"/>')
@@ -248,6 +257,10 @@ def phone(x, y, s=1.0, screen="empty", **_):
     elif screen == "down":  # falling price chart (31 Oct 2026)
         inner += (f'<path d="M-95 -160 V170 H100" fill="none" stroke="{INK}" stroke-width="4"/>'
                   f'<path d="M-90 -140 L-50 -110 L-20 -40 L20 -20 L60 90 L95 130" fill="none" stroke="{CORAL}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>')
+    elif screen == "pay":  # a generic send-money screen (how-to w46, no real app UI): a contact, an amount bar and a green send button
+        inner += (f'<circle cx="0" cy="-140" r="50" fill="{LB}" stroke="{INK}" stroke-width="5"/><path d="M-36 -96 Q0 -130 36 -96" fill="none" stroke="{INK}" stroke-width="4"/>'
+                  f'<rect x="-100" y="-50" width="200" height="70" rx="14" fill="{WHITE}" stroke="{INK}" stroke-width="5"/><path d="M-70 -15 H40" stroke="{GREY}" stroke-width="10" stroke-linecap="round"/>'
+                  f'<rect x="-100" y="70" width="200" height="80" rx="40" fill="{GREEN}" stroke="{INK}" stroke-width="5"/><path d="M-20 110 H20 M6 94 L22 110 L6 126" fill="none" stroke="{WHITE}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>')
     else:  # chat
         inner += (f'<rect x="-100" y="-200" width="160" height="60" rx="18" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
                   f'<rect x="-40" y="-110" width="140" height="60" rx="18" fill="{LB}" stroke="{INK}" stroke-width="4"/>'
@@ -305,14 +318,16 @@ def coins(x, y, s=1.0, n=5, **_):
     return _g(x, y, s, "".join(f'<ellipse cx="0" cy="{-k * 18}" rx="48" ry="16" fill="{GOLD}" stroke="{INK}" stroke-width="5"/>' for k in range(int(n))))
 
 
-def calendar(x, y, s=1.0, mark=None, **_):
-    """Wall calendar, no text. mark: day index 0-27 to circle (e.g. 2 = the 3rd)."""
+def calendar(x, y, s=1.0, mark=None, weeks=0, **_):
+    """Wall calendar, no text. mark: day index 0-27 to circle (e.g. 2 = the 3rd). weeks: the first n week rows filled in green with shift bars (a schedule posted ahead)."""
     inner = (f'<rect x="-150" y="-170" width="300" height="340" rx="14" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
              f'<rect x="-150" y="-170" width="300" height="70" rx="14" fill="{CORAL}" stroke="{INK}" stroke-width="{SW}"/>'
              f'<circle cx="-80" cy="-176" r="10" fill="{INK}"/><circle cx="80" cy="-176" r="10" fill="{INK}"/>')
     for k in range(28):
         cx, cy = -105 + (k % 7) * 35, -70 + (k // 7) * 55
         inner += f'<rect x="{cx - 12}" y="{cy - 12}" width="24" height="24" rx="4" fill="{SKY}"/>'
+        if k // 7 < int(weeks):
+            inner += f'<rect x="{cx - 14}" y="{cy - 14}" width="28" height="28" rx="5" fill="{GREEN}" opacity="0.85"/><path d="M{cx - 8} {cy + 2} h16" stroke="{WHITE}" stroke-width="4" stroke-linecap="round"/>'
         if mark is not None and int(mark) == k:
             inner += f'<circle cx="{cx}" cy="{cy}" r="24" fill="none" stroke="{BLUE}" stroke-width="6"/>'
     return _g(x, y, s, inner)
@@ -329,10 +344,11 @@ def invoice(x, y, s=1.0, stamp=False, rot=0, **_):
     return _g(x, y, s, inner, rot)
 
 
-def chart(x, y, s=1.0, trend="up", **_):
-    """Framed line chart on a wall or board. trend: up, down, flat."""
-    pts = {"up": "-150 90 -70 40 0 60 80 -20 150 -80", "down": "-150 -80 -70 -20 0 -40 80 40 150 90", "flat": "-150 20 -70 30 0 15 80 25 150 20"}[trend]
-    col = {"up": GREEN, "down": CORAL, "flat": GREY}[trend]
+def chart(x, y, s=1.0, trend="up", color=None, **_):
+    """Framed line chart on a wall or board. trend: up, down, flat, bend (high and flat, then bending down). color: green, coral, blue, grey overrides the trend colour (a falling line can be good news)."""
+    pts = {"up": "-150 90 -70 40 0 60 80 -20 150 -80", "down": "-150 -80 -70 -20 0 -40 80 40 150 90", "flat": "-150 20 -70 30 0 15 80 25 150 20",
+           "bend": "-150 -70 -100 -80 -50 -66 0 -74 40 -40 90 30 150 80"}[trend]
+    col = {"green": GREEN, "coral": CORAL, "blue": BLUE, "grey": GREY}.get(color) or {"up": GREEN, "down": CORAL, "flat": GREY, "bend": GREEN}[trend]
     inner = (f'<rect x="-200" y="-150" width="400" height="300" rx="10" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
              f'<path d="M-170 -120 V120 H180" fill="none" stroke="{INK}" stroke-width="4"/>'
              f'<polyline points="{pts}" fill="none" stroke="{col}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>')
@@ -364,9 +380,23 @@ def window(x, y, s=1.0, weather="clear", **_):
     return _g(x, y, s, inner)
 
 
-def door(x, y, s=1.0, **_):
-    """A tall door (leaving, going out)."""
-    return _g(x, y, s, f'<rect x="-125" y="-360" width="250" height="720" rx="6" fill="{LB}" stroke="{INK}" stroke-width="7"/><circle cx="80" cy="10" r="12" fill="{INK}"/>')
+def door(x, y, s=1.0, ajar=False, **_):
+    """A tall door (leaving, going out). ajar=True: the door swings open onto a bright doorway with a small figure walking out, and swing marks (staff who keep leaving)."""
+    if not ajar:
+        return _g(x, y, s, f'<rect x="-125" y="-360" width="250" height="720" rx="6" fill="{LB}" stroke="{INK}" stroke-width="7"/><circle cx="80" cy="10" r="12" fill="{INK}"/>')
+    inner = (f'<rect x="-135" y="-370" width="270" height="730" rx="6" fill="{SKY}" stroke="{INK}" stroke-width="8"/>'
+             f'<path d="M-135 250 H135" stroke="{INK}" stroke-width="3" opacity="0.35"/>'
+             f'<g transform="translate(40 250) scale(0.62)" opacity="0.75"><path d="M-46 0 V-90 Q-46 -130 0 -130 Q46 -130 46 -90 V0 Z" fill="{GREY}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<circle cx="0" cy="-178" r="40" fill="{GREY}" stroke="{INK}" stroke-width="{SW}"/></g>'
+             f'<path d="M135 -370 L250 -330 L250 330 L135 360 Z" fill="{LB}" stroke="{INK}" stroke-width="7" stroke-linejoin="round"/>'
+             f'<circle cx="230" cy="10" r="11" fill="{INK}"/>'
+             f'<path d="M290 -230 q30 60 0 120 M318 -270 q44 100 0 200 M290 110 q30 60 0 120" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round" opacity="0.7"/>'
+             f'<path d="M135 360 Q230 400 300 330" fill="none" stroke="{INK}" stroke-width="4" stroke-dasharray="14 12" opacity="0.6"/>')
+    return _g(x, y, s, inner)
+
+
+def door_box(x, y, s=1.0, ajar=False, **_):
+    return [x - 140 * s, y - 375 * s, (470 if ajar else 280) * s, 780 * s]
 
 
 def sofa(x, y, s=1.0, **_):
@@ -502,13 +532,22 @@ def thought_box(x, y, s=1.0, **_):
     return [x - 240 * s, y - 130 * s, 480 * s, 400 * s]
 
 
-def speech(x, y, s=1.0, side="left", **_):
-    """Speech bubble with lines (no words). side: which side the tail points to."""
+def speech(x, y, s=1.0, side="left", inner="none", **_):
+    """Speech bubble with lines (no words). side: which side the tail points to. inner = a preset drawn small inside instead of the lines (e.g. calendar)."""
     tail = "M-60 70 L-120 140 L-10 80" if side == "left" else "M60 70 L120 140 L10 80"
+    if inner in PRESETS and inner not in ("thought", "speech"):
+        body = (f'<rect x="-200" y="-150" width="400" height="230" rx="40" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
+                f'<path d="{tail}" fill="{WHITE}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+                f'<rect x="-150" y="60" width="300" height="16" fill="{WHITE}"/>' + PRESETS[inner][0](0, -35, 0.5))
+        return _g(x, y, s, body)
     return _g(x, y, s, (f'<rect x="-200" y="-90" width="400" height="170" rx="40" fill="{WHITE}" stroke="{INK}" stroke-width="6"/>'
                         f'<path d="{tail}" fill="{WHITE}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
                         f'<line x1="-130" y1="-25" x2="130" y2="-25" stroke="{GREY}" stroke-width="12" stroke-linecap="round"/>'
                         f'<line x1="-130" y1="25" x2="60" y2="25" stroke="{GREY}" stroke-width="12" stroke-linecap="round"/>'))
+
+
+def speech_box(x, y, s=1.0, inner="none", **_):
+    return [x - 205 * s, y - (155 if inner in PRESETS else 95) * s, 410 * s, (300 if inner in PRESETS else 240) * s]
 
 
 def building(x, y, s=1.0, done=False, **_):
@@ -1039,6 +1078,14 @@ def bg_svg(name):
                 f'<path d="M930 1110 V800" stroke="{INK}" stroke-width="5"/><path d="M930 805 L985 820 L930 838 Z" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>'
                 f'<path d="M0 1090 Q540 1060 1080 1090" fill="none" stroke="{INK}" stroke-width="4" opacity="0.6"/>'
                 f'<rect x="-200" y="1478" width="1480" height="700" fill="#DDEFD9"/><rect x="-200" y="-400" width="1480" height="400" fill="#DCEAFB" opacity="0.9"/>' + ground())
+    if name == "store":   # department store floor (1 Nov 2026): warm wall, cubby shelves of folded clothes, a hanging rail sign (no text), floor tiles
+        cub = "".join(f'<rect x="{x}" y="{y}" width="70" height="70" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                      f'<rect x="{x + 10}" y="{y + 36}" width="50" height="14" rx="3" fill="{c}" stroke="{INK}" stroke-width="2.5"/><rect x="{x + 10}" y="{y + 48}" width="50" height="14" rx="3" fill="{c}" stroke="{INK}" stroke-width="2.5"/>'
+                      for k, (x, y) in enumerate((x, y) for y in (900, 970, 1040) for x in (790, 860, 930)) for c in [[BLUE, CORAL, GREEN, "#F3D9A6", LB, NAVY, CORAL, GREEN, BLUE][k]])
+        return (wall("#F6EEE3", 0.85) + ground() +
+                f'<rect x="780" y="890" width="230" height="230" rx="6" fill="#E3D2B5" stroke="{INK}" stroke-width="5"/>' + cub +
+                f'<path d="M150 820 V860 M330 820 V860" stroke="{INK}" stroke-width="4"/><rect x="110" y="860" width="260" height="70" rx="12" fill="{BLUE}" stroke="{INK}" stroke-width="5"/>'
+                f'<path d="M210 900 q30 -26 60 0" fill="none" stroke="{WHITE}" stroke-width="6" stroke-linecap="round"/><path d="M240 880 v-8" stroke="{WHITE}" stroke-width="6" stroke-linecap="round"/>')
     if name == "none":
         return ""
     return ground()  # paper
@@ -1179,17 +1226,473 @@ def ghost_kid(x, y, s=1.0, eyes="open", bucket=True, **_):
 def ghost_kid_box(x, y, s=1.0, **_):
     return [x - 75 * s, y - 250 * s, 215 * s, 262 * s]
 
-BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "none"]
+
+# ---------------------------------------------------------------- how-to reel props (1 Nov 2026: "How [role] in [industry] deals with [problem]")
+def name_board(x, y, s=1.0, n=12, filled=12, cols=4, **_):
+    """Staff board of name tags (no text): n tags in `cols` columns, the first `filled` are filled in (blue strip, face, lines), the rest are empty dashed outlines with only a pin. (x, y) = centre."""
+    rows = (int(n) + int(cols) - 1) // int(cols); tw, th, gx, gy = 104, 70, 26, 26
+    W = cols * tw + (cols - 1) * gx + 60; H = rows * th + (rows - 1) * gy + 60
+    out = (f'<rect x="{-W / 2:.0f}" y="{-H / 2:.0f}" width="{W:.0f}" height="{H:.0f}" rx="12" fill="#E9D3AE" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<rect x="{-W / 2 + 12:.0f}" y="{-H / 2 + 12:.0f}" width="{W - 24:.0f}" height="{H - 24:.0f}" rx="6" fill="none" stroke="{INK}" stroke-width="2.5" opacity="0.35"/>')
+    for k in range(int(n)):
+        cx = -W / 2 + 30 + (k % cols) * (tw + gx); cy = -H / 2 + 30 + (k // cols) * (th + gy)
+        if k < int(filled):
+            out += (f'<rect x="{cx:.0f}" y="{cy:.0f}" width="{tw}" height="{th}" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                    f'<rect x="{cx:.0f}" y="{cy:.0f}" width="{tw}" height="16" rx="6" fill="{BLUE}"/>'
+                    f'<circle cx="{cx + 24:.0f}" cy="{cy + 42:.0f}" r="12" fill="{LB}" stroke="{INK}" stroke-width="3"/>'
+                    f'<path d="M{cx + 46:.0f} {cy + 36:.0f} h44 M{cx + 46:.0f} {cy + 52:.0f} h30" stroke="{GREY}" stroke-width="5" stroke-linecap="round"/>')
+        else:
+            out += f'<rect x="{cx:.0f}" y="{cy:.0f}" width="{tw}" height="{th}" rx="8" fill="none" stroke="{INK}" stroke-width="3.5" stroke-dasharray="10 9" opacity="0.55"/>'
+        out += f'<circle cx="{cx + tw / 2:.0f}" cy="{cy + 4:.0f}" r="7" fill="{CORAL}" stroke="{INK}" stroke-width="2.5"/>'
+    return _g(x, y, s, out)
+
+
+def name_board_box(x, y, s=1.0, n=12, cols=4, **_):
+    rows = (int(n) + int(cols) - 1) // int(cols); W = cols * 104 + (cols - 1) * 26 + 60; H = rows * 70 + (rows - 1) * 26 + 60
+    return [x - W / 2 * s, y - H / 2 * s, W * s, H * s]
+
+
+def clothes_rack(x, y, s=1.0, **_):
+    """A clothing rail on two stands with shirts on hangers (a department store floor). (x, y) = centre of the floor line under it."""
+    cols = [BLUE, CORAL, "#F3D9A6", GREEN, LB, NAVY]
+    out = (f'<path d="M-200 0 V-330 M200 0 V-330" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+           f'<path d="M-240 0 H-160 M160 0 H240" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+           f'<path d="M-215 -330 H215" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>')
+    for k, c in enumerate(cols):
+        hx = -160 + k * 64
+        out += (f'<path d="M{hx} -330 q0 -18 10 -18 M{hx - 26} -296 L{hx} -318 L{hx + 26} -296" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'
+                f'<path d="M{hx - 30} -298 L{hx - 46} -260 L{hx - 34} -254 L{hx - 30} -150 H{hx + 30} L{hx + 34} -254 L{hx + 46} -260 L{hx + 30} -298 Q{hx} -284 {hx - 30} -298 Z" fill="{c}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>')
+    return _g(x, y, s, out)
+
+
+def clothes_rack_box(x, y, s=1.0, **_):
+    return [x - 245 * s, y - 352 * s, 490 * s, 360 * s]
+
+
+def calculator(x, y, s=1.0, display="", rot=0, **_):
+    """A desk calculator with a short display text (e.g. "60%"; the one number shown in the art) and a key grid. (x, y) = centre."""
+    import html as _h
+    out = (f'<rect x="-110" y="-150" width="220" height="300" rx="22" fill="{NAVY}" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<rect x="-86" y="-126" width="172" height="70" rx="8" fill="#DCEFD8" stroke="{INK}" stroke-width="4"/>'
+           f'<text x="74" y="-74" text-anchor="end" font-family="Inter,sans-serif" font-weight="900" font-size="{46 if len(display) <= 5 else 34 if len(display) <= 7 else 27}" fill="{INK}">{_h.escape(display)}</text>')
+    for r in range(4):
+        for c in range(4):
+            col = GOLD if c == 3 else (WHITE if r < 3 else LB)
+            out += f'<rect x="{-86 + c * 46}" y="{-36 + r * 44}" width="34" height="32" rx="7" fill="{col}" stroke="{INK}" stroke-width="3"/>'
+    return _g(x, y, s, out, rot)
+
+
+def job_ad(x, y, s=1.0, **_):
+    """A job ad poster (no words): a blue header, a person icon with a plus badge (hiring) and blank lines. (x, y) = centre."""
+    return _g(x, y, s, (f'<rect x="-130" y="-170" width="260" height="340" rx="12" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<path d="M-130 -110 V-158 Q-130 -170 -118 -170 H118 Q130 -170 130 -158 V-110 Z" fill="{BLUE}" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<circle cx="0" cy="-42" r="30" fill="{LB}" stroke="{INK}" stroke-width="5"/>'
+                        f'<path d="M-52 40 Q-52 -6 0 -6 Q52 -6 52 40 Z" fill="{LB}" stroke="{INK}" stroke-width="5"/>'
+                        f'<circle cx="56" cy="-60" r="26" fill="{GREEN}" stroke="{INK}" stroke-width="4"/><path d="M56 -74 v28 M42 -60 h28" stroke="{WHITE}" stroke-width="6" stroke-linecap="round"/>'
+                        f'<path d="M-90 82 h180 M-90 112 h130 M-90 142 h160" stroke="{GREY}" stroke-width="9" stroke-linecap="round"/>'
+                        f'<circle cx="0" cy="-178" r="9" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>'))
+
+
+def manual(x, y, s=1.0, **_):
+    """A thick training manual (ring binder, no words): spine with rings, a label with blank lines and a small cap icon. (x, y) = centre."""
+    return _g(x, y, s, (f'<rect x="-120" y="-150" width="250" height="300" rx="10" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                        f'<rect x="-130" y="-160" width="250" height="300" rx="12" fill="{GREEN}" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<rect x="-130" y="-160" width="44" height="300" rx="10" fill="#24855A" stroke="{INK}" stroke-width="{SW}"/>'
+                        + "".join(f'<circle cx="-108" cy="{yy}" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="3"/>' for yy in (-100, -10, 80))
+                        + f'<rect x="-60" y="-110" width="150" height="110" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                        f'<path d="M-25 -66 L15 -84 L55 -66 L15 -48 Z" fill="{NAVY}"/><path d="M-5 -58 v18 q20 10 40 0 v-18" fill="none" stroke="{NAVY}" stroke-width="5"/>'
+                        f'<path d="M-40 -22 h110" stroke="{GREY}" stroke-width="7" stroke-linecap="round"/>'))
+
+
+def clipboard(x, y, s=1.0, rot=0, **_):
+    """A clipboard with a form (blank lines and tick boxes): taking notes in an interview. (x, y) = centre."""
+    return _g(x, y, s, (f'<rect x="-90" y="-120" width="180" height="240" rx="12" fill="#C79A5B" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<rect x="-72" y="-96" width="144" height="200" rx="4" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                        f'<rect x="-36" y="-132" width="72" height="30" rx="8" fill="{GREY}" stroke="{INK}" stroke-width="4"/>'
+                        + "".join(f'<rect x="-56" y="{yy - 9}" width="18" height="18" rx="3" fill="none" stroke="{INK}" stroke-width="3"/><path d="M-26 {yy} h74" stroke="{GREY}" stroke-width="6" stroke-linecap="round"/>' for yy in (-56, -12, 32, 76))
+                        + f'<path d="M-54 -56 l6 7 l12 -14" fill="none" stroke="{GREEN}" stroke-width="4" stroke-linecap="round"/>'), rot)
+
+
+def headcount(x, y, s=1.0, n=10, left=6, cols=5, **_):
+    """A staff headcount diagram (no words): n small figures in rows; the last `left` are coral and dashed, walking out past an arrow (the share of staff who leave). Under it a bar split in the same share. (x, y) = centre."""
+    out = ""; stay = int(n) - int(left)
+    for k in range(int(n)):
+        cx = -250 + (k % cols) * 110; cy = -60 + (k // cols) * 150
+        leave = k >= stay
+        c, dash, op = (CORAL, ' stroke-dasharray="8 7"', 0.95) if leave else (LB, "", 1)
+        out += (f'<g opacity="{op}"><circle cx="{cx}" cy="{cy - 62}" r="24" fill="{PAPER if not leave else "#F8DEDB"}" stroke="{INK}" stroke-width="4"{dash}/>'
+                f'<path d="M{cx - 32} {cy + 30} V{cy - 4} Q{cx - 32} {cy - 32} {cx} {cy - 32} Q{cx + 32} {cy - 32} {cx + 32} {cy - 4} V{cy + 30} Z" fill="{c}" stroke="{INK}" stroke-width="4"{dash}/></g>')
+    out += (f'<path d="M296 -40 H366 M346 -62 L370 -40 L346 -18" fill="none" stroke="{CORAL}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>'
+            f'<path d="M296 110 H366 M346 88 L370 110 L346 132" fill="none" stroke="{CORAL}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>')
+    bw = 560; fx = -280 + bw * stay / int(n)
+    out += (f'<rect x="-280" y="190" width="{bw}" height="44" rx="10" fill="{LB}" stroke="{INK}" stroke-width="4"/>'
+            f'<rect x="{fx:.0f}" y="190" width="{280 - fx:.0f}" height="44" rx="10" fill="{CORAL}" stroke="{INK}" stroke-width="4"/>')
+    return _g(x, y, s, out)
+
+
+def _tw(t, fs, k=0.58):
+    """Rough rendered width of Inter 800-900 text at font size fs (used to fit lines into boxes)."""
+    return len(str(t)) * fs * k
+
+
+def flow_box(x, y, s=1.0, num=1, title="Step", sub="", w=860, h=150, ghost=False, **_):
+    """Summary-diagram box (the one place with words in the art, for a screenshot-able recap): a hand-drawn rounded box with a blue step number, a bold title and a short key point. (x, y) = centre. w, h: size; the number, title and key point grow with h (h 150 = title 58 px) and shrink to fit w. Pops in with "at": "chunk:N". ghost=True: a grey dashed placeholder with only the number, put under a box that pops in later so the whole diagram fills the frame from the first summary beat."""
+    import html as _h
+    k = h / 150.0; x0 = -w / 2; tx = x0 + 146 * k; room = w / 2 - tx - 24
+    if ghost:
+        return _g(x, y, s, (f'<rect x="{x0:.0f}" y="{-h / 2:.0f}" width="{w:.0f}" height="{h:.0f}" rx="24" fill="none" stroke="{GREY}" stroke-width="5" stroke-dasharray="18 14"/>'
+                            f'<circle cx="{x0 + 74 * k:.0f}" cy="0" r="{44 * k:.0f}" fill="none" stroke="{GREY}" stroke-width="5" stroke-dasharray="12 10"/>'
+                            f'<text x="{x0 + 74 * k:.0f}" y="{19 * k:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{54 * k:.0f}" fill="{GREY}">{int(num)}</text>'))
+    ft = min(58 * k, room / max(1, len(title) * 0.62)); fsb = min(46 * k, room / max(1, len(sub) * 0.62)) if sub else 0   # 0.62: digits and $ run wide (w46)
+    out = (f'<path d="M{x0 + 22:.0f} {-h / 2 + 2:.0f} H{w / 2 - 20:.0f} Q{w / 2 - 1:.0f} {-h / 2:.0f} {w / 2:.0f} {-h / 2 + 22:.0f} V{h / 2 - 20:.0f} Q{w / 2 + 1:.0f} {h / 2:.0f} {w / 2 - 22:.0f} {h / 2 - 1:.0f} H{x0 + 20:.0f} Q{x0 + 1:.0f} {h / 2 + 1:.0f} {x0:.0f} {h / 2 - 22:.0f} V{-h / 2 + 20:.0f} Q{x0 - 1:.0f} {-h / 2 + 1:.0f} {x0 + 22:.0f} {-h / 2 + 2:.0f} Z" fill="{WHITE}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+           f'<circle cx="{x0 + 74 * k:.0f}" cy="0" r="{44 * k:.0f}" fill="{BLUE}" stroke="{INK}" stroke-width="5"/>'
+           f'<text x="{x0 + 74 * k:.0f}" y="{19 * k:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{54 * k:.0f}" fill="{WHITE}">{int(num)}</text>'
+           f'<text x="{tx:.0f}" y="{(-0.1 * h + 9) if sub else (0.35 * ft):.0f}" font-family="Inter,sans-serif" font-weight="900" font-size="{ft:.0f}" fill="{INK}">{_h.escape(title)}</text>')
+    if sub:
+        out += f'<text x="{tx + 2:.0f}" y="{50 * k - (46 * k - fsb) * 0.4:.0f}" font-family="Inter,sans-serif" font-weight="800" font-size="{fsb:.0f}" fill="#3B4A63">{_h.escape(sub)}</text>'
+    return _g(x, y, s, out)
+
+
+def flow_box_box(x, y, s=1.0, w=860, h=150, **_):
+    return [x - w / 2 * s - 4, y - h / 2 * s - 4, w * s + 8, h * s + 8]
+
+
+def _wobble_line(x0, x1, y, amp=4):
+    """A hand-drawn horizontal line (a fraction bar) from x0 to x1 at y, with a slight wave."""
+    m = (x0 + x1) / 2
+    return f'M{x0:.0f} {y + 2:.0f} Q{(x0 + m) / 2:.0f} {y - amp:.0f} {m:.0f} {y:.0f} T{x1:.0f} {y - 1:.0f}'
+
+
+def equation(x, y, s=1.0, mode="formula", lhs="", num="", den="", result="", note="", w=880, terms=None, **_):
+    """Hand-drawn equation (how-to reels, 1 Nov 2026), drawn in the art so it boils and draws on like the rest. (x, y) = centre.
+    mode "formula": `lhs =` on top, then `num` over a hand-drawn fraction bar over `den` (den "" = one line: lhs = num).
+    mode "numbers": the real numbers, `num` over `den` (or one line when den is "") then `= result` with a yellow
+    highlighter swipe behind the result, and an optional small `note` under it (e.g. "in one year"; state the period).
+    Text shrinks to fit width w. Put the numbers row below the formula and pop it in with "at": "chunk:N".
+    terms (formula mode, w46 batch): a list of added terms drawn one per line under "lhs =" ("Materials", "+ Labor",
+    "+ Overhead rate × hours"), for a sum that is too long for one line; num and den are then ignored.
+    In "numbers" mode, terms (["$1,200", "+ $600", "+ $600"]) stack the story's numbers over a sum line and "= result"."""
+    import html as _h
+    e = _h.escape; out = ""
+    T = lambda tx, xx, yy, fs, col=INK, wt=900, anc="middle": f'<text x="{xx:.0f}" y="{yy:.0f}" text-anchor="{anc}" font-family="Inter,sans-serif" font-weight="{wt}" font-size="{fs:.0f}" fill="{col}">{e(str(tx))}</text>'
+    if mode == "formula" and terms:
+        f1 = min(100, w / max(1, (len(lhs) + 2) * 0.6)); f2 = min(84, w / max(1, max(len(t) for t in terms) * 0.6)); n = len(terms)
+        y0 = -(f1 + n * f2 * 1.2) / 2 + f1 * 0.8
+        out += T(f"{lhs} =", 0, y0, f1)
+        for k, tm in enumerate(terms):
+            out += T(tm, 0, y0 + f1 * 0.45 + (k + 1) * f2 * 1.2, f2, BLUE)
+        return _g(x, y, s, out)
+    if mode == "formula":
+        f1 = min(100, w / max(1, (len(lhs) + 2) * 0.6)); f2 = min(84, w / max(1, max(len(num), len(den)) * 0.6))
+        if den:
+            out += T(f"{lhs} =", 0, -f2 * 1.25, f1)
+            bw = max(_tw(num, f2), _tw(den, f2)) + 50
+            out += T(num, 0, f2 * 0.62, f2, BLUE)
+            out += f'<path d="{_wobble_line(-bw / 2, bw / 2, f2 * 1.0)}" fill="none" stroke="{INK}" stroke-width="8" stroke-linecap="round"/>'
+            out += T(den, 0, f2 * 2.05, f2, BLUE)
+        else:
+            out += T(f"{lhs} = {num}", 0, f1 * 0.35, min(f1, w / max(1, (len(lhs) + len(num) + 3) * 0.6)))
+        return _g(x, y, s, out)
+    if terms:   # numbers mode with terms (w46 batch): the story's numbers one per line, a hand-drawn sum line, "= result" highlighted
+        n = len(terms); fs = min(104, w / max(1, max(len(t) for t in list(terms) + ["= " + result]) * 0.62))
+        y0 = -((n + 1) * fs * 1.12 + fs * 0.3) / 2 + fs * 0.85
+        for k, tm in enumerate(terms):
+            out += T(tm, 0, y0 + k * fs * 1.12, fs)
+        ly = y0 + (n - 1) * fs * 1.12 + fs * 0.32; hw = max(_tw(t, fs) for t in terms) / 2 + 30
+        out += f'<path d="{_wobble_line(-hw, hw, ly, 5)}" fill="none" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+        ry = ly + fs * 1.05; rw = _tw("= " + result, fs * 1.1, 0.66)
+        out += f'<path d="M{-rw / 2 + _tw("= ", fs) - 6:.0f} {ry - fs * 0.3:.0f} L{rw / 2 + 6:.0f} {ry - fs * 0.34:.0f}" fill="none" stroke="#FFD45C" stroke-width="{fs * 0.62:.0f}" stroke-linecap="round" opacity="0.9"/>'
+        out += T("= " + result, 0, ry, fs * 1.1)
+        if note: out += T(note, 0, ry + fs * 0.75, fs * 0.42, "#3B4A63", 800)
+        return _g(x, y, s, out)
+    # numbers
+    fs = 180
+    for _ in range(6):   # shrink until the row fits w
+        fw = max(_tw(num, fs), _tw(den, fs)) if den else _tw(num, fs)
+        gap = 0.3 * fs; tot = fw + gap + _tw("=", fs) + gap + _tw(result, fs * 1.1, 0.66)
+        if tot <= w: break
+        fs *= w / tot
+    x0 = -tot / 2; cx = x0 + fw / 2
+    if den:
+        out += T(num, cx, -fs * 0.25, fs)
+        out += f'<path d="{_wobble_line(x0 - 10, x0 + fw + 10, fs * 0.02, 5)}" fill="none" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>'
+        out += T(den, cx, fs * 0.98, fs)
+        ey = fs * 0.36
+    else:
+        out += T(num, cx, fs * 0.36, fs); ey = fs * 0.36
+    ex = x0 + fw + gap + _tw("=", fs) / 2
+    out += T("=", ex, ey, fs)
+    rx = ex + _tw("=", fs) / 2 + gap; rw = _tw(result, fs * 1.1, 0.66)
+    out += f'<path d="M{rx - 6:.0f} {ey - fs * 0.3:.0f} L{rx + rw + 6:.0f} {ey - fs * 0.34:.0f}" fill="none" stroke="#FFD45C" stroke-width="{fs * 0.62:.0f}" stroke-linecap="round" opacity="0.9"/>'
+    out += T(result, rx, ey, fs * 1.1, INK, 900, "start")
+    if note:
+        out += T(note, rx + rw / 2, ey + fs * 0.85, fs * 0.42, "#3B4A63", 800)
+    return _g(x, y, s, out)
+
+
+def equation_box(x, y, s=1.0, mode="formula", den="", w=880, terms=None, **_):
+    h = (100 + 100 * len(terms) if terms else 400 if den else 150) if mode == "formula" else (130 * (len(terms) + 1) + 60 if terms else 480 if den else 260)
+    return [x - w / 2 * s, y - h / 2 * s, w * s, h * s]
+
+
+def flow_arrow(x, y, s=1.0, dy=50, **_):
+    """A short hand-drawn down arrow joining two summary boxes, from (x, y) down by dy."""
+    return (f'<path d="M{_f(x)} {_f(y)} q4 {_f(dy / 2)} 0 {_f(dy)}" fill="none" stroke="{BLUE}" stroke-width="{9 * s}" stroke-linecap="round"/>'
+            f'<path d="M{_f(x - 16 * s)} {_f(y + dy - 18 * s)} L{_f(x)} {_f(y + dy + 2)} L{_f(x + 16 * s)} {_f(y + dy - 18 * s)}" fill="none" stroke="{BLUE}" stroke-width="{9 * s}" stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+def flow_arrow_box(x, y, s=1.0, dy=50, **_):
+    return [x - 20, y - 4, 40, dy + 10]
+
+
+# ---------------------------------------------------------------- how-to reel props, week 46 batch (1 Nov 2026): brewery, bike shop, marketplace, payment app, charity, gas stations
+STEEL = "#C9D1DC"; AMBER = "#E7A93B"; FOAM = "#FFF7E6"; BRICK = "#C8665A"
+
+
+def brew_tanks(x, y, s=1.0, n=3, new=False, **_):
+    """Craft brewery: n steel conical fermenting tanks on legs, joined by a pipe (no logos). new=True adds a dashed outline of one more tank on the right (a second brewhouse still to be built). (x, y) = centre of the floor line under them."""
+    n = int(n); k = n + (1 if new else 0); gap = 180; x0 = -(k - 1) * gap / 2; out = ""
+    out += f'<path d="M{x0 - 40:.0f} -300 H{x0 + (n - 1) * gap + 40:.0f}" stroke="{INK}" stroke-width="10" stroke-linecap="round"/>'
+    for i in range(k):
+        cx = x0 + i * gap; ghost = i >= n
+        st = f'stroke="{GREY if ghost else INK}" stroke-width="{5 if ghost else SW}"' + (' stroke-dasharray="16 12"' if ghost else "")
+        fill = "none" if ghost else STEEL
+        out += (f'<path d="M{cx - 52:.0f} -128 L{cx - 62:.0f} 0 M{cx + 52:.0f} -128 L{cx + 62:.0f} 0 M{cx - 58:.0f} -50 H{cx + 58:.0f}" {st} fill="none" stroke-linecap="round"/>'
+                f'<path d="M{cx - 70:.0f} -390 Q{cx - 70:.0f} -440 {cx:.0f} -440 Q{cx + 70:.0f} -440 {cx + 70:.0f} -390 V-150 L{cx:.0f} -60 L{cx - 70:.0f} -150 Z" fill="{fill}" {st} stroke-linejoin="round"/>')
+        if not ghost:
+            out += (f'<path d="M{cx - 44:.0f} -400 V-170" stroke="{WHITE}" stroke-width="10" stroke-linecap="round" opacity="0.8"/>'
+                    f'<circle cx="{cx + 30:.0f}" cy="-250" r="16" fill="{WHITE}" stroke="{INK}" stroke-width="4"/><path d="M{cx + 30:.0f} -250 l8 -8" stroke="{INK}" stroke-width="3"/>'
+                    f'<path d="M{cx:.0f} -60 V-38" stroke="{INK}" stroke-width="8"/><circle cx="{cx:.0f}" cy="-36" r="9" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>')
+    return _g(x, y, s, out)
+
+
+def brew_tanks_box(x, y, s=1.0, n=3, new=False, **_):
+    k = int(n) + (1 if new else 0); W = (k - 1) * 180 + 160
+    return [x - W / 2 * s, y - 445 * s, W * s, 450 * s]
+
+
+def pint(x, y, s=1.0, **_):
+    """A glass of beer with a foam head (no label). (x, y) = centre."""
+    return _g(x, y, s, (f'<path d="M-52 -78 L-42 92 Q-40 104 -28 104 H28 Q40 104 42 92 L52 -78 Z" fill="{AMBER}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+                        f'<path d="M-58 -70 Q-64 -112 -30 -104 Q-14 -128 10 -110 Q36 -126 50 -100 Q70 -96 58 -70 Z" fill="{FOAM}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                        f'<path d="M-30 -40 V70" stroke="{WHITE}" stroke-width="9" stroke-linecap="round" opacity="0.6"/>'
+                        f'<circle cx="14" cy="10" r="5" fill="{FOAM}"/><circle cx="24" cy="50" r="4" fill="{FOAM}"/><circle cx="4" cy="-30" r="4" fill="{FOAM}"/>'))
+
+
+def share_pie(x, y, s=1.0, share=1.0, r=200, mine="", other="", **_):
+    """Ownership pie: the founder's share in blue, a new owner's slice in gold (share = founder fraction 0-1). r = radius (a bigger pie after new money). mine / other: short labels in the slices (e.g. "80%", "20%"), optional. (x, y) = centre."""
+    import html as _h
+    share = max(0.0, min(1.0, float(share))); out = ""
+    if share >= 0.999:
+        out += f'<circle cx="0" cy="0" r="{r}" fill="{BLUE}" stroke="{INK}" stroke-width="{SW}"/>'
+    else:
+        a = 2 * math.pi * (1 - share); ex, ey = r * math.sin(a), -r * math.cos(a)
+        out += (f'<circle cx="0" cy="0" r="{r}" fill="{BLUE}" stroke="{INK}" stroke-width="{SW}"/>'
+                f'<path d="M0 0 L0 {-r} A{r} {r} 0 {1 if a > math.pi else 0} 1 {ex:.1f} {ey:.1f} Z" fill="{GOLD}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>')
+    fs = r * 0.36
+    T = lambda t, xx, yy, col: (lambda f: f'<text x="{xx:.0f}" y="{yy - fs * 0.35 + f * 0.35:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{f:.0f}" fill="{col}">{_h.escape(t)}</text>')(fs * min(1.0, 3.2 / max(3.2, len(t))))
+    if mine:
+        ma = math.pi * (1 - share) + math.pi * share if share < 0.999 else math.pi
+        ma = 2 * math.pi * (1 - share) + math.pi * share
+        out += T(mine, 0.5 * r * math.sin(ma), -0.5 * r * math.cos(ma) + fs * 0.35, WHITE)
+    if other and share < 0.999:
+        oa = math.pi * (1 - share)
+        out += T(other, 0.62 * r * math.sin(oa), -0.62 * r * math.cos(oa) + fs * 0.35, INK)
+    return _g(x, y, s, out)
+
+
+def share_pie_box(x, y, s=1.0, r=200, **_):
+    return [x - (r + 6) * s, y - (r + 6) * s, (2 * r + 12) * s, (2 * r + 12) * s]
+
+
+def bike(x, y, s=1.0, frame_only=False, **_):
+    """A custom bicycle, side view, blue frame. frame_only=True: the bare frame with dashed wheels (parts still to come). (x, y) = centre of the ground under the wheels."""
+    wst = f'stroke="{GREY}" stroke-width="6" stroke-dasharray="16 12"' if frame_only else f'stroke="{INK}" stroke-width="{SW}"'
+    out = ""
+    for cx in (-190, 190):
+        out += f'<circle cx="{cx}" cy="-120" r="118" fill="none" {wst}/>'
+        if not frame_only:
+            out += (f'<circle cx="{cx}" cy="-120" r="100" fill="none" stroke="{GREY}" stroke-width="3"/>'
+                    + "".join(f'<path d="M{cx} -120 L{cx + 100 * math.cos(a):.0f} {-120 + 100 * math.sin(a):.0f}" stroke="{GREY}" stroke-width="2.5"/>' for a in [j * math.pi / 6 for j in range(12)])
+                    + f'<circle cx="{cx}" cy="-120" r="12" fill="{INK}"/>')
+    # frame: rear hub (-190,-120), bottom bracket (-20,-110), seat top (-70,-300), head top (140,-300), head bottom (150,-250)
+    out += (f'<path d="M-190 -120 L-20 -110 L-70 -300 Z M-70 -300 L140 -290 L-20 -110 M140 -290 L190 -120" fill="none" stroke="{BLUE}" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'<path d="M-190 -120 L-20 -110 L-70 -300 Z M-70 -300 L140 -290 L-20 -110 M140 -290 L190 -120" fill="none" stroke="{INK}" stroke-width="3" stroke-linejoin="round" opacity="0.6"/>')
+    if not frame_only:
+        out += (f'<path d="M-70 -300 L-80 -335" stroke="{INK}" stroke-width="8"/><path d="M-125 -345 H-30 Q-20 -345 -30 -332 H-120 Z" fill="{NAVY}" stroke="{INK}" stroke-width="4"/>'
+                f'<path d="M140 -290 L130 -350 Q150 -372 190 -360" fill="none" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+                f'<circle cx="-20" cy="-110" r="26" fill="none" stroke="{INK}" stroke-width="6"/><path d="M-20 -110 L10 -60 M-6 -60 H26" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+                f'<path d="M-20 -110 Q-110 -90 -190 -120" fill="none" stroke="{INK}" stroke-width="3" stroke-dasharray="6 5"/>')
+    return _g(x, y, s, out)
+
+
+def bike_box(x, y, s=1.0, **_):
+    return [x - 312 * s, y - 375 * s, 624 * s, 377 * s]
+
+
+def tool_wall(x, y, s=1.0, **_):
+    """Workshop pegboard with hanging tools (wrench, hammer, pliers, tape) and a hanging lamp: the shop's overhead (rent, tools and power). No text. (x, y) = centre."""
+    holes = "".join(f'<circle cx="{xx}" cy="{yy}" r="4" fill="{INK}" opacity="0.25"/>' for xx in range(-190, 200, 40) for yy in range(-130, 140, 40))
+    return _g(x, y, s, (f'<rect x="-220" y="-160" width="440" height="320" rx="12" fill="#E9D3AE" stroke="{INK}" stroke-width="{SW}"/>' + holes +
+                        f'<path d="M-150 -100 V60" stroke="{GREY}" stroke-width="18" stroke-linecap="round"/><path d="M-170 -110 a22 22 0 1 1 40 0" fill="none" stroke="{GREY}" stroke-width="16"/><path d="M-150 -100 V60" stroke="{INK}" stroke-width="3" opacity="0.5"/>'
+                        f'<path d="M-60 -90 V80" stroke="#B07A3E" stroke-width="16" stroke-linecap="round"/><rect x="-100" y="-118" width="80" height="40" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="4"/>'
+                        f'<path d="M40 -100 L20 60 M80 -100 L100 60" stroke="{CORAL}" stroke-width="14" stroke-linecap="round"/><path d="M40 -100 Q60 -150 80 -100" fill="none" stroke="{GREY}" stroke-width="12"/>'
+                        f'<circle cx="160" cy="-40" r="42" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><circle cx="160" cy="-40" r="16" fill="#E9D3AE" stroke="{INK}" stroke-width="4"/>'
+                        f'<path d="M160 -220 V-185" stroke="{INK}" stroke-width="4"/><path d="M130 -160 Q160 -200 190 -160 Z" fill="{NAVY}" stroke="{INK}" stroke-width="4"/>'
+                        f'<circle cx="160" cy="-150" r="14" fill="#FFE49A" stroke="{INK}" stroke-width="3"/>'))
+
+
+def parcel(x, y, s=1.0, n=3, ret=False, **_):
+    """A stack of n cardboard shipping boxes with tape (online orders). ret=True adds a coral U-turn arrow (a return coming back). (x, y) = centre of the bottom of the stack."""
+    out = ""
+    for k in range(int(n)):
+        w = 220 - k * 30; hh = 120; yy = -hh * (k + 1); dx = (k % 2) * 18 - 9
+        out += (f'<rect x="{-w / 2 + dx:.0f}" y="{yy}" width="{w}" height="{hh}" rx="6" fill="#D9A866" stroke="{INK}" stroke-width="{SW}"/>'
+                f'<rect x="{-18 + dx:.0f}" y="{yy}" width="36" height="{hh}" fill="#F3D9A6" stroke="{INK}" stroke-width="3"/>'
+                f'<rect x="{w / 2 - 70 + dx:.0f}" y="{yy + 70}" width="44" height="30" rx="3" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>')
+    if ret:
+        out += (f'<path d="M150 -300 Q260 -300 260 -190 Q260 -80 160 -80" fill="none" stroke="{CORAL}" stroke-width="16" stroke-linecap="round"/>'
+                f'<path d="M190 -112 L150 -80 L190 -46" fill="none" stroke="{CORAL}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>')
+    return _g(x, y, s, out)
+
+
+def parcel_box(x, y, s=1.0, n=3, ret=False, **_):
+    hh = 120 * int(n); W = 290 if ret else 140
+    return [x - 130 * s, y - hh * s, (130 + W) * s, hh * s]
+
+
+def network(x, y, s=1.0, n=6, r=220, color="blue", **_):
+    """A network of n users (small people icons on a circle) with a line between every pair: the possible connections, n x (n - 1) / 2. color: blue or grey (a smaller rival). (x, y) = centre."""
+    n = int(n); c = BLUE if color == "blue" else GREY; pts = [(r * math.sin(2 * math.pi * i / n), -r * math.cos(2 * math.pi * i / n)) for i in range(n)]
+    lw = 5 if n <= 6 else 3 if n <= 12 else 1.6; op = 0.8 if n <= 6 else 0.55
+    out = "".join(f'<path d="M{a[0]:.0f} {a[1]:.0f} L{b[0]:.0f} {b[1]:.0f}" stroke="{c}" stroke-width="{lw}" opacity="{op}"/>' for i, a in enumerate(pts) for b in pts[i + 1:])
+    hr = max(10, min(34, 1.1 * r / max(n, 3)))
+    for px, py in pts:
+        out += (f'<path d="M{px - hr * 1.2:.0f} {py + hr * 1.5:.0f} Q{px:.0f} {py - hr * 0.2:.0f} {px + hr * 1.2:.0f} {py + hr * 1.5:.0f} Z" fill="{LB if color == "blue" else "#DDE1E7"}" stroke="{INK}" stroke-width="{max(2.5, hr / 7):.1f}"/>'
+                f'<circle cx="{px:.0f}" cy="{py - hr * 0.2:.0f}" r="{hr * 0.62:.0f}" fill="{PAPER}" stroke="{INK}" stroke-width="{max(2.5, hr / 7):.1f}"/>')
+    return _g(x, y, s, out)
+
+
+def network_box(x, y, s=1.0, n=6, r=220, **_):
+    hr = max(10, min(34, 1.1 * r / max(int(n), 3))); R = r + hr * 1.3
+    return [x - R * s, y - (r + hr) * s, 2 * R * s, (2 * r + hr * 2.6) * s]
+
+
+def school(x, y, s=1.0, roof="leak", **_):
+    """A small school building with a pitched roof (charity project). roof: leak (a hole and rain drops coming through), build (scaffolding and a dashed new roof), new (a finished red roof with a green tick). (x, y) = centre of the ground under it."""
+    out = (f'<rect x="-230" y="-300" width="460" height="300" fill="#F4ECDD" stroke="{INK}" stroke-width="{SW}"/>'
+           + "".join(f'<rect x="{xx}" y="-230" width="80" height="80" rx="6" fill="{SKY}" stroke="{INK}" stroke-width="4"/><path d="M{xx + 40} -230 V-150 M{xx} -190 H{xx + 80}" stroke="{INK}" stroke-width="3"/>' for xx in (-190, 110))
+           + f'<path d="M-45 0 V-130 Q0 -170 45 -130 V0" fill="{BLUE}" stroke="{INK}" stroke-width="5"/><circle cx="25" cy="-60" r="5" fill="{GOLD}"/>'
+           f'<path d="M-30 -310 V-345 M-30 -345 L20 -335 L-30 -325" fill="{CORAL}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>')
+    tri = "M-270 -300 L0 -470 L270 -300 Z"
+    if roof == "new":
+        out += (f'<path d="{tri}" fill="{BRICK}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+                + "".join(f'<path d="M{-270 + k * 54} -300 L{-270 + k * 54 + (0 - (-270 + k * 54)) * 0.35:.0f} -360" stroke="{INK}" stroke-width="3" opacity="0.35"/>' for k in range(1, 10))
+                + f'<circle cx="230" cy="-430" r="46" fill="{GREEN}" stroke="{INK}" stroke-width="5"/><path d="M208 -430 l16 18 l30 -36" fill="none" stroke="{WHITE}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>')
+    elif roof == "build":
+        out += (f'<path d="{tri}" fill="none" stroke="{GREY}" stroke-width="6" stroke-dasharray="18 12" stroke-linejoin="round"/>'
+                f'<path d="M-300 0 V-330 M-250 0 V-330 M250 0 V-330 M300 0 V-330 M-300 -110 H-250 M-300 -220 H-250 M250 -110 H300 M250 -220 H300 M-300 -330 H300" stroke="{GOLD}" stroke-width="8" stroke-linecap="round"/>'
+                f'<path d="M-270 -300 L-90 -413" stroke="{BRICK}" stroke-width="22" stroke-linecap="round"/>')
+    else:
+        out += (f'<path d="{tri}" fill="{BRICK}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+                f'<path d="M30 -420 L70 -400 L50 -370 L90 -350 L40 -340 Z" fill="{INK}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                + "".join(f'<path d="M{xx} {yy} q-9 16 0 22 q9 -6 0 -22 Z" fill="{BLUE}" stroke="{INK}" stroke-width="2.5"/>' for xx, yy in ((60, -300), (40, -250), (75, -220), (50, -180))))
+    return _g(x, y, s, out)
+
+
+def school_box(x, y, s=1.0, **_):
+    return [x - 305 * s, y - 478 * s, 610 * s, 480 * s]
+
+
+def money_jar(x, y, s=1.0, n=4, lock=False, tag="", **_):
+    """A glass jar of n banknotes and coins. lock=True: a padlock and a ribbon on the lid (money the donor restricted to one use). tag: a short label on a hanging tag (e.g. "Roof"), optional. (x, y) = centre."""
+    import html as _h
+    out = (f'<path d="M-100 -110 Q-110 -110 -110 -90 V120 Q-110 150 -80 150 H80 Q110 150 110 120 V-90 Q110 -110 100 -110 Z" fill="{SKY}" fill-opacity="0.7" stroke="{INK}" stroke-width="{SW}"/>')
+    for k in range(int(n)):
+        yy = 120 - k * 40
+        out += f'<rect x="{-70 + (k % 2) * 16}" y="{yy - 26}" width="124" height="44" rx="6" fill="{GREEN}" stroke="{INK}" stroke-width="4" transform="rotate({(-6 if k % 2 else 5)} 0 {yy})"/>'
+    out += (f'<ellipse cx="40" cy="128" rx="28" ry="10" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+            f'<path d="M-80 -90 V100" stroke="{WHITE}" stroke-width="8" stroke-linecap="round" opacity="0.7"/>'
+            f'<rect x="-116" y="-150" width="232" height="44" rx="10" fill="{NAVY if lock else GREY}" stroke="{INK}" stroke-width="{SW}"/>')
+    if lock:
+        out += (f'<path d="M-10 -128 V60 M10 -128 V60" stroke="{CORAL}" stroke-width="10" opacity="0.9"/>'
+                f'<path d="M-26 -10 V-36 a26 26 0 0 1 52 0 V-10" fill="none" stroke="{INK}" stroke-width="9"/>'
+                f'<rect x="-40" y="-14" width="80" height="64" rx="10" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><circle cx="0" cy="12" r="8" fill="{INK}"/>')
+    if tag:
+        out += (f'<path d="M100 -128 Q150 -110 150 -60" fill="none" stroke="{INK}" stroke-width="3"/>'
+                f'<rect x="110" y="-60" width="{max(80, len(tag) * 24 + 30)}" height="56" rx="8" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                f'<text x="{110 + max(80, len(tag) * 24 + 30) / 2:.0f}" y="-20" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="34" fill="{INK}">{_h.escape(tag)}</text>')
+    return _g(x, y, s, out)
+
+
+def money_jar_box(x, y, s=1.0, tag="", **_):
+    W = 232 + (max(80, len(tag) * 24 + 30) + 2 if tag else 0)
+    return [x - 118 * s, y - 152 * s, W * s, 305 * s]
+
+
+def gas_station(x, y, s=1.0, price="", color="blue", **_):
+    """A small gas station (no brand): a canopy on two posts over one pump, and a pole sign with the price per gallon (price, e.g. "$4.20"; the one number shown in the art). color: blue or coral canopy (two rival stations). (x, y) = centre of the ground under it."""
+    import html as _h
+    c = BLUE if color == "blue" else CORAL
+    out = (f'<rect x="-250" y="-470" width="440" height="60" rx="10" fill="{c}" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<path d="M-250 -420 H190" stroke="{WHITE}" stroke-width="6" opacity="0.7"/>'
+           f'<path d="M-200 -410 V0 M140 -410 V0" stroke="{INK}" stroke-width="14" stroke-linecap="round"/>'
+           f'<rect x="-80" y="-230" width="110" height="230" rx="12" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<rect x="-62" y="-208" width="74" height="50" rx="6" fill="#DCEFD8" stroke="{INK}" stroke-width="4"/>'
+           f'<path d="M30 -150 Q70 -150 70 -100 V-40 Q70 -20 90 -20" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+           f'<rect x="-60" y="-130" width="70" height="20" rx="4" fill="{c}" stroke="{INK}" stroke-width="3"/>'
+           f'<path d="M260 0 V-300" stroke="{INK}" stroke-width="12" stroke-linecap="round"/>'
+           f'<rect x="180" y="-440" width="170" height="150" rx="14" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<rect x="180" y="-440" width="170" height="40" rx="12" fill="{c}" stroke="{INK}" stroke-width="5"/>'
+           f'<path d="M248 -428 q17 -0 17 14 q0 10 -17 10 q-17 0 -17 -10 q0 -14 17 -14 z" fill="{WHITE}" opacity="0.9"/>')
+    if price:
+        out += f'<text x="265" y="-322" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{54 if len(price) <= 5 else 44}" fill="{INK}">{_h.escape(price)}</text>'
+    return _g(x, y, s, out)
+
+
+def gas_station_box(x, y, s=1.0, **_):
+    return [x - 256 * s, y - 476 * s, 612 * s, 480 * s]
+
+
+def payoff_grid(x, y, s=1.0, w=860, ch=230, circle=True, title="Profit a day", a="Station A", b="Station B", cells=None, **_):
+    """Game theory summary picture (the one place with words in the art): a hand-drawn 2 x 2 payoff grid. Rows are A's price (High, Low), columns B's price (High, Low); ch = cell height (230; 300 fills a full-frame scene); each cell shows A's profit (blue) and B's profit (coral). circle=True circles the both-low cell in red. cells: [[aHH, bHH], [aHL, bHL], [aLH, bLH], [aLL, bLL]] as strings. (x, y) = centre."""
+    import html as _h
+    e = _h.escape
+    cells = cells or [["$2,000", "$2,000"], ["$600", "$2,600"], ["$2,600", "$600"], ["$1,200", "$1,200"]]
+    lw = 220; cw = (w - lw) / 2; ch = float(ch); top = -330; gx = -w / 2 + lw
+    T = lambda t, xx, yy, fs, col=INK, wt=900, anc="middle": f'<text x="{xx:.0f}" y="{yy:.0f}" text-anchor="{anc}" font-family="Inter,sans-serif" font-weight="{wt}" font-size="{fs:.0f}" fill="{col}">{e(str(t))}</text>'
+    out = T(title, gx + cw, top - 92, 58)
+    out += T(f"{b}'s price", gx + cw, top - 32, 38, CORAL, 800) + T("High", gx + cw / 2, top + 18, 42, CORAL) + T("Low", gx + cw * 1.5, top + 18, 42, CORAL)
+    g0 = top + 40
+    out += f'<text transform="translate({-w / 2 + 30:.0f} {g0 + ch:.0f}) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="38" fill="{BLUE}">{e(a)}\'s price</text>'
+    out += T("High", -w / 2 + 140, g0 + ch / 2 + 14, 42, BLUE) + T("Low", -w / 2 + 140, g0 + ch * 1.5 + 14, 42, BLUE)
+    out += f'<rect x="{gx:.0f}" y="{g0:.0f}" width="{2 * cw:.0f}" height="{2 * ch:.0f}" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+    out += f'<path d="M{gx + cw:.0f} {g0:.0f} q4 {ch:.0f} 0 {2 * ch:.0f} M{gx:.0f} {g0 + ch:.0f} q{cw:.0f} -4 {2 * cw:.0f} 0" fill="none" stroke="{INK}" stroke-width="5"/>'
+    for i, (va, vb) in enumerate(cells):
+        r, c = divmod(i, 2); cx = gx + cw * (c + 0.5); cy = g0 + ch * (r + 0.5)
+        fs = min(64 * max(1.0, ch / 230), cw * 0.86 / max(1, max(len(va), len(vb)) * 0.66))
+        out += T(va, cx, cy - 8, fs, BLUE) + T(vb, cx, cy + fs + 4, fs, CORAL)
+    if circle:
+        cx = gx + cw * 1.5; cy = g0 + ch * 1.5 + 14; rx = cw * 0.44; ry = ch * 0.4
+        out += f'<path d="M{cx - rx:.0f} {cy - 10:.0f} Q{cx - rx:.0f} {cy - ry:.0f} {cx:.0f} {cy - ry:.0f} Q{cx + rx * 1.04:.0f} {cy - ry * 0.98:.0f} {cx + rx:.0f} {cy:.0f} Q{cx + rx * 0.98:.0f} {cy + ry:.0f} {cx:.0f} {cy + ry * 0.98:.0f} Q{cx - rx * 1.04:.0f} {cy + ry * 0.95:.0f} {cx - rx * 0.95:.0f} {cy - ry * 0.25:.0f}" fill="none" stroke="#D64545" stroke-width="9" stroke-linecap="round"/>'
+    return _g(x, y, s, out)
+
+
+def payoff_grid_box(x, y, s=1.0, w=860, ch=230, **_):
+    return [x - w / 2 * s, y - 430 * s, w * s, (140 + 2 * float(ch)) * s]
+
+
+BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "store", "none"]
 
 # name -> (draw function, box function or None = default box from size)
 PRESETS = {
     "ledger": (ledger, ledger_box), "person": (person, person_box), "people_group": (people_group, people_group_box),
     "phone": (phone, None), "laptop": (laptop, None), "bills": (bills, None), "coins": (coins, None),
     "calendar": (calendar, None), "invoice": (invoice, None), "chart": (chart, None), "coffee": (coffee, None),
-    "window": (window, None), "door": (door, None), "sofa": (sofa, None), "bed": (bed, None), "scale": (scale, scale_box),
+    "window": (window, None), "door": (door, door_box), "sofa": (sofa, None), "bed": (bed, None), "scale": (scale, scale_box),
     "pit": (pit, pit_box), "sun_arrow": (sun_arrow, None), "handshake": (handshake, None), "whiteboard": (whiteboard, None),
     "desk": (desk, desk_box), "school_desk": (school_desk, None), "ticket": (ticket, None), "thought": (thought, thought_box),
-    "speech": (speech, None), "building": (building, building_box), "clock": (clock, None), "umbrella": (umbrella, None),
+    "speech": (speech, speech_box), "building": (building, building_box), "clock": (clock, None), "umbrella": (umbrella, None),
     "books": (books, None), "blocks": (blocks, None), "price_tag": (price_tag, None), "funnel": (funnel, funnel_box), "envelope": (envelope, None),
     "arrow": (arrow, arrow_box), "cross": (cross, cross_box), "check": (check, None),
     "bubble": (bubble, bubble_box), "lamp": (lamp, None), "stat_card": (stat_card, None), "lightbulb": (lightbulb, None),
@@ -1201,6 +1704,12 @@ PRESETS = {
     "chip": (chip, chip_box), "swirl": (swirl, swirl_box),
     "backdrop": (backdrop, backdrop_box), "balance_sheet": (balance_sheet, None), "abc_tangle": (abc_tangle, None), "regression_guess": (regression_guess, None), "supply_shift": (supply_shift, None), "exam_sheet": (exam_sheet, exam_sheet_box), "cost_pools": (cost_pools, None), "scatter_plot": (scatter_plot, None),
     "pumpkin": (pumpkin, None), "candy_bowl": (candy_bowl, None), "ghost_kid": (ghost_kid, ghost_kid_box),
+    "name_board": (name_board, name_board_box), "clothes_rack": (clothes_rack, clothes_rack_box), "calculator": (calculator, None),
+    "job_ad": (job_ad, None), "manual": (manual, None), "clipboard": (clipboard, None), "headcount": (headcount, None),
+    "flow_box": (flow_box, flow_box_box), "flow_arrow": (flow_arrow, flow_arrow_box), "equation": (equation, equation_box),
+    "brew_tanks": (brew_tanks, brew_tanks_box), "pint": (pint, None), "share_pie": (share_pie, share_pie_box), "bike": (bike, bike_box),
+    "tool_wall": (tool_wall, None), "parcel": (parcel, parcel_box), "network": (network, network_box), "school": (school, school_box),
+    "money_jar": (money_jar, money_jar_box), "gas_station": (gas_station, gas_station_box), "payoff_grid": (payoff_grid, payoff_grid_box),
 }
 # half-sizes at s=1 for props that use the default box (centre +- these)
 HALF = {"pumpkin": (95, 100), "candy_bowl": (110, 85), "phone": (155, 285), "laptop": (235, 155), "bills": (95, 110), "coins": (50, 95), "calendar": (155, 185),
@@ -1212,7 +1721,8 @@ HALF = {"pumpkin": (95, 100), "candy_bowl": (110, 85), "phone": (155, 285), "lap
         "burger": (150, 105), "groceries_bag": (125, 250), "receipt": (95, 195),
         "code_screen": (290, 262), "chessboard": (210, 210), "cost_pools": (315, 255), "scatter_plot": (275, 205),
         "lamp": (230, 160), "stat_card": (235, 155), "lightbulb": (165, 165),
-        "balance_sheet": (362, 252), "abc_tangle": (332, 252), "regression_guess": (302, 232), "supply_shift": (322, 252)}
+        "calculator": (115, 155), "job_ad": (135, 190), "manual": (135, 165), "clipboard": (95, 140), "headcount": (380, 240),
+        "pint": (66, 132), "tool_wall": (225, 225), "balance_sheet": (362, 252), "abc_tangle": (332, 252), "regression_guess": (302, 232), "supply_shift": (322, 252)}
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 
@@ -1231,6 +1741,26 @@ def item_box(it):
     return [it["x"] - hw * s, it["y"] - hh * s, 2 * hw * s, 2 * hh * s]
 
 
+def summary_pointer(spec):
+    """How-to summary pointer (Hoang, 1 Nov 2026, opt-in): a scene with "pointer": true (or {"s", "outfit", "lanyard", "mood"})
+    gets a small Ledger left of the 4-box summary diagram who points at each real (non-ghost) flow_box while the voice names
+    it: one Ledger per box, placed so his pointing hand touches the box's left edge at mid-height, shown from that box's
+    "at" chunk until the next box's (pop "cut", so he steps box to box in sync with the voice). The boxes must leave him
+    room: flow_box w 700 centred at x 580 (left edge 230); he then stands in x 60-200, inside the safe area, off the text."""
+    items = list(spec.get("items", [])); pt = spec.get("pointer")
+    if not pt: return items
+    pt = pt if isinstance(pt, dict) else {}; ps = float(pt.get("s", 0.8))
+    boxes = [it for it in items if it.get("p") == "flow_box" and not it.get("ghost")]
+    for k, bx in enumerate(boxes):
+        left = bx["x"] - bx.get("w", 860) * bx.get("s", 1.0) / 2
+        led = {"p": "ledger", "id": f"ptr{k + 1}", "x": round(left - 107 * ps - 6), "y": round(bx["y"] + 88 * ps), "s": ps,
+               "outfit": pt.get("outfit", "suit"), "mood": pt.get("mood", "smile"), "arm": "point", "lanyard": bool(pt.get("lanyard", False))}
+        if k and bx.get("at"): led["at"] = bx["at"]; led["pop"] = "cut"
+        if k + 1 < len(boxes) and boxes[k + 1].get("at"): led["until"] = boxes[k + 1]["at"]
+        items.append(led)
+    return items
+
+
 def scene_body(spec):
     # items sit in <g class="content"> so the renderer can auto-fit the frame to the drawn subject (not the background)
     def _attrs(it):   # anim "wobble" (29 Oct 2026): the renderer sways the item +-amp degrees about its (x, y), hz times a second
@@ -1243,7 +1773,7 @@ def scene_body(spec):
         return a
     tint = spec.get("tint")   # {"color", "opacity"}: a wash over the whole scene (dim cool night, warm morning); drawn over the content
     tint_svg = f'<rect class="tint" x="-3000" y="-3000" width="7080" height="7840" fill="{tint["color"]}" fill-opacity="{tint.get("opacity", 0.3)}" stroke="none"/>' if tint else ""
-    items = spec.get("items", []); lit = [it for it in items if it.get("lit")]   # "lit": drawn above the tint (chat bubbles stay bright at night)
+    items = summary_pointer(spec); lit = [it for it in items if it.get("lit")]   # "lit": drawn above the tint (chat bubbles stay bright at night)
     return (bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in items if not it.get("lit")) + '</g>'
             + tint_svg + ('<g class="lit">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in lit) + '</g>' if lit else ""))
 

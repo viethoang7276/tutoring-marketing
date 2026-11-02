@@ -21,7 +21,7 @@ d = sys.argv[1]; T = json.load(open(f"{d}/timing.json")); B = json.load(open(f"{
 if len(T["beats"]) != len(B): sys.exit("REUSE_AUDIO: beat count changed; rebuild without REUSE_AUDIO")
 for t, b in zip(T["beats"], B):
     t.pop("cam", None)
-    for k in ("img", "focus", "cam"):
+    for k in ("img", "focus", "cam", "term", "keypoint", "equation", "footnote", "cta"):   # picture and end-card fields; voice timings stay
         if k in b: t[k] = b[k]
 json.dump(T, open(f"{d}/timing.json", "w"), indent=1)
 PYEOF
@@ -33,8 +33,9 @@ echo "== 5/7 scene data";    "$PY" "$HERE/make_scenes_json.py" "$W" "$W"
 echo "== 6/7 stills";        cd "$HERE"; [ -d node_modules ] || npm install --no-audit --no-fund >/dev/null
 TS=$("$PY" -c "import json;T=json.load(open('$W/timing.json'));print(','.join(str(round(min(b['end']-0.05, (b['chunks'][-1]['t']+0.45) if b.get('chunks') else b['start']+1.6),2)) for b in T['beats']))")
 rm -rf "$W/stills"; SCENES="$W/scenes.json" OUT="$W/stills" node render.js stills "$TS"
-[ "$STILLS_ONLY" = "1" ] && { "$PY" "$HERE/postcheck.py" "$W" "$SLUG" >/dev/null 2>&1; echo "STILLS_ONLY: stills and contact sheet only"; exit 0; }
+[ "$STILLS_ONLY" = "1" ] && { "$PY" "$HERE/postcheck.py" "$W" "$SLUG" >/dev/null 2>&1 || true; "$PY" "$HERE/framefill.py" "$W" || true; echo "STILLS_ONLY: stills and contact sheet only"; exit 0; }
 echo "== 7/7 render video";  SCENES="$W/scenes.json" ./build.sh "$W" "$SLUG"
 # poster: the first still by time (numeric sort, never by name), saved as <slug>-poster.jpg
 "$PY" -c "import glob,re;from PIL import Image;f=min(glob.glob('$W/stills/still-*.png'),key=lambda p:float(re.search(r'still-([\d.]+)\.png',p)[1]));Image.open(f).convert('RGB').resize((540,960)).save('$W/$SLUG-poster.jpg',quality=85);print('poster:','$W/$SLUG-poster.jpg','from',f.split('/')[-1])"
 "$PY" "$HERE/postcheck.py" "$W" "$SLUG"
+"$PY" "$HERE/framefill.py" "$W"   # frame-fill report; FAILs only for the full-frame layout (meta.layout "full")
