@@ -53,3 +53,22 @@ Offline, the same check runs on the mirror, for example:
 ```
 jq -r '.[] | select(.aliases | index("law of diminishing returns")) | .term' docs/content-workflow/concept-registry.json
 ```
+
+## New concepts go to the site (Hoang, 2 Nov 2026)
+
+Every new concept also appears on edlintics.com.
+
+- **A business term** goes to the glossary.
+  - When a concept is added here, send the tutoring-content (COO) session one row:
+    - term_text;
+    - the definition reviewed with 2+ sources;
+    - equation and example;
+    - the YouTube reel URL, if any.
+  - The COO decides between a new term, attaching the reel to an existing term, or a flag. The glossary wording wins. The meaning and the equation must match.
+- **Not a term** (a process or a story, such as a how-to topic): marketing prepares a blog post draft in the format tutoring-web gives.
+- Reel placement on term pages:
+  - the definition reel is the primary reel;
+  - the how-to reel is a secondary "see it applied" reel;
+  - list reels go on topic pages later;
+  - puzzle reels are never shown, so they can't give away practice answers.
+- Drafts only. Hoang approves before anything is published.
