@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="900" height="400">
+<g font-family="Inter, sans-serif">
+<text  x="60" y="76" font-size="28" font-weight="700" fill="#0d1523" text-anchor="start">Pay $29,000</text>
+<rect  x="60" y="90" width="540" height="70" rx="0" fill="#1f9e8f" stroke="#0d1523" stroke-width="3"/>
+<text  x="250" y="137" font-size="28" font-weight="700" fill="#ffffff" text-anchor="middle">taxed at 20%</text>
+<text  x="60" y="226" font-size="28" font-weight="700" fill="#0d1523" text-anchor="start">Pay $31,000</text>
+<rect  x="60" y="240" width="660" height="70" rx="0" fill="#1f9e8f" stroke="#0d1523" stroke-width="3"/>
+<rect  x="720" y="240" width="120" height="70" rx="0" fill="#f0b429" stroke="#0d1523" stroke-width="3"/>
+<text  x="250" y="287" font-size="28" font-weight="700" fill="#ffffff" text-anchor="middle">taxed at 20%</text>
+<text  x="780" y="287" font-size="30" font-weight="700" fill="#0d1523" text-anchor="middle">40%</text>
+<polygon  points="420,84 436,84 426,166 410,166" fill="#ffffff" />
+<polygon  points="420,234 436,234 426,316 410,316" fill="#ffffff" />
+<path  d="M718 52H722V66H718Z M718 76H722V90H718Z M718 100H722V114H718Z M718 124H722V138H718Z M718 148H722V162H718Z M718 172H722V186H718Z M718 196H722V210H718Z M718 220H722V234H718Z M718 244H722V258H718Z M718 268H722V282H718Z M718 292H722V306H718Z" fill="#5b6472" />
+<text  x="600" y="354" font-size="26" font-weight="500" fill="#5b6472" text-anchor="middle">$29,000</text>
+<text  x="720" y="354" font-size="26" font-weight="700" fill="#5b6472" text-anchor="middle">$30,000</text>
+<text  x="840" y="354" font-size="26" font-weight="500" fill="#5b6472" text-anchor="middle">$31,000</text>
+<text id="chg" x="60" y="394" font-size="30" font-weight="700" fill="#2960c7" text-anchor="start">Take-home pay change: ?</text>
+<text class="reveal-show" x="660" y="226" font-size="22" font-weight="700" fill="#0d1523" text-anchor="middle">$200 tax</text>
+<text class="reveal-show" x="790" y="226" font-size="22" font-weight="700" fill="#0d1523" text-anchor="middle">$400 tax</text>
+<rect class="reveal-show" x="600" y="240" width="120" height="70" rx="0" fill="#167f73" stroke="#0d1523" stroke-width="3"/>
+</g>
+</svg>

@@ -1,0 +1,77 @@
+{
+ "slug": "2026-11-08-1000",
+ "suffix": "-steps-demo",
+ "question": "Tax is 20% up to $30,000 and 40% above it. Maya's pay rises from $29,000 to $31,000. How does her *take-home pay* change?",
+ "diagram": "diagram.svg",
+ "options": [
+  "It falls",
+  "Up $1,200",
+  "Up $1,400"
+ ],
+ "answer": "C",
+ "prompt_text": "Pause and think, then comment your answer",
+ "prompt_say": "Pause and think before the timer ends.",
+ "countdown": {
+  "voice": 5,
+  "novoice": 6
+ },
+ "reveal": [
+  {
+   "sel": "#chg",
+   "text": "Take-home pay change: +$1,400"
+  }
+ ],
+ "explanation": [
+  {
+   "text": "Only the $1,000 above $30,000 is taxed at 40%",
+   "say": "Only the one thousand dollars above thirty thousand is taxed at forty percent."
+  },
+  {
+   "text": "She pays $600 more tax on a $2,000 raise, so she keeps *$1,400* more",
+   "say": "She pays six hundred dollars more tax on a two thousand dollar raise, so she keeps fourteen hundred dollars more."
+  },
+  {
+   "text": "A higher bracket taxes only the dollars inside it",
+   "style": "takeaway"
+  }
+ ],
+ "end_text": "Follow Edlintics to learn business concepts interactively",
+ "end_say": "Follow Edlintics to learn business concepts interactively.",
+ "pulse": "#chg",
+ "steps": [
+  {
+   "label": "At $29,000",
+   "text": "20% × $29,000 = $5,800 tax",
+   "say": "Twenty percent of twenty-nine thousand is fifty-eight hundred in tax."
+  },
+  {
+   "text": "$29,000 − $5,800 = $23,200",
+   "say": "So she keeps twenty-three thousand two hundred.",
+   "label": "She keeps"
+  },
+  {
+   "label": "At $31,000",
+   "text": "20% × $30,000 = $6,000",
+   "say": "At thirty-one thousand, the first thirty thousand is taxed at twenty percent. Six thousand."
+  },
+  {
+   "text": "40% × $1,000 = $400",
+   "say": "Only the last thousand is taxed at forty percent. Four hundred."
+  },
+  {
+   "text": "Tax: $6,000 + $400 = $6,400",
+   "say": "Total tax, sixty-four hundred."
+  },
+  {
+   "text": "$31,000 − $6,400 = $24,600",
+   "say": "So she keeps twenty-four thousand six hundred.",
+   "label": "She keeps"
+  },
+  {
+   "label": "The change",
+   "text": "$24,600 − $23,200 = *$1,400* more",
+   "say": "That is fourteen hundred dollars more.",
+   "hl": "#chg"
+  }
+ ]
+}

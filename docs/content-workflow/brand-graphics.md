@@ -66,4 +66,5 @@ The Canva folder **Edlintics · Brand graphics** (FAHYugebSqU) holds the generat
 | MAHZsGdRR8g | mascot | Ledger presenting with one hand out (transparent PNG; Uploads) | List reel cover pose | ledger, list, presenting, cover |
 | MAHZsKWCpgI | mascot | Ledger holding a small mic, other hand open (transparent PNG; Uploads) | Ledger talks cover pose | ledger, mic, talks, cover |
 | MAHZsLVhfoc | mascot | Ledger cheering with both arms up (transparent PNG; Uploads) | Highlighter reel cover pose | ledger, cheer, highlighter, cover |
+| (local, not in Canva) | mascot | Professor Ledger: black mortarboard with a gold tassel, round glasses, white wing collar and blue bow tie, pointing with a thin teaching stick (transparent PNG, `assets/renders/cover-templates/ledger/ledger-professor-point.png`; also `-smile` and `-wave`). Drawn by `scene_lib.ledger(outfit="professor", arm="point")` | Puzzle reel worked-steps guide (2 Nov 2026) | ledger, professor, puzzle, steps, pointing |
 | MAHZsKzh0fY | logo | Edlintics logo, wordmark and tie mark (transparent PNG; Uploads) | Logo | logo, brand, cover |

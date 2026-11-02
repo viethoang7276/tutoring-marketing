@@ -168,7 +168,7 @@ Review only: `preview-9x16.mp4` and `preview-4x5.mp4` have the captions burned i
 Use only CapCut's commercial-use library (or Canva's free library when assembling in Canva), or no music. Volume very low: Canva volume 8 with the voice at 100; in CapCut about -22 dB under the voice. Fade in and out over 1 s. No ripped or trending commercial tracks
 
 ## Meta AI disclosure
-The voice is synthetic (ElevenLabs v3). The animation is code-rendered, no AI-generated images or clips. Switch on Meta's "AI info" for this ad when uploading
+The voice is synthetic (ElevenLabs v3). The animation is code-rendered, no AI-generated images or clips. Leave Meta's "AI info" off when uploading (Hoang, 2 Nov 2026)
 """
 
 

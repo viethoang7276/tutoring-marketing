@@ -12,6 +12,10 @@ puzzle.json (paths relative to the JSON file):
                 {"sel": "#id", "attr": {"fill": "#2960c7"}} colour change, {"sel","text"} text swap, {"sel","hide": true}
   pulse         optional selector that pulses once at the reveal
   explanation   2-3 lines [{"text", "say"?, "style"?: "takeaway"}], shown in sequence after the reveal
+  steps         optional worked calculation (Hoang, 2 Nov 2026): [{"text", "say"?, "label"?, "hl"?: "#id"}], 3-7 short lines.
+                After the reveal the options fade, the diagram shrinks to the top and the lines appear one by one under it,
+                each read by the voice, while a tiny professor Ledger points at the current line. The explanation lines
+                with style "takeaway" follow as the last line, in blue; the other explanation lines are skipped
   prompt_text / prompt_say, end_text / end_say, countdown {"voice": 5, "novoice": 6}
   Any line may carry "say" to change what the voice reads (for example to spell out a unit)
 
@@ -86,7 +90,18 @@ def timeline(P, voice, cache):
     C = t0 + n; T["cd_end"] = round(C, 3); T["tap_t"] = round(C + 1.55, 3)
     R = C + 1.9; T["reveal_t"] = round(R, 3)
     t = R + 0.8; T["ans_t"] = []
-    for e in P["explanation"]:
+    if P.get("steps"):   # worked steps: hold the answer, then the steps board, one voiced line at a time
+        lines = list(P["steps"]) + [dict(e, style="takeaway") for e in P.get("explanation", []) if isinstance(e, dict) and e.get("style") == "takeaway"]
+        T["steps"] = lines; T["steps_in"] = round(R + 1.4, 3); t = T["steps_in"] + 0.65; T["step_t"] = []
+        for e in lines:
+            if voice:
+                a = tts(say_of(e, "text"), cache); clips.append((t, a)); T["step_t"].append(round(t - 0.15, 3))
+                t += len(a) / SR + (0.5 if e.get("style") == "takeaway" else 0.3)
+            else:
+                T["step_t"].append(round(t, 3)); t += max(2.4, len(plain(e["text"])) / CPS) + 0.3
+        t += 0.6
+        T["ans_t"] = [T["step_t"][-1]]
+    for e in ([] if P.get("steps") else P["explanation"]):
         if voice:
             a = tts(say_of(e, "text"), cache); clips.append((t, a)); T["ans_t"].append(round(t - 0.15, 3))
             t += len(a) / SR + 0.35
@@ -210,6 +225,10 @@ def build(pj, outdir, variant):
     svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
     T.update({k: P.get(k) for k in ("question", "options", "answer", "prompt_text", "reveal", "pulse", "explanation", "end_text")})
     T["options"] = T["options"] or []; T["diagram_svg"] = svg
+    if P.get("steps"):   # the professor Ledger, drawn by the explainer engine (feet at 0,0, scale 1)
+        sys.path.insert(0, f"{REPO}/.claude/skills/edlintics-explainer-reel/scripts"); import scene_lib
+        T["prof_svg"] = scene_lib.ledger(0, 0, 1.0, outfit="professor", arm="point")
+        T["explanation"] = []   # the steps board replaces the sentence slot
     tp = f"{work}/timeline.json"; json.dump(T, open(tp, "w"), indent=1)
     print(variant, "duration", T["dur"], "reveal", T["reveal_t"], "answers", T["ans_t"], "end", T["end_t"])
     audio = make_audio(T, clips, voice, work)
@@ -218,6 +237,8 @@ def build(pj, outdir, variant):
     if not os.environ.get("STILLS_ONLY"): node(["video", mp4, audio], tp)
     times = [1.2, T["prompt_t"] + 0.6 if voice else 2.6, T["countdown"]["t0"] + 1.5, T["cd_end"] + 0.85,
              T["tap_t"] + 0.16, T["reveal_t"] + 0.6, T["ans_t"][-1] + 1.0, T["end_t"] + 1.5]
+    if T.get("step_t"):   # worked steps: the board as it fills (first line, middle, last step, takeaway)
+        st = T["step_t"]; times[6:6] = [st[0] + 0.8, st[len(st) // 2] + 0.8, st[-2] + 0.8]
     times = [round(x, 2) for x in times]
     import shutil; shutil.rmtree(f"{work}/stills", ignore_errors=True)
     node(["stills", ",".join(f"{x:.2f}" for x in times), f"{work}/stills"], tp)

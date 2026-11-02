@@ -23,7 +23,7 @@ def _f(v):
 MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk", "dizzy"]
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
-OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula"]
+OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula", "professor"]
 
 
 def _arm(path, hand):
@@ -92,6 +92,11 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
                   f'<path d="M114 152 L126 152 L129 161 L111 161 Z" fill="{BLUE}"/><path d="M112 162 L128 162 L124 184 L120 189 L116 184 Z" fill="{BLUE}"/>')
     elif outfit == "casual":
         collar = (f'<path d="M106 150 L120 164 L134 150" fill="none" stroke="{WHITE}" stroke-width="5" stroke-linejoin="round"/>')
+    elif outfit == "professor":  # puzzle-reel guide (2 Nov 2026): white wing collar and a blue bow tie on the navy band
+        collar = (f'<path d="M106 150 L120 160 L112 164 L100 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+                  f'<path d="M134 150 L120 160 L128 164 L140 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+                  f'<path d="M120 166 L103 157 L103 175 Z M120 166 L137 157 L137 175 Z" fill="{BLUE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+                  f'<rect x="115" y="161" width="10" height="10" rx="2.5" fill="{BLUE}" stroke="{INK}" stroke-width="2"/>')
     else:  # student hoodie: drawstrings
         collar = (f'<path d="M110 150 v22 M130 150 v22" stroke="{WHITE}" stroke-width="4" stroke-linecap="round"/>'
                   f'<circle cx="110" cy="174" r="3.5" fill="{WHITE}"/><circle cx="130" cy="174" r="3.5" fill="{WHITE}"/>')
@@ -118,6 +123,14 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
                    f'<path d="M66 146 L100 166 M174 146 L140 166" stroke="#6B7280" stroke-width="2.5"/>')
         head = (f'<rect x="38" y="98" width="13" height="24" rx="6.5" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
                 f'<rect x="189" y="98" width="13" height="24" rx="6.5" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>')
+    if outfit == "professor":  # mortarboard with a gold tassel, small round glasses
+        head = (f'<path d="M84 40 L84 26 Q120 34 156 26 L156 40 Q120 48 84 40 Z" fill="#1A1A22" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                f'<path d="M120 2 L190 22 L120 42 L50 22 Z" fill="#1A1A22" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<circle cx="120" cy="22" r="4" fill="{GOLD}" stroke="{INK}" stroke-width="1.5"/>'
+                f'<path d="M120 22 Q160 26 176 34 L176 62" fill="none" stroke="{GOLD}" stroke-width="4" stroke-linecap="round"/>'
+                f'<path d="M171 60 L181 60 L183 76 L169 76 Z" fill="{GOLD}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+                f'<circle cx="102" cy="110" r="14" fill="none" stroke="{INK}" stroke-width="3.5"/><circle cx="138" cy="110" r="14" fill="none" stroke="{INK}" stroke-width="3.5"/>'
+                f'<path d="M116 108 Q120 104 124 108" fill="none" stroke="{INK}" stroke-width="3"/>')
     if outfit == "sales":  # headset
         head = (f'<path d="M58 70 Q120 6 182 70" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
                 f'<rect x="48" y="64" width="16" height="30" rx="7" fill="{INK}"/><path d="M58 92 Q66 128 98 130" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
@@ -133,6 +146,10 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         fuzz = "".join(f'<path d="M{163 + 9 * math.cos(a):.1f} {139 + 9 * math.sin(a):.1f} l{3 * math.cos(a):.1f} {3 * math.sin(a):.1f}" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>' for a in [k * math.pi / 6 for k in range(12)])
         prop = (f'<path d="M199 122 L172 135" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
                 f'<circle cx="163" cy="139" r="11" fill="#6B7280" stroke="{INK}" stroke-width="3"/>{fuzz}')
+    if arm == "point" and outfit == "professor":  # thin teaching pointer held in the pointing hand, tip up and to the right
+        prop = (f'<path d="M222 146 L292 112" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+                f'<path d="M222 146 L292 112" stroke="#8A5A2B" stroke-width="3.5" stroke-linecap="round"/>'
+                f'<circle cx="293" cy="111.5" r="4.5" fill="{INK}"/>')
     if arm == "phone":
         prop = (f'<g transform="rotate(-14 200 92)"><rect x="185" y="60" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
                 f'<rect x="190" y="68" width="20" height="38" rx="3" fill="{LB}"/></g>')
