@@ -13,6 +13,7 @@ Read these before any Edlintics social content work:
 - **Canva templates:** Definition DAHYuPFDiDU, This vs That DAHYuGf21MI, Puzzle DAHYuGZYL_E. Always copy them; never edit the originals.
 - **Claude Design templates:** canvas "Edlintics Post Templates", https://claude.ai/artifact/7yg3KS9LosoEoZEqEP2GAp
 - **Canva brand graphics folder:** FAHYugebSqU
+- **Canva thumbnail templates:** Edlintics › Thumbnail template `FAHZvEuoTWo`, one 9:16 cover template per reel type (Definition DAHZsFwGa8k, A day in the life DAHZsDp1sEM, How-to DAHZsPspd34, Puzzle DAHZsM7lYrQ, List DAHZsMn_9zo, Ledger talks DAHZsCwNlJQ, Highlighter DAHZsFzww28). Copy them; never edit the originals. Guide: assets/renders/cover-templates/README.md
 - **Canva post folder:** Edlintics › Social media posts `FAHYcHrS5PE`. File every saved post design here.
 - **Posting (option A, Chrome):** Meta Business Suite, business_id 110625140398351, asset_id 108471317472449 (Facebook + Instagram). LinkedIn company page admin: https://www.linkedin.com/company/31541400/admin/
 - **X and Threads (added 23 Oct 2026):** https://x.com/edlintics and https://www.threads.com/@edlintics. Chrome is logged in as Edlintics on both. Schedule with each site's own web composer.
