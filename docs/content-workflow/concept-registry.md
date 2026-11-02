@@ -72,3 +72,35 @@ Every new concept also appears on edlintics.com.
   - list reels go on topic pages later;
   - puzzle reels are never shown, so they can't give away practice answers.
 - Drafts only. Hoang approves before anything is published.
+
+### Hand-off format (agreed with the COO, 2 Nov 2026)
+
+**Batching**
+- One CSV per batch, weekly, or at 10 rows if that comes sooner.
+- Path: `assets/renders/glossary/new-concepts-YYYY-MM-DD.csv`.
+- Send it after the Thursday plan is approved.
+- This file is separate from the reel CSV.
+
+**Format:** UTF-8, one row per concept. Columns:
+- hub_concept_id
+- term_text
+- aliases (separated by |)
+- kind: term, process or story
+- definition_reviewed (verbatim)
+- source_urls (2 or more, separated by |)
+- equation
+- variables (symbol=meaning, separated by |)
+- example (with its numbers)
+- framework
+- topic
+- related_terms (separated by |)
+- reel_url, reel_type, duration_s (blank if there is no reel)
+
+**Who handles which rows**
+- The COO takes only `term` rows. Marketing writes blog drafts for `process` and `story` rows.
+
+**What the COO does**
+- Writes the glossary entry in its own wording, with a hero infographic and a practice MCQ.
+- Sends back four lists: new, attach, flag and not-a-term.
+- Holds reel attachments until tutoring-web ships the structured reel field.
+
