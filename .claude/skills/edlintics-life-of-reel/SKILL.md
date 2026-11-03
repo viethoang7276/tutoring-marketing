@@ -38,14 +38,14 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 1. **Pick the role and concept.** Take them from the topic bank below, or use the ones you were given. One concept per episode. If the hub already has a slot on the same concept, stop and report.
 2. **Write the script.** Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Copy the patterns in `example-accountant.json`.
    - **Beat roles, in order:** hook (1), moment (3-4), turn (1), concept (1), lesson (1-2), optional loop (1), endcard (1, always last).
-   - **The hook:** beat 1 leads with the number and the stakes, posed as a verdict question ("Three hundred thousand dollars in the bank. Safe for years?"). Beat 1 or 2 says "A day in the life of <a role>".
+   - **The hook:** beat 1 leads with the number and the stakes, posed as a verdict question in full sentences ("The startup has three hundred thousand dollars in the bank. Is it safe for years?"). Beat 1 or 2 says "A day in the life of <a role>".
    - **Moments:** short, specific and relatable, ideally with a number. The last moment is where the problem appears, often someone suggesting the wrong move.
    - **Turn:** Ledger explains why the wrong move is wrong.
    - **Concept:** "That is <concept>. <It in one plain sentence>."
    - **Lesson:** what it changes in business.
    - **End card:**
      - `"term"` is the concept; `"keypoint"` is one line to remember (4-12 words, no full stop);
-     - `"text"` is "<Concept>. <Key point as a sentence>.";
+     - `"text"` is one full sentence of 2.5-3.5 s that starts with the term, for example "Cash runway is cash divided by monthly net burn." (never "<Concept>. <Key point>.", which is a fragment);
      - the voice must say the term.
    - **Voice `text`:**
      - full sentences, with amounts spelled out ("twelve hundred dollars");

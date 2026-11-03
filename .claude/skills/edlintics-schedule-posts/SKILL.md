@@ -36,7 +36,8 @@ Per post:
    `if(!window.__claudeClickPatched){const o=HTMLInputElement.prototype.click;HTMLInputElement.prototype.click=function(){if(this.type==='file'){this.style.cssText='position:fixed;left:0;top:0;width:10px;height:10px;opacity:0.01;z-index:99999';if(!this.isConnected)document.body.appendChild(this);return;}return o.call(this)};window.__claudeClickPatched=true;}`
 3. Click "Add photo/video", then `find` "file input (type=file)" and `file_upload` all slides in order (10 max).
 4. Click the Text combobox and type the caption.
-5. Click the "Share to Facebook Story" switch (find it, scroll to it). A dialog appears: choose **Share this story**, not "Always share stories", then Confirm.
+5. **Facebook Story share is automatic (Hoang, 3 Nov 2026: "click always share stories we dont have to repeat").** "Always share stories" is now on for the page, so the "Share to Facebook Story" switch is on by default with no dialog. Just check the switch is on. If a dialog ever appears, choose **Always share stories**.
+   **Thumbnail:** always set Thumbnail › **Upload image** with the slot's `thumbnail.jpg` before scheduling. A scheduled reel cannot get a thumbnail later (Edit only trims the video), so a missing one means recreating the reel.
 6. Turn on "Set date and time". For each of Facebook and Instagram: triple-click the date and type `MM/DD/YYYY`, then Tab. Click the hours segment and type `03`, the minutes segment and type `00`, the AM/PM segment and type `P`. Zoom to verify both rows.
 7. Verify the switches with JavaScript: `[...document.querySelectorAll('[role=switch]')].map(e=>[e.getAttribute('aria-label'),e.checked])`. Click one switch at a time; a double click toggles it back off.
 8. Click Schedule, wait, then in the boost pop-up click **Maybe later** (never Boost).
@@ -133,7 +134,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 - **Speed:** batch predictable clicks in one browser_batch, use find instead of screenshots, export a day's media at once, and update `slots` and `runs` right after each slot so a stopped run can resume.
 
 ## Never
-- Boost, change page settings, choose "Always share stories", or post anything Hoang has not approved in chat.
+- Boost, change page settings (other than the "Always share stories" default Hoang turned on 3 Nov), or post anything Hoang has not approved in chat.
 
 ## 2d. YouTube (added 24 Oct 2026)
 After the other platforms, add each scheduled slot to YouTube with `.claude/skills/edlintics-youtube-upload/SKILL.md`: five-concepts videos as Shorts, everything else as channel Posts. Record the result in the slot's `youtube` field. Mind the posts rate limit (about 5 per hour).
@@ -152,7 +153,7 @@ TikTok (@edlintics) is scheduled from TikTok Studio web with `.claude/skills/edl
 ## Week-45 learnings (29 Oct 2026, scheduling 2 Nov on all 7 platforms)
 **Meta (Business Suite)**
 - 9:16 videos: use the Reels composer directly, `https://business.facebook.com/latest/reels_composer/?asset_id=108471317472449&business_id=110625140398351&context_ref=POSTS`. The post composer's "Go to Reels composer" link sticks at 0%, and it flags 9:16 as "Wrong aspect ratio" for Instagram
-- Reels flow: file-input patch, Add Video, wait for 100%, caption, click a blank area to close the hashtag list, Next, Next. Story switch: its dialog preselects **Always**, so choose "Share this story" and check with zoom before Confirm. Schedule tab, date and time per row, Schedule, Done
+- Reels flow: file-input patch, Add Video, wait for 100%, caption, click a blank area to close the hashtag list, Next, Next. Story switch: on by default since 3 Nov (Always share stories); just check it. Schedule tab, date and time per row, Schedule, Done
 - Five-concepts carousel day = two posts: Instagram-only (untick Edlintics in "Post to", upload clips p1–p7 in one call) and Facebook-only (the long MP4). In Scheduled the IG row shows "Your reel" but the caption is there. Never click **Publish now** in the side panel
 - Files over 10 MB (the Chrome upload cap): re-encode first with the same audio
 **LinkedIn** video works in the normal composer. Wait for "Your upload is complete" before navigating. Verify via clock › "View all scheduled posts" (the /admin/page-posts/scheduled/ URL redirects)
@@ -164,4 +165,4 @@ TikTok (@edlintics) is scheduled from TikTok Studio web with `.claude/skills/edl
 - **TikTok hashtags (3 Nov run):** clicking "Hashtags" then a `.suggest-item` leaves a stray "#" before each tag ("##edlintics"). Remove each stray "#" text node with a DOM Range + `execCommand('delete')` and check the counter equals caption + tags. Never type the tag text by script and then click a suggestion (it doubles the tag). If it goes wrong, reload and redo
 - **Threads cap planning:** with about 4 posts a day and a 25 cap, Threads runs about 6 days ahead at most. Mark the rest `thPending: true`; the daily 09:07 backlog run adds them as earlier ones go live
 - **TikTok caption helpers (4 Nov run):** the hashtag mention span is `[data-testid=mentionText]` (not `span.mention` in the DOM walk), so a stray-"#" strip that skips only `span.mention` eats the tag text. Draft.js only honours a script selection after `document.dispatchEvent(new Event('selectionchange'))` and about 500 ms; without that, `execCommand('delete')` deletes the char before Draft's own caret. Working sequence, stored in localStorage on tiktok.com: `edl_clr` (select all + selectionchange + delete), `edl_fill`, `edl_fix1` (clearing the video filename can drop the pasted first line from the editor state even though the counter counts it; it re-inserts it with insertText), `edl_end` (caret to end), then per tag: real click on "Hashtag" › `edl_tag('#tag')` (click suggestion, strip the stray "#" with a collapsed caret after it, caret back to end), `edl_mus` (music check on, waits for "No issues found"), `edl_sched`, `edl_go`. Check the full editor text equals body + "\n\n" + tags + " " before `edl_go`. On a photo post skip `edl_clr` when the editor is empty: it breaks the editor state (6 Nov run)
-- **Meta composer (4 Nov):** "Share to Facebook Story" was already on by default in the normal post composer (no dialog shown); the Reels composer still asks (choose "Share this story"). Use `find` refs for the hours/minutes/AM-PM spinbuttons; coordinates drift by a segment
+- **Meta composer (4 Nov):** "Share to Facebook Story" was already on by default in the normal post composer (no dialog shown); the Reels composer asked until 3 Nov, when Hoang chose Always share stories. Use `find` refs for the hours/minutes/AM-PM spinbuttons; coordinates drift by a segment
