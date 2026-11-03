@@ -1,6 +1,6 @@
 # REQ-0009  ·  Meta Pixel and Conversions API for tutoring and course ads
 
-- **Status:** proposed
+- **Status:** approved, in build (tutoring-web, 2026-11-04)
 - **Date:** 2026-11-03
 - **Source:** Hoang ("we should set meta pixel for tutoring and all the course to track the ads")
 - **Targets metric:** paid acquisition (cost per tutoring booking, cost per course purchase, cost per waitlist lead)
@@ -55,4 +55,4 @@ Marketing never imports app code and only reads results in Meta Ads Manager. No 
 ## Decision log
 - 2026-11-03 — requested by Hoang while setting up the tutoring conversion campaign; CMO wrote the request
 - 2026-11-03 — Hoang created a second dataset 1054697157584785 by mistake; he chose to keep the original 1000075088350707 (already has the CAPI token in Vercel). The 2026-11-03 dataset is not used. Domain verification tag sent to tutoring-web as a hotfix. Hoang then turned Automatic Advanced Matching on; consent requirements updated to a separate `marketing` purpose
-- _(Hoang / CTO: approve / defer / reject + reason here.)_
+- 2026-11-04 — domain verification tag live on edlintics.com (PR #101); Hoang approved REQ-0009 and tutoring-web is building it (per tutoring-web session). Marketing switches the tutoring ad set to Purchase optimisation once events show on prod
