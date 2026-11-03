@@ -103,12 +103,13 @@ def main(path):
     if t == "life-of" and beats and not any("day in the life" in b.get("text", "").lower() for b in beats[:2]):
         E.append('life-of: beat 1 or 2 must say "a day in the life of ..." (beat 1 may lead with the number and stakes, 3 Nov 2026)')
     # Ledger is never hidden (Hoang, 3 Nov 2026: "the desk cover ledger face"). Items draw in list order,
-    # so furniture listed after Ledger is painted over him.
+    # so furniture listed after Ledger is painted over him. Wide multi-panel scenes hold several Ledgers,
+    # so only a Ledger in the same panel (within 700 px in x) counts.
     for name, sp in scenes.items():
-        its = sp.get("items", []); li = next((i for i, it in enumerate(its) if it.get("p") == "ledger"), None)
-        if li is not None:
-            for it in its[li + 1:]:
-                if it.get("p") in ("desk", "school_desk", "whiteboard", "lemonade_stand", "people_group", "scale", "pit"):
+        its = sp.get("items", [])
+        for k, it in enumerate(its):
+            if it.get("p") in ("desk", "school_desk", "whiteboard", "lemonade_stand", "people_group", "scale", "pit"):
+                if any(l.get("p") == "ledger" and abs(l.get("x", 0) - it.get("x", 0)) < 700 for l in its[:k]):
                     E.append(f'scene {name}: "{it.get("p")}" is listed after Ledger, so it is drawn over him; list it before Ledger (Hoang, 3 Nov 2026)')
     # Story flow (Hoang, 3 Nov 2026: "no transitional words in a story"): story beats link to the one before
     if t in ("life-of", "howto", "definition") and beats:
