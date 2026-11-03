@@ -1,6 +1,6 @@
 ---
 name: edlintics-life-of-reel
-description: Make one Edlintics "A day in the life of a [role]" reel (9:16, 30-60 s) end to end. Covers the script from the template, the scene presets, a one-command build, the checks, the Canva draft with music and the hub proposal card. Structure is a hook, 3-4 relatable moments, the turning moment, one named concept, the business lesson and an end card. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
+description: Make one Edlintics "A day in the life of a [role]" reel (9:16, 30-60 s, 2-minute cap) end to end. Covers the script from the template, the scene presets, a one-command build, the checks, the Canva draft with music and the hub proposal card. Structure is a hook, 3-4 relatable moments, the turning moment, one named concept, the business lesson and an end card. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
 ---
 
 # Edlintics "life of" reel
@@ -26,7 +26,8 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 3. **Tell the story on the timescale of the numbers.** Monthly numbers get a monthly story, such as "today he checks the month", never clock times through one day. Yearly numbers get a year. The validator warns when clock times appear next to per-month or per-year numbers.
 4. **Never hide Ledger.** Items draw in list order, so put desks, whiteboards, stands and tables BEFORE Ledger in `items`. The validator fails otherwise. Check the contact sheet: nothing crosses his face.
 5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
-6. **Length:** every reel is 1 minute or less.
+6. **Length:** every video is 2 minutes or less (Hoang, 3 Nov 2026; this replaces the 1-minute cap). Keep it as short as the story allows.
+7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
 
 ## What makes it work
 - **People recognise their own day.** Use real, specific details: the 8 a.m. coffee, 200 invoices, a group chat at midnight. That's why viewers tag a friend.
@@ -53,7 +54,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
      - 2-5 words each, with numbers as "$1,200";
      - one `key` per beat;
      - no full stop at the end.
-   - **Totals:** 30-60 s, never over 1 minute (Hoang, 3 Nov 2026), about 105-150 words, 9-15 beats, and 12 words or fewer per beat.
+   - **Totals:** about 30-60 s, never over 2 minutes (Hoang, 3 Nov 2026), about 105-180 words, 9-30 beats, and 12 words or fewer per beat.
    - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the `concept` beat, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.
 3. **Compose the scenes.** Use presets only (`$PY $E/scene_lib.py --list`).
    - **Dress Ledger for the role** with `outfit`:

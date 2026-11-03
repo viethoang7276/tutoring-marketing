@@ -29,11 +29,11 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allowed=(85, 125), secs=(29, 41), wps=2.95),
-        # life-of: 30-60 s since 3 Nov 2026 (Hoang: "future reel have limit up to 1 min"; room for a connected story)
-        "life-of": dict(chunk=(2, 5), beats=(9, 15), target=(105, 150), allowed=(85, 165), secs=(29, 61), wps=2.95),
+        # life-of: 30-60 s target; hard cap 2 minutes from 3 Nov 2026 (Hoang: "limit up 2 minutes for videos", replacing the 1-minute cap)
+        "life-of": dict(chunk=(2, 5), beats=(9, 30), target=(105, 180), allowed=(85, 350), secs=(29, 121), wps=2.95),
         # howto: ElevenLabs v3 voice at tempo 1.12 (about 2.4 spoken words a second with gaps, measured 1 Nov 2026).
-        # Was 60-90 s; capped at 60 s from 3 Nov 2026 (Hoang: every future reel up to 1 min)
-        "howto": dict(chunk=(2, 5), beats=(12, 24), target=(115, 140), allowed=(100, 145), secs=(44, 61), wps=2.4),
+        # 60-90 s target; hard cap 2 minutes from 3 Nov 2026 (Hoang: "limit up 2 minutes for videos")
+        "howto": dict(chunk=(2, 5), beats=(12, 40), target=(115, 220), allowed=(100, 285), secs=(44, 121), wps=2.4),
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)

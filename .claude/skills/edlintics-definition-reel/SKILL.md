@@ -26,7 +26,8 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 3. **Tell the story on the timescale of the numbers.** Monthly numbers get a monthly story, such as "today he checks the month", never clock times through one day. Yearly numbers get a year. The validator warns when clock times appear next to per-month or per-year numbers.
 4. **Never hide Ledger.** Items draw in list order, so put desks, whiteboards, stands and tables BEFORE Ledger in `items`. The validator fails otherwise. Check the contact sheet: nothing crosses his face.
 5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
-6. **Length:** every reel is 1 minute or less.
+6. **Length:** every video is 2 minutes or less (Hoang, 3 Nov 2026; this replaces the 1-minute cap). Keep it as short as the story allows.
+7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
 
 ## Steps
 1. **Pick the topic.** Take it from the topic bank below, or use the one you were given. If the hub already has a slot on the same term (check `slots` titles), stop and report.
