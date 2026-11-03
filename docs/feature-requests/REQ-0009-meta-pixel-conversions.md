@@ -16,6 +16,9 @@ The site already has a clean event layer: `lib/analytics.ts` events are mapped t
 Add Meta as a second sink of the existing analytics events, behind the same cookie consent as GA and PostHog, plus a server-side Conversions API (CAPI) call for the money events so they still count when the browser blocks the Pixel
 
 ## Proposed requirements (CTO owns the final design)
+- **Consent option (new purpose).** Today `lib/consent.ts` has one optional purpose, `analytics`. Meta ad tracking with Advanced Matching is advertising, not analytics, so it needs its own opt-in. Add a second purpose `marketing` (label e.g. "Advertising: measure our ads on Meta"), off by default, as its own toggle in the cookie banner and the footer cookie settings, with Accept all / Reject all still one click. Bump `CONSENT_VERSION` so returning visitors are asked again. GA and PostHog keep using `analytics`; the Meta Pixel and the Conversions API use `marketing` only
+- **Automatic Advanced Matching is ON** (Hoang turned it on in Events Manager, 2026-11-03). With it, the Pixel reads email, phone and name fields that visitors type into site forms, hashes them in the browser and sends the hashes to Meta. It shall only run after `marketing` consent (it can, because the Pixel itself only loads after consent). Password, payment and card fields are never read by Meta's matching, but the CTO shall confirm no other sensitive field (e.g. student notes) is named like an email/phone field
+- The privacy policy and cookies page shall say, in plain words: Meta Platforms Ireland is a joint controller for ad measurement; with advertising consent the site shares page visits, bookings, purchases and hashed contact details (email, phone, name) with Meta to measure and improve our ads; visitors can withdraw consent at any time in cookie settings; Meta cookies `_fbp` and `_fbc`, up to 90 days. Update the cookie table in the cookies page and the cookie audit script
 - The system shall load the Meta Pixel (ID `1054697157584785`, dataset created by Hoang 2026-11-03; from an env var, e.g. `NEXT_PUBLIC_META_PIXEL_ID`) only after the visitor accepts marketing/analytics cookies, and shall clear `_fbp`/`_fbc` cookies when consent is withdrawn (extend `lib/consent-cookies.ts` and the cookie audit)
 - The cookies page and privacy policy shall list Meta as a processor
 - The system shall send these standard events, mapped from the existing analytics events:
@@ -33,7 +36,7 @@ Add Meta as a second sink of the existing analytics events, behind the same cook
 
 - `content_ids` shall be stable: one per course slug and `tutoring-1to1` / `tutoring-group` for tutoring, so ads can be reported per product
 - `Purchase` and `Schedule` shall also be sent server-side through the Conversions API (from the Stripe webhook / booking confirmation), with the same `event_id` as the browser event so Meta de-duplicates them. The CAPI access token lives in Vercel env vars only, never in code or logs. Server events only fire for visitors who gave consent (pass the consent state with the order)
-- No email, name or other personal data shall be sent in the browser Pixel. For CAPI, hashed email is optional and only with consent; CTO and Hoang decide
+- The site shall not add email or name to Pixel event parameters by hand; Advanced Matching handles matching. For CAPI, send SHA-256 hashed email (and `fbp`/`fbc`, client IP and user agent) only for orders made with `marketing` consent, so server events match as well as the browser ones
 - Private paths stay redacted as in `sanitizeUrlForGa` (claim, booking links, pay/seat)
 - Do not paste Meta's base code snippet into the root layout `<head>` as Meta suggests: it fires PageView before consent. Load `fbevents.js` from the consent-gated analytics loader instead, and keep the `<noscript>` image out (it cannot respect consent)
 - Test with Meta Events Manager "Test events" on a preview deploy before production
@@ -51,5 +54,5 @@ Marketing never imports app code and only reads results in Meta Ads Manager. No 
 
 ## Decision log
 - 2026-11-03 — requested by Hoang while setting up the tutoring conversion campaign; CMO wrote the request
-- 2026-11-03 — Hoang created the Pixel/dataset, ID 1054697157584785 (public ID, not a secret). Automatic Advanced Matching left off until consent handling is decided
+- 2026-11-03 — Hoang created the Pixel/dataset, ID 1054697157584785 (public ID, not a secret). Hoang then turned Automatic Advanced Matching on; consent requirements updated to a separate `marketing` purpose
 - _(Hoang / CTO: approve / defer / reject + reason here.)_
