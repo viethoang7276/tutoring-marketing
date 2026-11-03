@@ -16,7 +16,7 @@ The site already has a clean event layer: `lib/analytics.ts` events are mapped t
 Add Meta as a second sink of the existing analytics events, behind the same cookie consent as GA and PostHog, plus a server-side Conversions API (CAPI) call for the money events so they still count when the browser blocks the Pixel
 
 ## Proposed requirements (CTO owns the final design)
-- The system shall load the Meta Pixel (ID from an env var, e.g. `NEXT_PUBLIC_META_PIXEL_ID`) only after the visitor accepts marketing/analytics cookies, and shall clear `_fbp`/`_fbc` cookies when consent is withdrawn (extend `lib/consent-cookies.ts` and the cookie audit)
+- The system shall load the Meta Pixel (ID `1054697157584785`, dataset created by Hoang 2026-11-03; from an env var, e.g. `NEXT_PUBLIC_META_PIXEL_ID`) only after the visitor accepts marketing/analytics cookies, and shall clear `_fbp`/`_fbc` cookies when consent is withdrawn (extend `lib/consent-cookies.ts` and the cookie audit)
 - The cookies page and privacy policy shall list Meta as a processor
 - The system shall send these standard events, mapped from the existing analytics events:
 
@@ -35,6 +35,7 @@ Add Meta as a second sink of the existing analytics events, behind the same cook
 - `Purchase` and `Schedule` shall also be sent server-side through the Conversions API (from the Stripe webhook / booking confirmation), with the same `event_id` as the browser event so Meta de-duplicates them. The CAPI access token lives in Vercel env vars only, never in code or logs. Server events only fire for visitors who gave consent (pass the consent state with the order)
 - No email, name or other personal data shall be sent in the browser Pixel. For CAPI, hashed email is optional and only with consent; CTO and Hoang decide
 - Private paths stay redacted as in `sanitizeUrlForGa` (claim, booking links, pay/seat)
+- Do not paste Meta's base code snippet into the root layout `<head>` as Meta suggests: it fires PageView before consent. Load `fbevents.js` from the consent-gated analytics loader instead, and keep the `<noscript>` image out (it cannot respect consent)
 - Test with Meta Events Manager "Test events" on a preview deploy before production
 
 ## What Hoang does (outside the code)
@@ -50,4 +51,5 @@ Marketing never imports app code and only reads results in Meta Ads Manager. No 
 
 ## Decision log
 - 2026-11-03 — requested by Hoang while setting up the tutoring conversion campaign; CMO wrote the request
+- 2026-11-03 — Hoang created the Pixel/dataset, ID 1054697157584785 (public ID, not a secret). Automatic Advanced Matching left off until consent handling is decided
 - _(Hoang / CTO: approve / defer / reject + reason here.)_
