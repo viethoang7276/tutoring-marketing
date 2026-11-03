@@ -19,7 +19,7 @@ Add Meta as a second sink of the existing analytics events, behind the same cook
 - **Consent option (new purpose).** Today `lib/consent.ts` has one optional purpose, `analytics`. Meta ad tracking with Advanced Matching is advertising, not analytics, so it needs its own opt-in. Add a second purpose `marketing` (label e.g. "Advertising: measure our ads on Meta"), off by default, as its own toggle in the cookie banner and the footer cookie settings, with Accept all / Reject all still one click. Bump `CONSENT_VERSION` so returning visitors are asked again. GA and PostHog keep using `analytics`; the Meta Pixel and the Conversions API use `marketing` only
 - **Automatic Advanced Matching is ON** (Hoang turned it on in Events Manager, 2026-11-03). With it, the Pixel reads email, phone and name fields that visitors type into site forms, hashes them in the browser and sends the hashes to Meta. It shall only run after `marketing` consent (it can, because the Pixel itself only loads after consent). Password, payment and card fields are never read by Meta's matching, but the CTO shall confirm no other sensitive field (e.g. student notes) is named like an email/phone field
 - The privacy policy and cookies page shall say, in plain words: Meta Platforms Ireland is a joint controller for ad measurement; with advertising consent the site shares page visits, bookings, purchases and hashed contact details (email, phone, name) with Meta to measure and improve our ads; visitors can withdraw consent at any time in cookie settings; Meta cookies `_fbp` and `_fbc`, up to 90 days. Update the cookie table in the cookies page and the cookie audit script
-- The system shall load the Meta Pixel (ID `1054697157584785`, dataset created by Hoang 2026-11-03; from an env var, e.g. `NEXT_PUBLIC_META_PIXEL_ID`) only after the visitor accepts marketing/analytics cookies, and shall clear `_fbp`/`_fbc` cookies when consent is withdrawn (extend `lib/consent-cookies.ts` and the cookie audit)
+- The system shall load the Meta Pixel (ID `1000075088350707`, dataset "Edlintics Meta Pixel" created 2026-10-29; from an env var, e.g. `NEXT_PUBLIC_META_PIXEL_ID`) only after the visitor accepts marketing/analytics cookies, and shall clear `_fbp`/`_fbc` cookies when consent is withdrawn (extend `lib/consent-cookies.ts` and the cookie audit)
 - The cookies page and privacy policy shall list Meta as a processor
 - The system shall send these standard events, mapped from the existing analytics events:
 
@@ -42,7 +42,7 @@ Add Meta as a second sink of the existing analytics events, behind the same cook
 - Test with Meta Events Manager "Test events" on a preview deploy before production
 
 ## What Hoang does (outside the code)
-1. In Events Manager (business 110625140398351), create a dataset/Pixel named "Edlintics website" and share its ID with the CTO session
+1. Dataset: use "Edlintics Meta Pixel" 1000075088350707 (business 110625140398351), already created 2026-10-29
 2. Generate a Conversions API access token for that dataset and put it in Vercel env vars himself (not in chat)
 3. Verify the domain edlintics.com in Business Settings › Brand safety › Domains, then set the 8 events priority (Aggregated Event Measurement): Purchase, Schedule, InitiateCheckout, Lead, AddToCart, CompleteRegistration, ViewContent, PageView
 
@@ -54,5 +54,5 @@ Marketing never imports app code and only reads results in Meta Ads Manager. No 
 
 ## Decision log
 - 2026-11-03 — requested by Hoang while setting up the tutoring conversion campaign; CMO wrote the request
-- 2026-11-03 — Hoang created the Pixel/dataset, ID 1054697157584785 (public ID, not a secret). Hoang then turned Automatic Advanced Matching on; consent requirements updated to a separate `marketing` purpose
+- 2026-11-03 — Hoang created a second dataset 1054697157584785 by mistake; he chose to keep the original 1000075088350707 (already has the CAPI token in Vercel). The 2026-11-03 dataset is not used. Domain verification tag sent to tutoring-web as a hotfix. Hoang then turned Automatic Advanced Matching on; consent requirements updated to a separate `marketing` purpose
 - _(Hoang / CTO: approve / defer / reject + reason here.)_
