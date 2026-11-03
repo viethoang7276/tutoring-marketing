@@ -104,6 +104,25 @@ Run this every day straight after the first-comment run of the day's last post (
 
 If the Mac was asleep and the refresh was missed, the next session's start check runs it once for the missed days.
 
+## Daily ads refresh (added 4 Nov 2026)
+
+The hub's Performance › Ads sub-tab reads the hub doc `ads/latest` live, so a write shows up without a republish. Agents only read Ads Manager and write this doc: they never change budgets, edit ads or publish. Hoang publishes.
+
+1. **When:** every day, together with the daily metrics refresh above. Until the campaign is published there is nothing to read; leave the doc as it is.
+2. **Where to read** (read only): Ads Manager, `https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=535582635765592&business_id=110625140398351`. Use the Campaigns, Ad sets and Ads views, with the date range set to the Madrid day that just ended (the account is in VND).
+3. **Columns:** amount spent, impressions, reach, frequency, link clicks, CTR (link click-through rate), landing page views, cost per landing page view, CPM and delivery. Record only what Ads Manager shows: `null` = not shown. Never estimate.
+4. **Bookings:** tutoring bookings tagged `utm_source=meta` and `utm_campaign=tutoring-2026-11`, split by `utm_content` (`static-photo`, `static-photo-price`, `static-illustration`, `static-illustration-price`, `video`). Leave every `bookings` field `null` until there is a way to read them; never infer bookings from clicks.
+5. **Write** `ads/latest` with db_write **merge** and an `ifVersion` from a fresh db_get:
+   - `updatedAt` (ISO) and `readAt` (text, Vietnam time);
+   - `campaign.status` (draft, in review, active, paused, rejected) and any budget or optimisation change Hoang made;
+   - `days`: append or replace the entry for that Madrid day, `{date, spend, impressions, reach, clicks, lpv, bookings}` at campaign level. A merge replaces the whole array, so send the full list;
+   - `ads`: one row per ad per ad set, `{name, side, format, spend, impressions, reach, frequency, clicks, ctr, lpv, costPerLpv, cpm, bookings, status, delivery}`, lifetime figures. `side` is `A` or `B` from the ad set; the video runs in both, so it has two rows. `ctr` is the percentage Ads Manager shows (1.23 means 1.23%);
+   - `totals`: lifetime campaign figures (read reach and frequency for the whole period, because daily reach does not add up). Optionally `last7: {reach, frequency}` read with the last-7-days range;
+   - `test`: set `start` on the first delivery day, `judge` to start plus 14 days, `status` and `test.sides[].adSet`;
+   - `notes`: add `{date, text}` for learning phase, edits, rejections and anything Hoang should know.
+6. **The ADS-T1 rule (price vs no price):** judge after 14 days, or earlier once there are at least 5 bookings per side. Until then compare cost per landing page view between the sides on the static ads and call it directional in the note. Write the verdict to `test.verdict` and `test.status: "judged"`.
+7. **Log** the ads refresh in the same `runs/daily-<YYYY-MM-DD>` doc as `ads: {at, problems}`.
+
 ## Website analytics (GA4) and UTM links (agreed with tutoring-web, 25 Oct 2026)
 
 **Two GA4 properties, split by date (Hoang's decision, 25 Oct 2026; GA4 cannot merge properties):**
