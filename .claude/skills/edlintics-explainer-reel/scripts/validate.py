@@ -37,7 +37,7 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 13), target=(100, 115), allow
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 14), target=(80, 105), allowed=(65, 115), secs=(24, 37), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
-        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(55, 75), allowed=(45, 85), secs=(21, 36), wps=2.3)}   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
+        "ad": dict(chunk=(2, 5), beats=(5, 10), target=(55, 75), allowed=(45, 90), secs=(21, 43), wps=2.3)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
