@@ -1,6 +1,6 @@
 ---
 name: edlintics-definition-reel
-description: Make one Edlintics definition explainer reel (9:16, 30-40 s) end to end. Covers the script from the template, the scene presets, a one-command build, the checks, the Canva draft with music and the hub proposal card. Structure is hook, everyday story, one-sentence definition, business example, takeaway and end card. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
+description: Make one Edlintics definition explainer reel (9:16, up to 90 s) end to end. Covers the script from the template, the scene presets, a one-command build, the checks, the Canva draft with music and the hub proposal card. Structure is hook, everyday story, one-sentence definition, business example, takeaway and end card. Written step by step for a cheaper model. Engine: edlintics-explainer-reel.
 ---
 
 # Edlintics definition reel
@@ -42,10 +42,10 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
      - one chunk per beat has `key` (a word inside that chunk);
      - no full stop at the end; a question mark is fine.
    - **End card:**
-     - `"term"` is the term; `"keypoint"` is one line to remember (4-12 words, no full stop);
+     - `"term"` is the term; `"keypoint"` is one full sentence to remember (the glossary definition or its main point, no full stop at the end; check it fits on the contact sheet);
      - `"text"` is "<Term>. <Key point as a sentence>.";
      - the voice must say the term.
-   - **Totals:** about 100-115 words, 9-13 beats, and 2-4 s of voice per beat (12 words or fewer).
+   - **Totals:** up to 90 s (about 230 words, 26 beats at most; Hoang 4 Nov 2026), full sentences joined by transitional words, and 2-4 s of voice per beat (12 words or fewer).
    - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the `definition` beat, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.
 3. **Compose the scenes.** Each scene is `{"bg", "items": [...]}` (an optional `"frame"`), built from presets only. Never write SVG.
    - Run `$PY $E/scene_lib.py --list` to see every preset and option.

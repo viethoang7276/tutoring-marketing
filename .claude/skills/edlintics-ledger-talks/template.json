@@ -103,7 +103,7 @@
    "role": "endcard",
    "text": "<Term>. <Key point as a sentence.>",
    "term": "<Term>",
-   "keypoint": "<4-12 words, no full stop>"
+   "keypoint": "<One full sentence (the glossary definition for a term), no full stop at the end>"
   }
  ]
 }

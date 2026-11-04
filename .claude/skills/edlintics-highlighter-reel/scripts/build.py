@@ -47,7 +47,7 @@ def validate(S):
         if S["endcard"][k].rstrip().endswith("."): E.append(f"end card {k} ends with a full stop")
     wc = sum(len(b["text"].split()) for b in S["beats"]) + len(S["endcard"]["say"].split())
     print("words:", wc)
-    if not 70 <= wc <= 115: E.append(f"{wc} spoken words; aim for 75-105 (30-40 s)")
+    if not 70 <= wc <= 210: E.append(f"{wc} spoken words; must be 70-210 (up to 90 s, Hoang 4 Nov 2026)")
     for e in E: print("FAIL", e)
     if E: sys.exit(1)
 
@@ -102,7 +102,7 @@ def build(sp, out):
     if S.get("ledger"): T["ledger"] = {**S["ledger"], "keys": sorted(lkeys, key=lambda k: k["t"]), "parts": ledger_parts(S["ledger"].get("outfit", "suit"))}
     tp = f"{out}/timeline.json"; json.dump(T, open(tp, "w"), indent=1)
     print(f"duration {dur} s, end card at {T['end_t']} s, {len(actions)} highlights")
-    if not 30 <= dur <= 41: print(f"WARN duration {dur} s is outside 30-40 s; try ELEVEN_TEMPO=1.16 or trim words")
+    if not 30 <= dur <= 90: print(f"WARN duration {dur} s is outside 30-90 s; try ELEVEN_TEMPO=1.16 or trim words")
     audio = make_audio(T, clips, out)
     open(f"{out}/script.txt", "w").write("\n".join(f"{b['start']:5.2f}  {b['text']}" for b in beats) + f"\n{es:5.2f}  {S['endcard']['say']}\n")
     times = sorted({round(a["t1"] + 0.12, 2) for a in actions} | {0.2, round(T["end_t"] + 2.0, 2), round(dur - 0.05, 2)})

@@ -44,7 +44,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
    - **Concept:** "That is <concept>. <It in one plain sentence>."
    - **Lesson:** what it changes in business.
    - **End card:**
-     - `"term"` is the concept; `"keypoint"` is one line to remember (4-12 words, no full stop);
+     - `"term"` is the concept; `"keypoint"` is one full sentence to remember (no full stop at the end);
      - `"text"` is one full sentence of 2.5-3.5 s that starts with the term, for example "Cash runway is cash divided by monthly net burn." (never "<Concept>. <Key point>.", which is a fragment);
      - the voice must say the term.
    - **Voice `text`:**
