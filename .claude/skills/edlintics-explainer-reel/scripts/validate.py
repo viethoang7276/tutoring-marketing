@@ -223,7 +223,8 @@ def main(path):
             if where != "meta.first_comment" or EMOJI.search(body):
                 E.append(f"{where}: emoji in {s[:60]!r} (emojis are allowed only at the end of first_comment)")
         if TUTOR.search(s) and t != "ad": E.append(f"{where}: mentions tutoring: {s[:60]!r}")
-        if NOT_USD.search(s): E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
+        # paid tutoring ads quote the real €45/hour price (Hoang, 3 Nov 2026); organic content stays in US dollars
+        if NOT_USD.search(s) and t != "ad": E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
     for k in ("caption", "caption_x", "first_comment"):
         for para in [p for p in str(m.get(k, "")).split("\n") if p.strip()]:
             if para.rstrip().endswith("."): E.append(f'meta.{k}: paragraph ends with a full stop: "...{para.rstrip()[-40:]}"')
