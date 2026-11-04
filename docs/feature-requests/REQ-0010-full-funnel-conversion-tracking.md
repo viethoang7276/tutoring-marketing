@@ -1,6 +1,6 @@
 # REQ-0010  ·  Full-funnel conversion tracking for Meta, GA4 and Google Ads
 
-- **Status:** sent to tutoring-web for a spec (2026-11-04)
+- **Status:** spec drafted by tutoring-web (feature FT, `docs/specs/conversion-tracking/`, commit 7a829ebda on feat/ft-conversion-tracking); build waits for Hoang's sign-off of decisions D1-D12
 - **Date:** 2026-11-04
 - **Source:** Hoang ("set that up properly so every campaign can track proper funnel sale and conversion. Work with the CTO on the Meta Conversions API setup and the Google Analytics/Ads event setup")
 - **Targets metric:** paid acquisition: cost per booking, cost per purchase and return on ad spend (ROAS) per campaign and per ad, on Meta and Google
@@ -156,3 +156,4 @@ Read only. Nothing was changed. Figures are for 7 Oct to 3 Nov 2026
 
 ## Decision log
 - 2026-11-04 — requested by Hoang; tutoring-web supplied the event inventory from main at 67adbdaf (PR #102 live on prod 4 Nov); CMO drafted this request
+- 2026-11-04 — tutoring-web drafted the FT spec (36 tasks, 12 decisions for Hoang). CMO review: agreed with all 12 defaults; asked for a ready Phase 2 list (Google Ads 622-861-8576, edlintics@gmail.com, closed, Hoang plans to reactivate; keep its GA4 link), a test path given staff exclusion (a non-staff test account Hoang creates, FT097), groupBy utm_term and click_id_type, and pricing_viewed + booking_calendar_opened in the first batch (FT029). All four accepted in 7a829ebda
