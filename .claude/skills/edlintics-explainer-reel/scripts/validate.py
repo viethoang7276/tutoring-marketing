@@ -2,7 +2,7 @@
 
 Usage: python validate.py <workdir>/script.json
 Checks the house rules (voice, captions, currency, no tutoring, no trailing full stop), the beat structure for
-meta.type "definition" or "life-of", the scene presets, and an estimated length (up to 90 s for every type from 4 Nov 2026).
+meta.type "definition" or "life-of", the scene presets, and an estimated length (up to 2 minutes for every type from 4 Nov 2026).
 meta.type "ad" (paid ad creatives, 29 Oct 2026): 1-4 hooks, 2-3 points, one cta, end card, 22-30 s; tutoring and "book a
 session" are allowed there (the organic no-tutoring rule does not apply to paid ads), and only type/term/title/slug are required in meta.
 """
@@ -28,18 +28,17 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
            "min": {"hook": 1, "point": 2, "cta": 1, "endcard": 1}, "max": {"hook": 5, "point": 5, "cta": 1}},   # 5 hooks: Hoang's urgent opener (29 Oct 2026)
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
-# 4 Nov 2026 (Hoang, via tutoring-content): "stop the cap of 45 seconds, increase to 1 min 30" - short types may now run to 90 s;
-# life-of and howto keep their 2-minute cap
-SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 26), target=(100, 115), allowed=(85, 230), secs=(29, 91), wps=2.95),
+# 4 Nov 2026 (Hoang): "Put all of video to 2 mins cap" - every type may run to 2 minutes
+SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 34), target=(100, 115), allowed=(85, 330), secs=(29, 121), wps=2.95),
         # life-of: 30-60 s target; hard cap 2 minutes from 3 Nov 2026 (Hoang: "limit up 2 minutes for videos", replacing the 1-minute cap)
         "life-of": dict(chunk=(2, 5), beats=(9, 30), target=(105, 180), allowed=(85, 350), secs=(29, 121), wps=2.95),
         # howto: ElevenLabs v3 voice at tempo 1.12 (about 2.4 spoken words a second with gaps, measured 1 Nov 2026).
         # 60-90 s target; hard cap 2 minutes from 3 Nov 2026 (Hoang: "limit up 2 minutes for videos")
         "howto": dict(chunk=(2, 5), beats=(12, 40), target=(115, 220), allowed=(100, 285), secs=(44, 121), wps=2.4),
-        "ledger-talks": dict(chunk=(1, 3), beats=(8, 26), target=(80, 105), allowed=(65, 250), secs=(24, 91), wps=3.05),
+        "ledger-talks": dict(chunk=(1, 3), beats=(8, 34), target=(80, 105), allowed=(65, 350), secs=(24, 121), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
-        "ad": dict(chunk=(2, 5), beats=(5, 14), target=(55, 75), allowed=(45, 190), secs=(21, 91), wps=2.3)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
+        "ad": dict(chunk=(2, 5), beats=(5, 18), target=(55, 75), allowed=(45, 260), secs=(21, 121), wps=2.3)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)

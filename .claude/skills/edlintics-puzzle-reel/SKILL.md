@@ -1,13 +1,13 @@
 ---
 name: edlintics-puzzle-reel
-description: Turn one Edlintics puzzle into a 9:16 puzzle reel (up to 90 s) with the Kokoro voice reading the question, a silent 5-second ticking countdown, a hand that taps the right option, the answer reveal on the same diagram, a 3-sentence explanation and an end card. Code-rendered (no AI images or clips). Approved by Hoang 27 Oct 2026 (bottleneck v2 with voice). Also the reference for the future interactive puzzle exercise (REQ-0005)
+description: Turn one Edlintics puzzle into a 9:16 puzzle reel (up to 2 minutes) with the Kokoro voice reading the question, a silent 5-second ticking countdown, a hand that taps the right option, the answer reveal on the same diagram, a 3-sentence explanation and an end card. Code-rendered (no AI images or clips). Approved by Hoang 27 Oct 2026 (bottleneck v2 with voice). Also the reference for the future interactive puzzle exercise (REQ-0005)
 ---
 
 # Edlintics puzzle reel
 
 Reference build: `examples/bottleneck/` (bottleneck puzzle, 26 Oct). Worked-steps reference: `examples/tax-steps/puzzle.json` (tax bracket, 2 Nov). Hoang approved the voiced v2 on 27 Oct 2026. The video is in `docs/feature-requests/assets/REQ-0005/`
 
-## Flow (voiced cut, up to 90 s from 4 Nov 2026; the explanation and worked steps are full sentences with transitional words)
+## Flow (voiced cut, up to 2 minutes from 4 Nov 2026; the explanation and worked steps are full sentences with transitional words)
 1. **Question (0-10 s):** the question block (serif, 66 px, max 4 lines, one `*key word*` in blue) and the diagram drawing in. The voice reads the question
 2. **Pause (10-15 s):** the voice says "Pause and think before the timer ends", then a silent 5-second countdown ring (5, 4, 3, 2, 1, one full second each) with a soft tick. On screen: "Pause and think, then comment your answer"
 3. **Hand tap (about 1.9 s, added 27 Oct 2026 for v3):** when the countdown ends the ring fades and a flat line-art pointing hand (ink outline, white fill, blue cuff, about 155 px long, drawn in `render.html`) comes up from below. It points up, tilted 20 degrees to the right, with the fingertip on the option's letter circle and the hand body below and left of the circle, so the option text stays fully readable. It hovers briefly over a wrong option, moves to the right one and taps it: a press-down scale, a blue ripple ring from the circle and a soft generated tap sound. The tapped option fills blue with a white check. The hand slides back down and out before the explanation. On the lower rows (C, D) the cuff dips slightly below y 1250

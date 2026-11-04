@@ -1,6 +1,6 @@
 ---
 name: edlintics-explainer-reel
-description: Shared engine for Edlintics explainer reels (9:16, up to 90 s, hand-drawn Ledger picture stories with Kokoro voice, chunked captions, an end card and Canva music). Holds the scene library, validator, renderer and the one build command used by the edlintics-definition-reel and edlintics-life-of-reel skills. To make a reel, use one of those two skills; read this file only to change the engine.
+description: Shared engine for Edlintics explainer reels (9:16, up to 2 minutes, hand-drawn Ledger picture stories with Kokoro voice, chunked captions, an end card and Canva music). Holds the scene library, validator, renderer and the one build command used by the edlintics-definition-reel and edlintics-life-of-reel skills. To make a reel, use one of those two skills; read this file only to change the engine.
 ---
 
 # Edlintics explainer reel engine
@@ -23,7 +23,7 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 3. **Captions** are chunks of 2-5 words in time with the voice, with one `key` word highlighted per beat.
 4. **No full stop at the end of any paragraph.** This covers captions, the key point, the post caption, caption_x and the first comment. Full stops between sentences are fine.
 5. **House rules:** US dollars, no exclamation points, no emoji, no tutoring, general audience. The first comment never reveals the answer.
-6. **Length** is up to 90 s (Hoang, 4 Nov 2026: the 45 s cap is lifted; life-of and how-to keep their 2-minute cap). Use the time the story needs: about 2.4-3 spoken words a second, beats of 2-4 s.
+6. **Length** is up to 2 minutes for every reel type (Hoang, 4 Nov 2026: "Put all of video to 2 mins cap"). Use the time the story needs: about 2.4-3 spoken words a second, beats of 2-4 s.
 7. **Full sentences with transitions** (Hoang, 4 Nov 2026). The script, its description and every voice line are full sentences joined by strong transitional words (because, so, however, as a result, this means, for example). No fragments or keyword lists. The definition line is a full sentence that matches the glossary entry, and the end-card `keypoint` is a full sentence too, never a clipped phrase. The voice is Kokoro `af_heart` at speed 1.08.
 
 ## Files (scripts/)

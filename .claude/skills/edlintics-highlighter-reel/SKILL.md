@@ -1,6 +1,6 @@
 ---
 name: edlintics-highlighter-reel
-description: Make one Edlintics "highlighter" reel (9:16, up to 90 s). A printed Edlintics infographic sheet lies on a wooden desk, and a drawn hand with a yellow highlighter traces the chart and highlights each label as the ElevenLabs voice reads it, with big 2-4 word karaoke captions under the sheet and an end card. Code-rendered (no AI images, no real hands or faces). Used for "watch the numbers" ideas such as compounding, break-even and margins. Written step by step for a cheaper model. First reel: compounding (30 Oct 2026, from Hoang's reference video)
+description: Make one Edlintics "highlighter" reel (9:16, up to 2 minutes). A printed Edlintics infographic sheet lies on a wooden desk, and a drawn hand with a yellow highlighter traces the chart and highlights each label as the ElevenLabs voice reads it, with big 2-4 word karaoke captions under the sheet and an end card. Code-rendered (no AI images, no real hands or faces). Used for "watch the numbers" ideas such as compounding, break-even and margins. Written step by step for a cheaper model. First reel: compounding (30 Oct 2026, from Hoang's reference video)
 ---
 
 # Edlintics highlighter reel
