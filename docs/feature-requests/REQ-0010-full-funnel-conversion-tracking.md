@@ -1,6 +1,6 @@
 # REQ-0010  ·  Full-funnel conversion tracking for Meta, GA4 and Google Ads
 
-- **Status:** spec drafted by tutoring-web (feature FT, `docs/specs/conversion-tracking/`, commit 7a829ebda on feat/ft-conversion-tracking); build waits for Hoang's sign-off of decisions D1-D12
+- **Status:** building (D1-D12 approved by Hoang 2026-11-05, all defaults); FT010 schema + FT011 primitives first, then batches A/B/C; marketing verifies each batch from the CTO checklist
 - **Date:** 2026-11-04
 - **Source:** Hoang ("set that up properly so every campaign can track proper funnel sale and conversion. Work with the CTO on the Meta Conversions API setup and the Google Analytics/Ads event setup")
 - **Targets metric:** paid acquisition: cost per booking, cost per purchase and return on ad spend (ROAS) per campaign and per ad, on Meta and Google
@@ -158,3 +158,4 @@ Read only. Nothing was changed. Figures are for 7 Oct to 3 Nov 2026
 - 2026-11-04 — requested by Hoang; tutoring-web supplied the event inventory from main at 67adbdaf (PR #102 live on prod 4 Nov); CMO drafted this request
 - 2026-11-04 — tutoring-web drafted the FT spec (36 tasks, 12 decisions for Hoang). CMO review: agreed with all 12 defaults; asked for a ready Phase 2 list (Google Ads 622-861-8576, edlintics@gmail.com, closed, Hoang plans to reactivate; keep its GA4 link), a test path given staff exclusion (a non-staff test account Hoang creates, FT097), groupBy utm_term and click_id_type, and pricing_viewed + booking_calendar_opened in the first batch (FT029). All four accepted in 7a829ebda
 - 2026-11-05 — Hoang opened a new Google Ads account (customer ID from the overview URL: 938-406-8284; Hoang to confirm the ID shown in the account header). It replaces reactivating 622-861-8576 (FT190). Next: link it to GA4 263808863 and unlink 622-861-8576, turn on auto-tagging, accept the enhanced conversions terms; Phase 2 (FT110-FT114) can be scheduled
+- 2026-11-05 — Hoang approved D1-D12 (all defaults) in the tutoring-web session; FT build started (FT010, FT011, then A/B/C). Split agreed: CTO builds and sends a verify checklist per batch; marketing verifies in Events Manager and GA4 and owns GA4 admin, the hub funnel view and UTMs; Hoang owns credentials and sign-off
