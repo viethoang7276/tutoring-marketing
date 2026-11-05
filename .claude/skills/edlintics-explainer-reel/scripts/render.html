@@ -32,6 +32,8 @@ body.ad #card{top:300px;height:1090px;gap:34px}
 body.ad #card .term{font-size:120px}
 body.ad #card .fn{font:700 44px/1.3 Inter,sans-serif;color:#334155}
 #card>*{flex:none}
+/* no logo (in-lesson videos, 5 Nov 2026): nothing promotional, no corner logo and no logo on the cards */
+body.nologo #logo,body.nologo #card img{display:none !important}
 /* full-frame layout (opt-in with meta.layout "full", how-to reels, 1 Nov 2026): everything inside the platform safe zones
    (top 220 px, bottom 380 px, right 140 px). Captions y 228-438 in x 60-920, art box x 40-940 y 450-1440, logo y 1462 */
 body.full #art{-webkit-mask-image:linear-gradient(to bottom,transparent 438px,#000 462px);mask-image:linear-gradient(to bottom,transparent 438px,#000 462px)}
@@ -114,6 +116,7 @@ async function init(){ D=await (await fetch('scenes.json')).json(); await docume
   if(D.layout==='ad') document.body.classList.add('ad');
   if(D.layout==='full'){ document.body.classList.add('full'); BX=40; BW=900; BY=450; BH=990; }   // full-frame layout (how-to reels, 1 Nov 2026)
   if(D.clean) document.body.classList.add('clean');
+  if(D.nologo) document.body.classList.add('nologo');
   if(D.layout==='talk'){ TALK=true; document.body.classList.add('talk'); BX=0; BW=1080; BY=0; BH=1920; }
   return D.duration; }
 const clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>1-Math.pow(1-x,3), mix=(a,b,p)=>a.map((v,i)=>v+(b[i]-v)*p);
@@ -163,11 +166,13 @@ function eqHTML(el,q){ if(el.dataset.v===JSON.stringify(q)) return; el.dataset.v
 function render(t){
   const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08);
   const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
-  if(b.role==='endcard'){
+  // "defcard" (in-lesson videos, 5 Nov 2026): the same card mid-video, with the definition in place of the key point and no logo
+  if(b.role==='endcard'||b.role==='defcard'){
     const ct=t-a; art.style.opacity=0; cap.style.display='none'; logo.style.display='none'; card.style.display='flex';
-    const term=card.querySelector('.term'), kp=card.querySelector('.kp span');
-    if(term.textContent!==b.term){ term.textContent=b.term; kp.textContent=b.keypoint; }
-    const eq=card.querySelector('.eq'); if(b.equation){ eqHTML(eq,b.equation); eq.style.display='block'; eq.style.opacity=clamp((ct-0.9)/0.25); eq.style.transform=`scale(${0.94+0.06*back(clamp((ct-0.9)/0.3))})`; }
+    const term=card.querySelector('.term'), kp=card.querySelector('.kp span'), kt=b.role==='defcard'?b.definition:b.keypoint;
+    if(term.textContent!==b.term||kp.textContent!==kt){ term.textContent=b.term; kp.textContent=kt; }
+    if(b.role==='defcard') curImg=null;   // the next scene draws on again after the card
+    const eq=card.querySelector('.eq'); if(b.equation){ eqHTML(eq,b.equation); eq.style.display='block'; eq.style.opacity=clamp((ct-0.9)/0.25); eq.style.transform=`scale(${0.94+0.06*back(clamp((ct-0.9)/0.3))})`; } else eq.style.display='none';
     const fn=card.querySelector('.fn'); if(b.footnote){ fn.textContent=b.footnote; fn.style.display='block'; fn.style.opacity=clamp((ct-0.6)/0.3); }
     const cta=card.querySelector('.cta'); if(b.cta){ cta.textContent=b.cta; cta.style.display='block'; cta.style.opacity=clamp((ct-0.7)/0.15); cta.style.transform=`scale(${0.9+0.1*back(clamp((ct-0.7)/0.3))})`; }
     term.style.opacity=clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;

@@ -3,6 +3,8 @@
 Usage: python validate.py <workdir>/script.json
 Checks the house rules (voice, captions, currency, no tutoring, no trailing full stop), the beat structure for
 meta.type "definition" or "life-of", the scene presets, and an estimated length (up to 2 minutes for every type from 4 Nov 2026).
+meta.type "lesson" (in-lesson videos, 5 Nov 2026): no time cap (ideal 2-3 min), roles in any order, at least one defcard, nothing
+promotional (no end card, logo, follow line or loop-back), currency may follow the course (meta.currency).
 meta.type "ad" (paid ad creatives, 29 Oct 2026): 1-4 hooks, 2-3 points, one cta, end card, 22-30 s; tutoring and "book a
 session" are allowed there (the organic no-tutoring rule does not apply to paid ads), and only type/term/title/slug are required in meta.
 """
@@ -26,6 +28,10 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     # paid ad (29 Oct 2026): a hook, 2-3 selling points, one call to action, the end card
     "ad": {"order": ["hook", "point", "cta", "endcard"],
            "min": {"hook": 1, "point": 2, "cta": 1, "endcard": 1}, "max": {"hook": 5, "point": 5, "cta": 1}},   # 5 hooks: Hoang's urgent opener (29 Oct 2026)
+    # in-lesson video (Hoang, 5 Nov 2026): an optional hook question first, then the rest in any order; defcards (term +
+    # definition card, no logo) may sit after a section or all at the end, and may be last. No endcard, cta or loop
+    "lesson": {"order": ["hook", "story", "definition", "example", "defcard", "takeaway"], "free": True,
+               "min": {"defcard": 1}, "max": {"hook": 1}},
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 # 4 Nov 2026 (Hoang): "Put all of video to 2 mins cap" - every type may run to 2 minutes
@@ -38,13 +44,17 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 34), target=(100, 115), allow
         "ledger-talks": dict(chunk=(1, 3), beats=(8, 34), target=(80, 105), allowed=(65, 350), secs=(24, 121), wps=3.05),
         # ad: 1-4 short hook questions (a problem montage), 2-3 points, a CTA; the ad voice (ElevenLabs v3 dfeOmy6Uay63tNhyO99j
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
-        "ad": dict(chunk=(2, 5), beats=(5, 18), target=(55, 75), allowed=(45, 260), secs=(21, 121), wps=2.3)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
+        "ad": dict(chunk=(2, 5), beats=(5, 18), target=(55, 75), allowed=(45, 260), secs=(21, 121), wps=2.3),
+        # lesson (Hoang, 5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes)"; 60 s to about 4 minutes
+        "lesson": dict(chunk=(2, 5), beats=(6, 120), target=(354, 531), allowed=(177, 708), secs=(59, 241), wps=2.95)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
 NOT_USD = re.compile(r"[€£¥₫]|\b(euros?|eur|pounds? sterling|gbp|dong|vnd)\b", re.I)
 REQ_META = ["type", "term", "title", "slug", "caption", "caption_x", "first_comment", "threadsTopic", "threadsReason", "maths_check"]
 REQ_META_AD = ["type", "term", "title", "slug"]  # an ad's text lives in Ads Manager, not in caption/first comment
+REQ_META_LESSON = ["type", "title", "slug"]   # a lesson video is not posted: no caption, first comment or Threads fields
+PROMO = re.compile(r"\bfollow (us|edlintics|for more)\b|\blike and (share|subscribe)\b|\bsubscribe\b|\blink in (the )?bio\b|\bedlintics(\.com| dot com)?\b|\bwatch (till|until|to) the end\b|\bwait for it\b|\byou won'?t believe\b", re.I)
 
 
 def words(s):
@@ -54,10 +64,10 @@ def words(s):
 def main(path):
     S = json.load(open(path)); E, W = [], []
     m = S.get("meta", {}); t = m.get("type")
-    for k in (REQ_META_AD if t == "ad" else REQ_META):
+    for k in (REQ_META_AD if t == "ad" else REQ_META_LESSON if t == "lesson" else REQ_META):
         if not m.get(k): E.append(f"meta.{k} is missing")
     if t not in ROLES:
-        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto" or "ad"'); t = "definition"
+        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto", "ad" or "lesson"'); t = "definition"
     P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
@@ -87,10 +97,14 @@ def main(path):
     bad = [r for r in roles if r not in R["order"]]
     if bad: E.append(f"unknown roles {sorted(set(map(str, bad)))}; {t} roles are {R['order']}")
     seq = [R["order"].index(r) for r in roles if r in R["order"]]
-    if seq != sorted(seq): E.append(f"roles out of order; keep {' > '.join(R['order'])}")
-    if roles and roles[0] != "hook": E.append("beat 1 must be the hook")
-    if roles and roles[-1] != "endcard": E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint")')
-    if roles.count("endcard") > 1: E.append("only one end card")
+    if t == "lesson":   # any order; the hook, when there is one, opens the video as a direct question
+        if "hook" in roles[1:]: E.append("lesson: the hook (optional) can only be beat 1")
+        if roles and roles[0] == "hook" and "?" not in beats[0].get("text", ""): E.append("lesson: the hook must ask the learner a direct question (end it with ?)")
+    else:
+        if seq != sorted(seq): E.append(f"roles out of order; keep {' > '.join(R['order'])}")
+        if roles and roles[0] != "hook": E.append("beat 1 must be the hook")
+        if roles and roles[-1] != "endcard": E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint")')
+        if roles.count("endcard") > 1: E.append("only one end card")
     for name, sp in scenes.items():   # summary pointer (Hoang, 1 Nov 2026): the boxes must leave the small Ledger room on the left
         if sp.get("pointer"):
             if t != "howto": W.append(f"scene {name}: \"pointer\" is meant for how-to summary scenes")
@@ -113,13 +127,14 @@ def main(path):
                 if any(l.get("p") == "ledger" and abs(l.get("x", 0) - it.get("x", 0)) < 700 for l in its[:k]):
                     E.append(f'scene {name}: "{it.get("p")}" is listed after Ledger, so it is drawn over him; list it before Ledger (Hoang, 3 Nov 2026)')
     # Story flow (Hoang, 3 Nov 2026: "no transitional words in a story"): story beats link to the one before
-    if t in ("life-of", "howto", "definition") and beats:
-        LINK = re.compile(r"^\W*(but|so|then|that means|that is|which means|now|first|next|after|still|because|and|until|meanwhile|here is|here's|this is|by|at the end|finally|later|soon|instead|yet|that's)\b", re.I)
-        story = [b for b in beats[2:] if b.get("role") not in ("endcard", "summary", "loop")]
+    if t in ("life-of", "howto", "definition", "lesson") and beats:
+        LINK = re.compile(r"^\W*(but|so|then|that means|that is|which means|now|first|next|after|still|because|and|until|meanwhile|here is|here's|this is|by|at the end|finally|later|soon|instead|yet|that's"
+                          + (r"|however|for example|for instance|as a result|in other words|this means|this is why|in short|to see why|let's|imagine|in the same way|on the other hand|therefore|in fact|whenever|once|when|if" if t == "lesson" else "") + r")\b", re.I)
+        story = [b for b in beats[2:] if b.get("role") not in ("endcard", "summary", "loop", "defcard")]
         linked = sum(1 for b in story if LINK.search(b.get("text", "")) or re.search(r"[.:]\s*(but|so|then|that means|now)\b", b.get("text", ""), re.I))
         if story and linked / len(story) < 0.6:
             W.append(f"story flow: only {linked} of {len(story)} story beats start with a linking word (But, So, Then, That means, Now...); link each beat to the one before (Hoang, 3 Nov 2026)")
-        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t != "definition":
+        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t not in ("definition", "lesson"):
             W.append('story flow: the turn has no "But ..." (or Yet/Still/Instead); mark the turning point (Hoang, 3 Nov 2026)')
     # Time frame matches the numbers (Hoang, 3 Nov 2026: a monthly example told as clock times in one day)
     vtxt = " ".join(b.get("text", "") for b in beats).lower()
@@ -156,6 +171,32 @@ def main(path):
         tx = b.get("text", ""); total += len(words(tx))
         if "gap" in b and not 0 <= float(b["gap"]) <= 1.5: E.append(f"{where}: gap {b['gap']} s; use 0-1.5")
         if not tx: E.append(f"{where}: empty voice text")
+        if t == "lesson" and tx and b.get("role") != "defcard":   # full sentences (Hoang, 5 Nov 2026): no fragments or keyword lists
+            if len(words(tx)) < 5 or not re.search(r"[.?]['\"”’)]?$", tx.strip()): E.append(f"{where}: lesson voice must be full sentences ending in . or ?: {tx[:60]!r}")
+        if b.get("role") == "defcard":   # definition card (lessons, 5 Nov 2026): the term large, the definition with the highlighter, an optional equation; no logo
+            if t != "lesson": E.append(f'{where}: role "defcard" is for meta.type "lesson"')
+            term, df = b.get("term", ""), b.get("definition", "")
+            if not term: E.append(f'{where}: defcard needs "term"')
+            if not df: E.append(f'{where}: defcard needs "definition" (one full sentence)')
+            if df and not 6 <= len(words(df)) <= 30: E.append(f"{where}: definition has {len(words(df))} words (6-30, one full sentence)")
+            if df.rstrip().endswith("."): E.append(f"{where}: definition ends with a full stop")
+            for kk in ("keypoint", "cta", "footnote", "img"):
+                if b.get(kk): E.append(f'{where}: a defcard has no "{kk}" (term, definition and an optional equation only)')
+            _p = lambda z: " ".join(re.sub(r"[^a-z0-9$%]+", " ", z.lower()).split())
+            if term and _p(term) not in _p(tx): E.append(f"{where}: the voice must read the term")
+            if df and _p(df) not in _p(tx): E.append(f"{where}: the voice must read the definition as it is on the card")
+            q = b.get("equation")
+            if q is not None:
+                if not isinstance(q, dict) or not q.get("lhs") or not q.get("num"): E.append(f'{where}: "equation" must be {{"lhs", "num", "den" (optional)}}')
+                else:
+                    for kk in ("lhs", "num", "den", "example"):
+                        v = str(q.get(kk, ""))
+                        if v.rstrip().endswith("."): E.append(f"{where}: equation {kk} ends with a full stop")
+                        if len(v) > 34: E.append(f"{where}: equation {kk} {v[:30]!r}... is over 34 characters; shorten it to fit the card")
+                    texts_extra.append(("defcard equation", " ".join(str(q.get(kk, "")) for kk in ("lhs", "num", "den", "example"))))
+            if len(words(tx)) / WPS_T > 14: W.append(f"{where}: defcard voice is about {len(words(tx)) / WPS_T:.1f} s; keep the definition to one sentence")
+            texts_extra.append(("defcard", term + " " + df))
+            continue
         if b.get("role") == "endcard":
             term, kp = b.get("term", ""), b.get("keypoint", "")
             if not term: E.append(f"{where}: end card needs \"term\"")
@@ -203,7 +244,7 @@ def main(path):
             if ct.rstrip().endswith("."): E.append(f'{where}: caption chunk "{ct}" ends with a full stop')
             if c.get("key") and c["key"] not in ct: E.append(f'{where}: key "{c["key"]}" is not inside chunk "{ct}"')
         dur = len(words(tx)) / WPS_T
-        if dur > (7.5 if t == "ad" else 6.5 if t == "howto" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
+        if dur > (7.5 if t == "ad" else 6.5 if t == "howto" else 12 if t == "lesson" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
     for k, b in enumerate(beats, 1):   # takeaways and lessons avoid absolute claims (definition review, 1 Nov 2026)
         if t == "howto" and b.get("role") == "takeaway" and re.search(r"\b(never|always|only|every|all|no one|nobody|guarantees?)\b", b.get("text", ""), re.I):
             W.append(f"beat {k}: absolute word in the takeaway {b.get('text', '')[:60]!r}; prefer rarely, usually, often, can")
@@ -224,8 +265,10 @@ def main(path):
             if where != "meta.first_comment" or EMOJI.search(body):
                 E.append(f"{where}: emoji in {s[:60]!r} (emojis are allowed only at the end of first_comment)")
         if TUTOR.search(s) and t != "ad": E.append(f"{where}: mentions tutoring: {s[:60]!r}")
-        # paid tutoring ads quote the real €45/hour price (Hoang, 3 Nov 2026); organic content stays in US dollars
-        if NOT_USD.search(s) and t != "ad": E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
+        # paid tutoring ads quote the real €45/hour price (Hoang, 3 Nov 2026); organic content stays in US dollars;
+        # a lesson may follow its course's currency (meta.currency, e.g. "EUR")
+        if NOT_USD.search(s) and t != "ad" and not (t == "lesson" and str(m.get("currency", "USD")).upper() not in ("USD", "$")): E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
+        if t == "lesson" and PROMO.search(s): E.append(f"{where}: nothing promotional in a lesson (no follow, subscribe, brand or tease lines): {s[:60]!r}")
     for k in ("caption", "caption_x", "first_comment"):
         for para in [p for p in str(m.get(k, "")).split("\n") if p.strip()]:
             if para.rstrip().endswith("."): E.append(f'meta.{k}: paragraph ends with a full stop: "...{para.rstrip()[-40:]}"')

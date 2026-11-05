@@ -22,7 +22,8 @@ that scene shows the same steady frame. Beats never carry focus or focus_end. A 
   "wide"              everything in the scene
   [x, y, w, h]        an explicit box in the 1080x1920 art
 Boxes are widened to the frame's 1000:780 shape, so the subject fills the frame as much as possible.
-The last beat (role "endcard") has no img: the renderer shows the term, key point and logo instead.
+The last beat (role "endcard") has no img: the renderer shows the term, key point and logo instead. A lesson's "defcard"
+beats (anywhere in the list) have no img either: the renderer shows the term, the definition and an optional equation, no logo.
 """
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -198,7 +199,7 @@ def main(d):
     beats = []
     for k, b in enumerate(S["beats"], 1):
         nb = dict(b); nb.pop("focus_end", None)
-        if b.get("role") == "endcard":
+        if b.get("role") in ("endcard", "defcard"):
             nb.pop("img", None); nb["focus"] = [0, 0, 1080, 1920]; nb.setdefault("chunks", [])
         else:
             spec = S["scenes"][b["img"]]

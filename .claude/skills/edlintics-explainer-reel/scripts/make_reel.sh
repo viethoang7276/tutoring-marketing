@@ -7,9 +7,12 @@
 # Output in <workdir>: <slug>.mp4 (voice + effects + quiet pad, for preview), <slug>-voice-only.mp4,
 #   <slug>-canva-upload.mp4 (<10 MB, upload this to Canva), <slug>-contact-sheet.png, <slug>-poster.jpg (the
 #   first still by time, 540x960; upload it with the video), stills/, timing.json
+# meta.type "lesson" (in-lesson videos, 5 Nov 2026): no social size cap, a 1080x1920 poster, and lesson_files.py writes
+#   <slug>.vtt (captions) and <slug>-transcript.txt (the "Read instead" text)
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"; REPO="$(cd "$HERE/../../../.." && pwd)"; PY="$REPO/tools/tts/.venv/bin/python"
 W="$(cd "$1" && pwd)"; SLUG="$2"; SPEED="${3:-1.08}"
+LESSON=$("$PY" -c "import json,sys;print(int(json.load(open(sys.argv[1])).get('meta',{}).get('type')=='lesson'))" "$W/script.json")
 [ -n "$SLUG" ] || { echo "usage: make_reel.sh <workdir> <slug> [speed]"; exit 2; }
 echo "== 1/7 validate";      "$PY" "$HERE/validate.py" "$W/script.json"
 echo "== 2/7 scenes";        "$PY" "$HERE/build_scenes.py" "$W"
@@ -21,7 +24,7 @@ d = sys.argv[1]; T = json.load(open(f"{d}/timing.json")); B = json.load(open(f"{
 if len(T["beats"]) != len(B): sys.exit("REUSE_AUDIO: beat count changed; rebuild without REUSE_AUDIO")
 for t, b in zip(T["beats"], B):
     t.pop("cam", None)
-    for k in ("img", "focus", "cam", "term", "keypoint", "equation", "footnote", "cta"):   # picture and end-card fields; voice timings stay
+    for k in ("img", "focus", "cam", "term", "keypoint", "definition", "equation", "footnote", "cta"):   # picture and end-card fields; voice timings stay
         if k in b: t[k] = b[k]
 json.dump(T, open(f"{d}/timing.json", "w"), indent=1)
 PYEOF
@@ -36,6 +39,9 @@ rm -rf "$W/stills"; SCENES="$W/scenes.json" OUT="$W/stills" node render.js still
 [ "$STILLS_ONLY" = "1" ] && { "$PY" "$HERE/postcheck.py" "$W" "$SLUG" >/dev/null 2>&1 || true; "$PY" "$HERE/framefill.py" "$W" || true; echo "STILLS_ONLY: stills and contact sheet only"; exit 0; }
 echo "== 7/7 render video";  SCENES="$W/scenes.json" ./build.sh "$W" "$SLUG"
 # poster: the first still by time (numeric sort, never by name), saved as <slug>-poster.jpg
-"$PY" -c "import glob,re;from PIL import Image;f=min(glob.glob('$W/stills/still-*.png'),key=lambda p:float(re.search(r'still-([\d.]+)\.png',p)[1]));Image.open(f).convert('RGB').resize((540,960)).save('$W/$SLUG-poster.jpg',quality=85);print('poster:','$W/$SLUG-poster.jpg','from',f.split('/')[-1])"
+# lessons: full size 1080x1920 for the in-app player
+PS=$([ "$LESSON" = "1" ] && echo "1080,1920" || echo "540,960")
+"$PY" -c "import glob,re;from PIL import Image;f=min(glob.glob('$W/stills/still-*.png'),key=lambda p:float(re.search(r'still-([\d.]+)\.png',p)[1]));Image.open(f).convert('RGB').resize(($PS)).save('$W/$SLUG-poster.jpg',quality=85 if '$PS'=='540,960' else 90);print('poster:','$W/$SLUG-poster.jpg','from',f.split('/')[-1])"
+[ "$LESSON" = "1" ] && "$PY" "$HERE/lesson_files.py" "$W" "$SLUG"
 "$PY" "$HERE/postcheck.py" "$W" "$SLUG"
 "$PY" "$HERE/framefill.py" "$W"   # frame-fill report; FAILs only for the full-frame layout (meta.layout "full")

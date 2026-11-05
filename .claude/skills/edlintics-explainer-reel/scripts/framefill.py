@@ -46,14 +46,14 @@ print(f"layout {layout}: {len(rows)} stills")
 print(" beat  role       frame   safe   rows   span y      ui-zone ink")
 for k, fr, sa, top, bot, ui, role, rw in rows:
     print(f" {k + 1:>4}  {str(role):<9} {fr:6.1%} {sa:6.1%} {rw:6.1%}   {top:>4}-{bot:<4}   {ui:5.1%}")
-body = [r for r in rows if r[6] != "endcard"]
+body = [r for r in rows if r[6] not in ("endcard", "defcard")]
 mf = np.mean([r[1] for r in body]); ms = np.mean([r[2] for r in body]); mb = np.mean([r[4] for r in body]); mr = np.mean([r[7] for r in body])
 print(f"MEAN (without end card): frame {mf:.1%}, safe area {ms:.1%}, rows {mr:.1%}, content bottom y {mb:.0f}")
 E = []
 if layout == "full":
     if ms < MIN: E.append(f"mean safe-area share {ms:.1%} is under {MIN:.0%}: make the scenes bigger")
     for k, fr, sa, top, bot, ui, role, rw in rows:
-        if ui > 0.02: E.append(f"beat {k + 1}: {ui:.1%} of the ink sits in the UI zones (top 220, bottom 380, right 140 px)")
+        if ui > 0.02 and role != "defcard": E.append(f"beat {k + 1}: {ui:.1%} of the ink sits in the UI zones (top 220, bottom 380, right 140 px)")
 # caption sync: every caption chunk must start inside its own voice line (timing.json from vo.py)
 try:
     T = json.load(open(f"{d}/timing.json")); bad = 0

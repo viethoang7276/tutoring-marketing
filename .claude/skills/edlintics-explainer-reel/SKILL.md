@@ -9,6 +9,7 @@ To make a reel, use one of these skills:
 - **edlintics-definition-reel:** hook, everyday story, definition, business example, takeaway, end card.
 - **edlintics-life-of-reel:** "A day in the life of a [role]", relatable moments, the turning moment, the concept, the lesson, end card.
 - **edlintics-howto-reel:** "How [role] in [industry] deals with [problem]" (60-90 s, 2-minute cap): hook question, the problem, 3-4 steps, the concept with its equation, a 4-box summary diagram, takeaway, end card with term, definition and equation. `meta.type: "howto"`; it opts in to the full-frame layout with `meta.layout: "full"` (see "Full-frame layout" below).
+- **In-lesson videos:** `meta.type: "lesson"`, for course lessons in the app, not social posts (see "In-lesson videos (type lesson)" below). Examples: `example-lesson.json` (defcards inline) and `example-lesson-grouped.json` (defcards at the end).
 - **edlintics-ledger-talks:** Ledger talks to camera with a mic (test format T1). `meta.type: "ledger-talks"` switches the engine to the talk layout: full-screen art, a fixed frame, lip sync (mood `talk`), jump cuts, 1-3 word karaoke captions over his chest, voice only. New presets: mood `talk`, arm `mic`, `larm` (`up_l`, `point_l`, `open_l`, `shrug_l`) and background `campus`.
 
 Both write a `script.json` and build it with this engine:
@@ -37,7 +38,8 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 | `mix_audio.py` | Makes `audio-voice.wav` (voice plus soft generated whoosh and tick) and `audio.wav` (adds a quiet pad for preview) |
 | `make_scenes_json.py` | Packs the art, beats and end card into `<work>/scenes.json` |
 | `render.html`, `render.js`, `build.sh` | The headless Chrome renderer at 24 fps, plus the H.264 encode, the voice-only cut and the Canva upload copy under 10 MB |
-| `postcheck.py` | Checks resolution, audio, length and the 10 MB limit, and makes `<slug>-contact-sheet.png` |
+| `postcheck.py` | Checks resolution, audio, length and the 10 MB limit (not for lessons), and makes `<slug>-contact-sheet.png` |
+| `lesson_files.py` | Lessons only, run by `make_reel.sh`: `<slug>.vtt` (WebVTT from the caption chunk times) and `<slug>-transcript.txt` (the "Read instead" text) |
 | `canva_kit.py` | After the build: the editable kit (per-beat clean clips, voice and per-line files normalised to -14 LUFS, SRT, end-card PNGs, previews, README) for Canva or CapCut |
 | `cutcheck.py` | Frame checks after the build: ink coverage on the first frames after every cut, plus the 4 fps and cut ±2-frame review sheets |
 | `logo/edlintics-logo.png` | The logo from the Canva post template DAHYuGZYL_E |
@@ -162,3 +164,13 @@ Hoang (1 Nov 2026): the first how-to sample left the bottom half of the phone em
 - **framefill.py:** frame-fill and caption-sync report, run at the end of `make_reel.sh` (also with `STILLS_ONLY=1`); it FAILs only for the full layout (mean safe-area share under 75%, more than 2% ink in the UI zones, a caption chunk outside its voice line). Sample: 63.6% (old layout) to 80.1%.
 - **Long reels and 10 MB:** `build.sh` lowers the Canva copy's video bitrate for reels over ~48 s so it stays near 9 MB (shorter reels keep 1500k), and re-encodes `<slug>.mp4` at that bitrate only if it is 10 MB or more.
 - `REUSE_AUDIO=1` now also carries end-card fields (`term`, `keypoint`, `equation`, `footnote`, `cta`) from beats.json, and `STILLS_ONLY=1` no longer exits 1 because the MP4s are missing.
+
+## In-lesson videos (type lesson, 5 Nov 2026)
+Hoang (5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes), vertical design, script need to be in full sentence with transitional words, using the same drawing style like what we have with the explainer reels". Set `meta.type: "lesson"`; `meta.layout: "full"` is recommended. Same scenes, Ledger, pencil look, voice and captions as the reels.
+- **Roles:** an optional `hook` (beat 1 only, a direct question to the learner ending in `?`, never a social tease), then `story`, `definition`, `example`, `defcard` and `takeaway` in any order. At least one `defcard`; no `endcard`, `loop` or `cta`
+- **Defcard:** `{"role": "defcard", "term", "definition", "text", "equation"?}`. It renders like the end card without the logo: the term large, the full-sentence definition (6-30 words, no closing full stop) with the highlighter, and an optional `equation {lhs, num, den}` card. The voice `text` must read the term and then the definition word for word. It has no `img` and no caption chunks. Defcards may come after a section (inline) or all at the end (grouped, as in FA1 2.4), more than once, and may be the last beat
+- **Nothing promotional:** no end card, logo (corner logo and card logo are off: `nologo` in scenes.json, set from the type), follow line, loop-back or edlintics.com. The validator FAILs follow, subscribe, link-in-bio, brand-name and tease lines
+- **Length:** 60 s to about 4 minutes (177-708 words at 2.95 words a second); the 354-531 word target (2-3 minutes) is a WARN only. Beats may run to about 12 s. Captions are 2-5 word chunks with no closing full stop
+- **Kept checks:** full sentences ending in `.` or `?` with transitions (story-flow WARN, with however, for example, as a result, in other words and the like), no exclamation points or emoji, no tutoring. Money in US dollars unless `meta.currency` names the course's currency (for example `"EUR"`)
+- **Not required:** caption, caption_x, first comment, Threads fields, follow CTA, logo end card, how-to hook question. Meta needs only `type`, `title` and `slug`
+- **Outputs (next to the MP4):** `<slug>.mp4` (crf 20, no 10 MB re-encode; postcheck skips the size check), `<slug>.vtt`, `<slug>-transcript.txt` (spoken `text`, never `say`, `[tags]` dropped, paragraphs per role run, each defcard as a term line and a definition line, no full stop closing a paragraph), and `<slug>-poster.jpg` at 1080x1920 from the first frame (the hook). `make_cover.js` is not used for lessons because its kicker and title are social cover copy

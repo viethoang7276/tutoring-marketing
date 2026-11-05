@@ -13,11 +13,12 @@ for b in T["beats"]:
     m = re.match(r'\s*(<rect x="0" y="0" width="1080" height="1480"[^>]*/>)', body)
     if m: wall, body = True, body[m.end():]
     scenes[b["img"]] = {"body": body, "wall": wall}
-layout = "reel"; env = []
+layout = "reel"; env = []; nologo = False
 try:
     _t = json.load(open(f"{d}/script.json")).get("meta", {}).get("type")
     if _t == "ledger-talks": layout = "talk"
     if _t == "ad": layout = "ad"   # paid ad: captions sit inside the central 4:5 safe area (Meta feed crop)
+    nologo = _t == "lesson"   # in-lesson videos (5 Nov 2026): nothing promotional, so no logo on the frames or the cards
     # full-frame layout (opt-in, how-to reels, 1 Nov 2026): captions y 228-438, art x 40-940 y 450-1440, logo y 1462,
     # all inside the platform safe zones (top 220, bottom 380, right 140 px)
     if json.load(open(f"{d}/script.json")).get("meta", {}).get("layout") == "full" and layout == "reel": layout = "full"
@@ -30,6 +31,6 @@ if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (li
     env = [int(v > thr) for v in r]
     for k in range(1, len(env) - 1):   # a mouth that flaps every frame looks jittery: hold open frames for 2
         if env[k - 1] and not env[k] and env[k + 1]: env[k] = 1
-data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env,
-        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "footnote", "cta", "fx", "cam", "equation") if k in b} for b in T["beats"]]}
+data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env, "nologo": nologo,
+        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "definition", "footnote", "cta", "fx", "cam", "equation") if k in b} for b in T["beats"]]}
 json.dump(data, open(f"{out}/scenes.json", "w")); print(len(data["beats"]), "beats,", len(scenes), "scenes")

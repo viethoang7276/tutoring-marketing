@@ -2,7 +2,7 @@
 
 Usage: tools/tts/.venv/bin/python postcheck.py <workdir> <slug>
 Fails (exit 1) if the video isn't 1080x1920, has no audio, its length is off from timing.json by more than
-0.5 s, or the Canva upload copy is 10 MB or more. Writes <workdir>/<slug>-contact-sheet.png from <workdir>/stills.
+0.5 s, or the Canva upload copy is 10 MB or more (not for meta.type "lesson": in-lesson videos have no social size cap). Writes <workdir>/<slug>-contact-sheet.png from <workdir>/stills.
 """
 import glob, json, os, re, subprocess, sys
 import imageio_ffmpeg
@@ -10,6 +10,8 @@ from PIL import Image, ImageDraw
 
 d, slug = sys.argv[1], sys.argv[2]; FF = imageio_ffmpeg.get_ffmpeg_exe(); E = []
 T = json.load(open(f"{d}/timing.json"))
+try: LESSON = json.load(open(f"{d}/script.json")).get("meta", {}).get("type") == "lesson"
+except Exception: LESSON = False
 def probe(f):
     r = subprocess.run([FF, "-hide_banner", "-i", f], capture_output=True, text=True).stderr
     dur = re.search(r"Duration: (\d+):(\d+):([\d.]+)", r); res = re.search(r"Video: .*?(\d{3,4})x(\d{3,4})", r)
@@ -24,7 +26,7 @@ for name in (f"{slug}.mp4", f"{slug}-voice-only.mp4", f"{slug}-canva-upload.mp4"
     if abs(dur - T["duration"]) > 0.5: E.append(f"{name}: {dur:.2f} s but timing.json says {T['duration']} s")
     print(f"{name}: {dur:.2f} s, {res}, audio {aud}, {os.path.getsize(f) / 1e6:.1f} MB")
 cu = f"{d}/{slug}-canva-upload.mp4"
-if os.path.exists(cu) and os.path.getsize(cu) >= 10e6: E.append("canva upload copy is 10 MB or more; the Chrome file bridge refuses it")
+if os.path.exists(cu) and os.path.getsize(cu) >= 10e6 and not LESSON: E.append("canva upload copy is 10 MB or more; the Chrome file bridge refuses it")
 stills = sorted(glob.glob(f"{d}/stills/still-*.png"), key=lambda p: float(re.search(r"still-([\d.]+)\.png", p)[1]))
 if stills:
     tw, th, cols = 270, 480, min(6, len(stills)); rows = (len(stills) + cols - 1) // cols
