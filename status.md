@@ -3,7 +3,7 @@
 The cross-session memory for this repo. Read after `session-start.md`. Update it at the end of any
 session that changes state (append to the session log; revise "Now" / "Next").
 
-_Last updated: 2026-10-28_
+_Last updated: 2026-11-05_
 
 ## Social posting engine: handover (read first, updated 2026-10-24; current rules: see "Rules: current state" at the end)
 
@@ -566,3 +566,13 @@ Any session can take over from here. Do these in order:
 - **Halloween (Hoang 31 Oct):** two extra posts, approved and live: reel `lifeof-financebro-halloween` (Ledger in a Dracula costume over his standard suit, forward contracts and cocoa, 21:30 VN) and puzzle `2026-10-31-2030-halloween` (cocoa less than half its record, why chocolate is not cheaper, 22:30 VN). Definition-reviewer fixes applied. Threads posted live (cap full). Meta AI info not offered in the Reels composer. New engine outfits `vest` and `dracula` plus Halloween props
 - **Holiday calendar (Hoang 31 Oct):** `docs/content-workflow/holiday-calendar.md`, big yearly international events only (no Vietnamese or national days); Thursday plan step 4a; Christmas run 11-24 Dec drafted in the 3 Dec plan. The 07:59 cloud planner's instructions are still outdated and must follow this before 3 Dec. Christmas music research: `docs/research/2026-10-31-christmas-music.md` (Pixabay piano shortlist; decisions pending on Content ID and Canva-first)
 - **Phone tasks (Instagram Stories):** DfIEbr-geAs, DfJoERPCNS5, DfJyX92gcE9, DfKAG5OD2rQ, DfKG4VGj7r3, DfKYIG4Eqma, DfKe4oDCv5d
+
+## 5 Nov 2026 (15:00 VN): session restart after the Mac shut down
+This log had no entries for 1-5 Nov; for that gap see `git log` and the hub (`runs`, slot `statusNote`). The interrupted session had finished its last reply (14:41 VN); no agent or render was cut off
+- **Safeguard:** no `changes` slots; runs/daily-2026-11-04 and daily-2026-11-05 exist; all 4 Nov posts have first comments on all 7 platforms (bullwhip ones late, 5 Nov 10:00-10:45 VN). No Threads backlog (no run has thPending)
+- **Crons recreated (session-only, die with the session):** 14 first-comment runs 5 Nov 16:04 to 9 Nov 00:04 VN (the 00:04 runs also do the daily metrics refresh); 7 how-to runs 10-16 Nov 03:04 VN; morning refresh 07:13 (c46e4b78); weekly review Mondays 01:13 (074c2ed3). Recurring ones expire after 7 days. Threads backlog cron not recreated (nothing pending). Week-46 posts other than the how-to reels have no crons yet: add them when they are scheduled
+- **Hub week view:** re-checked in Chrome after the last two fixes (no puzzle duplicates, W46 proposals show); closes the open check from the old session
+- **Hub issues found, not fixed:** (a) First comments banner says "39 posts need attention" but is inflated: non-post runs docs (weekly-*, threads-backlog-*, thumbnails-*, schedule-howto-*) render as rows, so a real miss is hard to see; (b) 2 Nov 13:00 and the startup-founder reel show "Scheduled" in the calendar though their runs docs show them live and done (2 Nov 16:00 comic shows the same; its runs doc not checked)
+- **Open from the 5 Nov refresh (runs/daily-2026-11-05):** X 3 Nov 10:00 and 13:00 posts never went out; live X bullwhip post is the old v1 video; TikTok 0 views on every post since 27 Oct (7-day account views 10); Facebook Insights lists a second skill compression reel at 4 Nov 16:54 VN (20 views), possible duplicate
+- **Waiting on Hoang:** "approve plan" for the monthly plan (104 proposals, 8 decisions, W46 starts 9 Nov); blog import with his key (AI-at-work series, tutoring-web); Ledger's tie in the FA1 lesson videos if the no-suit rule covers him; long sentences in those videos need a script edit
+- **Waiting on others:** CTO tells us when the first real Purchase arrives, then switch the tutoring ad sets from landing page views to Purchase (REQ-0009); REQ-0010 build in progress; FA1 2.4 videos wait for the CTO's video card
