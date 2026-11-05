@@ -118,7 +118,7 @@ The standard events above cover the big steps. Custom events cover the small ste
 - Make sure Google OAuth sign-ups fire `signup_completed`
 
 ## What Hoang does (outside the code)
-1. **Google Ads (later):** when Hoang opens the account, give its ID and link it to GA4 property 263808863. Until then phase 1 runs without it
+1. **Google Ads:** new account opened 5 Nov 2026 (938-406-8284, from its URL; to confirm). Link it to GA4 property 263808863 and unlink the closed 622-861-8576
 2. In Google Ads: turn on auto-tagging, accept the enhanced conversions terms, and create the conversion actions the spec names (or let the CTO/CMO do it with his OK)
 3. Meta: run the MP022 test purchase (browser + server dedupe), rotate `META_CAPI_ACCESS_TOKEN`, accept the Business Tools Terms, add `NEXT_PUBLIC_META_PIXEL_ID` to Preview
 4. Approve the privacy and cookie page wording for Google Ads
@@ -157,3 +157,4 @@ Read only. Nothing was changed. Figures are for 7 Oct to 3 Nov 2026
 ## Decision log
 - 2026-11-04 — requested by Hoang; tutoring-web supplied the event inventory from main at 67adbdaf (PR #102 live on prod 4 Nov); CMO drafted this request
 - 2026-11-04 — tutoring-web drafted the FT spec (36 tasks, 12 decisions for Hoang). CMO review: agreed with all 12 defaults; asked for a ready Phase 2 list (Google Ads 622-861-8576, edlintics@gmail.com, closed, Hoang plans to reactivate; keep its GA4 link), a test path given staff exclusion (a non-staff test account Hoang creates, FT097), groupBy utm_term and click_id_type, and pricing_viewed + booking_calendar_opened in the first batch (FT029). All four accepted in 7a829ebda
+- 2026-11-05 — Hoang opened a new Google Ads account (customer ID from the overview URL: 938-406-8284; Hoang to confirm the ID shown in the account header). It replaces reactivating 622-861-8576 (FT190). Next: link it to GA4 263808863 and unlink 622-861-8576, turn on auto-tagging, accept the enhanced conversions terms; Phase 2 (FT110-FT114) can be scheduled
