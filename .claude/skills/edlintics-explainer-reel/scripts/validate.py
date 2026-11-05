@@ -202,7 +202,7 @@ def main(path):
             if not term: E.append(f"{where}: end card needs \"term\"")
             if not kp: E.append(f"{where}: end card needs \"keypoint\" (one line to remember)")
             if term and m.get("term") and term.lower().rstrip("s") != str(m["term"]).lower().rstrip("s"): E.append(f'{where}: end card term "{term}" differs from meta.term "{m.get("term")}"')
-            if kp and not 4 <= len(words(kp)) <= 12: E.append(f"{where}: key point has {len(words(kp))} words (4-12)")
+            if kp and not 4 <= len(words(kp)) <= 24: E.append(f"{where}: key point has {len(words(kp))} words (4-24; a glossary-length sentence is allowed from 4 Nov 2026)")
             if kp.rstrip().endswith("."): E.append(f"{where}: key point ends with a full stop")
             _n = lambda z: re.sub(r"[/\-]", " ", z.lower())  # "A-B testing" says "A/B testing" (Kokoro reads "/" as "slash")
             cta = b.get("cta", "")
@@ -228,7 +228,7 @@ def main(path):
                 if len(ln) > 90 or ln.rstrip().endswith("."): E.append(f"{where}: footnote line {ln[:40]!r}: 90 characters at most, no closing full stop")
             if fn: texts_extra.append(("footnote", fn))
             sec = len(words(tx)) / WPS_T
-            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 5.6 if t == "howto" else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
+            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 5.6 if t == "howto" else 8.0 if t in ("definition", "life-of") else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
             continue
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
