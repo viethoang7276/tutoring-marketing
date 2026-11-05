@@ -1724,6 +1724,362 @@ def payoff_grid_box(x, y, s=1.0, w=860, ch=230, **_):
     return [x - w / 2 * s, y - 430 * s, w * s, (140 + 2 * float(ch)) * s]
 
 
+# ---------------------------------------------------------------- FA1 course cast and lesson diagram props (in-lesson videos, 5 Nov 2026)
+# Plot and Tempo are EdCharacter cast members (geometry from tutoring-web/public/mascot/plot.svg and tempo.svg, 240x270 units,
+# the same frame, legs, arms and hands as Ledger). No-suit design: no collar and no tie (tutoring-content mascot skill, "The cast").
+# Identity kept in every pose: the face-screen with its instrument (Plot: the bar chart; Tempo: the hourglass), the brand
+# colours and the eyes. Moods and arms change the expression only.
+CAST_MOODS = ["smile", "happy", "focused", "surprised", "worried", "thinking", "sigh"]
+SAND = "#EAF2FF"; BAR_GREY = "#94A3B8"
+
+
+def _cast_face(mood, ey, er, my, msw, gaze=None):
+    """Eyes, brows, mouth and effect marks for a cast face. ey/er: eye centre y and radius; my: mouth line y; msw: mouth stroke."""
+    gx, gy, _ = GAZES.get(gaze, (0, 0, 0))
+    mouth = f'<path d="M106 {my} Q120 {my + 12} 134 {my}" fill="none" stroke="{INK}" stroke-width="{msw}" stroke-linecap="round"/>'
+    eyes = "".join(f'<circle cx="{cx + gx}" cy="{ey + gy}" r="{er}" fill="{INK}"/><circle cx="{cx + gx + er * 0.34:.1f}" cy="{ey + gy - er * 0.34:.1f}" r="{er * 0.3:.1f}" fill="{WHITE}"/>' for cx in (102, 138))
+    brows = extra = ""
+    if mood == "happy":
+        eyes = "".join(f'<path d="M{cx - 7} {ey + 2} Q{cx} {ey - 7} {cx + 7} {ey + 2}" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>' for cx in (102, 138))
+        mouth = f'<path d="M104 {my - 2} Q120 {my + 16} 136 {my - 2}" fill="none" stroke="{INK}" stroke-width="{msw}" stroke-linecap="round"/>'
+    elif mood == "focused":
+        brows = f'<path d="M93 {ey - 15.5} L110 {ey - 10.5} M147 {ey - 15.5} L130 {ey - 10.5}" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/>'
+        mouth = f'<path d="M108 {my + 1} L132 {my + 1}" stroke="{INK}" stroke-width="{msw}" stroke-linecap="round"/>'
+    elif mood == "surprised":
+        R = er * 1.5
+        eyes = "".join(f'<circle cx="{cx}" cy="{ey}" r="{R:.1f}" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/><circle cx="{cx + gx * 0.5:.1f}" cy="{ey + 1}" r="{er * 0.7:.1f}" fill="{INK}"/>' for cx in (102, 138))
+        mouth = f'<ellipse cx="120" cy="{my + 3}" rx="5" ry="6.5" fill="{INK}"/>'
+        extra = f'<path d="M176 6 L172 30" stroke="{BLUE}" stroke-width="6" stroke-linecap="round"/><circle cx="170.5" cy="40" r="3.6" fill="{BLUE}"/>'
+    elif mood == "worried":
+        brows = f'<path d="M93 {ey - 10} L109 {ey - 16} M147 {ey - 10} L131 {ey - 16}" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/>'
+        mouth = f'<path d="M108 {my + 4} Q114 {my - 1} 120 {my + 3} Q126 {my + 7} 132 {my + 2}" fill="none" stroke="{INK}" stroke-width="{msw}" stroke-linecap="round"/>'
+        extra = f'<path d="M172 40 q8 14 0 20 q-8 -6 0 -20 z" fill="{LB}" stroke="{INK}" stroke-width="2.5"/>'
+    elif mood == "thinking":
+        brows = f'<path d="M94 {ey - 11} q8 -4 16 0 M130 {ey - 11} q8 -4 16 0" fill="none" stroke="{INK}" stroke-width="2.5" stroke-linecap="round"/>'
+        mouth = f'<path d="M110 {my + 1} q11 -5 20 2" fill="none" stroke="{INK}" stroke-width="{msw}" stroke-linecap="round"/>'
+        extra = (f'<circle cx="152" cy="30" r="3.5" fill="{BLUE}" opacity="0.5"/><circle cx="163" cy="17" r="5" fill="{BLUE}" opacity="0.7"/>'
+                 f'<circle cx="178" cy="2" r="7" fill="{BLUE}"/>')
+    elif mood == "sigh":   # eyes closed downwards, a small frown, a breath puff (a tired sigh)
+        eyes = "".join(f'<path d="M{cx - 8} {ey - 1} Q{cx} {ey + 6} {cx + 8} {ey - 1}" fill="none" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>' for cx in (102, 138))
+        brows = f'<path d="M93 {ey - 10} L109 {ey - 15} M147 {ey - 10} L131 {ey - 15}" stroke="{INK}" stroke-width="3.5" stroke-linecap="round"/>'
+        mouth = f'<path d="M110 {my + 6} Q120 {my - 1} 130 {my + 6}" fill="none" stroke="{INK}" stroke-width="{msw}" stroke-linecap="round"/>'
+        extra = f'<path d="M150 {my + 4} q18 -6 26 4 q8 10 22 2" fill="none" stroke="{GREY}" stroke-width="3.5" stroke-linecap="round"/>'
+    return eyes + brows + mouth + extra
+
+
+def _cast(body_fn, x, y, s, mood, arm, flip, tilt, larm, gaze, **_):
+    pose = ARM_POSES.get(arm, ARM_POSES["down"])
+    right = _arm(*pose["R"]); left = _arm(*pose.get("L", ARM_POSES["down"]["L"]))
+    if larm and larm != "down":
+        left = _arm(*ARM_POSES.get(larm, ARM_POSES["down"]).get("L", ARM_POSES["down"]["L"]))
+    prop = ""
+    if arm == "phone":   # the same small phone Ledger holds
+        prop = (f'<g transform="rotate(-14 200 92)"><rect x="185" y="60" width="30" height="58" rx="8" fill="{NAVY}" stroke="{INK}" stroke-width="3"/>'
+                f'<rect x="190" y="68" width="20" height="38" rx="3" fill="{LB}"/></g>')
+    legs = (f'<ellipse cx="120" cy="236" rx="46" ry="7" fill="{INK}" opacity="0.10"/>'
+            f'<line x1="102" y1="186" x2="102" y2="210" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+            f'<line x1="138" y1="186" x2="138" y2="210" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+            f'<rect x="88" y="208" width="29" height="14" rx="7" fill="{INK}"/><rect x="123" y="208" width="29" height="14" rx="7" fill="{INK}"/>')
+    fl = " scale(-1 1) translate(-240 0)" if flip else ""
+    return (f'<g transform="translate({_f(x)} {_f(y)}) scale({s}) translate(-120 -230){fl}">'
+            f'{legs}<g transform="rotate({tilt} 120 198)">{left}{body_fn(mood, gaze)}{prop}{right}</g></g>')
+
+
+def plot(x, y, s=1.0, mood="smile", arm="down", flip=False, tilt=0, larm=None, gaze=None, **_):
+    """FA1 cast: Plot, the bar-chart character (owns the clothes store in FA1 unit 2). No collar or tie. (x, y) = between the feet, same size as Ledger. mood: smile, happy, focused, surprised, worried, thinking, sigh. arm/larm: Ledger's arm poses (down, point, up, both_up, phone, shrug, wave, hold...). flip, tilt, gaze as Ledger."""
+    def body(mood, gaze):
+        return (f'<rect x="52" y="42" width="136" height="150" rx="16" fill="{PAPER}" stroke="{INK}" stroke-width="5"/>'
+                f'<line x1="66" y1="176" x2="174" y2="176" stroke="{INK}" stroke-width="2.5" opacity="0.4"/>'
+                f'<rect x="72" y="150" width="24" height="26" rx="4" fill="{BAR_GREY}"/><rect x="104" y="132" width="24" height="44" rx="4" fill="{BAR_GREY}"/>'
+                f'<rect x="136" y="116" width="24" height="60" rx="4" fill="{BLUE}"/>' + _cast_face(mood, 80, 7.5, 100, 4.5, gaze))
+    return _cast(body, x, y, s, mood, arm, flip, tilt, larm, gaze)
+
+
+def tempo(x, y, s=1.0, mood="smile", arm="down", flip=False, tilt=0, larm=None, gaze=None, **_):
+    """FA1 cast: Tempo, the hourglass character (works at the till in FA1 unit 2). No collar or tie. (x, y) = between the feet, same size as Ledger. mood: smile, happy, focused, surprised, worried, thinking, sigh. arm/larm: Ledger's arm poses. flip, tilt, gaze as Ledger."""
+    def body(mood, gaze):
+        return (f'<line x1="74" y1="52" x2="74" y2="182" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
+                f'<line x1="166" y1="52" x2="166" y2="182" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
+                f'<rect x="62" y="44" width="116" height="12" rx="5" fill="{INK}"/><rect x="62" y="180" width="116" height="12" rx="5" fill="{INK}"/>'
+                f'<path d="M76 58 L164 58 L120 119 Z" fill="{SAND}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M120 121 L164 178 L76 178 Z" fill="{SAND}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M104 102 L136 102 L120 119 Z" fill="{BLUE}"/><path d="M120 121 L121 150 L119 150 Z" fill="{BLUE}"/>'
+                f'<path d="M86 178 L154 178 L120 150 Z" fill="{BLUE}"/>' + _cast_face(mood, 78, 6, 90, 3.5, gaze))
+    return _cast(body, x, y, s, mood, arm, flip, tilt, larm, gaze)
+
+
+def till(x, y, s=1.0, w=420, **_):
+    """A shop counter with a cash register (the till). Put the character behind it BEFORE it in the item list, so the counter hides the legs. (x, y) = centre of the floor line under the counter. w = counter width."""
+    h = 170; x0 = -w / 2
+    return _g(x, y, s, (f'<rect x="{x0:.0f}" y="{-h}" width="{w}" height="{h}" rx="8" fill="#E3D2B5" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<rect x="{x0 - 14:.0f}" y="{-h - 18}" width="{w + 28}" height="22" rx="8" fill="#C9AE84" stroke="{INK}" stroke-width="5"/>'
+                        f'<path d="M{x0 + 30:.0f} {-h + 60} H{-x0 - 30:.0f} M{x0 + 30:.0f} {-h + 110} H{-x0 - 30:.0f}" stroke="{INK}" stroke-width="3" opacity="0.3"/>'
+                        # register on the right of the counter top
+                        f'<path d="M{-x0 - 190:.0f} {-h - 18} L{-x0 - 175:.0f} {-h - 120} H{-x0 - 30:.0f} L{-x0 - 15:.0f} {-h - 18} Z" fill="{NAVY}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                        f'<rect x="{-x0 - 150:.0f}" y="{-h - 190}" width="96" height="58" rx="6" fill="{NAVY}" stroke="{INK}" stroke-width="5"/>'
+                        f'<rect x="{-x0 - 140:.0f}" y="{-h - 180}" width="76" height="38" rx="4" fill="#DCEFD8"/>'
+                        f'<path d="M{-x0 - 102:.0f} {-h - 132} V{-h - 120}" stroke="{INK}" stroke-width="10"/>'
+                        + "".join(f'<rect x="{-x0 - 160 + c * 36:.0f}" y="{-h - 100 + r * 26}" width="26" height="16" rx="4" fill="{WHITE if c < 3 else GOLD}"/>' for r in range(3) for c in range(4))))
+
+
+def till_box(x, y, s=1.0, w=420, **_):
+    return [x - (w / 2 + 16) * s, y - 360 * s, (w + 32) * s, 362 * s]
+
+
+_COL = {"blue": BLUE, "green": GREEN, "coral": "#D0675E", "grey": "#7C8698", "ink": INK, "gold": GOLD}
+
+
+def _label_dims(title, amount, note, fs, w):
+    ft, fa, fn = fs * 0.82, fs * 1.2, fs * 0.6
+    tl = [z for z in str(title).split("/")] if title else []
+    tw = max(max((_tw(z, ft, 0.56) for z in tl), default=0), _tw(amount, fa, 0.6) if amount else 0, _tw(note, fn, 0.56) if note else 0)
+    W = max(w or 0, tw + 64, 160)
+    H = 34 + ((ft + 6) * len(tl) + 6 if title else 0) + (fa + 8 if amount else 0) + (fn + 10 if note else 0)
+    return W, H, ft, fa, fn
+
+
+def label(x, y, s=1.0, title="", amount="", note="", color="blue", w=0, fs=44, faded=False, strike=False, fill=None, **_):
+    """Lesson label card (in-lesson videos; words allowed, like flow_box): a hand-drawn white card with a bold title, a big coloured amount (e.g. "$30,000") and an optional small note; "/" in the title breaks it into lines. Any line may be empty, so it also makes a title card or a tag. color: blue, green, coral, grey, ink, gold. fs = base font size. w = minimum width. faded=True: grey dashed card (set aside). strike=True: a coral line through it. fill: card colour. (x, y) = centre."""
+    import html as _h
+    W, H, ft, fa, fn = _label_dims(title, amount, note, fs, w)
+    col = _COL.get(color, BLUE); stroke = GREY if faded else INK
+    out = (f'<rect x="{-W / 2:.0f}" y="{-H / 2:.0f}" width="{W:.0f}" height="{H:.0f}" rx="22" fill="{fill or WHITE}" stroke="{stroke}" stroke-width="5"'
+           + (' stroke-dasharray="16 12"' if faded else "") + '/>')
+    yy = -H / 2 + 22
+    tcol = GREY if faded else INK; acol = GREY if faded else col
+    if title:
+        for z in str(title).split("/"):
+            yy += ft; out += f'<text x="0" y="{yy:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="{ft:.0f}" fill="{tcol}">{_h.escape(z)}</text>'; yy += 6
+        yy += 6
+    if amount:
+        yy += fa * 0.92; out += f'<text x="0" y="{yy:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{fa:.0f}" fill="{acol}">{_h.escape(amount)}</text>'; yy += 16
+    if note:
+        yy += fn; out += f'<text x="0" y="{yy:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="{fn:.0f}" fill="#4B5568">{_h.escape(note)}</text>'
+    if strike:
+        out += f'<path d="M{-W / 2 - 10:.0f} {H / 4:.0f} L{W / 2 + 10:.0f} {-H / 4:.0f}" stroke="{CORAL}" stroke-width="9" stroke-linecap="round"/>'
+    return _g(x, y, s, out)
+
+
+def label_box(x, y, s=1.0, title="", amount="", note="", fs=44, w=0, **_):
+    W, H, *_r = _label_dims(title, amount, note, fs, w)
+    return [x - W / 2 * s - 4, y - H / 2 * s - 4, W * s + 8, H * s + 8]
+
+
+def _icon(kind):
+    """Small hand-drawn icons (about 110 units across, centred) for icon_tile."""
+    if kind == "bags":
+        return (f'<path d="M-30 -30 q0 -26 16 -26 q16 0 16 26" fill="none" stroke="{INK}" stroke-width="4"/><rect x="-50" y="-30" width="58" height="76" rx="6" fill="{BLUE}" stroke="{INK}" stroke-width="4"/>'
+                f'<path d="M18 -18 q0 -24 14 -24 q14 0 14 24" fill="none" stroke="{INK}" stroke-width="4"/><rect x="2" y="-18" width="54" height="64" rx="6" fill="{CORAL}" stroke="{INK}" stroke-width="4"/>')
+    if kind == "key":
+        return (f'<circle cx="-26" cy="0" r="22" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><circle cx="-26" cy="0" r="8" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+                f'<path d="M-4 0 H52 M36 0 V16 M48 0 V12" stroke="{INK}" stroke-width="8" stroke-linecap="round"/>')
+    if kind == "shield":
+        return (f'<path d="M0 -50 L42 -34 V0 Q42 34 0 52 Q-42 34 -42 0 V-34 Z" fill="{LB}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                f'<path d="M-16 0 L-4 14 L18 -14" fill="none" stroke="{BLUE}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>')
+    if kind == "invoice":
+        return (f'<path d="M-36 -50 H24 L38 -36 V50 H-36 Z" fill="{WHITE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                + "".join(f'<path d="M-24 {yy} H{20 if k % 2 else 26}" stroke="{GREY}" stroke-width="5" stroke-linecap="round"/>' for k, yy in enumerate((-28, -12, 4, 20)))
+                + f'<path d="M0 36 H26" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>')
+    if kind == "box":
+        return (f'<path d="M-50 -20 L0 -42 L50 -20 L0 2 Z" fill="#E7C893" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M-50 -20 V30 L0 52 V2 Z" fill="#D9B27C" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M50 -20 V30 L0 52 V2 Z" fill="#C99C62" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M-25 -31 L25 -9" stroke="{WHITE}" stroke-width="6" opacity="0.8"/>')
+    if kind == "poster":   # advertising: a megaphone
+        return (f'<path d="M-40 -14 L22 -44 V44 L-40 14 Z" fill="{CORAL}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                f'<rect x="-54" y="-16" width="16" height="32" rx="5" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                f'<path d="M-28 14 L-20 40 H-6 L-12 18" fill="{WHITE}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M34 -24 L50 -34 M36 0 H54 M34 24 L50 34" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>')
+    if kind == "mirror":
+        return "".join(f'<ellipse cx="{cx}" cy="-8" rx="20" ry="40" fill="{SKY}" stroke="{INK}" stroke-width="4"/><path d="M{cx - 8} -30 L{cx + 4} -42" stroke="{WHITE}" stroke-width="5" stroke-linecap="round"/>'
+                       f'<path d="M{cx} 32 V50 M{cx - 14} 52 H{cx + 14}" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>' for cx in (-26, 26))
+    if kind == "bank":
+        return (f'<path d="M-52 -18 L0 -50 L52 -18 Z" fill="{LB}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                + "".join(f'<rect x="{cx - 6}" y="-14" width="12" height="50" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>' for cx in (-36, -12, 12, 36))
+                + f'<rect x="-56" y="36" width="112" height="12" rx="3" fill="{LB}" stroke="{INK}" stroke-width="4"/>')
+    if kind == "wallet":
+        return (f'<rect x="-50" y="-34" width="100" height="72" rx="12" fill="#8B5E3C" stroke="{INK}" stroke-width="5"/>'
+                f'<path d="M-50 -14 H50" stroke="{INK}" stroke-width="3" opacity="0.5"/><rect x="14" y="-6" width="40" height="26" rx="8" fill="#A9774F" stroke="{INK}" stroke-width="4"/>'
+                f'<circle cx="28" cy="7" r="4" fill="{GOLD}"/><rect x="-38" y="-46" width="54" height="22" rx="3" fill="#BFE0C5" stroke="{INK}" stroke-width="3"/>')
+    if kind == "payslip":
+        return (f'<rect x="-38" y="-50" width="76" height="100" rx="6" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+                f'<rect x="-38" y="-50" width="76" height="22" rx="6" fill="{GREEN}" stroke="{INK}" stroke-width="5"/>'
+                + "".join(f'<path d="M-24 {yy} H{14 if k % 2 else 24}" stroke="{GREY}" stroke-width="5" stroke-linecap="round"/>' for k, yy in enumerate((-12, 4, 20)))
+                + f'<path d="M-4 36 H24" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>')
+    if kind == "percent":
+        return (f'<circle cx="0" cy="0" r="50" fill="{LB}" stroke="{INK}" stroke-width="5"/>'
+                f'<circle cx="-16" cy="-16" r="10" fill="none" stroke="{INK}" stroke-width="6"/><circle cx="16" cy="16" r="10" fill="none" stroke="{INK}" stroke-width="6"/>'
+                f'<path d="M22 -26 L-22 26" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>')
+    if kind == "bulb":
+        return (f'<path d="M0 -50 Q34 -50 34 -16 Q34 4 18 18 V28 H-18 V18 Q-34 4 -34 -16 Q-34 -50 0 -50 Z" fill="#FFE08A" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                f'<rect x="-16" y="28" width="32" height="18" rx="4" fill="{GREY}" stroke="{INK}" stroke-width="4"/><path d="M-8 -6 L0 6 L8 -6" fill="none" stroke="{INK}" stroke-width="3"/>')
+    if kind == "shelf":   # a slightly worn shelf: scuffs and a dashed crack
+        return (f'<path d="M-52 -40 V48 M52 -40 V48" stroke="#8B5E3C" stroke-width="8" stroke-linecap="round"/>'
+                f'<rect x="-56" y="-14" width="112" height="14" rx="3" fill="#C99C62" stroke="{INK}" stroke-width="4"/><rect x="-56" y="26" width="112" height="14" rx="3" fill="#C99C62" stroke="{INK}" stroke-width="4"/>'
+                f'<path d="M-20 -14 L-8 0 L4 -14" fill="none" stroke="{INK}" stroke-width="3" stroke-dasharray="5 4"/><path d="M18 30 l10 6 M30 28 l8 6" stroke="{INK}" stroke-width="3" stroke-linecap="round"/>'
+                f'<rect x="-40" y="-40" width="26" height="26" rx="3" fill="{BLUE}" stroke="{INK}" stroke-width="3"/><rect x="10" y="-36" width="30" height="22" rx="3" fill="{CORAL}" stroke="{INK}" stroke-width="3"/>')
+    if kind == "jacket":
+        return (f'<path d="M-20 -46 L-50 -30 L-56 20 L-38 22 L-36 48 H36 L38 22 L56 20 L50 -30 L20 -46 Q0 -32 -20 -46 Z" fill="{BLUE}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M0 -36 V48" stroke="{INK}" stroke-width="3"/>')
+    return f'<circle cx="0" cy="0" r="40" fill="{LB}" stroke="{INK}" stroke-width="5"/>'
+
+
+ICONS = ["bags", "key", "shield", "invoice", "box", "poster", "mirror", "bank", "wallet", "payslip", "percent", "bulb", "shelf", "jacket"]
+
+
+def icon_tile(x, y, s=1.0, icon="key", amount="", note="", color="ink", w=200, **_):
+    """Lesson tile: a small hand-drawn icon over an amount (e.g. "$2,500") and a short note (e.g. "rent"; "/" splits it into two lines). icon: bags, key (rent), shield (insurance), invoice, box (stock), poster (a megaphone: advertising), mirror, bank, wallet, payslip (wages), percent (interest), bulb (electricity), shelf (wear), jacket. color: the amount colour. (x, y) = centre; the tile is w x 230."""
+    import html as _h
+    h = 230; col = _COL.get(color, INK)
+    fa = min(44, (w - 24) / max(1, len(amount) * 0.6)); fn = min(28, (w - 20) / max(1, len(str(note)) * 0.55))
+    out = (f'<rect x="{-w / 2:.0f}" y="{-h / 2}" width="{w}" height="{h}" rx="20" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+           f'<g transform="translate(0 -46) scale(0.95)">{_icon(icon)}</g>')
+    if amount: out += f'<text x="0" y="{58}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{fa:.0f}" fill="{col}">{_h.escape(amount)}</text>'
+    nl = [z.strip() for z in str(note).split("/") if z.strip()]
+    if len(nl) > 1: fn = min(23, min((w - 20) / max(1, len(z) * 0.55) for z in nl))
+    for j, z in enumerate(nl): out += f'<text x="0" y="{(96 if len(nl) == 1 else 88 + j * 26)}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="{fn:.0f}" fill="#4B5568">{_h.escape(z)}</text>'
+    return _g(x, y, s, out)
+
+
+def icon_tile_box(x, y, s=1.0, w=200, **_):
+    return [x - w / 2 * s - 4, y - 119 * s, w * s + 8, 238 * s]
+
+
+def big_icon(x, y, s=1.0, icon="key", **_):
+    """One of the icon_tile icons drawn on its own, without the tile (s 2-3 for a prop). (x, y) = centre."""
+    return _g(x, y, s, _icon(icon))
+
+
+def months(x, y, s=1.0, used=1, total=12, **_):
+    """A year as 12 month boxes in two rows (insurance paid ahead): the first `used` are coral with a tick (used up), the rest light blue (still to come). (x, y) = centre."""
+    out = f'<rect x="-230" y="-100" width="460" height="200" rx="18" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+    for k in range(int(total)):
+        cx, cy = -175 + (k % 6) * 70, -40 + (k // 6) * 80
+        u = k < int(used)
+        out += f'<rect x="{cx - 28}" y="{cy - 28}" width="56" height="56" rx="8" fill="{CORAL if u else LB}" stroke="{INK}" stroke-width="3.5"/>'
+        if u: out += f'<path d="M{cx - 13} {cy} L{cx - 3} {cy + 11} L{cx + 14} {cy - 11}" fill="none" stroke="{WHITE}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>'
+    return _g(x, y, s, out)
+
+
+def block(x, y, s=1.0, w=420, h=120, title="", amount="", color="blue", faded=False, **_):
+    """A bar piece for stacked bars, trays and running sums (lessons): a hand-drawn filled rectangle with its title and amount inside (one line when h < 110, else two). color: blue, green, coral, gold, grey, light, white. faded=True: dashed grey outline (set aside). (x, y) = centre."""
+    import html as _h
+    fills = {"blue": (BLUE, WHITE), "green": (GREEN, WHITE), "coral": (CORAL, INK), "gold": ("#F3D9A6", INK), "grey": ("#CBD2DC", INK), "light": (LB, INK), "white": (WHITE, INK)}
+    fc, tc = fills.get(color, fills["blue"])
+    if faded: fc, tc = "none", GREY
+    out = (f'<rect x="{-w / 2:.0f}" y="{-h / 2:.0f}" width="{w}" height="{h}" rx="14" fill="{fc}" stroke="{GREY if faded else INK}" stroke-width="5"'
+           + (' stroke-dasharray="16 12"' if faded else "") + '/>')
+    if h < 110:
+        line = (title + "  " + amount).strip()
+        f = min(h * 0.5, 46, (w - 30) / max(1, len(line) * 0.57))
+        out += f'<text x="0" y="{f * 0.36:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{f:.0f}" fill="{tc}">{_h.escape(line)}</text>'
+    else:
+        ft = min(40, (w - 30) / max(1, len(title) * 0.56)); fa = min(58, h * 0.4, (w - 30) / max(1, len(amount) * 0.6))
+        gap = (h - ft - fa) / 3
+        if title: out += f'<text x="0" y="{-h / 2 + gap + ft * 0.8:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="{ft:.0f}" fill="{tc}">{_h.escape(title)}</text>'
+        if amount: out += f'<text x="0" y="{h / 2 - gap - fa * 0.12:.0f}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{fa:.0f}" fill="{tc}">{_h.escape(amount)}</text>'
+    return _g(x, y, s, out)
+
+
+def block_box(x, y, s=1.0, w=420, h=120, **_):
+    return [x - w / 2 * s - 4, y - h / 2 * s - 4, w * s + 8, h * s + 8]
+
+
+def t_account(x, y, s=1.0, title="Cash", left="", right="", w=420, move="", **_):
+    """A hand-drawn T-account: the account name over the T, Dr and Cr heads, one amount on the debit (left) and/or credit (right) side. move: "up" (green arrow) or "down" (coral arrow) beside the name. (x, y) = centre of the T's cross bar."""
+    import html as _h
+    out = (f'<text x="0" y="-40" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="50" fill="{INK}">{_h.escape(title)}</text>'
+           f'<path d="{_wobble_line(-w / 2, w / 2, 0, 3)}" fill="none" stroke="{INK}" stroke-width="8" stroke-linecap="round"/>'
+           f'<path d="M0 0 Q3 110 -1 230" fill="none" stroke="{INK}" stroke-width="8" stroke-linecap="round"/>'
+           f'<text x="{-w / 4:.0f}" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="34" fill="#7C8698">Dr</text>'
+           f'<text x="{w / 4:.0f}" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="34" fill="#7C8698">Cr</text>')
+    if left: out += f'<text x="{-w / 4:.0f}" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="58" fill="{BLUE}">{_h.escape(left)}</text>'
+    if right: out += f'<text x="{w / 4:.0f}" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="58" fill="{BLUE}">{_h.escape(right)}</text>'
+    tx = _tw(title, 50, 0.6) / 2 + 40
+    if move == "down":
+        out += f'<path d="M{tx:.0f} -88 V-30 M{tx - 16:.0f} -48 L{tx:.0f} -28 L{tx + 16:.0f} -48" fill="none" stroke="{CORAL}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>'
+    elif move == "up":
+        out += f'<path d="M{tx:.0f} -28 V-86 M{tx - 16:.0f} -68 L{tx:.0f} -88 L{tx + 16:.0f} -68" fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>'
+    return _g(x, y, s, out)
+
+
+def t_account_box(x, y, s=1.0, title="Cash", w=420, **_):
+    ww = max(w, _tw(title, 50, 0.6) + 120)
+    return [x - ww / 2 * s, y - 95 * s, ww * s, 330 * s]
+
+
+def letter_tiles(x, y, s=1.0, word="DEAD", head="Debit +", labels="", color="blue", glow=-1, **_):
+    """Memory-trick letter tiles (DEAD CURLS, FA1 lesson 1.5): a head pill (e.g. "Debit +") over the letters stacked as square tiles; labels ("|"-separated per letter, "/" breaks a line) expand each letter into its account type to the right. glow = index of a letter to light up with a yellow halo. color: blue or coral tiles. (x, y) = top centre of the head pill; the column is about 430 wide."""
+    import html as _h
+    col = _COL.get(color, BLUE); L = [z for z in str(labels).split("|")] if labels else []
+    out = (f'<rect x="-200" y="0" width="400" height="80" rx="40" fill="{col}" stroke="{INK}" stroke-width="5"/>'
+           f'<text x="0" y="56" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="50" fill="{WHITE}">{_h.escape(head)}</text>')
+    for k, ch in enumerate(word):
+        ty = 110 + k * 116; tx = -205
+        if k == int(glow):
+            out += f'<rect x="{tx - 14}" y="{ty - 14}" width="{128 + (330 if L else 0)}" height="128" rx="26" fill="#FFD45C" opacity="0.85"/>'
+        out += (f'<rect x="{tx}" y="{ty}" width="100" height="100" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+                f'<text x="{tx + 50}" y="{ty + 72}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="70" fill="{col}">{_h.escape(ch)}</text>')
+        if k < len(L) and L[k]:
+            lines = L[k].split("/")
+            fsz = 40 if len(lines) == 1 else 34
+            for j, ln in enumerate(lines):
+                yy = ty + 50 + (j - (len(lines) - 1) / 2) * (fsz + 4) + fsz * 0.36
+                out += f'<text x="{tx + 122}" y="{yy:.0f}" font-family="Inter,sans-serif" font-weight="800" font-size="{fsz}" fill="{INK}">{_h.escape(ln.strip())}</text>'
+    return _g(x, y, s, out)
+
+
+def letter_tiles_box(x, y, s=1.0, word="DEAD", **_):
+    return [x - 225 * s, y - 4 * s, 450 * s, (110 + len(word) * 116 + 10) * s]
+
+
+def shopfront(x, y, s=1.0, **_):
+    """A small clothes shop from the street (no sign text): a striped awning, a big shop window with a rail of shirts and a door. Put a character after it in the list at the window (about x - 120, y - 40 at s 1) to show them inside. (x, y) = centre of the ground under it; about 800 wide and 760 tall at s 1."""
+    stripes = "".join(f'<path d="M{-400 + k * 80} -600 h80 l-6 70 q-34 22 -68 0 Z" fill="{BLUE if k % 2 == 0 else WHITE}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>' for k in range(10))
+    shirts = "".join(f'<path d="M{hx - 24} -404 L{hx - 38} -374 L{hx - 28} -370 L{hx - 24} -300 H{hx + 24} L{hx + 28} -370 L{hx + 38} -374 L{hx + 24} -404 Q{hx} -394 {hx - 24} -404 Z" fill="{c}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+                     for hx, c in ((-300, CORAL), (-240, "#F3D9A6"), (-180, GREEN), (-120, LB), (-60, NAVY)))
+    return _g(x, y, s, (f'<rect x="-380" y="-720" width="760" height="720" fill="#F4ECDD" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<rect x="-380" y="-720" width="760" height="110" fill="#E3D2B5" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<rect x="-250" y="-690" width="500" height="54" rx="10" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                        f'<path d="M-200 -663 H200" stroke="{GREY}" stroke-width="8" stroke-linecap="round" stroke-dasharray="40 18"/>'
+                        f'{stripes}<rect x="-340" y="-480" width="420" height="440" rx="6" fill="{SKY}" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<path d="M-330 -404 H70" stroke="{INK}" stroke-width="5"/>{shirts}'
+                        f'<path d="M-300 -150 L-260 -200 M-280 -120 L-220 -190" stroke="{WHITE}" stroke-width="8" stroke-linecap="round" opacity="0.8"/>'
+                        f'<rect x="130" y="-420" width="200" height="420" rx="6" fill="{BLUE}" stroke="{INK}" stroke-width="{SW}"/>'
+                        f'<rect x="160" y="-390" width="140" height="170" rx="6" fill="{SKY}" stroke="{INK}" stroke-width="4"/>'
+                        f'<circle cx="300" cy="-200" r="10" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+                        f'<path d="M-420 0 H420" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'))
+
+
+def shopfront_box(x, y, s=1.0, **_):
+    return [x - 405 * s, y - 725 * s, 810 * s, 728 * s]
+
+
+def shopping_bag(x, y, s=1.0, color="blue", **_):
+    """A paper shopping bag with rope handles (no logo). color: blue, coral, gold, green. (x, y) = centre."""
+    c = {"blue": BLUE, "coral": CORAL, "gold": "#F3D9A6", "green": GREEN}.get(color, BLUE)
+    return _g(x, y, s, (f'<path d="M-24 -50 q0 -36 24 -36 q24 0 24 36" fill="none" stroke="{INK}" stroke-width="6"/>'
+                        f'<path d="M-60 -50 H60 L68 80 H-68 Z" fill="{c}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+                        f'<path d="M-60 -50 L-48 -30 H48 L60 -50" fill="none" stroke="{INK}" stroke-width="3" opacity="0.5"/>'))
+
+
+def bank_app(x, y, s=1.0, amount="", note="", **_):
+    """A big phone showing a generic banking app (no real brand): a balance card with a coral amount going out (e.g. "-$23,950"), a short note and a draining bar. (x, y) = centre (phone size)."""
+    import html as _h
+    fa = min(64, 230 / max(1, len(amount) * 0.6))
+    return _g(x, y, s, (f'<rect x="-150" y="-280" width="300" height="560" rx="40" fill="{WHITE}" stroke="{INK}" stroke-width="8"/>'
+                        f'<rect x="-125" y="-235" width="250" height="450" rx="12" fill="{SKY}"/>'
+                        f'<rect x="-30" y="232" width="60" height="10" rx="5" fill="{INK}" opacity="0.4"/>'
+                        f'<circle cx="-80" cy="-190" r="22" fill="{LB}" stroke="{INK}" stroke-width="4"/><path d="M-44 -196 H60 M-44 -178 H20" stroke="{GREY}" stroke-width="8" stroke-linecap="round"/>'
+                        f'<rect x="-108" y="-130" width="216" height="150" rx="14" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                        f'<text x="0" y="-48" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="{fa:.0f}" fill="#D0675E">{_h.escape(amount)}</text>'
+                        f'<text x="0" y="0" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="26" fill="#4B5568">{_h.escape(note)}</text>'
+                        f'<rect x="-100" y="60" width="200" height="34" rx="17" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>'
+                        f'<rect x="-96" y="64" width="54" height="26" rx="13" fill="{CORAL}"/>'
+                        f'<path d="M-20 130 V190 M-40 172 L-20 192 L0 172" fill="none" stroke="{CORAL}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>'
+                        f'<path d="M30 130 V190 M10 172 L30 192 L50 172" fill="none" stroke="{CORAL}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>'))
+
+
 BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "store", "none"]
 
 # name -> (draw function, box function or None = default box from size)
@@ -1765,6 +2121,12 @@ HALF = {"pumpkin": (95, 100), "candy_bowl": (110, 85), "phone": (155, 285), "lap
         "lamp": (230, 160), "stat_card": (235, 155), "lightbulb": (165, 165),
         "calculator": (115, 155), "job_ad": (135, 190), "manual": (135, 165), "clipboard": (95, 140), "headcount": (380, 240),
         "pint": (66, 132), "tool_wall": (225, 225), "balance_sheet": (362, 252), "abc_tangle": (332, 252), "regression_guess": (302, 232), "supply_shift": (322, 252)}
+# FA1 cast and lesson diagram props (in-lesson videos, 5 Nov 2026)
+PRESETS.update({"plot": (plot, ledger_box), "tempo": (tempo, ledger_box), "till": (till, till_box), "label": (label, label_box),
+                "icon_tile": (icon_tile, icon_tile_box), "big_icon": (big_icon, None), "months": (months, None), "block": (block, block_box),
+                "t_account": (t_account, t_account_box), "letter_tiles": (letter_tiles, letter_tiles_box), "shopfront": (shopfront, shopfront_box),
+                "shopping_bag": (shopping_bag, None), "bank_app": (bank_app, None)})
+HALF.update({"big_icon": (60, 56), "months": (234, 104), "shopping_bag": (72, 90), "bank_app": (155, 285)})
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 
