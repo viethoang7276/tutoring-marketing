@@ -1,6 +1,6 @@
 # REQ-0009  ·  Meta Pixel and Conversions API for tutoring and course ads
 
-- **Status:** built, on env-dev; release PR #102 waiting for Hoang's merge and NEXT_PUBLIC_META_PIXEL_ID (2026-11-04)
+- **Status:** live on prod since 2026-11-04 09:12 UTC; only PageView received so far (5 Nov); Purchase/Schedule and CAPI unverified until the first consented order (test purchase MP022 waits for Hoang)
 - **Date:** 2026-11-03
 - **Source:** Hoang ("we should set meta pixel for tutoring and all the course to track the ads")
 - **Targets metric:** paid acquisition (cost per tutoring booking, cost per course purchase, cost per waitlist lead)
@@ -57,3 +57,4 @@ Marketing never imports app code and only reads results in Meta Ads Manager. No 
 - 2026-11-03 — Hoang created a second dataset 1054697157584785 by mistake; he chose to keep the original 1000075088350707 (already has the CAPI token in Vercel). The 2026-11-03 dataset is not used. Domain verification tag sent to tutoring-web as a hotfix. Hoang then turned Automatic Advanced Matching on; consent requirements updated to a separate `marketing` purpose
 - 2026-11-04 — domain verification tag live on edlintics.com (PR #101); Hoang approved REQ-0009 and tutoring-web is building it (per tutoring-web session). Marketing switches the tutoring ad set to Purchase optimisation once events show on prod
 - 2026-11-04 — tutoring-web: Pixel + CAPI built, reviewed, on env-dev; release PR #102 (development → main) open for Hoang. Not live until Hoang sets NEXT_PUBLIC_META_PIXEL_ID on env-dev and prod. Server events deduped by event_id purchase.<orderId> / schedule.<orderId>; content_ids course slugs or tutoring-1to1 / tutoring-group; advertising consent is its own switch, off by default. Known funnel gap: a signed-out visitor checking out from the course cart sees a generic error instead of a sign-in prompt (pre-existing, follow-up with Hoang)
+- 2026-11-05 — tutoring-web (Events Manager, 5 Nov): PageView active (8 events, EMQ 6.1, integration "Multiple" = browser Pixel plus probably the no-code connection). No ViewContent, AddToCart, InitiateCheckout, CompleteRegistration, Lead, Schedule or Purchase yet: no consented visitor has done those steps. CAPI needs the rotated META_CAPI_ACCESS_TOKEN (Hoang); dedupe against the no-code connection unverified. Domain verified, diagnostics clean. Next: Hoang's go for test purchase MP022
