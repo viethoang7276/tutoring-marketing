@@ -106,9 +106,9 @@ If the Mac was asleep and the refresh was missed, the next session's start check
 
 ## Daily ads refresh (added 4 Nov 2026)
 
-The hub's Performance › Ads sub-tab reads the hub doc `ads/latest` live, so a write shows up without a republish. Agents only read Ads Manager and write this doc: they never change budgets, edit ads or publish. Hoang publishes.
+The hub's Performance › Ads sub-tab reads the hub doc `ads/latest` live, so a write shows up without a republish. Agents read the ad account and write this doc. Read through the `meta-ads` MCP (app "Edlintics Ads Reporting", 3030719937268223) when it is connected, otherwise Ads Manager in Chrome. The MCP has manage access (Hoang 5 Nov 2026), but an agent changes a budget, ad or status only after showing Hoang that exact change and getting his yes; no refresh run ever changes anything.
 
-1. **When:** every day, together with the daily metrics refresh above. Until the campaign is published there is nothing to read; leave the doc as it is.
+1. **When:** every day with the daily metrics refresh above, straight after the first comment on the day's last post (Hoang 5 Nov 2026). The morning refresh at 07:13 is the fallback if that run was missed.
 2. **Where to read** (read only): Ads Manager, `https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=535582635765592&business_id=110625140398351`. Use the Campaigns, Ad sets and Ads views, with the date range set to the Madrid day that just ended (the account is in VND).
 3. **Columns:** amount spent, impressions, reach, frequency, link clicks, CTR (link click-through rate), landing page views, cost per landing page view, CPM and delivery. Record only what Ads Manager shows: `null` = not shown. Never estimate.
 4. **Bookings:** tutoring bookings tagged `utm_source=meta` and `utm_campaign=tutoring-2026-11`, split by `utm_content` (`static-photo`, `static-photo-price`, `static-illustration`, `static-illustration-price`, `video`). Leave every `bookings` field `null` until there is a way to read them; never infer bookings from clicks.
@@ -136,7 +136,7 @@ The hub's Performance › Ads sub-tab reads the hub doc `ads/latest` live, so a 
 
 **UTM convention (every link we post):** lowercase, hyphens, no spaces.
 - `utm_source` = platform: instagram, facebook, linkedin, x, threads, youtube, tiktok, newsletter, email, or partner-<name>.
-- `utm_medium` = where the link sits: social-post (caption or first comment), social-bio, social-story, email, referral, or paid-social (reserved).
+- `utm_medium` = where the link sits: social-post (caption or first comment), social-bio, social-story, email, referral, or paid (ads; the tracking code counts `paid` and `cpc` as ad traffic, so do not use other values such as paid-social).
 - `utm_campaign` = content stream or named campaign: puzzle, definition, this-vs-that, five-concepts, comic, explainer-reel, bio, or a named campaign such as oct-exam-2026 or launch-v1.
 - `utm_content` = hub slot id (for example 2026-10-24-1800); bio links use "bio".
 
