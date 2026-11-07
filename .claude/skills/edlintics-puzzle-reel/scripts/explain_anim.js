@@ -99,6 +99,8 @@
     },
   };
 
+  window.EXPLAIN_KIT = { DRAW, TONE, clamp, ramp, ease, back, lerp, esc, money, text, pill, INK, GREY, BLUE, PAPER };   // explain_scene.js adds the picture props
+
   window.renderExplainAnim = function (t) {
     const A = T.explain_anim, S = ramp(t, T.steps_in, T.steps_in + 0.4);
     let out = '';

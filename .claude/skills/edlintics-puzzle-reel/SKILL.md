@@ -57,6 +57,17 @@ Hoang: "yes, in the answer explaination", with "arrow green red illustation with
 
 **The build stops** on text under 34 px, and on any number that is not in the puzzle. A worked-out number goes in `"derived": {"$1,020": "$1,000 + $20"}`. A made-up number needs `"example": true` on a note, which labels it on screen.
 
+## Picture explanation (opt-in, 7 Nov 2026, awaiting Hoang's verdict)
+Hoang: "even with the puzzle I feel like it is too dry with only number, may be we should use graphic to explain as well". Use the same `explain_anim` block, but tell the puzzle's situation as a picture: its people and objects act with the voice, with numbers as labels on them. At most 2 or 3 things to follow at once, so clear earlier items with `until`; text at 34 px or more. Code: `scripts/explain_scene.js`. Worked examples: `assets/renders/upgraded-7nov/<slot id>/puzzle.json` for 2026-11-09-1000 to 2026-11-15-1000. A puzzle with only an `explanation` needs `steps` for this: keep each voiced sentence as `say` and give it a shorter `text`, because the on-screen text may be shorter than the voice.
+
+Items (`"p"`), on top of those in "Animated explanation". All take `x`, `y`, `at`, `until`, `fade`:
+- `sprite`: one drawn object. `kind`: cafe, card, bank, note, tag, block, cart, shirt, pants, phone, jacket, wheat, bread, hat, store, clock, gauge, receipt, board, cross. Optional: `s`, `pop`, `moves` `[{at, to, dur, arc, scale, rot, ease}]`, `pulse` `[{at, dur, amp}]`, `text`, `texts` `[{at, text}]` to swap text, `value` `{prefix, start, keys: [{at, to, dur}]}` for a ticking number, `lines`, `fs`, `tc`, `tpos`, `label` `{text, dx, dy, fs, tone, pill, at, until}`. (x, y) is the centre, except top left for cafe and block and the middle of the ground for store. Kind extras: `w`, `h`, `tone`, `fill` (board), `sweep` `{at, to, dur}` (clock), `start` and `keys` (gauge), `wkeys` and `grow` (block), `sw` (cross)
+- `walker`: the person prop with `moves`; bobs while moving. `name`, `nfs`, `color`, `s`, `acts`
+- `flow`: people who enter, sit and leave. `grid` `{x, y, cols, rows, dx, dy}`, `enter` and `exit` point lists, `arrive` `[{at, n, dur}]`, `count` `{x, y, fs, suffix}`. Once every seat is taken, each arrival sends out the person in that seat, so the room stays full
+- `dots`: a crowd. `n`, `cols`, `x`, `y`, `dx`, `dy`, `r`, `tone`, `mini`, `flips` `[{at, idx, tone, until}]`
+
+Before showing Hoang, check mid-move frames as well as the stills: nothing covers a label, and the last frame has no more than 3 things to read.
+
 ## Rules
 - Layout v4 (28 Oct 2026, Hoang: "use the height of the screen more"; applies from the 2 Nov puzzles, the 27 Oct-1 Nov reels keep v3): content from y ~190 to y 1560; only the bottom ~360 px (caption and username overlay) stays empty, and the right-hand buttons sit beside the options. The question and diagram follow layout v5 above (6 Nov 2026), "Pause and think" line at y 1075, options 54 px with 72 px circles from y 1190, timer beside them at x 680, logo under the timer at y 1488, explanation 70 px in the question block
 - Diagrams: draw new puzzle diagrams taller, about 900x500-540 (viewBox), so the diagram fills the space down to the prompt line. The 27 Oct batch was 900x345, which leaves the frame looking flat

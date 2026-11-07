@@ -2491,6 +2491,24 @@ def pin_box(x, y, s=1.0, **_):
 PRESETS.update({"pin": (pin, pin_box)})
 
 
+def car(x, y, s=1.0, flip=False, color=None, **_):
+    """A small family car, side view, no brand (7 Nov 2026). (x, y) = centre of the road under its wheels. flip faces left. color: body fill."""
+    c = color or LB
+    inner = (f'<path d="M-200 -50 V-105 Q-200 -125 -175 -128 L-115 -135 L-65 -200 Q-55 -212 -38 -212 H70 Q88 -212 100 -198 L145 -135 L180 -128 Q205 -122 205 -100 V-50 Q205 -40 195 -40 H-190 Q-200 -40 -200 -50 Z" fill="{c}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+             f'<path d="M-88 -135 L-50 -187 Q-45 -194 -36 -194 H0 V-135 Z" fill="{SKY}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/><path d="M18 -135 V-194 H68 Q78 -194 85 -186 L122 -135 Z" fill="{SKY}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+             f'<path d="M30 -110 H62" stroke="{INK}" stroke-width="5" stroke-linecap="round"/><circle cx="192" cy="-100" r="8" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+             f'<circle cx="-115" cy="-40" r="40" fill="{INK}"/><circle cx="-115" cy="-40" r="15" fill="{GREY}"/><circle cx="125" cy="-40" r="40" fill="{INK}"/><circle cx="125" cy="-40" r="15" fill="{GREY}"/>')
+    if flip: inner = f'<g transform="scale(-1 1)">{inner}</g>'
+    return _g(x, y, s, inner)
+
+
+def car_box(x, y, s=1.0, **_):
+    return [x - 210 * s, y - 216 * s, 420 * s, 216 * s]
+
+
+PRESETS.update({"car": (car, car_box)})
+
+
 # ---------------------------------------------------------------- motion layer (opt-in, 6 Nov 2026)
 # Hoang: "the animation sometimes too simple ... arrow green red illustation with graph, number inside with people trading action and supplement info".
 # Nothing here runs unless a script uses these props or item keys. The renderer computes every state from the time alone, so frames can be rendered by seeking.

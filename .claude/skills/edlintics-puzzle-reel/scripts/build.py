@@ -163,11 +163,14 @@ def prepare_anim(P, T):
             if "at" in o: o["t"] = anim_time(o, spans, where)
             if "until" in o: o["t_until"] = anim_time({"at": o["until"], "word": o.get("until_word"), "delay": o.get("until_delay", 0)}, spans, where)
     for i, it in enumerate(A["items"]):
-        if it.get("p") not in ("counter", "line_chart", "arrow", "chip", "note", "split_bar", "person"): sys.exit(f'FAIL explain_anim: item {i} has unknown "p": {it.get("p")!r}')
+        if it.get("p") not in ("counter", "line_chart", "arrow", "chip", "note", "split_bar", "person", "sprite", "walker", "flow", "dots"): sys.exit(f'FAIL explain_anim: item {i} has unknown "p": {it.get("p")!r}')
         walk(it, it, f'item {i} ({it["p"]})')
         unit, dec = it.get("unit", "$"), it.get("dec", 0)
         if it["p"] == "counter": [check_number(f"{v:,.{dec}f}", it) for v in [it["start"]] + [k["to"] for k in it.get("keys", [])]]
         if it["p"] == "line_chart": [check_number(f'{p["v"]:,.{dec}f}', it) for p in it["points"]]
+        for v in [it.get("value"), (it.get("label") or {}).get("value") if isinstance(it.get("label"), dict) else None]:   # picture props: a ticking label holds only numbers from the puzzle
+            if v: [check_number(f'{x:,.{v.get("dec", 0)}f}', it) for x in [v["start"]] + [k["to"] for k in v.get("keys", [])]]
+        if it["p"] == "flow" and it.get("count"): check_number(str(it["grid"]["cols"] * it["grid"]["rows"]), it)
     return A
 
 
