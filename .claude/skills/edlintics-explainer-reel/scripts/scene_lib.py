@@ -2080,6 +2080,351 @@ def bank_app(x, y, s=1.0, amount="", note="", **_):
                         f'<path d="M30 130 V190 M10 172 L30 192 L50 172" fill="none" stroke="{CORAL}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>'))
 
 
+# ---------------------------------------------------------------- data props: real numbers on screen (Hoang, 6 Nov 2026)
+# Hand-drawn like the rest (they boil and draw on), blue main colour, amber highlight. They compute nothing but the scale:
+# every value shows as given. Text stays at DATA_FLOOR or larger at s=1; if it cannot, the build stops with a clear message.
+ED_BLUE = "#2960c7"; DATA_FLOOR = 34; DATA_SUB = INK; DATA_RULE = "#C9D1DC"
+_D_PREFIX = ("$", "€", "£")
+
+
+def _d_tw(txt, fs):
+    """Estimated width of Inter 800-900 text, by character class, a touch wide on purpose so labels never touch."""
+    w = 0.0
+    for c in str(txt):
+        if c in "il.,:;'|!": w += 0.31
+        elif c in "jftr ()-": w += 0.42
+        elif c in "mw": w += 0.9
+        elif c in "MW%": w += 0.98
+        elif c.isupper(): w += 0.73
+        else: w += 0.62
+    return w * fs
+
+
+def _d_num(v, unit, where):
+    """The number behind a shown value, used only for the scale. Accepts 0.44, "0.44", "$0.44", "3,000", "12%"."""
+    if isinstance(v, bool): raise ValueError(f"{where}: {v!r} is not a number")
+    if isinstance(v, (int, float)): return float(v)
+    t = str(v).replace("−", "-")
+    if unit: t = t.replace(unit, "")
+    for c in _D_PREFIX + (",", "%", " "): t = t.replace(c, "")
+    try: return float(t)
+    except ValueError: raise ValueError(f'{where}: value {v!r} is not a number; put words in "unit" or "labels"') from None
+
+
+def _d_label(v, unit):
+    """The value as shown: the given text plus the unit ("$" and other currency signs in front, the rest behind). Pass strings to keep zeros ("0.40")."""
+    t = v if isinstance(v, str) else (str(int(v)) if float(v).is_integer() else str(v))
+    t = t.replace("−", "-").strip()
+    if not unit or unit in t: return t
+    if unit in _D_PREFIX: return ("-" + unit + t[1:]) if t.startswith("-") else unit + t
+    return t + unit if unit == "%" else f"{t} {unit}"
+
+
+def _d_wrap(txt, fs, width):
+    """Greedy word wrap by estimated width. A word wider than width stays on its own line (the caller rejects that size)."""
+    lines = []; cur = ""
+    for word in str(txt).split():
+        t = f"{cur} {word}".strip()
+        if cur and _d_tw(t, fs) > width: lines.append(cur); cur = word
+        else: cur = t
+    return lines + [cur] if cur else [""]
+
+
+def _d_fit(labels, width, top, maxlines, where):
+    """The largest font size (top down to DATA_FLOOR) at which every label wraps into maxlines lines inside width."""
+    fs = top
+    while fs >= DATA_FLOOR:
+        wrapped = [_d_wrap(t, fs, width) for t in labels]
+        if all(len(w) <= maxlines and all(_d_tw(l, fs) <= width for l in w) for w in wrapped): return fs, wrapped
+        fs -= 2
+    raise ValueError(f"{where}: labels {labels!r} do not fit {width:.0f} wide at the {DATA_FLOOR} px minimum; shorten them, use fewer of them or raise w")
+
+
+def _d_index(hl, n, where):
+    if hl is None: return None
+    if isinstance(hl, bool) or not isinstance(hl, int) or not -n <= hl < n: raise ValueError(f"{where}: highlight {hl!r} is out of range (there are {n})")
+    return hl % n
+
+
+def _d_rect_hits_seg(r, a, b):
+    """True when the segment a-b passes through the rectangle r = (x0, y0, x1, y1) (Liang-Barsky clip)."""
+    t0, t1 = 0.0, 1.0; dx, dy = b[0] - a[0], b[1] - a[1]
+    for p, q in ((-dx, a[0] - r[0]), (dx, r[2] - a[0]), (-dy, a[1] - r[1]), (dy, r[3] - a[1])):
+        if p == 0:
+            if q < 0: return False
+        else:
+            u = q / p
+            if p < 0: t0 = max(t0, u)
+            else: t1 = min(t1, u)
+            if t0 > t1: return False
+    return True
+
+
+def data_chart(x, y, s=1.0, kind="bars", values=None, labels=None, unit="", y_title="", x_title="", highlight=None, w=860, h=760, zero=True, **_):
+    """Real numbers as a hand-drawn bar or line chart (6 Nov 2026). (x, y) = centre, box w x h. kind: bars (always from zero) or line. values: numbers or number strings, shown as given (use strings to keep zeros: "0.40"). labels: one category per value (equally spaced, 1-8). unit: "$" goes in front, "%" or a word behind. y_title, x_title: optional axis titles. highlight: index or category label, drawn in amber. zero false (line only): the scale starts near the lowest value instead of 0."""
+    where = "data_chart"
+    values = list(values or []); labels = [str(l) for l in (labels or [])]
+    if kind not in ("bars", "line"): raise ValueError(f'{where}: kind {kind!r}; use "bars" or "line"')
+    if not 1 <= len(values) <= 8: raise ValueError(f"{where}: {len(values)} values; use 1 to 8")
+    if len(labels) != len(values): raise ValueError(f"{where}: {len(values)} values but {len(labels)} labels")
+    n = len(values); nums = [_d_num(v, unit, where) for v in values]; shown = [_d_label(v, unit) for v in values]
+    if isinstance(highlight, str):
+        if highlight not in labels: raise ValueError(f"{where}: highlight {highlight!r} is not one of the labels")
+        highlight = labels.index(highlight)
+    hl = _d_index(highlight, n, where)
+    hw, hh = w / 2, h / 2; pw = w - 16; slot = pw / n; left = -pw / 2; out = ""
+    cx = [left + slot * (k + 0.5) for k in range(n)]
+    # top: the y title
+    top = -hh
+    if y_title:
+        fs, (ls,) = _d_fit([y_title], w, 42, 2, where)
+        for l in ls:
+            top += fs * 1.02; out += _t(-hw + 6, top, l, round(fs), 800, DATA_SUB, "start"); top += fs * 0.16
+        top += 10
+    # bottom: the x title under the category labels
+    bot = hh
+    if x_title:
+        fs, (ls,) = _d_fit([x_title], w, 42, 2, where)
+        for k, l in enumerate(reversed(ls)): out += _t(0, bot - 8 - k * fs * 1.16, l, round(fs), 800, DATA_SUB)
+        bot -= len(ls) * fs * 1.16 + 14
+    stagger = 0
+    try: fc, wrapped = _d_fit(labels, slot - 6, 50, 3, where)
+    except ValueError:   # too tight in one row: every second label drops to a second row, so each gets about two slots of width
+        fc, wrapped = _d_fit(labels, slot * 2 - 16, 44, 2, where)
+        stagger = max(len(l) for l in wrapped[::2]) * fc * 1.16 + 6 if n > 1 else 0
+    nl = max(len(l) for l in wrapped); bot -= stagger + nl * fc * 1.16 + 8
+    fv = 84
+    while fv > DATA_FLOOR and max(_d_tw(t, fv) for t in shown) > slot - 20: fv -= 2
+    if max(_d_tw(t, fv) for t in shown) > slot - 20: raise ValueError(f"{where}: values {shown!r} do not fit {slot:.0f} wide at the {DATA_FLOOR} px minimum; use fewer values or raise w")
+    # scale: from the numbers only. Bars always include zero
+    lo, hi = min(nums + [0.0]), max(nums + [0.0])
+    if kind == "line" and not zero and min(nums) > 0:
+        rng = (max(nums) - min(nums)) or max(nums); lo, hi = min(nums) - 0.1 * rng, max(nums)
+    head = fv * 0.78 + 56 if kind == "line" else fv * 1.34   # room for the value above the top point or bar, and below when the scale goes under the axis
+    foot = head if lo < 0 or (kind == "line" and lo > 0) else 0
+    ph = bot - top - head - foot
+    if ph < 110: raise ValueError(f"{where}: h {h} leaves only {ph:.0f} px for the plot; raise h or shorten the labels and titles")
+    k_y = ph / ((hi - lo) or 1.0); ptop = top + head
+    Y = lambda v: ptop + (hi - v) * k_y
+    base = Y(max(lo, 0.0)) if lo <= 0 else Y(lo)
+    out += f'<path d="{_wobble_line(-hw + 4, hw - 4, base, 3)}" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+    if kind == "bars":
+        bw = min(slot * 0.66, 240)
+        for k, v in enumerate(nums):
+            c = cx[k]; yt = Y(v); d = yt - base; xl, xr = c - bw / 2, c + bw / 2
+            if abs(d) >= 1:
+                r = min(12, abs(d) / 2) * (1 if d < 0 else -1); m = (yt + base) / 2
+                out += (f'<path d="M{xl:.1f} {base:.1f} Q{xl - 2:.1f} {m:.1f} {xl + 1:.1f} {yt + r:.1f} Q{xl + 1:.1f} {yt:.1f} {xl + 1 + abs(r):.1f} {yt:.1f} '
+                        f'L{xr - abs(r):.1f} {yt + 1.5:.1f} Q{xr:.1f} {yt + 1:.1f} {xr:.1f} {yt + r:.1f} Q{xr + 2:.1f} {m:.1f} {xr - 1:.1f} {base:.1f}" '
+                        f'fill="{AMBER if k == hl else ED_BLUE}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>')
+            out += _t(c, yt - fv * 0.3 if v >= 0 else yt + fv * 1.04, shown[k], round(fv), 900, INK)
+    else:
+        pts = [(cx[k], Y(v)) for k, v in enumerate(nums)]
+        segs = list(zip(pts, pts[1:])) + [((-hw, base), (hw, base))]
+        for c in cx: out += f'<path d="M{c:.1f} {base - 9:.1f} L{c:.1f} {base + 9:.1f}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
+        if n > 1: out += '<path d="M' + " L".join(f"{p[0]:.1f} {p[1]:.1f}" for p in pts) + f'" fill="none" stroke="{ED_BLUE}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>'
+        for k, p in enumerate(pts):
+            out += f'<circle cx="{p[0]:.1f}" cy="{p[1]:.1f}" r="{22 if k == hl else 14}" fill="{AMBER if k == hl else ED_BLUE}" stroke="{INK}" stroke-width="5"/>'
+        dots = [(p[0] - 24, p[1] - 24, p[0] + 24, p[1] + 24) for p in pts]; m = 8
+        def spots(fs):   # for each value, the first spot that clears the line, the dots, the axis and the other values; None if one has no spot at this size
+            placed = []; res = []
+            for k, p in enumerate(pts):
+                lw = _d_tw(shown[k], fs); lh = fs * 0.78; gap = 38 if k == hl else 24; spot = None
+                for extra in (0, 18, 44, 90, 150):
+                    for dx, above in ((0, True), (lw / 2 + 14, True), (-lw / 2 - 14, True), (0, False), (lw / 2 + 14, False), (-lw / 2 - 14, False)):
+                        y1 = p[1] - gap - extra if above else p[1] + gap + extra + lh
+                        r = (p[0] + dx - lw / 2 - m, y1 - lh - m, p[0] + dx + lw / 2 + m, y1 + m)
+                        if r[0] < -hw or r[2] > hw or r[1] < top or r[3] > bot: continue
+                        if any(_d_rect_hits_seg(r, a, b) for a, b in segs): continue
+                        if any(r[0] < q[2] and q[0] < r[2] and r[1] < q[3] and q[1] < r[3] for q in placed + [d for j, d in enumerate(dots) if j != k]): continue
+                        spot = (p[0] + dx, y1, r, lw, lh); break
+                    if spot: break
+                if not spot: return None
+                placed.append(spot[2]); res.append(spot)
+            return res
+        fl = fv; found = spots(fl)
+        while not found and fl > DATA_FLOOR:   # a tight zigzag: smaller values find room before the build gives up
+            fl = max(DATA_FLOOR, fl - 4); found = spots(fl)
+        if not found: raise ValueError(f"{where}: no clear spot for the values {shown!r} at the {DATA_FLOOR} px minimum; use fewer points or raise w or h")
+        for k, (lx, ly, _r, lw, lh) in enumerate(found):
+            if k == hl: out += f'<rect x="{lx - lw / 2 - 8:.1f}" y="{ly - lh - 2:.1f}" width="{lw + 16:.1f}" height="{lh + 10:.1f}" rx="10" fill="{AMBER}" fill-opacity="0.6" stroke="none"/>'
+            out += _t(lx, ly, shown[k], round(fl), 900, INK)
+    for k, ls in enumerate(wrapped):
+        for j, l in enumerate(ls): out += _t(min(max(cx[k], -hw + _d_tw(l, fc) / 2), hw - _d_tw(l, fc) / 2), bot + 8 + (stagger if k % 2 else 0) + fc * 0.92 + j * fc * 1.16, l, round(fc), 900 if k == hl else 800, INK)
+    return _g(x, y, s, out)
+
+
+def data_chart_box(x, y, s=1.0, w=860, h=760, **_):
+    return [x - w / 2 * s - 4, y - h / 2 * s - 4, w * s + 8, h * s + 8]
+
+
+def _dt_numeric(t):
+    import re
+    return bool(re.match(r"^[-+−(]?\s?[$€£]?\s?\d[\d,]*(\.\d+)?\s?(%|[A-Za-z]{1,3})?\)?$", str(t).strip()))
+
+
+def _dt_layout(headers, rows, w, h):
+    """Font size, column widths, row heights and wrapped text for data_table."""
+    where = "data_table"
+    head = [str(c) for c in (headers or [])]; body = [[str(c) for c in r] for r in (rows or [])]; nc = len(head)
+    if not 1 <= nc <= 5: raise ValueError(f"{where}: {nc} columns; use 1 to 5")
+    if not 1 <= len(body) <= 6: raise ValueError(f"{where}: {len(body)} rows; use 1 to 6")
+    for r in body:
+        if len(r) != nc: raise ValueError(f"{where}: row {r!r} has {len(r)} cells; the headers have {nc}")
+    num = []   # a column reads as numbers when most of its filled cells are numbers: it aligns right, the rest left
+    for c in range(nc):
+        cells = [r[c] for r in body if r[c].strip()]
+        num.append(bool(cells) and sum(_dt_numeric(t) for t in cells) * 2 >= len(cells))
+    px = {1: 24, 2: 24, 3: 24, 4: 18}.get(nc, 14); fs = 66
+    while fs >= DATA_FLOOR:
+        mins, ideal = [], []
+        for c in range(nc):
+            col = [r[c] for r in body]
+            words = [wd for t in [head[c]] + (col if not num[c] else []) for wd in t.split()] + (col if num[c] else [])
+            mins.append(max(_d_tw(t, fs) for t in words + [""]) + 2 * px)
+            ideal.append(max(_d_tw(t, fs) for t in [head[c]] + col) + 2 * px)
+        if sum(mins) <= w:
+            spare = w - sum(mins); need = [i - m for i, m in zip(ideal, mins)]; tot = sum(need)
+            if tot <= spare: cw = [i + (spare - tot) / nc for i in ideal]
+            else: cw = [m + spare * d / tot for m, d in zip(mins, need)]
+            hd = [_d_wrap(t, fs, cw[c] - 2 * px + 1) for c, t in enumerate(head)]
+            bd = [[_d_wrap(t, fs, cw[c] - 2 * px + 1) if not num[c] else [t] for c, t in enumerate(r)] for r in body]
+            if max(len(l) for l in hd) <= 3 and all(len(l) <= 3 for r in bd for l in r):
+                lh = fs * 1.16; vp = max(14, fs * 0.3)
+                rh = [max(len(l) for l in hd) * lh + 2 * vp] + [max(len(l) for l in r) * lh + 2 * vp for r in bd]
+                if not h or sum(rh) <= h:
+                    if h: rh = [v + (h - sum(rh)) / len(rh) for v in rh]
+                    return {"fs": fs, "lh": lh, "cw": cw, "rh": rh, "num": num, "hd": hd, "bd": bd, "W": w, "H": sum(rh), "px": px}
+        fs -= 2
+    raise ValueError(f"{where}: the table does not fit {w} wide{f' x {h} high' if h else ''} at the {DATA_FLOOR} px minimum; shorten the text, drop a column or raise w")
+
+
+def data_table(x, y, s=1.0, headers=None, rows=None, highlight=None, w=860, h=None, **_):
+    """Real numbers as a hand-drawn table (6 Nov 2026). (x, y) = centre. headers: up to 5 columns; rows: up to 6 rows of cells, shown as given (strings: "$1,200"). Number columns align right; text wraps. highlight: amber on a row (2, -1 or {"row": 2}) or a cell ({"cell": [row, column]}), counted in body rows from 0. w, h: size (h optional: rows stretch to fill it)."""
+    L_ = _dt_layout(headers, rows, w, h); W, H = L_["W"], L_["H"]; fs = L_["fs"]; lh = L_["lh"]; nr = len(L_["bd"]); nc = len(L_["cw"])
+    hl_row = hl_cell = None
+    if isinstance(highlight, dict) and "cell" in highlight:
+        r, c = highlight["cell"]; hl_cell = (_d_index(r, nr, "data_table"), _d_index(c, nc, "data_table"))
+    elif isinstance(highlight, dict): hl_row = _d_index(highlight.get("row"), nr, "data_table")
+    else: hl_row = _d_index(highlight, nr, "data_table")
+    x0, y0 = -W / 2, -H / 2; x1, y1 = W / 2, H / 2; R = 20
+    edge = lambda a, b, c, d: f"M{a + R:.1f} {b:.1f} L{c - R:.1f} {b - 1.5:.1f} Q{c:.1f} {b:.1f} {c:.1f} {b + R:.1f} L{c + 1.5:.1f} {d - R:.1f} Q{c:.1f} {d:.1f} {c - R:.1f} {d:.1f} L{a + R:.1f} {d + 1.5:.1f} Q{a:.1f} {d:.1f} {a:.1f} {d - R:.1f} L{a - 1.5:.1f} {b + R:.1f} Q{a:.1f} {b:.1f} {a + R:.1f} {b:.1f} Z"
+    out = f'<path d="{edge(x0, y0, x1, y1)}" fill="{WHITE}" stroke="none"/>'
+    yh = y0 + L_["rh"][0]
+    out += f'<path d="M{x0:.1f} {yh:.1f} L{x0:.1f} {y0 + R:.1f} Q{x0:.1f} {y0:.1f} {x0 + R:.1f} {y0:.1f} L{x1 - R:.1f} {y0:.1f} Q{x1:.1f} {y0:.1f} {x1:.1f} {y0 + R:.1f} L{x1:.1f} {yh:.1f} Z" fill="{ED_BLUE}" stroke="none"/>'
+    ys = [yh]
+    for v in L_["rh"][1:]: ys.append(ys[-1] + v)
+    xs = [x0]
+    for v in L_["cw"]: xs.append(xs[-1] + v)
+    if hl_row is not None:
+        a, b = ys[hl_row], ys[hl_row + 1]
+        if hl_row == nr - 1: out += f'<path d="M{x0:.1f} {a:.1f} L{x1:.1f} {a:.1f} L{x1:.1f} {b - R:.1f} Q{x1:.1f} {b:.1f} {x1 - R:.1f} {b:.1f} L{x0 + R:.1f} {b:.1f} Q{x0:.1f} {b:.1f} {x0:.1f} {b - R:.1f} Z" fill="{AMBER}" stroke="none"/>'
+        else: out += f'<rect x="{x0:.1f}" y="{a:.1f}" width="{W:.1f}" height="{b - a:.1f}" fill="{AMBER}" stroke="none"/>'
+    if hl_cell:
+        r, c = hl_cell
+        out += f'<rect x="{xs[c] + 6:.1f}" y="{ys[r] + 6:.1f}" width="{xs[c + 1] - xs[c] - 12:.1f}" height="{ys[r + 1] - ys[r] - 12:.1f}" rx="12" fill="{AMBER}" stroke="none"/>'
+    for v in ys[1:-1]: out += f'<path d="{_wobble_line(x0 + 12, x1 - 12, v, 2)}" fill="none" stroke="{DATA_RULE}" stroke-width="4" stroke-linecap="round"/>'
+    out += f'<path d="{edge(x0, y0, x1, y1)}" fill="none" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+    def cell(lines, c, top, height, col, wt):
+        nn = len(lines); fy = top + (height - nn * lh) / 2 + lh * 0.5 + fs * 0.36; right = L_["num"][c]; px = L_["px"]
+        return "".join(_t(xs[c + 1] - px if right else xs[c] + px, fy + j * lh, l, fs, wt, col, "end" if right else "start") for j, l in enumerate(lines))
+    for c, ls in enumerate(L_["hd"]): out += cell(ls, c, y0, L_["rh"][0], WHITE, 900)
+    for r, row in enumerate(L_["bd"]):
+        for c, ls in enumerate(row):
+            out += cell(ls, c, ys[r], ys[r + 1] - ys[r], INK, 900 if r == hl_row or (r, c) == hl_cell else 800)
+    return _g(x, y, s, out)
+
+
+def data_table_box(x, y, s=1.0, headers=None, rows=None, w=860, h=None, **_):
+    L_ = _dt_layout(headers, rows, w, h)
+    return [x - w / 2 * s - 4, y - L_["H"] / 2 * s - 4, w * s + 8, L_["H"] * s + 8]
+
+
+_XL = {"blue": ("#2F6FDE", "#DCE8FC"), "red": ("#D6453D", "#FBE3E1"), "green": ("#1F8A4C", "#DDF3E5"), "violet": ("#7A5AF8", "#EAE5FE"), "amber": ("#B97A00", "#FFF0C9")}
+
+
+def _xl_layout(cols, rows, w, h, fs):
+    from html import escape
+    cols = cols or []; rows = rows or []
+    if not cols or not rows: raise ValueError("sheet_grid: needs cols and rows")
+    if any(len(r) != len(cols) for r in rows): raise ValueError("sheet_grid: each row needs one cell per column (use \"\" for an empty cell)")
+    head = 76; col_h = 56; gut = 66; rh = 78
+    H = h or head + col_h + rh * len(rows) + 10
+    rh = (H - head - col_h - 10) / len(rows)
+    want = [max(3.2, max(len(str(r[c])) for r in rows) + 1.6) for c in range(len(cols))]
+    avail = w - gut - 8; unit = avail / sum(want)
+    size = min(fs, unit / 0.62)
+    if size < 30: raise ValueError(f"sheet_grid: cell text needs {size:.0f} px to fit; shorten the cells or drop a column (30 px is the minimum)")
+    cw = [v * unit for v in want]
+    return dict(H=H, head=head, col_h=col_h, gut=gut, rh=rh, cw=cw, fs=size, esc=escape)
+
+
+def sheet_grid(x, y, s=1.0, cols=None, rows=None, name_box="", formula="", selected=None, refs=None, start_row=1, popup=None, w=880, h=None, fs=40, **_):
+    """A real spreadsheet (6 Nov 2026, Hoang: "real excel reference and equation"): name box, formula bar with the formula as typed, lettered columns, numbered rows, a selected cell and coloured reference boxes that match the formula. (x, y) = centre. cols: ["A", "B"]; rows: cells as given; start_row: number of the first row shown; selected: [row, col] counted from 0; refs: [{"cell": [row, col], "color": "blue", "label": "B2"}] (blue, red, green, violet, amber; label colours that text in the formula); popup: {"title", "text"} is an error box over the grid. Show states with several items and at/until."""
+    L_ = _xl_layout(cols, rows, w, h, fs); W, H = w, L_["H"]; esc = L_["esc"]; f = L_["fs"]
+    x0, y0 = -W / 2, -H / 2; out = f'<rect x="{x0}" y="{y0}" width="{W}" height="{H}" rx="10" fill="{WHITE}" stroke="none"/>'
+    # name box and formula bar
+    nb = 170; bh = L_["head"] - 16; by = y0 + 8
+    out += f'<rect x="{x0 + 8}" y="{by}" width="{nb}" height="{bh}" rx="6" fill="#F3F5F8" stroke="{INK}" stroke-width="3"/>'
+    out += _t(x0 + 8 + nb / 2, by + bh * 0.72, esc(str(name_box)), 38, 800, INK)
+    fx = x0 + nb + 22
+    out += _t(fx + 18, by + bh * 0.72, "fx", 36, 800, "#64748B")
+    fb = fx + 52; out += f'<rect x="{fb}" y="{by}" width="{W / 2 - 8 - fb}" height="{bh}" rx="6" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+    # formula text, reference names in their colours
+    import re as _re
+    colour = {str(r["label"]): _XL[r.get("color", "blue")][0] for r in (refs or []) if r.get("label")}
+    parts = _re.split("(" + "|".join(_re.escape(k) for k in sorted(colour, key=len, reverse=True)) + ")", str(formula)) if colour else [str(formula)]
+    ffs = 42; room = W / 2 - 8 - fb - 28; flen = len(str(formula)) * ffs * 0.58
+    if flen > room: ffs = ffs * room / flen
+    if ffs < 30: raise ValueError(f"sheet_grid: the formula {formula!r} is too long for the bar; widen the sheet or shorten it")
+    spans = "".join(f'<tspan fill="{colour.get(p, INK)}">{esc(p)}</tspan>' for p in parts if p)
+    out += f'<text x="{fb + 14}" y="{by + bh * 0.72}" font-family="Inter" font-size="{ffs:.1f}" font-weight="800">{spans}</text>'
+    # grid
+    gy = y0 + L_["head"]; gx = x0 + L_["gut"]; xs = [gx]
+    for v in L_["cw"]: xs.append(xs[-1] + v)
+    ch = L_["col_h"]; rh = L_["rh"]; ys = [gy + ch + i * rh for i in range(len(rows) + 1)]
+    out += f'<rect x="{x0}" y="{gy}" width="{W}" height="{ch}" fill="#E8ECF1" stroke="none"/><rect x="{x0}" y="{gy}" width="{L_["gut"]}" height="{ys[-1] - gy}" fill="#E8ECF1" stroke="none"/>'
+    for c, nm in enumerate(cols):
+        on = selected and selected[1] == c
+        if on: out += f'<rect x="{xs[c]}" y="{gy}" width="{L_["cw"][c]}" height="{ch}" fill="#CFE8D8" stroke="none"/>'
+        out += _t((xs[c] + xs[c + 1]) / 2, gy + ch * 0.72, esc(str(nm)), 32, 800, "#475569")
+    for r in range(len(rows)):
+        on = selected and selected[0] == r
+        if on: out += f'<rect x="{x0}" y="{ys[r]}" width="{L_["gut"]}" height="{rh}" fill="#CFE8D8" stroke="none"/>'
+        out += _t(x0 + L_["gut"] / 2, ys[r] + rh * 0.64, str(start_row + r), 32, 800, "#475569")
+    for rf in refs or []:
+        a, b = rf["cell"]; col, tint = _XL[rf.get("color", "blue")]
+        out += f'<rect x="{xs[b]}" y="{ys[a]}" width="{L_["cw"][b]}" height="{rh}" fill="{tint}" stroke="none"/>'
+    for v in ys: out += f'<line x1="{gx}" y1="{v}" x2="{xs[-1]}" y2="{v}" stroke="#AEB8C4" stroke-width="2.5"/>'
+    for v in xs: out += f'<line x1="{v}" y1="{gy}" x2="{v}" y2="{ys[-1]}" stroke="#AEB8C4" stroke-width="2.5"/>'
+    for r, row in enumerate(rows):
+        for c, val in enumerate(row):
+            sv = str(val)
+            if not sv: continue
+            right = bool(_re.match(r"^[-$\d]", sv))
+            tx = xs[c + 1] - 14 if right else xs[c] + 14
+            out += _t(tx, ys[r] + rh * 0.66, esc(sv), f, 700, INK, "end" if right else "start")
+    for rf in refs or []:
+        a, b = rf["cell"]; col = _XL[rf.get("color", "blue")][0]
+        out += f'<rect x="{xs[b] + 2}" y="{ys[a] + 2}" width="{L_["cw"][b] - 4}" height="{rh - 4}" fill="none" stroke="{col}" stroke-width="6"/>'
+    if selected:
+        a, b = selected
+        out += f'<rect x="{xs[b] + 1}" y="{ys[a] + 1}" width="{L_["cw"][b] - 2}" height="{rh - 2}" fill="none" stroke="#107C41" stroke-width="8"/><rect x="{xs[b + 1] - 9}" y="{ys[a + 1] - 9}" width="16" height="16" fill="#107C41" stroke="{WHITE}" stroke-width="2"/>'
+    out += f'<rect x="{x0}" y="{y0}" width="{W}" height="{H}" rx="10" fill="none" stroke="{INK}" stroke-width="6"/>'
+    if popup:
+        pw = W * 0.82; ph = 230; px = -pw / 2; py = ys[-1] - ph - 12
+        out += f'<rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="14" fill="{WHITE}" stroke="#D6453D" stroke-width="7"/>'
+        out += f'<circle cx="{px + 62}" cy="{py + 74}" r="34" fill="#D6453D"/>' + _t(px + 62, py + 90, "×", 52, 900, WHITE)
+        out += _t(px + 116, py + 90, esc(str(popup.get("title", ""))), 44, 900, INK, "start")
+        out += _t(px + 40, py + 170, esc(str(popup.get("text", ""))), 38, 700, INK, "start")
+    return _g(x, y, s, out)
+
+
+def sheet_grid_box(x, y, s=1.0, cols=None, rows=None, w=880, h=None, fs=40, **_):
+    L_ = _xl_layout(cols, rows, w, h, fs)
+    return [x - w / 2 * s - 4, y - L_["H"] / 2 * s - 4, w * s + 8, L_["H"] * s + 8]
+
+
 BACKGROUNDS = ["paper", "office", "classroom", "lecture", "home", "street", "campus", "store", "none"]
 
 # name -> (draw function, box function or None = default box from size)
@@ -2127,6 +2472,514 @@ PRESETS.update({"plot": (plot, ledger_box), "tempo": (tempo, ledger_box), "till"
                 "t_account": (t_account, t_account_box), "letter_tiles": (letter_tiles, letter_tiles_box), "shopfront": (shopfront, shopfront_box),
                 "shopping_bag": (shopping_bag, None), "bank_app": (bank_app, None)})
 HALF.update({"big_icon": (60, 56), "months": (234, 104), "shopping_bag": (72, 90), "bank_app": (155, 285)})
+# data props: real numbers on screen (6 Nov 2026)
+PRESETS.update({"data_chart": (data_chart, data_chart_box), "data_table": (data_table, data_table_box)})
+PRESETS.update({"sheet_grid": (sheet_grid, sheet_grid_box)})
+
+
+def pin(x, y, s=1.0, color="coral", **_):
+    """A small map pin that marks a field on a document (lessons). (x, y) = the pin's point."""
+    col = {"coral": CORAL, "blue": BLUE, "green": GREEN}.get(color, CORAL)
+    return _g(x, y, s, f'<path d="M0 0 C-6 -14 -18 -22 -18 -36 A18 18 0 1 1 18 -36 C18 -22 6 -14 0 0 Z" fill="{col}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                       f'<circle cx="0" cy="-36" r="6" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>')
+
+
+def pin_box(x, y, s=1.0, **_):
+    return [x - 20 * s, y - 56 * s, 40 * s, 58 * s]
+
+
+PRESETS.update({"pin": (pin, pin_box)})
+
+
+# ---------------------------------------------------------------- motion layer (opt-in, 6 Nov 2026)
+# Hoang: "the animation sometimes too simple ... arrow green red illustation with graph, number inside with people trading action and supplement info".
+# Nothing here runs unless a script uses these props or item keys. The renderer computes every state from the time alone, so frames can be rendered by seeking.
+UP = "#1F9D61"; DOWN = "#D8433B"; UP_TINT = "#D8F1E3"; DOWN_TINT = "#FBDDDA"; NOTE_FILL = "#FFF6D1"; GHOST = "#D5DBE4"
+SELF_TIMED = {"coin_stream", "burst"}   # these props use "at" as their own start time; for the rest "at" is the usual pop-in
+
+
+def _m_attr(o):
+    import html as _h, json as _j
+    return _h.escape(_j.dumps(o, separators=(",", ":"), ensure_ascii=False), quote=True)
+
+
+def _m_fmt(v, dec=0, pre="", suf="", comp="", plus=False):
+    """Money and number text, the same rules as fmtN in render.html: $1,234.50, −$5, $500K. comp "K" or "M" divides and appends the letter."""
+    c = {"K": 1e3, "M": 1e6}.get(comp, 1); t = f"{abs(float(v)) / c:.{int(dec)}f}"; a, _, b = t.partition(".")
+    a = f"{int(a):,}"; zero = float(t) == 0
+    return ("−" if float(v) < 0 and not zero else "+" if plus and not zero else "") + pre + a + ("." + b if b else "") + comp + suf
+
+
+def _m_unit(unit):
+    """(prefix, suffix) for a unit: a currency sign goes in front, the rest behind."""
+    u = str(unit or "")
+    if u in _D_PREFIX: return u, ""
+    return "", (u if u == "%" or not u else " " + u)
+
+
+def _m_keys(v):
+    """Motion keys are a dict or a list of dicts. Anything else is ignored, because older scripts use "move" and "pulse" as their own fields."""
+    if isinstance(v, dict): return [v]
+    if isinstance(v, list) and v and all(isinstance(k, dict) for k in v): return v
+    return []
+
+
+def _m_at(k):
+    q = {"at": str(k.get("at", "chunk:0")), "delay": float(k.get("delay", 0))}
+    if not str(q["at"]).startswith("chunk:"): raise ValueError(f'motion: at {q["at"]!r}; use "chunk:N"')
+    return q
+
+
+def _m_wrap(it, inner):
+    """Generic motion on any item, opt-in by key. move: {"at","delay","dur","to":[x,y],"arc","ease","scale","rot","trail"} or a list of them, played in order. arc: pixels the path bows upward. trail: a colour name or {"color","fade","width"}. pulse: {"at","dur","amp"}. shake: {"at","dur","amp","hz"}. bob: {"amp","hz"}. out: {"at","dur"} fades it away. reveal: {"at","dur","dir"} wipes it in, dir right, left, up or down."""
+    mv, pl, sh, ot, rv = [_m_keys(it.get(k)) for k in ("move", "pulse", "shake", "out", "reveal")]
+    bob = it.get("bob") if isinstance(it.get("bob"), dict) else None
+    if not (mv or pl or sh or ot or rv or bob): return inner
+    trails = ""; x0, y0 = it["x"], it["y"]; S = {"x": x0, "y": y0}
+    if mv:
+        S["move"] = []
+        for k in mv:
+            if not (isinstance(k.get("to"), (list, tuple)) and len(k["to"]) == 2): raise ValueError(f'{it["p"]}: move needs "to": [x, y]')
+            q = dict(_m_at(k), dur=float(k.get("dur", 0.7)), to=list(k["to"]), arc=float(k.get("arc", 0)), ease=k.get("ease", "inout"))
+            if "scale" in k: q["scale"] = float(k["scale"])
+            if "rot" in k: q["rot"] = float(k["rot"])
+            S["move"].append(q)
+            tr = k.get("trail")
+            if tr:
+                tr = tr if isinstance(tr, dict) else {"color": tr}
+                x1, y1 = k["to"]; cx, cy = (x0 + x1) / 2, (y0 + y1) / 2 - q["arc"]
+                col = {"green": UP, "red": DOWN, "blue": ED_BLUE, "ink": INK, "amber": AMBER}.get(tr.get("color", "blue"), tr.get("color", ED_BLUE))
+                spec = dict(_m_at(k), dur=q["dur"], ease=q["ease"], fade=float(tr.get("fade", 0)))
+                trails += (f'<path data-fx="trail" data-nodraw="1" data-spec="{_m_attr(spec)}" d="M{_f(x0)} {_f(y0)} Q{_f(cx)} {_f(cy)} {_f(x1)} {_f(y1)}" pathLength="1" '
+                           f'stroke-dasharray="0 1" fill="none" stroke="{col}" stroke-width="{tr.get("width", 7)}" stroke-linecap="round" opacity="0"/>')
+            x0, y0 = k["to"]
+    if pl: S["pulse"] = [dict(_m_at(k), dur=float(k.get("dur", 0.5)), amp=float(k.get("amp", 0.12))) for k in pl]
+    if sh: S["shake"] = [dict(_m_at(k), dur=float(k.get("dur", 0.6)), amp=float(k.get("amp", 9)), hz=float(k.get("hz", 7))) for k in sh]
+    if ot: S["out"] = [dict(_m_at(k), dur=float(k.get("dur", 0.3))) for k in ot]
+    if bob: S["bob"] = {"amp": float(bob.get("amp", 5)), "hz": float(bob.get("hz", 1.1))}
+    if rv:
+        k = rv[0]; b = item_box(it); pad = 24; cid = "clip-" + format(abs(hash_text(inner)) % 10 ** 10)
+        spec = dict(_m_at(k), dur=float(k.get("dur", 0.8)), dir=k.get("dir", "right"), ease=k.get("ease", "inout"), box=[b[0] - pad, b[1] - pad, b[2] + 2 * pad, b[3] + 2 * pad])
+        inner = (f'<clipPath id="{cid}"><rect data-fx="clip" data-nodraw="1" data-spec="{_m_attr(spec)}" x="{_f(b[0] - pad)}" y="{_f(b[1] - pad)}" width="0" height="{_f(b[3] + 2 * pad)}"/></clipPath>'
+                 f'<g clip-path="url(#{cid})">{inner}</g>')
+    return trails + f'<g data-fx="m" data-spec="{_m_attr(S)}">{inner}</g>'
+
+
+def hash_text(t):
+    h = 0
+    for c in t: h = (h * 131 + ord(c)) % 2147483647
+    return h
+
+
+def _m_count(x, y, S, txt, fs, wt=900, col=INK, anchor="middle"):
+    """A number text the renderer ticks. S: from, keys, dec, pre, suf, comp, plus."""
+    return f'<text data-fx="count" data-spec="{_m_attr(S)}" x="{_f(x)}" y="{_f(y)}" text-anchor="{anchor}" font-family="Inter,sans-serif" font-weight="{wt}" font-size="{_f(fs)}" fill="{col}">{txt}</text>'
+
+
+def counter(x, y, s=1.0, start=0, to=None, keys=None, unit="$", dec=0, comp="", plus=False, tick=None, dur=1.2, fs=96, color="ink", title="", tfs=40, **_):
+    """A number that ticks between caption chunks, with correct money formatting. (x, y) = centre. start, to: the values; tick: the chunk it starts ticking ("chunk:N", default its "at"), dur: seconds. keys: several steps instead, [{"at","delay","dur","to"}]. unit: "$" goes in front, "%" or a word behind. dec: decimals. comp: "K" or "M" shows $500K. plus: shows + on positive values. color: ink, blue, green, red. title: small line above it. Show only numbers the voice or the script supports."""
+    kk = _.get("at")
+    pre, suf = _m_unit(unit); col = {"ink": INK, "blue": ED_BLUE, "green": UP, "red": DOWN}.get(color, color)
+    K = [dict(_m_at(k), dur=float(k.get("dur", dur)), to=_d_num(k["to"], unit, "counter")) for k in (keys or [])]
+    if not K and to is not None: K = [dict(_m_at({"at": tick or kk or "chunk:0", "delay": _.get("delay", 0)}), dur=float(dur), to=_d_num(to, unit, "counter"))]
+    S = {"from": _d_num(start, unit, "counter"), "keys": K, "dec": dec, "pre": pre, "suf": suf, "comp": comp, "plus": plus, "ease": "out"}
+    out = ""
+    if title: out += _t(0, -fs * 0.55, str(title), tfs, 800, INK)
+    out += _m_count(0, fs * 0.35, S, _m_fmt(S["from"], dec, pre, suf, comp, plus), fs, 900, col)
+    return _g(x, y, s, out)
+
+
+def counter_box(x, y, s=1.0, fs=96, to=None, start=0, keys=None, unit="$", dec=0, comp="", title="", **_):
+    pre, suf = _m_unit(unit); vals = [start] + ([to] if to is not None else []) + [k["to"] for k in (keys or [])]
+    w = max(_d_tw(_m_fmt(_d_num(v, unit, "counter"), dec, pre, suf, comp), fs) for v in vals) + 12
+    if title: w = max(w, _d_tw(title, 40))
+    top = fs * 0.55 + 40 if title else fs * 0.5
+    return [x - w / 2 * s, y - top * s, w * s, (top + fs * 0.55) * s]
+
+
+def order_chip(x, y, s=1.0, label="Buy", color="green", fs=44, plain=False, **_):
+    """A hand-drawn pill with short text: an order on its way ("Bid $50.00"), or a tag ("Buyer"). color: green, red, blue, amber, light. plain: true draws only the coloured words, for a name under a figure. (x, y) = centre. Add "move" to send it somewhere."""
+    fill, tc = {"green": (UP, WHITE), "red": (DOWN, WHITE), "blue": (ED_BLUE, WHITE), "amber": (AMBER, INK), "light": (WHITE, INK), "white": (WHITE, INK)}.get(color, (ED_BLUE, WHITE))
+    W = _d_tw(label, fs) + 44; H = fs * 1.5
+    if plain: return _g(x, y, s, _t(0, fs * 0.36, str(label), fs, 900, fill if color != "light" else INK))
+    return _g(x, y, s, f'<rect x="{-W / 2:.1f}" y="{-H / 2:.1f}" width="{W:.1f}" height="{H:.1f}" rx="{H / 2:.1f}" fill="{fill}" stroke="{INK}" stroke-width="5"/>' + _t(0, fs * 0.36, str(label), fs, 900, tc))
+
+
+def order_chip_box(x, y, s=1.0, label="Buy", fs=44, **_):
+    W = _d_tw(label, fs) + 44; H = fs * 1.5
+    return [x - W / 2 * s, y - H / 2 * s, W * s, H * s]
+
+
+def coin(x, y, s=1.0, **_):
+    """One gold coin with a dollar sign, to send somewhere with "move". (x, y) = centre."""
+    return _g(x, y, s, f'<circle r="34" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><circle r="24" fill="none" stroke="{INK}" stroke-width="3" opacity="0.45"/>' + _t(0, 14, "$", 40, 900, INK))
+
+
+def _stream_piece(kind, color):
+    col = {"green": UP, "red": DOWN, "blue": ED_BLUE, "amber": AMBER}.get(color, color)
+    if kind == "coin": return f'<circle r="26" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>' + _t(0, 11, "$", 32, 900, INK)
+    if kind == "chip": return f'<rect x="-34" y="-18" width="68" height="36" rx="18" fill="{col}" stroke="{INK}" stroke-width="4"/>'
+    return f'<circle r="15" fill="{col}" stroke="{INK}" stroke-width="4"/>'
+
+
+def coin_stream(x, y, s=1.0, to=None, n=5, dur=0.9, stagger=0.16, arc=60, kind="coin", color="green", delay=0, **_):
+    """Several pieces flowing from (x, y) to "to": [x, y], one after another, then gone, from its "at" chunk. kind: coin, chip or dot. n: pieces; dur: seconds each; stagger: seconds between them; arc: how far the path bows upward. Coins moving between people, orders arriving at a book."""
+    if not to: raise ValueError('coin_stream: needs "to": [x, y]')
+    S = {"at": str(_.get("at", "chunk:0")), "delay": float(delay), "dur": float(dur), "stagger": float(stagger), "x": x, "y": y, "to": list(to), "arc": float(arc), "s": s}
+    return f'<g data-fx="stream" data-spec="{_m_attr(S)}">' + "".join(f'<g class="sp" opacity="0">{_stream_piece(kind, color)}</g>' for _i in range(int(n))) + "</g>"
+
+
+def coin_stream_box(x, y, s=1.0, to=None, **_):
+    to = to or [x, y]
+    return [min(x, to[0]) - 30, min(y, to[1]) - 30, abs(to[0] - x) + 60, abs(to[1] - y) + 60]
+
+
+def burst(x, y, s=1.0, color="amber", label="", delay=0, dur=0.7, **_):
+    """A brief flash when something happens, such as a trade matching: rays and a ring grow and fade from its "at" chunk. label: optional pill text that stays a little longer. (x, y) = centre."""
+    col = {"amber": AMBER, "green": UP, "red": DOWN, "blue": ED_BLUE}.get(color, color)
+    rays = "".join(f'<path d="M{math.cos(a) * 52:.1f} {math.sin(a) * 52:.1f} L{math.cos(a) * (88 + 16 * (i % 2)):.1f} {math.sin(a) * (88 + 16 * (i % 2)):.1f}" stroke="{col}" stroke-width="11" stroke-linecap="round" fill="none"/>'
+                   for i, a in enumerate(math.pi * 2 * k / 12 for k in range(12)))
+    S = {"at": str(_.get("at", "chunk:0")), "delay": float(delay), "dur": float(dur), "x": x, "y": y, "s": s}
+    tag = ""
+    if label:
+        W = _d_tw(label, 44) + 44
+        tag = (f'<g class="bl" opacity="0"><rect x="{-W / 2:.1f}" y="-36" width="{W:.1f}" height="72" rx="36" fill="{AMBER}" stroke="{INK}" stroke-width="5"/>' + _t(0, 16, str(label), 44, 900, INK) + "</g>")
+    return f'<g data-fx="burst" data-spec="{_m_attr(S)}"><g class="br" opacity="0"><circle r="60" fill="{col}" fill-opacity="0.28" stroke="{col}" stroke-width="7"/>{rays}</g>{tag}</g>'
+
+
+def burst_box(x, y, s=1.0, **_):
+    return [x - 105 * s, y - 105 * s, 210 * s, 210 * s]
+
+
+def _nc_layout(title, lines, w, fs):
+    lines = [str(l) for l in (lines or [])]
+    size = fs
+    while size >= DATA_FLOOR:
+        wr = [wl for l in lines for wl in _d_wrap(l, size, w - 56)]
+        if all(_d_tw(l, size) <= w - 56 for l in wr): break
+        size -= 2
+    else: raise ValueError(f"note_card: {lines!r} does not fit {w} wide at the {DATA_FLOOR} px minimum; shorten it or raise w")
+    tl = _d_wrap(title, size, w - 56) if title else []
+    H = 54 + len(tl) * size * 1.2 + (10 if tl else 0) + len(wr) * size * 1.22
+    return size, tl, wr, H
+
+
+def note_card(x, y, s=1.0, title="", lines=None, w=480, fs=42, rot=0, mark=False, **_):
+    """A small pinned note for supporting information, such as "Spread = $50.05 − $50.00 = 5 cents". (x, y) = centre. title: bold blue line. lines: list of lines, wrapped to w; text stays at 34 px or more. mark: yellow highlighter on the last line. rot: slight tilt in degrees."""
+    size, tl, wr, H = _nc_layout(title, lines, w, fs)
+    out = (f'<path d="M{-w / 2 + 16} {-H / 2} L{w / 2 - 14} {-H / 2 - 2} Q{w / 2} {-H / 2} {w / 2} {-H / 2 + 16} L{w / 2 + 2} {H / 2 - 16} Q{w / 2} {H / 2} {w / 2 - 16} {H / 2} L{-w / 2 + 14} {H / 2 + 2} Q{-w / 2} {H / 2} {-w / 2} {H / 2 - 16} L{-w / 2 - 2} {-H / 2 + 16} Q{-w / 2} {-H / 2} {-w / 2 + 16} {-H / 2} Z" '
+           f'fill="{NOTE_FILL}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>')
+    out += f'<rect x="-46" y="{-H / 2 - 15:.1f}" width="92" height="30" rx="5" fill="{BLUE}" fill-opacity="0.75" stroke="{INK}" stroke-width="3"/>'
+    yy = -H / 2 + 24
+    for l in tl:
+        yy += size * 1.0; out += _t(0, yy, l, size, 900, ED_BLUE); yy += size * 0.2
+    if tl: yy += 10
+    for i, l in enumerate(wr):
+        yy += size * 1.0
+        if mark and i == len(wr) - 1:
+            lw = _d_tw(l, size) + 14
+            out += f'<rect x="{-lw / 2:.1f}" y="{yy - size * 0.72:.1f}" width="{lw:.1f}" height="{size * 0.84:.1f}" rx="6" fill="#FFD45C" stroke="none"/>'
+        out += _t(0, yy, l, size, 800, INK); yy += size * 0.22
+    return _g(x, y, s, out, rot)
+
+
+def note_card_box(x, y, s=1.0, title="", lines=None, w=480, fs=42, **_):
+    H = _nc_layout(title, lines, w, fs)[3]
+    return [x - w / 2 * s - 4, y - (H / 2 + 16) * s, w * s + 8, (H + 18) * s]
+
+
+def trend_arrow(x, y, s=1.0, dir="up", length=240, width=110, text="", fs=56, **_):
+    """A chunky market arrow: green pointing up, red pointing down. (x, y) = centre. text: short label to its right, such as "+20%". Add "reveal" with dir up or down so it grows."""
+    col = UP if dir == "up" else DOWN; L = length / 2; hw = width / 2; sw = width * 0.28; hh = width * 0.62; k = -1 if dir == "up" else 1
+    d = f"M{-sw:.1f} {-k * L:.1f} L{sw:.1f} {-k * L:.1f} L{sw:.1f} {k * (L - hh):.1f} L{hw:.1f} {k * (L - hh):.1f} L0 {k * L:.1f} L{-hw:.1f} {k * (L - hh):.1f} L{-sw:.1f} {k * (L - hh):.1f} Z"
+    out = f'<path d="{d}" fill="{col}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+    if text: out += _t(hw + 14, fs * 0.35, str(text), fs, 900, col, "start")
+    return _g(x, y, s, out)
+
+
+def trend_arrow_box(x, y, s=1.0, length=240, width=110, text="", fs=56, **_):
+    tw = _d_tw(text, fs) + 18 if text else 0
+    return [x - width / 2 * s - 4, y - length / 2 * s - 4, (width + tw) * s + 8, length * s + 8]
+
+
+def trader(x, y, s=1.0, side="buy", mood="smile", acts=None, name="", look=0, color=None, **_):
+    """A person who acts: same look as "person", with arms. (x, y) = between the feet. side: buy (green top) or sell (red top). name: small label under the feet, such as "Buyer". acts: [{"at","delay","pose","mood"}]; pose: down, raise, both, point (right arm in), point_l (left arm in), cheer, shrug; a small hop plays on each act unless "hop": false. mood: smile, happy, flat, sad, o, worried. look: -1 or 1 moves the eyes left or right."""
+    c = color or {"buy": "#BFE6CF", "sell": "#F6C9C4"}.get(side, LB)
+    Mouth = {"smile": "M-12 -168 Q0 -158 12 -168", "happy": "M-14 -170 Q0 -148 14 -170 Z", "flat": "M-11 -164 H11", "sad": "M-12 -158 Q0 -170 12 -158", "worried": "M-12 -160 Q-6 -166 0 -161 Q6 -156 12 -162", "o": ""}
+    moods = [mood] + [a["mood"] for a in (acts or []) if a.get("mood")]
+    mouths = ""
+    for m in dict.fromkeys(moods):
+        if m not in Mouth: raise ValueError(f"trader: mood {m!r}; use {', '.join(Mouth)}")
+        body = f'<circle cx="0" cy="-162" r="8" fill="{INK}"/>' if m == "o" else f'<path d="{Mouth[m]}" fill="{"#FFFFFF" if m == "happy" else "none"}" stroke="{INK}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'
+        mouths += f'<g class="tm" data-m="{m}" opacity="{1 if m == mood else 0}">{body}</g>'
+    ex = 4 * (look or 0)
+    A = {"mood": mood, "acts": [dict(_m_at(a), pose=a.get("pose"), mood=a.get("mood"), hop=a.get("hop", True), dur=float(a.get("dur", 0.3))) for a in (acts or [])]}
+    arm = lambda sx, ex_: f'<path d="M{sx} -112 Q{sx + (5 if sx > 0 else -5)} -84 {ex_} -58" fill="none" stroke="{INK}" stroke-width="10" stroke-linecap="round"/><path d="M{sx} -112 Q{sx + (5 if sx > 0 else -5)} -84 {ex_} -58" fill="none" stroke="{c}" stroke-width="4" stroke-linecap="round"/><circle cx="{ex_}" cy="-56" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="4"/>'
+    inner = (f'<path d="M-46 0 V-90 Q-46 -130 0 -130 Q46 -130 46 -90 V0 Z" fill="{c}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<circle cx="0" cy="-178" r="40" fill="{PAPER}" stroke="{INK}" stroke-width="{SW}"/>'
+             f'<circle cx="{-13 + ex}" cy="-184" r="5" fill="{INK}"/><circle cx="{13 + ex}" cy="-184" r="5" fill="{INK}"/>{mouths}'
+             f'<g class="ta" data-side="L" data-sx="-44" data-sy="-110">{arm(-44, -52)}</g><g class="ta" data-side="R" data-sx="44" data-sy="-110">{arm(44, 52)}</g>')
+    out = f'<ellipse cx="0" cy="4" rx="46" ry="7" fill="{INK}" opacity="0.10"/><g data-fx="trader" data-spec="{_m_attr(A)}">{inner}</g>'
+    if name: out += _t(0, 46, str(name), round(36 / min(s, 1)), 900, UP if side == "buy" else DOWN if side == "sell" else INK)
+    return _g(x, y, s, out)
+
+
+def trader_box(x, y, s=1.0, name="", **_):
+    return [x - 70 * s, y - 222 * s, 140 * s, (226 + (56 if name else 0)) * s]
+
+
+def _ob_layout(asks, bids, w, rh, states, gap_min, gap_max):
+    if not asks or not bids: raise ValueError("order_book: needs asks and bids")
+    def nums(rows, where): return [[_d_num(r[0], "$", where), _d_num(r[1], "", where)] for r in rows]
+    A, B = nums(asks, "order_book asks"), nums(bids, "order_book bids")
+    for v, nm in ((A, "asks"), (B, "bids")):
+        pr = [r[0] for r in v]
+        if pr != sorted(pr, reverse=nm == "bids"): raise ValueError(f"order_book: {nm} go best price first (asks rising, bids falling): {pr}")
+    sps = [A[0][0] - B[0][0]]; St = []
+    for st in states or []:
+        a2, b2 = nums(st.get("asks") or asks, "order_book states"), nums(st.get("bids") or bids, "order_book states")
+        if len(a2) != len(A) or len(b2) != len(B): raise ValueError("order_book: each state must have the same number of rows")
+        sps.append(a2[0][0] - b2[0][0]); St.append(dict(_m_at(st), dur=float(st.get("dur", 0.9)), asks=a2, bids=b2))
+    if min(sps) <= 0: raise ValueError(f"order_book: the best ask must be above the best bid (spreads {sps})")
+    gmin = float(gap_min); gmax = float(gap_max) if gap_max else (gmin if len(set(round(v, 6) for v in sps)) == 1 else gmin + 110)
+    qmax = max(r[1] for v in [A, B] + [st["asks"] for st in St] + [st["bids"] for st in St] for r in v) or 1
+    return A, B, St, sps, gmin, gmax, qmax
+
+
+def order_book(x, y, s=1.0, asks=None, bids=None, w=620, rh=64, fs=46, title="Order book", example=True, states=None, show=None, flash=None, gap_min=76, gap_max=None, spread_range=None, spread_label=True, dec=2, **_):
+    """A trading ladder: red asks above, green bids below, real numbers inside, and a highlighted spread band between the best ask and the best bid. (x, y) = centre of the band. asks, bids: rows of [price, shares], BEST PRICE FIRST (index 0 sits next to the band), e.g. "asks": [["50.05", 300], ["50.06", 500]]. states: [{"at","dur","asks","bids"}] move the prices and shares, so the spread narrows or widens and the band follows. show: {"bids": "chunk:N", "asks": "chunk:N", "band": "chunk:N"} when each part comes in (default: from the start); a value may be {"at","delay"}. flash: [{"at","side":"ask","row":0}] flashes a row. example: true writes "Example prices" in the header; use false only when the voice says every number or the scene labels them. spread_label: writes the live spread on the band. spread_range: [low, high] in dollars, the spreads that map to gap_min and gap_max; give two books the same range so their bands compare fairly."""
+    A, B, St, sps, gmin, gmax, qmax = _ob_layout(asks, bids, w, rh, states, gap_min, gap_max)
+    na, nb = len(A), len(B); head = 78; sub = 52; wl = w / 2; pad = 22; fq = max(DATA_FLOOR, fs - 8)
+    if _d_tw("$00.00", fs) + _d_tw("0,000", fq) + 2 * pad + 20 > w: raise ValueError(f"order_book: w {w} is too narrow for the numbers at {fs} px; raise w")
+    tA = head + sub + na * rh; tB = sub + nb * rh; g0 = 0
+    S = {"asks": A, "bids": B, "states": St, "dec": dec, "qmax": qmax, "gmin": gmin, "gmax": gmax, "spmax": float(spread_range[1]) if spread_range else max(sps), "spmin": float(spread_range[0]) if spread_range else min(sps), "w": w, "rh": rh, "tA": tA, "tB": tB, "show": {k: _m_at(v if isinstance(v, dict) else {"at": v}) for k, v in (show or {}).items()}, "label": bool(spread_label),
+         "flash": [dict(_m_at(f), side=f.get("side", "ask"), row=int(f.get("row", 0)), dur=float(f.get("dur", 0.7))) for f in (flash or [])]}
+    def row(k, r, side):
+        col, tint, bar_y = (DOWN, DOWN_TINT, 0) if side == "ask" else (UP, UP_TINT, 0)
+        best = k == 0; bw = (w - 8) * 0.62 * r[1] / qmax; wt = 900
+        return (f'<g class="obr" data-side="{side}" data-i="{k}">'
+                f'<rect class="obb" data-nodraw="1" x="{wl - 4 - bw:.1f}" y="4" width="{bw:.1f}" height="{rh - 8}" rx="8" fill="{tint}" stroke="none"/>'
+                + (f'<rect data-nodraw="1" x="-{wl - 8}" y="3" width="{w - 16}" height="{rh - 6}" rx="10" fill="none" stroke="{col}" stroke-width="5"/>' if best else "")
+                + f'<rect class="obf" data-nodraw="1" x="-{wl - 8}" y="3" width="{w - 16}" height="{rh - 6}" rx="10" fill="{AMBER}" opacity="0" stroke="none"/>'
+                + f'<text class="obp" x="{-wl + pad}" y="{rh / 2 + fs * 0.36:.1f}" font-family="Inter,sans-serif" font-size="{fs}" font-weight="{wt}" fill="{col}">{_m_fmt(r[0], dec, "$")}</text>'
+                + f'<text class="obq" x="{wl - pad}" y="{rh / 2 + fq * 0.36:.1f}" text-anchor="end" font-family="Inter,sans-serif" font-size="{fq}" font-weight="800" fill="{INK}">{_m_fmt(r[1])}</text></g>')
+    # top group: header, "Asks" line and ask rows, best ask at the bottom; it sits above the band and moves up as the band opens
+    top = ""; yy = -tA
+    ex = bool(example) and _d_tw(title, 40) + _d_tw("Example prices", 34) + 56 <= w
+    if example and not ex: raise ValueError(f'order_book: w {w} cannot hold "{title}" and "Example prices" in the header; shorten the title, raise w, or set example false and label the scene')
+    top += f'<path d="M{-wl} {yy + head} V{yy + 20} Q{-wl} {yy} {-wl + 20} {yy} H{wl - 20} Q{wl} {yy} {wl} {yy + 20} V{yy + head} Z" fill="{ED_BLUE}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+    top += _t(-wl + pad, yy + 52, str(title), 40, 900, WHITE, "start")
+    if ex: top += _t(wl - pad, yy + 50, "Example prices", 34, 800, "#FFE9A8", "end")
+    yy += head
+    asks_g = f'<text x="{-wl + pad}" y="{yy + 38}" font-family="Inter,sans-serif" font-size="36" font-weight="900" fill="{DOWN}">Asks: sellers</text><text x="{wl - pad}" y="{yy + 38}" text-anchor="end" font-family="Inter,sans-serif" font-size="34" font-weight="800" fill="#475569">Shares</text>'
+    yy += sub
+    for k in range(na - 1, -1, -1):
+        asks_g += f'<g transform="translate(0 {yy:.1f})">{row(k, A[k], "ask")}</g>'; yy += rh
+    bot = ""; yy = 0
+    for k in range(nb):
+        bot += f'<g transform="translate(0 {yy:.1f})">{row(k, B[k], "bid")}</g>'; yy += rh
+    bot += f'<text x="{-wl + pad}" y="{yy + 38}" font-family="Inter,sans-serif" font-size="36" font-weight="900" fill="{UP}">Bids: buyers</text>'
+    card = f'<rect class="obc" data-nodraw="1" x="{-wl}" y="{-tA}" width="{w}" height="{tA + tB}" rx="20" fill="{WHITE}" stroke="none"/>'
+    edge = f'<rect class="obe" data-nodraw="1" x="{-wl}" y="{-tA}" width="{w}" height="{tA + tB}" rx="20" fill="none" stroke="{INK}" stroke-width="6"/>'
+    band = (f'<g class="obband"><rect class="obbr" data-nodraw="1" x="{-wl + 5}" y="-30" width="{w - 10}" height="60" fill="{AMBER}" fill-opacity="0.75" stroke="none"/>'
+            f'<path class="obla" d="M{-wl + 30} 0 L{-wl + 30} 0" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round" data-nodraw="1"/>'
+            + (f'<text class="obl" x="20" y="16" text-anchor="middle" font-family="Inter,sans-serif" font-size="{42 if w >= 500 else 36}" font-weight="900" fill="{INK}">Spread</text>' if spread_label else "") + "</g>")
+    out = f'<g data-fx="book" data-spec="{_m_attr(S)}">{card}<g class="obtop">{top}</g><g class="obasks">{asks_g}</g><g class="obbids">{bot}</g>{band}{edge}</g>'
+    return _g(x, y, s, out)
+
+
+def order_book_box(x, y, s=1.0, asks=None, bids=None, w=620, rh=64, states=None, gap_min=76, gap_max=None, **_):
+    A, B, St, sps, gmin, gmax, qmax = _ob_layout(asks, bids, w, rh, states, gap_min, gap_max)
+    tA = 78 + 52 + len(A) * rh + gmax / 2; tB = 52 + len(B) * rh + gmax / 2
+    return [x - w / 2 * s - 4, y - tA * s - 4, w * s + 8, (tA + tB) * s + 8]
+
+
+def _lc_stops(stops, n):
+    R = _m_keys(stops) or [{"at": "chunk:0", "dur": 1.5, "upto": n - 1}]
+    return [dict(_m_at(k), dur=float(k.get("dur", 1.5)), upto=float(k.get("upto", n - 1))) for k in R]
+
+
+def live_chart(x, y, s=1.0, kind="candles", candles=None, points=None, unit="$", dec=2, w=860, h=620, stops=None, marks=None, ticks=None, title="", example=True, color="market", **_):
+    """A price chart that draws itself over time. (x, y) = centre. kind: candles (candles: [[open, high, low, close], ...]) or line (points: [...]). stops: [{"at","delay","dur","upto"}]: by that chunk's time + dur the chart has reached index upto, so it stays in sync with the voice. marks: [{"i": 3, "dir": "up", "text": "Buyers"}]: a green up or red down arrow that pops when the chart reaches index i. ticks: price labels on the right axis. A price tag on the axis follows the latest price, green when rising, red when falling. example: true writes "Example prices"; use false only when the voice says every number. color (line): market (green up, red down) or blue."""
+    where = "live_chart"; pre, suf = _m_unit(unit)
+    if kind == "candles":
+        C = [[_d_num(v, unit, where) for v in c] for c in (candles or [])]
+        if not C or any(len(c) != 4 for c in C): raise ValueError(f"{where}: candles need [[open, high, low, close], ...]")
+        for c in C:
+            if not (c[2] <= min(c[0], c[3]) and c[1] >= max(c[0], c[3])): raise ValueError(f"{where}: candle {c} has a high or low outside its open and close")
+        P = [c[3] for c in C]; lo, hi = min(c[2] for c in C), max(c[1] for c in C)
+    elif kind == "line":
+        P = [_d_num(v, unit, where) for v in (points or [])]
+        if len(P) < 2: raise ValueError(f"{where}: a line needs at least 2 points")
+        C = None; lo, hi = min(P), max(P)
+    else: raise ValueError(f'{where}: kind {kind!r}; use "candles" or "line"')
+    n = len(P); hw, hh = w / 2, h / 2; R = 150; top = -hh
+    out = ""
+    if title or example:
+        if title: out += _t(-hw + 6, top + 40, str(title), 42, 900, INK, "start")
+        if example:
+            tw = _d_tw("Example prices", 36) + 30
+            if title and _d_tw(title, 42) + tw + 20 > w: raise ValueError(f"{where}: the title and \"Example prices\" do not fit {w} wide; shorten the title")
+            out += f'<rect x="{hw - tw:.1f}" y="{top + 2:.1f}" width="{tw:.1f}" height="54" rx="12" fill="{NOTE_FILL}" stroke="{INK}" stroke-width="4"/>' + _t(hw - tw / 2, top + 41, "Example prices", 36, 800, INK)
+        top += 70
+    plotL, plotR, plotT, plotB = -hw + 4, hw - R, top + 6, hh - 14
+    ups = [m for m in (marks or []) if m.get("dir") == "up"]; dns = [m for m in (marks or []) if m.get("dir") != "up"]
+    padT = 40 + (130 if dns else 0); padB = 30 + (130 if ups else 0)
+    if plotB - plotT - padT - padB < 110: raise ValueError(f"{where}: h {h} leaves too little room for the plot; raise h or use fewer marks")
+    span = (hi - lo) or 1.0; ky = (plotB - plotT - padT - padB) / span
+    Y = lambda v: plotT + padT + (hi - v) * ky
+    slot = (plotR - plotL) / n; X = lambda i: plotL + slot * (i + 0.5)
+    tk = ticks if ticks is not None else [lo, (lo + hi) / 2, hi]
+    out += f'<path d="M{plotR:.1f} {plotT:.1f} L{plotR:.1f} {plotB:.1f} L{plotL:.1f} {plotB:.1f}" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>'
+    for v in tk:
+        vv = _d_num(v, unit, where); yy = Y(vv)
+        out += f'<path d="M{plotL:.1f} {yy:.1f} L{plotR:.1f} {yy:.1f}" fill="none" stroke="{DATA_RULE}" stroke-width="4" stroke-dasharray="4 14" stroke-linecap="round"/>' + _t(plotR + 10, yy + 12, _m_fmt(vv, dec, pre, suf), DATA_FLOOR, 800, "#334155", "start")
+    S = {"u0": -1 if kind == "candles" else 0, "stops": _lc_stops(stops, n), "dec": dec, "pre": pre, "suf": suf, "n": n, "kind": kind, "P": P, "Y": [round(Y(v), 2) for v in P], "X": [round(X(i), 2) for i in range(n)], "plotR": plotR}
+    bw = min(slot * 0.62, 70); plot = ""; boxes = []
+    if kind == "candles":
+        S["C"] = C; S["YC"] = [[round(Y(v), 2) for v in c] for c in C]
+        for i, c in enumerate(C):
+            up = c[3] >= c[0]; col = UP if up else DOWN; cx = X(i)
+            plot += (f'<g class="cc" data-i="{i}" opacity="0"><path class="cw" data-nodraw="1" d="M{cx:.1f} {Y(c[1]):.1f} L{cx:.1f} {Y(c[2]):.1f}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
+                     f'<rect class="cb" data-nodraw="1" x="{cx - bw / 2:.1f}" y="{min(Y(c[0]), Y(c[3])):.1f}" width="{bw:.1f}" height="{max(6, abs(Y(c[3]) - Y(c[0]))):.1f}" rx="5" fill="{col}" stroke="{INK}" stroke-width="5"/></g>')
+            boxes.append((cx - bw / 2, Y(c[1]), cx + bw / 2, Y(c[2])))
+    else:
+        for i in range(n - 1):
+            col = ED_BLUE if color == "blue" else (UP if P[i + 1] >= P[i] else DOWN)
+            plot += f'<path class="cs" data-i="{i}" data-nodraw="1" d="M{X(i):.1f} {Y(P[i]):.1f} L{X(i + 1):.1f} {Y(P[i + 1]):.1f}" pathLength="1" stroke-dasharray="0 1" fill="none" stroke="{col}" stroke-width="11" stroke-linecap="round" opacity="0"/>'
+        plot += f'<circle class="cd" data-nodraw="1" r="15" fill="{ED_BLUE}" stroke="{INK}" stroke-width="5"/>'
+        boxes = [(X(i) - 16, Y(P[i]) - 16, X(i) + 16, Y(P[i]) + 16) for i in range(n)]
+    # marks, each with its text on the far side of the arrow; nothing may touch another mark or a candle
+    placed = []; mk = ""
+    for m in marks or []:
+        i = int(m.get("i", 0)); up = m.get("dir") == "up"; col = UP if up else DOWN
+        if not 0 <= i < n: raise ValueError(f"{where}: mark index {i} is outside the chart")
+        cx = X(i); edge = (Y(C[i][2]) if C else Y(P[i])) + 14 if up else (Y(C[i][1]) if C else Y(P[i])) - 14
+        tail = edge + 72 if up else edge - 72; head_w = 26; d = 1 if up else -1
+        arrow_svg = (f'<path d="M{cx - 11:.1f} {tail:.1f} L{cx + 11:.1f} {tail:.1f} L{cx + 11:.1f} {edge + d * 30:.1f} L{cx + head_w:.1f} {edge + d * 30:.1f} L{cx:.1f} {edge:.1f} L{cx - head_w:.1f} {edge + d * 30:.1f} L{cx - 11:.1f} {edge + d * 30:.1f} Z" fill="{col}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>')
+        rects = [(cx - head_w, min(edge, tail), cx + head_w, max(edge, tail))]; txt = ""
+        if m.get("text"):
+            tw = _d_tw(m["text"], 36); tx = min(max(cx, plotL + tw / 2), plotR - tw / 2 - 4); ty = tail + 38 if up else tail - 12
+            txt = _t(tx, ty, str(m["text"]), 36, 900, col); rects.append((tx - tw / 2, ty - 30, tx + tw / 2, ty + 6))
+        for r in rects:
+            if r[1] < plotT or r[3] > plotB: raise ValueError(f"{where}: the mark at index {i} runs out of the plot; raise h or move it")
+            hit = lambda a, b: a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
+            if any(hit(r, q) for q in placed): raise ValueError(f"{where}: the mark at index {i} overlaps another mark; move it or shorten its text")
+            if any(hit(r, q) for j, q in enumerate(boxes) if j != i): raise ValueError(f"{where}: the mark at index {i} overlaps the chart at another index; move it to a higher or lower point")
+        placed += rects
+        mk += f'<g class="cm" data-i="{i}" data-ax="{cx:.1f}" data-ay="{edge:.1f}" opacity="0">{arrow_svg}{txt}</g>'
+    tag_w = R - 2
+    tag = (f'<g class="ct" opacity="0"><path d="M{plotL:.1f} 0 L{plotR:.1f} 0" fill="none" stroke="{INK}" stroke-width="3" stroke-dasharray="10 12"/>'
+           f'<rect class="ctr" x="{plotR + 4:.1f}" y="-29" width="{tag_w:.1f}" height="58" rx="10" fill="{UP}" stroke="{INK}" stroke-width="4"/>'
+           f'<text class="ctt" x="{plotR + 4 + tag_w / 2:.1f}" y="13" text-anchor="middle" font-family="Inter,sans-serif" font-size="36" font-weight="900" fill="{WHITE}"></text></g>')
+    out += f'<g data-fx="chart" data-spec="{_m_attr(S)}">{plot}{tag}{mk}</g>'
+    return _g(x, y, s, out)
+
+
+def live_chart_box(x, y, s=1.0, w=860, h=620, **_):
+    return [x - w / 2 * s - 4, y - h / 2 * s - 4, w * s + 8, h * s + 8]
+
+
+def waterfall(x, y, s=1.0, steps=None, unit="$", comp="", dec=0, w=860, h=720, rider=None, connect=True, **_):
+    """A waterfall chart that builds bar by bar, each number ticking up as its bar grows. (x, y) = centre. steps: [{"label","value","kind","at","delay","dur"}]; kind: total (blue, from zero), down (red, drops from the running level), up (green). at: the chunk that bar starts ("chunk:N"). comp: "K" or "M" shows $500K. connect: false drops the dashed line between bars, for a plain comparison of two bars. Labels too wide for one row drop to two staggered rows. rider: {"s","outfit","moods":{step index: mood}} puts a small Ledger on the newest bar, hopping down as the money falls. Show only numbers the voice or the script supports."""
+    where = "waterfall"; steps = steps or []; pre, suf = _m_unit(unit)
+    if not 1 <= len(steps) <= 8: raise ValueError(f"{where}: {len(steps)} steps; use 1 to 8")
+    n = len(steps); hw, hh = w / 2, h / 2; slot = (w - 12) / n
+    labels = [st.get("label", "") for st in steps]; stagger = 0
+    try: fc, wrapped = _d_fit(labels, slot - 6, 44, 3, where)
+    except ValueError:   # too tight in one row: every second label drops to a second row, so each gets about two slots of width
+        fc, wrapped = _d_fit(labels, slot * 2 - 20, 40, 2, where)
+        stagger = max(len(l) for l in wrapped[::2]) * fc * 1.16 + 6
+    nl = max(len(l) for l in wrapped); base = hh - nl * fc * 1.16 - 14 - stagger
+    level = 0.0; levels = []; vals = []
+    for st in steps:
+        v = _d_num(st["value"], unit, where); kind = st.get("kind", "total"); a = level if kind != "total" else 0.0
+        if kind == "total": b = v; show = v
+        elif kind == "down": b = level - abs(v); show = -abs(v)
+        elif kind == "up": b = level + abs(v); show = abs(v)
+        else: raise ValueError(f"{where}: kind {kind!r}; use total, down or up")
+        levels.append((a, b)); vals.append(show); level = b
+    shown = [_m_fmt(v, dec, pre, suf, comp) for v in vals]; fv = 62
+    while fv > DATA_FLOOR and max(_d_tw(t, fv) for t in shown) > slot - 8: fv -= 2
+    if max(_d_tw(t, fv) for t in shown) > slot - 8: raise ValueError(f"{where}: values {shown!r} do not fit {slot:.0f} wide at the {DATA_FLOOR} px minimum; use comp \"K\" or fewer steps")
+    rs = float((rider or {}).get("s", 0.56)); rh = 232 * rs + 6 if rider else 0; lh = fv * 1.08 + 10
+    hi = max(max(l) for l in levels); ptop = -hh + lh + rh
+    if base - ptop < 110: raise ValueError(f"{where}: h {h} leaves too little room for the bars; raise h")
+    ky = (base - ptop) / (hi or 1.0); Y = lambda v: base - v * ky
+    X = [-hw + 6 + slot * (i + 0.5) for i in range(n)]; bw = min(slot * 0.72, 170)
+    out = f'<path d="{_wobble_line(-hw + 2, hw - 2, base, 3)}" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+    S = {"steps": [], "dec": dec, "pre": pre, "suf": suf, "comp": comp, "fv": fv}; bars = ""; conn = ""
+    for i, st in enumerate(steps):
+        ya, yb = Y(levels[i][0]), Y(levels[i][1]); kind = st.get("kind", "total"); col = {"total": ED_BLUE, "down": DOWN, "up": UP}[kind]
+        S["steps"].append(dict(_m_at(st), dur=float(st.get("dur", 0.8)), a=round(ya, 2), b=round(yb, 2), v=vals[i]))
+        cl = ""
+        if i and connect:
+            yc = Y(levels[i - 1][1])
+            cl = f'<path d="M{X[i - 1] + bw / 2:.1f} {yc:.1f} L{X[i] - bw / 2:.1f} {yc:.1f}" fill="none" stroke="{INK}" stroke-width="5" stroke-dasharray="10 10" stroke-linecap="round"/>'
+        lbl = "".join(_t(min(max(X[i], -hw + _d_tw(l, fc) / 2), hw - _d_tw(l, fc) / 2), base + 8 + (stagger if i % 2 else 0) + fc * 0.92 + j * fc * 1.16, l, round(fc), 800, INK) for j, l in enumerate(wrapped[i]))
+        bars += (f'<g class="wf" data-i="{i}" opacity="0">{cl}<rect class="wb" data-nodraw="1" x="{X[i] - bw / 2:.1f}" y="{min(ya, yb):.1f}" width="{bw:.1f}" height="{abs(yb - ya):.1f}" rx="8" fill="{col}" stroke="{INK}" stroke-width="6"/>{lbl}'
+                 + f'<text class="wv" x="{X[i]:.1f}" y="{min(ya, yb) - 10:.1f}" text-anchor="middle" font-family="Inter,sans-serif" font-size="{fv}" font-weight="900" fill="{col if kind != "total" else INK}">{shown[i]}</text></g>')
+    out += f'<g data-fx="wf" data-spec="{_m_attr(S)}">{bars}</g>'
+    if rider:
+        outfit = rider.get("outfit", "suit"); moods = {int(k): v for k, v in (rider.get("moods") or {}).items()}
+        tops = [min(Y(levels[i][0]), Y(levels[i][1])) - lh + 4 for i in range(n)]
+        keys = []
+        for i, st in enumerate(steps):
+            q = dict(_m_at(st), to=[round(X[i], 1), round(tops[i], 1)], dur=float(st.get("dur", 0.8)), ease="out" if i == 0 else "inout", arc=0 if i == 0 else 90)
+            keys.append(q)
+        start = [X[0], base - lh + 4]
+        faces = ""; chg = sorted(moods) or [0]
+        cur_keys = [0] + [k for k in chg if k > 0]
+        for j, k in enumerate(cur_keys):
+            m = moods.get(k, rider.get("mood", "smile")); attrs = ""
+            if j: attrs += f' data-at="{_m_at(steps[k])["at"]}" data-pop="cut"'
+            if j + 1 < len(cur_keys): attrs += f' data-until="{_m_at(steps[cur_keys[j + 1]])["at"]}"'
+            faces += f'<g{attrs}>{ledger(start[0], start[1], rs, mood=m, arm=rider.get("arm", "down"), outfit=outfit)}</g>'
+        spec = {"x": start[0], "y": start[1], "move": keys, "hide": _m_at(steps[0])}
+        out += f'<g data-fx="m" data-spec="{_m_attr(spec)}">{faces}</g>'
+    return _g(x, y, s, out)
+
+
+def waterfall_box(x, y, s=1.0, w=860, h=720, **_):
+    return [x - w / 2 * s - 4, y - h / 2 * s - 4, w * s + 8, h * s + 8]
+
+
+def fill_grid(x, y, s=1.0, n=100, cols=10, capacity=None, size=64, gap=10, cell="person", fills=None, fades=None, start=0, color="blue", over_color="red", **_):
+    """A grid of small people or rooms that fills one by one. (x, y) = centre. n: cells; cols: per row; capacity: cells from this index on go on their own row below, in over_color (6 bookings too many). cell: person or square. fills: [{"at","delay","dur","upto"}]: by then cells up to number upto are filled. fades: [{"at","delay","dur","cells":[...]}]: those cells empty out again, leaving a red outline. start: cells filled from the first frame."""
+    cap = capacity if capacity is not None else n
+    if n > 400 or cols < 1: raise ValueError("fill_grid: use at most 400 cells")
+    rows = math.ceil(cap / cols); over = n - cap; G = size + gap; W = cols * G - gap; extra = (G + 14) if over > 0 else 0; H = rows * G - gap + extra
+    col = {"blue": ED_BLUE, "green": UP, "red": DOWN, "amber": AMBER}.get(color, color); oc = {"blue": ED_BLUE, "green": UP, "red": DOWN, "amber": AMBER}.get(over_color, over_color)
+    gone = {c for f in (fades or []) for c in f.get("cells", [])}   # cells that empty out leave a red outline, so the viewer can find them
+    def shape(c, solid, edge=GHOST):
+        z = size / 64
+        st = f'fill="{c}" stroke="{INK}" stroke-width="{3.5:.1f}"' if solid else f'fill="none" stroke="{edge}" stroke-width="{3.5 if edge == GHOST else 5}"'
+        if cell == "square": return f'<rect x="{-size / 2 + 3:.1f}" y="{-size / 2 + 3:.1f}" width="{size - 6:.1f}" height="{size - 6:.1f}" rx="{8 * z:.1f}" {st}/>'
+        return f'<circle cy="{-15 * z:.1f}" r="{12 * z:.1f}" {st}/><path d="M{-19 * z:.1f} {27 * z:.1f} V{12 * z:.1f} Q{-19 * z:.1f} {-1 * z:.1f} 0 {-1 * z:.1f} Q{19 * z:.1f} {-1 * z:.1f} {19 * z:.1f} {12 * z:.1f} V{27 * z:.1f} Z" {st}/>'
+    out = ""; ghost = ""; solid = ""
+    for i in range(n):
+        if i < cap: cx = -W / 2 + G * (i % cols) + size / 2; cy = -H / 2 + G * (i // cols) + size / 2
+        else: cx = -W / 2 + G * (i - cap) + size / 2; cy = -H / 2 + G * rows + 14 + size / 2
+        if i < cap: ghost += f'<g transform="translate({cx:.1f} {cy:.1f})">{shape(col, False, DOWN if i in gone else GHOST)}</g>'
+        solid += f'<g class="gc" data-i="{i}" data-ax="{cx:.1f}" data-ay="{cy:.1f}" opacity="0"><g transform="translate({cx:.1f} {cy:.1f})">{shape(oc if i >= cap else col, True)}</g></g>'
+    S = {"start": start, "fills": [dict(_m_at(f), dur=float(f.get("dur", 1.0)), upto=float(f.get("upto", n))) for f in (fills or [])],
+         "fades": [dict(_m_at(f), dur=float(f.get("dur", 1.0)), cells=list(f.get("cells", []))) for f in (fades or [])]}
+    out = f'{ghost}<g data-fx="grid" data-spec="{_m_attr(S)}">{solid}</g>'
+    return _g(x, y, s, out)
+
+
+def fill_grid_box(x, y, s=1.0, n=100, cols=10, capacity=None, size=64, gap=10, **_):
+    cap = capacity if capacity is not None else n
+    rows = math.ceil(cap / cols); G = size + gap; W = cols * G - gap; H = rows * G - gap + ((G + 14) if n > cap else 0)
+    return [x - W / 2 * s - 4, y - H / 2 * s - 4, W * s + 8, H * s + 8]
+
+
+PRESETS.update({"counter": (counter, counter_box), "order_chip": (order_chip, order_chip_box), "coin": (coin, None), "coin_stream": (coin_stream, coin_stream_box), "burst": (burst, burst_box),
+                "note_card": (note_card, note_card_box), "trend_arrow": (trend_arrow, trend_arrow_box), "trader": (trader, trader_box), "order_book": (order_book, order_book_box),
+                "live_chart": (live_chart, live_chart_box), "waterfall": (waterfall, waterfall_box), "fill_grid": (fill_grid, fill_grid_box)})
+HALF.update({"coin": (36, 36)})
+
+
 PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 
@@ -2171,15 +3024,15 @@ def scene_body(spec):
         a = f' data-p="{it["p"]}"'
         if it.get("anim") or it.get("at") or it.get("until"): a += f' data-ax="{_f(it["x"])}" data-ay="{_f(it["y"])}"'
         if it.get("anim"): a += f' data-anim="{it["anim"]}" data-amp="{it.get("amp", 4)}" data-hz="{it.get("hz", 1.1)}"'
-        if it.get("at"): a += f' data-at="{it["at"]}"'   # "chunk:N": pops in when caption chunk N of this scene starts
+        if it.get("at") and it["p"] not in SELF_TIMED: a += f' data-at="{it["at"]}"'   # "chunk:N": pops in when caption chunk N of this scene starts
         if it.get("until"): a += f' data-until="{it["until"]}"'   # "chunk:N" (30 Oct 2026): hidden from the start of caption chunk N
         if it.get("pop"): a += f' data-pop="{it["pop"]}"'   # "cut": appears at once on its chunk, no fade or scale (a state swap)
         return a
     tint = spec.get("tint")   # {"color", "opacity"}: a wash over the whole scene (dim cool night, warm morning); drawn over the content
     tint_svg = f'<rect class="tint" x="-3000" y="-3000" width="7080" height="7840" fill="{tint["color"]}" fill-opacity="{tint.get("opacity", 0.3)}" stroke="none"/>' if tint else ""
     items = summary_pointer(spec); lit = [it for it in items if it.get("lit")]   # "lit": drawn above the tint (chat bubbles stay bright at night)
-    return (bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in items if not it.get("lit")) + '</g>'
-            + tint_svg + ('<g class="lit">' + "".join(f'<g{_attrs(it)}>{item_svg(it)}</g>' for it in lit) + '</g>' if lit else ""))
+    return (bg_svg(spec.get("bg", "paper")) + '<g class="content">' + "".join(_m_wrap(it, f'<g{_attrs(it)}>{item_svg(it)}</g>') for it in items if not it.get("lit")) + '</g>'
+            + tint_svg + ('<g class="lit">' + "".join(_m_wrap(it, f'<g{_attrs(it)}>{item_svg(it)}</g>') for it in lit) + '</g>' if lit else ""))
 
 
 def scene_svg(spec):

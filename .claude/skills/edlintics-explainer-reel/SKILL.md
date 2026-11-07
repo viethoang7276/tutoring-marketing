@@ -23,21 +23,79 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 2. **End card last.** The final beat has role `"endcard"`, with `"term"` and `"keypoint"`. It shows the term large, a one-line key point with a highlighter, and the logo, for about 3-4 s while the voice says both. A loop-back line before it is optional (role `"loop"`).
 3. **Captions** are chunks of 2-5 words in time with the voice, with one `key` word highlighted per beat.
 4. **No full stop at the end of any paragraph.** This covers captions, the key point, the post caption, caption_x and the first comment. Full stops between sentences are fine.
-5. **House rules:** US dollars, no exclamation points, no emoji, no tutoring, general audience. The first comment never reveals the answer.
+5. **House rules:** mixed currencies across posts (one inside a post), no exclamation points, no emoji, no tutoring, general audience. The first comment never reveals the answer.
 6. **Length** is up to 2 minutes for every reel type (Hoang, 4 Nov 2026: "Put all of video to 2 mins cap"). Use the time the story needs: about 2.4-3 spoken words a second, beats of 2-4 s.
 7. **Full sentences with transitions** (Hoang, 4 Nov 2026). The script, its description and every voice line are full sentences joined by strong transitional words (because, so, however, as a result, this means, for example). No fragments or keyword lists. The definition line is a full sentence that matches the glossary entry, and the end-card `keypoint` is a full sentence too, never a clipped phrase. The voice is Kokoro `af_heart` at speed 1.08.
+
+8. **Say out loud when the example starts, and when the reel goes back to it (Hoang, 6 Nov 2026).** See "Context transitions" below. The validator fails a script that drops the viewer into an example unannounced.
+9. **Show the real thing (Hoang, 6 Nov 2026: "real excel refernece and equation").** When a concept lives in a tool or a formula, draw the tool with its real contents, not a generic picture of it. See "Real artefacts" below.
+
+## Context transitions (Hoang, 6 Nov 2026)
+Hoang: "when ever you start the context explaine, please give the transitional context like Let's imagine ..., for this let's use the example of ... so user understand, continue from the last example, ..., continue the story".
+
+**Why:** a viewer who starts mid-scroll, or who has just heard a definition, cannot tell whether a new person or number belongs to a new example or the same one. One spoken phrase fixes that.
+
+**Three moments need a spoken signpost:**
+| Moment | Say | Instead of |
+|---|---|---|
+| The example starts | "Let's imagine a toy shop that ...", "For this, let's use the example of a cafe's order sheet", "To see why, picture ..." | Starting cold: "Last January, he bought ..." |
+| The reel returns to the same example, after a definition or a step away | "Continuing the story, ...", "Back to our toy shop, ...", "Continuing from the last example, ...", "Staying with the same sheet, ..." | "At twenty-five percent, Ledger's toys ..." |
+| A different example starts | "Now let's use a business example. Imagine a bank that ...", "Let's take a second example ..." | Changing the setting with no warning |
+
+**By reel type (the validator enforces the first two columns):**
+| Type | Must open the example | Must signal the return | Pattern |
+|---|---|---|---|
+| Definition | first `story` beat | first `example` beat | hook, "Let's imagine ...", definition, "Continuing the story, ..." or "Now let's use a business example ...", takeaway |
+| A day in the life | a `hook` beat or the first `moment` | first `lesson` beat | "Let's follow a day in the life of ...", moments, turn, concept, "Back to the wedding, ..." |
+| How-to | first `problem` beat | none, the steps already run First, Then, Next, Finally | hook question, "Let's imagine an airline where ...", steps, concept, "Let's revise the process" |
+| List | the `story` beat after the hook, naming the running example | at least two later terms: "Back in our cafe, ...", "On the same sheet, ..." | "Let's use a cafe's order sheet as our example", then each term on that same example |
+
+**Writing it:**
+- Keep it short. The signpost adds 3-5 words to a line; it never gets its own sentence unless the example needs setting up.
+- Vary the phrase inside a reel. "Let's imagine" once, then "Continuing the story", then "Back to our toy shop".
+- Name the thing you return to ("Back to our toy shop"), so a viewer who looked away can rejoin.
+- Put the signpost in the captions too, as its own chunk where it fits ("Let's imagine a toy shop").
+- Hooks stay as they are: a hook asks the question first, and the signpost comes straight after it.
+- Lessons (`meta.type: "lesson"`), Ledger talks and ads are not checked, but the same idea helps in lessons.
+
+**Example, carrying cost:**
+- Before: "Ledger's toys sit unsold on a shelf, so why do they keep costing him money? Last January, he bought ten thousand dollars of toys ..."
+- After: "Ledger's toys sit unsold on a shelf, so why do they keep costing him money? Let's imagine he bought ten thousand dollars of toys last January ..."
+- Before: "That is carrying cost ... Many businesses estimate it at twenty to thirty percent ..."
+- After: "That is carrying cost ... Continuing the story, many businesses estimate it at twenty to thirty percent ..."
+
+## Real artefacts (Hoang, 6 Nov 2026)
+A reel about formulas or a tool shows that tool with real contents. For anything in a spreadsheet use `sheet_grid`, never `laptop` with `screen: "sheet"`. The numbers in the cells must be the ones the voice says, and the formula bar must hold the formula exactly as a viewer would type it. Work the sheet's sums out and add them to `meta.maths_check`.
+
+**`sheet_grid`, full layout, no Ledger:**
+```json
+{"bg": "none", "frame": "wide", "items": [
+  {"p": "sheet_grid", "x": 490, "y": 945, "w": 860, "h": 900, "cols": ["A", "B", "C", "D"],
+   "rows": [["Item", "Price", "Cups", "Total"], ["Latte", "$3.00", "3", "$9.00"], ["", "", "", ""]],
+   "name_box": "D2", "formula": "=B2*C2", "selected": [1, 3],
+   "refs": [{"cell": [1, 1], "color": "blue", "label": "B2"}, {"cell": [1, 2], "color": "red", "label": "C2"}]}
+]}
+```
+- `rows` shows cells as given. Pad with empty rows so the grid fills the frame and looks like a real sheet. `start_row` sets the first row number.
+- `selected` is `[row, col]` from 0, with the green cell border and fill handle. `name_box` should name the same cell.
+- `refs` tints and outlines the cells a formula uses, as Excel does. `label` colours that text in the formula, so `B2` in the bar matches the blue `B2` box. Colours: blue, red, green, violet, amber.
+- `popup: {"title", "text"}` draws an error box over the grid, for data validation.
+- **Animate with states, never with camera moves:** stack two `sheet_grid` items, the first with `"until": "chunk:N"` and the second with `"at": "chunk:N", "pop": "cut"`. Copying a formula down is the selection and the formula moving one row. Check the state change lands on the right word on the contact sheet.
+- Text below 30 px, or a formula too long for the bar, stops the build at the scenes step with a message saying what to shorten.
+- Worked example: `assets/renders/explainer-reels/w47/2026-11-16-1300/script.json`.
 
 ## Files (scripts/)
 | File | What it does |
 |---|---|
 | `make_reel.sh` | The one command: validate, scenes, voice, audio mix, scene data, stills, video, then the checks and contact sheet |
 | `validate.py` | Checks script.json against the rules above and the beat structure for `meta.type` |
-| `scene_lib.py` | The scene library: Ledger (`mood`, `arm`, `outfit`, `flip`, `tilt`), about 35 props and 6 backgrounds. Run `python scene_lib.py --list` |
+| `scene_lib.py` | The scene library (spreadsheets: `sheet_grid`, numbers: `data_chart`, `data_table`): Ledger (`mood`, `arm`, `outfit`, `flip`, `tilt`), about 35 props and 6 backgrounds. Run `python scene_lib.py --list` |
 | `build_scenes.py` | Turns scene presets into `s*.svg` and resolves each scene's optional `frame` (default `auto`) into `beats.json` |
 | `vo.py` | Makes the Kokoro voiceover (`voiceover.wav`) and `timing.json` with beat and chunk times |
 | `mix_audio.py` | Makes `audio-voice.wav` (voice plus soft generated whoosh and tick) and `audio.wav` (adds a quiet pad for preview) |
 | `make_scenes_json.py` | Packs the art, beats and end card into `<work>/scenes.json` |
 | `render.html`, `render.js`, `build.sh` | The headless Chrome renderer at 24 fps, plus the H.264 encode, the voice-only cut and the Canva upload copy under 10 MB |
+| `render_range.sh` | Renders one time range of a built reel with its audio, for pilots and quick checks |
 | `postcheck.py` | Checks resolution, audio, length and the 10 MB limit (not for lessons), and makes `<slug>-contact-sheet.png` |
 | `lesson_files.py` | Lessons only, run by `make_reel.sh`: `<slug>.vtt` (WebVTT from the caption chunk times) and `<slug>-transcript.txt` (the "Read instead" text) |
 | `canva_kit.py` | After the build: the editable kit (per-beat clean clips, voice and per-line files normalised to -14 LUFS, SRT, end-card PNGs, previews, README) for Canva or CapCut |
@@ -72,6 +130,108 @@ It is modelled on the pencil reference (evanbode, "TIME FLIES"):
 
 We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing Ledger and lose the exact mascot.
 
+## Data charts and tables (Hoang, 6 Nov 2026)
+Hoang: "For the reel, if it is a numerical concept, we can add graph and table to explain clearly as well".
+
+**Rule:** in explainer, how-to and list reels, a concept that rests on numbers gets at least one `data_chart` or `data_table` beat where it explains the idea more clearly than a picture. Put the same numbers as the voice line on screen, and never show a number the voice or slot does not support.
+
+The props compute nothing but the scale: every value shows as given, so the script owns the maths and the currency. Pass values as strings to keep zeros and commas (`"0.40"`, `"3,000"`); the JSON number `0.40` would show as `0.4`.
+
+**Bar chart, full layout, no Ledger:**
+```json
+{"bg": "none", "frame": "wide", "items": [
+  {"p": "data_chart", "kind": "bars", "x": 490, "y": 945, "w": 860, "h": 940, "values": ["0.40", "0.44"], "labels": ["Before the deal", "After the deal"], "unit": "$", "y_title": "Price per ounce", "highlight": 1}
+]}
+```
+**Line chart, full layout, Ledger below:**
+```json
+{"bg": "none", "frame": "wide", "items": [
+  {"p": "data_chart", "kind": "line", "x": 490, "y": 755, "w": 860, "h": 610, "values": [100, 80, 64, 51], "labels": ["1", "2", "4", "8"], "y_title": "Hours to build one boat", "x_title": "Boats built so far", "highlight": 3},
+  {"p": "ledger", "x": 170, "y": 1430, "s": 1.55, "mood": "smile", "arm": "point", "outfit": "suit"}
+]}
+```
+**Table, full layout, no Ledger:**
+```json
+{"bg": "none", "frame": "wide", "items": [
+  {"p": "data_table", "x": 490, "y": 945, "w": 860, "h": 800, "headers": ["Cost", "Boat 1", "Boat 2"], "rows": [["Materials", "$1,200", "$1,200"], ["Labor", "$2,500", "$2,000"], ["Overhead", "$600", "$480"], ["Total", "$4,300", "$3,680"]], "highlight": -1}
+]}
+```
+**Other layouts (art box 1000x780):** no Ledger: `"x": 500, "y": 920, "w": 860, "h": 700` (table `"h": 640`). With Ledger beside it: `"x": 640, "y": 920, "w": 620, "h": 740` (table `"y": 880, "h": 620`) and Ledger at `"x": 165, "y": 1290, "s": 1.15`.
+
+**`data_chart` options:**
+- `kind`: `bars` (always from zero, negatives go below the axis) or `line` (from zero unless `"zero": false`; use that only when a line from zero would look flat, and let the value labels carry the numbers).
+- `values` and `labels`: 1-8 of each, equally spaced in the order given. A line over 1, 2, 4, 8 is therefore spaced by doubling, so the voice must say "each time the number doubles".
+- `unit`: `$` and other currency signs go in front, `%` and words go behind. A word unit makes labels long, so prefer it in `y_title`.
+- `y_title`, `x_title`: optional axis titles.
+- `highlight`: an index or a category label, drawn in amber.
+
+**`data_table` options:**
+- `headers`: up to 5 columns. `rows`: up to 6 rows, shown as given.
+- Number columns align right and text wraps.
+- `highlight`: a body row (`2`, `-1` or `{"row": 2}`) or a cell (`{"cell": [row, column]}`), counted from 0.
+- `h` is optional; rows stretch to fill it.
+
+**Fit and legibility:**
+- Text shrinks and wraps down to a 34 px minimum at `s` 1, the smallest size of the existing prop labels. Category labels that still do not fit drop to two staggered rows. Line values move to a clear spot off the line.
+- If text still cannot fit, the build stops at the scenes step with a message saying what to shorten. Keep `s` at 1 and size the prop with `w` and `h`.
+- A scene with a data prop and a frame of auto or `wide` shows the whole scene inside the safe area, so it does not use Ledger-first sizing. The 70% Ledger check does not apply to these beats. `build_scenes.py` WARNs if an item overlaps the numbers or the prop shows under 85% of its size.
+- Use `"bg": "none"`, and pop the prop in with `"at": "chunk:N"` when the voice reaches the numbers.
+
+## Motion and market props (standard from 7 Nov 2026)
+Hoang: "any way we can improve the animation to be more finance oriented ... arrow green red illustation with graph, number inside with people trading action and supplement info". Hoang approved this after watching the bid-ask pilot on 7 Nov 2026. **Every beat in an organic reel that explains a number or a finance idea uses these props:** a real graph, table or order book, green and red direction, numbers inside the graphic, people acting, a short supporting note, and motion timed to the voice. Story beats stay hand-drawn with Ledger, so the reel does not turn into an infographic. Lessons and scripts that do not use the props render exactly as before.
+
+Flaws to avoid, seen in the pilots: a counter must not sit on its starting value such as "$0.00" for more than about a second, so start the count when the voice reaches it; check the frames either side of each scene change for a near-empty frame; a flying chip must not cross a face or stay on a label.
+
+**Time.** Every `at` is `"chunk:N"`, counted over the consecutive beats that share the scene, as for pop-ins. Add `"delay"` in seconds and `"dur"` for the length. A scene may run over several beats (give them the same `img`), so a chart keeps building across lines. Frames are rendered by seeking, so all motion is computed from the time.
+
+**Frame.** Use an explicit frame so coordinates equal screen pixels: full layout `"frame": [40, 450, 900, 990]` (safe x 40-940, y 460-1440), other layouts `"frame": [40, 530, 1000, 780]` (safe x 40-960, y 535-1305). Do not use the auto frame with Ledger: it moves items after you place them. `build_scenes.py` WARNs about that, about a chunk number past the end of the run, and about items outside the box.
+
+**Keys on any item** (a dict, or a list of dicts played in order for `move`):
+| Key | Fields | What it does |
+|---|---|---|
+| `move` | `at, delay, dur, to: [x, y], arc, ease, scale, rot, trail` | Travels to `to`. `arc` bows the path upward in pixels. `ease`: inout (default), out, linear, back. `trail`: `"green"` or `{"color", "fade", "width"}` |
+| `pulse` | `at, delay, dur, amp` | Grows and settles once, for emphasis |
+| `shake` | `at, delay, dur, amp, hz` | Trembles, for panic |
+| `bob` | `amp, hz` | A slow idle float |
+| `out` | `at, delay, dur` | Fades away |
+| `reveal` | `at, delay, dur, dir` | Wipes in: right, left, up or down. Add `"at"` and `"pop": "cut"` on the same item so nothing shows before it. On a `flow_box` over a ghost box, this is a process step that fills |
+
+**New props** (`python scene_lib.py --list` prints every option):
+| Prop | Use |
+|---|---|
+| `order_book` | Ladder with red asks, green bids, numbers inside and a spread band. Rows are best price first. `show` times the parts, `states` move the prices so the spread narrows or widens, and the band's text follows. Give two books the same `spread_range` to compare them |
+| `live_chart` | `candles` or `line` that draw themselves. `stops` sets how far the chart has reached by each chunk, `marks` adds green and red arrows with short text, and a price tag follows the latest price |
+| `waterfall` | Bars build one by one (`total`, `down`, `up`) while the numbers tick. `rider` puts a small Ledger on the newest bar. With `connect: false` it is two bars growing side by side |
+| `fill_grid` | People or squares that fill one by one (`fills`) or empty out and leave a red outline (`fades`). `capacity` puts the excess on its own red row |
+| `counter` | A number that ticks with money formatting: `$1,234.50`, `−$0.05`, `$500K` (`comp`), `+20%` (`plus`, `unit`) |
+| `trader` | A person with arms. `acts` are poses on chunks: raise, both, point, point_l, cheer, shrug, down, and an optional `mood`. A small hop plays on each |
+| `order_chip` | A pill, such as "Bid $50.00", to send with `move`. `plain: true` draws only the coloured words, for a name |
+| `coin`, `coin_stream` | One coin to `move`, or several pieces flowing from (x, y) to `to` (`kind`: coin, chip or dot) |
+| `burst` | A short flash when something happens, such as a trade matching |
+| `note_card` | A pinned note with supporting information. `mark` highlights the last line |
+| `trend_arrow` | A chunky green up or red down arrow. Grow it with `reveal` |
+
+**Small example, a trade (full layout):**
+```json
+"tags": {"bg": "none", "frame": [40, 450, 900, 990], "items": [
+  {"p": "order_book", "x": 490, "y": 822, "w": 640, "asks": [["50.05", 300], ["50.06", 500]], "bids": [["50.00", 400], ["49.99", 600]],
+   "show": {"bids": "chunk:1", "asks": "chunk:2", "band": "chunk:3"}},
+  {"p": "trader", "x": 790, "y": 1385, "s": 1.15, "side": "sell", "name": "Seller", "acts": [{"at": "chunk:2", "pose": "raise", "mood": "happy"}]},
+  {"p": "order_chip", "x": 760, "y": 1098, "label": "Ask $50.05", "color": "red", "at": "chunk:2", "until": "chunk:3",
+   "move": {"at": "chunk:2", "dur": 0.8, "to": [490, 750], "arc": 70, "trail": {"color": "red", "fade": 0.5}}, "out": {"at": "chunk:2", "delay": 0.7, "dur": 0.15}},
+  {"p": "note_card", "x": 490, "y": 1285, "w": 390, "fs": 38, "title": "Spread", "lines": ["$50.05 − $50.00", "= 5 cents"], "mark": true, "at": "chunk:3"},
+  {"p": "burst", "x": 862, "y": 822, "s": 0.85, "at": "chunk:3"}
+]}
+```
+
+**Numbers.** Every number comes from the script. Voiced numbers can appear as they are. Anything else, such as candle prices and ladder depth, must be plainly labelled: `order_book` and `live_chart` write "Example prices" by default, and `"example": false` is only for a scene where the voice says every number or another item carries the label. Use the post's own currency. Text stays at 34 px or more, and a prop stops the build with a message if its labels cannot fit.
+
+**Colour.** Blue stays the main colour (headers, total bars, the numbers that matter). Green and red mean market direction only.
+
+**Check.** Rebuild with `REUSE_AUDIO=1 STILLS_ONLY=1 make_reel.sh`, then look at frames in the middle of a move, not only the stills at the end of each beat: `SCENES=<work>/scenes.json OUT=<dir> node render.js stills 12.5,13.0,13.5`. A flying item may pass over a label for under a second, but must not rest on one. To render part of a reel: `render_range.sh <work> <t0> <t1> <out.mp4>`.
+
+**Worked examples:** the four pilots in `assets/renders/pilot-animation/` (`script.json` in each folder).
+
 ## Changing the engine
 - **New prop:** add a function to `scene_lib.py`, register it in `PRESETS` (and `HALF` for its size), give it a one-line docstring, and test with the two examples.
 - After any engine change, rebuild both examples and look at the contact sheets.
@@ -81,6 +241,8 @@ We don't use rough.js, perfect-freehand or Remotion: they would mean redrawing L
 - **Hands proportional:** Ledger's hands and arms match the brand proportions (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time)
 - No text inside the art, and nothing sits under the caption band
 - The end card shows the term and the key point
+- A spoken signpost opens the example, and another marks each return to it (read the voice lines, not only the frames)
+- Formulas and tables on screen show the same numbers as the voice, and state changes land on the right word
 
 ## Notes from batch runs (25 Oct 2026)
 - `people_group` doesn't work under Ledger-first framing: it gets cropped or hidden behind Ledger. Use one `person` (plus a `check`, `bills` and so on) to show "the others".
@@ -171,7 +333,7 @@ Hoang (5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes)
 - **Defcard:** `{"role": "defcard", "term", "definition", "text", "equation"?}`. It renders like the end card without the logo: the term large, the full-sentence definition (6-30 words, no closing full stop) with the highlighter, and an optional `equation {lhs, num, den}` card. The voice `text` must read the term and then the definition word for word. It has no `img` and no caption chunks. Defcards may come after a section (inline) or all at the end (grouped, as in FA1 2.4), more than once, and may be the last beat
 - **Nothing promotional:** no end card, logo (corner logo and card logo are off: `nologo` in scenes.json, set from the type), follow line, loop-back or edlintics.com. The validator FAILs follow, subscribe, link-in-bio, brand-name and tease lines
 - **Length:** 60 s to about 4 minutes (177-708 words at 2.95 words a second); the 354-531 word target (2-3 minutes) is a WARN only. Beats may run to about 12 s. Captions are 2-5 word chunks with no closing full stop
-- **Kept checks:** full sentences ending in `.` or `?` with transitions (story-flow WARN, with however, for example, as a result, in other words and the like), no exclamation points or emoji, no tutoring. Money in US dollars unless `meta.currency` names the course's currency (for example `"EUR"`)
+- **Kept checks:** full sentences ending in `.` or `?` with transitions (story-flow WARN, with however, for example, as a result, in other words and the like), no exclamation points or emoji, no tutoring. Money may be in any currency; a lesson follows its course's currency, and more than one currency sign in a post gives a WARN
 - **Not required:** caption, caption_x, first comment, Threads fields, follow CTA, logo end card, how-to hook question. Meta needs only `type`, `title` and `slug`
 - **FA1 cast and lesson props (5 Nov 2026, first used by FA1 2.4 cards 2 and 10):** `plot` (the bar-chart character, owner of the clothes store) and `tempo` (the hourglass, at the till) are the EdCharacter cast, drawn from `tutoring-web/public/mascot/plot.svg` and `tempo.svg` in Ledger's frame and arm poses. They are no-suit: never add a collar or tie. Moods `smile, happy, focused, surprised, worried, thinking, sigh`; `arm`, `larm`, `flip`, `tilt` and `gaze` work as on Ledger. Props: `till` (counter and register; list the character before it and raise them about 150 x s so the counter hides the legs), `label` (title / amount / note card, "/" breaks the title), `icon_tile` and `big_icon` (13 small icons: bags, key, shield, invoice, box, poster, mirror, bank, wallet, payslip, percent, bulb, shelf, jacket), `months`, `block` (bar pieces and trays), `t_account`, `letter_tiles` (DEAD CURLS; swap labelled and glow states with `at`/`until`), `shopfront`, `shopping_bag` and `bank_app`. Lesson scenes in FA1 2.4 use one explicit frame `[40, 490, 900, 990]` with the full layout, so art coordinates map to the screen 1:1 (minus 40 in y)
 - **Outputs (next to the MP4):** `<slug>.mp4` (crf 20, no 10 MB re-encode; postcheck skips the size check), `<slug>.vtt`, `<slug>-transcript.txt` (spoken `text`, never `say`, `[tags]` dropped, paragraphs per role run, each defcard as a term line and a definition line, no full stop closing a paragraph), and `<slug>-poster.jpg` at 1080x1920 from the first frame (the hook). `make_cover.js` is not used for lessons because its kicker and title are social cover copy

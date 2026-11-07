@@ -48,9 +48,11 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 34), target=(100, 115), allow
         # lesson (Hoang, 5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes)"; 60 s to about 4 minutes
         "lesson": dict(chunk=(2, 5), beats=(6, 120), target=(354, 531), allowed=(177, 708), secs=(59, 241), wps=2.95)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
+CTX_OPEN = re.compile(r"\b(let's (imagine|use|take|say|look at|picture|follow|start with|walk through|see)|imagine|picture|suppose|for this,? let's|take the example|as (an|our) example|to see (this|why|how))\b", re.I)
+CTX_BACK = re.compile(r"\b(continu(e|es|ing)|back (to|in|at|with)|going back|returning to|let's return|let's go back|staying with|still with|in our (story|example)|from the last example|same (story|example|sheet|store|shop|company)|now let's|let's (now |also )?(use|take|look at|see|apply|imagine)|imagine|as (a|an|our) (business )?example|for example|in business)\b", re.I)
 EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\U00002300-\U000023FF\U00002B00-\U00002BFF️]")  # + ⏳⌛⏰ and ⭐
 TUTOR = re.compile(r"\btutor(s|ing|ed)?\b|\b1[:-]1\b|\bprivate lesson|\bbook a (session|call|class)", re.I)
-NOT_USD = re.compile(r"[€£¥₫]|\b(euros?|eur|pounds? sterling|gbp|dong|vnd)\b", re.I)
+CURRENCY_SIGN = re.compile(r"[$€£¥₫]")
 REQ_META = ["type", "term", "title", "slug", "caption", "caption_x", "first_comment", "threadsTopic", "threadsReason", "maths_check"]
 REQ_META_AD = ["type", "term", "title", "slug"]  # an ad's text lives in Ads Manager, not in caption/first comment
 REQ_META_LESSON = ["type", "title", "slug"]   # a lesson video is not posted: no caption, first comment or Threads fields
@@ -136,6 +138,22 @@ def main(path):
             W.append(f"story flow: only {linked} of {len(story)} story beats start with a linking word (But, So, Then, That means, Now...); link each beat to the one before (Hoang, 3 Nov 2026)")
         if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t not in ("definition", "lesson"):
             W.append('story flow: the turn has no "But ..." (or Yet/Still/Instead); mark the turning point (Hoang, 3 Nov 2026)')
+    # Context transitions (Hoang, 6 Nov 2026: "when ever you start the context explaine, please give the transitional context"):
+    # the viewer is told when an example starts, and told when the reel goes back to it
+    def _first(*rr):
+        return next((b for b in beats if b.get("role") in rr), None)
+    def _need(b, rx, what):
+        if b is not None and not rx.search(b.get("text", "")): E.append(f'context transition: the {b.get("role")} beat "{b.get("text", "")[:60]}" {what} (Hoang, 6 Nov 2026)')
+    OPENS = "must open the example out loud, for example \"Let's imagine ...\" or \"For this, let's use the example of ...\""
+    BACK = "must say it continues or moves on, for example \"Continuing the story, ...\", \"Back to our cafe, ...\" or \"Now let's use a business example ...\""
+    if t == "definition":
+        _need(_first("story"), CTX_OPEN, OPENS); _need(_first("example"), CTX_BACK, BACK)
+    elif t == "life-of":
+        lead = [b for b in beats if b.get("role") == "hook"] + ([_first("moment")] if _first("moment") else [])
+        if not any(CTX_OPEN.search(b.get("text", "")) for b in lead): E.append(f"context transition: a hook beat or the first moment {OPENS}, such as \"Let's follow a day in the life of ...\" (Hoang, 6 Nov 2026)")
+        _need(_first("lesson"), CTX_BACK, BACK)
+    elif t == "howto":
+        _need(_first("problem"), CTX_OPEN, OPENS)
     # Time frame matches the numbers (Hoang, 3 Nov 2026: a monthly example told as clock times in one day)
     vtxt = " ".join(b.get("text", "") for b in beats).lower()
     if re.search(r"\b(\w+ (a|p)\.m\.|noon|midnight|o'clock)", vtxt) and re.search(r"\b(a|per|each|every|this) (month|year|quarter)\b|\bmonthly\b|\byearly\b", vtxt):
@@ -265,10 +283,10 @@ def main(path):
             if where != "meta.first_comment" or EMOJI.search(body):
                 E.append(f"{where}: emoji in {s[:60]!r} (emojis are allowed only at the end of first_comment)")
         if TUTOR.search(s) and t != "ad": E.append(f"{where}: mentions tutoring: {s[:60]!r}")
-        # paid tutoring ads quote the real €45/hour price (Hoang, 3 Nov 2026); organic content stays in US dollars;
-        # a lesson may follow its course's currency (meta.currency, e.g. "EUR")
-        if NOT_USD.search(s) and t != "ad" and not (t == "lesson" and str(m.get("currency", "USD")).upper() not in ("USD", "$")): E.append(f"{where}: non-US currency: {s[:60]!r}; use US dollars")
         if t == "lesson" and PROMO.search(s): E.append(f"{where}: nothing promotional in a lesson (no follow, subscribe, brand or tease lines): {s[:60]!r}")
+    # currencies are mixed across posts (Hoang, 7 Nov 2026); inside one post, more than one is usually a slip
+    signs = {c for _, s in texts for c in CURRENCY_SIGN.findall(s)}
+    if len(signs) > 1: W.append(f"more than one currency in this post ({' '.join(sorted(signs))}); fine only if the concept is about exchange rates")
     for k in ("caption", "caption_x", "first_comment"):
         for para in [p for p in str(m.get(k, "")).split("\n") if p.strip()]:
             if para.rstrip().endswith("."): E.append(f'meta.{k}: paragraph ends with a full stop: "...{para.rstrip()[-40:]}"')

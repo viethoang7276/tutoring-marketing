@@ -182,14 +182,13 @@
   {
    "role": "story",
    "img": "story1",
-   "text": "<Ledger in a concrete everyday moment with a US dollar amount, spelled out in words for the voice>.",
+   "text": "Let's imagine <Ledger in a concrete everyday moment with a US dollar amount, spelled out in words for the voice>.",
    "chunks": [
     {
-     "text": "<2-5 words with $ amount>",
-     "key": "<$ amount>"
+     "text": "Let's imagine <2-5 words>"
     },
     {
-     "text": "<2-5 words>"
+     "text": "<2-5 words with $ amount>"
     }
    ]
   },
@@ -244,14 +243,16 @@
   {
    "role": "example",
    "img": "biz1",
-   "text": "<The same idea in a company, with dollar amounts>.",
+   "text": "Now let's use a business example. <The same idea in a company, with dollar amounts> (or: Continuing the story, <the same example with bigger numbers>).",
    "chunks": [
+    {
+     "text": "Now a business example"
+    },
     {
      "text": "<2-5 words>"
     },
     {
-     "text": "<2-5 words with $>",
-     "key": "<$>"
+     "text": "<2-5 words with $>"
     }
    ]
   },

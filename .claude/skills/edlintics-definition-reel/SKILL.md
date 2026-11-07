@@ -28,6 +28,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
 6. **Length:** every video is 2 minutes or less (Hoang, 3 Nov 2026; this replaces the 1-minute cap). Keep it as short as the story allows.
 7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
+8. **Say when the example starts and when you go back to it (Hoang, 6 Nov 2026).** The first `story` beat opens with "Let's imagine ..." or "For this, let's use the example of ...". The first `example` beat says "Continuing the story, ...", "Back to our toy shop, ..." or "Now let's use a business example ...". The validator fails the script otherwise. Full guide: "Context transitions" in the engine skill.
 
 ## Steps
 1. **Pick the topic.** Take it from the topic bank below, or use the one you were given. If the hub already has a slot on the same term (check `slots` titles), stop and report.
@@ -36,7 +37,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
    - **Voice `text`:**
      - full sentences, calm and plain, as if to a smart 15-year-old;
      - amounts spelled out ("sixty dollars"), so Kokoro reads them right;
-     - US dollars only; no exclamation points, emoji or tutoring.
+     - One currency in the post, rotated across posts; no exclamation points, emoji or tutoring.
    - **Caption `chunks`:**
      - 2-5 words each, taken from the voice line, with numbers as "$60";
      - one chunk per beat has `key` (a word inside that chunk);

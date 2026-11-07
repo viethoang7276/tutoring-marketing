@@ -319,13 +319,13 @@
   {
    "role": "hook",
    "img": "desk",
-   "text": "A day in the life of an accountant at month-end.",
+   "text": "Let's follow a day in the life of an accountant at month-end.",
    "chunks": [
     {
-     "text": "A day in the life"
+     "text": "Let's follow a day"
     },
     {
-     "text": "of an accountant"
+     "text": "in an accountant's life"
     },
     {
      "text": "at month-end",
@@ -452,10 +452,10 @@
   {
    "role": "lesson",
    "img": "profit",
-   "text": "Without it, October would look twelve hundred dollars too profitable.",
+   "text": "Back to the books, without it, October would look twelve hundred dollars too profitable.",
    "chunks": [
     {
-     "text": "Without it"
+     "text": "Back to the books"
     },
     {
      "text": "October would look"

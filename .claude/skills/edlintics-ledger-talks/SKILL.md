@@ -33,7 +33,7 @@ description: Make one "Ledger talks" reel, Edlintics' face-free version of the c
    - don't name the creator in the public caption unless Hoang decides to; put the credit in the slot `sources`.
 2. **Script:** `cp template.json $W/script.json` and fill it.
    - **Roles, in order:** hook (1), point (3-10), takeaway (1), optional loop, endcard (always last).
-   - **Voice:** full sentences, US dollars spelled out, about 80-105 words in total (validator target; 25-36 s at speed 1.12). Keep each beat to 12 words or fewer.
+   - **Voice:** full sentences, money spelled out, about 80-105 words in total (validator target; 25-36 s at speed 1.12). Keep each beat to 12 words or fewer.
    - **Caption chunks:** **1-3 words** each, one `key` per beat, no full stop.
    - **End card:** `term` is the idea's name or the list title; `keypoint` is one full sentence with no full stop at the end; the voice says the term.
    - **Definition check (Hoang, 29 Oct 2026):** before you build, run the `definition-reviewer` agent (`.claude/agents/definition-reviewer.md`) on `script.json`: the any beat that says what a term is or means, the end card `term` and `keypoint`, and the caption. Every term must PASS against at least 2 online sources; apply each FIX wording and run it again. The end card must show a real definition or a key point that follows one, never only a takeaway. Put the source URLs in the slot `sources` and the result in `definition_check`.

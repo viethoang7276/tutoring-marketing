@@ -100,6 +100,12 @@
    ],
    "items": [
     {
+     "p": "desk",
+     "x": 450,
+     "y": 1330,
+     "w": 640
+    },
+    {
      "p": "name_board",
      "id": "board",
      "x": 300,
@@ -119,12 +125,6 @@
      "mood": "flat",
      "arm": "point",
      "flip": true
-    },
-    {
-     "p": "desk",
-     "x": 450,
-     "y": 1330,
-     "w": 640
     },
     {
      "p": "calculator",
@@ -500,13 +500,13 @@
   {
    "role": "problem",
    "img": "floor",
-   "text": "This store averages about two hundred staff.",
+   "text": "Let's imagine a store that averages about two hundred staff.",
    "chunks": [
     {
-     "text": "This store averages"
+     "text": "Let's imagine a store"
     },
     {
-     "text": "about 200 staff",
+     "text": "with about 200 staff",
      "key": "200 staff"
     }
    ]

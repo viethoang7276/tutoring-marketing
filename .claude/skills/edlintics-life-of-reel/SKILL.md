@@ -28,6 +28,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
 6. **Length:** every video is 2 minutes or less (Hoang, 3 Nov 2026; this replaces the 1-minute cap). Keep it as short as the story allows.
 7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
+8. **Say when the example starts and when you go back to it (Hoang, 6 Nov 2026).** A hook beat or the first `moment` opens with "Let's follow a day in the life of ..." or "Let's imagine ...". The `lesson` beat returns with "Back to the wedding, ..." or "Continuing the story, ...". The validator fails the script otherwise. Full guide: "Context transitions" in the engine skill.
 
 ## What makes it work
 - **People recognise their own day.** Use real, specific details: the 8 a.m. coffee, 200 invoices, a group chat at midnight. That's why viewers tag a friend.
@@ -49,7 +50,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
      - the voice must say the term.
    - **Voice `text`:**
      - full sentences, with amounts spelled out ("twelve hundred dollars");
-     - US dollars only; no exclamation points, emoji or tutoring.
+     - One currency in the post, rotated across posts; no exclamation points, emoji or tutoring.
    - **Caption `chunks`:**
      - 2-5 words each, with numbers as "$1,200";
      - one `key` per beat;

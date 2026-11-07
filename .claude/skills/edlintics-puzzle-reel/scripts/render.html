@@ -60,6 +60,7 @@ html,body{width:1080px;height:1920px;background:#fff;overflow:hidden}
   </svg>
 </div>
 <div id="end"><img src="edlintics-logo.png"><div class="t serif"></div><div class="rule"></div></div>
+<script src="explain_anim.js"></script>
 <script>
 let T, optC = [], els = [], ops = [], showEls = [], pulseEl = null, pulseBox = null, optEls = [], ansEls = [];
 let stEls = [], stY = [], hlEls = [], diagK = 1, diagH = 0;
@@ -79,13 +80,29 @@ async function init() {
   T = await (await fetch('timeline.json')).json();
   $('#q').innerHTML = `<div>${mark(T.question)}</div>`;
   $('#diag').innerHTML = T.diagram_svg;
-  const svg = $('#diag svg'); const vb = svg.viewBox.baseVal; svg.style.overflow = 'visible'; svg.setAttribute('width', 1000); svg.setAttribute('height', 1000 * vb.height / vb.width);
+  // Full question on screen (Hoang, 6 Nov 2026: the same words as the caption, never shortened). The text sets the layout:
+  // it fits from 74 px down to 46 px within 440 px (560 px at most), long questions read left-aligned, and the diagram takes the rest down to y 1062.
+  const svg = $('#diag svg'); const vb = svg.viewBox.baseVal; svg.style.overflow = 'visible';
+  await document.fonts.ready;
+  const qe = $('#q'), qt = qe.firstChild; const QMAX = 560; qe.style.height = 'auto'; let qf = 74;
+  const fitQ = () => { qe.style.fontSize = qf + 'px'; return qt.getBoundingClientRect().height; };
+  while (fitQ() > 440 && qf > 46) qf -= 2;   // keep room for the diagram; only a question too long at 46 px may run to QMAX
+  const lineH = qf * 1.14, qh = qt.getBoundingClientRect().height;
+  if (qh > lineH * 3.5) { qe.style.textAlign = 'left'; qe.style.textWrap = 'pretty'; qe.style.justifyContent = 'flex-start'; }
+  if (qh > QMAX) throw new Error(`question too long: ${Math.round(qh)} px at ${qf} px; the rule is the full question, so widen the limit in render.html, do not shorten it`);
+  const blockH = Math.max(qh, 390); qe.style.height = blockH + 'px';
+  const dTop = 190 + blockH + 24, dH = 1062 - dTop, dW = Math.min(1000, dH * vb.width / vb.height);
+  const de = $('#diag'); de.style.top = dTop + 'px'; de.style.left = (540 - dW / 2) + 'px'; de.style.width = dW + 'px';
+  svg.setAttribute('width', dW); svg.setAttribute('height', dW * vb.height / vb.width);
+  window.__qfit = { qf, qh: Math.round(qh), dW: Math.round(dW) };
+  $('#ans').style.height = blockH + 'px';
   $('#opts').innerHTML = T.options.map((o, i) => `<div class="opt"><div class="c"><span class="l">${'ABCD'[i]}</span><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${esc(o)}</span></div>`).join('');
   optEls = [...document.querySelectorAll('.opt')];
   optC = optEls.map(o => { const r = o.querySelector('.c').getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
   $('#prompt').textContent = T.prompt_text;
   $('#ans').innerHTML = T.explanation.map(e => `<p class="${e.style || ''}"><span>${mark(e.text)}</span></p>`).join('');
   ansEls = [...document.querySelectorAll('#ans p')];
+  ansEls.forEach(p => { let f = 70; const t = p.firstChild; p.style.opacity = 0; while (t.getBoundingClientRect().height > blockH && f > 46) { f -= 2; p.style.fontSize = f + 'px'; } });
   $('#end .t').textContent = T.end_text;
   await document.fonts.ready;
   // Draw-in list: leaf shapes and texts in document order (answer-only elements excluded)
@@ -104,6 +121,7 @@ async function init() {
     return { ...o, e, orig, origText: e.textContent };
   });
   if (T.steps) layoutSteps(svg);
+  if (T.explain_anim) { const l = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); l.id = 'animlayer'; l.setAttribute('viewBox', '0 0 1080 1920'); l.style.cssText = 'position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible'; $('#steps').after(l); layoutAnimSteps(); }
   if (T.pulse) { pulseEl = svg.querySelector(T.pulse); const b = pulseEl.getBBox(); pulseBox = [b.x + b.width / 2, b.y + b.height / 2]; }
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   return T.dur;
@@ -116,7 +134,9 @@ function layoutSteps(svg) {
   $('#steps').innerHTML = T.steps.map(e => `<div class="st ${e.style || ''}">${e.label ? `<div class="lb">${esc(e.label)}</div>` : ''}<span class="tx">${mark(e.text)}</span></div>`).join('');
   stEls = [...document.querySelectorAll('#steps .st')];
   const W = 588, fit = (tx, f0, fmin) => { let f = f0; tx.style.fontSize = f + 'px'; while (tx.scrollWidth > W && f > fmin) { f -= 2; tx.style.fontSize = f + 'px'; } return f; };
-  stEls.forEach(el => { const tx = el.querySelector('.tx'); if (el.classList.contains('takeaway')) return;
+  stEls.forEach(el => { const tx = el.querySelector('.tx'); if (el.classList.contains('takeaway')) { const n = tx.textContent.length; if (n > 100) tx.style.fontSize = '46px'; else if (n > 80) tx.style.fontSize = '52px'; return; }   // 5 Nov 2026: a long takeaway shrinks so the board stays above the bottom overlay zone
+    // 5 Nov 2026: a long step that is a sentence (a definition, no "=") wraps over several rows at 50 px instead of overflowing one row
+    if ((!/=/.test(tx.textContent) && tx.textContent.length > 30) || (tx.textContent.match(/=/g) || []).length > 1) { tx.style.whiteSpace = 'normal'; tx.style.fontSize = '50px'; el.dataset.f = 50; return; }
     tx.style.display = 'inline-block'; let f = fit(tx, 70, 60);
     if (tx.scrollWidth > W && / = /.test(tx.innerHTML)) { const i = tx.innerHTML.lastIndexOf(' = '); tx.innerHTML = tx.innerHTML.slice(0, i) + '<br>= ' + tx.innerHTML.slice(i + 3); f = fit(tx, 70, 44); }
     else if (tx.scrollWidth > W) f = fit(tx, 60, 40);
@@ -129,13 +149,21 @@ function layoutSteps(svg) {
   hlEls = T.steps.map(e => { if (!e.hl) return null; const el = svg.querySelector(e.hl); if (!el) throw new Error('step hl not found: ' + e.hl); const bb = el.getBBox(); return { el, c: [bb.x + bb.width / 2, bb.y + bb.height / 2] }; });
   $('#prof').innerHTML = T.prof_svg;
 }
+// Animated explanation (7 Nov 2026, opt-in): one line at a time beside Ledger at the top; the items below it carry the explanation
+function layoutAnimSteps() {
+  const Y = T.explain_anim.line_y || 322, MAXH = T.explain_anim.line_h || 250;
+  stEls.forEach(el => { const tx = el.querySelector('.tx');
+    if (el.classList.contains('takeaway')) { let f = 64; tx.style.fontSize = f + 'px'; while (el.getBoundingClientRect().height > MAXH && f > 40) { f -= 2; tx.style.fontSize = f + 'px'; } el.style.top = (Y - el.getBoundingClientRect().height / 2) + 'px'; }
+    else { const r = tx.getBoundingClientRect(), b = el.getBoundingClientRect(); el.style.top = (Y - (r.top - b.top) - (el.dataset.f || 64) * 0.6) + 'px'; } });
+  stY = stEls.map(() => Y);
+}
 function renderSteps(t) {
   const S = ease(ramp(t, T.steps_in, T.steps_in + 0.6));
   $('#diag').style.opacity = 1 - S;
   $('#opts').style.opacity = 1 - S; $('#logo').style.opacity = 0.8 * (1 - S);
   const st = T.step_t; let cur = -1; st.forEach((x, i) => { if (t >= x) cur = i; });
   stEls.forEach((el, i) => {
-    const p = ease(ramp(t, st[i], st[i] + 0.3)); el.style.opacity = p * (i < cur && !el.classList.contains('takeaway') ? 0.5 : 1);
+    const p = ease(ramp(t, st[i], st[i] + 0.3)); el.style.opacity = p * (T.explain_anim ? (st[i + 1] === undefined ? 1 : 1 - ease(ramp(t, st[i + 1] - 0.25, st[i + 1] + 0.05))) : (i < cur && !el.classList.contains('takeaway') ? 0.5 : 1));
     el.style.transform = `translateY(${14 * (1 - p)}px)`;
     const tx = el.querySelector('.tx'); tx.style.backgroundSize = `${i === cur ? 100 * ease(ramp(t, st[i] + 0.15, st[i] + 0.6)) : 0}% 42%`; });
   hlEls.forEach((h, i) => { if (!h) return; const q = i === cur ? ramp(t, st[i], st[i] + 0.7) : 0, k = 1 + 0.08 * Math.sin(Math.PI * q);
@@ -191,6 +219,7 @@ function render(t) {
     const o = nx === undefined ? 1 : 1 - ease(ramp(t, nx - 0.25, nx + 0.05));
     a.style.opacity = p * o; a.style.transform = `translateY(${16 * (1 - p)}px)`; });
   if (T.steps) renderSteps(t);
+  if (T.explain_anim) renderExplainAnim(t);
   // end card, then a fade to white so the loop runs back into the opening frame (white, question fading in)
   $('#end').style.opacity = ease(ramp(t, T.end_t + 0.15, T.end_t + 0.55)) * (1 - ease(ramp(t, T.dur - 0.4, T.dur)));
   document.body.offsetHeight;

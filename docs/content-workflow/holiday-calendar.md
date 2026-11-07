@@ -2,7 +2,7 @@
 
 Hoang's rule (31 Oct 2026): note every holiday and make the content fit it. Christmas gets its own content run starting 1–2 weeks before 25 Dec.
 
-**Scope (Hoang, 31 Oct 2026): only big yearly international events.** No Vietnamese holidays, and no national or US-only days (Thanksgiving, Tax Day, Independence Day and the like). Black Friday stays because it is global. When in doubt, leave it out.
+**Scope (Hoang, 31 Oct 2026): only big yearly international events.** No Vietnamese holidays, and no national or US-only days (Thanksgiving, Tax Day, Independence Day and the like). Black Friday stays because it is global. When in doubt, leave it out. Scheduled economic events have their own list and rules in `economic-calendar.md` (Hoang, 6 Nov 2026).
 
 How the planner uses this file:
 - Every Thursday plan checks this table for holidays in the next 3 weeks (step 4a of the Thursday run in `weekly-content-process.md`).

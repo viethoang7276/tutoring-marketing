@@ -25,7 +25,6 @@ def validate(S):
     for s in alltext:
         if "!" in s: E.append(f"exclamation point: {s}")
         if re.search(r"[\U0001F300-\U0001FAFF\u2600-\u27BF]", s): E.append(f"emoji: {s}")
-        if "€" in s: E.append(f"euro sign (use US dollars): {s}")
     for b in S["beats"]:
         words = b["text"].split(); n = sum(c.get("n", len(c["text"].split())) for c in b["chunks"])
         if n != len(words): E.append(f"chunk word counts ({n}) do not match the spoken words ({len(words)}): {b['text']}")

@@ -1,5 +1,6 @@
 // Usage: node render.js stills 1.2,5,9   -> PNG stills in out/
 //        node render.js video out.mp4 audio.wav  -> MP4 via bundled ffmpeg
+//        node render.js range out.mp4 <t0> <t1>  -> one silent MP4 of that time range only
 //        CLEAN=1 node render.js clips <outdir>   -> one silent MP4 per beat (frame-exact cuts), art only when CLEAN=1
 //        node render.js cardparts <outdir>       -> transparent PNGs of the end-card layers (term, kp, rule, fn, logo, all)
 //        CLEAN=1 hides captions, logo and the end-card text (editable ads, 29 Oct 2026); FPS stays 24
@@ -45,6 +46,11 @@ const srv = http.createServer((q, r) => {
       await p.evaluate(t => window.render(t), t);
       await p.screenshot({ path: path.join(OUT, `still-${t}.png`) });
     }
+  } else if (mode === 'range') {
+    // one silent MP4 of the frames between two times (node render.js range out.mp4 t0 t1); the same frames as a full render, for pilot clips and quick checks
+    const out = process.argv[3], k0 = Math.ceil(+process.argv[4] * FPS - 1e-6), k1 = Math.min(Math.ceil(dur * FPS), Math.ceil(+process.argv[5] * FPS - 1e-6)), enc = encode(out);
+    for (let k = k0; k < k1; k++) { await frame(k, enc); if ((k - k0) % 120 === 0) console.log('frame', k - k0, '/', k1 - k0); }
+    enc.ff.stdin.end(); await enc.done();
   } else if (mode === 'clips') {
     // one clip per beat, cut on the same integer frames as the full video (beat i owns the frames where beatAt() picks it)
     const out = process.argv[3]; fs.mkdirSync(out, { recursive: true });

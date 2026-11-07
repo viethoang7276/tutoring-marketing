@@ -197,6 +197,11 @@
    "bg": "office",
    "items": [
     {
+     "p": "desk",
+     "x": 540,
+     "y": 1250
+    },
+    {
      "p": "phone",
      "id": "app",
      "x": 300,
@@ -211,11 +216,6 @@
      "y": 1268,
      "s": 1.7,
      "mood": "flat"
-    },
-    {
-     "p": "desk",
-     "x": 540,
-     "y": 1250
     },
     {
      "p": "bills",
@@ -238,6 +238,15 @@
    "bg": "paper",
    "items": [
     {
+     "p": "scale",
+     "id": "sc",
+     "x": 780,
+     "y": 1170,
+     "s": 1.0,
+     "left": "coins",
+     "right": "arrow"
+    },
+    {
      "p": "coins",
      "id": "old",
      "x": 150,
@@ -251,15 +260,6 @@
      "y": 1270,
      "w": 170,
      "h": 240
-    },
-    {
-     "p": "scale",
-     "id": "sc",
-     "x": 780,
-     "y": 1170,
-     "s": 1.0,
-     "left": "coins",
-     "right": "arrow"
     },
     {
      "p": "ledger",
@@ -321,14 +321,14 @@
   {
    "role": "story",
    "img": "ticket",
-   "text": "Ledger paid sixty dollars for a concert ticket.",
+   "text": "Let's imagine Ledger paid sixty dollars for a concert ticket.",
    "chunks": [
     {
-     "text": "Ledger paid $60",
-     "key": "$60"
+     "text": "Let's imagine Ledger paid"
     },
     {
-     "text": "for a concert ticket"
+     "text": "$60 for a concert ticket",
+     "key": "$60"
     }
    ]
   },
@@ -405,10 +405,10 @@
   {
    "role": "example",
    "img": "app",
-   "text": "Companies do it too. Ledger's company spent two million dollars on an app nobody uses.",
+   "text": "Now let's use a business example. Ledger's company spent two million dollars on an app nobody uses.",
    "chunks": [
     {
-     "text": "Companies do it too"
+     "text": "Now a business example"
     },
     {
      "text": "Ledger's company spent"

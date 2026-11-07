@@ -36,6 +36,7 @@ LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY = 0.74, 0.88, 0.74   # Ledger's share of the
 # its height and the props get the room above and beside him
 FULL = {"aspect": 900 / 990, "ledger": (0.66, 0.78, 0.66)}
 BLEED = {"desk", "building", "whiteboard", "window", "people_group"}   # may run off the left/right edges
+DATA_PROPS = {"data_chart", "data_table", "sheet_grid", "order_book", "live_chart", "waterfall"}   # real numbers (6 Nov 2026): the numbers are the subject, so an auto or "wide" frame shows the whole scene (data_frame) and never shrinks them around Ledger
 HELD = {"ticket", "phone", "coins", "bills", "invoice", "coffee", "price_tag", "envelope", "books", "umbrella", "receipt",
         "pizza_slice", "sandwich", "burger", "lemonade_cup", "plate"}   # props Ledger can hold (checked against his hand)
 
@@ -124,6 +125,61 @@ def hand_check(name, spec):
     return out
 
 
+def data_frame(name, spec, full):
+    """The frame for a scene with a data prop, when its frame is auto or "wide": the whole scene fills the safe part of the art
+    box (full layout x 50-930, y 455-1435; other layouts x 60-960, y 535-1305, clear of the right-hand buttons), never over 1:1."""
+    BX, BY, BW, BH = (40, 450, 900, 990) if full else (40, 530, 1000, 780)
+    x0, y0, x1, y1 = (50, 455, 930, 1435) if full else (60, 535, 960, 1305)
+    u = union([L.item_box(it) for it in spec.get("items", [])])
+    k = min(1.0, (x1 - x0) / u[2], (y1 - y0) / u[3])
+    if k < 0.85: print(f"WARN  scene {name}: the data prop shows at {k:.2f} of its size, so its text may be too small; reduce w, h or the other items")
+    fw, fh = BW / k, BH / k   # the renderer maps the frame's centre to the box's centre
+    cx = u[0] + u[2] / 2 - ((x0 + x1) / 2 - (BX + BW / 2)) / k; cy = u[1] + u[3] / 2 - ((y0 + y1) / 2 - (BY + BH / 2)) / k
+    return [round(cx - fw / 2), round(cy - fh / 2), round(fw), round(fh)]
+
+
+def data_check(name, spec):
+    """WARN when another item sits on a data_chart or data_table (Ledger and props go beside or below the numbers)."""
+    out = []; items = spec.get("items", [])
+    for d in [it for it in items if it["p"] in DATA_PROPS]:
+        a = L.item_box(d)
+        for it in items:
+            if it is d or it["p"] in BLEED or it["p"] == "backdrop": continue
+            c = L.item_box(it)
+            if a[0] < c[0] + c[2] and c[0] < a[0] + a[2] and a[1] < c[1] + c[3] and c[1] < a[1] + a[3]:
+                out.append(f"scene {name}: {it['p']} overlaps the {d['p']}; move it beside or below the numbers")
+    return out
+
+
+def motion_check(name, spec, beats, full):
+    """WARN about motion items (keys move, reveal and so on, 6 Nov 2026): a chunk number past the end of the scene's run, Ledger-first framing that would shift items away from their "to", and items that end outside the safe art box."""
+    out = []; items = spec.get("items", []); KEYS = ("move", "pulse", "shake", "out", "reveal")
+    has = [it for it in items if any(L._m_keys(it.get(k)) for k in KEYS) or it["p"] in L.SELF_TIMED or it["p"] in ("order_book", "live_chart", "waterfall", "fill_grid", "trader", "counter")]
+    if not has: return out
+    run = 0; seen = False   # caption chunks over the first run of beats that use this scene
+    for b in beats:
+        if b.get("img") == name: run += len(b.get("chunks") or []); seen = True
+        elif seen: break
+    def refs(v):
+        if isinstance(v, dict):
+            for k, x in v.items():
+                if k == "at" and isinstance(x, str) and x.startswith("chunk:"): yield int(x.split(":")[1])
+                else: yield from refs(x)
+        elif isinstance(v, list):
+            for x in v: yield from refs(x)
+    for it in has:
+        for n in refs({k: v for k, v in it.items() if k not in ("p", "id", "x", "y", "s")}):
+            if n >= run: out.append(f'scene {name}: {it["p"]} uses chunk:{n}, but this scene has only {run} caption chunks (0 to {run - 1})')
+    if spec.get("frame") in (None, "auto") and any(it["p"] == "ledger" for it in items): out.append(f'scene {name}: motion with Ledger-first framing moves items after you placed them; set "frame" to an explicit box')
+    x0, y0, x1, y1 = (40, 450, 940, 1440) if full else (40, 530, 1040, 1310)
+    if isinstance(spec.get("frame"), list):
+        for it in has:
+            b = L.item_box(it); pts = [(b[0], b[1]), (b[0] + b[2], b[1] + b[3])]
+            for k in L._m_keys(it.get("move")): pts += [(k["to"][0] - b[2] / 2, k["to"][1]), (k["to"][0] + b[2] / 2, k["to"][1])]
+            if any(px < x0 - 6 or px > x1 + 6 or py < y0 - 6 or py > y1 + 6 for px, py in pts): out.append(f'scene {name}: {it["p"]} runs outside the art box x {x0}-{x1}, y {y0}-{y1}')
+    return out
+
+
 def resolve(f, spec, where):
     items = spec.get("items", [])
     led = [it for it in items if it["p"] == "ledger"]
@@ -192,9 +248,13 @@ def main(d):
     for name, spec in S["scenes"].items():
         if talk and spec.get("frame") in (None, "auto"):
             frames[name] = talk_frame(spec)
+        elif spec.get("frame") in (None, "auto", "wide") and any(it["p"] in DATA_PROPS for it in spec.get("items", [])):
+            frames[name] = data_frame(name, spec, S.get("meta", {}).get("layout") == "full")
         elif spec.get("frame") in (None, "auto") and any(it["p"] == "ledger" for it in spec.get("items", [])):
             frames[name] = ledger_first(spec)   # props are nudged/scaled before the art is drawn
         for w in hand_check(name, spec): print("WARN ", w)
+        for w in data_check(name, spec): print("WARN ", w)
+        for w in motion_check(name, spec, S.get("beats", []), S.get("meta", {}).get("layout") == "full"): print("WARN ", w)
         open(os.path.join(d, f"{name}.svg"), "w").write(L.scene_svg(spec))
     beats = []
     for k, b in enumerate(S["beats"], 1):

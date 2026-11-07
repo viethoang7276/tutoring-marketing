@@ -165,14 +165,13 @@
   {
    "role": "hook",
    "img": "hook",
-   "text": "A day in the life of <a role>, <when: at month-end, before the exam, on launch day>.",
+   "text": "Let's follow a day in the life of <a role>, <when: at month-end, before the exam, on launch day>.",
    "chunks": [
     {
-     "text": "A day in the life"
+     "text": "Let's follow a day"
     },
     {
-     "text": "of <a role>",
-     "key": "<role>"
+     "text": "in the life of <a role>"
     },
     {
      "text": "<2-5 words>"
@@ -275,14 +274,13 @@
   {
    "role": "lesson",
    "img": "lesson",
-   "text": "<What it changes in business, one sentence>.",
+   "text": "Back to <the story's setting>, <what it changes in business, one sentence>.",
    "chunks": [
     {
-     "text": "<2-5 words>"
+     "text": "Back to <setting>"
     },
     {
-     "text": "<2-5 words>",
-     "key": "<key>"
+     "text": "<2-5 words>"
     }
    ]
   },

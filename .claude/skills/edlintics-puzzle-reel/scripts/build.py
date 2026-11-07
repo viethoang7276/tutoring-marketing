@@ -4,7 +4,9 @@ Usage (from anywhere; build.sh wraps this):
   <repo>/tools/tts/.venv/bin/python build.py <puzzle.json> <outdir> [voice|novoice|both]
 
 puzzle.json (paths relative to the JSON file):
-  question      one block, full sentences, *word* = the blue key word
+  question      the slot's full `question`, word for word, the same words as the caption (Hoang, 6 Nov 2026). Never a shortened version;
+                one *word* = the blue key word. The voice reads it all and the text fits itself from 74 px down to 46 px
+  caption       the slot's post caption. The build stops unless the question appears in it word for word
   diagram       SVG in question state. Leaf shapes and texts draw in in document order.
                 class="reveal-show" on any element = hidden until the reveal
   options       optional list of up to 4 answer options (A-D); answer = "C"
@@ -18,6 +20,7 @@ puzzle.json (paths relative to the JSON file):
                 suit Ledger with round glasses and a pointer, option F picked by Hoang 2 Nov) points at the current line.
                 A line too wide for one row breaks before its "=". The explanation lines with style "takeaway" follow as
                 the last line, in blue; the other explanation lines are skipped
+  explain_anim  optional animated explanation (Hoang, 7 Nov 2026; needs `steps`). See "Animated explanation" in SKILL.md. Without it nothing changes
   prompt_text / prompt_say, end_text / end_say, countdown {"voice": 5, "novoice": 6}
   Any line may carry "say" to change what the voice reads (for example to spell out a unit)
 
@@ -94,15 +97,16 @@ def timeline(P, voice, cache):
     t = R + 0.8; T["ans_t"] = []
     if P.get("steps"):   # worked steps: hold the answer, then the steps board, one voiced line at a time
         lines = list(P["steps"]) + [dict(e, style="takeaway") for e in P.get("explanation", []) if isinstance(e, dict) and e.get("style") == "takeaway"]
-        T["steps"] = lines; T["steps_in"] = round(R + 1.4, 3); t = T["steps_in"] + 0.65; T["step_t"] = []
+        T["steps"] = lines; T["steps_in"] = round(R + 1.4, 3); t = T["steps_in"] + 0.65; T["step_t"] = []; spans = []
         for e in lines:
             if voice:
-                a = tts(say_of(e, "text"), cache); clips.append((t, a)); T["step_t"].append(round(t - 0.15, 3))
+                a = tts(say_of(e, "text"), cache); clips.append((t, a)); T["step_t"].append(round(t - 0.15, 3)); spans.append((t, len(a) / SR, say_of(e, "text")))
                 t += len(a) / SR + (0.5 if e.get("style") == "takeaway" else 0.3)
             else:
-                T["step_t"].append(round(t, 3)); t += max(2.4, len(plain(e["text"])) / CPS) + 0.3
+                T["step_t"].append(round(t, 3)); spans.append((t, max(2.4, len(plain(e["text"])) / CPS), say_of(e, "text"))); t += max(2.4, len(plain(e["text"])) / CPS) + 0.3
         t += 0.6
         T["ans_t"] = [T["step_t"][-1]]
+        if P.get("explain_anim"): T["_spans"] = spans
     for e in ([] if P.get("steps") else P["explanation"]):
         if voice:
             a = tts(say_of(e, "text"), cache); clips.append((t, a)); T["ans_t"].append(round(t - 0.15, 3))
@@ -117,6 +121,54 @@ def timeline(P, voice, cache):
     T["dur"] = round(round(dur * 24) / 24, 4)
     T["ticks"] = [round(t0 + k, 3) for k in range(n)]
     return T, clips
+
+
+# ---------- animated explanation (Hoang, 7 Nov 2026) ----------
+ANIM_TEXT = ("text", "label", "name")
+NUM = re.compile(r"\d[\d,]*(?:\.\d+)?")
+
+
+def anim_time(spec, spans, where):
+    """ "step:N" is the start of the voice on line N (the takeaway is the last line). "word" moves to that word, spaced by characters along the clip. "delay" adds seconds"""
+    m = re.fullmatch(r"step:(\d+)", str(spec.get("at", "")))
+    if not m or int(m[1]) >= len(spans): sys.exit(f'FAIL explain_anim: {where} needs "at": "step:N" with N under {len(spans)}, got {spec.get("at")!r}')
+    t0, dur, say = spans[int(m[1])]; t = t0
+    if spec.get("word"):
+        i = say.lower().find(spec["word"].lower())
+        if i < 0: sys.exit(f'FAIL explain_anim: {where}: the word {spec["word"]!r} is not in the voice line {say!r}')
+        t = t0 + (dur - 0.175) * i / len(say)
+    return round(t + float(spec.get("delay", 0)), 3)
+
+
+def prepare_anim(P, T):
+    """Checks the block and returns a copy with every time in seconds. The build stops on text under 34 px or on a number the puzzle does not hold"""
+    A = json.loads(json.dumps(P["explain_anim"])); spans = T.pop("_spans")
+    source = " ".join(plain(str(x)) for x in [P["question"], P.get("caption", ""), *P.get("options", [])]
+                      + [e.get(k, "") for e in P["steps"] + P.get("explanation", []) for k in ("text", "label")] + [o.get("text", "") for o in P.get("reveal", [])])
+    allowed = set(NUM.findall(source)) | set(NUM.findall(" ".join(A.get("derived", {}))))
+    def check_number(val, item):
+        if item.get("example") and item.get("p") == "note": return   # only a note prints the "Example:" label
+        for n in NUM.findall(str(val)):
+            if n not in allowed: sys.exit(f'FAIL explain_anim: {n} is not in the puzzle. Add it to "derived" with its sum, or mark the item "example": true: {item.get("p")}')
+    def walk(o, item, where):
+        if isinstance(o, list):
+            for x in o: walk(x, item, where)
+        elif isinstance(o, dict):
+            for k, v in list(o.items()):
+                if k in ("fs", "lfs", "nfs") and v < 34: sys.exit(f"FAIL explain_anim: {where} has {k} {v}; text must be 34 px or more")
+                if k in ANIM_TEXT and isinstance(v, str): check_number(v, item)
+                if k == "lines":
+                    for l in v: check_number(l, item)
+                if isinstance(v, (dict, list)): walk(v, item, where)
+            if "at" in o: o["t"] = anim_time(o, spans, where)
+            if "until" in o: o["t_until"] = anim_time({"at": o["until"], "word": o.get("until_word"), "delay": o.get("until_delay", 0)}, spans, where)
+    for i, it in enumerate(A["items"]):
+        if it.get("p") not in ("counter", "line_chart", "arrow", "chip", "note", "split_bar", "person"): sys.exit(f'FAIL explain_anim: item {i} has unknown "p": {it.get("p")!r}')
+        walk(it, it, f'item {i} ({it["p"]})')
+        unit, dec = it.get("unit", "$"), it.get("dec", 0)
+        if it["p"] == "counter": [check_number(f"{v:,.{dec}f}", it) for v in [it["start"]] + [k["to"] for k in it.get("keys", [])]]
+        if it["p"] == "line_chart": [check_number(f'{p["v"]:,.{dec}f}', it) for p in it["points"]]
+    return A
 
 
 # ---------- audio ----------
@@ -219,6 +271,9 @@ def contact_sheet(work, times, out):
 
 def build(pj, outdir, variant):
     P = json.load(open(pj)); base = os.path.dirname(os.path.abspath(pj)); slug = P["slug"]
+    q_plain = re.sub(r"\s+", " ", plain(P["question"])).strip(); cap = re.sub(r"\s+", " ", plain(P.get("caption") or ""))
+    if q_plain not in cap:   # Hoang, 6 Nov 2026: "It needs to precise and cannot cut the words short"
+        sys.exit(f'FAIL {slug}: the on-screen question must be the caption\'s question word for word. Set "question" to the slot\'s full question and "caption" to the slot\'s caption. Do not use reel.question_short')
     voice = variant == "voice"
     work = f"{outdir}/work-{slug}{P.get('suffix', '')}-{variant}"; cache = f"{outdir}/work-{slug}-vo-cache"
     os.makedirs(work, exist_ok=True); os.makedirs(cache, exist_ok=True)
@@ -227,6 +282,9 @@ def build(pj, outdir, variant):
     svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
     T.update({k: P.get(k) for k in ("question", "options", "answer", "prompt_text", "reveal", "pulse", "explanation", "end_text")})
     T["options"] = T["options"] or []; T["diagram_svg"] = svg
+    if P.get("explain_anim"):
+        if not P.get("steps"): sys.exit("FAIL explain_anim needs `steps`: the animation is timed to the voiced worked lines")
+        T["explain_anim"] = prepare_anim(P, T)
     if P.get("steps"):   # the guide Ledger (option F, 2 Nov 2026): the hand-drawn pencil pose PNG, feet at (130, 262) of its 320x280 box
         if len(P["steps"]) > 5: print(f"WARN: {len(P['steps'])} steps; keep 4-5 so the reel stays about 45-50 s")
         import base64, io

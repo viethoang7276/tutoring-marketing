@@ -27,7 +27,6 @@ def validate(S):
     for s in shown + caps + [b["text"] for b in S["beats"]] + [S["endcard"]["say"]]:
         if "!" in s: E.append(f"exclamation point: {s}")
         if re.search(r"[\U0001F300-\U0001FAFF☀-➿]", s): E.append(f"emoji: {s}")
-        if "€" in s: E.append(f"euro sign (use US dollars): {s}")
     for s in shown + caps:
         if s.rstrip().endswith("."): E.append(f"on-screen line ends with a full stop: {s}")
     tot = round(sum(s["amount"] for s in S["slices"]), 2)

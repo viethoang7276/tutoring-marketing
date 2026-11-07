@@ -33,4 +33,7 @@ if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (li
         if env[k - 1] and not env[k] and env[k + 1]: env[k] = 1
 data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env, "nologo": nologo,
         "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "definition", "footnote", "cta", "fx", "cam", "equation") if k in b} for b in T["beats"]]}
+try:   # meta.solid_cuts (7 Nov 2026, opt-in): every scene is complete on its first frame, no fade or draw-on at the cut. Without it, scenes.json is unchanged
+    if json.load(open(f"{d}/script.json")).get("meta", {}).get("solid_cuts") is True: data["solidCuts"] = True
+except Exception: pass
 json.dump(data, open(f"{out}/scenes.json", "w")); print(len(data["beats"]), "beats,", len(scenes), "scenes")

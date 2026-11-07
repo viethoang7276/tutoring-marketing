@@ -417,10 +417,10 @@
   {
    "role": "problem",
    "img": "problem",
-   "text": "<The setting, with the base number, in a full sentence.>",
+   "text": "Let's imagine <the setting, with the base number, in a full sentence.>",
    "chunks": [
     {
-     "text": "<2-5 words>"
+     "text": "Let's imagine <2-5 words>"
     },
     {
      "text": "<2-5 words>"
@@ -476,7 +476,7 @@
   {
    "role": "step",
    "img": "step2",
-   "text": "<Detail with a USD amount.>",
+   "text": "<Detail with an amount in the post's currency.>",
    "chunks": [
     {
      "text": "<2-5 words>"

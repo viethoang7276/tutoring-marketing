@@ -18,7 +18,7 @@ Reference build: `examples/compounding/` (`make_sheet.py` → `sheet.svg`, `scri
 
 ## Steps
 1. **Numbers first.** Write `examples/<slug>/make_sheet.py` (copy the compounding one). Compute every number in two independent ways (for example a loop and a closed formula) and `assert` that they agree, plus the rounded figures you print on the sheet. It writes `numbers.json`, which goes into the slot's `maths_check`
-2. **Sheet.** The same script writes `sheet.svg` (viewBox 0 0 960 1300). Give an `id` to every element the hand will highlight (a `<text>` or `<tspan>`) and to the curve (`<path id="curve">`) and its dots (`<circle id="dot1">`). State the assumptions in small print (19 px or larger) at the bottom, and say the figures are an illustration, not advice or a promise. Keep slide lines as full sentences. Use US dollars
+2. **Sheet.** The same script writes `sheet.svg` (viewBox 0 0 960 1300). Give an `id` to every element the hand will highlight (a `<text>` or `<tspan>`) and to the curve (`<path id="curve">`) and its dots (`<circle id="dot1">`). State the assumptions in small print (19 px or larger) at the bottom, and say the figures are an illustration, not advice or a promise. Keep slide lines as full sentences. Use one currency, rotated across posts
 3. **Script.** Write `examples/<slug>/script.json`:
    - `beats`: 7-9 beats. Each has a `text` (a full spoken sentence), `chunks` (the captions) and `do` (the highlights)
    - A chunk is `{"text", "n"?, "key"?}`. `n` is how many spoken words it covers when the caption is written differently (for example "$500 a month" covers "five hundred dollars a month", so `n: 5`). The chunk word counts must add up to the beat's spoken words; the build checks this
@@ -45,7 +45,7 @@ Reference build: `examples/compounding/` (`make_sheet.py` → `sheet.svg`, `scri
 - Text is readable at phone width (open a still at 360 px wide)
 - Each highlight happens when the voice says that word (the build uses the real word times; WARN "actions too close" means two strokes are less than 0.22 s apart, which is fine if the still looks right)
 - The first and last frames match (loop), and the hand is gone before the end card
-- House rules: US dollars, no "!", no emoji, no full stop at the end of any caption or end-card line, no tutoring, general audience, numbers with stated assumptions
+- House rules: one currency in the post, no "!", no emoji, no full stop at the end of any caption or end-card line, no tutoring, general audience, numbers with stated assumptions
 
 ## Files (scripts/)
 | File | What it does |

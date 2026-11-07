@@ -109,7 +109,7 @@ body.parts #card{display:flex !important}
 // in the 1080x1920 art, fitted into the box x 40-1040, y 530-1310). A new scene comes in with a quick 0.15 s fade and a fast draw-on; no zoom, pan or reframe.
 // Captions show 2-5 word chunks timed to the voice, key word highlighted. The last beat (role "endcard") hides
 // the art and shows the term, a one-line key point and the logo.
-let D=null, curImg=null, els=[], cut=0, TALK=false, sceneBeat=0;
+let D=null, curImg=null, els=[], fxEls=[], cut=0, TALK=false, sceneBeat=0;
 let BX=40, BW=1000, BY=530, BH=780;
 const artBody=document.getElementById('artBody'), capC=document.querySelector('#cap .c');
 async function init(){ D=await (await fetch('scenes.json')).json(); await document.fonts.ready;
@@ -125,7 +125,8 @@ function beatAt(t){ let i=0; D.beats.forEach((b,k)=>{ if(t>=(k===0?0:b.start-0.0
 function load(img){
   const s=D.scenes[img];
   artBody.innerHTML=(s.wall?'<rect x="-3000" y="-3000" width="7080" height="4480" fill="#E8F0FC" opacity="0.55"/>':'')+s.body;
-  els=[...artBody.querySelectorAll('path,line,rect,circle,ellipse,polygon,polyline,text')].filter((e,k)=>!(s.wall&&k===0));
+  els=[...artBody.querySelectorAll('path,line,rect,circle,ellipse,polygon,polyline,text')].filter((e,k)=>!(s.wall&&k===0)).filter(e=>!e.closest('[data-nodraw]'));   // data-nodraw: the motion layer owns that element's geometry
+  fxEls=[...artBody.querySelectorAll('[data-fx]')];
   const n=els.length;
   els.forEach((e,k)=>{ const st=e.getAttribute('stroke'), dashed=e.getAttribute('stroke-dasharray');
     let L=0; try{L=e.getTotalLength();}catch(_){}
@@ -175,7 +176,7 @@ function render(t){
     const eq=card.querySelector('.eq'); if(b.equation){ eqHTML(eq,b.equation); eq.style.display='block'; eq.style.opacity=clamp((ct-0.9)/0.25); eq.style.transform=`scale(${0.94+0.06*back(clamp((ct-0.9)/0.3))})`; } else eq.style.display='none';
     const fn=card.querySelector('.fn'); if(b.footnote){ fn.textContent=b.footnote; fn.style.display='block'; fn.style.opacity=clamp((ct-0.6)/0.3); }
     const cta=card.querySelector('.cta'); if(b.cta){ cta.textContent=b.cta; cta.style.display='block'; cta.style.opacity=clamp((ct-0.7)/0.15); cta.style.transform=`scale(${0.9+0.1*back(clamp((ct-0.7)/0.3))})`; }
-    term.style.opacity=clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;
+    term.style.opacity=D.solidCuts?1:clamp(ct/0.15); term.style.transform=`scale(${0.9+0.1*back(clamp(ct/0.3))})`;
     card.querySelector('.kp').style.opacity=clamp((ct-0.35)/0.2); kp.style.setProperty('--w',(ease(clamp((ct-0.6)/0.5))*100)+'%');
     if(D.layout==='ad'){   // ad (reviewer, 29 Oct 2026): the card is complete on its first frame; a 0.12 s settle of the whole card, highlight wipes from 0.3 s
       [term,card.querySelector('.kp'),cta,fn].forEach(e=>{ e.style.opacity=1; e.style.transform='none'; });
@@ -190,9 +191,9 @@ function render(t){
   const f=Math.floor(t*12)%3;
   document.getElementById('t1').setAttribute('seed',String(1+f)); document.getElementById('t2').setAttribute('seed',String(11+f)); document.getElementById('t3').setAttribute('seed',String(5+f));
   const AD=D.layout==='ad';
-  for(const el of els){ const p=AD?1:ease(clamp((sceneT-el._t0)/el._dur));   // ad (reviewer, 29 Oct 2026): fully drawn at frame 1
+  for(const el of els){ const p=(AD||D.solidCuts)?1:ease(clamp((sceneT-el._t0)/el._dur));   // ad (reviewer, 29 Oct 2026): fully drawn at frame 1
     if(el._draw) el.setAttribute('stroke-dashoffset',String(el._L*(1-p)));
-    const pf=AD?1:clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));   // ad: fills too are full at frame 1
+    const pf=(AD||D.solidCuts)?1:clamp((sceneT-el._t0-el._dur*0.4)/0.15); el.setAttribute('fill-opacity',String(el._fo*(el._draw?pf:p)));   // ad: fills too are full at frame 1
     if(!el._draw) el.setAttribute('stroke-opacity',String(p)); }
   // item animation (anim "wobble"): a small sway about the item's own feet, +-amp degrees at hz; no camera move
   artBody.querySelectorAll('[data-anim="wobble"]').forEach(g=>{ const A=+g.dataset.amp, H=+g.dataset.hz, on=clamp((sceneT-0.2)/0.5);
@@ -212,6 +213,7 @@ function render(t){
       if(g.dataset.pop==='cut'){ g.setAttribute('opacity',(t>=t0&&!gone)?'1':'0'); return; }
       const q=ease(clamp((t-t0)/0.2)), k=0.7+0.3*back(clamp((t-t0)/0.3));
       g.setAttribute('opacity',String(gone?0:q)); g.setAttribute('transform',`translate(${g.dataset.ax} ${g.dataset.ay}) scale(${k.toFixed(3)}) translate(${-g.dataset.ax} ${-g.dataset.ay})`); }); }
+  if(fxEls.length){ const ch=[]; for(let j=sceneBeat;j<B.length&&B[j].img===b.img;j++) ch.push(...B[j].chunks); fxRender(t,ch); }
   // steady frame: no push-in, pan or reframe
   const F=b.cam?camAt(t,b,B):(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
   // camera scenes (paid ads, 30 Oct 2026): the art is clipped below the caption band and above the logo, and the pencil
@@ -226,7 +228,7 @@ function render(t){
   if(AD){ const k=0.97+0.03*ease(clamp(sceneT/0.12)), cx=BX+BW/2, cy=BY+BH/2;   // whole-group settle, no fade: ink is full from the first frame
     document.getElementById('pop').setAttribute('transform',newScene?`translate(${cx} ${cy}) scale(${k.toFixed(4)}) translate(${-cx} ${-cy})`:''); art.style.opacity=1; }
   else { document.getElementById('pop').setAttribute('transform','');
-    art.style.opacity=newScene?clamp((sceneT+1/24)/0.15):1; }   // +1 frame: the first frame of a cut is never blank paper
+    art.style.opacity=(newScene&&!D.solidCuts)?clamp((sceneT+1/24)/0.15):1; }   // +1 frame: the first frame of a cut is never blank paper
   if(TALK){ const on=(D.env||[])[Math.floor(t*12)]===1;
     artBody.querySelectorAll('.mo').forEach(e=>e.style.display=on?'inline':'none'); artBody.querySelectorAll('.mc').forEach(e=>e.style.display=on?'none':'inline'); }
   const wipe=document.getElementById('wipe'); wipe.style.display='none';
@@ -241,6 +243,79 @@ function render(t){
   if(i===0&&ci===0) capC.style.transform='scale(1)';
   const k=capC.querySelector('.k'); if(k) k.style.setProperty('--w',(ease(clamp((ct-0.08)/0.28))*100)+'%');
 }
+// ---- motion layer (opt-in, 6 Nov 2026): items and props marked data-fx. Every state below comes from the time t alone, because frames are
+// rendered by seeking (and clips start on any frame). "at" counts caption chunks over the beats that share the scene, as for pop-ins. Scenes without data-fx never reach this code.
+const EZ={linear:x=>x,out:ease,inout:inout,in:x=>x*x*x,back:x=>x<=0?0:back(x)};
+function fmtN(v,o){ const c=o.comp==='K'?1e3:o.comp==='M'?1e6:1, s=(Math.abs(v)/c).toFixed(o.dec||0), z=+s===0, pt=s.split('.');
+  pt[0]=pt[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return (v<0&&!z?'−':(o.plus&&!z?'+':''))+(o.pre||'')+pt.join('.')+(o.comp||'')+(o.suf||''); }
+function setTxt(e,s){ if(e.textContent!==s) e.textContent=s; }
+const fx={
+  m(e,S,T,t){ let x=S.x,y=S.y,k=1,r=0,op=1;
+    for(const q of S.move||[]){ const t0=T(q); if(t<t0) break; const p=(EZ[q.ease]||inout)(q.dur>0?clamp((t-t0)/q.dur):1), u=1-p, cx=(x+q.to[0])/2, cy=(y+q.to[1])/2-(q.arc||0);
+      const nx=u*u*x+2*u*p*cx+p*p*q.to[0], ny=u*u*y+2*u*p*cy+p*p*q.to[1]; x=nx; y=ny; if(q.scale!==undefined) k+=(q.scale-k)*p; if(q.rot!==undefined) r+=(q.rot-r)*p; }
+    for(const q of S.pulse||[]){ const u=(t-T(q))/q.dur; if(u>0&&u<1) k*=1+q.amp*Math.sin(Math.PI*u); }
+    for(const q of S.shake||[]){ const a=t-T(q), u=a/q.dur; if(u>0&&u<1) x+=q.amp*(1-u)*Math.sin(2*Math.PI*q.hz*a); }
+    if(S.bob) y+=S.bob.amp*Math.sin(2*Math.PI*S.bob.hz*t);
+    for(const q of S.out||[]){ const t0=T(q); if(t>=t0) op=Math.min(op,1-clamp((t-t0)/q.dur)); }
+    if(S.hide&&t<T(S.hide)) op=0;
+    e.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${k.toFixed(4)}) translate(${-S.x} ${-S.y})`); e.setAttribute('opacity',op.toFixed(3)); },
+  trail(e,S,T,t){ const t0=T(S); if(t<t0){ e.setAttribute('opacity','0'); return; } const p=(EZ[S.ease]||inout)(clamp((t-t0)/S.dur));
+    e.setAttribute('stroke-dasharray',`${p.toFixed(4)} 1`); e.setAttribute('opacity',(0.6*(S.fade>0?1-clamp((t-t0-S.dur)/S.fade):1)).toFixed(3)); },
+  clip(e,S,T,t){ const t0=T(S), p=t<t0?0:(EZ[S.ease]||inout)(clamp((t-t0)/S.dur)), [x,y,w,h]=S.box;
+    const horiz=S.dir==='right'||S.dir==='left'; e.setAttribute('x',S.dir==='left'?x+w*(1-p):x); e.setAttribute('width',horiz?w*p:w); e.setAttribute('y',S.dir==='up'?y+h*(1-p):y); e.setAttribute('height',horiz?h:h*p); },
+  count(e,S,T,t){ let v=S.from; for(const q of S.keys||[]){ const t0=T(q); if(t<t0) break; v+=(q.to-v)*(EZ[S.ease]||ease)(q.dur>0?clamp((t-t0)/q.dur):1); } setTxt(e,fmtN(v,S)); },
+  stream(e,S,T,t){ const t0=T(S); e._p=e._p||[...e.querySelectorAll('.sp')];
+    e._p.forEach((g,i)=>{ const u=(t-t0-i*S.stagger)/S.dur; if(u<0||u>1){ g.setAttribute('opacity','0'); return; } const p=inout(u), w=1-p, cx=(S.x+S.to[0])/2, cy=(S.y+S.to[1])/2-S.arc;
+      const x=w*w*S.x+2*w*p*cx+p*p*S.to[0], y=w*w*S.y+2*w*p*cy+p*p*S.to[1];
+      g.setAttribute('opacity',Math.min(1,u/0.08,(1-u)/0.08).toFixed(3)); g.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${S.s})`); }); },
+  burst(e,S,T,t){ const t0=T(S), u=(t-t0)/S.dur, r=e._r||(e._r=e.querySelector('.br')), l=e._l||(e._l=e.querySelector('.bl'));
+    if(u<0||u>1) r.setAttribute('opacity','0'); else { r.setAttribute('opacity',(1-u*u).toFixed(3)); r.setAttribute('transform',`translate(${S.x} ${S.y}) scale(${(S.s*(0.45+0.9*ease(u))).toFixed(3)})`); }
+    if(l){ const a=t-t0; if(a<0||a>1.5) l.setAttribute('opacity','0'); else { l.setAttribute('opacity',Math.min(1,a/0.1,(1.5-a)/0.25).toFixed(3)); l.setAttribute('transform',`translate(${S.x} ${S.y}) scale(${(S.s*(0.7+0.3*back(clamp(a/0.25)))).toFixed(3)})`); } } },
+  trader(e,S,T,t){ const P={down:[0,0],raise:[-150,0],both:[-150,150],point:[-100,0],point_l:[0,100],cheer:[-165,165],shrug:[-62,62]}; let R=0,L=0,dy=0,m=S.mood;
+    e._a=e._a||[...e.querySelectorAll('.ta')]; e._m=e._m||[...e.querySelectorAll('.tm')];
+    for(const a of S.acts){ const t0=T(a); if(t<t0) break; const p=back(clamp((t-t0)/a.dur)), g=P[a.pose]; if(g){ R+=(g[0]-R)*p; L+=(g[1]-L)*p; } if(a.mood) m=a.mood;
+      const u=(t-t0)/0.36; if(a.hop&&u<1) dy=-20*Math.sin(Math.PI*u); }
+    e.setAttribute('transform',`translate(0 ${dy.toFixed(2)})`);
+    e._a.forEach(g=>g.setAttribute('transform',`rotate(${(g.dataset.side==='R'?R:L).toFixed(2)} ${g.dataset.sx} ${g.dataset.sy})`));
+    e._m.forEach(g=>g.setAttribute('opacity',g.dataset.m===m?'1':'0')); },
+  book(e,S,T,t){ const R=e._R||(e._R={rows:[...e.querySelectorAll('.obr')].map(g=>({g,side:g.dataset.side,i:+g.dataset.i,b:g.querySelector('.obb'),p:g.querySelector('.obp'),q:g.querySelector('.obq'),f:g.querySelector('.obf')})),top:e.querySelector('.obtop'),asks:e.querySelector('.obasks'),bids:e.querySelector('.obbids'),card:e.querySelector('.obc'),edge:e.querySelector('.obe'),band:e.querySelector('.obband'),br:e.querySelector('.obbr'),la:e.querySelector('.obla'),l:e.querySelector('.obl')});
+    const a=S.asks.map(r=>r.slice()), b=S.bids.map(r=>r.slice());
+    for(const st of S.states){ const t0=T(st); if(t<t0) break; const p=inout(clamp((t-t0)/st.dur)); st.asks.forEach((r,i)=>{ a[i][0]+=(r[0]-a[i][0])*p; a[i][1]+=(r[1]-a[i][1])*p; }); st.bids.forEach((r,i)=>{ b[i][0]+=(r[0]-b[i][0])*p; b[i][1]+=(r[1]-b[i][1])*p; }); }
+    const sp=a[0][0]-b[0][0], g=S.spmax>S.spmin?S.gmin+(S.gmax-S.gmin)*Math.sqrt(clamp((sp-S.spmin)/(S.spmax-S.spmin))):S.gmin;
+    R.top.setAttribute('transform',`translate(0 ${(-g/2).toFixed(2)})`); R.asks.setAttribute('transform',`translate(0 ${(-g/2).toFixed(2)})`); R.bids.setAttribute('transform',`translate(0 ${(g/2).toFixed(2)})`);
+    for(const c of [R.card,R.edge]){ c.setAttribute('y',(-S.tA-g/2).toFixed(2)); c.setAttribute('height',(S.tA+S.tB+g).toFixed(2)); }
+    R.br.setAttribute('y',(-g/2).toFixed(2)); R.br.setAttribute('height',g.toFixed(2));
+    const lx=-S.w/2+36, h=g/2-9; R.la.setAttribute('d',`M${lx} ${-h} L${lx} ${h} M${lx-11} ${-h+13} L${lx} ${-h} L${lx+11} ${-h+13} M${lx-11} ${h-13} L${lx} ${h} L${lx+11} ${h-13}`);
+    const bt=S.show.band?T(S.show.band):-1; R.band.setAttribute('opacity',ease(clamp((t-bt)/0.25)).toFixed(3));
+    if(R.l){ const c=Math.round(sp*100); setTxt(R.l,'Spread '+(c<100?`${c} cent${c===1?'':'s'}`:'$'+(c/100).toFixed(2))); }
+    for(const r of R.rows){ const v=(r.side==='ask'?a:b)[r.i], s=S.show[r.side==='ask'?'asks':'bids'], t0=(s?T(s):-1)+r.i*0.13, u=clamp((t-t0)/0.22);
+      r.g.setAttribute('opacity',u.toFixed(3)); r.g.setAttribute('transform',u<1?`translate(${(26*(1-ease(u))).toFixed(1)} 0)`:'');
+      setTxt(r.p,fmtN(v[0],{dec:S.dec,pre:'$'})); setTxt(r.q,fmtN(v[1],{})); const w=(S.w-8)*0.62*v[1]/S.qmax; r.b.setAttribute('width',w.toFixed(1)); r.b.setAttribute('x',(S.w/2-4-w).toFixed(1));
+      let f=0; for(const q of S.flash) if(q.side===r.side&&q.row===r.i){ const y=(t-T(q))/q.dur; if(y>0&&y<1) f=Math.max(f,0.6*Math.sin(Math.PI*y)); } r.f.setAttribute('opacity',f.toFixed(3)); } },
+  chart(e,S,T,t){ const R=e._R||(e._R={cc:[...e.querySelectorAll('.cc')].map(g=>({g,i:+g.dataset.i,w:g.querySelector('.cw'),b:g.querySelector('.cb')})),cs:[...e.querySelectorAll('.cs')],cd:e.querySelector('.cd'),ct:e.querySelector('.ct'),ctr:e.querySelector('.ctr'),ctt:e.querySelector('.ctt'),cm:[...e.querySelectorAll('.cm')]});
+    let u=S.u0; for(const st of S.stops){ const t0=T(st); if(t<t0) break; u+=(st.upto-u)*inout(clamp((t-t0)/st.dur)); }
+    let price=null, py=0, rising=true;
+    if(S.kind==='candles'){ for(const c of R.cc){ const p=clamp(u-(c.i-1)), Y=S.YC[c.i], x=S.X[c.i]; if(p<=0){ c.g.setAttribute('opacity','0'); continue; } c.g.setAttribute('opacity','1');
+        const yc=Y[0]+(Y[3]-Y[0])*p; c.b.setAttribute('y',Math.min(Y[0],yc).toFixed(2)); c.b.setAttribute('height',Math.max(6,Math.abs(yc-Y[0])).toFixed(2));
+        c.w.setAttribute('d',`M${x} ${(Y[0]+(Y[1]-Y[0])*p).toFixed(2)} L${x} ${(Y[0]+(Y[2]-Y[0])*p).toFixed(2)}`);
+        price=S.C[c.i][0]+(S.C[c.i][3]-S.C[c.i][0])*p; py=yc; rising=S.C[c.i][3]>=S.C[c.i][0]; } }
+    else { R.cs.forEach((g,i)=>{ const p=clamp(u-i); g.setAttribute('stroke-dasharray',`${p.toFixed(4)} 1`); g.setAttribute('opacity',p>0?'1':'0'); });
+      const j=Math.max(0,Math.min(S.n-1,Math.floor(u))), f=u-j, k=Math.min(S.n-1,j+1); price=S.P[j]+(S.P[k]-S.P[j])*f; py=S.Y[j]+(S.Y[k]-S.Y[j])*f; rising=S.P[k]>=S.P[j];
+      R.cd.setAttribute('cx',(S.X[j]+(S.X[k]-S.X[j])*f).toFixed(2)); R.cd.setAttribute('cy',py.toFixed(2)); }
+    if(price===null) R.ct.setAttribute('opacity','0'); else { R.ct.setAttribute('opacity','1'); R.ct.setAttribute('transform',`translate(0 ${py.toFixed(2)})`); R.ctr.setAttribute('fill',rising?'#1F9D61':'#D8433B'); setTxt(R.ctt,fmtN(price,S)); }
+    for(const g of R.cm){ const p=clamp((u-(+g.dataset.i))/0.6+ (u>=+g.dataset.i?0.001:0)); g.setAttribute('opacity',ease(p).toFixed(3)); const k=0.6+0.4*back(p); g.setAttribute('transform',`translate(${g.dataset.ax} ${g.dataset.ay}) scale(${k.toFixed(3)}) translate(${-g.dataset.ax} ${-g.dataset.ay})`); } },
+  wf(e,S,T,t){ const R=e._R||(e._R=[...e.querySelectorAll('.wf')].map(g=>({g,b:g.querySelector('.wb'),v:g.querySelector('.wv')})));
+    S.steps.forEach((q,i)=>{ const r=R[i], t0=T(q), a=t-t0; if(a<0){ r.g.setAttribute('opacity','0'); return; } r.g.setAttribute('opacity',clamp(a/0.1+0.25).toFixed(3));
+      const p=ease(clamp(q.dur>0?a/q.dur:1)), cur=q.a+(q.b-q.a)*p, top=Math.min(q.a,cur); r.b.setAttribute('y',top.toFixed(2)); r.b.setAttribute('height',Math.max(4,Math.abs(cur-q.a)).toFixed(2));
+      r.v.setAttribute('y',(top-10).toFixed(2)); setTxt(r.v,fmtN(q.v*p,S)); }); },
+  grid(e,S,T,t){ const R=e._R||(e._R=[...e.querySelectorAll('.gc')]); let k=S.start; for(const f of S.fills){ const t0=T(f); if(t<t0) break; k+=(f.upto-k)*clamp((t-t0)/f.dur); }
+    const gone={}; for(const f of S.fades){ const t0=T(f), n=f.cells.length; f.cells.forEach((c,j)=>{ gone[c]=clamp((t-t0-j*f.dur/n)/0.3); }); }
+    R.forEach(g=>{ const i=+g.dataset.i, p=clamp(k-i), o=p*(1-(gone[i]||0)); g.setAttribute('opacity',o.toFixed(3)); const z=p<1?0.5+0.5*back(p):1+(gone[i]?0.25*gone[i]:0);
+      g.setAttribute('transform',z===1?'':`translate(${g.dataset.ax} ${g.dataset.ay}) scale(${z.toFixed(3)}) translate(${-g.dataset.ax} ${-g.dataset.ay})`); }); }
+};
+function fxRender(t,ch){ const T=o=>{ const n=o&&o.at?+String(o.at).split(':')[1]:0; return (ch[n]?ch[n].t:(ch.length?ch[ch.length-1].t:0))+((o&&o.delay)||0); };
+  for(const e of fxEls){ const S=e._s||(e._s=JSON.parse(e.dataset.spec)), f=fx[e.dataset.fx]; if(f) f(e,S,T,t); } }
 // end-card layers for the editable kit: show the finished card on a transparent page with only one part visible,
 // and return that part's box so the caller can screenshot it. part: term, kp, rule, fn, logo, all
 function cardPart(part){ document.body.classList.add('parts'); document.documentElement.classList.add('parts'); const b=D.beats[D.beats.length-1]; const card=document.getElementById('card');

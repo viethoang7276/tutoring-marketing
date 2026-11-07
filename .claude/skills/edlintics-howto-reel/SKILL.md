@@ -29,6 +29,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 5. **Each caption chunk makes sense on its own.** Avoid fragments like "just arrived" or "for years".
 6. **Length:** every video is 2 minutes or less (Hoang, 3 Nov 2026; this replaces the 1-minute cap). Keep it as short as the story allows.
 7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
+8. **Say when the example starts (Hoang, 6 Nov 2026).** The first `problem` beat opens with "Let's imagine an airline where ..." or "For this, let's use the example of ...", straight after the hook question. The validator fails the script otherwise. Full guide: "Context transitions" in the engine skill.
 
 ## What makes it work
 - **A real job, a real problem.** Viewers see how a named role in a named industry handles something that actually happens: a ransomware attack at a hospital, staff quitting at a store, a restricted donation at a charity.
@@ -39,7 +40,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 1. **Pick a role.** Finance, accounting, IT, audit, marketing, HR, procurement, compliance, operations, supply chain, customer experience, risk.
 2. **Pick an industry** different from every how-to and industry-series post of the last 30 days (hospital, bus operator, fashion marketplace, airline, department store, charity, bank, football club, drug company, coffee chain…).
 3. **Pick a real problem or process** that role handles there, with one number that shows the size of it.
-4. **Prefer a holiday or news hook.** Open `docs/content-workflow/holiday-calendar.md`. If a holiday's content window covers the post date, use it (Singles' Day: returns and GMV; Black Friday: loss leaders). Only international events; no national days. Record it in `meta.hook_reason` (or "none").
+4. **Prefer a holiday or news hook.** Open `docs/content-workflow/holiday-calendar.md`. If a holiday's content window covers the post date, use it (Singles' Day: returns and GMV; Black Friday: loss leaders). Only international events; no national days. Then check `docs/content-workflow/economic-calendar.md`: if the post date falls in an event's posting window and the plan assigns the week's economic post to this reel, follow that file's rules (teach the concept, no forecasts or investment advice). Record the hook in `meta.hook_reason` (or "none").
 5. **Registry check.** Read the hub `concepts` collection (rules and queries in `docs/content-workflow/concept-registry.md`; offline, the mirror `docs/content-workflow/concept-registry.json`). The concept is blocked if:
    - the same concept was a main idea in the last 90 days (planned posts count, in both directions);
    - a `related` concept was a main idea in the last 30 days;
@@ -62,14 +63,14 @@ Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Cop
   - `"A"`: beat 1 is the question;
   - `"B"` (hook test, 1 Nov 2026): beat 1 is a `hook` beat that opens on the problem and its number ("Price a custom bike below cost, and the shop loses money on it."), and the question follows in hook beat 2 or 3. The validator checks both.
 - **Problem:** the setting and one number ("This store averages about two hundred staff. Last year, a hundred and twenty left.").
-- **Steps (3-4):** "First, …", "Then …", "Next, …", "Finally, …", each followed by a detail line with the numbers in US dollars.
+- **Steps (3-4):** "First, …", "Then …", "Next, …", "Finally, …", each followed by a detail line with the numbers in the post's currency.
 - **Concept:** "That is <term>." then "It is <one-sentence definition>." Then, when the definition has an equation, one more beat on the `equation` scene that says it in words ("You find it by dividing the people who left by average headcount.") with `"gap": 1.1` so the filled-in numbers stay on screen.
 - **Summary (Hoang, 2 Nov 2026):** the voice walks the diagram as a recap: "Let's revise the process. Step 1, measure it." then "Step 2, price it.", "Step 3, find the cause.", "Step 4, fix it and track it." One beat per box, `"gap": 0.45` each, 1.5 on the last. Say "the process" when the boxes are steps the role takes, and "the concept" when they explain how the idea works (the gas-station prisoner's dilemma: map the profits, see the trap, notice the cost, compete on something else). Chunks: `"Let's revise the process"` or `"Let's revise the concept"` (beat 1 only, no full stop), `"Step N"`, then the short step (2-5 words, lower case). Write `"say"` with the number in words ("Step one, …") and `text` with the digit. The validator FAILs a how-to summary without this.
 - **Takeaway:** one business lesson. No absolute words: "never", "always", "only", "every", "all", "guarantee" (the validator WARNs). Use rarely, usually, often, can.
 - **End card:** only the term, the one-sentence definition and the equation (Hoang, 1 Nov 2026). `"term"`, `"keypoint"` = the one-sentence definition, a full sentence matching the glossary entry (no full stop at the end), `"text"` = "<Term>. <Definition as a sentence>." and, when there is one, `"equation": {"lhs", "num", "den"}` (each 34 characters at most; `den` empty for a one-line equation such as "Profit = Revenue − Costs"). No worked example or numbers line: the validator FAILs an `"example"` or an "=" inside lhs, num or den. The story's numbers stay in the equation scene. When the concept has no equation, set `meta.equation` to "none (...)" and leave `"equation"` out.
 - **Length:** about 60-90 s, never over 2 minutes (Hoang, 3 Nov 2026), about 140-220 words, 12-40 beats. The voice is ElevenLabs `eleven_v3`, voice `gPiEpcKoaZywgOzc0Zn9`, tempo 1.12 (the defaults; never set another voice, never print the key).
 - **House rules:**
-  - US dollars only ("four thousand dollars" in the voice, "$4,000" in captions); US spelling (labor, analyze, center);
+  - One currency in the post, rotated across posts ("four thousand euros" in the voice, "€4,000" in captions); US spelling (labor, analyze, center);
   - voice lines are full sentences; caption chunks are 2-5 words with one `key` per beat and no full stop at the end;
   - no full stop at the end of any on-screen line, caption paragraph or first comment;
   - no exclamation points; emojis only at the end of the first comment; no tutoring.
