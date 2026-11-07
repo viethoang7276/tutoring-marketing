@@ -479,7 +479,7 @@ Any session can take over from here. Do these in order:
 - **Hub:** title fixed to "Edlintics Marketing Hub" (v33).
 - **AI-label research:** report `reports/Chat videos and AI labels.md` (notes in `research_notes/`). The labels come from Canva AI clips, not the voice.
 - **Chat-story reels:** Hoang's reference is @orbi_the_alien "Corporate Life in 2026" (a Slack-style chat with the mascot as a user, voice-free). Fictional characters are fine; no testimonials or outcome claims about Edlintics; layouts only, never real app names, logos, colours or sounds; drawn avatars.
-- **Video engine software (REQ-0004):** Hoang wants a REUSABLE video editor app, not one-off videos. The tutoring-web CTO session owns it, in `tutoring/video-engine-software/` (spec on branch spec/editor, `docs/specs/video-engine/`).
+- **Video engine software (REQ-0004): CLOSED 7 Nov 2026.** Hoang stopped `video-engine-software` (too much technical debt); do not use it, the `ve` CLI or plan on it. Our explainer engine stays; the content team forks it into `tutoring-content/tools/video/engine/` (16:9 lessons) with a scene_lib sync script and coordinates with us. Old note: **Video engine software (REQ-0004):** Hoang wants a REUSABLE video editor app, not one-off videos. The tutoring-web CTO session owns it, in `tutoring/video-engine-software/` (spec on branch spec/editor, `docs/specs/video-engine/`).
   - Screens: Projects, Media library, Templates, Exports, and an Editor (preview, inspector, six-track timeline, Script and Agent tabs).
   - One JSON project format with a schema, shared by the editor, the `ve` CLI and the MCP tools. Its own engine (no Remotion).
   - Build order is editor-first; marketing's dates were dropped.

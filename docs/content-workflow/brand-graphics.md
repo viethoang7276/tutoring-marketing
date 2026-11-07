@@ -69,3 +69,18 @@ The Canva folder **Edlintics · Brand graphics** (FAHYugebSqU) holds the generat
 | (local, not in Canva) | mascot | Guide Ledger (option F, picked by Hoang 2 Nov 2026): the standard suit Ledger in the hand-drawn pencil style with round glasses and a thin wooden pointer (transparent PNG, `assets/renders/cover-templates/ledger/ledger-guide-point.png`; also `-smile`). Drawn by `scene_lib.ledger(outfit="suit", arm="point", glasses=True, pointer=True)` with the pencil filter | Puzzle reel worked-steps guide | ledger, guide, glasses, pointer, puzzle, steps |
 | (local, not in Canva) | mascot | Professor Ledger and the other design options (mortarboard professor, lecturer, graduate, maths professor), not picked; outfits kept in scene_lib (`professor`, `lecturer`, `graduate`, `mathprof`), PNGs `ledger-professor-*.png` | Not in use (2 Nov 2026 options) | ledger, professor, options |
 | MAHZsKzh0fY | logo | Edlintics logo, wordmark and tie mark (transparent PNG; Uploads) | Logo | logo, brand, cover |
+| MAHaO2OOlqo | icon | Flat-screen TV with a gold percent sticker | No-interest promotion, 0% offer | 0% offer, promotion, TV, credit |
+| MAHaO4SN5yg | icon | Curved arrow pointing back from a calendar to a receipt | Deferred interest, back-dated charge | deferred interest, back-dated, receipt |
+| MAHaO9glE2A | icon | Credit card beside a short checklist | Credit card offers, terms | credit card, intro offer, checklist |
+| MAHaO1cmXrc | icon | Calendar with the last page circled in gold | Promotion end date, deadline | deadline, end date, calendar |
+| MAHaO9_dtJ4 | icon | Store card leaning on a shopping bag | Store card offers, retail credit | store card, shopping, retail |
+| MAHaO0njKV0 | icon | Printer with a gold discount tag | Loss leader, discount pricing | loss leader, discount, printer |
+| MAHaO6I5fTc | icon | Empty ink cartridge beside a full one with an arrow | Consumable, repeat purchase | consumable, refill, cartridge |
+| MAHaO5RoJpI | icon | Printer with a gold padlock on the cartridge door | Lock-in, switching cost | lock-in, switching cost, printer |
+| MAHaO5hwddY | icon | Shopper at a laptop filling a form beside a cart | Checkout, online shopping | checkout, e-commerce, form |
+| MAHaO4A7pXk | icon | Full shopping cart alone in an empty aisle | Abandoned cart | abandoned cart, e-commerce, cart |
+| MAHaOwtPRoI | icon | Envelope with an arrow curving back to a cart | Recovery email, win-back | recovery email, reminder, cart |
+| MAHaO06wbWU | icon | Savings jar of coins with an upward arrow | Nominal return, savings growth | savings, return, interest |
+| MAHaOwKqGsk | icon | Shopping basket with a price tag and an upward arrow | Inflation, real return | inflation, prices, basket |
+| MAHaO4MW2Wo | icon | Customer handing a coin bag across a counter toward an empty shelf | Prepayment, paid in advance | prepayment, advance payment, deferred revenue |
+| MAHaOwKMpcw | icon | Calendar beside a segmented meter filling one segment | Revenue recognition over time | recognition, over time, monthly |

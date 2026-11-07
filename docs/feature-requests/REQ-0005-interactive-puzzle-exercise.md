@@ -30,7 +30,7 @@ We believe that **an interactive puzzle exercise that mirrors the social puzzle 
 - The system shall reveal the answer by changing the same diagram (highlight, new values) rather than showing a new picture
 - The system shall show a short explanation (2-3 sentences) and link to the concept it teaches (Key concepts)
 - The system shall let authors (COO, admin editor) create these from a small data structure similar to the puzzle JSON: question, diagram, options, answer, reveal changes, explanation lines, concept
-- Nice to have: the same data can render the social puzzle reel (via the video engine, REQ-0004), so one authored puzzle feeds both the app and social
+- Nice to have: the same data can render the social puzzle reel (via our puzzle reel renderer; REQ-0004 was closed on 7 Nov 2026), so one authored puzzle feeds both the app and social
 
 ## Success signal
 Once live: completion rate of puzzle exercises vs other exercise kinds; later, sign-ups attributed to social puzzle posts that link to a public puzzle

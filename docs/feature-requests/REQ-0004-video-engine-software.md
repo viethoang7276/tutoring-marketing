@@ -1,6 +1,7 @@
 # REQ-0004  ·  Video engine software: a standalone, AI-drivable engine for chat-story and explainer videos
 
-- **Status:** relayed (Hoang asked the CMO to relay it to the tutoring-web CTO session on 27 Oct 2026)
+- **Status:** closed 7 Nov 2026: Hoang stopped `video-engine-software` (too much technical debt). Do not use it or the `ve` CLI. Our own explainer engine (`.claude/skills/edlintics-explainer-reel/`) stays; the content team forks it into `tutoring-content/tools/video/engine/` for 16:9 lessons.
+- **Earlier status:** relayed (Hoang asked the CMO to relay it to the tutoring-web CTO session on 27 Oct 2026)
 - **Date:** 2026-10-27
 - **Source:** research (`reports/Chat videos and AI labels.md`) and Hoang's request
 - **Targets metric:** acquisition (reach, watch time and saves per reel without AI labels)

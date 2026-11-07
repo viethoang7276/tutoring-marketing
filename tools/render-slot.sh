@@ -3,10 +3,12 @@
 # Usage: tools/render-slot.sh <command> [args...]
 # RENDER_SLOTS  how many renders may run at once (default 3)
 # RENDER_MAXLOAD  a new render waits while the 1-minute load is above this (default 14, on 11 cores). Lesson renders count too.
+# Pause: touch "${TMPDIR:-/tmp}/edlintics-render-slot.pause"; resume: rm it.
 SLOTS="${RENDER_SLOTS:-3}"; MAXLOAD="${RENDER_MAXLOAD:-14}"; BASE="${TMPDIR:-/tmp}/edlintics-render-slot"
 while :; do
   LOAD=$(sysctl -n vm.loadavg | awk '{print int($2)}')
-  if [ "$LOAD" -lt "$MAXLOAD" ]; then
+  # touch "$BASE.pause" to hold every new render (e.g. while another project needs the laptop); rm it to resume
+  if [ "$LOAD" -lt "$MAXLOAD" ] && [ ! -e "$BASE.pause" ]; then
     for i in $(seq 1 "$SLOTS"); do
       if mkdir "$BASE.$i" 2>/dev/null; then echo $$ > "$BASE.$i/pid"; HELD="$BASE.$i"; break; fi
       holder=$(cat "$BASE.$i/pid" 2>/dev/null)

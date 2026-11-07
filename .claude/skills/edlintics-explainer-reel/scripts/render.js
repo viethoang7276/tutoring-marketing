@@ -75,19 +75,34 @@ const srv = http.createServer((q, r) => {
     }
   } else {
     const out = process.argv[3], audio = process.argv[4];
-    const ff = spawn(FF, ['-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-', '-i', audio,
-      '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', String(FPS),
-      '-c:a', 'aac', '-ar', '48000', '-b:a', '160k', '-movflags', '+faststart', '-shortest', out], { stdio: ['pipe', 'ignore', 'pipe'] });
+    // speed options (7 Nov 2026), all opt-in; with none set the ffmpeg arguments are exactly the old ones:
+    //   ENGINE_RANGE=1  the pc->tv range conversion of build.sh in this first pass (LESSON_SINGLE_ENCODE uses it)
+    //   ENGINE_ENCODER=videotoolbox  Apple hardware H.264 at ENGINE_VB kbit/s (default 3000) instead of libx264 crf 20
+    //   ENGINE_PROFILE=1  prints where the time goes (page render, screenshot, waiting on the encoder, encoder flush)
+    //   audio "-" or none: a silent video (PICTURE_ONLY)
+    const VT = process.env.ENGINE_ENCODER === 'videotoolbox', silent = !audio || audio === '-', PROF = process.env.ENGINE_PROFILE === '1';
+    const vcodec = VT ? ['-c:v', 'h264_videotoolbox', '-profile:v', 'high', '-b:v', `${process.env.ENGINE_VB || 3000}k`] : ['-c:v', 'libx264', '-preset', 'medium', '-crf', '20'];
+    const ff = spawn(FF, ['-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-', ...(silent ? [] : ['-i', audio]),
+      ...(process.env.ENGINE_RANGE === '1' ? ['-vf', 'scale=in_range=pc:out_range=tv,format=yuv420p'] : []),
+      ...vcodec, '-pix_fmt', 'yuv420p', '-r', String(FPS),
+      ...(silent ? ['-an'] : ['-c:a', 'aac', '-ar', '48000', '-b:a', '160k']), '-movflags', '+faststart', ...(silent ? [] : ['-shortest']), out], { stdio: ['pipe', 'ignore', 'pipe'] });
     let err = ''; ff.stderr.on('data', d => err = (err + d).slice(-2000));
-    const N = Math.ceil(dur * FPS);
+    const N = Math.ceil(dur * FPS), now = () => Number(process.hrtime.bigint()) / 1e6, pt = { render: 0, shot: 0, wait: 0, bytes: 0 }, pt0 = now();
     for (let k = 0; k < N; k++) {
+      const a = PROF ? now() : 0;
       await p.evaluate(t => window.render(t), k / FPS);
+      const b1 = PROF ? now() : 0;
       const buf = await p.screenshot({ type: 'jpeg', quality: 92 });
+      const c1 = PROF ? now() : 0;
       if (!ff.stdin.write(buf)) await new Promise(ok => ff.stdin.once('drain', ok));
+      if (PROF) { const d1 = now(); pt.render += b1 - a; pt.shot += c1 - b1; pt.wait += d1 - c1; pt.bytes += buf.length; }
       if (k % 120 === 0) console.log('frame', k, '/', N);
     }
+    const pt1 = now();
     ff.stdin.end();
     await new Promise(ok => ff.on('close', c => { console.log('ffmpeg exit', c); if (c) console.log(err); ok(); }));
+    if (PROF) { const s = x => (x / 1000).toFixed(1) + ' s', f = now() - pt1;
+      console.log(`PROFILE render.js ${N} frames: loop ${s(pt1 - pt0)} (${(N / (pt1 - pt0) * 1000).toFixed(1)} fps) = page render ${s(pt.render)}, screenshot ${s(pt.shot)}, waiting on encoder ${s(pt.wait)}; encoder flush after last frame ${s(f)}; mean jpeg ${(pt.bytes / N / 1024).toFixed(0)} KB; encoder ${VT ? 'videotoolbox' : 'libx264'}`); }
   }
   await b.close(); srv.close();
 })().catch(e => { console.error(e); process.exit(1); });
