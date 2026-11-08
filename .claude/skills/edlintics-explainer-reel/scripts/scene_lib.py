@@ -2737,6 +2737,7 @@ def trader(x, y, s=1.0, side="buy", mood="smile", acts=None, name="", look=0, co
              f'<circle cx="0" cy="-178" r="40" fill="{PAPER}" stroke="{INK}" stroke-width="{SW}"/>'
              f'<circle cx="{-13 + ex}" cy="-184" r="5" fill="{INK}"/><circle cx="{13 + ex}" cy="-184" r="5" fill="{INK}"/>{mouths}'
              f'<g class="ta" data-side="L" data-sx="-44" data-sy="-110">{arm(-44, -52)}</g><g class="ta" data-side="R" data-sx="44" data-sy="-110">{arm(44, 52)}</g>')
+    if _.get("wear"): inner = _trader_wear(_["wear"], inner)   # opt-in (8 Nov 2026): "veil" (a bride) or "bowtie" (a groom); without it the output is unchanged
     out = f'<ellipse cx="0" cy="4" rx="46" ry="7" fill="{INK}" opacity="0.10"/><g data-fx="trader" data-spec="{_m_attr(A)}">{inner}</g>'
     if name: out += _t(0, 46, str(name), round(36 / min(s, 1)), 900, UP if side == "buy" else DOWN if side == "sell" else INK)
     return _g(x, y, s, out)
@@ -2998,7 +2999,137 @@ PRESETS.update({"counter": (counter, counter_box), "order_chip": (order_chip, or
 HALF.update({"coin": (36, 36)})
 
 
-PRESET_HELP = {k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
+# ---------------------------------------------------------------- story props, 8 Nov 2026 (opt-in: nothing changes unless a script uses them)
+# Hoang on the event-planner and surge-pricing reels: "where are couple, dessert animation, make animation close to the script",
+# "map of people moving to busy area and move to non busy area depend on price".
+def _trader_wear(kind, inner):
+    """trader "wear": veil (white veil and a flower crown: a bride) or bowtie (white shirt V and a black bow tie: a groom; pair with a dark "color")."""
+    if kind == "veil":
+        back = f'<path d="M-30 -212 Q-80 -150 -76 -26 L76 -26 Q80 -150 30 -212 Z" fill="{WHITE}" fill-opacity="0.92" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+        crown = "".join(f'<circle cx="{cx}" cy="{cy}" r="9" fill="{f}" stroke="{INK}" stroke-width="3"/>' for cx, cy, f in ((-24, -210, "#F7B6C2"), (0, -219, GOLD), (24, -210, "#F7B6C2")))
+        return back + inner + crown
+    if kind == "bowtie":
+        return inner + (f'<path d="M-20 -128 L0 -90 L20 -128 Z" fill="{WHITE}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/>'
+                        f'<path d="M0 -121 L-22 -133 L-22 -109 Z M0 -121 L22 -133 L22 -109 Z" fill="{INK}" stroke="{INK}" stroke-width="3" stroke-linejoin="round"/><circle cx="0" cy="-121" r="6" fill="{INK}"/>')
+    raise ValueError(f"trader: wear {kind!r}; use veil or bowtie")
+
+
+def string_lights(x, y, s=1.0, w=760, n=11, sag=60, **_):
+    """Party string lights: a wire in two swags between three nails with n glowing bulbs (gold, orange, pink, blue). (x, y) = the middle nail; w = full width; sag = how far each swag dips."""
+    hw = w / 2; out = f'<path d="M{-hw:.0f} 0 Q{-hw / 2:.0f} {2 * sag:.0f} 0 0 Q{hw / 2:.0f} {2 * sag:.0f} {hw:.0f} 0" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
+    out += "".join(f'<circle cx="{px:.0f}" cy="0" r="8" fill="{INK}"/>' for px in (-hw, 0, hw))
+    cols = ["#FFD45C", "#F6A04D", "#F7B6C2", "#9FD3F5"]
+    for k in range(int(n)):
+        t = (k + 0.5) / n; half = 0 if t < 0.5 else 1; u = (t - 0.5 * half) * 2
+        px = -hw + w * t; py = 4 * sag * u * (1 - u) * 0.5 * 2   # the quadratic swag reaches sag at its middle
+        c = cols[k % len(cols)]
+        out += (f'<circle cx="{px:.0f}" cy="{py + 26:.0f}" r="27" fill="{c}" fill-opacity="0.33"/>'
+                f'<rect x="{px - 7:.0f}" y="{py - 2:.0f}" width="14" height="13" rx="3" fill="{INK}"/>'
+                f'<circle cx="{px:.0f}" cy="{py + 25:.0f}" r="14" fill="{c}" stroke="{INK}" stroke-width="4"/>')
+    return _g(x, y, s, out)
+
+
+def string_lights_box(x, y, s=1.0, w=760, sag=60, **_):
+    return [x - (w / 2 + 12) * s, y - 12 * s, (w + 24) * s, (sag + 70) * s]
+
+
+def camera(x, y, s=1.0, **_):
+    """A photo camera with a big lens (a photographer). (x, y) = centre."""
+    return _g(x, y, s, f'<rect x="-26" y="-58" width="52" height="22" rx="6" fill="#4A5568" stroke="{INK}" stroke-width="5"/>'
+                       f'<rect x="-62" y="-42" width="124" height="84" rx="14" fill="#4A5568" stroke="{INK}" stroke-width="{SW}"/>'
+                       f'<rect x="-52" y="-34" width="18" height="11" rx="3" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+                       f'<circle cx="0" cy="2" r="31" fill="#2D3748" stroke="{INK}" stroke-width="{SW}"/><circle cx="0" cy="2" r="16" fill="{SKY}" stroke="{INK}" stroke-width="3"/><circle cx="-5" cy="-3" r="5" fill="{WHITE}"/>')
+
+
+def dessert_table(x, y, s=1.0, **_):
+    """A dessert bar: a table with a pink cloth, a three-tier wedding cake and two cupcakes. (x, y) = centre of the floor under it."""
+    pink = "#F7B6C2"; cream = "#FFF4E0"
+    out = "".join(f'<rect x="{lx}" y="-150" width="12" height="150" fill="{INK}"/>' for lx in (-150, 138))
+    out += (f'<path d="M-178 -146 V-64 Q-150 -40 -122 -64 Q-94 -40 -66 -64 Q-38 -40 -10 -64 Q18 -40 46 -64 Q74 -40 102 -64 Q130 -40 158 -64 Q170 -54 178 -64 V-146 Z" fill="#F9DDE4" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+            f'<rect x="-182" y="-172" width="364" height="28" rx="6" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>')
+    for w, h, top in ((150, 88, -260), (106, 72, -332), (66, 56, -388)):
+        out += (f'<rect x="{-w / 2}" y="{top}" width="{w}" height="{h}" rx="8" fill="{cream}" stroke="{INK}" stroke-width="5"/>'
+                f'<path d="M{-w / 2} {top + 14} ' + " ".join(f'Q{-w / 2 + (i + 0.5) * w / 5:.0f} {top + 30} {-w / 2 + (i + 1) * w / 5:.0f} {top + 14}' for i in range(5)) + f'" fill="none" stroke="{pink}" stroke-width="8" stroke-linecap="round"/>')
+    out += f'<path d="M0 -392 C-14 -410 -30 -398 -16 -384 L0 -370 L16 -384 C30 -398 14 -410 0 -392 Z" fill="#E2928B" stroke="{INK}" stroke-width="4"/>'
+    for cx in (-128, 128):
+        out += (f'<path d="M{cx - 24} -206 L{cx + 24} -206 L{cx + 17} -172 H{cx - 17} Z" fill="{LB}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                f'<path d="M{cx - 28} -204 Q{cx - 28} -238 {cx} -240 Q{cx + 28} -238 {cx + 28} -204 Z" fill="{pink}" stroke="{INK}" stroke-width="4"/><circle cx="{cx}" cy="-246" r="8" fill="#D8433B" stroke="{INK}" stroke-width="3"/>')
+    return _g(x, y, s, out)
+
+
+def dessert_table_box(x, y, s=1.0, **_):
+    return [x - 186 * s, y - 412 * s, 372 * s, 416 * s]
+
+
+def guitar(x, y, s=1.0, rot=-30, **_):
+    """An acoustic guitar (a band). (x, y) = centre of its body; rot tilts it (degrees), so it can sit across a trader's body."""
+    out = (f'<rect x="-9" y="-210" width="18" height="170" fill="#7A4E2D" stroke="{INK}" stroke-width="4"/><rect x="-15" y="-246" width="30" height="40" rx="5" fill="#5B3920" stroke="{INK}" stroke-width="4"/>'
+           f'<path d="M0 -78 C-46 -78 -52 -40 -34 -16 C-74 4 -64 84 0 84 C64 84 74 4 34 -16 C52 -40 46 -78 0 -78 Z" fill="#D39A5B" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+           f'<circle cx="0" cy="-12" r="16" fill="{INK}"/><rect x="-24" y="40" width="48" height="10" rx="3" fill="{INK}"/>'
+           + "".join(f'<path d="M{dx} -236 V44" stroke="{WHITE}" stroke-width="1.5" opacity="0.8"/>' for dx in (-5, 0, 5)))
+    return _g(x, y, s, out, rot)
+
+
+def drum(x, y, s=1.0, **_):
+    """A small drum kit: a bass drum, a snare and a cymbal on a stand (a band). (x, y) = centre of the floor under the bass drum."""
+    return _g(x, y, s, f'<path d="M150 0 V-250 M120 0 H180" stroke="{INK}" stroke-width="7" stroke-linecap="round"/><ellipse cx="150" cy="-254" rx="72" ry="12" fill="{GOLD}" stroke="{INK}" stroke-width="5"/>'
+                       f'<path d="M-140 0 V-132 M-170 0 H-110" stroke="{INK}" stroke-width="7" stroke-linecap="round"/><rect x="-196" y="-176" width="112" height="44" rx="8" fill="{BLUE}" stroke="{INK}" stroke-width="5"/><ellipse cx="-140" cy="-176" rx="56" ry="12" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+                       f'<circle cx="0" cy="-96" r="92" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/><circle cx="0" cy="-96" r="76" fill="none" stroke="{BLUE}" stroke-width="10"/><circle cx="0" cy="-96" r="22" fill="{SKY}" stroke="{INK}" stroke-width="4"/>')
+
+
+def drum_box(x, y, s=1.0, **_):
+    return [x - 200 * s, y - 270 * s, 425 * s, 274 * s]
+
+
+def music_notes(x, y, s=1.0, color="blue", **_):
+    """Two joined music notes (music playing). (x, y) = centre. color: blue, ink or gold."""
+    c = {"blue": BLUE, "ink": INK, "gold": GOLD}.get(color, color)
+    return _g(x, y, s, f'<path d="M-22 40 V-50 L48 -66 V26" fill="none" stroke="{INK}" stroke-width="8" stroke-linejoin="round"/><path d="M-22 -50 L48 -66 V-44 L-22 -28 Z" fill="{INK}"/>'
+                       f'<ellipse cx="-38" cy="42" rx="20" ry="15" fill="{c}" stroke="{INK}" stroke-width="5" transform="rotate(-20 -38 42)"/><ellipse cx="32" cy="28" rx="20" ry="15" fill="{c}" stroke="{INK}" stroke-width="5" transform="rotate(-20 32 28)"/>')
+
+
+def city_map(x, y, s=1.0, w=880, h=620, night=False, roads_x=4, roads_y=3, **_):
+    """A simple city map seen from above: a rounded panel with white roads in a grid and two small parks, no words. (x, y) = centre; w, h: size. night: a cooler panel with a moon in the top right corner. Put map_zone, car, trader and order_chip items on it."""
+    fill = "#DCE3EE" if night else "#ECEFF4"; hw, hh = w / 2, h / 2; out = f'<rect x="{-hw}" y="{-hh}" width="{w}" height="{h}" rx="28" fill="{fill}" stroke="{INK}" stroke-width="{SW}"/>'
+    xs = [-hw + w * (k + 1) / (roads_x + 1) for k in range(int(roads_x))]; ys = [-hh + h * (k + 1) / (roads_y + 1) for k in range(int(roads_y))]
+    for (px, py) in ((xs[0] + (xs[1] - xs[0]) / 2 if len(xs) > 1 else -hw / 2, ys[-1] + (hh - ys[-1]) / 2), (xs[-1] + (hw - xs[-1]) / 2, -hh + (ys[0] + hh) / 2)):
+        out += f'<rect x="{px - 46:.0f}" y="{py - 30:.0f}" width="92" height="60" rx="16" fill="#CFEBD9" stroke="#9CCFB0" stroke-width="3"/>'
+    for yy in ys: out += f'<rect x="{-hw + 6}" y="{yy - 15:.0f}" width="{w - 12}" height="30" fill="{WHITE}"/><path d="M{-hw + 14} {yy:.0f} H{hw - 14}" stroke="#C5CCD8" stroke-width="3" stroke-dasharray="16 14"/>'
+    for xx in xs: out += f'<rect x="{xx - 15:.0f}" y="{-hh + 6}" width="30" height="{h - 12}" fill="{WHITE}"/><path d="M{xx:.0f} {-hh + 14} V{hh - 14}" stroke="#C5CCD8" stroke-width="3" stroke-dasharray="16 14"/>'
+    out += f'<rect x="{-hw}" y="{-hh}" width="{w}" height="{h}" rx="28" fill="none" stroke="{INK}" stroke-width="{SW}"/>'
+    if night: out += f'<circle cx="{hw - 62:.0f}" cy="{-hh + 62:.0f}" r="30" fill="#FFD45C" stroke="{INK}" stroke-width="4"/><circle cx="{hw - 48:.0f}" cy="{-hh + 52:.0f}" r="26" fill="{fill}"/>'
+    return _g(x, y, s, out)
+
+
+def city_map_box(x, y, s=1.0, w=880, h=620, **_):
+    return [x - w / 2 * s, y - h / 2 * s, w * s, h * s]
+
+
+_ZONE = {"red": ("#D8433B", "#FBDDDA"), "blue": ("#2F6FDE", "#DCE8FC"), "green": ("#1F9D61", "#D8F1E3"), "amber": ("#B97A00", "#FFF0C9")}
+
+
+def map_zone(x, y, s=1.0, rx=190, ry=220, color="red", label="", fs=38, **_):
+    """An area on a city_map: a tinted oval with a dashed edge and an optional name pill on its top edge ("Busy area"). (x, y) = centre; rx, ry: radii. color: red, blue, green or amber. Swap two zones with at/until to change an area's state."""
+    if color not in _ZONE: raise ValueError(f"map_zone: color {color!r}; use {', '.join(_ZONE)}")
+    col, tint = _ZONE[color]
+    out = f'<ellipse cx="0" cy="0" rx="{rx}" ry="{ry}" fill="{tint}" fill-opacity="0.72" stroke="{col}" stroke-width="6" stroke-dasharray="20 12"/>'
+    if label:
+        W = _d_tw(label, fs) + 40; H = fs * 1.45
+        out += f'<rect x="{-W / 2:.1f}" y="{-ry - H / 2:.1f}" width="{W:.1f}" height="{H:.1f}" rx="{H / 2:.1f}" fill="{col}" stroke="{INK}" stroke-width="4"/>' + _t(0, -ry + fs * 0.36, str(label), fs, 900, WHITE)
+    return _g(x, y, s, out)
+
+
+def map_zone_box(x, y, s=1.0, rx=190, ry=220, label="", fs=38, **_):
+    top = ry + (fs * 0.75 if label else 0)
+    return [x - rx * s, y - top * s, 2 * rx * s, (ry + top) * s]
+
+
+PRESETS.update({"string_lights": (string_lights, string_lights_box), "camera": (camera, None), "dessert_table": (dessert_table, dessert_table_box), "guitar": (guitar, None),
+                "drum": (drum, drum_box), "music_notes": (music_notes, None), "city_map": (city_map, city_map_box), "map_zone": (map_zone, map_zone_box)})
+HALF.update({"camera": (64, 60), "guitar": (80, 170), "music_notes": (60, 70)})
+
+
+PRESET_HELP ={k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
 
 
 def item_svg(it):
