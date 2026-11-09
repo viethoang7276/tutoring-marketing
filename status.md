@@ -640,3 +640,8 @@ This log had no entries for 1-5 Nov; for that gap see `git log` and the hub (`ru
 - **Weekly review 2-8 Nov:** H15 judged (link comments win on clicks), Threads alternate topics rejected (go back to primary), list reels best (econometrics 6 saves, 2 follows), carousels weakest. See `perf/latest` v33 and `runs/weekly-2026-11-09`.
 - **Waiting on Hoang:** (1) ad account restricted for unusual activity, Request review in Ads Manager; (2) TikTok 2 views from 25 posts, check the account on the phone; (3) close the 5c-format test early?; (4) approve 16 Nov-6 Dec on the hub; Instagram Story shares (phone).
 - **Session crons (die on restart, recurring expire after 7 days):** first comments 9-16 Nov at each post +4 min (16:04, 18:04/19:04, 00:04 and the 03:04 how-tos); morning refresh 07:13; weekly review Mon 01:13; Threads backlog 09:07. After a restart, recreate them from the runs docs (`dueAt`).
+
+## 9 Nov 2026 (10:35 VN): session restart
+- **Safeguard:** no `changes` slots; runs/daily-2026-11-08 and daily-2026-11-09 exist; the 4 posts live in the last 24 h (8 Nov 16:00, 19:00, 22:00 and 9 Nov 00:00 VN winner's curse) have first comments on all 7 platforms. No peer marketing session running (ListAgents)
+- **Crons recreated (all had died; session-only):** 21 first-comment runs 9 Nov 16:04 to 16 Nov 00:04 VN (the 00:04 runs also do the daily metrics and Ads tab refresh), 7 how-to runs 10-16 Nov 03:04, morning refresh 07:13 (6ea2a5a5), weekly review Mon 01:13 (c115a9cd), Threads backlog 09:07 (044cae54; today's 09:07 run was missed, next 10 Nov). Recurring ones expire after 7 days
+- **Still waiting on Hoang:** unchanged from the 09:45 handover above (ad account review, TikTok views, 5c-format test, approve 16 Nov-6 Dec, IG Story shares)
