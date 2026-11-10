@@ -49,3 +49,6 @@ data/contacts/*
 tools/tts/
 tools/tts-chatterbox/
 ops/weekly-performance-review.log
+
+# Client exports (PII) - never commit, repo is public
+client_old_edlintics/
