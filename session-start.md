@@ -9,7 +9,7 @@ build contract is `docs/specs/0001-tier1-manager-calendar.md`.
 
 Use portfolio **edlintics 1** `1704820277908835`, page `108471317472449`, and ad account **Edlintics** `2038169006901956` (VND, Madrid time). Start at https://business.facebook.com/latest/home?asset_id=108471317472449&business_id=1704820277908835. Older status entries refer to the former portfolio/account; do not use them as current defaults.
 
-Pixel migration is pending. Read `docs/feature-requests/REQ-0009-meta-pixel-conversions.md` → "Portfolio migration" before creating a dataset or changing website tracking. Re-read Datasets & pixels first to avoid duplicates if Hoang completed the prepared form himself.
+New pixel **Edlintics Meta Pixel** `1178793404712949` is created and connected to ad account `2038169006901956`; website/CAPI migration is pending. Read `docs/feature-requests/REQ-0009-meta-pixel-conversions.md` → "Portfolio migration" before creating a dataset or changing website tracking. Re-read Datasets & pixels first; do not create a duplicate.
 
 ## Git ritual (collaborator repo — do this every session)
 
