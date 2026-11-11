@@ -3,7 +3,7 @@
 The cross-session memory for this repo. Read after `session-start.md`. Update it at the end of any
 session that changes state (append to the session log; revise "Now" / "Next").
 
-_Last updated: 2026-11-11_
+_Last updated: 2026-11-12_
 
 **Current ads handoff (11 Nov, 21:13 VN):** use fresh manual draft **120251906822720036**, not the imported migration campaign. Two ad sets / six manually uploaded ads; campaign OFF and unpublished. Import is blocked by Meta #3738001. Website migration remains on hold for Claude. Read the final session entry below before continuing.
 
@@ -718,3 +718,13 @@ This log had no entries for 1-5 Nov; for that gap see `git log` and the hub (`ru
 - Today's evening FB/IG/LinkedIn/Threads results are in the preceding entry; no duplicate comments. TikTok/YouTube remain blocked by native-only access and the skill's JS insertion/persistent-mute requirements. IG Stories remain a phone task. No timers recreated; underlying hub `runs` and `ads/latest` NOT updated.
 - Attempted a follow-up reply to the earlier Claude artifact annotation, but Hoang switched Chrome to Zoom before entry/submission could be verified. **No new artifact reply saved.** Browser interaction stopped to avoid interfering. This local handoff is authoritative for the manual rebuild; the earlier artifact annotation still describes the blocked import and needs reconciliation when Claude resumes.
 - Draft link: https://adsmanager.facebook.com/adsmanager/manage/campaigns/edit/standalone?act=2038169006901956&business_id=1704820277908835&selected_campaign_ids=120251906822720036
+
+### 12 Nov 2026 00:29–00:36 VN: midnight restaurant first-comment catch-up
+- Hoang requested first comments and normal engagement on other posts published today. Git pull already up to date. Checked last 24 hours and new midnight slot; previous Singles' Day, bike and project-management FB/IG/LI/Threads engagement remains present, project-management X also already done. Did not duplicate.
+- Hub Review approved **A day in the life of a restaurant manager: prime cost**, 11 Nov 18:00 Madrid = 12 Nov 00:00 VN. Exact approved text used on every completed platform: “Follow Edlintics for a new day-in-the-life reel every week, and send this to a friend who runs a restaurant 🍽️📌”. GMV how-to is not due until 03:00 VN; no future post engaged.
+- **Facebook:** live post 1883388509855825 / reel **2331649147599756**; comment **4082700485194301** verified as Edlintics, Remove Like confirms like. No repost (not applicable).
+- **Instagram:** reel **Dfm99UZAs_t**, comment **17914769070488746**. Submitted via Business Suite, reopened comments to verify, then verified directly on Instagram. Active profile link /edlintics/. Like = Unlike; repost count 1 verified after applying; like count hidden and menu rechecked as Unhide. Desktop Share lacks Add to Story; Story remains phone task.
+- **LinkedIn:** newest restaurant post in company 31541400 admin; approved comment verified as Edlintics, Unreact Like confirms like. No repost (not applicable).
+- **Threads:** original **Dfm99x3iXuK**, reply **DfnBzaXEpUv**. Opened reply permalink to verify exact published text; original shows Unlike 1 and Repost 1. No Threads Drafts opened.
+- **X:** original **2120562202033742188**, reply **2120570956259422217**. Exact reply visible, original verified 1 reply / 1 repost Reposted / 1 like Liked. Profile contains restaurant and project-management posts; other recent scheduled X posts remain unverified, not assumed published.
+- **Still blocked:** browser access host unavailable (native Chrome only). TikTok/YouTube skill requires persistent JavaScript muter and JS-only comment insertion, so no native typing attempted there. Underlying hub runs/ads data and daily metrics not updated because ArtifactData tools are unavailable; no timers created. Task tabs closed. Ads and website unchanged.
