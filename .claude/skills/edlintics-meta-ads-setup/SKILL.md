@@ -33,7 +33,7 @@ Under `OUTCOME_SALES`, an LPV ad set still needs `promoted_object` `{"pixel_id":
 
 ## Build order
 1. Create the campaign. It stages as a draft. Check the returned spec: Meta may attach a `product_catalog_id` on its own. Clear it with `promoted_object: {}`, since a published catalog cannot be removed, and confirm it on read-back.
-2. Create one ad set per side with identical targeting. Set both sides to half the budget with the fixed limits above.
+2. Current Hoang decision (9–10 Nov): two ad sets, price and no-price, identical targeting, sharing the campaign budget; no A/B test and no ad-set spend floors/caps. Do not apply the historical half-budget limits above. Latest source budget verified 11 Nov: 500,000 VND/day.
 3. Reuse existing creatives with `{"creative_id": "..."}` plus `source_ad_id`. These still work in Development mode.
 4. New creatives use `placement_customizations`: 4:5 as the fallback, and 9:16 for Instagram `story`, `reels`, `ig_search`. There is no `url_tags` input, so put the UTM tags in `link_url`.
 5. Read back with `object_state=draft`: every `active_errors` empty, right ad count per ad set, budget, goal, placements, no catalog.
