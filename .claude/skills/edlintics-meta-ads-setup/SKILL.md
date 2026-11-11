@@ -31,6 +31,11 @@ Choose a goal the pixel can feed. Check `ads_get_dataset_stats` first: with no P
 
 Under `OUTCOME_SALES`, an LPV ad set still needs `promoted_object` `{"pixel_id":"1178793404712949","custom_event_type":"PURCHASE"}` and `destination_type` WEBSITE.
 
+## New-account import restriction (11 Nov 2026)
+- New account 2038169006901956 rejects publishing imported entities with #3738001 until it has several weeks of policy-compliant ad history. A successful import and clean creative preview do not establish publishability. Use the normal Create flow with manual media uploads; do not import or duplicate imported entities. Hoang requested manual rebuild. Keep imported draft paused for reference until deletion is specifically authorized
+- Current replacement is manual draft campaign **120251906822720036**, two ad sets / six ads, campaign OFF. Full IDs and remaining launch checks are in `status.md` (11 Nov 21:13 VN). Do not resume the imported campaign by mistake.
+- After saving a media wizard, re-read primary text, headline, CTA, URL and AI disclosure in the main editor and again after switching ads. The wizard restored inherited text/UTMs and default See details in this session. Native field values alone are not proof of persistence; verify the preview link and re-opened state. Illustrations also defaulted Show spotlights ON; disable and confirm if preserving this campaign's original choices.
+
 ## Build order
 1. Create the campaign. It stages as a draft. Check the returned spec: Meta may attach a `product_catalog_id` on its own. Clear it with `promoted_object: {}`, since a published catalog cannot be removed, and confirm it on read-back.
 2. Current Hoang decision (9–10 Nov): two ad sets, price and no-price, identical targeting, sharing the campaign budget; no A/B test and no ad-set spend floors/caps. Do not apply the historical half-budget limits above. Latest source budget verified 11 Nov: 500,000 VND/day.
