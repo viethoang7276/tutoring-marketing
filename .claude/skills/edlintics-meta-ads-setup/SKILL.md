@@ -5,7 +5,9 @@ description: Set up, rebuild or repair an Edlintics Meta ad campaign through the
 
 # Meta ads setup
 
-Account `535582635765592` (currency VND, no decimals, so 550000 means 550,000 VND). Page `108471317472449`. Instagram `17841432834644119`. Pixel `1000075088350707`. Business facts and targeting choices: memory note `tutoring-ads-facts`.
+Current portfolio: **edlintics 1** `1704820277908835`. Account **Edlintics** `2038169006901956` (VND, Madrid time; no currency decimals). Page `108471317472449`. Instagram `17841432834644119`. Verified in Business Suite on 11 Nov 2026.
+
+**Pixel migration pending:** the new portfolio has no datasets. The old pixel `1000075088350707`, old account `535582635765592` and portfolio `110625140398351` are historical only. Do not reuse old campaign, ad-set, creative, pixel or token IDs without verifying access in the new portfolio. See `docs/feature-requests/REQ-0009-meta-pixel-conversions.md`. Business facts in older memory notes may be stale.
 
 ## Gates
 - Show Hoang each ad change first. A "go" covers only what was shown.
@@ -27,7 +29,7 @@ Account `535582635765592` (currency VND, no decimals, so 550000 means 550,000 VN
 ## Delivery goal
 Choose a goal the pixel can feed. Check `ads_get_dataset_stats` first: with no Purchase events, a Purchase goal sits on "Preparing" with no error at all. Use `LANDING_PAGE_VIEWS` until real purchases fire (REQ-0009), and read the ad set's `optimization_goal`, not its name: the old side A was named LPV but ran on Purchase.
 
-Under `OUTCOME_SALES`, an LPV ad set still needs `promoted_object` `{"pixel_id":"1000075088350707","custom_event_type":"PURCHASE"}` and `destination_type` WEBSITE.
+Under `OUTCOME_SALES`, an LPV ad set still needs `promoted_object` `{"pixel_id":"<verified current pixel ID>","custom_event_type":"PURCHASE"}` and `destination_type` WEBSITE.
 
 ## Build order
 1. Create the campaign. It stages as a draft. Check the returned spec: Meta may attach a `product_catalog_id` on its own. Clear it with `promoted_object: {}`, since a published catalog cannot be removed, and confirm it on read-back.

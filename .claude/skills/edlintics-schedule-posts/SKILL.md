@@ -8,6 +8,9 @@ description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Busi
 Only run on an approved batch: content, design and time approved, and Hoang said "go" in chat.
 
 
+## Current Meta route (11 Nov 2026)
+Portfolio **edlintics 1** `1704820277908835` now contains page `108471317472449`. The new home URL was verified: https://business.facebook.com/latest/home?asset_id=108471317472449&business_id=1704820277908835. If a direct composer/feed link fails, use Home → Content; do not switch back to the old portfolio. The revised direct routes below still need verification after the move.
+
 ## 0a. Identity check before every automated action (Hoang, 24 Oct 2026)
 Before posting, scheduling, commenting, liking, reposting or editing on any platform, confirm the active identity is Edlintics. If it isn't, switch to it. Never type a password. If switching would need one, stop for that platform and tell Hoang.
 - **Meta Business Suite:** the top-left asset is "Edlintics" (Facebook page and edlintics Instagram), and comment boxes read "Comment as Edlintics".
@@ -29,7 +32,7 @@ Every video post needs its approved thumbnail (slot `thumbnail.png`, made from t
 - Times: the browser and both schedulers use the Mac's time zone (Asia/Saigon). Convert Madrid slots: CEST (until the last Sunday of Oct) is +5 h; CET is +6 h. 10:00 Madrid = 15:00 Vietnam in summer time, 16:00 in winter time.
 
 ## 1. Meta Business Suite (Facebook + Instagram in one post)
-URL: `https://business.facebook.com/latest/composer/?asset_id=108471317472449&business_id=110625140398351&context_ref=POSTS`
+URL: `https://business.facebook.com/latest/composer/?asset_id=108471317472449&business_id=1704820277908835&context_ref=POSTS`
 Per post:
 1. Navigate to the composer, wait about 5 s. "Post to" is already "Edlintics and edlintics" (FB + IG).
 2. Run this JavaScript first so the file picker never opens natively:
@@ -84,7 +87,7 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 **Save tokens:** load all the Chrome tools in one ToolSearch call. Use `find` for buttons instead of full screenshots, take screenshots at `scale` 0.5, use `zoom` to check typed text, and put routine clicks in one `browser_batch`. Read `get_page_text` only to verify. Don't explore: the routes below are proven (23 Oct 2026).
 
 **A. Facebook:** facebook.com is blocked for the extension, so use Business Suite.
-1. Go to `https://business.facebook.com/latest/posts/feed_and_grid?business_id=110625140398351&asset_id=108471317472449`. The left column is the page feed.
+1. Go to `https://business.facebook.com/latest/posts/feed_and_grid?business_id=1704820277908835&asset_id=108471317472449`. The left column is the page feed.
 2. `find` "Like, Comment, Share buttons under the first Facebook post". Click Comment. The box must read "Comment as Edlintics".
 3. Type the paragraphs, with `shift+Enter shift+Enter` between them. Click the send arrow.
 4. Click Like. **No share/repost on Facebook** (Hoang stopped it on 24 Oct 2026).
@@ -152,7 +155,7 @@ TikTok (@edlintics) is scheduled from TikTok Studio web with `.claude/skills/edl
 
 ## Week-45 learnings (29 Oct 2026, scheduling 2 Nov on all 7 platforms)
 **Meta (Business Suite)**
-- 9:16 videos: use the Reels composer directly, `https://business.facebook.com/latest/reels_composer/?asset_id=108471317472449&business_id=110625140398351&context_ref=POSTS`. The post composer's "Go to Reels composer" link sticks at 0%, and it flags 9:16 as "Wrong aspect ratio" for Instagram
+- 9:16 videos: use the Reels composer directly, `https://business.facebook.com/latest/reels_composer/?asset_id=108471317472449&business_id=1704820277908835&context_ref=POSTS`. The post composer's "Go to Reels composer" link sticks at 0%, and it flags 9:16 as "Wrong aspect ratio" for Instagram
 - Reels flow: file-input patch, Add Video, wait for 100%, caption, click a blank area to close the hashtag list, Next, Next. Story switch: on by default since 3 Nov (Always share stories); just check it. Schedule tab, date and time per row, Schedule, Done
 - Five-concepts carousel day = two posts: Instagram-only (untick Edlintics in "Post to", upload clips p1–p7 in one call) and Facebook-only (the long MP4). In Scheduled the IG row shows "Your reel" but the caption is there. Never click **Publish now** in the side panel
 - Files over 10 MB (the Chrome upload cap): re-encode first with the same audio

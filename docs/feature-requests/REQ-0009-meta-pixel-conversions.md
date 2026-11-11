@@ -7,7 +7,17 @@
 - **Priority (CMO view):** high (the tutoring ads campaign is being set up now)
 - **Effort guess (CMO, non-binding):** S for the Pixel, M with the Conversions API
 
-## Summary
+## Portfolio migration — 11 Nov 2026
+
+Hoang moved the Facebook page to **edlintics 1**, business `1704820277908835`. Business Suite confirms page `108471317472449` and ad account **Edlintics** `2038169006901956` (VND, Madrid time). Datasets & pixels shows **No Datasets Added**. The old pixel `1000075088350707` below is historical; a new dataset ID has not been created or configured on the website.
+
+- Prepared creation form: **Edlintics Meta Pixel**, automatic portfolio-wide "Conversions API with Meta" unchecked. Creation awaits Hoang confirming the Meta Business Tools Terms shown by the Create action. No dataset or token has been created.
+- After creation: record the new ID, verify its connection to the new ad account, and coordinate the website migration with the CTO. Update `NEXT_PUBLIC_META_PIXEL_ID` in the intended environments and rebuild/redeploy; configure the corresponding server-side dataset ID and `META_CAPI_ACCESS_TOKEN` through the existing secret-management flow. Never paste tokens into chat or git.
+- Preserve marketing-consent gating, withdrawal cleanup and browser/server `event_id` deduplication. Do not add an unconditional base snippet or a second automatic CAPI integration.
+- Verify domain access under the new portfolio and validate consented browser events and server delivery. Keep the 5 Nov no-test-purchase decision; no paid test order without a new instruction.
+- No website code, deployment settings, credentials or asset permissions were changed during this inspection.
+
+## Summary (original request)
 Hoang is launching Meta ads for tutoring (4 static variants, each with and without the €45/hr price) and later for the courses. Meta can only optimise for bookings and purchases if edlintics.com reports them. There is no Meta Pixel in tutoring-web today (checked 3 Nov 2026: no `fbq`, no pixel ID). Until it exists, the ads run on the Traffic objective (landing page views) and bookings are judged by hand from the `utm_content` split
 
 The site already has a clean event layer: `lib/analytics.ts` events are mapped to GA4 in `lib/ga-events.ts`, consent-gated, with URL redaction for private paths. The Pixel should be one more consumer of the same events, not a parallel tracking setup

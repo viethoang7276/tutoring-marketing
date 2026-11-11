@@ -5,6 +5,12 @@ This repo is its independent, local-first marketing engine. Read this file at th
 session, `git pull --ff-only`, then read `status.md` for where things stand. Full design is in `README.md`; the current
 build contract is `docs/specs/0001-tier1-manager-calendar.md`.
 
+## Current Meta portfolio (11 Nov 2026)
+
+Use portfolio **edlintics 1** `1704820277908835`, page `108471317472449`, and ad account **Edlintics** `2038169006901956` (VND, Madrid time). Start at https://business.facebook.com/latest/home?asset_id=108471317472449&business_id=1704820277908835. Older status entries refer to the former portfolio/account; do not use them as current defaults.
+
+Pixel migration is pending. Read `docs/feature-requests/REQ-0009-meta-pixel-conversions.md` → "Portfolio migration" before creating a dataset or changing website tracking. Re-read Datasets & pixels first to avoid duplicates if Hoang completed the prepared form himself.
+
 ## Git ritual (collaborator repo — do this every session)
 
 The repo lives at `https://github.com/viethoang7276/tutoring-marketing` (branch `main`) and other
