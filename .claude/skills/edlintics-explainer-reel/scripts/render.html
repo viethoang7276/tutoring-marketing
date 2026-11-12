@@ -44,6 +44,46 @@ body.full #card{top:228px;height:1290px;left:60px;right:160px;gap:48px}
 body.full #card .term{font-size:116px}
 body.full #card .kp{font-size:60px;max-width:860px}
 body.full #card img{width:280px;margin-top:0}
+/* ladder layout (opt-in with meta.layout "ladder", career-ladder reels, 12 Nov 2026; Hoang on the reference reel: "I like they move sub to
+   the bottom half, more animation"). Rung title and duty chips y 228-446 in x 60-920, logo top right, art panel x 40-940 y 456-1294,
+   karaoke captions y 1304-1520, all inside the platform safe zones (top 220, bottom 380, right 140 px) */
+#rung{display:none}
+body.ladder #rung{display:block;position:absolute;left:60px;top:228px;width:860px}
+body.ladder #rung .rt{display:flex;align-items:center;gap:16px;height:74px;font:900 56px/1 Inter,sans-serif;color:#0F172A;letter-spacing:-0.01em;white-space:nowrap}
+body.ladder #rung .rn{flex:none;font:900 34px/1 Inter,sans-serif;color:#FFFFFF;background:#467DE3;border-radius:999px;padding:12px 20px;letter-spacing:0}
+body.ladder #rung .chips{display:flex;flex-wrap:wrap;gap:10px 12px;margin-top:12px;align-content:flex-start}
+body.ladder #rung .chip{font:900 31px/1 Inter,sans-serif;color:#0F172A;background:#FFD45C;border:4px solid #0F172A;border-radius:999px;padding:11px 20px;white-space:nowrap;transform-origin:50% 50%}
+body.ladder #art{-webkit-mask-image:none;mask-image:none;clip-path:inset(456px 140px 626px 40px round 36px)}
+body.ladder #cap{top:1304px;height:216px;left:60px;right:160px}
+body.ladder #cap .c{font:900 98px/1.06 Inter,sans-serif}
+body.ladder #cap .k{background-image:linear-gradient(#FFD45C,#FFD45C);border-radius:16px;padding:0 14px}
+body.ladder #logo{top:246px;left:768px;width:160px;transform:none;opacity:0.8}
+body.ladder #card{top:228px;height:1290px;left:60px;right:160px;gap:48px}
+body.ladder #card .term{font-size:112px}
+body.ladder #card .kp{font-size:60px;max-width:860px}
+body.ladder #card img{width:280px;margin-top:0}
+/* ladder layout, full-bleed style (meta.ladder_style "bleed", 13 Nov 2026; Hoang on the v1 preview: "make the video take up the whole vertical
+   screen, the sub will be on top as usual"). The art fills 1080x1920 (art coordinates = screen pixels, no panel), captions sit at y 228-438 on a soft
+   paper backing, the rung title at y 452-522, the duty chips at y 534-670, the logo top right at y 466 */
+body.ladder.bleed #art{clip-path:none}
+body.ladder.bleed #cap{top:228px;height:210px;left:60px;right:160px}
+body.ladder.bleed #cap .c{font:900 84px/1.12 Inter,sans-serif;display:inline-block;background:rgba(251,250,246,0.92);border-radius:30px;padding:6px 26px 12px}
+body.ladder.bleed #rung{left:0;top:0;width:1080px}
+body.ladder.bleed #rung .rt{position:absolute;left:60px;top:452px;height:70px;font-size:50px;background:rgba(251,250,246,0.92);border-radius:999px;padding:0 26px 0 7px}
+body.ladder.bleed #rung .chips{position:absolute;left:60px;top:534px;width:860px;margin-top:0}
+body.ladder.bleed #logo{top:468px;left:768px}
+/* ladder "cta" beat (13 Nov 2026): the closing message on a card beside the ladder, with the logo; no end card */
+#ctab{display:none}
+body.ladder #ctab{position:absolute;left:400px;top:640px;width:520px;box-sizing:border-box;background:#FBFAF6;border:5px solid #0F172A;border-radius:36px;padding:34px 28px 30px;text-align:center;transform-origin:50% 50%}
+body.ladder #ctab .msg{font:900 52px/1.16 Inter,sans-serif;color:#0F172A;letter-spacing:-0.01em;text-wrap:balance}
+body.ladder #ctab .msg b{color:#467DE3;font-weight:900}
+body.ladder #ctab img{width:300px;margin-top:26px}
+body.ladder #ctab .tg{display:none;font:900 34px/1 Inter,sans-serif;color:#FFFFFF;background:#467DE3;border-radius:999px;padding:14px 26px;margin:0 auto 24px;width:max-content;letter-spacing:0.02em}
+body.ladder #ctab.ttl img{display:none}
+body.ladder.bleed #ctab{left:60px;top:560px;width:860px;padding:40px 34px 36px}   /* 13 Nov 2026: a full-width card over the five Ledgers on their steps, so the sentence takes about four lines */
+body.ladder.bleed #ctab .msg{font-size:66px;line-height:1.14}
+body.ladder.bleed #ctab img{width:340px;margin-top:30px}
+body.clean #rung,body.clean #ctab{display:none !important}
 /* end-card equation (how-to reels): lhs =, a fraction, and the filled-in example, in a hand-drawn formula card */
 #card .eq{display:none;background:#FFFFFF;border:6px solid #0F172A;border-radius:34px 28px 36px 26px;padding:26px 44px 30px;max-width:840px;color:#0F172A}
 #card .eq .lhs{font:900 60px/1.15 Inter,sans-serif}
@@ -99,6 +139,8 @@ body.parts #card{display:flex !important}
  <rect width="1080" height="1920" filter="url(#fibers)"/><rect width="1080" height="1920" filter="url(#paperTex)"/>
 </svg>
 <div id="cap"><div class="c"></div></div>
+<div id="ctab"><div class="tg"></div><div class="msg"></div><img src="logo/edlintics-logo.png"></div>
+<div id="rung"><div class="rt"><span class="rn"></span><span class="rl"></span></div><div class="chips"></div></div>
 <img id="logo" src="logo/edlintics-logo.png">
 <div id="wipe"></div>
 <div id="card"><div class="term"></div><div class="rule"></div><div class="kp"><span></span></div><div class="eq"></div><img src="logo/edlintics-logo.png"><div class="cta"></div><div class="fn"></div></div>
@@ -109,12 +151,15 @@ body.parts #card{display:flex !important}
 // in the 1080x1920 art, fitted into the box x 40-1040, y 530-1310). A new scene comes in with a quick 0.15 s fade and a fast draw-on; no zoom, pan or reframe.
 // Captions show 2-5 word chunks timed to the voice, key word highlighted. The last beat (role "endcard") hides
 // the art and shows the term, a one-line key point and the logo.
-let D=null, curImg=null, els=[], fxEls=[], cut=0, TALK=false, sceneBeat=0;
+let D=null, curImg=null, els=[], fxEls=[], cut=0, TALK=false, sceneBeat=0, LAD=false;
 let BX=40, BW=1000, BY=530, BH=780;
 const artBody=document.getElementById('artBody'), capC=document.querySelector('#cap .c');
 async function init(){ D=await (await fetch('scenes.json')).json(); await document.fonts.ready;
   if(D.layout==='ad') document.body.classList.add('ad');
   if(D.layout==='full'){ document.body.classList.add('full'); BX=40; BW=900; BY=450; BH=990; }   // full-frame layout (how-to reels, 1 Nov 2026)
+  if(D.layout==='ladder'){ LAD=true; document.body.classList.add('ladder'); BX=40; BW=900; BY=460; BH=830;   // ladder layout (career-ladder reels, 12 Nov 2026)
+    try{ await Promise.all([document.fonts.load('900 84px Inter'),document.fonts.load('800 40px Inter')]); }catch(_){}   // ladder only: the caption font is ready for frame 0
+    if(D.bleed){ document.body.classList.add('bleed'); BX=0; BW=1080; BY=0; BH=1920; } }   // full-bleed style (13 Nov 2026): the art is the whole screen
   if(D.clean) document.body.classList.add('clean');
   if(D.nologo) document.body.classList.add('nologo');
   if(D.layout==='talk'){ TALK=true; document.body.classList.add('talk'); BX=0; BW=1080; BY=0; BH=1920; }
@@ -164,8 +209,25 @@ function eqHTML(el,q){ if(el.dataset.v===JSON.stringify(q)) return; el.dataset.v
   let h=q.den?`<div class="lhs">${e(q.lhs)} =</div><div class="fr"><span>${e(q.num)}</span><span class="bar"></span><span>${e(q.den)}</span></div>`:`<div class="lhs">${e(q.lhs)} = <span style="color:#467DE3">${e(q.num)}</span></div>`;
   if(q.example){ const i=q.example.lastIndexOf('='); h+=`<div class="ex">${i<0?e(q.example):e(q.example.slice(0,i+1))+' <span>'+e(q.example.slice(i+1).trim())+'</span>'}</div>`; }
   el.innerHTML=h; }
+// ladder layout (12 Nov 2026): the rung header. b.rung is the 1-based rung (titles in D.rungs); a beat's chips [{label, at: chunk index in that beat}]
+// pop in on their chunk and stay until the rung's run of beats ends. Every state comes from the time alone
+const rungEl=document.getElementById('rung');
+function rungRender(t,i,b,B){
+  if(!b.rung||b.role==='endcard'){ rungEl.style.display='none'; return; }
+  rungEl.style.display='block';
+  let j0=i, j1=i; while(j0>0&&B[j0-1].rung===b.rung) j0--; while(j1+1<B.length&&B[j1+1].rung===b.rung) j1++;
+  const key=b.rung+':'+j0;
+  if(rungEl.dataset.v!==key){ rungEl.dataset.v=key;
+    rungEl.querySelector('.rn').textContent=b.rung+'/'+D.rungs.length; rungEl.querySelector('.rl').textContent=D.rungs[b.rung-1]||''; rungEl.querySelector('.rl').style.fontSize=(D.rungs[b.rung-1]||'').length>14?'43px':'';
+    const box=rungEl.querySelector('.chips'); box.innerHTML='';
+    for(let j=j0;j<=j1;j++) for(const c of (B[j].chips||[])){ const e=document.createElement('div'); e.className='chip'; e.textContent=c.label; e._t=(B[j].chunks[c.at||0]||B[j].chunks[0]).t; box.appendChild(e); } }
+  const u=t-(j0===0?0:B[j0].start-0.08), rt=rungEl.querySelector('.rt');
+  rt.style.opacity=j0===0?1:clamp((u+1/24)/0.15); rt.style.transform=`translateX(${(j0===0?0:-40*(1-ease(clamp(u/0.3)))).toFixed(1)}px)`;
+  rungEl.querySelectorAll('.chip').forEach(e=>{ const q=t-e._t; e.style.visibility=q<0?'hidden':'visible'; e.style.transform=`scale(${(q<0?1:0.6+0.4*back(clamp(q/0.28))).toFixed(3)})`; });
+}
 function render(t){
   const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08);
+  if(LAD) rungRender(t,i,b,B);
   const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
   // "defcard" (in-lesson videos, 5 Nov 2026): the same card mid-video, with the definition in place of the key point and no logo
   if(b.role==='endcard'||b.role==='defcard'){
@@ -185,6 +247,12 @@ function render(t){
     return;
   }
   card.style.display='none'; cap.style.display='flex'; logo.style.display='block';
+  if(LAD){ const cb=document.getElementById('ctab');   // ladder "cta" beat: the message card replaces the captions and the corner logo
+    if(b.role==='cta'||b.role==='title'){ const TT=b.role==='title'; cap.style.display='none'; logo.style.display=TT?'block':'none'; cb.style.display='block';   // "title" (13 Nov 2026): the opening title card, complete on frame 1, with an optional tag pill ("IN 90 SECONDS") and no logo inside
+      cb.classList.toggle('ttl',TT); const tg=cb.querySelector('.tg'); tg.textContent=TT?(b.tag||''):''; tg.style.display=TT&&b.tag?'block':'none';
+      if(cb.dataset.v!==b.message){ cb.dataset.v=b.message; cb.querySelector('.msg').innerHTML=String(b.message||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/Edlintics/,'<b>Edlintics</b>'); }
+      const u=i===0?9:t-a; cb.style.opacity=clamp((u-0.1)/0.15); cb.style.transform=`scale(${(0.85+0.15*back(clamp((u-0.1)/0.3))).toFixed(4)})`; }
+    else cb.style.display='none'; }
   if(b.img!==curImg){ load(b.img); curImg=b.img; cut=a; autoFit=fitAuto(); sceneBeat=i; while(sceneBeat>0&&B[sceneBeat-1].img===b.img) sceneBeat--; }   // first beat of this scene's run, so chunk counts hold when rendering out of order
   const sceneT=(i===0||TALK?99:t-cut), newScene=!TALK&&(Math.abs(cut-a)<1e-6)&&i>0;  // talk: jump cuts, like a talking-head edit  // beat 0 opens fully drawn: the hook frame must read at once
   // line boil: new drawing every 2 frames at 24 fps
@@ -259,6 +327,7 @@ const fx={
     if(S.bob) y+=S.bob.amp*Math.sin(2*Math.PI*S.bob.hz*t);
     for(const q of S.out||[]){ const t0=T(q); if(t>=t0) op=Math.min(op,1-clamp((t-t0)/q.dur)); }
     if(S.hide&&t<T(S.hide)) op=0;
+    if(S.appear){ const q=t-T(S.appear); if(q<0) op=0; else { op=Math.min(op,clamp(q/0.1+0.2)); k*=0.55+0.45*back(clamp(q/0.3)); } }   // appear (12 Nov 2026): pops in at its chunk plus delay
     e.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${k.toFixed(4)}) translate(${-S.x} ${-S.y})`); e.setAttribute('opacity',op.toFixed(3)); },
   trail(e,S,T,t){ const t0=T(S); if(t<t0){ e.setAttribute('opacity','0'); return; } const p=(EZ[S.ease]||inout)(clamp((t-t0)/S.dur));
     e.setAttribute('stroke-dasharray',`${p.toFixed(4)} 1`); e.setAttribute('opacity',(0.6*(S.fade>0?1-clamp((t-t0-S.dur)/S.fade):1)).toFixed(3)); },

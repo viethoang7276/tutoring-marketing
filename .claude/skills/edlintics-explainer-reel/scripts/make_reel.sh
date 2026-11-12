@@ -49,8 +49,8 @@ import json, sys
 d = sys.argv[1]; T = json.load(open(f"{d}/timing.json")); B = json.load(open(f"{d}/beats.json"))
 if len(T["beats"]) != len(B): sys.exit("REUSE_AUDIO: beat count changed; rebuild without REUSE_AUDIO")
 for t, b in zip(T["beats"], B):
-    t.pop("cam", None)
-    for k in ("img", "focus", "cam", "term", "keypoint", "definition", "equation", "footnote", "cta"):   # picture and end-card fields; voice timings stay
+    t.pop("cam", None); t.pop("rung", None); t.pop("chips", None)
+    for k in ("img", "focus", "cam", "term", "keypoint", "definition", "equation", "footnote", "cta", "rung", "chips", "message", "tag"):   # picture and end-card fields; voice timings stay
         if k in b: t[k] = b[k]
 json.dump(T, open(f"{d}/timing.json", "w"), indent=1)
 PYEOF

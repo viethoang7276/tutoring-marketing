@@ -1,0 +1,2910 @@
+{
+ "meta": {
+  "type": "ladder",
+  "layout": "ladder",
+  "ladder_style": "bleed",
+  "term": "Career ladder",
+  "title": "From audit intern to CFO, the career ladder explained with Ledger in 90 seconds",
+  "slug": "ladder-audit-intern-to-cfo",
+  "rungs": [
+   "THE INTERN",
+   "THE SENIOR",
+   "THE MANAGER",
+   "THE CONTROLLER",
+   "THE CFO"
+  ],
+  "family_or_category": "accounting",
+  "concept_id": "career-ladder-audit-to-cfo",
+  "themes": [
+   "career-ladder",
+   "audit"
+  ],
+  "caption": "From audit intern to CFO, the job changes on every rung\n\nThe intern matches invoices and ticks numbers, and the senior runs the fieldwork. Then the manager leads the team and the budget, and the controller closes the books every month. Finally, the CFO decides where the money goes and explains the numbers to the board\n\nSo each rung up, you count less yourself and decide more. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #accounting #finance",
+  "caption_x": "Audit intern to CFO in five rungs: match invoices, run the fieldwork, lead the team, close the books, allocate capital. Each rung up, you count less and decide more #edlintics",
+  "first_comment": "Which rung are you on right now? Tell us below 🪜📊",
+  "first_comment_igtt": "Which rung are you on right now? Tell us below, link in bio 🪜📊",
+  "hashtags": [
+   "#edlintics",
+   "#businessstudents",
+   "#accounting",
+   "#finance"
+  ],
+  "threadsTopic": "Accounting",
+  "threadsReason": "The audit-to-CFO path is an accounting career story, so Accounting is the closest topic",
+  "maths_check": "No career numbers are stated. The only number is the video length in the title (ninety seconds): the built video must be 90 s or less. No currency amounts (the coins carry a $ sign)",
+  "sources": [
+   "https://tgg-accounting.com/how-to-become-a-cfo/",
+   "https://www.accountingtools.com/articles/vouching",
+   "https://www.indeed.com/hire/job-description/audit-intern",
+   "https://accountingtools.com/articles/accountant-in-charge",
+   "https://www.lhh.com/en-us/insights/job-descriptions/audit-manager",
+   "https://trullion.com/blog/controller-vs-cfo/",
+   "https://corporatefinanceinstitute.com/resources/career/what-does-a-cfo-do/"
+  ],
+  "definition_check": "No term is defined in this reel. Role duties were checked against the sources (12 Nov 2026)",
+  "registry_check": "registry check: clear on concepts (no concept or related concept is repeated). Theme career-ladder runs on four days in a row, 13-16 Nov 2026, cleared by Hoang on 13 Nov 2026 (\"We will post 3 more ladder career next 3 days\")"
+ },
+ "scenes": {
+  "title": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "career_ladder",
+     "x": 840.0,
+     "y": 1210,
+     "n": 4,
+     "gap": 150,
+     "w": 150
+    },
+    {
+     "p": "steps",
+     "x": 30,
+     "y": 1500,
+     "n": 5,
+     "step_w": 180,
+     "rise": 44
+    },
+    {
+     "p": "ledger",
+     "x": 120.0,
+     "y": 1450,
+     "s": 0.82,
+     "outfit": "intern",
+     "mood": "happy",
+     "arm": "wave"
+    },
+    {
+     "p": "arrow",
+     "x": 264.0,
+     "y": 1235.6,
+     "dx": 413.99999999999994,
+     "dy": -101.19999999999999,
+     "color": "blue",
+     "s": 1.0,
+     "dashed": true
+    }
+   ]
+  },
+  "climb1": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "career_ladder",
+     "x": 230,
+     "y": 1400,
+     "n": 5,
+     "gap": 190,
+     "w": 220
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 1210.0,
+     "h": 476,
+     "label": "AUDIT FIRM",
+     "color": "ink",
+     "fs": 36
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 735.0,
+     "h": 286,
+     "label": "COMPANY",
+     "color": "blue",
+     "fs": 36
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1400,
+     "label": "INTERN",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:1"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1400,
+     "label": "INTERN",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:1",
+     "pop": "cut"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:1"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:1"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 640,
+     "label": "CFO",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "burst",
+     "x": 230,
+     "y": 1118,
+     "s": 1.3,
+     "color": "amber",
+     "at": "chunk:0",
+     "delay": 1.0
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1400,
+     "s": 0.8,
+     "outfit": "intern",
+     "mood": "smile",
+     "arm": "both_up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        1305.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        1210
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "out": {
+      "at": "chunk:0",
+      "delay": 1.0,
+      "dur": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1400,
+     "s": 0.8,
+     "outfit": "senior",
+     "mood": "happy",
+     "arm": "up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        1305.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        1210
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.98
+     }
+    }
+   ]
+  },
+  "climb2": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "career_ladder",
+     "x": 230,
+     "y": 1400,
+     "n": 5,
+     "gap": 190,
+     "w": 220
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 1210.0,
+     "h": 476,
+     "label": "AUDIT FIRM",
+     "color": "ink",
+     "fs": 36
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 735.0,
+     "h": 286,
+     "label": "COMPANY",
+     "color": "blue",
+     "fs": 36
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1400,
+     "label": "INTERN",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:1"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:1",
+     "pop": "cut"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:1"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:1"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 640,
+     "label": "CFO",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "burst",
+     "x": 230,
+     "y": 928,
+     "s": 1.3,
+     "color": "amber",
+     "at": "chunk:0",
+     "delay": 1.0
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1210,
+     "s": 0.8,
+     "outfit": "senior",
+     "mood": "smile",
+     "arm": "both_up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        1115.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        1020
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "out": {
+      "at": "chunk:0",
+      "delay": 1.0,
+      "dur": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1210,
+     "s": 0.8,
+     "outfit": "manager",
+     "mood": "happy",
+     "arm": "up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        1115.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        1020
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.98
+     }
+    }
+   ]
+  },
+  "climb3": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "career_ladder",
+     "x": 230,
+     "y": 1400,
+     "n": 5,
+     "gap": 190,
+     "w": 220
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 1210.0,
+     "h": 476,
+     "label": "AUDIT FIRM",
+     "color": "ink",
+     "fs": 36
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 735.0,
+     "h": 286,
+     "label": "COMPANY",
+     "color": "blue",
+     "fs": 36,
+     "pulse": {
+      "at": "chunk:1",
+      "dur": 0.5,
+      "amp": 0.09
+     }
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1400,
+     "label": "INTERN",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:2"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:2",
+     "pop": "cut"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:2"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:2"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 640,
+     "label": "CFO",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "burst",
+     "x": 230,
+     "y": 738,
+     "s": 1.3,
+     "color": "amber",
+     "at": "chunk:0",
+     "delay": 1.0
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1020,
+     "s": 0.8,
+     "outfit": "manager",
+     "mood": "smile",
+     "arm": "both_up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        925.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        830
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "out": {
+      "at": "chunk:0",
+      "delay": 1.0,
+      "dur": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1020,
+     "s": 0.8,
+     "outfit": "controller",
+     "mood": "happy",
+     "arm": "up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        925.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        830
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.98
+     }
+    }
+   ]
+  },
+  "climb4": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "career_ladder",
+     "x": 230,
+     "y": 1400,
+     "n": 5,
+     "gap": 190,
+     "w": 220
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 1210.0,
+     "h": 476,
+     "label": "AUDIT FIRM",
+     "color": "ink",
+     "fs": 36
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 735.0,
+     "h": 286,
+     "label": "COMPANY",
+     "color": "blue",
+     "fs": 36
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1400,
+     "label": "INTERN",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:2"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:2",
+     "pop": "cut"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 640,
+     "label": "CFO",
+     "state": "todo",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "until": "chunk:2"
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 640,
+     "label": "CFO",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46,
+     "at": "chunk:2"
+    },
+    {
+     "p": "burst",
+     "x": 230,
+     "y": 548,
+     "s": 1.3,
+     "color": "amber",
+     "at": "chunk:0",
+     "delay": 1.0
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 830,
+     "s": 0.8,
+     "outfit": "controller",
+     "mood": "smile",
+     "arm": "both_up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        735.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        640
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "out": {
+      "at": "chunk:0",
+      "delay": 1.0,
+      "dur": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 830,
+     "s": 0.8,
+     "outfit": "cfo",
+     "mood": "happy",
+     "arm": "up",
+     "move": [
+      {
+       "at": "chunk:0",
+       "delay": 0.15,
+       "dur": 0.42,
+       "to": [
+        244,
+        735.0
+       ],
+       "ease": "inout",
+       "rot": 4
+      },
+      {
+       "at": "chunk:0",
+       "delay": 0.6,
+       "dur": 0.42,
+       "to": [
+        230,
+        640
+       ],
+       "ease": "inout",
+       "rot": 0
+      }
+     ],
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.98
+     }
+    }
+   ]
+  },
+  "r1a": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E3F3EA",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "ledger",
+     "x": 470,
+     "y": 1496,
+     "s": 3.4,
+     "outfit": "intern",
+     "mood": "happy",
+     "arm": "wave"
+    },
+    {
+     "p": "arrow",
+     "x": 880,
+     "y": 1400,
+     "dx": -290,
+     "dy": -50,
+     "color": "blue",
+     "s": 1.0,
+     "at": "chunk:2"
+    },
+    {
+     "p": "arrow",
+     "x": 925,
+     "y": 1010,
+     "dx": -150,
+     "dy": 130,
+     "color": "blue",
+     "s": 1.0,
+     "at": "chunk:3"
+    }
+   ]
+  },
+  "r1b": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E3F3EA",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "match_rows",
+     "x": 690,
+     "y": 1070,
+     "w": 480,
+     "n": 4,
+     "bad": 2,
+     "rh": 130,
+     "fs": 36,
+     "link": {
+      "at": "chunk:1",
+      "every": 0.45
+     },
+     "tick": {
+      "at": "chunk:4",
+      "delay": 0.1,
+      "every": 0.4
+     },
+     "flag": {
+      "at": "chunk:7"
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 212,
+     "y": 1496,
+     "s": 2.0,
+     "outfit": "intern",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r1c": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E3F3EA",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "dial",
+     "x": 490,
+     "y": 770,
+     "w": 720,
+     "fs": 44,
+     "left": "Counts",
+     "right": "Decides",
+     "start": 0.06
+    },
+    {
+     "p": "invoice",
+     "x": 650,
+     "y": 1400,
+     "s": 0.6,
+     "rot": -8,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.0
+     }
+    },
+    {
+     "p": "invoice",
+     "x": 745,
+     "y": 1392,
+     "s": 0.6,
+     "rot": 4,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.16
+     }
+    },
+    {
+     "p": "invoice",
+     "x": 840,
+     "y": 1384,
+     "s": 0.6,
+     "rot": -3,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.32
+     }
+    },
+    {
+     "p": "invoice",
+     "x": 664,
+     "y": 1220,
+     "s": 0.6,
+     "rot": 7,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.48
+     }
+    },
+    {
+     "p": "invoice",
+     "x": 759,
+     "y": 1212,
+     "s": 0.6,
+     "rot": -5,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.64
+     }
+    },
+    {
+     "p": "invoice",
+     "x": 854,
+     "y": 1204,
+     "s": 0.6,
+     "rot": 3,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.8
+     }
+    },
+    {
+     "p": "calculator",
+     "x": 548,
+     "y": 1262,
+     "s": 0.5,
+     "display": "",
+     "rot": 8
+    },
+    {
+     "p": "ledger",
+     "x": 300,
+     "y": 1496,
+     "s": 2.4,
+     "outfit": "intern",
+     "mood": "smile",
+     "arm": "hold"
+    }
+   ]
+  },
+  "r2a": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E6EEFD",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "building",
+     "x": 805,
+     "y": 1252,
+     "s": 0.8,
+     "done": true,
+     "at": "chunk:2"
+    },
+    {
+     "p": "person",
+     "x": 712,
+     "y": 1496,
+     "s": 1.25,
+     "color": "#F3D9A6",
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.0
+     }
+    },
+    {
+     "p": "person",
+     "x": 872,
+     "y": 1496,
+     "s": 1.25,
+     "color": "#CFE9D9",
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.2
+     }
+    },
+    {
+     "p": "clipboard",
+     "x": 596,
+     "y": 1250,
+     "s": 0.58,
+     "rot": 6
+    },
+    {
+     "p": "ledger",
+     "x": 335,
+     "y": 1496,
+     "s": 2.5,
+     "outfit": "senior",
+     "mood": "smile",
+     "arm": "hold"
+    }
+   ]
+  },
+  "r2b": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E6EEFD",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "test_picker",
+     "x": 696,
+     "y": 1085,
+     "w": 480,
+     "rh": 120,
+     "pick": {
+      "at": "chunk:2",
+      "every": 0.35
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 218,
+     "y": 1496,
+     "s": 2.0,
+     "outfit": "senior",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r2c": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E6EEFD",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "invoice",
+     "x": 645,
+     "y": 965,
+     "s": 1.3,
+     "rot": -3
+    },
+    {
+     "p": "check",
+     "x": 782,
+     "y": 836,
+     "s": 0.38,
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.3
+     }
+    },
+    {
+     "p": "check",
+     "x": 782,
+     "y": 883,
+     "s": 0.38,
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.6
+     }
+    },
+    {
+     "p": "check",
+     "x": 782,
+     "y": 930,
+     "s": 0.38,
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.8999999999999999
+     }
+    },
+    {
+     "p": "check",
+     "x": 782,
+     "y": 977,
+     "s": 0.38,
+     "appear": {
+      "at": "chunk:0",
+      "delay": 1.2
+     }
+    },
+    {
+     "p": "person",
+     "x": 852,
+     "y": 1496,
+     "s": 1.55,
+     "color": "#7FA0DC",
+     "at": "chunk:1"
+    },
+    {
+     "p": "ledger",
+     "x": 285,
+     "y": 1496,
+     "s": 2.3,
+     "outfit": "senior",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r3a": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#FDF0D9",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "clipboard",
+     "x": 770,
+     "y": 900,
+     "s": 1.0,
+     "rot": 4,
+     "at": "chunk:2"
+    },
+    {
+     "p": "person",
+     "x": 640,
+     "y": 1496,
+     "s": 1.45,
+     "color": "#F3D9A6",
+     "appear": {
+      "at": "chunk:3",
+      "delay": 0.0
+     }
+    },
+    {
+     "p": "person",
+     "x": 762,
+     "y": 1496,
+     "s": 1.45,
+     "color": "#7FA0DC",
+     "appear": {
+      "at": "chunk:3",
+      "delay": 0.2
+     }
+    },
+    {
+     "p": "person",
+     "x": 884,
+     "y": 1496,
+     "s": 1.45,
+     "color": "#CFE9D9",
+     "appear": {
+      "at": "chunk:3",
+      "delay": 0.4
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 290,
+     "y": 1496,
+     "s": 2.4,
+     "outfit": "manager",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r3b": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#FDF0D9",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "cal_fill",
+     "x": 700,
+     "y": 965,
+     "size": 70,
+     "gap": 12,
+     "title": "Hours",
+     "fills": [
+      {
+       "at": "chunk:0",
+       "delay": 0.2,
+       "dur": 1.5,
+       "upto": 20
+      }
+     ]
+    },
+    {
+     "p": "meter",
+     "x": 700,
+     "y": 1350,
+     "w": 440,
+     "h": 60,
+     "fs": 40,
+     "label": "Budget",
+     "limit": "Limit",
+     "to": 0.86,
+     "fill": {
+      "at": "chunk:1",
+      "delay": 0.3,
+      "dur": 1.2
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 218,
+     "y": 1496,
+     "s": 2.0,
+     "outfit": "manager",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r3c": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#FDF0D9",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "bubble",
+     "x": 310,
+     "y": 800,
+     "s": 1.6,
+     "label": "?",
+     "side": "down",
+     "at": "chunk:1"
+    },
+    {
+     "p": "person",
+     "x": 810,
+     "y": 1496,
+     "s": 1.8,
+     "color": "#CFE9D9",
+     "at": "chunk:3"
+    },
+    {
+     "p": "phone",
+     "x": 640,
+     "y": 1180,
+     "s": 0.3,
+     "screen": "call",
+     "appear": {
+      "at": "chunk:3",
+      "delay": 0.25
+     },
+     "shake": {
+      "at": "chunk:3",
+      "delay": 0.4,
+      "dur": 0.8,
+      "amp": 6,
+      "hz": 9
+     }
+    },
+    {
+     "p": "speech",
+     "x": 745,
+     "y": 900,
+     "s": 0.65,
+     "side": "right",
+     "appear": {
+      "at": "chunk:3",
+      "delay": 0.7
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 300,
+     "y": 1496,
+     "s": 2.4,
+     "outfit": "manager",
+     "mood": "flat",
+     "arm": "down",
+     "until": "chunk:3"
+    },
+    {
+     "p": "ledger",
+     "x": 300,
+     "y": 1496,
+     "s": 2.4,
+     "outfit": "manager",
+     "mood": "smile",
+     "arm": "phone",
+     "at": "chunk:3",
+     "pop": "cut"
+    }
+   ]
+  },
+  "r4a": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#ECE7FA",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "desk",
+     "x": 775,
+     "y": 1287,
+     "w": 320
+    },
+    {
+     "p": "laptop",
+     "x": 775,
+     "y": 1182,
+     "s": 0.8,
+     "screen": "sheet"
+    },
+    {
+     "p": "books",
+     "x": 775,
+     "y": 1425,
+     "s": 0.6,
+     "n": 4,
+     "at": "chunk:1"
+    },
+    {
+     "p": "ledger",
+     "x": 310,
+     "y": 1496,
+     "s": 2.5,
+     "outfit": "controller",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r4b": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#ECE7FA",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "checklist",
+     "x": 695,
+     "y": 1020,
+     "w": 480,
+     "rh": 110,
+     "tick": {
+      "at": "chunk:1",
+      "delay": 0.15,
+      "every": 0.5
+     }
+    },
+    {
+     "p": "calendar",
+     "x": 695,
+     "y": 1400,
+     "s": 0.5,
+     "mark": 27
+    },
+    {
+     "p": "ledger",
+     "x": 218,
+     "y": 1496,
+     "s": 2.0,
+     "outfit": "controller",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r4c": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#ECE7FA",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "chart",
+     "x": 690,
+     "y": 905,
+     "s": 1.0,
+     "trend": "up",
+     "at": "chunk:1"
+    },
+    {
+     "p": "check",
+     "x": 880,
+     "y": 770,
+     "s": 0.6,
+     "appear": {
+      "at": "chunk:1",
+      "delay": 0.45
+     }
+    },
+    {
+     "p": "person",
+     "x": 630,
+     "y": 1496,
+     "s": 1.4,
+     "color": "#F2C7C2",
+     "appear": {
+      "at": "chunk:2",
+      "delay": 0.0
+     }
+    },
+    {
+     "p": "person",
+     "x": 752,
+     "y": 1496,
+     "s": 1.4,
+     "color": "#CFE9D9",
+     "appear": {
+      "at": "chunk:2",
+      "delay": 0.2
+     }
+    },
+    {
+     "p": "person",
+     "x": 874,
+     "y": 1496,
+     "s": 1.4,
+     "color": "#F3D9A6",
+     "appear": {
+      "at": "chunk:2",
+      "delay": 0.4
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 285,
+     "y": 1496,
+     "s": 2.4,
+     "outfit": "controller",
+     "mood": "smile",
+     "arm": "up"
+    }
+   ]
+  },
+  "r5a": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#DCE4F3",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "bills",
+     "x": 690,
+     "y": 840,
+     "s": 1.0,
+     "n": 4
+    },
+    {
+     "p": "pot",
+     "x": 524,
+     "y": 1150,
+     "s": 1.0,
+     "label": "Growth",
+     "color": "blue",
+     "fs": 34
+    },
+    {
+     "p": "pot",
+     "x": 692,
+     "y": 1150,
+     "s": 1.0,
+     "label": "Debt",
+     "color": "amber",
+     "fs": 34
+    },
+    {
+     "p": "pot",
+     "x": 856,
+     "y": 1150,
+     "s": 1.0,
+     "label": "Owners",
+     "color": "green",
+     "fs": 34
+    },
+    {
+     "p": "coin_stream",
+     "x": 690,
+     "y": 880,
+     "to": [
+      524,
+      1150
+     ],
+     "n": 4,
+     "dur": 0.7,
+     "stagger": 0.14,
+     "arc": 80,
+     "s": 1.15,
+     "at": "chunk:1",
+     "delay": 0.0
+    },
+    {
+     "p": "coin_stream",
+     "x": 690,
+     "y": 880,
+     "to": [
+      692,
+      1150
+     ],
+     "n": 4,
+     "dur": 0.7,
+     "stagger": 0.14,
+     "arc": 80,
+     "s": 1.15,
+     "at": "chunk:1",
+     "delay": 0.55
+    },
+    {
+     "p": "coin_stream",
+     "x": 690,
+     "y": 880,
+     "to": [
+      856,
+      1150
+     ],
+     "n": 4,
+     "dur": 0.7,
+     "stagger": 0.14,
+     "arc": 80,
+     "s": 1.15,
+     "at": "chunk:1",
+     "delay": 1.1
+    },
+    {
+     "p": "ledger",
+     "x": 200,
+     "y": 1496,
+     "s": 1.9,
+     "outfit": "cfo",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r5b": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#DCE4F3",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "chart",
+     "x": 255,
+     "y": 860,
+     "s": 0.82,
+     "trend": "up",
+     "reveal": {
+      "at": "chunk:0",
+      "delay": 0.1,
+      "dur": 0.8,
+      "dir": "right"
+     }
+    },
+    {
+     "p": "board_table",
+     "x": 705,
+     "y": 900,
+     "w": 430,
+     "n": 3,
+     "colors": [
+      "#BFE6CF",
+      "#D8F1E3",
+      "#BFE6CF"
+     ],
+     "seat": {
+      "at": "chunk:2",
+      "every": 0.2
+     }
+    },
+    {
+     "p": "order_chip",
+     "x": 705,
+     "y": 998,
+     "label": "Investors",
+     "color": "light",
+     "fs": 36,
+     "at": "chunk:2"
+    },
+    {
+     "p": "board_table",
+     "x": 705,
+     "y": 1270,
+     "w": 460,
+     "n": 3,
+     "seat": {
+      "at": "chunk:1",
+      "every": 0.2
+     }
+    },
+    {
+     "p": "order_chip",
+     "x": 705,
+     "y": 1368,
+     "label": "Board",
+     "color": "light",
+     "fs": 36,
+     "at": "chunk:1"
+    },
+    {
+     "p": "ledger",
+     "x": 225,
+     "y": 1496,
+     "s": 2.0,
+     "outfit": "cfo",
+     "mood": "smile",
+     "arm": "point"
+    }
+   ]
+  },
+  "r5c": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#DCE4F3",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "dial",
+     "x": 490,
+     "y": 770,
+     "w": 720,
+     "fs": 44,
+     "left": "Counts",
+     "right": "Decides",
+     "start": 0.06,
+     "slide": {
+      "at": "chunk:0",
+      "delay": 0.2,
+      "to": 0.95,
+      "dur": 1.3
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 490,
+     "y": 1496,
+     "s": 3.0,
+     "outfit": "cfo",
+     "mood": "smile",
+     "arm": "shrug",
+     "until": "chunk:2"
+    },
+    {
+     "p": "ledger",
+     "x": 490,
+     "y": 1496,
+     "s": 3.0,
+     "outfit": "cfo",
+     "mood": "happy",
+     "arm": "up",
+     "at": "chunk:2",
+     "pop": "cut"
+    }
+   ]
+  },
+  "all": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "career_ladder",
+     "x": 230,
+     "y": 1400,
+     "n": 5,
+     "gap": 190,
+     "w": 220
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 1210.0,
+     "h": 476,
+     "label": "AUDIT FIRM",
+     "color": "ink",
+     "fs": 36
+    },
+    {
+     "p": "side_bracket",
+     "x": 856,
+     "y": 735.0,
+     "h": 286,
+     "label": "COMPANY",
+     "color": "blue",
+     "fs": 36
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1400,
+     "label": "INTERN",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1210,
+     "label": "SENIOR",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 1020,
+     "label": "MANAGER",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 830,
+     "label": "CONTROLLER",
+     "state": "done",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "rung_tag",
+     "x": 612.0,
+     "y": 640,
+     "label": "CFO",
+     "state": "now",
+     "w": 440,
+     "h": 96,
+     "fs": 46
+    },
+    {
+     "p": "dial",
+     "x": 540,
+     "y": 524,
+     "w": 420,
+     "fs": 36,
+     "left": "Counts",
+     "right": "Decides",
+     "start": 0.06,
+     "slide": {
+      "at": "chunk:1",
+      "to": 0.95,
+      "dur": 1.8
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1400,
+     "s": 0.8,
+     "outfit": "intern",
+     "mood": "smile",
+     "arm": "down",
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.05
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1210,
+     "s": 0.8,
+     "outfit": "senior",
+     "mood": "smile",
+     "arm": "down",
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.33
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 1020,
+     "s": 0.8,
+     "outfit": "manager",
+     "mood": "smile",
+     "arm": "down",
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.6100000000000001
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 830,
+     "s": 0.8,
+     "outfit": "controller",
+     "mood": "smile",
+     "arm": "down",
+     "appear": {
+      "at": "chunk:0",
+      "delay": 0.8900000000000001
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 230,
+     "y": 640,
+     "s": 0.8,
+     "outfit": "cfo",
+     "mood": "happy",
+     "arm": "wave",
+     "appear": {
+      "at": "chunk:0",
+      "delay": 1.1700000000000002
+     }
+    }
+   ]
+  },
+  "cta": {
+   "bg": "none",
+   "frame": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "items": [
+    {
+     "p": "backdrop",
+     "x": 540,
+     "y": 1500,
+     "w": 1400,
+     "wall": "#E8F0FC",
+     "up": 1700,
+     "down": 600
+    },
+    {
+     "p": "floor_deco",
+     "x": 540,
+     "y": 1500
+    },
+    {
+     "p": "steps",
+     "x": 30,
+     "y": 1500,
+     "n": 5,
+     "step_w": 180,
+     "rise": 44
+    },
+    {
+     "p": "ledger",
+     "x": 120.0,
+     "y": 1450,
+     "s": 0.82,
+     "outfit": "intern",
+     "mood": "happy",
+     "arm": "down",
+     "pulse": {
+      "at": "chunk:0",
+      "delay": 0.3,
+      "dur": 0.45,
+      "amp": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 300.0,
+     "y": 1406,
+     "s": 0.82,
+     "outfit": "senior",
+     "mood": "happy",
+     "arm": "down",
+     "pulse": {
+      "at": "chunk:0",
+      "delay": 0.48,
+      "dur": 0.45,
+      "amp": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 480.0,
+     "y": 1362,
+     "s": 0.82,
+     "outfit": "manager",
+     "mood": "happy",
+     "arm": "down",
+     "pulse": {
+      "at": "chunk:0",
+      "delay": 0.6599999999999999,
+      "dur": 0.45,
+      "amp": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 660.0,
+     "y": 1318,
+     "s": 0.82,
+     "outfit": "controller",
+     "mood": "happy",
+     "arm": "down",
+     "pulse": {
+      "at": "chunk:0",
+      "delay": 0.8400000000000001,
+      "dur": 0.45,
+      "amp": 0.1
+     }
+    },
+    {
+     "p": "ledger",
+     "x": 840.0,
+     "y": 1274,
+     "s": 0.82,
+     "outfit": "cfo",
+     "mood": "happy",
+     "arm": "wave",
+     "pulse": {
+      "at": "chunk:0",
+      "delay": 1.02,
+      "dur": 0.45,
+      "amp": 0.1
+     }
+    }
+   ]
+  }
+ },
+ "beats": [
+  {
+   "role": "title",
+   "img": "title",
+   "text": "From audit intern to CFO, the career ladder explained with Ledger in ninety seconds.",
+   "chunks": [
+    {
+     "text": "From audit intern"
+    },
+    {
+     "text": "to CFO"
+    },
+    {
+     "text": "the career ladder"
+    },
+    {
+     "text": "explained with Ledger",
+     "key": "Ledger"
+    }
+   ],
+   "message": "From audit intern to CFO, the career ladder explained with Ledger",
+   "tag": "IN 90 SECONDS",
+   "gap": 0.3
+  },
+  {
+   "role": "rung",
+   "img": "r1a",
+   "text": "First, Ledger is the audit intern, with a badge and a backpack.",
+   "chunks": [
+    {
+     "text": "First, Ledger"
+    },
+    {
+     "text": "is the audit intern",
+     "key": "intern"
+    },
+    {
+     "text": "with a badge"
+    },
+    {
+     "text": "and a backpack"
+    }
+   ],
+   "rung": 1
+  },
+  {
+   "role": "rung",
+   "img": "r1b",
+   "text": "He matches each invoice to the ledger, line by line.",
+   "chunks": [
+    {
+     "text": "He matches"
+    },
+    {
+     "text": "each invoice",
+     "key": "invoice"
+    },
+    {
+     "text": "to the ledger"
+    },
+    {
+     "text": "line by line"
+    }
+   ],
+   "rung": 1,
+   "chips": [
+    {
+     "label": "MATCH INVOICES",
+     "at": 1
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r1b",
+   "text": "Then he ticks every number that agrees, and flags the rest.",
+   "chunks": [
+    {
+     "text": "Then he ticks",
+     "key": "ticks"
+    },
+    {
+     "text": "every number"
+    },
+    {
+     "text": "that agrees"
+    },
+    {
+     "text": "and flags the rest"
+    }
+   ],
+   "rung": 1,
+   "chips": [
+    {
+     "label": "TICK AND TIE",
+     "at": 0
+    },
+    {
+     "label": "FLAG GAPS",
+     "at": 3
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r1c",
+   "text": "On this rung, he counts everything himself.",
+   "chunks": [
+    {
+     "text": "On this rung"
+    },
+    {
+     "text": "he counts everything",
+     "key": "everything"
+    },
+    {
+     "text": "himself"
+    }
+   ],
+   "rung": 1,
+   "chips": [
+    {
+     "label": "COUNT IT ALL",
+     "at": 1
+    }
+   ]
+  },
+  {
+   "role": "climb",
+   "img": "climb1",
+   "text": "After that, he climbs to senior.",
+   "chunks": [
+    {
+     "text": "After that, he climbs"
+    },
+    {
+     "text": "to senior",
+     "key": "senior"
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r2a",
+   "text": "Now he runs the fieldwork at the client's office.",
+   "chunks": [
+    {
+     "text": "Now he runs"
+    },
+    {
+     "text": "the fieldwork",
+     "key": "fieldwork"
+    },
+    {
+     "text": "at the client's office"
+    }
+   ],
+   "rung": 2,
+   "chips": [
+    {
+     "label": "RUN FIELDWORK",
+     "at": 1
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r2b",
+   "text": "He helps decide which numbers are big enough to test.",
+   "chunks": [
+    {
+     "text": "He helps decide"
+    },
+    {
+     "text": "which numbers"
+    },
+    {
+     "text": "are big enough",
+     "key": "big enough"
+    },
+    {
+     "text": "to test"
+    }
+   ],
+   "rung": 2,
+   "chips": [
+    {
+     "label": "PICK THE TESTS",
+     "at": 3
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r2c",
+   "text": "And he reviews the intern's work.",
+   "chunks": [
+    {
+     "text": "And he reviews",
+     "key": "reviews"
+    },
+    {
+     "text": "the intern's work"
+    }
+   ],
+   "rung": 2,
+   "chips": [
+    {
+     "label": "REVIEW WORK",
+     "at": 0
+    }
+   ]
+  },
+  {
+   "role": "climb",
+   "img": "climb2",
+   "text": "Then he climbs again, to manager.",
+   "chunks": [
+    {
+     "text": "Then he climbs again"
+    },
+    {
+     "text": "to manager",
+     "key": "manager"
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r3a",
+   "text": "As manager, he leads the whole engagement and its team.",
+   "chunks": [
+    {
+     "text": "As manager"
+    },
+    {
+     "text": "he leads"
+    },
+    {
+     "text": "the whole engagement"
+    },
+    {
+     "text": "and its team",
+     "key": "team"
+    }
+   ],
+   "rung": 3,
+   "chips": [
+    {
+     "label": "LEAD THE TEAM",
+     "at": 1
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r3b",
+   "text": "He plans the hours, so the job stays on budget.",
+   "chunks": [
+    {
+     "text": "He plans the hours",
+     "key": "hours"
+    },
+    {
+     "text": "so the job stays"
+    },
+    {
+     "text": "on budget"
+    }
+   ],
+   "rung": 3,
+   "chips": [
+    {
+     "label": "PLAN THE HOURS",
+     "at": 0
+    },
+    {
+     "label": "HOLD THE BUDGET",
+     "at": 2
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r3c",
+   "text": "And when a hard question comes up, he calls the client.",
+   "chunks": [
+    {
+     "text": "And when"
+    },
+    {
+     "text": "a hard question"
+    },
+    {
+     "text": "comes up"
+    },
+    {
+     "text": "he calls the client",
+     "key": "client"
+    }
+   ],
+   "rung": 3,
+   "chips": [
+    {
+     "label": "CALL THE CLIENT",
+     "at": 3
+    }
+   ]
+  },
+  {
+   "role": "climb",
+   "img": "climb3",
+   "text": "Next, he joins a company as controller.",
+   "chunks": [
+    {
+     "text": "Next, he joins"
+    },
+    {
+     "text": "a company"
+    },
+    {
+     "text": "as controller",
+     "key": "controller"
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r4a",
+   "text": "Now he runs the company's accounting.",
+   "chunks": [
+    {
+     "text": "Now he runs"
+    },
+    {
+     "text": "the company's accounting",
+     "key": "accounting"
+    }
+   ],
+   "rung": 4,
+   "chips": [
+    {
+     "label": "RUN ACCOUNTING",
+     "at": 1
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r4b",
+   "text": "Every month, he closes the books, step by step.",
+   "chunks": [
+    {
+     "text": "Every month"
+    },
+    {
+     "text": "he closes the books",
+     "key": "closes"
+    },
+    {
+     "text": "step by step"
+    }
+   ],
+   "rung": 4,
+   "chips": [
+    {
+     "label": "CLOSE THE BOOKS",
+     "at": 1
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r4c",
+   "text": "Then he signs off the reports that everyone relies on.",
+   "chunks": [
+    {
+     "text": "Then he signs off",
+     "key": "signs off"
+    },
+    {
+     "text": "the reports"
+    },
+    {
+     "text": "that everyone"
+    },
+    {
+     "text": "relies on"
+    }
+   ],
+   "rung": 4,
+   "chips": [
+    {
+     "label": "SIGN THE REPORTS",
+     "at": 0
+    }
+   ]
+  },
+  {
+   "role": "climb",
+   "img": "climb4",
+   "text": "Finally, he reaches the top rung, as CFO.",
+   "chunks": [
+    {
+     "text": "Finally, he reaches"
+    },
+    {
+     "text": "the top rung"
+    },
+    {
+     "text": "as CFO",
+     "key": "CFO"
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r5a",
+   "text": "Now he decides where the company's money goes next.",
+   "chunks": [
+    {
+     "text": "Now he decides",
+     "key": "decides"
+    },
+    {
+     "text": "where the company's money"
+    },
+    {
+     "text": "goes next"
+    }
+   ],
+   "rung": 5,
+   "chips": [
+    {
+     "label": "ALLOCATE CAPITAL",
+     "at": 0
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r5b",
+   "text": "He explains the numbers to the board, and to investors.",
+   "chunks": [
+    {
+     "text": "He explains the numbers"
+    },
+    {
+     "text": "to the board",
+     "key": "board"
+    },
+    {
+     "text": "and to investors"
+    }
+   ],
+   "rung": 5,
+   "chips": [
+    {
+     "label": "BRIEF THE BOARD",
+     "at": 1
+    },
+    {
+     "label": "FACE INVESTORS",
+     "at": 2
+    }
+   ]
+  },
+  {
+   "role": "rung",
+   "img": "r5c",
+   "text": "He hardly counts anything himself, yet he answers for every number.",
+   "chunks": [
+    {
+     "text": "He hardly counts"
+    },
+    {
+     "text": "anything himself"
+    },
+    {
+     "text": "yet he answers",
+     "key": "answers"
+    },
+    {
+     "text": "for every number"
+    }
+   ],
+   "rung": 5,
+   "chips": [
+    {
+     "label": "OWN THE NUMBERS",
+     "at": 2
+    }
+   ]
+  },
+  {
+   "role": "payoff",
+   "img": "all",
+   "text": "So with each rung, Ledger counted less, and decided more.",
+   "chunks": [
+    {
+     "text": "So with each rung"
+    },
+    {
+     "text": "Ledger counted less"
+    },
+    {
+     "text": "and decided more",
+     "key": "decided more"
+    }
+   ],
+   "gap": 0.5
+  },
+  {
+   "role": "cta",
+   "img": "cta",
+   "text": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "chunks": [
+    {
+     "text": "To climb your own"
+    },
+    {
+     "text": "career ladder"
+    },
+    {
+     "text": "learn technical"
+    },
+    {
+     "text": "business concepts"
+    },
+    {
+     "text": "at Edlintics",
+     "key": "Edlintics"
+    }
+   ],
+   "say": "To climb your own career ladder, learn technical business concepts at Ed-lin-tics.",
+   "message": "To climb your own career ladder, learn technical business concepts at Edlintics"
+  }
+ ]
+}

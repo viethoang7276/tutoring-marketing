@@ -31,6 +31,8 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
 8. **Say when the example starts (Hoang, 6 Nov 2026).** The first `problem` beat opens with "Let's imagine an airline where ..." or "For this, let's use the example of ...", straight after the hook question. The validator fails the script otherwise. Full guide: "Context transitions" in the engine skill.
 
+**Direct opening (Hoang, 13 Nov 2026).** New reels open by saying what the video is and then go straight to the point, with no question or teaser hook: see "Direct opening" in the engine skill (`edlintics-explainer-reel`). It does NOT yet apply to how-to reels: the validator still requires the "How does <a role> ... deal with <a problem>?" question in beat 1 (or beat 2-3 with hookStyle B), so keep the question opening until the validator is updated. Reels already scheduled are not changed.
+
 ## What makes it work
 - **A real job, a real problem.** Viewers see how a named role in a named industry handles something that actually happens: a ransomware attack at a hospital, staff quitting at a store, a restricted donation at a charity.
 - **A process they can screenshot.** The 3-4 steps come back as a 4-box diagram that fills the screen.

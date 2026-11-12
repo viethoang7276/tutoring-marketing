@@ -30,6 +30,8 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
 8. **Say when the example starts and when you go back to it (Hoang, 6 Nov 2026).** The first `story` beat opens with "Let's imagine ..." or "For this, let's use the example of ...". The first `example` beat says "Continuing the story, ...", "Back to our toy shop, ..." or "Now let's use a business example ...". The validator fails the script otherwise. Full guide: "Context transitions" in the engine skill.
 
+**Direct opening (Hoang, 13 Nov 2026).** New reels open by saying what the video is and then go straight to the point, with no question or teaser hook: see "Direct opening" in the engine skill (`edlintics-explainer-reel`). For a new definition reel, beat 1 (role `hook`) is the title sentence, for example "Bid-ask spread, explained with Ledger in 90 seconds", replacing a hook question; the first `story` beat still opens with "Let's imagine ...". Reels already scheduled are not changed.
+
 ## Steps
 1. **Pick the topic.** Take it from the topic bank below, or use the one you were given. If the hub already has a slot on the same term (check `slots` titles), stop and report.
 2. **Write the script.** Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Copy the patterns in `example-sunk-cost.json`.

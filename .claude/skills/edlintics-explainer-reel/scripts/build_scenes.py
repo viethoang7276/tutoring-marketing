@@ -35,6 +35,9 @@ LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY = 0.74, 0.88, 0.74   # Ledger's share of the
 # platform safe zones (top 220, bottom 380, right 140 px). The box is taller than wide, so Ledger takes a smaller share of
 # its height and the props get the room above and beside him
 FULL = {"aspect": 900 / 990, "ledger": (0.66, 0.78, 0.66)}
+# Ladder layout (meta.layout "ladder", career-ladder reels, 12 Nov 2026): the art panel is x 40-940, y 460-1290 (900x830), between the rung
+# header and the low captions. Scenes there use the explicit frame [40, 460, 900, 830], so art coordinates equal screen pixels
+LADDER = {"aspect": 900 / 830, "ledger": (0.6, 0.74, 0.6), "box": (40, 460, 940, 1290), "bleed_box": (0, 220, 940, 1540)}   # bleed (meta.ladder_style, 13 Nov 2026): frame [0, 0, 1080, 1920], items stay in the safe area
 BLEED = {"desk", "building", "whiteboard", "window", "people_group"}   # may run off the left/right edges
 DATA_PROPS = {"data_chart", "data_table", "sheet_grid", "order_book", "live_chart", "waterfall"}   # real numbers (6 Nov 2026): the numbers are the subject, so an auto or "wide" frame shows the whole scene (data_frame) and never shrinks them around Ledger
 HELD = {"ticket", "phone", "coins", "bills", "invoice", "coffee", "price_tag", "envelope", "books", "umbrella", "receipt",
@@ -151,7 +154,7 @@ def data_check(name, spec):
     return out
 
 
-def motion_check(name, spec, beats, full):
+def motion_check(name, spec, beats, full, box=None):
     """WARN about motion items (keys move, reveal and so on, 6 Nov 2026): a chunk number past the end of the scene's run, Ledger-first framing that would shift items away from their "to", and items that end outside the safe art box."""
     out = []; items = spec.get("items", []); KEYS = ("move", "pulse", "shake", "out", "reveal")
     has = [it for it in items if any(L._m_keys(it.get(k)) for k in KEYS) or it["p"] in L.SELF_TIMED or it["p"] in ("order_book", "live_chart", "waterfall", "fill_grid", "trader", "counter")]
@@ -171,7 +174,7 @@ def motion_check(name, spec, beats, full):
         for n in refs({k: v for k, v in it.items() if k not in ("p", "id", "x", "y", "s")}):
             if n >= run: out.append(f'scene {name}: {it["p"]} uses chunk:{n}, but this scene has only {run} caption chunks (0 to {run - 1})')
     if spec.get("frame") in (None, "auto") and any(it["p"] == "ledger" for it in items): out.append(f'scene {name}: motion with Ledger-first framing moves items after you placed them; set "frame" to an explicit box')
-    x0, y0, x1, y1 = (40, 450, 940, 1440) if full else (40, 530, 1040, 1310)
+    x0, y0, x1, y1 = box or ((40, 450, 940, 1440) if full else (40, 530, 1040, 1310))
     if isinstance(spec.get("frame"), list):
         for it in has:
             b = L.item_box(it); pts = [(b[0], b[1]), (b[0] + b[2], b[1] + b[3])]
@@ -243,6 +246,9 @@ def main(d):
     S = json.load(open(os.path.join(d, "script.json")))
     if S.get("meta", {}).get("layout") == "full":
         ASPECT = FULL["aspect"]; LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY = FULL["ledger"]
+    ladder = S.get("meta", {}).get("layout") == "ladder"
+    if ladder:
+        ASPECT = LADDER["aspect"]; LEDGER_MIN, LEDGER_MAX, LEDGER_BUSY = LADDER["ledger"]
     frames = {}
     talk = S.get("meta", {}).get("type") == "ledger-talks"
     for name, spec in S["scenes"].items():
@@ -254,7 +260,7 @@ def main(d):
             frames[name] = ledger_first(spec)   # props are nudged/scaled before the art is drawn
         for w in hand_check(name, spec): print("WARN ", w)
         for w in data_check(name, spec): print("WARN ", w)
-        for w in motion_check(name, spec, S.get("beats", []), S.get("meta", {}).get("layout") == "full"): print("WARN ", w)
+        for w in motion_check(name, spec, S.get("beats", []), S.get("meta", {}).get("layout") == "full", (LADDER["bleed_box"] if S.get("meta", {}).get("ladder_style") == "bleed" else LADDER["box"]) if ladder else None): print("WARN ", w)
         open(os.path.join(d, f"{name}.svg"), "w").write(L.scene_svg(spec))
     beats = []
     for k, b in enumerate(S["beats"], 1):

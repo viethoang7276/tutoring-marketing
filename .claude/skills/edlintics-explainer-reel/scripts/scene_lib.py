@@ -23,7 +23,12 @@ def _f(v):
 MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "angry", "talk", "dizzy"]
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
-OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula", "professor", "lecturer", "graduate", "mathprof"]
+OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula", "professor", "lecturer", "graduate", "mathprof", "intern", "senior", "manager", "controller", "cfo",
+           "mk_intern", "mk_specialist", "mk_manager", "mk_director", "mk_cmo", "inv_junior", "inv_analyst", "inv_senior", "inv_pm", "inv_cio", "con_analyst", "con_consultant", "con_manager", "con_principal", "con_partner"]
+LADDER_OUTFITS = ("intern", "senior", "manager", "controller", "cfo",   # audit to CFO
+                  "mk_intern", "mk_specialist", "mk_manager", "mk_director", "mk_cmo",   # marketing intern to CMO (13 Nov 2026)
+                  "inv_junior", "inv_analyst", "inv_senior", "inv_pm", "inv_cio",   # junior analyst to CIO (13 Nov 2026)
+                  "con_analyst", "con_consultant", "con_manager", "con_principal", "con_partner")   # consulting analyst to partner (13 Nov 2026)   # one Ledger per rung of a career-ladder reel (12 Nov 2026), see _ladder_wear
 PROF = ("professor", "lecturer", "graduate", "mathprof")   # puzzle-guide family (2 Nov 2026 design options)
 
 
@@ -148,12 +153,20 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
         head = (f'<path d="M58 70 Q120 6 182 70" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
                 f'<rect x="48" y="64" width="16" height="30" rx="7" fill="{INK}"/><path d="M58 92 Q66 128 98 130" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/>'
                 f'<circle cx="100" cy="130" r="5" fill="{INK}"/>')
+    sleeve = None
+    if outfit in LADDER_OUTFITS:   # career-ladder reels (12 Nov 2026): the same Ledger, dressed for each rung
+        band, collar, behind, head, brows, sleeve = _ladder_wear(outfit, brows)
     # arms: every pose keeps the brand proportions (assets/brand/ledger.svg): shoulder-to-hand 38-48 units,
     # arm stroke 13/8, hand r 9, so hands never look tiny or huge next to the body. See ARM_POSES and check_proportions().
     pose = ARM_POSES.get(arm, ARM_POSES["down"])
     right = _arm(*pose["R"]); left = _arm(*pose.get("L", ARM_POSES["down"]["L"]))
     if larm and larm != "down":
         left = _arm(*ARM_POSES.get(larm, ARM_POSES["down"]).get("L", ARM_POSES["down"]["L"]))
+    if sleeve:   # a sleeve from the shoulder over the first part of each arm (ladder outfits only); the arm and hand keep the brand shape
+        _lp = (ARM_POSES.get(larm, ARM_POSES["down"]) if larm and larm != "down" else pose).get("L", ARM_POSES["down"]["L"])[0]
+        _sl = lambda d: (f'<path d="{d}" fill="none" stroke="{INK}" stroke-width="17" stroke-dasharray="{sleeve[1] + 2} 400"/>'
+                         f'<path d="{d}" fill="none" stroke="{sleeve[0]}" stroke-width="12" stroke-dasharray="{sleeve[1]} 400"/>')
+        right += _sl(pose["R"][0]); left += _sl(_lp)
     prop = ""
     if arm == "mic":  # small handheld mic with a fuzzy windscreen, held at cheek height (drawn under the hand)
         fuzz = "".join(f'<path d="M{163 + 9 * math.cos(a):.1f} {139 + 9 * math.sin(a):.1f} l{3 * math.cos(a):.1f} {3 * math.sin(a):.1f}" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>' for a in [k * math.pi / 6 for k in range(12)])
@@ -192,6 +205,114 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
     # shoulders (29 Oct 2026: a tilted body with untilted arms left a hand floating off the corner); the legs stay put
     return (f'<g transform="translate({_f(x)} {_f(y)}) scale({s}) translate(-120 -230){fl}">'
             f'{behind}{legs}<g transform="rotate({tilt} 120 198)">{left}{body}{prop}{right}</g></g>')
+
+
+def _ladder_wear(outfit, brows):
+    """Ledger's clothes on each rung of a career-ladder reel (12 Nov 2026): intern (soft blue top, lanyard with a badge, orange backpack),
+    senior (white shirt with rolled sleeves, tie, brown laptop bag), manager (navy suit, pocket square), controller (grey suit, glasses,
+    a pen in the pocket), cfo (black suit, gold pocket square, glasses, grey temples and brows). Returns band, collar, behind, head, brows, sleeve."""
+    bandp = lambda col, edge="": f'<path d="M54.5 150 L185.5 150 L185.5 174 Q185.5 189.5 170 189.5 L70 189.5 Q54.5 189.5 54.5 174 Z" fill="{col}"{edge}/>'
+    shirt = (f'<path d="M108 150 L120 168 L116 173 L102 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+             f'<path d="M132 150 L120 168 L124 173 L138 154 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+             f'<path d="M114 152 L126 152 L129 161 L111 161 Z" fill="{BLUE}"/><path d="M112 162 L128 162 L124 184 L120 189 L116 184 Z" fill="{BLUE}"/>')
+    lapels = lambda col: f'<path d="M96 151 L112 186 M144 151 L128 186" fill="none" stroke="{col}" stroke-width="3" stroke-linecap="round"/>'
+    GL = (f'<circle cx="102" cy="110" r="14" fill="none" stroke="{INK}" stroke-width="3.5"/><circle cx="138" cy="110" r="14" fill="none" stroke="{INK}" stroke-width="3.5"/>'
+          f'<path d="M116 108 Q120 104 124 108" fill="none" stroke="{INK}" stroke-width="3"/><path d="M88 108 L56 101 M152 108 L184 101" stroke="{INK}" stroke-width="3" stroke-linecap="round"/>')
+    behind = head = ""; sleeve = None
+    if outfit == "intern":
+        band = bandp("#7FA0DC")
+        collar = (f'<path d="M104 150 Q120 164 136 150 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+                  f'<path d="M92 150 L120 174 L148 150" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+                  f'<rect x="105" y="171" width="30" height="27" rx="4" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/><rect x="105" y="171" width="30" height="8" rx="3" fill="{BLUE}"/>'
+                  f'<circle cx="114" cy="186" r="3.5" fill="{GREY}"/><path d="M121 185 h10 M121 191 h7" stroke="{GREY}" stroke-width="2.2" stroke-linecap="round"/>')
+        behind = (f'<rect x="34" y="88" width="34" height="92" rx="12" fill="#F08A24" stroke="{INK}" stroke-width="4"/>'
+                  f'<rect x="172" y="88" width="34" height="92" rx="12" fill="#F08A24" stroke="{INK}" stroke-width="4"/>'
+                  f'<path d="M96 40 Q120 14 144 40" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>')
+        sleeve = ("#7FA0DC", 15)
+    elif outfit == "senior":
+        band = bandp("#F4F8FF", f' stroke="{INK}" stroke-width="2.5"')
+        collar = shirt + f'<path d="M150 158 h22 v14 h-22 z" fill="none" stroke="{GREY}" stroke-width="2.2"/>'
+        behind = (f'<path d="M46 150 L58 66" stroke="#6B4423" stroke-width="7" stroke-linecap="round"/>'
+                  f'<rect x="16" y="146" width="50" height="58" rx="8" fill="#8A5A2B" stroke="{INK}" stroke-width="4"/>'
+                  f'<path d="M16 166 H66" stroke="{INK}" stroke-width="3"/><rect x="35" y="160" width="12" height="13" rx="3" fill="{GOLD}" stroke="{INK}" stroke-width="2"/>')
+        sleeve = ("#F4F8FF", 13)
+    elif outfit == "manager":
+        band = bandp(NAVY)
+        collar = shirt + lapels("#53627F") + f'<path d="M150 160 L170 157 L170 166 L150 166 Z" fill="{WHITE}" stroke="{INK}" stroke-width="1.5" stroke-linejoin="round"/>'
+        sleeve = (NAVY, 26)
+    elif outfit == "controller":
+        band = bandp("#6E7A91")
+        collar = (shirt + lapels("#3F4A5E") + f'<path d="M150 158 H171 V178 Q160 184 150 178 Z" fill="none" stroke="#3F4A5E" stroke-width="2.5" stroke-linejoin="round"/>'
+                  f'<path d="M157 150 V172" stroke="{GOLD}" stroke-width="4.5" stroke-linecap="round"/><path d="M157 150 V157" stroke="{INK}" stroke-width="4.5" stroke-linecap="round"/>')
+        head = GL; sleeve = ("#6E7A91", 26)
+    elif outfit in ("cfo", "inv_cio"):
+        band = bandp("#14161C")
+        collar = (shirt + lapels("#4A4F5C") + f'<path d="M149 161 L160 154 L171 161 L171 167 L149 167 Z" fill="{GOLD}" stroke="{INK}" stroke-width="1.5" stroke-linejoin="round"/>'
+                  f'<rect x="113" y="170" width="14" height="4" rx="2" fill="{GOLD}"/>')
+        tuft = lambda sx: (f'<g transform="translate(120 0) scale({sx} 1) translate(-120 0)"><path d="M54 58 Q38 60 40 74 Q34 82 42 92 Q40 102 54 104 Z" fill="#C3C9D3" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                           f'<path d="M46 72 Q50 76 46 82 M47 88 Q51 92 48 96" fill="none" stroke="{INK}" stroke-width="2" stroke-linecap="round" opacity="0.5"/></g>')
+        head = GL + tuft(1) + tuft(-1)
+        if not brows: brows = f'<path d="M92 91 Q101 85 111 90 M129 90 Q139 85 148 91" fill="none" stroke="#9AA3B2" stroke-width="5.5" stroke-linecap="round"/>'
+        sleeve = ("#14161C", 26)
+        if outfit == "inv_cio": collar += f'<path d="M128 178 Q140 190 153 176" fill="none" stroke="{GOLD}" stroke-width="3" stroke-linecap="round"/>'   # a watch chain
+    else:   # marketing and investment ladders (13 Nov 2026): the same parts, mixed per rung
+        tee = f'<path d="M104 150 Q120 164 136 150 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+        lany = (f'<path d="M92 150 L120 174 L148 150" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+                f'<rect x="105" y="171" width="30" height="27" rx="4" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/><rect x="105" y="171" width="30" height="8" rx="3" fill="{BLUE}"/>'
+                f'<circle cx="114" cy="186" r="3.5" fill="{GREY}"/><path d="M121 185 h10 M121 191 h7" stroke="{GREY}" stroke-width="2.2" stroke-linecap="round"/>')
+        opensh = f'<path d="M102 150 L120 174 L138 150 Z" fill="{WHITE}" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'
+        psq = lambda col: f'<path d="M150 160 L170 157 L170 166 L150 166 Z" fill="{col}" stroke="{INK}" stroke-width="1.5" stroke-linejoin="round"/>'
+        glc = lambda col: GL.replace(f'stroke="{INK}" stroke-width="3.5"', f'stroke="{col}" stroke-width="4.5"')
+        tufts = "".join(f'<g transform="translate(120 0) scale({sx} 1) translate(-120 0)"><path d="M54 58 Q38 60 40 74 Q34 82 42 92 Q40 102 54 104 Z" fill="#C3C9D3" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/></g>' for sx in (1, -1))
+        gbrow = f'<path d="M92 91 Q101 85 111 90 M129 90 Q139 85 148 91" fill="none" stroke="#9AA3B2" stroke-width="5.5" stroke-linecap="round"/>'
+        pack = lambda col: (f'<rect x="34" y="88" width="34" height="92" rx="12" fill="{col}" stroke="{INK}" stroke-width="4"/><rect x="172" y="88" width="34" height="92" rx="12" fill="{col}" stroke="{INK}" stroke-width="4"/>'
+                            f'<path d="M96 40 Q120 14 144 40" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>')
+        if outfit == "mk_intern":   # coral tee, lanyard, a cap
+            band = bandp("#EF8F7A"); collar = tee + lany; sleeve = ("#EF8F7A", 15)
+            head = (f'<path d="M66 44 Q66 8 120 8 Q174 8 174 44 Z" fill="#EF8F7A" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                    f'<path d="M150 36 Q200 28 214 46 Q186 52 150 46 Z" fill="#D9705A" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/><circle cx="120" cy="10" r="5" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/>')
+        elif outfit == "mk_specialist":   # teal hoodie with drawstrings, headphones
+            band = bandp("#2FA39A"); sleeve = ("#2FA39A", 22)
+            collar = (f'<path d="M110 150 v22 M130 150 v22" stroke="{WHITE}" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="174" r="3.5" fill="{WHITE}"/><circle cx="130" cy="174" r="3.5" fill="{WHITE}"/>')
+            head = (f'<path d="M50 84 Q120 -18 190 84" fill="none" stroke="{INK}" stroke-width="8" stroke-linecap="round"/>'
+                    f'<rect x="36" y="72" width="22" height="46" rx="10" fill="#F08A24" stroke="{INK}" stroke-width="4"/><rect x="182" y="72" width="22" height="46" rx="10" fill="#F08A24" stroke="{INK}" stroke-width="4"/>')
+        elif outfit == "mk_manager":   # navy blazer over an open white shirt, coral pocket square
+            band = bandp(NAVY); collar = opensh + lapels("#53627F") + psq("#EF8F7A"); sleeve = (NAVY, 26)
+        elif outfit == "mk_director":   # plum blazer, dark roll neck, coloured glasses
+            band = bandp("#6B3F7C"); sleeve = ("#6B3F7C", 26)
+            collar = f'<path d="M100 150 H140 V161 Q120 168 100 161 Z" fill="#2B2F3A" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>' + lapels("#3F2549") + psq(WHITE)
+            head = glc("#D9705A")
+        elif outfit == "mk_cmo":   # black blazer, open shirt, gold pocket square, coloured glasses, grey temples
+            band = bandp("#14161C"); collar = opensh + lapels("#4A4F5C") + psq(GOLD); sleeve = ("#14161C", 26)
+            head = glc("#D9705A") + tufts
+            if not brows: brows = gbrow
+        elif outfit == "inv_junior":   # white shirt and tie, lanyard, teal backpack
+            band = bandp("#F4F8FF", f' stroke="{INK}" stroke-width="2.5"'); collar = shirt + lany.replace('L120 174 L148', 'L134 176 L152').replace('x="105"', 'x="134"').replace('cx="114"', 'cx="143"').replace('M121 185 h10 M121 191 h7', 'M150 185 h10 M150 191 h7')
+            behind = pack("#2FA39A"); sleeve = ("#F4F8FF", 13)
+        elif outfit == "inv_analyst":   # shirt and tie under a grey fleece vest
+            band = bandp("#F4F8FF", f' stroke="{INK}" stroke-width="2.5"'); sleeve = ("#F4F8FF", 20)
+            collar = shirt + (f'<path d="M57 124 L104 151 L110 189 L70 189 Q57 189 57 176 Z" fill="#4B5563" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                              f'<path d="M183 124 L136 151 L130 189 L170 189 Q183 189 183 176 Z" fill="#4B5563" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                              f'<path d="M66 146 L100 166 M174 146 L140 166" stroke="#6B7280" stroke-width="2.5"/>')
+        elif outfit == "inv_senior":   # navy suit, pocket square, a pen
+            band = bandp(NAVY); sleeve = (NAVY, 26)
+            collar = shirt + lapels("#53627F") + psq(WHITE) + f'<path d="M163 150 V160" stroke="{GOLD}" stroke-width="4.5" stroke-linecap="round"/>'
+        elif outfit == "con_analyst":   # white shirt and tie, lanyard, blue backpack
+            band = bandp("#F4F8FF", f' stroke="{INK}" stroke-width="2.5"'); collar = shirt + lany.replace('L120 174 L148', 'L134 176 L152').replace('x="105"', 'x="134"').replace('cx="114"', 'cx="143"').replace('M121 185 h10 M121 191 h7', 'M150 185 h10 M150 191 h7')
+            behind = pack("#7FA0DC"); sleeve = ("#F4F8FF", 13)
+        elif outfit == "con_consultant":   # mid-blue blazer, tie
+            band = bandp("#3B6FB5"); collar = shirt + lapels("#274E85"); sleeve = ("#3B6FB5", 26)
+        elif outfit == "con_manager":   # navy suit, pocket square
+            band = bandp(NAVY); collar = shirt + lapels("#53627F") + psq(WHITE); sleeve = (NAVY, 26)
+        elif outfit == "con_principal":   # burgundy suit, glasses
+            band = bandp("#7A2E3A"); collar = shirt + lapels("#4F1C25") + psq(WHITE); head = GL; sleeve = ("#7A2E3A", 26)
+        elif outfit == "con_partner":   # black suit, gold pocket square, glasses, grey temples
+            band = bandp("#14161C"); collar = shirt + lapels("#4A4F5C") + psq(GOLD); head = GL + tufts; sleeve = ("#14161C", 26)
+            if not brows: brows = gbrow
+        else:   # inv_pm: grey pinstripe suit, glasses
+            band = bandp("#5A6478") + "".join(f'<path d="M{sx} 152 V187" stroke="#8D97AB" stroke-width="1.6"/>' for sx in range(62, 182, 11))
+            collar = shirt + lapels("#343C4C") + psq(WHITE); head = GL; sleeve = ("#5A6478", 26)
+    return band, collar, behind, head, brows, sleeve
 
 
 # Arm poses, all measured against the brand file: shoulders at (62,152) and (178,152), hand r 9, arm 38-48 units long.
@@ -1142,11 +1263,11 @@ def _t(x, y, txt, size=34, w=800, col=INK, anchor="middle", extra=""):
     return f'<text x="{_f(x)}" y="{_f(y)}" text-anchor="{anchor}" font-family="Inter,sans-serif" font-weight="{w}" font-size="{size}" fill="{col}"{extra}>{_h.escape(txt)}</text>'
 
 
-def backdrop(x, y, s=1.0, w=1080, wall=SKY, floor="#F1ECE2", **_):
-    """A self-contained room panel for a scene made of several zones: a wall of colour `wall` w wide, a floor band below and the ground line. (x, y) = centre of the ground line."""
+def backdrop(x, y, s=1.0, w=1080, wall=SKY, floor="#F1ECE2", up=1100, down=500, **_):
+    """A self-contained room panel for a scene made of several zones: a wall of colour `wall` w wide, a floor band below and the ground line. (x, y) = centre of the ground line. up, down: how far the wall rises and the floor drops (raise them for a full-bleed scene)."""
     h = w / 2
-    return (f'<rect x="{_f(x - h)}" y="{_f(y - 1100)}" width="{_f(w)}" height="1100" fill="{wall}" stroke="none"/>'
-            f'<rect x="{_f(x - h)}" y="{_f(y)}" width="{_f(w)}" height="500" fill="{floor}" stroke="none"/>'
+    return (f'<rect x="{_f(x - h)}" y="{_f(y - up)}" width="{_f(w)}" height="{_f(up)}" fill="{wall}" stroke="none"/>'
+            f'<rect x="{_f(x - h)}" y="{_f(y)}" width="{_f(w)}" height="{_f(down)}" fill="{floor}" stroke="none"/>'
             f'<path d="M{_f(x - h + 30)} {_f(y)} Q{_f(x)} {_f(y - 14)} {_f(x + h - 30)} {_f(y)}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>')
 
 
@@ -2552,7 +2673,8 @@ def _m_wrap(it, inner):
     """Generic motion on any item, opt-in by key. move: {"at","delay","dur","to":[x,y],"arc","ease","scale","rot","trail"} or a list of them, played in order. arc: pixels the path bows upward. trail: a colour name or {"color","fade","width"}. pulse: {"at","dur","amp"}. shake: {"at","dur","amp","hz"}. bob: {"amp","hz"}. out: {"at","dur"} fades it away. reveal: {"at","dur","dir"} wipes it in, dir right, left, up or down."""
     mv, pl, sh, ot, rv = [_m_keys(it.get(k)) for k in ("move", "pulse", "shake", "out", "reveal")]
     bob = it.get("bob") if isinstance(it.get("bob"), dict) else None
-    if not (mv or pl or sh or ot or rv or bob): return inner
+    ap = it.get("appear") if isinstance(it.get("appear"), dict) else None   # appear (12 Nov 2026): {"at","delay"}, pops the item in at a chunk plus a delay, for staggered pop-ins
+    if not (mv or pl or sh or ot or rv or bob or ap): return inner
     trails = ""; x0, y0 = it["x"], it["y"]; S = {"x": x0, "y": y0}
     if mv:
         S["move"] = []
@@ -2575,6 +2697,7 @@ def _m_wrap(it, inner):
     if sh: S["shake"] = [dict(_m_at(k), dur=float(k.get("dur", 0.6)), amp=float(k.get("amp", 9)), hz=float(k.get("hz", 7))) for k in sh]
     if ot: S["out"] = [dict(_m_at(k), dur=float(k.get("dur", 0.3))) for k in ot]
     if bob: S["bob"] = {"amp": float(bob.get("amp", 5)), "hz": float(bob.get("hz", 1.1))}
+    if ap: S["appear"] = _m_at(ap)
     if rv:
         k = rv[0]; b = item_box(it); pad = 24; cid = "clip-" + format(abs(hash_text(inner)) % 10 ** 10)
         spec = dict(_m_at(k), dur=float(k.get("dur", 0.8)), dir=k.get("dir", "right"), ease=k.get("ease", "inout"), box=[b[0] - pad, b[1] - pad, b[2] + 2 * pad, b[3] + 2 * pad])
@@ -3127,6 +3250,301 @@ def map_zone_box(x, y, s=1.0, rx=190, ry=220, label="", fs=38, **_):
 PRESETS.update({"string_lights": (string_lights, string_lights_box), "camera": (camera, None), "dessert_table": (dessert_table, dessert_table_box), "guitar": (guitar, None),
                 "drum": (drum, drum_box), "music_notes": (music_notes, None), "city_map": (city_map, city_map_box), "map_zone": (map_zone, map_zone_box)})
 HALF.update({"camera": (64, 60), "guitar": (80, 170), "music_notes": (60, 70)})
+
+# ---------------------------------------------------------------- career-ladder reels (12 Nov 2026, opt-in: nothing changes unless a script uses these)
+# Hoang on the "intern to CTO" reference reel: "I like they move sub to the bottom half, more animation ... Use Ledger as the storyline,
+# generate different version of Ledger". Used with meta.layout "ladder" (captions low, rung header with duty chips on top).
+WOOD = "#D9A04A"; WOOD_LIGHT = "#EDBE6E"; CHIP_YELLOW = "#FFD45C"
+
+
+def _appear(inner, spec, i=0, ax=0, ay=0):
+    """Pop `inner` in (short fade, small overshoot about (ax, ay)) at spec {"at": "chunk:N", "delay": s, "every": s}; the i-th piece waits i x every. spec None: drawn from the first frame."""
+    if not spec: return inner
+    S = {"x": ax, "y": ay, "appear": {"at": str(spec.get("at", "chunk:0")), "delay": float(spec.get("delay", 0)) + i * float(spec.get("every", 0.3))}}
+    return f'<g data-fx="m" data-spec="{_m_attr(S)}">{inner}</g>'
+
+
+def _tick_path(cx, cy, k=1.0, col=None, sw=9):
+    return f'<path d="M{_f(cx - 15 * k)} {_f(cy)} L{_f(cx - 4 * k)} {_f(cy + 11 * k)} L{_f(cx + 17 * k)} {_f(cy - 13 * k)}" fill="none" stroke="{col or UP}" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
+
+
+def _mini(cx, cy, z=1.0, col=None):
+    """A small person icon (head and shoulders), about 40 x 44 at z 1, centred on (cx, cy)."""
+    c = col or LB
+    return (f'<circle cx="{_f(cx)}" cy="{_f(cy - 13 * z)}" r="{_f(11 * z)}" fill="{PAPER}" stroke="{INK}" stroke-width="3.5"/>'
+            f'<path d="M{_f(cx - 19 * z)} {_f(cy + 24 * z)} V{_f(cy + 11 * z)} Q{_f(cx - 19 * z)} {_f(cy)} {_f(cx)} {_f(cy)} Q{_f(cx + 19 * z)} {_f(cy)} {_f(cx + 19 * z)} {_f(cy + 11 * z)} V{_f(cy + 24 * z)} Z" fill="{c}" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>')
+
+
+def career_ladder(x, y, s=1.0, n=5, gap=130, w=170, **_):
+    """A tall wooden ladder with n rungs (career-ladder reels). (x, y) = centre of the bottom rung; gap = distance between rungs; w = width between the rails. Put rung_tag items beside the rungs and a small Ledger on a rung (his feet at the rung's y)."""
+    top = -(n - 1) * gap - gap * 0.6; bot = gap * 0.6; hw = w / 2
+    out = "".join(f'<rect x="{_f(sx - 11)}" y="{_f(top)}" width="22" height="{_f(bot - top)}" rx="10" fill="{WOOD}" stroke="{INK}" stroke-width="5"/>' for sx in (-hw, hw))
+    out += "".join(f'<rect x="{_f(-hw + 8)}" y="{_f(-k * gap - 9)}" width="{_f(w - 16)}" height="18" rx="8" fill="{WOOD_LIGHT}" stroke="{INK}" stroke-width="5"/>' for k in range(int(n)))
+    return _g(x, y, s, out)
+
+
+def career_ladder_box(x, y, s=1.0, n=5, gap=130, w=170, **_):
+    top = -(n - 1) * gap - gap * 0.6
+    return [x - (w / 2 + 14) * s, y + top * s, (w + 28) * s, (gap * 0.6 - top) * s]
+
+
+def rung_tag(x, y, s=1.0, label="INTERN", state="todo", w=400, h=76, fs=40, **_):
+    """A rung label beside the career_ladder. (x, y) = centre. state: todo (white, grey dashed edge), now (yellow: the rung Ledger stands on) or done (blue with a tick). A short connector runs from its left edge to the ladder. Swap states with at/until."""
+    if state not in ("todo", "now", "done"): raise ValueError(f"rung_tag: state {state!r}; use todo, now or done")
+    fill, edge, tc, dash = {"todo": (WHITE, GREY, "#6B7689", ' stroke-dasharray="14 10"'), "now": (CHIP_YELLOW, INK, INK, ""), "done": (BLUE, INK, WHITE, "")}[state]
+    tx = -w / 2 + (76 if state == "done" else 30)
+    if _d_tw(label, fs) > w / 2 - tx - 16: raise ValueError(f"rung_tag: {label!r} does not fit {w} wide at {fs} px; shorten it or raise w")
+    out = (f'<path d="M{_f(-w / 2 - 50)} 0 H{_f(-w / 2)}" fill="none" stroke="{edge}" stroke-width="5" stroke-linecap="round"{dash}/>'
+           f'<rect x="{_f(-w / 2)}" y="{_f(-h / 2)}" width="{_f(w)}" height="{_f(h)}" rx="{_f(h / 2)}" fill="{fill}" stroke="{edge}" stroke-width="5"{dash}/>')
+    if state == "done": out += _tick_path(-w / 2 + 42, 0, 1.0, WHITE, 8)
+    out += _t(tx, fs * 0.36, str(label), fs, 900, tc, "start")
+    return _g(x, y, s, out)
+
+
+def rung_tag_box(x, y, s=1.0, w=400, h=76, **_):
+    return [x - (w / 2 + 52) * s, y - h / 2 * s - 3, (w + 55) * s, h * s + 6]
+
+
+def dial(x, y, s=1.0, w=620, left="Counts", right="Decides", start=0.1, slide=None, fs=38, **_):
+    """The count-or-decide slider of a career-ladder reel: a track with a word at each end and a knob. (x, y) = centre of the track. start: knob position, 0 (left) to 1 (right). slide: {"at": "chunk:N", "delay", "dur", "to"} moves the knob to `to`. The words sit above the track's ends."""
+    hw = w / 2; k0 = -hw + w * float(start)
+    out = (_t(-hw, -34, str(left), fs, 900, INK, "start") + _t(hw, -34, str(right), fs, 900, ED_BLUE, "end")
+           + f'<rect x="{_f(-hw)}" y="-13" width="{_f(w)}" height="26" rx="13" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+           + "".join(f'<path d="M{_f(-hw + w * q)} -13 V13" stroke="{GREY}" stroke-width="3"/>' for q in (0.25, 0.5, 0.75)))
+    knob = f'<circle cx="{_f(k0)}" cy="0" r="27" fill="{BLUE}" stroke="{INK}" stroke-width="5"/><circle cx="{_f(k0)}" cy="0" r="9" fill="{WHITE}"/>'
+    if slide:
+        S = {"x": k0, "y": 0, "move": [dict(_m_at(slide), dur=float(slide.get("dur", 0.9)), to=[-hw + w * float(slide.get("to", start)), 0], arc=0.0, ease="inout")]}
+        knob = f'<g data-fx="m" data-spec="{_m_attr(S)}">{knob}</g>'
+    return _g(x, y, s, out + knob)
+
+
+def dial_box(x, y, s=1.0, w=620, fs=38, **_):
+    return [x - (w / 2 + 30) * s, y - (34 + fs) * s, (w + 60) * s, (64 + fs) * s]
+
+
+def match_rows(x, y, s=1.0, w=520, n=4, bad=2, rh=92, link=None, tick=None, flag=None, left="Invoices", right="Ledger", fs=34, **_):
+    """Matching invoices to the ledger, line by line: two cards with n rows of lines (no amounts) and a dashed link between each pair. (x, y) = centre. link, tick: {"at": "chunk:N", "delay", "every"}: the links, then the green ticks, appear row by row. bad: the row that does not agree (its ledger amount is longer and coral); it gets no tick but a coral "?" flag at flag {"at", "delay"}. bad None: every row agrees."""
+    cw = w * 0.38; hh = 68; H = hh + n * rh + 14; top = -H / 2; x0 = -w / 2; x1 = w / 2 - cw; mid = 0
+    lens = [46, 64, 38, 56, 50, 60]
+    out = ""
+    for cx, title, col in ((x0, left, LB), (x1, right, BLUE)):
+        f = fs
+        while _d_tw(title, f) > cw - 20 and f > DATA_FLOOR: f -= 1
+        if _d_tw(title, f) > cw - 12: raise ValueError(f"match_rows: title {title!r} does not fit; shorten it or raise w")
+        out += (f'<rect x="{_f(cx)}" y="{_f(top)}" width="{_f(cw)}" height="{_f(H)}" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+                f'<path d="M{_f(cx)} {_f(top + hh)} V{_f(top + 16)} Q{_f(cx)} {_f(top)} {_f(cx + 16)} {_f(top)} H{_f(cx + cw - 16)} Q{_f(cx + cw)} {_f(top)} {_f(cx + cw)} {_f(top + 16)} V{_f(top + hh)} Z" fill="{col}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/>'
+                + _t(cx + cw / 2, top + hh / 2 + f * 0.36, str(title), f, 900, WHITE if col == BLUE else INK))
+    for i in range(int(n)):
+        yy = top + hh + rh * (i + 0.5) + 4; a = lens[i % len(lens)]; isbad = bad is not None and i == int(bad)
+        for cx, side in ((x0, 0), (x1, 1)):
+            al = a + 30 if (isbad and side) else a
+            out += (f'<rect x="{_f(cx + 16)}" y="{_f(yy - 7)}" width="{_f(cw * 0.36)}" height="14" rx="7" fill="{GREY}" stroke="none"/>'
+                    f'<rect x="{_f(cx + cw - 16 - al)}" y="{_f(yy - 9)}" width="{_f(al)}" height="18" rx="6" fill="{DOWN if (isbad and side) else INK}" stroke="none"/>')
+            if i: out += f'<path d="M{_f(cx + 10)} {_f(yy - rh / 2)} H{_f(cx + cw - 10)}" stroke="{DATA_RULE}" stroke-width="3"/>'
+        out += _appear(f'<path d="M{_f(x0 + cw + 8)} {_f(yy)} H{_f(x1 - 8)}" fill="none" stroke="{GREY}" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 9"/>', link, i, mid, yy)
+        if isbad:
+            badge = f'<circle cx="{mid}" cy="{_f(yy)}" r="27" fill="{DOWN}" stroke="{INK}" stroke-width="4"/>' + _t(mid, yy + 14, "?", 40, 900, WHITE)
+            out += _appear(badge, flag, 0, mid, yy) if flag else badge
+        else:
+            badge = f'<circle cx="{mid}" cy="{_f(yy)}" r="25" fill="{WHITE}" stroke="{UP}" stroke-width="5"/>' + _tick_path(mid, yy, 0.82, UP, 7)
+            out += _appear(badge, tick, i - (1 if (bad is not None and i > int(bad)) else 0), mid, yy)
+    return _g(x, y, s, out)
+
+
+def match_rows_box(x, y, s=1.0, w=520, n=4, rh=92, **_):
+    H = 68 + n * rh + 14
+    return [x - w / 2 * s - 4, y - H / 2 * s - 4, w * s + 8, H * s + 8]
+
+
+def test_picker(x, y, s=1.0, w=520, labels=None, sizes=None, cut=0.4, rh=92, pick=None, note="Worth testing", fs=36, **_):
+    """Choosing what is worth testing: account names with bars of different sizes (no numbers) and a dashed cut line. (x, y) = centre. sizes: bar lengths 0-1; bars at or over cut turn blue and get a tick, one by one, at pick {"at": "chunk:N", "delay", "every"}; the small ones stay pale. note: short words over the cut line."""
+    labels = labels or ["Revenue", "Inventory", "Payroll", "Travel", "Stationery"]; sizes = sizes or [1.0, 0.74, 0.56, 0.17, 0.08]
+    if len(labels) != len(sizes): raise ValueError("test_picker: labels and sizes need the same length")
+    n = len(labels); lw = max(_d_tw(l, fs) for l in labels) + 18; bw = w - lw - 58; x0 = -w / 2; bx = x0 + lw; head = 62; H = head + n * rh; top = -H / 2
+    if bw < 150: raise ValueError("test_picker: the labels leave no room for the bars; shorten them or raise w")
+    cx = bx + bw * float(cut); out = ""; k = 0
+    for i, (lab, z) in enumerate(zip(labels, sizes)):
+        yy = top + head + rh * (i + 0.5); bl = max(14, bw * float(z))
+        out += _t(x0, yy + fs * 0.36, str(lab), fs, 800, INK, "start")
+        out += f'<rect x="{_f(bx)}" y="{_f(yy - 23)}" width="{_f(bl)}" height="46" rx="10" fill="{LB}" stroke="{INK}" stroke-width="4"/>'
+        if float(z) >= float(cut):
+            hot = (f'<rect x="{_f(bx)}" y="{_f(yy - 23)}" width="{_f(bl)}" height="46" rx="10" fill="{BLUE}" stroke="{INK}" stroke-width="4"/>' + _tick_path(bx + bl + 30, yy, 1.0, UP, 9))
+            out += _appear(hot, pick, k, bx + bl / 2, yy); k += 1
+    out += f'<path d="M{_f(cx)} {_f(top + head - 8)} V{_f(top + H + 4)}" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 11"/>'
+    if note:
+        tw = _d_tw(note, fs); tx = min(max(cx + 26, x0 + tw / 2), w / 2 - tw / 2)
+        out += _t(tx, top + 36, str(note), fs, 900, ED_BLUE) + f'<path d="M{_f(cx)} {_f(top + 50)} l-9 -13 h18 z" fill="{INK}" stroke="none"/>'
+    return _g(x, y, s, out)
+
+
+def test_picker_box(x, y, s=1.0, w=520, labels=None, rh=92, **_):
+    H = 62 + len(labels or [0] * 5) * rh
+    return [x - w / 2 * s - 4, y - H / 2 * s - 4, w * s + 8, H * s + 12]
+
+
+def meter(x, y, s=1.0, w=420, h=52, label="Budget", to=0.88, fill=None, color="green", limit="", fs=36, **_):
+    """A budget bar that fills and stops short of its limit (no numbers). (x, y) = centre of the bar. label: words over its left end. to: how full it gets, 0-1. fill: {"at": "chunk:N", "delay", "dur"} fills it from the left; without it the bar is drawn full. limit: optional word over the right end, where a thick line marks the limit."""
+    col = {"green": UP, "blue": ED_BLUE, "amber": AMBER, "red": DOWN}.get(color, color); hw = w / 2
+    out = _t(-hw, -h / 2 - 16, str(label), fs, 900, INK, "start") if label else ""
+    if limit: out += _t(hw - 14, -h / 2 - 16, str(limit), fs, 800, "#6B7689", "end")
+    out += f'<rect x="{_f(-hw)}" y="{_f(-h / 2)}" width="{_f(w)}" height="{_f(h)}" rx="12" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+    bar = f'<rect x="{_f(-hw + 6)}" y="{_f(-h / 2 + 6)}" width="{_f(w * float(to) - 6)}" height="{_f(h - 12)}" rx="8" fill="{col}" stroke="none"/>'
+    if fill:
+        cid = "mt-" + format(abs(hash_text(f"{x}{y}{w}{label}{to}")) % 10 ** 10)
+        spec = dict(_m_at(fill), dur=float(fill.get("dur", 1.2)), dir="right", ease="out", box=[-hw, -h / 2, w * float(to), h])
+        bar = (f'<clipPath id="{cid}"><rect data-fx="clip" data-nodraw="1" data-spec="{_m_attr(spec)}" x="{_f(-hw)}" y="{_f(-h / 2)}" width="0" height="{_f(h)}"/></clipPath><g clip-path="url(#{cid})">{bar}</g>')
+    out += bar + f'<path d="M{_f(hw)} {_f(-h / 2 - 12)} V{_f(h / 2 + 12)}" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+    return _g(x, y, s, out)
+
+
+def meter_box(x, y, s=1.0, w=420, h=52, fs=36, **_):
+    return [x - w / 2 * s - 4, y - (h / 2 + 18 + fs) * s, w * s + 12, (h + 32 + fs) * s]
+
+
+def cal_fill(x, y, s=1.0, cols=5, rows=4, size=58, gap=10, fills=None, start=0, title="", color="blue", **_):
+    """A month planner that fills day by day: a calendar card with cols x rows day squares. (x, y) = centre. fills: [{"at": "chunk:N", "delay", "dur", "upto"}], as on fill_grid: by then the first upto days are filled. start: days filled from the first frame. title: optional words in the header band."""
+    G = size + gap; W = cols * G - gap; Hh = rows * G - gap; cw = W + 52; hd = 72; ch = Hh + 52 + hd; top = -ch / 2
+    out = (f'<rect x="{_f(-cw / 2)}" y="{_f(top)}" width="{_f(cw)}" height="{_f(ch)}" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<path d="M{_f(-cw / 2)} {_f(top + hd)} V{_f(top + 16)} Q{_f(-cw / 2)} {_f(top)} {_f(-cw / 2 + 16)} {_f(top)} H{_f(cw / 2 - 16)} Q{_f(cw / 2)} {_f(top)} {_f(cw / 2)} {_f(top + 16)} V{_f(top + hd)} Z" fill="{CORAL}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+           f'<circle cx="{_f(-cw / 4)}" cy="{_f(top - 4)}" r="10" fill="{INK}"/><circle cx="{_f(cw / 4)}" cy="{_f(top - 4)}" r="10" fill="{INK}"/>')
+    if title: out += _t(0, top + hd / 2 + 13, str(title), 36, 900, INK)
+    out += fill_grid(0, top + hd + 26 + Hh / 2, 1.0, n=cols * rows, cols=cols, size=size, gap=gap, cell="square", fills=fills, start=start, color=color)
+    return _g(x, y, s, out)
+
+
+def cal_fill_box(x, y, s=1.0, cols=5, rows=4, size=58, gap=10, **_):
+    G = size + gap; cw = cols * G - gap + 52; ch = rows * G - gap + 124
+    return [x - cw / 2 * s - 4, y - ch / 2 * s - 16, cw * s + 8, ch * s + 20]
+
+
+def checklist(x, y, s=1.0, w=500, title="Month-end close", lines=None, tick=None, done=0, fs=38, rh=86, **_):
+    """A checklist card that ticks itself: a blue title band and one row per line with a box. (x, y) = centre. tick: {"at": "chunk:N", "delay", "every"}: the green ticks appear top to bottom. Without tick, the first `done` rows are ticked from the first frame. Text stays at 34 px or more."""
+    lines = [str(l) for l in (lines or ["Reconcile accounts", "Post accruals", "Review the numbers", "Lock the month"])]
+    size = fs
+    while size > DATA_FLOOR and max(_d_tw(l, size) for l in lines + [title]) > w - 110: size -= 1
+    if max(_d_tw(l, size) for l in lines) > w - 104: raise ValueError(f"checklist: {lines!r} does not fit {w} wide at the {DATA_FLOOR} px minimum; shorten a line or raise w")
+    hh = 80; H = hh + len(lines) * rh + 12; top = -H / 2; x0 = -w / 2
+    out = (f'<rect x="{_f(x0)}" y="{_f(top)}" width="{_f(w)}" height="{_f(H)}" rx="18" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>'
+           f'<path d="M{_f(x0)} {_f(top + hh)} V{_f(top + 18)} Q{_f(x0)} {_f(top)} {_f(x0 + 18)} {_f(top)} H{_f(-x0 - 18)} Q{_f(-x0)} {_f(top)} {_f(-x0)} {_f(top + 18)} V{_f(top + hh)} Z" fill="{BLUE}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+           + _t(0, top + hh / 2 + size * 0.36, str(title), size, 900, WHITE))
+    for i, l in enumerate(lines):
+        yy = top + hh + rh * (i + 0.5) + 4; bx = x0 + 26
+        out += f'<rect x="{_f(bx)}" y="{_f(yy - 24)}" width="48" height="48" rx="10" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>' + _t(bx + 68, yy + size * 0.36, l, size, 800, INK, "start")
+        mark = f'<rect x="{_f(bx)}" y="{_f(yy - 24)}" width="48" height="48" rx="10" fill="{UP_TINT}" stroke="{INK}" stroke-width="5"/>' + _tick_path(bx + 24, yy, 1.05, UP, 9)
+        if tick: out += _appear(mark, tick, i, bx + 24, yy)
+        elif i < int(done): out += mark
+    return _g(x, y, s, out)
+
+
+def checklist_box(x, y, s=1.0, w=500, lines=None, rh=86, **_):
+    H = 80 + len(lines or [0] * 4) * rh + 12
+    return [x - w / 2 * s - 4, y - H / 2 * s - 4, w * s + 8, H * s + 8]
+
+
+def pot(x, y, s=1.0, label="Growth", color="blue", fs=36, **_):
+    """A labelled bucket that money flows into (capital allocation). (x, y) = centre of its opening: send a coin_stream to this point. label: a short word on a pill under it. color: blue, green, amber or coral."""
+    col, tint = {"blue": (ED_BLUE, "#DCE8FC"), "green": (UP, UP_TINT), "amber": ("#B97A00", "#FFF0C9"), "coral": ("#D0675E", "#FBDDDA")}.get(color, (ED_BLUE, "#DCE8FC"))
+    W = _d_tw(label, fs) + 40; Hp = fs * 1.5
+    out = (f'<path d="M-74 0 Q0 -60 74 0" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>'
+           f'<path d="M-72 0 H72 L56 112 Q54 122 44 122 H-44 Q-54 122 -56 112 Z" fill="{tint}" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+           f'<path d="M-66 34 H66 L62 60 H-62 Z" fill="{col}" stroke="none"/>'
+           f'<ellipse cx="0" cy="0" rx="72" ry="15" fill="{WHITE}" stroke="{INK}" stroke-width="{SW}"/>')
+    if label:
+        out += f'<rect x="{_f(-W / 2)}" y="{_f(140)}" width="{_f(W)}" height="{_f(Hp)}" rx="{_f(Hp / 2)}" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + _t(0, 140 + Hp / 2 + fs * 0.36, str(label), fs, 900, INK)
+    return _g(x, y, s, out)
+
+
+def pot_box(x, y, s=1.0, label="Growth", fs=36, **_):
+    W = max(150, _d_tw(label, fs) + 44)
+    return [x - W / 2 * s, y - 34 * s, W * s, (176 + fs * 1.5) * s]
+
+
+def board_table(x, y, s=1.0, w=560, n=4, seat=None, colors=None, **_):
+    """A board table with n people seated behind it (the board, a client team). (x, y) = centre of the table top. seat: {"at": "chunk:N", "delay", "every"}: the people take their seats one by one; without it they sit from the first frame. colors: their tops. List it BEFORE Ledger."""
+    cols = colors or ["#F3D9A6", "#CFE9D9", "#F2C7C2", LB, "#E3D7F5", "#F3D9A6"]; hw = w / 2; out = ""
+    for i in range(int(n)):
+        px = -hw + 70 + (w - 140) * (i / max(1, n - 1)) if n > 1 else 0
+        out += _appear(person(px, 124, 0.9, mood="smile", color=cols[i % len(cols)]), seat, i, px, 0)
+    out += (f'<path d="M{_f(-hw + 26)} 36 H{_f(hw - 26)} L{_f(hw - 50)} 150 H{_f(-hw + 50)} Z" fill="#B97F35" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>'
+            f'<rect x="{_f(-hw)}" y="-6" width="{_f(w)}" height="44" rx="14" fill="{WOOD}" stroke="{INK}" stroke-width="{SW}"/>')
+    return _g(x, y, s, out)
+
+
+def board_table_box(x, y, s=1.0, w=560, **_):
+    return [x - w / 2 * s - 4, y - 82 * s, w * s + 8, 236 * s]
+
+
+def org_chart(x, y, s=1.0, w=820, heads=None, team=3, rows=2, show=None, fs=34, **_):
+    """An org chart that grows under a boss (put Ledger just above it). (x, y) = the point under the boss's feet. heads: the direct reports, one labelled box each; team: people per row under each, rows: rows of them. show: {"heads": {"at", "delay", "every"}, "team": {...}}: the boxes, then the people, appear one by one. Text stays at 34 px or more."""
+    heads = [str(h) for h in (heads or ["Controller", "Planning", "Treasury"])]; n = len(heads); show = show or {}
+    gapx = 22; bwid = (w - (n - 1) * gapx) / n; bh = 74; y1 = 30; y2 = 62
+    if max(_d_tw(h, fs) for h in heads) > bwid - 20: raise ValueError(f"org_chart: {heads!r} do not fit boxes {bwid:.0f} wide at {fs} px; shorten them, raise w or use fewer heads")
+    xs = [-w / 2 + bwid / 2 + i * (bwid + gapx) for i in range(n)]
+    out = _appear(f'<path d="M0 0 V{y1} M{_f(xs[0])} {y1} H{_f(xs[-1])} ' + " ".join(f'M{_f(px)} {y1} V{y2}' for px in xs) + f'" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>', show.get("heads"), 0, 0, y1)
+    ty = y2 + bh + 30; k = 0
+    for i, (px, h) in enumerate(zip(xs, heads)):
+        box = (f'<rect x="{_f(px - bwid / 2)}" y="{y2}" width="{_f(bwid)}" height="{bh}" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+               f'<rect x="{_f(px - bwid / 2)}" y="{y2}" width="14" height="{bh}" rx="7" fill="{BLUE}" stroke="none"/>' + _t(px + 4, y2 + bh / 2 + fs * 0.36, h, fs, 900, INK))
+        out += _appear(box, show.get("heads"), i, px, y2 + bh / 2)
+        step = bwid / int(team)
+        for r in range(int(rows)):
+            z = 1.5 if r == 0 else 1.25; cy = ty + 34 + r * 98
+            for j in range(int(team)):
+                cx = px - bwid / 2 + step * (j + 0.5)
+                ic = (f'<path d="M{_f(cx)} {_f(cy - 30 * z)} V{_f(cy - 44 * z if r == 0 else cy - 46 * z)}" stroke="{GREY}" stroke-width="4" stroke-linecap="round"/>' if r == 0 else "") + _mini(cx, cy, z, [LB, "#CFE9D9", "#F3D9A6", "#F2C7C2"][(i + j + r) % 4])
+                out += _appear(ic, show.get("team"), k, cx, cy); k += 1
+    return _g(x, y, s, out)
+
+
+def org_chart_box(x, y, s=1.0, w=820, rows=2, **_):
+    H = 62 + 74 + 30 + 34 + (rows - 1) * 98 + 44
+    return [x - w / 2 * s - 4, y, w * s + 8, H * s]
+
+
+def side_bracket(x, y, s=1.0, h=300, label="AUDIT FIRM", color="blue", fs=34, **_):
+    """A vertical bracket with a word reading upward beside it, to group rungs of the career_ladder ("AUDIT FIRM", "COMPANY"). (x, y) = centre of the bracket line; h = its height. color: blue, ink, green or amber."""
+    col = {"blue": ED_BLUE, "ink": INK, "green": UP, "amber": "#B97A00"}.get(color, ED_BLUE)
+    if _d_tw(label, fs) > h: raise ValueError(f"side_bracket: {label!r} does not fit a bracket {h} high at {fs} px")
+    out = (f'<path d="M-16 {_f(-h / 2)} H0 V{_f(h / 2)} H-16" fill="none" stroke="{col}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>'
+           f'<g transform="translate({_f(22 + fs * 0.5)} 0) rotate(-90)">' + _t(0, fs * 0.36, str(label), fs, 900, col) + "</g>")
+    return _g(x, y, s, out)
+
+
+def side_bracket_box(x, y, s=1.0, h=300, fs=34, **_):
+    return [x - 20 * s, y - h / 2 * s - 4, (48 + fs) * s, h * s + 8]
+
+
+def floor_deco(x, y, s=1.0, w=1400, depth=440, **_):
+    """Light floor decoration for a full-bleed scene (13 Nov 2026): a pale skirting line and floorboard seams fanning out below the ground line, nothing that needs reading. (x, y) = centre of the ground line; w = width; depth = how far down it runs. Put it right after the backdrop."""
+    h = w / 2; c = "#E2DACB"
+    out = f'<rect x="{_f(-h)}" y="8" width="{_f(w)}" height="20" fill="#E9E2D4" stroke="none"/>'
+    out += "".join(f'<path d="M{_f(-h)} {_f(28 + depth * q)} H{_f(h)}" stroke="{c}" stroke-width="3"/>' for q in (0.16, 0.42, 0.78))
+    out += "".join(f'<path d="M{_f(k * 150)} 28 L{_f(k * 150 * 1.9)} {_f(28 + depth)}" stroke="{c}" stroke-width="3"/>' for k in range(-4, 5))
+    return _g(x, y, s, out)
+
+
+def floor_deco_box(x, y, s=1.0, w=1400, depth=440, **_):
+    return [x - w / 2 * s, y, w * s, (depth + 30) * s]
+
+
+def steps(x, y, s=1.0, n=5, step_w=180, rise=44, **_):
+    """Wooden steps rising left to right, one per rung of the career, for the title and closing scenes of a ladder reel (13 Nov 2026). (x, y) = the bottom-left corner on the ground; step k (0 = lowest) is step_w wide and (k + 1) x rise high. Stand a Ledger on step k at x + (k + 0.5) x step_w, y - (k + 1) x rise."""
+    out = ""
+    for k in range(int(n)):
+        h = (k + 1) * rise
+        out += (f'<rect x="{_f(k * step_w)}" y="{_f(-h)}" width="{_f(step_w)}" height="{_f(h)}" fill="{WOOD}" stroke="{INK}" stroke-width="5"/>'
+                f'<rect x="{_f(k * step_w - 4)}" y="{_f(-h - 9)}" width="{_f(step_w + 8)}" height="18" rx="8" fill="{WOOD_LIGHT}" stroke="{INK}" stroke-width="5"/>')
+    return _g(x, y, s, out)
+
+
+def steps_box(x, y, s=1.0, n=5, step_w=180, rise=44, **_):
+    return [x - 6 * s, y - (n * rise + 12) * s, (n * step_w + 12) * s, (n * rise + 12) * s]
+
+
+PRESETS.update({"side_bracket": (side_bracket, side_bracket_box), "floor_deco": (floor_deco, floor_deco_box), "steps": (steps, steps_box)})
+PRESETS.update({"career_ladder": (career_ladder, career_ladder_box), "rung_tag": (rung_tag, rung_tag_box), "dial": (dial, dial_box), "match_rows": (match_rows, match_rows_box),
+                "test_picker": (test_picker, test_picker_box), "meter": (meter, meter_box), "cal_fill": (cal_fill, cal_fill_box), "checklist": (checklist, checklist_box),
+                "pot": (pot, pot_box), "board_table": (board_table, board_table_box), "org_chart": (org_chart, org_chart_box)})
 
 
 PRESET_HELP ={k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}

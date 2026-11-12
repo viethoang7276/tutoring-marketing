@@ -32,6 +32,12 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     # definition card, no logo) may sit after a section or all at the end, and may be last. No endcard, cta or loop
     "lesson": {"order": ["hook", "story", "definition", "example", "defcard", "takeaway"], "free": True,
                "min": {"defcard": 1}, "max": {"hook": 1}},
+    # career-ladder reel (12 Nov 2026): a hook on the ladder, then for each rung its "rung" beats (the job on that rung, with duty chips)
+    # and a "climb" beat to the next rung, a payoff (the wide shot) and the end card. Rung and climb beats alternate, so the order is free
+    # 13 Nov 2026: the reel may close on a "cta" beat (a scene with a "message" card and the logo) instead of the end card
+    # 13 Nov 2026 (Hoang: "avoid the hook just go directly to the point"): beat 1 is a "title" beat (a title card with a "message") and beat 2 starts the first rung
+    "ladder": {"order": ["title", "hook", "rung", "climb", "payoff", "cta", "endcard"], "free": True,
+               "min": {"rung": 3, "climb": 1, "payoff": 1}},
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 # 4 Nov 2026 (Hoang): "Put all of video to 2 mins cap" - every type may run to 2 minutes
@@ -46,7 +52,9 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 34), target=(100, 115), allow
         # at ELEVEN_TEMPO 1.15) speaks about 2.3 words a second (measured 29 Oct 2026); points may run 5-7 s (one line, one scene)
         "ad": dict(chunk=(2, 5), beats=(5, 18), target=(55, 75), allowed=(45, 260), secs=(21, 121), wps=2.3),
         # lesson (Hoang, 5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes)"; 60 s to about 4 minutes
-        "lesson": dict(chunk=(2, 5), beats=(6, 120), target=(354, 531), allowed=(177, 708), secs=(59, 241), wps=2.95)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
+        "lesson": dict(chunk=(2, 5), beats=(6, 120), target=(354, 531), allowed=(177, 708), secs=(59, 241), wps=2.95),
+        # ladder: karaoke chunks of 1-4 words low in the frame; ElevenLabs v3 at tempo 1.12 (about 2.4 words a second with gaps); 90-110 s target, 2-minute cap
+        "ladder": dict(chunk=(1, 4), beats=(12, 60), target=(200, 265), allowed=(120, 285), secs=(44, 121), wps=2.4)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 CTX_OPEN = re.compile(r"\b(let's (imagine|use|take|say|look at|picture|follow|start with|walk through|see)|imagine|picture|suppose|for this,? let's|take the example|as (an|our) example|to see (this|why|how))\b", re.I)
 CTX_BACK = re.compile(r"\b(continu(e|es|ing)|back (to|in|at|with)|going back|returning to|let's return|let's go back|staying with|still with|in our (story|example)|from the last example|same (story|example|sheet|store|shop|company)|now let's|let's (now |also )?(use|take|look at|see|apply|imagine)|imagine|as (a|an|our) (business )?example|for example|in business)\b", re.I)
@@ -69,7 +77,7 @@ def main(path):
     for k in (REQ_META_AD if t == "ad" else REQ_META_LESSON if t == "lesson" else REQ_META):
         if not m.get(k): E.append(f"meta.{k} is missing")
     if t not in ROLES:
-        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto", "ad" or "lesson"'); t = "definition"
+        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto", "ad", "lesson" or "ladder"'); t = "definition"
     P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
@@ -96,12 +104,58 @@ def main(path):
         if roles.count(r) < n: E.append(f'needs at least {n} beat(s) with role "{r}" (has {roles.count(r)})')
     for r, n in R.get("max", {}).items():
         if roles.count(r) > n: E.append(f'at most {n} beat(s) with role "{r}" (has {roles.count(r)})')
+    texts_extra_cta = []
     bad = [r for r in roles if r not in R["order"]]
     if bad: E.append(f"unknown roles {sorted(set(map(str, bad)))}; {t} roles are {R['order']}")
     seq = [R["order"].index(r) for r in roles if r in R["order"]]
     if t == "lesson":   # any order; the hook, when there is one, opens the video as a direct question
         if "hook" in roles[1:]: E.append("lesson: the hook (optional) can only be beat 1")
         if roles and roles[0] == "hook" and "?" not in beats[0].get("text", ""): E.append("lesson: the hook must ask the learner a direct question (end it with ?)")
+    elif t == "ladder":   # title (or the older hook) first, cta or end card last; rung and climb beats alternate up the ladder; the payoff comes after the last rung
+        if roles and roles[0] not in ("title", "hook"): E.append('beat 1 must be the title beat (role "title" with a "message": what the video is, for example "From audit intern to CFO, the career ladder explained with Ledger")')
+        if "title" in roles[1:]: E.append("the title beat can only be beat 1")
+        if roles and roles[0] == "title":
+            b0 = beats[0]; tg = str(b0.get("tag", ""))
+            if len(tg) > 16 or tg.rstrip().endswith("."): E.append('beat 1: the title "tag" (for example "IN 90 SECONDS") is 16 characters at most, with no full stop')
+            if tg: texts_extra_cta.append(("title tag", tg))
+            if "?" in b0.get("text", ""): E.append("beat 1: the title says what the video is; it is not a question or a teaser (Hoang, 13 Nov 2026)")
+            if re.search(r"\b(90|ninety) seconds\b", (b0.get("text", "") + " " + tg), re.I): W.append("beat 1 says the video takes 90 seconds: after the build, check timing.json duration is 90 s or less, or say \"in under two minutes\"")
+        if roles and roles[-1] not in ("endcard", "cta"): E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint") or a "cta" beat with a "message"')
+        if roles.count("endcard") + roles.count("cta") > 1: E.append("only one closing beat (end card or cta)")
+        if m.get("ladder_style") not in (None, "panel", "bleed"): E.append('ladder: meta.ladder_style must be "bleed" (full-bleed art, captions on top) or left out (the panel style)')
+        for k, b in enumerate(beats, 1):
+            if b.get("role") not in ("cta", "title"): continue
+            msg = str(b.get("message", ""))
+            if not 4 <= len(words(msg)) <= 16 or len(msg) > 90: E.append(f'beat {k}: a {b.get("role")} beat needs "message", 4-16 words and 90 characters at most')
+            if msg.rstrip().endswith("."): E.append(f"beat {k}: the {b.get('role')} message ends with a full stop")
+            texts_extra_cta.append((f"{b.get('role')} message", msg))
+        rungs = m.get("rungs") or []
+        if not (isinstance(rungs, list) and 2 <= len(rungs) <= 7 and all(isinstance(r, str) and r.strip() for r in rungs)): E.append('ladder: meta.rungs must list 2-7 rung titles, bottom rung first (for example "THE INTERN")')
+        for r in rungs if isinstance(rungs, list) else []:
+            if len(str(r)) > 17: E.append(f'ladder: rung title "{r}" is over 17 characters; it must fit beside the logo')
+            if str(r).rstrip().endswith("."): E.append(f'ladder: rung title "{r}" ends with a full stop')
+        if m.get("layout") != "ladder": E.append('ladder: set meta.layout to "ladder" (rung header on top, captions low)')
+        seen = []
+        for k, b in enumerate(beats, 1):
+            r = b.get("role"); n = b.get("rung")
+            if r == "rung":
+                if not (isinstance(n, int) and 1 <= n <= len(rungs)): E.append(f'beat {k}: a rung beat needs "rung": 1-{len(rungs)} (its place in meta.rungs)'); continue
+                if seen and n < seen[-1]: E.append(f"beat {k}: rung {n} comes after rung {seen[-1]}; the ladder only goes up")
+                if n not in seen: seen.append(n)
+            elif n is not None: E.append(f'beat {k}: only rung beats carry "rung" (the header hides on hook, climb and payoff beats)')
+            cps = b.get("chips") or []
+            if cps and r != "rung": E.append(f"beat {k}: duty chips belong to rung beats")
+            for c in cps:
+                lab = str(c.get("label", ""))
+                if not 1 <= len(words(lab)) <= 3 or len(lab) > 17: E.append(f'beat {k}: chip "{lab}" must be 1-3 words and 17 characters at most')
+                if lab.rstrip().endswith("."): E.append(f'beat {k}: chip "{lab}" ends with a full stop')
+                if not (isinstance(c.get("at", 0), int) and 0 <= c.get("at", 0) < len(b.get("chunks") or [])): E.append(f'beat {k}: chip "{lab}" needs "at": the index of the caption chunk that names the duty (0-{len(b.get("chunks") or []) - 1})')
+        if isinstance(rungs, list) and seen != list(range(1, len(rungs) + 1)): E.append(f"ladder: every rung in meta.rungs needs at least one rung beat, in order (found {seen})")
+        for n in seen:
+            nc = sum(len(b.get("chips") or []) for b in beats if b.get("rung") == n)
+            if not 1 <= nc <= 4: E.append(f"ladder: rung {n} has {nc} duty chips; use 1-4 (two rows at most)")
+        if "payoff" in roles and "rung" in roles[roles.index("payoff"):]: E.append("ladder: the payoff comes after the last rung")
+        if roles and roles[0] == "hook" and not any(CTX_OPEN.search(b.get("text", "")) for b in beats if b.get("role") == "hook"): E.append("context transition: a hook beat " + "must open the story out loud, for example \"Let's follow Ledger up the ladder ...\" (Hoang, 6 Nov 2026)")
     else:
         if seq != sorted(seq): E.append(f"roles out of order; keep {' > '.join(R['order'])}")
         if roles and roles[0] != "hook": E.append("beat 1 must be the hook")
@@ -129,14 +183,14 @@ def main(path):
                 if any(l.get("p") == "ledger" and abs(l.get("x", 0) - it.get("x", 0)) < 700 for l in its[:k]):
                     E.append(f'scene {name}: "{it.get("p")}" is listed after Ledger, so it is drawn over him; list it before Ledger (Hoang, 3 Nov 2026)')
     # Story flow (Hoang, 3 Nov 2026: "no transitional words in a story"): story beats link to the one before
-    if t in ("life-of", "howto", "definition", "lesson") and beats:
+    if t in ("life-of", "howto", "definition", "lesson", "ladder") and beats:
         LINK = re.compile(r"^\W*(but|so|then|that means|that is|which means|now|first|next|after|still|because|and|until|meanwhile|here is|here's|this is|by|at the end|finally|later|soon|instead|yet|that's"
                           + (r"|however|for example|for instance|as a result|in other words|this means|this is why|in short|to see why|let's|imagine|in the same way|on the other hand|therefore|in fact|whenever|once|when|if" if t == "lesson" else "") + r")\b", re.I)
-        story = [b for b in beats[2:] if b.get("role") not in ("endcard", "summary", "loop", "defcard")]
+        story = [b for b in beats[2:] if b.get("role") not in ("endcard", "summary", "loop", "defcard", "cta", "title")]
         linked = sum(1 for b in story if LINK.search(b.get("text", "")) or re.search(r"[.:]\s*(but|so|then|that means|now)\b", b.get("text", ""), re.I))
         if story and linked / len(story) < 0.6:
             W.append(f"story flow: only {linked} of {len(story)} story beats start with a linking word (But, So, Then, That means, Now...); link each beat to the one before (Hoang, 3 Nov 2026)")
-        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t not in ("definition", "lesson"):
+        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t not in ("definition", "lesson", "ladder"):
             W.append('story flow: the turn has no "But ..." (or Yet/Still/Instead); mark the turning point (Hoang, 3 Nov 2026)')
     # Context transitions (Hoang, 6 Nov 2026: "when ever you start the context explaine, please give the transitional context"):
     # the viewer is told when an example starts, and told when the reel goes back to it
@@ -158,7 +212,8 @@ def main(path):
     vtxt = " ".join(b.get("text", "") for b in beats).lower()
     if re.search(r"\b(\w+ (a|p)\.m\.|noon|midnight|o'clock)", vtxt) and re.search(r"\b(a|per|each|every|this) (month|year|quarter)\b|\bmonthly\b|\byearly\b", vtxt):
         W.append("time frame: clock times in one day but the numbers are per month/year; tell the story on the timescale of the numbers (Hoang, 3 Nov 2026)")
-    if m.get("layout") not in (None, "reel", "full"): E.append('meta.layout must be "full" (full-frame layout, how-to reels) or left out')
+    if m.get("layout") not in (None, "reel", "full", "ladder"): E.append('meta.layout must be "full" (full-frame layout, how-to reels), "ladder" (career-ladder reels) or left out')
+    if m.get("layout") == "ladder" and t != "ladder": E.append('meta.layout "ladder" is for meta.type "ladder"')
     if t == "howto" and m.get("layout") != "full": W.append('howto without meta.layout "full": the old layout leaves the bottom half empty (Hoang, 1 Nov 2026)')
     if t == "howto":   # how-to card fields (edlintics-howto-reel step F)
         for k in ("concept_id", "themes", "industry", "role"):
@@ -246,7 +301,7 @@ def main(path):
                 if len(ln) > 90 or ln.rstrip().endswith("."): E.append(f"{where}: footnote line {ln[:40]!r}: 90 characters at most, no closing full stop")
             if fn: texts_extra.append(("footnote", fn))
             sec = len(words(tx)) / WPS_T
-            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 5.6 if t == "howto" else 8.0 if t in ("definition", "life-of") else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
+            if not (1.4 if t == "ad" else 2.2) <= sec <= (4.6 if t == "ledger-talks" else 5.6 if t == "howto" else 8.0 if t in ("definition", "life-of", "ladder") else 4.2): E.append(f"{where}: end card voice is about {sec:.1f} s; keep it 2.5-3.5 s (term + key point)")
             texts_extra.append(("endcard", term + " " + kp))
             continue
         if b.get("img") not in scenes: E.append(f"{where}: img {b.get('img')!r} is not a scene")
@@ -262,7 +317,7 @@ def main(path):
             if ct.rstrip().endswith("."): E.append(f'{where}: caption chunk "{ct}" ends with a full stop')
             if c.get("key") and c["key"] not in ct: E.append(f'{where}: key "{c["key"]}" is not inside chunk "{ct}"')
         dur = len(words(tx)) / WPS_T
-        if dur > (7.5 if t == "ad" else 6.5 if t == "howto" else 12 if t == "lesson" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
+        if dur > (7.5 if t == "ad" else 6.5 if t in ("howto", "ladder") else 12 if t == "lesson" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
     for k, b in enumerate(beats, 1):   # takeaways and lessons avoid absolute claims (definition review, 1 Nov 2026)
         if t == "howto" and b.get("role") == "takeaway" and re.search(r"\b(never|always|only|every|all|no one|nobody|guarantees?)\b", b.get("text", ""), re.I):
             W.append(f"beat {k}: absolute word in the takeaway {b.get('text', '')[:60]!r}; prefer rarely, usually, often, can")
@@ -275,6 +330,7 @@ def main(path):
     # house rules on every piece of text
     texts = [("voice", b.get("text", "")) for b in beats] + [("caption", c.get("text", "")) for b in beats for c in b.get("chunks", [])]
     texts += [(f"meta.{k}", str(m.get(k, ""))) for k in ("caption", "caption_x", "first_comment", "title")] + texts_extra
+    texts += texts_extra_cta + [("chip", str(c.get("label", ""))) for b in beats for c in (b.get("chips") or [])] + [("rung title", str(r)) for r in (m.get("rungs") or [])]
     for where, s in texts:
         if "!" in s: E.append(f"{where}: exclamation point in {s[:60]!r}")
         if EMOJI.search(s):

@@ -17,8 +17,8 @@ if os.path.exists(f"{d}/timing.json"):
     if not R.get("estimated") and len(R["beats"]) == len(B): T = R
 if T is not None:
     for t, b in zip(T["beats"], B):   # same picture fields as REUSE_AUDIO in make_reel.sh
-        t.pop("cam", None)
-        for k in ("img", "focus", "cam", "term", "keypoint", "definition", "equation", "footnote", "cta"):
+        t.pop("cam", None); t.pop("rung", None); t.pop("chips", None)
+        for k in ("img", "focus", "cam", "term", "keypoint", "definition", "equation", "footnote", "cta", "rung", "chips", "message", "tag"):
             if k in b: t[k] = b[k]
     print("picture timing: the real voice timings from timing.json")
 else:

@@ -30,6 +30,8 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 7. **Full sentences (Hoang, 3 Nov 2026: "Always write full sentence").** Every voice line is a full sentence with a subject and a verb. No fragments like "Eighty out, twenty in." or "Five months, not years." Write "Eighty thousand goes out and twenty thousand comes in." Caption chunks split a full sentence; they never replace it.
 8. **Say when the example starts and when you go back to it (Hoang, 6 Nov 2026).** A hook beat or the first `moment` opens with "Let's follow a day in the life of ..." or "Let's imagine ...". The `lesson` beat returns with "Back to the wedding, ..." or "Continuing the story, ...". The validator fails the script otherwise. Full guide: "Context transitions" in the engine skill.
 
+**Direct opening (Hoang, 13 Nov 2026).** New reels open by saying what the video is and then go straight to the point, with no question or teaser hook: see "Direct opening" in the engine skill (`edlintics-explainer-reel`). For a new life-of reel, beat 1 (role `hook`) is the title sentence, for example "A day in the life of a manager, in 90 seconds", replacing the verdict question in step 2; the first `moment` still opens with "Let's follow ..." or "Let's imagine ...". Reels already scheduled are not changed.
+
 ## What makes it work
 - **People recognise their own day.** Use real, specific details: the 8 a.m. coffee, 200 invoices, a group chat at midnight. That's why viewers tag a friend.
 - **Situational humour only.** The joke is the situation, never the person or the job. Never mock accountants, salespeople, students or any role.

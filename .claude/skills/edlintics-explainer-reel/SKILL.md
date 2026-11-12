@@ -10,6 +10,7 @@ To make a reel, use one of these skills:
 - **edlintics-life-of-reel:** "A day in the life of a [role]", relatable moments, the turning moment, the concept, the lesson, end card.
 - **edlintics-howto-reel:** "How [role] in [industry] deals with [problem]" (60-90 s, 2-minute cap): hook question, the problem, 3-4 steps, the concept with its equation, a 4-box summary diagram, takeaway, end card with term, definition and equation. `meta.type: "howto"`; it opts in to the full-frame layout with `meta.layout: "full"` (see "Full-frame layout" below).
 - **In-lesson videos:** `meta.type: "lesson"`, for course lessons in the app, not social posts (see "In-lesson videos (type lesson)" below). Examples: `example-lesson.json` (defcards inline) and `example-lesson-grouped.json` (defcards at the end).
+- **edlintics-ladder-reel:** "From audit intern to CFO, the career ladder explained with Ledger in 90 seconds" (13 Nov 2026): Ledger climbs five rungs in a different outfit on each. `meta.type: "ladder"`, `meta.layout: "ladder"`, `meta.ladder_style: "bleed"` (see "Ladder layout" below).
 - **edlintics-ledger-talks:** Ledger talks to camera with a mic (test format T1). `meta.type: "ledger-talks"` switches the engine to the talk layout: full-screen art, a fixed frame, lip sync (mood `talk`), jump cuts, 1-3 word karaoke captions over his chest, voice only. New presets: mood `talk`, arm `mic`, `larm` (`up_l`, `point_l`, `open_l`, `shrug_l`) and background `campus`.
 
 Both write a `script.json` and build it with this engine:
@@ -29,6 +30,20 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 
 8. **Say out loud when the example starts, and when the reel goes back to it (Hoang, 6 Nov 2026).** See "Context transitions" below. The validator fails a script that drops the viewer into an example unannounced.
 9. **Show the real thing (Hoang, 6 Nov 2026: "real excel refernece and equation").** When a concept lives in a tool or a formula, draw the tool with its real contents, not a generic picture of it. See "Real artefacts" below.
+
+10. **Direct opening, no hook (Hoang, 13 Nov 2026).** See "Direct opening" below. It applies to NEW reels; reels already scheduled are not changed.
+
+## Direct opening (Hoang, 13 Nov 2026)
+Hoang, after sharing two "X, explained in 90 seconds" reels: "I think we should avoid the hook and go directly to the point like these video? Like Bid-Ask Spread explained with Ledger in 90s, Understand a day in the life of a manager in ..., avoid the hook just go directly to the point".
+
+**Rule for new reels:** beat 1 says what the video is, as one full sentence on screen and in the voice, and the story starts in beat 2. No verdict question, no teaser, no "did you know". This replaces the "beat 1 is a verdict question" and "hook question" guidance in the definition, life-of and how-to skills for new reels.
+- **Example openings:** "Bid-ask spread, explained with Ledger in 90 seconds", "A day in the life of a manager, in 90 seconds", "From audit intern to CFO, the career ladder explained with Ledger in 90 seconds".
+- **Only claim a length the video has.** "In 90 seconds" needs a `timing.json` duration of 90 or less; otherwise say "in under two minutes".
+- **Thumbnail, card title and YouTube title** use the same direct title.
+- **Where it works today:**
+  - ladder reels: beat 1 has role `title` (a title card with a tag pill, complete on frame 1); the validator requires it;
+  - definition and life-of reels: beat 1 keeps role `hook` and may be a title-style sentence. The validators accept it as long as the first `story` beat (definition) or the first `moment` (life-of) still opens the example out loud ("Let's imagine ...", "Let's follow ..."), and a life-of beat 1 or 2 still says "a day in the life of";
+  - how-to reels: NOT yet. The how-to validator still requires "How does <a role> ... deal with <a problem>?" in beat 1 (or in hook beat 2-3 with `hookStyle: "B"`), so a title-style beat 1 fails. Until the validator is updated, how-to reels keep the question opening.
 
 ## Context transitions (Hoang, 6 Nov 2026)
 Hoang: "when ever you start the context explaine, please give the transitional context like Let's imagine ..., for this let's use the example of ... so user understand, continue from the last example, ..., continue the story".
@@ -326,6 +341,17 @@ Hoang (1 Nov 2026): the first how-to sample left the bottom half of the phone em
 - **framefill.py:** frame-fill and caption-sync report, run at the end of `make_reel.sh` (also with `STILLS_ONLY=1`); it FAILs only for the full layout (mean safe-area share under 75%, more than 2% ink in the UI zones, a caption chunk outside its voice line). Sample: 63.6% (old layout) to 80.1%.
 - **Long reels and 10 MB:** `build.sh` lowers the Canva copy's video bitrate for reels over ~48 s so it stays near 9 MB (shorter reels keep 1500k), and re-encodes `<slug>.mp4` at that bitrate only if it is 10 MB or more.
 - `REUSE_AUDIO=1` now also carries end-card fields (`term`, `keypoint`, `equation`, `footnote`, `cta`) from beats.json, and `STILLS_ONLY=1` no longer exits 1 because the MP4s are missing.
+
+## Ladder layout and career-ladder pieces (12-13 Nov 2026, opt-in)
+`meta.type: "ladder"` with `meta.layout: "ladder"` (used by edlintics-ladder-reel; every other reel type is unchanged). Two styles:
+- **`meta.ladder_style: "bleed"` (the one Hoang approved, 13 Nov 2026):** the art fills 1080x1920 and scenes use the frame `[0, 0, 1080, 1920]`, so art coordinates are screen pixels. Captions y 228-438 (84 px) on a soft paper backing, rung title with its "n/5" pill at y 452-522, logo top right at y 468, duty chips at y 534-670. Keep faces, text and props in x 30-940, y 690-1500 (ladder shots, which have no header: from y 450); the ground line is at y 1500.
+- **Left out or `"panel"` (the first preview):** art in a rounded panel x 40-940, y 456-1294 (frame `[40, 460, 900, 830]`), captions low at y 1304-1520.
+- **Roles:** `title` (beat 1: a scene plus a card with `message` and an optional `tag` pill, no captions), `rung` (carries `rung` 1-5 and `chips: [{label, at}]`, where `at` is the chunk index in that beat), `climb`, `payoff`, `cta` (last: a scene plus a full-width card with `message` and the logo). `hook` and `endcard` are still accepted for the older style. `meta.rungs` lists the header titles (17 characters at most). Caption chunks are 1-4 words.
+- **Ledger outfits per rung:** `intern`, `senior`, `manager`, `controller`, `cfo`; `mk_intern` to `mk_cmo`; `inv_junior` to `inv_cio`; `con_analyst` to `con_partner` (`scene_lib._ladder_wear`; the body, face and hands never change, and a short sleeve colours the first part of each arm).
+- **Props:** `career_ladder`, `rung_tag` (state todo, now, done), `side_bracket`, `steps`, `floor_deco`, `dial` (the two-word slider), `match_rows`, `test_picker`, `meter`, `cal_fill`, `checklist`, `pot`, `board_table`, `org_chart`. `backdrop` takes `up` and `down` for a full-bleed room.
+- **Item key `appear`:** `{"at": "chunk:N", "delay": s}` pops an item in after a delay, for staggers (the ladder props use it inside themselves).
+- **Helpers:** `.claude/skills/edlintics-ladder-reel/ladder_script.py` writes the title, climb, payoff and closing scenes.
+- The ladder layout waits for Inter 900 before frame 0, so the title card is in the right font on the first frame.
 
 ## In-lesson videos (type lesson, 5 Nov 2026)
 Hoang (5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes), vertical design, script need to be in full sentence with transitional words, using the same drawing style like what we have with the explainer reels". Set `meta.type: "lesson"`; `meta.layout: "full"` is recommended. Same scenes, Ledger, pencil look, voice and captions as the reels.
