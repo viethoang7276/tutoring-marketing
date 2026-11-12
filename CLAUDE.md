@@ -5,7 +5,7 @@ Read these before any Edlintics social content work:
 - `docs/content-workflow/weekly-content-process.md`: the Thursday plan, caption and first-comment rules, and approvals.
 - `docs/content-workflow/brand-graphics.md`: reusable icons and illustrations. Check it before generating anything.
 - `docs/content-workflow/holiday-calendar.md`: every holiday with its content window. Make content fit upcoming holidays; Christmas content starts 1–2 weeks before 25 Dec.
-- `docs/content-workflow/economic-calendar.md`: scheduled economic events with global impact (Federal Reserve and ECB decisions, US CPI, euro area flash inflation, big earnings weeks). At most one post a week, published before the event, teaching a concept that stays true whatever the result.
+- `docs/content-workflow/economic-calendar.md`: scheduled economic events with global impact (Federal Reserve and ECB decisions, US CPI, euro area flash inflation, big earnings weeks). Up to three news-led posts a week (raised from one on 13 Nov 2026; includes posts on a famous company's reported results), with no forecasts or investment advice.
 - `docs/content-workflow/concept-registry.md`: the hub `concepts` registry of every concept already used. Query it before proposing any post; same concept blocked 90 days, related concept or same industry 30 days, a theme at most 2 posts a week.
 - Skills `edlintics-concept-carousel` and `edlintics-puzzle-visuals`: copies in `docs/content-workflow/skills/` (to load them as project skills, copy that folder to `.claude/skills/`).
 

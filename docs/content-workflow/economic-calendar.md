@@ -17,7 +17,7 @@ Jobs reports, other central banks and smaller data releases are not on the list.
 Every Thursday run checks this file, in both the monthly plan and the weekly refresh (step 4b in `weekly-content-process.md`).
 
 - **What to look for:** every event whose "plan by" date falls in the next 3 weeks.
-- **Limit:** at most one economic post in any Monday-to-Sunday week. It uses a normal slot and counts toward the weekly refresh's limit of about a third of the slots. It is never an extra post.
+- **Limit (raised 13 Nov 2026, Hoang: "Ok with all decision"):** up to three news-led posts in any Monday-to-Sunday week (it was one). This covers the scheduled events here and posts built on a famous company's reported results (for example "follow $100 of revenue" after an earnings report), using only reported figures with sources, with no forecasts and no investment advice. Why: on a reference account studied on 13 Nov, famous-company and fresh-news reels had about ten times the views of everyday comparisons (hub `trends/2026-11-13-hoang-ig-explained-in-90-seconds`). The number three is the Marketing Manager's reading of "raise the cap"; Hoang can change it. It uses a normal slot and counts toward the weekly refresh's limit of about a third of the slots. It is never an extra post.
 - **More than one event in a week:** choose in this order: rate decision, then US CPI, then euro area flash inflation, then earnings. One post may cover two decisions that fall in the same week.
 - **Timing:** the post goes out 1 to 3 days before the event.
 - **Holiday overlap:** Black Friday, the Christmas run and other big holiday runs keep their slots. The economic post takes a free slot or is skipped that week.
