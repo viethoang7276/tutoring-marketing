@@ -271,6 +271,8 @@ def main(path):
     if re.search(r"\b(\w+ (a|p)\.m\.|noon|midnight|o'clock)", vtxt) and re.search(r"\b(a|per|each|every|this) (month|year|quarter)\b|\bmonthly\b|\byearly\b", vtxt):
         W.append("time frame: clock times in one day but the numbers are per month/year; tell the story on the timescale of the numbers (Hoang, 3 Nov 2026)")
     if m.get("layout") not in (None, "reel", "full", "ladder"): E.append('meta.layout must be "full" (full-frame layout, how-to reels), "ladder" (career-ladder reels) or left out')
+    if m.get("caption_pos") != "low": W.append('captions are in the older band; new videos set meta.caption_pos to "low" (the middle of the bottom half, Hoang, 13 Nov 2026). Leave it only when reproducing a reel built before the rule')
+    if m.get("caption_pos") not in (None, "top", "low"): E.append('meta.caption_pos must be "low" (captions in the middle of the bottom half, the rule for new videos from 13 Nov 2026) or "top" / left out (the older caption band)')
     if m.get("layout") == "ladder" and t not in ("ladder", "map"): E.append('meta.layout "ladder" is for meta.type "ladder"')
     if t == "howto" and m.get("layout") != "full": W.append('howto without meta.layout "full": the old layout leaves the bottom half empty (Hoang, 1 Nov 2026)')
     if t == "howto":   # how-to card fields (edlintics-howto-reel step F)

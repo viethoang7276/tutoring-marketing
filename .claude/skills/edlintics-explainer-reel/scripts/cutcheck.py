@@ -12,6 +12,8 @@ import imageio_ffmpeg, numpy as np
 from PIL import Image, ImageDraw
 
 FF = imageio_ffmpeg.get_ffmpeg_exe(); FPS = 24
+try: BOX_Y0 = 380 if json.load(open(os.path.join(sys.argv[1], "scenes.json"))).get("capLow") else 530   # low captions (13 Nov 2026): the ad art box is y 380-1160
+except Exception: BOX_Y0 = 530
 
 
 def frame(mp4, k):
@@ -21,7 +23,7 @@ def frame(mp4, k):
 
 
 def ink(im):
-    box = im[530:1310, 40:1040].astype(int)
+    box = im[BOX_Y0:BOX_Y0 + 780, 40:1040].astype(int)
     return float((box.min(axis=2) < 150).mean())
 
 

@@ -39,8 +39,24 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 Hoang, on the ladder and map reels: "I realize the sub is still on the top. I want it to be at the center of bottom half rather than at the top", then "make it the rule for all videos now to be at bottom half center".
 
 **Rule for new videos:** captions sit in the middle of the bottom half of the frame (centre near y 1425, inside y 1320-1530, above the platform zone that starts at y 1540), never in the top band.
-- **Done:** the bleed style of the ladder layout takes `meta.caption_pos: "low"` (captions y 1320-1530; the header, chips and logo move up to y 240-390; put the ground line of the scenes at y 1270 so nothing important sits under the captions). First reel built this way: `assets/renders/map-reels/map-career-cities/`. The ladder helper `ladder_script.py` does it by default from 13 Nov 2026 (`write()` lifts the scenes by 220 px; `caption_pos="top"` reproduces the older reels), and the seven ladder reels not yet scheduled on that day were rebuilt with captions low.
-- **Not done yet:** the default, full, ad, talk and lesson layouts and the puzzle and highlighter reels keep their old caption bands (Hoang, 13 Nov 2026: "caption low will be in other type of video as well", so these are next). Each needs its art moved before the captions can go low; do it layout by layout, with the "After an engine change" regression, and do not change reels that are already scheduled.
+- **Engine switch:** `meta.caption_pos: "low"` in any script (`"top"` or left out = the older band, so reels built before the rule render exactly as before). The templates and examples of the definition, life-of, how-to and Ledger-talks skills and the two lesson examples carry it, so new scripts get it by default.
+- **What moves, per layout (end cards and definition cards never move):**
+
+| Layout | Captions | Logo | Art box |
+|---|---|---|---|
+| default (definition, life-of, lessons without `layout`) | y 1320-1530, x 60-920, 84 px, paper backing | top centre, y 246 | y 400-1180 (was 530-1310) |
+| full (how-to, lessons) | y 1310-1520, x 60-920, 84 px, paper backing | top, y 232 | y 300-1290 (was 450-1440) |
+| ad | y 1300-1520, x 120-960, 84 px, paper backing (inside the 4:5 safe area) | y 296 | y 380-1160; camera scenes are clipped to it |
+| talk (Ledger talks) | y 1300-1530, under Ledger on the ground, same white outlined style | unchanged (y 262) | unchanged (full screen) |
+| ladder, bleed style (ladder and map reels) | y 1320-1530 | top right, y 256 | full screen; the helper lifts scenes by 220 px |
+
+- **Helpers that follow it:** `framefill.py` (logo box), `cutcheck.py` (ad art box), `canva_kit.py` (caption and logo boxes in `kit.json`), `make_cover.js` (the cover keeps its own layout). Frames from `build_scenes.py` do not change: only where the box sits on screen.
+- **Compose rule:** nothing important may hang below the art box, because the captions sit right under it (full layout: 20 px under it).
+- **Already low, unchanged:** the highlighter reel (its captions are at y 1425-1565 on the desk).
+- **Not converted:** the puzzle reel. It has no caption band: its text is the full question at the top (y 190-580) with the diagram and the options under it. Putting the question in the bottom half means a new layout for the question, the prompt, the options, the timer and the worked steps, so it needs a redesign decision from Hoang.
+- **Regression note:** the examples now carry `caption_pos`, so compare old and new engine on the SAME script file; a script without `caption_pos` must still give byte-identical `scenes.json` and pixel-identical stills.
+- **Ladder and map reels:** the bleed style of the ladder layout takes `meta.caption_pos: "low"` (captions y 1320-1530; the header, chips and logo move up to y 240-390; put the ground line of the scenes at y 1270 so nothing important sits under the captions). First reel built this way: `assets/renders/map-reels/map-career-cities/`. The ladder helper `ladder_script.py` does it by default from 13 Nov 2026 (`write()` lifts the scenes by 220 px; `caption_pos="top"` reproduces the older reels), and the seven ladder reels not yet scheduled on that day were rebuilt with captions low.
+- **Hoang, 13 Nov 2026, third message:** "caption low will be in other type of video as well". Each needs its art moved before the captions can go low; do it layout by layout, with the "After an engine change" regression, and do not change reels that are already scheduled.
 
 ## Direct opening (Hoang, 13 Nov 2026)
 Hoang, after sharing two "X, explained in 90 seconds" reels: "I think we should avoid the hook and go directly to the point like these video? Like Bid-Ask Spread explained with Ledger in 90s, Understand a day in the life of a manager in ..., avoid the hook just go directly to the point".
@@ -133,7 +149,8 @@ Tools, with no system installs:
 Each reel builds in its own work folder, so several can build at once.
 
 ## Layout (1080x1920)
-- **Caption band:** y 262-498, Inter 900 at 92 px, 2 lines at most.
+- **Caption band, new videos (`meta.caption_pos: "low"`, 13 Nov 2026):** y 1320-1530, x 60-920, Inter 900 at 84 px on a soft paper backing, 2 lines at most; the logo sits at the top (y 246) and the art box is x 40-1040, y 400-1180. See "Caption position".
+- **Caption band, older reels (no `caption_pos`):** y 262-498, Inter 900 at 92 px, 2 lines at most, with the art box and logo as below.
 - **Art box:** x 40-1040, y 530-1310.
 - **Ledger-first framing (the default, 25 Oct 2026):** in any scene with Ledger, `build_scenes.py` sizes the frame from Ledger's own height, so he fills 74-88% of the art-box height (about 74% in a busy scene) whatever his `s`. Props that would fall outside are nudged in, then scaled down if still too big; Ledger is never shrunk or moved. Wide "bleed" props (`desk`, `building`, `whiteboard`, `window`, `people_group`) may run off the left and right edges instead of shrinking. Nothing goes above the frame top, so nothing sits under the caption band. Scenes without Ledger fall back to the renderer's fit (the drawn subject at ~70% of the width).
 - **Override:** set `"frame"` on the scene to `content` (old fit-everything), `ledger`, `ledger-close`, `wide`, `item:<id>`, `items:<id>,<id>` or `[x, y, w, h]`. Use it only for a deliberate close-up or crop.
@@ -263,7 +280,7 @@ Flaws to avoid, seen in the pilots: a counter must not sit on its starting value
 ## Contact-sheet review checklist (every reel, every build)
 - Ledger is accurate to assets/brand/ledger.svg and fills at least 70% of the art-box height in every scene
 - **Hands proportional:** Ledger's hands and arms match the brand proportions (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time)
-- No text inside the art, and nothing sits under the caption band
+- No text inside the art, and nothing sits under the captions (low captions: nothing important hangs below the art box)
 - The end card shows the term and the key point
 - A spoken signpost opens the example, and another marks each return to it (read the voice lines, not only the frames)
 - Formulas and tables on screen show the same numbers as the voice, and state changes land on the right word
@@ -299,7 +316,7 @@ Every reel gets a cover: `SCENES=$W/scenes.json node $E/make_cover.js <t> $W/<sl
 - Only `type`, `term`, `title` and `slug` are required in meta: the ad text lives in Ads Manager, not in caption or first comment
 - Tutoring and "book a session" are allowed in ads (the organic no-tutoring rule stays for every other type). No price, no outcome promises, no exclamation points, no trailing full stops, US dollars
 - End card: optional `"footnote"` (1-2 lines split by `\n`, at most 90 characters each, no closing full stop), shown small under the logo, for example the IE independence line or "Interactive courses opening soon"
-- Layout `ad`: the caption band moves down to y 300-520 so the captions, art and end card all sit inside the central 4:5 safe area (y 285-1635) that Meta's feed crop keeps
+- Layout `ad` (older band; with `caption_pos: "low"` see "Caption position"): the caption band moves down to y 300-520 so the captions, art and end card all sit inside the central 4:5 safe area (y 285-1635) that Meta's feed crop keeps
 - Pace: build with `ELEVEN_TEMPO=1.24 VO_GAP=0.1 make_reel.sh ...` (`VO_GAP` is the pause between beats, default 0.2). At the default 1.12 the 80-word tutoring ad ran 34.8 s
 - New presets: Ledger mood `dizzy` (spiral eyes, wavy mouth, a ring of three stars over his head; body and arms unchanged), `chip` (labelled pill; the one prop with text in the art, for subject chips), `exam_sheet`, `cost_pools` (ABC costing), `scatter_plot` (regression), whiteboard drawing `shift` (supply curve moves), laptop screens `call` (generic online lesson: a student tile and a shared board, no real app UI) and `lesson` (interactive lesson card)
 - Wide props next to Ledger got cropped by Ledger-first framing; set `"frame": "wide"` on those scenes and check the contact sheet

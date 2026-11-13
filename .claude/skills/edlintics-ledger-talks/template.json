@@ -1,6 +1,6 @@
 {
  "meta": {
-  "type": "ledger-talks",
+  "type": "ledger-talks", "caption_pos": "low",
   "term": "<term or list title shown on the end card>",
   "title": "Ledger talks: <topic>",
   "slug": "<slot id>",

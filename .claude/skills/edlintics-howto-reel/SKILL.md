@@ -20,6 +20,8 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
 ```
 
 
+**Caption position.** Captions go in the middle of the bottom half (Hoang, 13 Nov 2026: "make it the rule for all videos now to be at bottom half center"): keep `"caption_pos": "low"` in `meta`, as the template and the example have it. Leave it out only to reproduce a reel built before the rule.
+
 ## Story rules for every reel (Hoang, 3 Nov 2026)
 Hoang rejected the posted founder-runway reel because it "doesn't have flow". Read `.claude/skills/storytelling-and-narrative` (the BEATS framework) before you write any script.
 1. **One story, not a list of facts.** Use setup, then tension, then the turn, then the payoff. One hero (Ledger in the role) wants something, a problem appears, and the concept resolves it.
@@ -90,7 +92,7 @@ Run `mkdir -p $W && cp template.json $W/script.json` and fill every `<...>`. Cop
 ## D. Build
 ### The full-frame layout (Hoang, 1 Nov 2026: "use more of the phone screen")
 `meta.layout: "full"` (opt-in; other reel types are unchanged) puts everything inside the platform safe zones (top 220 px, bottom 380 px, right 140 px):
-- captions y 228-438 in x 60-920, Inter 900 at 84 px;
+- captions y 1310-1520 in x 60-920, Inter 900 at 84 px on a soft paper backing (`meta.caption_pos: "low"`, the rule from 13 Nov 2026), logo at the top (y 232) and the art box at y 300-1290; a script without `caption_pos` keeps the older band, captions y 228-438 with the art box at y 450-1440 and the logo at y 1462;
 - art box x 40-940, y 450-1440 (900x990);
 - logo 190 px wide at y 1462;
 - end card y 228-1518 in x 60-920: term, rule, definition, equation card, logo.

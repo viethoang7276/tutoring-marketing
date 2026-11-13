@@ -1,6 +1,6 @@
 {
  "meta": {
-  "type": "definition",
+  "type": "definition", "caption_pos": "low",
   "term": "Sunk cost",
   "title": "Sunk cost, explained by Ledger",
   "slug": "sunk-cost",

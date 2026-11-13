@@ -21,6 +21,7 @@ const srv = http.createServer((q, r) => {
   await p.goto(`http://127.0.0.1:${srv.address().port}/render.html`, { waitUntil: 'networkidle0' });
   await p.evaluate(() => window.init());
   // full-frame layout (how-to reels): the art starts at y 450, so fit it into a smaller box under the cover title
+  await p.evaluate(() => { if (document.body.classList.contains('caplow')) { document.body.classList.remove('caplow'); BY = document.body.classList.contains('full') ? 450 : 530; } });   // low captions (13 Nov 2026): the cover keeps its own layout
   await p.evaluate(() => { if (document.body.classList.contains('full')) { BX = 90; BW = 800; BY = 565; BH = 880; } });
   await p.evaluate(t => window.render(t), Number(t));
   await p.evaluate((kicker, title) => {

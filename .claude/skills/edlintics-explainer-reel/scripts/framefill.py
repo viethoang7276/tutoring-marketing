@@ -24,6 +24,9 @@ SAFE = (0, 220, 940, 1540)   # x0, y0, x1, y1
 try: S = json.load(open(f"{d}/scenes.json")); layout = S.get("layout", "reel"); beats = S["beats"]
 except Exception: layout, beats = "reel", []
 LOGO = {"full": (390, 1455, 590, 1520), "ladder": (760, 238, 936, 306)}.get(layout, (430, 1330, 650, 1400))   # logo box per layout, left out of the measure
+try:
+    if S.get("capLow") and layout != "ladder": LOGO = {"full": (390, 226, 590, 292), "ad": (430, 288, 650, 362)}.get(layout, (430, 238, 650, 312))   # low captions: the logo sits at the top
+except NameError: pass
 stills = sorted(glob.glob(f"{d}/stills/still-*.png"), key=lambda p: float(re.search(r"still-([\d.]+)\.png", p)[1]))
 if not stills: sys.exit("no stills; run make_reel.sh first (STILLS_ONLY=1 is enough)")
 paper = np.array([251, 250, 246], dtype=np.int16)

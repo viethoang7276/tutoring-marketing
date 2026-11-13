@@ -77,6 +77,20 @@ body.ladder.bleed.caplow #cap{top:1320px}
 body.ladder.bleed.caplow #rung .rt{top:240px}
 body.ladder.bleed.caplow #rung .chips{top:322px}
 body.ladder.bleed.caplow #logo{top:256px}
+/* low captions for the other layouts (meta.caption_pos "low", 13 Nov 2026, opt-in; Hoang: "caption low will be in other type of video as well").
+   Captions sit in the middle of the bottom half (y 1310-1530, x 60-920, clear of the app buttons on the right) on a soft paper backing,
+   the logo moves to the top and the art box moves up into the old caption band. End cards and definition cards do not move.
+   default layout: logo y 246, art box y 400-1180 | full: logo y 232, art box y 300-1290 | ad: logo y 296, art box y 380-1160 (all inside the 4:5 safe area) | talk: captions y 1300-1530 */
+body.caplow:not(.ladder) #cap{top:1320px;height:210px;left:60px;right:160px}
+body.caplow:not(.ladder):not(.talk) #cap .c{font:900 84px/1.12 Inter,sans-serif;display:inline-block;background:rgba(251,250,246,0.92);border-radius:30px;padding:6px 26px 12px}
+body.caplow:not(.ladder):not(.full):not(.ad):not(.talk) #art{-webkit-mask-image:linear-gradient(to bottom,transparent 318px,#000 372px);mask-image:linear-gradient(to bottom,transparent 318px,#000 372px)}
+body.caplow:not(.ladder):not(.full):not(.ad):not(.talk) #logo{top:246px}
+body.caplow.full #art{-webkit-mask-image:linear-gradient(to bottom,transparent 288px,#000 310px);mask-image:linear-gradient(to bottom,transparent 288px,#000 310px)}
+body.caplow.full #cap{top:1310px}
+body.caplow.full #logo{top:232px}
+body.caplow.ad #cap{top:1300px;height:220px;left:120px;right:120px}
+body.caplow.ad #logo{top:296px}
+body.caplow.talk #cap{top:1300px;height:230px;left:40px;right:40px}
 /* ladder "cta" beat (13 Nov 2026): the closing message on a card beside the ladder, with the logo; no end card */
 #ctab{display:none}
 body.ladder #ctab{position:absolute;left:400px;top:640px;width:520px;box-sizing:border-box;background:#FBFAF6;border:5px solid #0F172A;border-radius:36px;padding:34px 28px 30px;text-align:center;transform-origin:50% 50%}
@@ -162,6 +176,7 @@ const artBody=document.getElementById('artBody'), capC=document.querySelector('#
 async function init(){ D=await (await fetch('scenes.json')).json(); await document.fonts.ready;
   if(D.layout==='ad') document.body.classList.add('ad');
   if(D.layout==='full'){ document.body.classList.add('full'); BX=40; BW=900; BY=450; BH=990; }   // full-frame layout (how-to reels, 1 Nov 2026)
+  if(D.capLow&&D.layout!=='ladder'){ document.body.classList.add('caplow'); try{ await document.fonts.load('900 84px Inter'); }catch(_){} if(D.layout==='full') BY=300; else if(D.layout==='ad') BY=380; else if(D.layout!=='talk') BY=400; }   // low captions (13 Nov 2026, opt-in): the art box moves up into the old caption band
   if(D.layout==='ladder'){ LAD=true; document.body.classList.add('ladder'); BX=40; BW=900; BY=460; BH=830;   // ladder layout (career-ladder reels, 12 Nov 2026)
     try{ await Promise.all([document.fonts.load('900 84px Inter'),document.fonts.load('800 40px Inter')]); }catch(_){}   // ladder only: the caption font is ready for frame 0
     if(D.bleed){ document.body.classList.add('bleed'); BX=0; BW=1080; BY=0; BH=1920; if(D.capLow) document.body.classList.add('caplow'); } }   // full-bleed style (13 Nov 2026): the art is the whole screen
@@ -291,7 +306,7 @@ function render(t){
   const F=b.cam?camAt(t,b,B):(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
   // camera scenes (paid ads, 30 Oct 2026): the art is clipped below the caption band and above the logo, and the pencil
   // noise is scaled against the zoom so a close-up boils like a normal frame (no bigger wobble). Other scenes are untouched
-  document.getElementById('art').style.clipPath=b.cam?'inset(530px 0 584px 0)':'';
+  document.getElementById('art').style.clipPath=b.cam?(D.capLow?`inset(${BY}px 0 ${1920-BY-BH-26}px 0)`:'inset(530px 0 584px 0)'):'';
   const zr=b.cam?F.s:1;
   if(b.cam||document.body.dataset.camz){ document.body.dataset.camz=b.cam?'1':'';
     document.querySelectorAll('#pencil feDisplacementMap').forEach(e=>e.setAttribute('scale',String(4/zr)));

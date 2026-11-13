@@ -1,6 +1,6 @@
 {
  "meta": {
-  "type": "howto",
+  "type": "howto", "caption_pos": "low",
   "layout": "full",
   "term": "<Term>",
   "title": "How <role> at <company type> deals with <problem>: <term>",

@@ -19,6 +19,8 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
 ```
 
 
+**Caption position.** Captions go in the middle of the bottom half (Hoang, 13 Nov 2026: "make it the rule for all videos now to be at bottom half center"): keep `"caption_pos": "low"` in `meta`, as the template and the example have it. Leave it out only to reproduce a reel built before the rule.
+
 ## Story rules for every reel (Hoang, 3 Nov 2026)
 Hoang rejected the posted founder-runway reel because it "doesn't have flow". Read `.claude/skills/storytelling-and-narrative` (the BEATS framework) before you write any script.
 1. **One story, not a list of facts.** Use setup, then tension, then the turn, then the payoff. One hero (Ledger in the role) wants something, a problem appears, and the concept resolves it.
@@ -81,7 +83,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
    - the role is clear from the first frame;
    - Ledger is big and recognisable;
    - **hands proportional:** in every scene Ledger's hands and arms match the brand proportions (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time);
-   - no art sits under the captions;
+   - no art sits under the captions (captions are low, y 1320-1530, right under the art box; the logo is at the top);
    - the end card reads well.
    If a prop hides under the captions or a hand looks off, fix the scene (see Compose) and rebuild (about 2 min; add `REUSE_AUDIO=1` before the command when only the pictures changed).
 6. **Canva draft with music:** follow edlintics-definition-reel step 6 exactly:

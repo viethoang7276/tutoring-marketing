@@ -13,6 +13,8 @@ description: Make one "Ledger talks" reel, Edlintics' face-free version of the c
 - **Blank to fill:** `template.json`.
 - **Engine:** `.claude/skills/edlintics-explainer-reel/scripts/` (`$E`). Set REPO, E, PY and W as in edlintics-life-of-reel.
 
+**Caption position.** Captions go in the middle of the bottom half (Hoang, 13 Nov 2026: "make it the rule for all videos now to be at bottom half center"): keep `"caption_pos": "low"` in `meta`, as the template and the example have it. Leave it out only to reproduce a reel built before the rule.
+
 ## What the engine does for `meta.type: "ledger-talks"`
 - **Frame:** the art fills the whole 9:16 screen, and Ledger is framed the same in every scene:
   - he is about 80% of the screen width with his arms;
@@ -22,7 +24,7 @@ description: Make one "Ledger talks" reel, Edlintics' face-free version of the c
 - **Jump cuts:** a new beat may switch scenes to change the gesture. There's no fade and no draw-on after the first beat, like a talking-head edit.
 - **Captions:**
   - white Inter 900 at 112 px with a navy outline, the key word in yellow;
-  - centred at y 1110-1340, over Ledger's chest, never his face;
+  - centred at y 1300-1530, under Ledger on the ground, never over his face or body (`meta.caption_pos: "low"`, the rule from 13 Nov 2026; a script without it keeps the older place, y 1110-1340 over his chest);
   - the logo sits small at the top (y 262).
 - **Sound:** voice only, with no whoosh and no music bed (the reference has none). The Canva copy also has no music.
 

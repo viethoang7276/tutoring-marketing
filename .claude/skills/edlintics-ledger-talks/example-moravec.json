@@ -1,6 +1,6 @@
 {
  "meta": {
-  "type": "ledger-talks",
+  "type": "ledger-talks", "caption_pos": "low",
   "term": "Moravec's paradox",
   "title": "Ledger talks: the skills that pay are flipping",
   "slug": "test-ledger-talks-moravec",

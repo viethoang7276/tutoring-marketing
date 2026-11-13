@@ -1,6 +1,6 @@
 {
  "meta": {
-  "type": "definition",
+  "type": "definition", "caption_pos": "low",
   "term": "<Term, as it appears on the end card>",
   "title": "<Short title, e.g. Sunk cost, explained by Ledger>",
   "slug": "<kebab-case, e.g. sunk-cost>",

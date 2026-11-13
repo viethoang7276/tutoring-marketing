@@ -67,6 +67,8 @@ def srt_time(t):
 def main(w, slug, out):
     w, out = os.path.abspath(w), os.path.abspath(out)
     T = json.load(open(f"{w}/timing.json")); S = json.load(open(f"{w}/script.json")); D = json.load(open(f"{w}/scenes.json"))
+    if D.get("capLow"):   # low captions (meta.caption_pos "low", 13 Nov 2026): the kit's caption and logo boxes follow the render
+        STYLE["caption"].update({"size_px": 84, "box": {"x": 120, "y": 1300, "w": 840, "h": 220}, "backing": "soft paper pill, rgba(251,250,246,0.92), radius 30 px"}); STYLE["logo"]["y"] = 296
     os.makedirs(out, exist_ok=True)
     for sub in ("clips", "clips-4x5", "voice", "endcard", "logo"):
         shutil.rmtree(f"{out}/{sub}", ignore_errors=True); os.makedirs(f"{out}/{sub}")

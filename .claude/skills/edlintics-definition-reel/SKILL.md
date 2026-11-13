@@ -19,6 +19,8 @@ W=<scratchpad>/reel/<slug>          # one folder per reel
 ```
 
 
+**Caption position.** Captions go in the middle of the bottom half (Hoang, 13 Nov 2026: "make it the rule for all videos now to be at bottom half center"): keep `"caption_pos": "low"` in `meta`, as the template and the example have it. Leave it out only to reproduce a reel built before the rule.
+
 ## Story rules for every reel (Hoang, 3 Nov 2026)
 Hoang rejected the posted founder-runway reel because it "doesn't have flow". Read `.claude/skills/storytelling-and-narrative` (the BEATS framework) before you write any script.
 1. **One story, not a list of facts.** Use setup, then tension, then the turn, then the payoff. One hero (Ledger in the role) wants something, a problem appears, and the concept resolves it.
@@ -68,7 +70,7 @@ Hoang rejected the posted founder-runway reel because it "doesn't have flow". Re
 5. **Check by eye.** Open the contact sheet and check each of these:
    - Ledger is recognisable and big in every scene, and nothing important is cut off at the frame edge;
    - **hands proportional:** Ledger's hands and arms match the brand proportions in every scene (hand about the size of his eye-to-eye gap, arms no longer than his body is tall), and anything he holds is in scale with his hand (Hoang, 25 Oct 2026: check this every time);
-   - no art sits under the caption;
+   - no art sits under the caption (captions are low, y 1320-1530, right under the art box; the logo is at the top);
    - the end card reads well;
    - each caption matches its picture.
    If a scene looks wrong, move the items (x, y, s), or add a `frame` override, then rebuild. When only the pictures changed, run `REUSE_AUDIO=1 $E/make_reel.sh $W <slug>` to keep the voice and timings.
