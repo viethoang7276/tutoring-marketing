@@ -33,6 +33,15 @@ Reference build: sunk cost v5 (hub slot `explainer-sunk-cost`, Canva `DAHZALJdKo
 
 10. **Direct opening, no hook (Hoang, 13 Nov 2026).** See "Direct opening" below. It applies to NEW reels; reels already scheduled are not changed.
 
+11. **Captions in the middle of the bottom half (Hoang, 13 Nov 2026).** See "Caption position" below. It applies to every NEW video.
+
+## Caption position (Hoang, 13 Nov 2026)
+Hoang, on the ladder and map reels: "I realize the sub is still on the top. I want it to be at the center of bottom half rather than at the top", then "make it the rule for all videos now to be at bottom half center".
+
+**Rule for new videos:** captions sit in the middle of the bottom half of the frame (centre near y 1425, inside y 1320-1530, above the platform zone that starts at y 1540), never in the top band.
+- **Done:** the bleed style of the ladder layout takes `meta.caption_pos: "low"` (captions y 1320-1530; the header, chips and logo move up to y 240-390; put the ground line of the scenes at y 1270 so nothing important sits under the captions). First reel built this way: `assets/renders/map-reels/map-career-cities/`. The ladder helper `ladder_script.py` does it by default from 13 Nov 2026 (`write()` lifts the scenes by 220 px; `caption_pos="top"` reproduces the older reels), and the seven ladder reels not yet scheduled on that day were rebuilt with captions low.
+- **Not done yet:** the default, full, ad, talk and lesson layouts and the puzzle and highlighter reels keep their old caption bands (Hoang, 13 Nov 2026: "caption low will be in other type of video as well", so these are next). Each needs its art moved before the captions can go low; do it layout by layout, with the "After an engine change" regression, and do not change reels that are already scheduled.
+
 ## Direct opening (Hoang, 13 Nov 2026)
 Hoang, after sharing two "X, explained in 90 seconds" reels: "I think we should avoid the hook and go directly to the point like these video? Like Bid-Ask Spread explained with Ledger in 90s, Understand a day in the life of a manager in ..., avoid the hook just go directly to the point".
 

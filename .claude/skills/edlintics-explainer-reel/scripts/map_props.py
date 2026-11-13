@@ -211,6 +211,18 @@ def install(G):
         o += "".join(f'<rect x="{-150 + (i % 4) * 58}" y="{-74 - (i // 4) * 30}" width="54" height="28" fill="{cols[i]}" stroke="{INK}" stroke-width="3.5"/>' for i in range(8))
         return _g(x, y, s, o)
 
+    def delivery_van(x, y, s=1.0, flip=False, color=None, **_):
+        """A delivery van, side view, with a parcel mark on its side (no brand; 13 Nov 2026). (x, y) = centre of the road under its wheels. flip faces left. color: body fill."""
+        c = color or WHITE
+        o = (f'<path d="M-250 -50 V-250 Q-250 -270 -230 -270 H70 V-50 Z" fill="{c}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+             f'<path d="M70 -50 V-215 H150 Q170 -215 182 -198 L236 -128 Q250 -120 250 -100 V-50 Z" fill="{BLUE}" stroke="{INK}" stroke-width="6" stroke-linejoin="round"/>'
+             f'<path d="M96 -130 V-190 H146 Q156 -190 163 -181 L200 -130 Z" fill="{G["SKY"]}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+             f'<rect x="-140" y="-212" width="96" height="96" rx="8" fill="#D9A04A" stroke="{INK}" stroke-width="4"/><path d="M-92 -212 V-116 M-140 -164 H-44" stroke="{INK}" stroke-width="3.5" opacity="0.55"/>'
+             f'<path d="M-250 -92 H70" stroke="{INK}" stroke-width="3" opacity="0.35"/><circle cx="238" cy="-92" r="8" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+             f'<circle cx="-150" cy="-40" r="40" fill="{INK}"/><circle cx="-150" cy="-40" r="15" fill="{GREY}"/><circle cx="150" cy="-40" r="40" fill="{INK}"/><circle cx="150" cy="-40" r="15" fill="{GREY}"/>')
+        if flip: o = f'<g transform="scale(-1 1)">{o}</g>'
+        return _g(x, y, s, o)
+
     # ---- landmarks: generic silhouettes, line art with flat fills, no logos or names. (x, y) = centre of the base on the ground
     def P(d, fill="none", sw=5, stroke=None, extra=""):
         return f'<path d="{d}" fill="{fill}" stroke="{stroke or INK}" stroke-width="{sw}" stroke-linejoin="round" stroke-linecap="round"{extra}/>'
@@ -354,6 +366,6 @@ def install(G):
         return [x + b[0] * s, y + b[1] * s, b[2] * s, b[3] * s]
 
     G["PRESETS"].update({"world_map": (world_map, world_map_box), "map_pin": (map_pin, map_pin_box), "flight_path": (flight_path, flight_path_box),
-                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None)})
+                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
     G["HALF"].update({"cloud": (112, 56), "plane": (140, 80), "cargo_ship": (175, 112)})
     G["LANDMARKS"] = tuple(LM)

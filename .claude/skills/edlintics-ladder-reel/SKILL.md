@@ -32,7 +32,7 @@ D=$REPO/assets/renders/ladder-reels/$SLUG   # the finished package (gitignored)
 What that means for every ladder reel:
 1. **One hero.** Ledger is the only main character. He climbs five rungs and looks different on each (clothes and accessories), still clearly Ledger.
 2. **Full-bleed art.** The wall and floor fill 1080x1920. No panel, no empty paper band.
-3. **Captions on top**, in the usual band (y 228-438), on a soft paper backing.
+3. **Captions in the middle of the bottom half** (y 1320-1530), on a soft paper backing. Hoang, 13 Nov 2026, after approving the first reels with captions on top: "I want it to be at the center of bottom half rather than at the top", then "make it the rule for all videos now". `write()` in `ladder_script.py` does this by default (`meta.caption_pos: "low"`); `write(..., caption_pos="top")` keeps the old band (y 228-438) and is only for reproducing reels rendered before the rule (audit, marketing, analyst, consulting).
 4. **Direct opening, no hook.** Beat 1 is a title card that says what the video is. Beat 2 starts the first rung.
 5. **No definition card at the end.** The reel ends on the call to action "To climb your own career ladder, learn technical business concepts at Edlintics".
 6. **More animation.** Every voice line has its own prop that moves on the word.
@@ -96,10 +96,10 @@ Art coordinates are screen pixels (frame `[0, 0, 1080, 1920]`). Import everythin
 | Zone | Where |
 |---|---|
 | Platform UI, nothing important | top 220 px, bottom 380 px (y over 1540), right 140 px (x over 940) |
-| Captions | y 228-438 |
-| Rung title and logo | y 452-522 |
-| Duty chips | y 534-670 (two rows) |
-| Rung scenes: faces, text, props | x 30-940, y 690-1500 |
+| Rung title and logo (you compose with) | y 452-522 |
+| Duty chips (you compose with) | y 534-670 (two rows) |
+| Rung scenes: faces, text, props (you compose with) | x 30-940, y 690-1500 |
+| On screen, after `write()` lifts every scene except the title and closing scenes by 220 px | header y 240-310, chips y 322-458, content y 470-1280, ground line y 1280, captions y 1320-1530 |
 | Ladder scenes (no header) | x 30-940, y 450-1500 |
 | Ground line | y 1500 (`GY`); Ledger's feet y 1496 (`FEET`) |
 
@@ -149,7 +149,7 @@ Art coordinates are screen pixels (frame `[0, 0, 1080, 1920]`). Import everythin
 5. **Read the stills and frames yourself.** Make a sheet of the stills, then extract 8-10 frames from the MP4 (first frame, a mid-climb frame, one per rung, payoff, closing card). Pass criteria:
    - frame 1 shows the finished title card in the right font;
    - the five Ledgers differ at thumbnail size and are all clearly Ledger;
-   - captions sit on top and are readable; title, chips and logo do not collide;
+   - captions sit in the middle of the bottom half, on the floor, and are readable; they never cover Ledger's face, a number, a concept tag or a ladder label; title, chips and logo do not collide;
    - nothing important in the UI zones; nothing covers Ledger; hands proportional;
    - in a mid-climb frame Ledger is between two rungs;
    - the slider's two words do not touch each other or the logo;
@@ -199,6 +199,12 @@ Every other reel type must come out the same. Before you change `$E`, and again 
 2. Copy the first two into two scratch folders as `script.json`, run `$PY $E/build_scenes.py <dir>`, `$PY $E/picture_timing.py <dir> <dir>/_picture 165`, `$PY $E/make_scenes_json.py <dir>/_picture <dir>/_picture`: `scenes.json` and `beats.json` must be byte-identical (`cmp`).
 3. Render three stills of each (`cd $E && SCENES=<dir>/_picture/scenes.json OUT=<out> node render.js stills 3.87,20.37,35.25`) with the old engine (`git stash`, render, `git stash pop`, never while another render runs) and the new one: the maximum pixel difference must be 0.
 Gate every new behaviour behind `meta.layout: "ladder"`, a new outfit name, a new prop or a new item key.
+
+## Caption position (13 Nov 2026)
+- **Compose as before:** write scenes with the ground at y 1500 (`GY`) and the safe areas in the table above. `write()` then lifts every scene except the title and closing scenes by `LIFT` (220 px) and sets `meta.caption_pos: "low"`, so the header, chips and logo move to the top and captions land on the floor below the ground line.
+- **Keep the floor clear:** nothing important may hang below the ground line (a label under a prop at y 1500 or lower would sit under the captions).
+- **Ladder shots:** the top Ledger of the payoff shot reaches about y 235, just inside the top safe line, and the right slider word ends close to the corner logo; keep slider words short.
+- **Rebuilding a reel with captions low:** run its generator again (same text, so `REUSE_AUDIO=1` keeps the voice and timing), build, look at every still, then replace the video in the same Canva design and export again.
 
 ## Pitfalls (what went wrong on 12-13 Nov 2026)
 - **Hidden parent, visible children.** Hiding the header with `visibility: hidden` left the chips on screen over the ladder shots; the header is switched with `display`.

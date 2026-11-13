@@ -5,8 +5,10 @@ by hand and lets the helpers draw the parts that are the same in every ladder re
 the "all five Ledgers" payoff) and the closing call-to-action scene. See example-audit-intern-to-cfo.py for a full reel.
 
 Layout (meta.layout "ladder", meta.ladder_style "bleed"): frame [0, 0, 1080, 1920], so art coordinates are screen pixels.
-  captions y 228-438 | rung title y 452-522 | duty chips y 534-670 | ground line y 1500 | UI zones: top 220, bottom 380, right 140 px
+  You compose with: rung title y 452-522 | duty chips y 534-670 | ground line y 1500 | UI zones: top 220, bottom 380, right 140 px
   rung scenes: keep faces, text and props in x 30-940, y 690-1500. Ladder scenes have no header, so they may start at y 450.
+  Captions (13 Nov 2026): write() defaults to caption_pos "low": captions y 1320-1530, and it lifts every scene but the title and closing
+  scenes by LIFT (220), so on screen the header is at y 240-310, chips y 322-458, content y 470-1280. write(..., caption_pos="top") keeps captions at y 228-438.
 """
 import json, os
 
@@ -131,7 +133,34 @@ class Ladder:
                  say=CTA.replace("Edlintics", "Ed-lin-tics") + ".", message=CTA)
 
 
-def write(folder, meta, scenes, beats):
+LIFT = 220   # low captions: how far write() lifts the rung and ladder scenes, so the ground line sits at y 1280 and captions (y 1320-1530) cover only floor
+
+
+def lift_scene(spec, dy=LIFT):
+    """A copy of a scene moved up by dy: every item's y, every "to" target (moves, coin streams), and a taller floor under the backdrop."""
+    def up(v):
+        if isinstance(v, dict):
+            return {k: ([x[0], x[1] - dy] if k == "to" and isinstance(x, list) and len(x) == 2 and all(isinstance(n, (int, float)) for n in x) else up(x)) for k, x in v.items()}
+        if isinstance(v, list): return [up(x) for x in v]
+        return v
+    items = []
+    for it in spec.get("items", []):
+        it = up(it); it["y"] = it["y"] - dy
+        if it["p"] == "backdrop": it["down"] = it.get("down", 500) + dy
+        items.append(it)
+    return dict(spec, items=items)
+
+
+def write(folder, meta, scenes, beats, caption_pos="low"):
+    """Write script.json. caption_pos "low" (the default from 13 Nov 2026, Hoang: "make it the rule for all videos now to be at bottom half center"):
+    captions sit at y 1320-1530, the rung header, chips and logo move to the top (y 240-460), and every scene except the title and closing scenes
+    is lifted by LIFT, so you still compose scenes with the ground at y 1500 (GY) as before. caption_pos "top" keeps the 13 Nov layout (captions y 228-438)
+    for reels rendered before the rule."""
     meta = dict({"type": "ladder", "layout": "ladder", "ladder_style": "bleed"}, **meta)
+    if caption_pos == "low":
+        meta["caption_pos"] = "low"
+        fixed = {b.get("img") for b in beats if b.get("role") in ("title", "cta")}   # their cards sit at y 560, with no captions: unchanged
+        scenes = {k: (v if k in fixed else lift_scene(v)) for k, v in scenes.items()}
+    elif caption_pos != "top": raise ValueError('caption_pos must be "low" or "top"')
     json.dump({"meta": meta, "scenes": scenes, "beats": beats}, open(os.path.join(folder, "script.json"), "w"), indent=1, ensure_ascii=False)
-    print("script.json:", len(scenes), "scenes,", len(beats), "beats,", sum(len(b["text"].split()) for b in beats), "words")
+    print("script.json:", len(scenes), "scenes,", len(beats), "beats,", sum(len(b["text"].split()) for b in beats), "words, captions", caption_pos)

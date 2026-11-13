@@ -72,6 +72,11 @@ body.ladder.bleed #rung{left:0;top:0;width:1080px}
 body.ladder.bleed #rung .rt{position:absolute;left:60px;top:452px;height:70px;font-size:50px;background:rgba(251,250,246,0.92);border-radius:999px;padding:0 26px 0 7px}
 body.ladder.bleed #rung .chips{position:absolute;left:60px;top:534px;width:860px;margin-top:0}
 body.ladder.bleed #logo{top:468px;left:768px}
+/* low captions for the bleed style (meta.caption_pos "low", 13 Nov 2026, opt-in; Hoang: "I want it to be at the center of bottom half rather than at the top"): captions y 1320-1530, the header, chips and logo move up into the old caption band */
+body.ladder.bleed.caplow #cap{top:1320px}
+body.ladder.bleed.caplow #rung .rt{top:240px}
+body.ladder.bleed.caplow #rung .chips{top:322px}
+body.ladder.bleed.caplow #logo{top:256px}
 /* ladder "cta" beat (13 Nov 2026): the closing message on a card beside the ladder, with the logo; no end card */
 #ctab{display:none}
 body.ladder #ctab{position:absolute;left:400px;top:640px;width:520px;box-sizing:border-box;background:#FBFAF6;border:5px solid #0F172A;border-radius:36px;padding:34px 28px 30px;text-align:center;transform-origin:50% 50%}
@@ -159,7 +164,7 @@ async function init(){ D=await (await fetch('scenes.json')).json(); await docume
   if(D.layout==='full'){ document.body.classList.add('full'); BX=40; BW=900; BY=450; BH=990; }   // full-frame layout (how-to reels, 1 Nov 2026)
   if(D.layout==='ladder'){ LAD=true; document.body.classList.add('ladder'); BX=40; BW=900; BY=460; BH=830;   // ladder layout (career-ladder reels, 12 Nov 2026)
     try{ await Promise.all([document.fonts.load('900 84px Inter'),document.fonts.load('800 40px Inter')]); }catch(_){}   // ladder only: the caption font is ready for frame 0
-    if(D.bleed){ document.body.classList.add('bleed'); BX=0; BW=1080; BY=0; BH=1920; } }   // full-bleed style (13 Nov 2026): the art is the whole screen
+    if(D.bleed){ document.body.classList.add('bleed'); BX=0; BW=1080; BY=0; BH=1920; if(D.capLow) document.body.classList.add('caplow'); } }   // full-bleed style (13 Nov 2026): the art is the whole screen
   if(D.clean) document.body.classList.add('clean');
   if(D.nologo) document.body.classList.add('nologo');
   if(D.layout==='talk'){ TALK=true; document.body.classList.add('talk'); BX=0; BW=1080; BY=0; BH=1920; }
