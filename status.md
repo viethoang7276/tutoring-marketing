@@ -771,3 +771,11 @@ This log had no entries for 1-5 Nov; for that gap see `git log` and the hub (`ru
 - **Queued:** rewrite one upcoming definition reel in the new story structure and show the script before replacing anything
 - **03:04 run, howto-payment-network:** first comment, like and repost done on all 7 platforms (runs doc `howto-payment-network`). Instagram Story share is Hoang's phone task
 - **Security review of commit dd750a4 did not complete** (model unreachable); log in `~/.claude/security/log.txt`
+
+## 13 Nov 2026 (07:40-08:50 VN)
+- **Morning refresh:** no first comments missed in the last 24 h, no slots with status "changes", `runs/daily-2026-11-13` already existed
+- **Hoang approved all 4 ladder cards on the hub** and said "I mean publish them in social media"
+- **Audit intern to CFO reel PUBLISHED about 08:00-08:25 VN on all 7 platforms** with thumbnail (Meta, LinkedIn, TikTok), caption and first-comment round (runs doc `ladder-audit-intern-to-cfo`): IG `Dfqc1kOgHKW`, X `2121053241177952741`, Threads `DfqdWVyEe0w` (topic Accounting), YouTube Short `tvXl7aWtpzA`, TikTok `7707464117807779092` (IE Tower location). Instagram Story share is Hoang's phone task. Nobody listened to the audio before it went out
+- **YouTube copies:** `<slug>-youtube.mp4` made for all 4 ladder reels with `mixbed.py` (voice-only audio + `assets/renders/money-reels/music/youtube-sleep-music-no1-bed.wav`, video stream copied from `-post.mp4`). Not yet in the ladder skill: add this step
+- **Other 3 ladder reels:** a background agent is scheduling them on 7 platforms for 14, 15, 16 Nov at 21:30 VN (15:30 Madrid) and writing slots + runs docs. If the session died mid-way, check each platform's scheduled list before redoing anything
+- **Session crons added:** first-comment runs 14, 15, 16 Nov 21:34 VN (ladder slots); test L1 24 h checkpoint 14 Nov 08:47 VN
