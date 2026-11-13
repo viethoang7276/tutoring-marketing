@@ -40,7 +40,7 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
                "min": {"rung": 3, "climb": 1, "payoff": 1}},
     # map reel (13 Nov 2026, opt-in): a title card, then for each stop on the map its "stop" beats (the city, its career, one sourced fact),
     # a "summary" beat (the whole map with every pin), and one or two closing "cta" cards. Uses the ladder layout in its bleed style
-    "map": {"order": ["title", "stop", "summary", "cta"], "free": True, "min": {"title": 1, "stop": 8, "summary": 1, "cta": 1}, "max": {"cta": 2}},
+    "map": {"order": ["title", "stop", "summary", "cta"], "free": True, "min": {"title": 1, "stop": 5, "summary": 1, "cta": 1}, "max": {"cta": 2}},   # 13 Nov 2026: series parts have 5-6 stops (two beats each)
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 # 4 Nov 2026 (Hoang): "Put all of video to 2 mins cap" - every type may run to 2 minutes
@@ -58,7 +58,7 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 34), target=(100, 115), allow
         "lesson": dict(chunk=(2, 5), beats=(6, 120), target=(354, 531), allowed=(177, 708), secs=(59, 241), wps=2.95),
         # ladder: karaoke chunks of 1-4 words low in the frame; ElevenLabs v3 at tempo 1.12 (about 2.4 words a second with gaps); 90-110 s target, 2-minute cap
         "ladder": dict(chunk=(1, 4), beats=(12, 60), target=(200, 265), allowed=(120, 285), secs=(44, 121), wps=2.4),
-        "map": dict(chunk=(1, 4), beats=(12, 60), target=(200, 270), allowed=(120, 285), secs=(44, 121), wps=2.4)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
+        "map": dict(chunk=(1, 4), beats=(12, 60), target=(150, 270), allowed=(120, 285), secs=(44, 121), wps=2.4)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 CTX_OPEN = re.compile(r"\b(let's (imagine|use|take|say|look at|picture|follow|start with|walk through|see)|imagine|picture|suppose|for this,? let's|take the example|as (an|our) example|to see (this|why|how))\b", re.I)
 CTX_BACK = re.compile(r"\b(continu(e|es|ing)|back (to|in|at|with)|going back|returning to|let's return|let's go back|staying with|still with|in our (story|example)|from the last example|same (story|example|sheet|store|shop|company)|now let's|let's (now |also )?(use|take|look at|see|apply|imagine)|imagine|as (a|an|our) (business )?example|for example|in business)\b", re.I)
@@ -179,7 +179,7 @@ def main(path):
             if msg.rstrip().endswith("."): E.append(f"beat {k}: the {b.get('role')} message ends with a full stop")
             texts_extra_cta.append((f"{b.get('role')} message", msg))
         stops = m.get("rungs") or []; cities = m.get("cities") or []
-        if not (isinstance(stops, list) and 8 <= len(stops) <= 12 and all(isinstance(r, str) and r.strip() for r in stops)): E.append("map: meta.rungs must list the 8-12 stops (city names for the header), in travel order")
+        if not (isinstance(stops, list) and 5 <= len(stops) <= 12 and all(isinstance(r, str) and r.strip() for r in stops)): E.append("map: meta.rungs must list the 5-12 stops (city names for the header), in travel order")
         for r in stops if isinstance(stops, list) else []:
             if len(str(r)) > 15: E.append(f'map: stop title "{r}" is over 15 characters; it must fit beside the stop counter and the logo')
         if not (isinstance(cities, list) and len(cities) == len(stops)): E.append("map: meta.cities must hold one {city, career, fact, source, figureDate} per stop")

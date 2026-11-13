@@ -188,8 +188,9 @@ def install(G):
         return f'<rect data-nodraw="1" x="{_f(x - w / 2)}" y="{_f(y - h / 2)}" width="{_f(w)}" height="{_f(h)}" rx="{_f(h / 2)}" fill="{PAPER}" fill-opacity="0.92" stroke="none"/>'
 
     def map_dot(x, y, s=1.0, num=1, dx=0, dy=-60, state="done", **_):
-        """A small city dot for the summary map, with a numbered badge set off by (dx, dy) and joined to it by a thin line, so close cities stay readable. (x, y) = the city."""
+        """A small city dot for the summary map, with a numbered badge set off by (dx, dy) and joined to it by a thin line, so close cities stay readable. (x, y) = the city. num None: only the small dot (a city from an earlier part of a series)."""
         col = {"done": BLUE, "now": "#E8553B", "todo": GREY}.get(state, BLUE)
+        if num is None: return _g(x, y, s, f'<circle r="9" fill="{col}" stroke="{INK}" stroke-width="3"/>')   # a plain lit dot (cities of earlier parts of a series)
         return _g(x, y, s, f'<path d="M0 0 L{_f(dx)} {_f(dy)}" fill="none" stroke="{INK}" stroke-width="3" stroke-linecap="round"/><circle r="8" fill="{col}" stroke="{INK}" stroke-width="3"/>'
                            f'<circle cx="{_f(dx)}" cy="{_f(dy)}" r="26" fill="{col}" stroke="{INK}" stroke-width="4"/>' + _t(dx, dy + 12, str(num), 34, 900, WHITE))
 
@@ -353,11 +354,137 @@ def install(G):
         o += win(-98, 98, -430, -150, 7, 1, 0.4) + win(-70, 70, -580, -430, 5, 1, 0.4) + win(-130, 130, -150, 0, 9, 1, 0.4)
         return o, (-255, -885, 515, 890)
 
+    # ---- series parts 2 and 3 (13 Nov 2026): North America, Australia and New Zealand
+    def palm(px, h=150, k=1.0):
+        return (P(f"M{px} 0 q{_f(14 * k)} {_f(-h / 2)} 0 {-h}", "none", 7, "#8A5A3C")
+                + P(f"M{px} {-h} q{_f(-44 * k)} {_f(-22 * k)} {_f(-70 * k)} {_f(6 * k)} M{px} {-h} q{_f(-30 * k)} {_f(-50 * k)} {_f(-66 * k)} {_f(-42 * k)} M{px} {-h} q{_f(44 * k)} {_f(-22 * k)} {_f(70 * k)} {_f(6 * k)} M{px} {-h} q{_f(30 * k)} {_f(-50 * k)} {_f(66 * k)} {_f(-42 * k)} M{px} {-h} q{_f(4 * k)} {_f(-40 * k)} {_f(-4 * k)} {_f(-62 * k)}", "none", 7, "#2FA36B"))
+
+    def lm_liberty():
+        gr = "#8FC7B5"; o = water(520, -4)
+        o += P("M-110 -6 L-90 -70 H90 L110 -6 Z", "#D9DEE8") + R(-70, -250, 140, 180, "#E7DDC8") + win(-70, 70, -250, -70, 3, 3, 0.35) + R(-84, -270, 168, 24, "#D9CDB4", 4, 4)
+        o += P("M-52 -270 Q-64 -420 -40 -520 L40 -520 Q70 -400 60 -270 Z", gr) + P("M-30 -300 Q-20 -420 -10 -500 M14 -300 Q20 -400 22 -500 M40 -290 Q50 -380 44 -470", "none", 3, INK, ' opacity="0.45"')
+        o += P("M-40 -470 L-96 -430 L-84 -380 L-36 -410 Z", gr, 4) + R(-100, -440, 34, 48, "#E7DDC8", 4, 3)
+        o += P("M30 -500 L62 -640 L86 -634 L58 -486 Z", gr, 4) + P("M58 -640 H92 L84 -664 H66 Z", GOLD, 4) + P("M75 -664 Q60 -700 76 -730 Q92 -700 75 -664 Z", "#F7C531", 4)
+        o += f'<circle cx="0" cy="-556" r="40" fill="{gr}" stroke="{INK}" stroke-width="5"/>' + P("M-14 -560 h8 M8 -560 h8 M-10 -540 q10 6 20 0", "none", 4)
+        o += "".join(P(f"M{_f(46 * math.cos(a))} {_f(-580 - 46 * math.sin(a))} L{_f(84 * math.cos(a))} {_f(-580 - 84 * math.sin(a))}", "none", 7, gr) for a in (math.radians(d) for d in (20, 50, 80, 100, 130, 160)))
+        o += P("M-38 -582 Q0 -616 38 -582", "none", 9, gr)
+        return o, (-260, -735, 520, 780)
+
+    def lm_cn_tower():
+        cn = "#C9D2DE"
+        o = R(-260, -300, 96, 300, "#DCE6F5") + win(-260, -164, -300, 0, 3, 8) + R(150, -380, 100, 380, "#CBD9EE") + win(150, 250, -380, 0, 3, 10) + R(-150, -210, 80, 210, "#E7EDF7", 4) + win(-150, -70, -210, 0, 2, 5)
+        o += P("M-46 0 L-14 -600 H14 L46 0 Z", cn) + P("M0 -590 V0", "none", 3, INK, ' opacity="0.4"')
+        o += P("M-64 -640 Q-70 -600 -40 -590 H40 Q70 -600 64 -640 Q0 -672 -64 -640 Z", WHITE) + P("M-60 -626 H60", "none", 4, "#E0563B") + R(-34, -690, 68, 46, cn, 4, 8)
+        o += P("M-10 -690 L-5 -860 H5 L10 -690 Z", cn, 4) + P("M0 -860 V-950", "none", 5) + P("M-7 -780 H7 M-6 -820 H6", "none", 4, "#E0563B")
+        return o, (-265, -955, 520, 960)
+
+    def lm_space_needle():
+        o = R(-250, -260, 100, 260, "#DCE6F5") + win(-250, -150, -260, 0, 3, 7) + R(150, -200, 96, 200, "#E7EDF7") + win(150, 246, -200, 0, 3, 5)
+        o += P("M-90 0 Q-30 -260 -22 -520 M90 0 Q30 -260 22 -520 M-30 0 Q-6 -260 -8 -520 M30 0 Q6 -260 8 -520", "none", 9, INK) + P("M-90 0 Q-30 -260 -22 -520 M90 0 Q30 -260 22 -520 M-30 0 Q-6 -260 -8 -520 M30 0 Q6 -260 8 -520", "none", 5, WHITE)
+        o += P("M-40 -300 H40 M-32 -400 H32", "none", 5) + P("M-150 -560 Q0 -610 150 -560 L110 -520 H-110 Z", WHITE) + P("M-150 -560 Q0 -520 150 -560", "none", 4)
+        o += P("M-110 -572 Q0 -640 110 -572 Z", "#F29D52") + R(-26, -660, 52, 40, WHITE, 4, 6) + P("M0 -660 V-800", "none", 5)
+        o += f'<path d="M-330 0 L-290 -130 L-250 0 Z M-312 -70 L-290 -190 L-268 -70 Z" fill="#2FA36B" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+        return o, (-335, -805, 585, 810)
+
+    def lm_oil_rig():
+        st = "#33435E"
+        o = R(150, -420, 100, 420, "#CBD9EE") + win(150, 250, -420, 0, 3, 11) + R(262, -300, 80, 300, "#E7EDF7", 4) + win(262, 342, -300, 0, 2, 8)
+        o += P("M-290 0 L-240 -520 H-200 L-150 0 M-282 -90 L-158 -90 M-270 -210 L-170 -210 M-258 -330 L-182 -330 M-248 -430 L-192 -430 M-282 -90 L-170 -210 M-158 -90 L-270 -210 M-270 -210 L-182 -330 M-170 -210 L-258 -330", "none", 6, st) + R(-250, -560, 60, 40, st, 4, 4)
+        o += P("M-20 0 L20 -220 L60 0 M0 -110 H40", "none", 8, st) + P("M-110 -260 L130 -200", "none", 14, INK) + P("M-110 -260 L130 -200", "none", 9, "#E0563B")
+        o += P("M-150 -300 Q-90 -330 -96 -230 Q-100 -200 -140 -216 Z", "#E0563B") + P("M-124 -220 V-30", "none", 5) + R(-140, -40, 34, 40, st, 4) + P("M130 -200 L96 -40", "none", 6, st)
+        o += f'<circle cx="100" cy="-40" r="34" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><circle cx="100" cy="-40" r="8" fill="{INK}"/>' + R(60, -10, 110, 14, st, 3)
+        return o, (-295, -565, 640, 570)
+
+    def lm_state_house():
+        br = "#C97A5E"
+        o = R(-300, -200, 600, 200, br) + win(-300, 300, -160, -30, 10, 2, 0.35) + R(-150, -300, 300, 300, br)
+        o += R(-130, -200, 260, 200, "#F4EFE4", 4) + "".join(R(-116 + i * 44, -196, 16, 194, WHITE, 3) for i in range(6)) + P("M-160 -300 L0 -380 L160 -300 Z", "#F4EFE4")
+        o += R(-80, -430, 160, 60, "#F4EFE4", 4) + P("M-90 -430 Q-90 -560 0 -572 Q90 -560 90 -430 Z", "#F2C230") + P("M-40 -438 Q-40 -540 -14 -566 M40 -438 Q40 -540 14 -566 M0 -572 V-434", "none", 3, INK, ' opacity="0.45"')
+        o += R(-14, -610, 28, 40, "#F2C230", 4, 4) + P("M0 -610 V-660", "none", 5)
+        return o, (-305, -665, 610, 670)
+
+    def lm_observatory():
+        o = P("M-360 0 Q-260 -260 -90 -250 Q60 -330 220 -230 Q320 -200 360 0 Z", "#D8C79A", 4)
+        o += R(-190, -330, 380, 90, WHITE) + win(-190, 190, -330, -240, 8, 1, 0.35)
+        o += P("M-70 -330 Q-70 -430 0 -436 Q70 -430 70 -330 Z", "#5A6478") + P("M0 -436 V-476", "none", 5)
+        o += "".join(P(f"M{xx - 40} -330 Q{xx - 40} -384 {xx} -388 Q{xx + 40} -384 {xx + 40} -330 Z", "#5A6478", 4) for xx in (-150, 150))
+        o += palm(-300, 190, 1.0) + palm(300, 230, 1.1) + palm(246, 150, 0.8)
+        # a film clapperboard on the ground in front
+        o += f'<g transform="translate(-40 -30) rotate(-6)"><rect x="-90" y="-80" width="180" height="110" rx="8" fill="#33435E" stroke="{INK}" stroke-width="5"/><path d="M-90 -80 L-80 -122 L96 -104 L90 -80 Z" fill="{WHITE}" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/><path d="M-50 -119 l-10 36 M-6 -114 l-10 34 M38 -110 l-10 30 M80 -106 l-8 26" stroke="{INK}" stroke-width="12"/><path d="M-66 -40 H66 M-66 -10 H30" stroke="{WHITE}" stroke-width="5" opacity="0.7"/></g>'
+        return o, (-375, -480, 750, 485)
+
+    def lm_opera_house():
+        o = water(720, -4)
+        o += P("M-350 -40 Q-100 -420 150 -40", "none", 16, INK) + P("M-350 -40 Q-100 -420 150 -40", "none", 10, "#7C8FB5") + P("M-350 -110 H150", "none", 8, "#7C8FB5")
+        o += "".join(P(f"M{xx} -110 V{_f(-40 - 380 * (1 - ((xx + 100) / 250) ** 2) * 0.5 - 0)}", "none", 3, "#7C8FB5") for xx in range(-310, 140, 44))
+        o += "".join(R(xx, -150, 26, 150, "#C9B48A", 4) for xx in (-360, 140))
+        o += R(-40, -40, 400, 40, "#D9CDB4", 4, 6)
+        for bx, h, w in ((40, 250, 150), (130, 200, 130), (210, 150, 110), (285, 100, 80)):
+            o += P(f"M{bx - w * 0.5} -40 Q{bx - w * 0.2} {-40 - h} {bx + w * 0.45} {-40 - h * 0.96} Q{bx + w * 0.3} {-40 - h * 0.4} {bx + w * 0.42} -40 Z", WHITE)
+        o += P("M-10 -40 Q0 -120 46 -150 Q30 -90 36 -40 Z", WHITE, 4)
+        return o, (-365, -300, 730, 345)
+
+    def lm_flinders():
+        ye = "#E9C46A"; gr = "#6FA58B"
+        o = R(-330, -210, 560, 210, ye) + win(-330, 230, -170, -40, 9, 2, 0.35) + P("M-330 -210 H230", "none", 8, "#B5473A")
+        o += R(-60, -300, 220, 300, ye) + P("M-20 0 V-150 Q50 -230 120 -150 V0 Z", "#7C8FB5", 4) + f'<circle cx="50" cy="-232" r="26" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + P("M50 -232 V-250 M50 -232 h12", "none", 3)
+        o += P("M-70 -300 Q-70 -430 50 -444 Q170 -430 170 -300 Z", gr) + P("M-10 -306 Q-6 -410 30 -440 M110 -306 Q106 -410 70 -440 M50 -444 V-304", "none", 3, INK, ' opacity="0.45"') + R(34, -486, 32, 44, gr, 4, 4) + P("M50 -486 V-530", "none", 5)
+        o += R(-330, -330, 70, 330, ye) + P("M-336 -330 Q-295 -400 -254 -330 Z", gr) + f'<circle cx="-295" cy="-250" r="24" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + P("M-295 -250 V-266 M-295 -250 h10", "none", 3)
+        # a tram in front
+        o += P("M150 -150 L170 -190 M330 -150 L310 -190 M140 -190 H340", "none", 4) + R(120, -150, 240, 120, "#2F8F5B", 5, 18) + R(120, -66, 240, 22, "#F2C230", 3) + "".join(R(138 + i * 54, -134, 42, 50, G["SKY"], 3, 6) for i in range(4))
+        o += f'<circle cx="170" cy="-22" r="18" fill="{INK}"/><circle cx="310" cy="-22" r="18" fill="{INK}"/>'
+        return o, (-340, -535, 705, 540)
+
+    def lm_haul_truck():
+        ye = "#F2C230"
+        o = P("M-360 0 L-250 -230 L-140 -110 L-40 -300 L80 0 Z", "#C9A27C", 4) + P("M-250 -230 L-226 -170 L-270 -150 M-40 -300 L-10 -220 L-60 -200", "none", 3, INK, ' opacity="0.45"')
+        o += P("M-60 -150 L-30 -330 H250 L330 -260 L300 -150 Z", ye) + P("M-20 -310 H240 M0 -260 H280", "none", 4, INK, ' opacity="0.35"') + P("M-10 -330 Q110 -400 240 -330 Z", "#8A5A3C", 4)
+        o += R(-80, -150, 400, 70, "#33435E", 5, 10) + R(250, -250, 90, 110, ye, 5, 8) + R(266, -236, 58, 46, G["SKY"], 4, 6) + P("M330 -150 V-40 M345 -150 V-40 M330 -110 H345 M330 -70 H345", "none", 4)
+        o += "".join(f'<circle cx="{cx}" cy="-74" r="74" fill="{INK}"/><circle cx="{cx}" cy="-74" r="30" fill="{GREY}" stroke="{WHITE}" stroke-width="5"/>' for cx in (10, 230))
+        return o, (-365, -400, 715, 405)
+
+    def lm_parliament_au():
+        o = P("M-370 0 Q-200 -250 0 -250 Q200 -250 370 0 Z", "#9CCB8E", 4)
+        o += R(-260, -150, 520, 150, WHITE) + "".join(R(-244 + i * 46, -140, 20, 140, "#E7EDF7", 3) for i in range(11)) + R(-90, -190, 180, 190, "#F4EFE4", 4) + "".join(R(-76 + i * 34, -180, 14, 180, WHITE, 3) for i in range(5))
+        o += P("M-120 -250 L0 -560 L120 -250 M-60 -250 L0 -560 L60 -250", "none", 11, INK) + P("M-120 -250 L0 -560 L120 -250 M-60 -250 L0 -560 L60 -250", "none", 6, "#C9D2DE") + P("M0 -560 V-690", "none", 6)
+        o += P("M0 -690 H110 L96 -660 L110 -630 H0 Z", BLUE, 4) + f'<circle cx="34" cy="-660" r="9" fill="{WHITE}"/>'
+        return o, (-375, -695, 750, 700)
+
+    def lm_beehive():
+        cu = "#C9A27C"; o = ""
+        for i, (w, y0) in enumerate(((300, 0), (280, -70), (256, -140), (228, -210), (196, -280), (160, -350))):
+            o += R(-w / 2, y0 - 70, w, 70, "#E9DCC4" if i % 2 == 0 else "#D9CDB4", 5, 10) + win(-w / 2 + 8, w / 2 - 8, y0 - 62, y0 - 8, max(6, int(w / 26)), 1, 0.4)
+        o += P("M-70 -420 Q-70 -480 0 -486 Q70 -480 70 -420 Z", cu) + P("M0 -486 V-540", "none", 5)
+        o += R(-330, -260, 150, 260, "#E7EDF7", 5) + "".join(R(-318 + i * 36, -250, 16, 250, WHITE, 3) for i in range(4)) + P("M-340 -260 L-255 -320 L-170 -260 Z", "#E7EDF7", 4)
+        o += f'<path d="M250 0 q-30 -90 0 -150 q30 60 0 150 Z M300 0 q-22 -60 0 -104 q22 44 0 104 Z" fill="#8FCBA0" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+        return o, (-345, -545, 670, 550)
+
+    def lm_sky_tower():
+        cn = "#C9D2DE"; o = water(560, -4)
+        o += R(-250, -280, 100, 274, "#DCE6F5") + win(-250, -150, -280, -6, 3, 8) + R(140, -200, 110, 194, "#E7EDF7") + win(140, 250, -200, -6, 3, 5)
+        o += P("M-26 -6 L-16 -560 H16 L26 -6 Z", cn) + P("M-70 -6 L-18 -200 M70 -6 L18 -200", "none", 7, "#7C8FB5")
+        o += P("M-58 -600 L-40 -560 H40 L58 -600 Z", "#7C8FB5") + R(-64, -650, 128, 50, WHITE, 5, 10) + win(-64, 64, -650, -600, 7, 1, 0.45) + P("M-50 -650 L-30 -690 H30 L50 -650 Z", cn, 4)
+        o += P("M-9 -690 L-4 -840 H4 L9 -690 Z", cn, 4) + P("M0 -840 V-930", "none", 5) + P("M-6 -770 H6 M-5 -810 H5", "none", 4, "#E0563B")
+        o += P("M-230 20 l40 -70 l0 70 Z M-180 20 l0 -90 l44 90 Z", WHITE, 4) + P("M-250 24 H-120", "none", 5)
+        return o, (-285, -935, 570, 985)
+
+    def lm_wine():
+        o = P("M-370 0 Q-250 -200 -80 -170 Q80 -260 240 -150 Q330 -130 370 0 Z", "#A9CF8E", 4)
+        o += "".join(P(f"M{-300 + i * 44} {-60 - (i % 3) * 14} q14 -22 28 0 M{-286 + i * 44} {-40 - (i % 3) * 14} v-40", "none", 4, "#5E7A4A") for i in range(15))
+        o += f'<ellipse cx="-150" cy="-110" rx="120" ry="110" fill="#C98F52" stroke="{INK}" stroke-width="6"/><ellipse cx="-150" cy="-110" rx="78" ry="72" fill="#E2B37A" stroke="{INK}" stroke-width="4"/>'
+        o += P("M-262 -150 Q-150 -190 -38 -150 M-262 -70 Q-150 -30 -38 -70", "none", 7, "#5A6478") + f'<circle cx="-150" cy="-110" r="12" fill="{INK}"/>' + R(-230, -10, 160, 14, "#8A5A3C", 4, 4)
+        o += P("M60 0 V-250 Q60 -300 84 -330 V-420 H116 V-330 Q140 -300 140 -250 V0 Z", "#2F5D50") + R(80, -440, 40, 26, "#7A2E3A", 4, 4) + R(64, -210, 72, 110, "#F4EFE4", 4, 6) + P("M78 -170 H122 M78 -140 H112", "none", 4, INK, ' opacity="0.5"')
+        o += P("M210 -330 Q210 -210 256 -206 Q302 -210 302 -330 Z", WHITE) + P("M216 -280 Q256 -262 296 -280 Q296 -214 256 -210 Q216 -214 216 -280 Z", "#7A2E3A", 3) + P("M256 -206 V-30 M216 -10 Q256 -40 296 -10", "none", 6)
+        o += "".join(f'<circle cx="{cx}" cy="{cy}" r="17" fill="#6B3FA0" stroke="{INK}" stroke-width="3.5"/>' for cx, cy in ((-20, -40), (10, -40), (-5, -66), (-35, -66), (-20, -92), (25, -66), (-5, -16))) + P("M-20 -108 q10 -30 40 -30", "none", 5, "#5E7A4A")
+        return o, (-375, -445, 750, 450)
+
     LM = {"golden_gate": lm_golden_gate, "big_ben": lm_big_ben, "eiffel": lm_eiffel, "erasmus": lm_erasmus, "euro": lm_euro, "minster": lm_minster,
-          "burj": lm_burj, "mbs": lm_mbs, "hk": lm_hk, "fab": lm_fab, "tokyo_tower": lm_tokyo_tower, "empire": lm_empire}
+          "burj": lm_burj, "mbs": lm_mbs, "hk": lm_hk, "fab": lm_fab, "tokyo_tower": lm_tokyo_tower, "empire": lm_empire,
+          "liberty": lm_liberty, "cn_tower": lm_cn_tower, "space_needle": lm_space_needle, "oil_rig": lm_oil_rig, "state_house": lm_state_house, "observatory": lm_observatory,
+          "opera_house": lm_opera_house, "flinders": lm_flinders, "haul_truck": lm_haul_truck, "parliament_au": lm_parliament_au, "beehive": lm_beehive, "sky_tower": lm_sky_tower, "wine": lm_wine}
 
     def landmark(x, y, s=1.0, kind="eiffel", **_):
-        """A city landmark as a simple hand-drawn silhouette with flat fills (map reels; no logos or names). (x, y) = centre of its base on the ground. kind: golden_gate, big_ben, eiffel, erasmus (a cable-stayed bridge with one bent pylon), euro (a euro-sign sculpture before bank towers), minster (a red twin-spired cathedral on a river), burj (a very tall stepped spire), mbs (three towers under one roof deck), hk (a faceted tower, a peak and a red-sailed junk), fab (a chip plant with a large microchip), tokyo_tower, empire."""
+        """A city landmark as a simple hand-drawn silhouette with flat fills (map reels; no logos or names). (x, y) = centre of its base on the ground. kind: golden_gate, big_ben, eiffel, erasmus (a cable-stayed bridge with one bent pylon), euro (a euro-sign sculpture before bank towers), minster (a red twin-spired cathedral on a river), burj (a very tall stepped spire), mbs (three towers under one roof deck), hk (a faceted tower, a peak and a red-sailed junk), fab (a chip plant with a large microchip), tokyo_tower, empire, liberty, cn_tower, space_needle, oil_rig (a derrick and a pumpjack), state_house (a gold-domed brick state house), observatory (domes on a hill, palms and a film clapperboard), opera_house (white sails and an arch bridge), flinders (a domed yellow station and a tram), haul_truck (a mine truck before an open pit), parliament_au (a flag mast over a low white building on a hill), beehive (a round stepped building), sky_tower, wine (a barrel, a bottle and a glass before vineyard hills)."""
         if kind not in LM: raise ValueError(f"landmark: kind {kind!r}; use {', '.join(LM)}")
         return _g(x, y, s, LM[kind]()[0])
 
