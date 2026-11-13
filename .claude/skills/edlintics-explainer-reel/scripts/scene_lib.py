@@ -24,11 +24,14 @@ MOODS = ["smile", "happy", "frown", "sad", "flat", "o", "worried", "tired", "ang
 ARMS = ["down", "hold", "up", "both_up", "point", "phone", "shrug", "wave", "mic"]
 LARMS = ["down", "up_l", "point_l", "open_l", "shrug_l"]   # left-arm gestures (larm), used with arm "mic" in ledger-talks reels
 OUTFITS = ["suit", "student", "casual", "sales", "vest", "dracula", "professor", "lecturer", "graduate", "mathprof", "intern", "senior", "manager", "controller", "cfo",
-           "mk_intern", "mk_specialist", "mk_manager", "mk_director", "mk_cmo", "inv_junior", "inv_analyst", "inv_senior", "inv_pm", "inv_cio", "con_analyst", "con_consultant", "con_manager", "con_principal", "con_partner"]
+           "mk_intern", "mk_specialist", "mk_manager", "mk_director", "mk_cmo", "inv_junior", "inv_analyst", "inv_senior", "inv_pm", "inv_cio", "con_analyst", "con_consultant", "con_manager", "con_principal", "con_partner",
+           "rs_busser", "rs_waiter", "rs_lead", "rs_manager", "rs_area", "fl_assist", "fl_florist", "fl_senior", "fl_manager", "fl_owner", "fa_operator", "fa_tech", "fa_senior", "fa_super", "fa_plant", "fs_intern", "fs_assist", "fs_designer", "fs_senior", "fs_cd", "ba_barista", "ba_shift", "ba_asst", "ba_store", "ba_district", "wh_picker", "wh_lead", "wh_shift", "wh_manager", "wh_director"]
 LADDER_OUTFITS = ("intern", "senior", "manager", "controller", "cfo",   # audit to CFO
                   "mk_intern", "mk_specialist", "mk_manager", "mk_director", "mk_cmo",   # marketing intern to CMO (13 Nov 2026)
                   "inv_junior", "inv_analyst", "inv_senior", "inv_pm", "inv_cio",   # junior analyst to CIO (13 Nov 2026)
-                  "con_analyst", "con_consultant", "con_manager", "con_principal", "con_partner")   # consulting analyst to partner (13 Nov 2026)   # one Ledger per rung of a career-ladder reel (12 Nov 2026), see _ladder_wear
+                  "con_analyst", "con_consultant", "con_manager", "con_principal", "con_partner",
+                  "rs_busser", "rs_waiter", "rs_lead", "rs_manager", "rs_area", "fl_assist", "fl_florist", "fl_senior", "fl_manager", "fl_owner", "fa_operator", "fa_tech", "fa_senior", "fa_super", "fa_plant", "fs_intern", "fs_assist", "fs_designer", "fs_senior", "fs_cd", "ba_barista", "ba_shift", "ba_asst", "ba_store", "ba_district", "wh_picker", "wh_lead", "wh_shift", "wh_manager", "wh_director")   # everyday-jobs ladders (14 Nov 2026: restaurant, florist, factory, fashion, coffee chain, warehouse)
+# consulting analyst to partner (13 Nov 2026)   # one Ledger per rung of a career-ladder reel (12 Nov 2026), see _ladder_wear
 PROF = ("professor", "lecturer", "graduate", "mathprof")   # puzzle-guide family (2 Nov 2026 design options)
 
 
@@ -207,6 +210,88 @@ def ledger(x, y, s=1.0, mood="smile", arm="down", outfit="suit", tilt=0, flip=Fa
             f'{behind}{legs}<g transform="rotate({tilt} 120 198)">{left}{body}{prop}{right}</g></g>')
 
 
+_NEW_LOOKS = {   # everyday-jobs ladders (14 Nov 2026): name -> (band colour, collar kind, sleeve, accessories); see _new_look
+    "rs_busser": ("#3A3F4B", "tee", ("#3A3F4B", 15), ["apron:#F4F8FF", "cap:#3A3F4B"]),
+    "rs_waiter": ("#F4F8FF", "shirt", ("#F4F8FF", 13), ["vest:#1F232B", "apron:#1F232B"]),
+    "rs_lead": ("#B5473A", "tee", ("#B5473A", 15), ["headset", "lany"]),
+    "rs_manager": ("#2F5D50", "suit", ("#2F5D50", 26), ["psq:#FFFFFF", "glasses"]),
+    "rs_area": ("#14161C", "suit", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
+    "fl_assist": ("#F4B6C2", "tee", ("#F4B6C2", 15), ["apron:#8FB996"]),
+    "fl_florist": ("#F4F8FF", "shirt", ("#F4F8FF", 13), ["apron:#8FB996", "scarf:#E2928B"]),
+    "fl_senior": ("#B39DDB", "tee", ("#B39DDB", 20), ["apron:#8FB996", "beret:#E2928B"]),
+    "fl_manager": ("#5E7A4A", "open", ("#5E7A4A", 26), ["psq:#F4B6C2", "glasses"]),
+    "fl_owner": ("#2F4F3A", "open", ("#2F4F3A", 26), ["psq:gold", "glasses", "tufts"]),
+    "fa_operator": ("#E8863A", "tee", ("#9AA3B2", 15), ["hat:#FFFFFF", "stripes"]),
+    "fa_tech": ("#3B6FB5", "tee", ("#3B6FB5", 20), ["hat:#F2C230"]),
+    "fa_senior": ("#6E7A91", "tee", ("#6E7A91", 20), ["hat:#F2C230", "glasses", "lany"]),
+    "fa_super": ("#F4F8FF", "shirt", ("#F4F8FF", 13), ["hat:#FFFFFF", "vest:#E8863A", "stripes"]),
+    "fa_plant": ("#14161C", "suit", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
+    "fs_intern": ("#F3E6CE", "tee", ("#F3E6CE", 15), ["tape", "lany"]),
+    "fs_assist": ("#E7E7EC", "tee", ("#E7E7EC", 15), ["tape", "scarf:#E2928B"]),
+    "fs_designer": ("#2B2F3A", "roll", ("#2B2F3A", 22), ["beret:#E2928B"]),
+    "fs_senior": ("#C49A6C", "open", ("#C49A6C", 26), ["scarf:#2B2F3A", "glasses"]),
+    "fs_cd": ("#14161C", "open", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
+    "ba_barista": ("#F4F8FF", "tee", ("#F4F8FF", 15), ["apron:#1E6B4F", "cap:#1E6B4F"]),
+    "ba_shift": ("#2B2F3A", "tee", ("#2B2F3A", 15), ["apron:#1E6B4F", "lany"]),
+    "ba_asst": ("#3B6FB5", "shirt", ("#3B6FB5", 20), ["lany", "apron:#1E6B4F"]),
+    "ba_store": ("#1E6B4F", "suit", ("#1E6B4F", 26), ["psq:#FFFFFF", "glasses"]),
+    "ba_district": ("#14161C", "suit", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
+    "wh_picker": ("#8A8F9B", "tee", ("#8A8F9B", 15), ["vest:#E8863A", "stripes", "cap:#2B2F3A"]),
+    "wh_lead": ("#F4F8FF", "tee", ("#F4F8FF", 15), ["vest:#C6D72B", "stripes", "hat:#FFFFFF"]),
+    "wh_shift": ("#2F4A7A", "tee", ("#2F4A7A", 15), ["headset", "lany"]),
+    "wh_manager": ("#F4F8FF", "shirt", ("#F4F8FF", 13), ["glasses", "lany"]),
+    "wh_director": ("#14161C", "suit", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
+}
+_NEW_LOOKS.update({   # hotel front desk ladder (receptionist to general manager, 13 Nov 2026)
+    "ht_recept": ("#F4F8FF", "shirt", ("#F4F8FF", 13), ["vest:#7A2E3A", "lany"]),
+    "ht_super": ("#7A2E3A", "suit", ("#7A2E3A", 26), ["headset"]),
+    "ht_fom": ("#2F4A7A", "suit", ("#2F4A7A", 26), ["psq:#FFFFFF"]),
+    "ht_rooms": ("#5A6478", "suit", ("#5A6478", 26), ["psq:#7A2E3A", "glasses"]),
+    "ht_gm": ("#14161C", "suit", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
+})
+OUTFITS += ["ht_recept", "ht_super", "ht_fom", "ht_rooms", "ht_gm"]; LADDER_OUTFITS += ("ht_recept", "ht_super", "ht_fom", "ht_rooms", "ht_gm")
+
+
+def _new_look(outfit, brows, bandp, shirt, lapels, tee, lany, opensh, psq, glc, tufts, gbrow, GL):
+    bc, kind, sleeve, acc = _NEW_LOOKS[outfit]
+    band = bandp(bc, f' stroke="{INK}" stroke-width="2.5"' if bc == "#F4F8FF" else "")
+    collar = {"tee": tee, "shirt": shirt, "open": opensh, "suit": shirt + lapels("#3F4A5E"),
+              "roll": f'<path d="M100 150 H140 V161 Q120 168 100 161 Z" fill="#2B2F3A" stroke="{INK}" stroke-width="2" stroke-linejoin="round"/>'}[kind]
+    head = ""
+    for a in acc:
+        k, _, v = a.partition(":"); v = GOLD if v == "gold" else v
+        if k == "apron":
+            collar += (f'<path d="M96 150 L86 168 M144 150 L154 168" stroke="{v}" stroke-width="4" stroke-linecap="round"/>'
+                       f'<path d="M80 164 H160 L166 189 H74 Z" fill="{v}" stroke="{INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M96 176 H144" stroke="{INK}" stroke-width="2" opacity="0.4"/>')
+        elif k == "vest":
+            collar += (f'<path d="M57 124 L104 151 L110 189 L70 189 Q57 189 57 176 Z" fill="{v}" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>'
+                       f'<path d="M183 124 L136 151 L130 189 L170 189 Q183 189 183 176 Z" fill="{v}" stroke="{INK}" stroke-width="3.5" stroke-linejoin="round"/>')
+        elif k == "stripes":
+            collar += f'<path d="M62 168 H106 M134 168 H178 M64 178 H107 M133 178 H176" stroke="#F4F1D0" stroke-width="4" stroke-linecap="round"/>'
+        elif k == "scarf":
+            collar += f'<path d="M90 148 Q120 172 150 148 L152 160 Q120 184 88 160 Z" fill="{v}" stroke="{INK}" stroke-width="2.5" stroke-linejoin="round"/>'
+        elif k == "tape":
+            collar += (f'<path d="M92 150 L110 188 M148 150 L130 188" stroke="{INK}" stroke-width="9" stroke-linecap="round"/><path d="M92 150 L110 188 M148 150 L130 188" stroke="#F2C230" stroke-width="6" stroke-linecap="round"/>'
+                       f'<path d="M97 160 l5 -3 M103 172 l5 -3 M143 160 l-5 -3 M137 172 l-5 -3" stroke="{INK}" stroke-width="1.8"/>')
+        elif k == "psq": collar += psq(v)
+        elif k == "lany": collar += lany
+        elif k == "glasses": head += glc("#2B2F3A") if bc != "#14161C" else GL
+        elif k == "tufts": head += tufts
+        elif k == "cap":
+            head += (f'<path d="M66 44 Q66 8 120 8 Q174 8 174 44 Z" fill="{v}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
+                     f'<path d="M150 36 Q200 28 214 46 Q186 52 150 46 Z" fill="{v}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/><circle cx="120" cy="10" r="5" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/>')
+        elif k == "hat":
+            head += (f'<path d="M62 48 Q62 2 120 2 Q178 2 178 48 Z" fill="{v}" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/><path d="M50 48 H190" stroke="{INK}" stroke-width="7" stroke-linecap="round"/>'
+                     f'<path d="M50 48 H190" stroke="{v}" stroke-width="3.5" stroke-linecap="round"/><path d="M120 4 V30" stroke="{INK}" stroke-width="3" opacity="0.5"/>')
+        elif k == "beret":
+            head += (f'<ellipse cx="112" cy="22" rx="52" ry="18" transform="rotate(-8 112 22)" fill="{v}" stroke="{INK}" stroke-width="4"/><circle cx="108" cy="6" r="5" fill="{v}" stroke="{INK}" stroke-width="3"/>')
+        elif k == "headset":
+            head += (f'<path d="M58 70 Q120 6 182 70" fill="none" stroke="{INK}" stroke-width="6" stroke-linecap="round"/>'
+                     f'<rect x="48" y="64" width="16" height="30" rx="7" fill="{INK}"/><path d="M58 92 Q66 128 98 130" fill="none" stroke="{INK}" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="130" r="5" fill="{INK}"/>')
+    if "tufts" in acc and not brows: brows = gbrow
+    return band, collar, "", head, brows, sleeve
+
+
 def _ladder_wear(outfit, brows):
     """Ledger's clothes on each rung of a career-ladder reel (12 Nov 2026): intern (soft blue top, lanyard with a badge, orange backpack),
     senior (white shirt with rolled sleeves, tie, brown laptop bag), manager (navy suit, pocket square), controller (grey suit, glasses,
@@ -267,7 +352,9 @@ def _ladder_wear(outfit, brows):
         gbrow = f'<path d="M92 91 Q101 85 111 90 M129 90 Q139 85 148 91" fill="none" stroke="#9AA3B2" stroke-width="5.5" stroke-linecap="round"/>'
         pack = lambda col: (f'<rect x="34" y="88" width="34" height="92" rx="12" fill="{col}" stroke="{INK}" stroke-width="4"/><rect x="172" y="88" width="34" height="92" rx="12" fill="{col}" stroke="{INK}" stroke-width="4"/>'
                             f'<path d="M96 40 Q120 14 144 40" fill="none" stroke="{INK}" stroke-width="5" stroke-linecap="round"/>')
-        if outfit == "mk_intern":   # coral tee, lanyard, a cap
+        if outfit in _NEW_LOOKS:
+            band, collar, behind, head, brows, sleeve = _new_look(outfit, brows, bandp, shirt, lapels, tee, lany, opensh, psq, glc, tufts, gbrow, GL)
+        elif outfit == "mk_intern":   # coral tee, lanyard, a cap
             band = bandp("#EF8F7A"); collar = tee + lany; sleeve = ("#EF8F7A", 15)
             head = (f'<path d="M66 44 Q66 8 120 8 Q174 8 174 44 Z" fill="#EF8F7A" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/>'
                     f'<path d="M150 36 Q200 28 214 46 Q186 52 150 46 Z" fill="#D9705A" stroke="{INK}" stroke-width="4" stroke-linejoin="round"/><circle cx="120" cy="10" r="5" fill="{WHITE}" stroke="{INK}" stroke-width="2.5"/>')
@@ -3545,6 +3632,26 @@ PRESETS.update({"side_bracket": (side_bracket, side_bracket_box), "floor_deco": 
 PRESETS.update({"career_ladder": (career_ladder, career_ladder_box), "rung_tag": (rung_tag, rung_tag_box), "dial": (dial, dial_box), "match_rows": (match_rows, match_rows_box),
                 "test_picker": (test_picker, test_picker_box), "meter": (meter, meter_box), "cal_fill": (cal_fill, cal_fill_box), "checklist": (checklist, checklist_box),
                 "pot": (pot, pot_box), "board_table": (board_table, board_table_box), "org_chart": (org_chart, org_chart_box)})
+
+
+def bouquet(x, y, s=1.0, n=4, **_):
+    """A bucket of fresh flowers (n stems with coloured heads, green leaves). (x, y) = centre of the floor under the bucket."""
+    cols = [CORAL, "#F3D9A6", "#B39DDB", "#F4B6C2", "#FFD36B"]; out = ""
+    for k in range(int(n)):
+        a = (k - (n - 1) / 2) * 0.32; hx = 150 * math.sin(a) * 1.0; hy = -150 - 120 * math.cos(a)
+        out += (f'<path d="M{_f(hx * 0.2)} -60 Q{_f(hx * 0.6)} -150 {_f(hx)} {_f(hy)}" fill="none" stroke="{INK}" stroke-width="9" stroke-linecap="round"/><path d="M{_f(hx * 0.2)} -60 Q{_f(hx * 0.6)} -150 {_f(hx)} {_f(hy)}" fill="none" stroke="{GREEN}" stroke-width="5" stroke-linecap="round"/>'
+                f'<circle cx="{_f(hx)}" cy="{_f(hy)}" r="38" fill="{cols[k % 5]}" stroke="{INK}" stroke-width="5"/><circle cx="{_f(hx)}" cy="{_f(hy)}" r="12" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>')
+    out += (f'<path d="M-30 -110 q-40 -30 -70 -10 q40 40 70 10 Z M30 -100 q40 -30 70 -10 q-40 40 -70 10 Z" fill="{GREEN}" stroke="{INK}" stroke-width="4"/>'
+            f'<path d="M-70 -70 L-58 0 H58 L70 -70 Z" fill="#9FC4E8" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/><path d="M-62 -40 H62" stroke="{INK}" stroke-width="3" opacity="0.4"/>')
+    return _g(x, y, s, out)
+
+
+PRESETS.update({"bouquet": (bouquet, None)}); HALF.update({"bouquet": (150, 270)})
+
+
+# ---- MAP REELS BLOCK START (13 Nov 2026, opt-in): world_map, map_pin, flight_path, suitcase, cloud, map_label and landmark live in map_props.py
+import map_props as _map_props; _map_props.install(globals())
+# ---- MAP REELS BLOCK END
 
 
 PRESET_HELP ={k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}

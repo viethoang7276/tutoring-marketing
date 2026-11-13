@@ -218,7 +218,7 @@ function rungRender(t,i,b,B){
   let j0=i, j1=i; while(j0>0&&B[j0-1].rung===b.rung) j0--; while(j1+1<B.length&&B[j1+1].rung===b.rung) j1++;
   const key=b.rung+':'+j0;
   if(rungEl.dataset.v!==key){ rungEl.dataset.v=key;
-    rungEl.querySelector('.rn').textContent=b.rung+'/'+D.rungs.length; rungEl.querySelector('.rl').textContent=D.rungs[b.rung-1]||''; rungEl.querySelector('.rl').style.fontSize=(D.rungs[b.rung-1]||'').length>14?'43px':'';
+    rungEl.querySelector('.rn').textContent=D.rungLabel?D.rungLabel.replace('{n}',b.rung).replace('{N}',D.rungs.length):b.rung+'/'+D.rungs.length; rungEl.querySelector('.rl').textContent=D.rungs[b.rung-1]||''; rungEl.querySelector('.rl').style.fontSize=D.rungLabel?((D.rungs[b.rung-1]||'').length>9?'40px':'46px'):(D.rungs[b.rung-1]||'').length>14?'43px':'';   // D.rungLabel (map reels, 13 Nov 2026, opt-in): the pill reads "STOP 3 OF 11" 
     const box=rungEl.querySelector('.chips'); box.innerHTML='';
     for(let j=j0;j<=j1;j++) for(const c of (B[j].chips||[])){ const e=document.createElement('div'); e.className='chip'; e.textContent=c.label; e._t=(B[j].chunks[c.at||0]||B[j].chunks[0]).t; box.appendChild(e); } }
   const u=t-(j0===0?0:B[j0].start-0.08), rt=rungEl.querySelector('.rt');

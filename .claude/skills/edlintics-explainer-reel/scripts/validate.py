@@ -38,6 +38,9 @@ ROLES = {  # "loop" (a line leading back to the hook) is optional; "endcard" is 
     # 13 Nov 2026 (Hoang: "avoid the hook just go directly to the point"): beat 1 is a "title" beat (a title card with a "message") and beat 2 starts the first rung
     "ladder": {"order": ["title", "hook", "rung", "climb", "payoff", "cta", "endcard"], "free": True,
                "min": {"rung": 3, "climb": 1, "payoff": 1}},
+    # map reel (13 Nov 2026, opt-in): a title card, then for each stop on the map its "stop" beats (the city, its career, one sourced fact),
+    # a "summary" beat (the whole map with every pin), and one or two closing "cta" cards. Uses the ladder layout in its bleed style
+    "map": {"order": ["title", "stop", "summary", "cta"], "free": True, "min": {"title": 1, "stop": 8, "summary": 1, "cta": 1}, "max": {"cta": 2}},
 }
 # per type: caption chunk words, beats, word target, allowed words, length (s), spoken words per second
 # 4 Nov 2026 (Hoang): "Put all of video to 2 mins cap" - every type may run to 2 minutes
@@ -54,7 +57,8 @@ SPEC = {"definition": dict(chunk=(2, 5), beats=(9, 34), target=(100, 115), allow
         # lesson (Hoang, 5 Nov 2026): "no time cap for in lesson video (ideal time is 2-3 minutes)"; 60 s to about 4 minutes
         "lesson": dict(chunk=(2, 5), beats=(6, 120), target=(354, 531), allowed=(177, 708), secs=(59, 241), wps=2.95),
         # ladder: karaoke chunks of 1-4 words low in the frame; ElevenLabs v3 at tempo 1.12 (about 2.4 words a second with gaps); 90-110 s target, 2-minute cap
-        "ladder": dict(chunk=(1, 4), beats=(12, 60), target=(200, 265), allowed=(120, 285), secs=(44, 121), wps=2.4)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
+        "ladder": dict(chunk=(1, 4), beats=(12, 60), target=(200, 265), allowed=(120, 285), secs=(44, 121), wps=2.4),
+        "map": dict(chunk=(1, 4), beats=(12, 60), target=(200, 270), allowed=(120, 285), secs=(44, 121), wps=2.4)}   # 4 Nov 2026 (Hoang ok): full-sentence voice at tempo 1.0, about 38 s, 42 s with the price line   # Hoang 29 Oct 2026: 32 s target, 35 s acceptable for the emotional cut
 FRAMES = ("auto", "content", "ledger", "ledger-close", "wide")
 CTX_OPEN = re.compile(r"\b(let's (imagine|use|take|say|look at|picture|follow|start with|walk through|see)|imagine|picture|suppose|for this,? let's|take the example|as (an|our) example|to see (this|why|how))\b", re.I)
 CTX_BACK = re.compile(r"\b(continu(e|es|ing)|back (to|in|at|with)|going back|returning to|let's return|let's go back|staying with|still with|in our (story|example)|from the last example|same (story|example|sheet|store|shop|company)|now let's|let's (now |also )?(use|take|look at|see|apply|imagine)|imagine|as (a|an|our) (business )?example|for example|in business)\b", re.I)
@@ -77,7 +81,7 @@ def main(path):
     for k in (REQ_META_AD if t == "ad" else REQ_META_LESSON if t == "lesson" else REQ_META):
         if not m.get(k): E.append(f"meta.{k} is missing")
     if t not in ROLES:
-        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto", "ad", "lesson" or "ladder"'); t = "definition"
+        E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto", "ad", "lesson", "ladder" or "map"'); t = "definition"
     P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
@@ -156,6 +160,60 @@ def main(path):
             if not 1 <= nc <= 4: E.append(f"ladder: rung {n} has {nc} duty chips; use 1-4 (two rows at most)")
         if "payoff" in roles and "rung" in roles[roles.index("payoff"):]: E.append("ladder: the payoff comes after the last rung")
         if roles and roles[0] == "hook" and not any(CTX_OPEN.search(b.get("text", "")) for b in beats if b.get("role") == "hook"): E.append("context transition: a hook beat " + "must open the story out loud, for example \"Let's follow Ledger up the ladder ...\" (Hoang, 6 Nov 2026)")
+    elif t == "map":   # MAP REELS BLOCK (13 Nov 2026): title first, stops in order, the summary map after the last stop, one or two cta cards last
+        if roles and roles[0] != "title": E.append('map: beat 1 must be the title beat (role "title" with a "message": what the video is)')
+        if "title" in roles[1:]: E.append("map: the title beat can only be beat 1")
+        if roles and roles[-1] != "cta": E.append('map: the last beat must be a "cta" beat with a "message"')
+        if "cta" in roles and any(r != "cta" for r in roles[roles.index("cta"):]): E.append("map: the cta beats close the reel; nothing comes after them")
+        if m.get("layout") != "ladder" or m.get("ladder_style") != "bleed": E.append('map: set meta.layout to "ladder" and meta.ladder_style to "bleed" (full-bleed art, captions on top)')
+        if roles and roles[0] == "title":
+            tg = str(beats[0].get("tag", ""))
+            if len(tg) > 18 or tg.rstrip().endswith("."): E.append('beat 1: the title "tag" is 18 characters at most, with no full stop')
+            if tg: texts_extra_cta.append(("title tag", tg))
+            if "?" in beats[0].get("text", ""): E.append("beat 1: the title says what the video is; it is not a question or a teaser (Hoang, 13 Nov 2026)")
+            if re.search(r"\b\d+ seconds\b|\b(ninety|hundred) seconds\b", beats[0].get("text", "") + " " + tg, re.I): W.append("beat 1 states a length in seconds: after the build, check timing.json duration is that or less, or say \"in under two minutes\"")
+        for k, b in enumerate(beats, 1):
+            if b.get("role") not in ("cta", "title"): continue
+            msg = str(b.get("message", ""))
+            if not 4 <= len(words(msg)) <= 16 or len(msg) > 90: E.append(f'beat {k}: a {b.get("role")} beat needs "message", 4-16 words and 90 characters at most')
+            if msg.rstrip().endswith("."): E.append(f"beat {k}: the {b.get('role')} message ends with a full stop")
+            texts_extra_cta.append((f"{b.get('role')} message", msg))
+        stops = m.get("rungs") or []; cities = m.get("cities") or []
+        if not (isinstance(stops, list) and 8 <= len(stops) <= 12 and all(isinstance(r, str) and r.strip() for r in stops)): E.append("map: meta.rungs must list the 8-12 stops (city names for the header), in travel order")
+        for r in stops if isinstance(stops, list) else []:
+            if len(str(r)) > 15: E.append(f'map: stop title "{r}" is over 15 characters; it must fit beside the stop counter and the logo')
+        if not (isinstance(cities, list) and len(cities) == len(stops)): E.append("map: meta.cities must hold one {city, career, fact, source, figureDate} per stop")
+        for c in cities if isinstance(cities, list) else []:
+            for kk in ("city", "career", "fact", "source", "figureDate"):
+                if not (isinstance(c, dict) and str(c.get(kk, "")).strip()): E.append(f"map: meta.cities entry {str(c)[:40]!r} is missing {kk} (every stop needs one sourced fact with the date of its figure)")
+            if isinstance(c, dict) and str(c.get("fact", "")).rstrip().endswith("."): E.append(f'map: the fact for {c.get("city")} ends with a full stop')
+        seen = []
+        for k, b in enumerate(beats, 1):
+            r = b.get("role"); n = b.get("rung")
+            if r == "stop":
+                if not (isinstance(n, int) and 1 <= n <= len(stops)): E.append(f'beat {k}: a stop beat needs "rung": 1-{len(stops)} (its place in meta.rungs)'); continue
+                if seen and n < seen[-1]: E.append(f"beat {k}: stop {n} comes after stop {seen[-1]}; the trip only goes forward")
+                if n not in seen: seen.append(n)
+            elif n is not None: E.append(f'beat {k}: only stop beats carry "rung" (the header hides on the title, summary and cta beats)')
+            cps = b.get("chips") or []
+            if cps and r != "stop": E.append(f"beat {k}: chips belong to stop beats")
+            for c in cps:
+                lab = str(c.get("label", ""))
+                if not 1 <= len(words(lab)) <= 3 or len(lab) > 19: E.append(f'beat {k}: chip "{lab}" must be 1-3 words and 19 characters at most')
+                if lab.rstrip().endswith("."): E.append(f'beat {k}: chip "{lab}" ends with a full stop')
+                if not (isinstance(c.get("at", 0), int) and 0 <= c.get("at", 0) < len(b.get("chunks") or [])): E.append(f'beat {k}: chip "{lab}" needs "at": the index of the caption chunk that names it')
+        if isinstance(stops, list) and seen != list(range(1, len(stops) + 1)): E.append(f"map: every stop in meta.rungs needs at least one stop beat, in order (found {seen})")
+        for n in seen:
+            nc = sum(len(b.get("chips") or []) for b in beats if b.get("rung") == n)
+            if not 1 <= nc <= 3: E.append(f"map: stop {n} has {nc} chips; use 1-3 (the career first)")
+            sc = [scenes.get(b.get("img"), {}) for b in beats if b.get("rung") == n]
+            if not any(it.get("p") == "landmark" for sp in sc for it in sp.get("items", [])): E.append(f"map: stop {n} shows no landmark (prop \"landmark\")")
+        if "summary" in roles and "stop" in roles[roles.index("summary"):]: E.append("map: the summary map comes after the last stop")
+        for name, sp in scenes.items():   # Ledger is on every scene; no country borders or labels exist in world_map, so only cities can be named
+            if not any(it.get("p") == "ledger" for it in sp.get("items", [])): E.append(f"map: scene {name} has no Ledger (he must be visible on every scene)")
+        if not m.get("superlative_source"):   # "best" and "highest paying" need a source that says exactly that (owner's brief, 13 Nov 2026)
+            for k, b in enumerate(beats, 1):
+                if re.search(r"\b(best|highest[- ]paying|top[- ]paying|richest)\b", b.get("text", ""), re.I): E.append(f'beat {k}: "best" or "highest paying" needs a source that says exactly that (set meta.superlative_source), or say "a hub for"')
     else:
         if seq != sorted(seq): E.append(f"roles out of order; keep {' > '.join(R['order'])}")
         if roles and roles[0] != "hook": E.append("beat 1 must be the hook")
@@ -183,14 +241,14 @@ def main(path):
                 if any(l.get("p") == "ledger" and abs(l.get("x", 0) - it.get("x", 0)) < 700 for l in its[:k]):
                     E.append(f'scene {name}: "{it.get("p")}" is listed after Ledger, so it is drawn over him; list it before Ledger (Hoang, 3 Nov 2026)')
     # Story flow (Hoang, 3 Nov 2026: "no transitional words in a story"): story beats link to the one before
-    if t in ("life-of", "howto", "definition", "lesson", "ladder") and beats:
+    if t in ("life-of", "howto", "definition", "lesson", "ladder", "map") and beats:
         LINK = re.compile(r"^\W*(but|so|then|that means|that is|which means|now|first|next|after|still|because|and|until|meanwhile|here is|here's|this is|by|at the end|finally|later|soon|instead|yet|that's"
                           + (r"|however|for example|for instance|as a result|in other words|this means|this is why|in short|to see why|let's|imagine|in the same way|on the other hand|therefore|in fact|whenever|once|when|if" if t == "lesson" else "") + r")\b", re.I)
         story = [b for b in beats[2:] if b.get("role") not in ("endcard", "summary", "loop", "defcard", "cta", "title")]
         linked = sum(1 for b in story if LINK.search(b.get("text", "")) or re.search(r"[.:]\s*(but|so|then|that means|now)\b", b.get("text", ""), re.I))
         if story and linked / len(story) < 0.6:
             W.append(f"story flow: only {linked} of {len(story)} story beats start with a linking word (But, So, Then, That means, Now...); link each beat to the one before (Hoang, 3 Nov 2026)")
-        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t not in ("definition", "lesson", "ladder"):
+        if not any(re.match(r"^\W*(but|yet|still|instead)\b", b.get("text", ""), re.I) for b in beats if b.get("role") in ("turn", "problem")) and t not in ("definition", "lesson", "ladder", "map"):
             W.append('story flow: the turn has no "But ..." (or Yet/Still/Instead); mark the turning point (Hoang, 3 Nov 2026)')
     # Context transitions (Hoang, 6 Nov 2026: "when ever you start the context explaine, please give the transitional context"):
     # the viewer is told when an example starts, and told when the reel goes back to it
@@ -213,7 +271,7 @@ def main(path):
     if re.search(r"\b(\w+ (a|p)\.m\.|noon|midnight|o'clock)", vtxt) and re.search(r"\b(a|per|each|every|this) (month|year|quarter)\b|\bmonthly\b|\byearly\b", vtxt):
         W.append("time frame: clock times in one day but the numbers are per month/year; tell the story on the timescale of the numbers (Hoang, 3 Nov 2026)")
     if m.get("layout") not in (None, "reel", "full", "ladder"): E.append('meta.layout must be "full" (full-frame layout, how-to reels), "ladder" (career-ladder reels) or left out')
-    if m.get("layout") == "ladder" and t != "ladder": E.append('meta.layout "ladder" is for meta.type "ladder"')
+    if m.get("layout") == "ladder" and t not in ("ladder", "map"): E.append('meta.layout "ladder" is for meta.type "ladder"')
     if t == "howto" and m.get("layout") != "full": W.append('howto without meta.layout "full": the old layout leaves the bottom half empty (Hoang, 1 Nov 2026)')
     if t == "howto":   # how-to card fields (edlintics-howto-reel step F)
         for k in ("concept_id", "themes", "industry", "role"):
@@ -317,7 +375,7 @@ def main(path):
             if ct.rstrip().endswith("."): E.append(f'{where}: caption chunk "{ct}" ends with a full stop')
             if c.get("key") and c["key"] not in ct: E.append(f'{where}: key "{c["key"]}" is not inside chunk "{ct}"')
         dur = len(words(tx)) / WPS_T
-        if dur > (7.5 if t == "ad" else 6.5 if t in ("howto", "ladder") else 12 if t == "lesson" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
+        if dur > (7.5 if t == "ad" else 6.5 if t in ("howto", "ladder", "map") else 12 if t == "lesson" else 4.6): W.append(f"{where}: about {dur:.1f} s of voice; split it into two beats (2-4 s each)")
     for k, b in enumerate(beats, 1):   # takeaways and lessons avoid absolute claims (definition review, 1 Nov 2026)
         if t == "howto" and b.get("role") == "takeaway" and re.search(r"\b(never|always|only|every|all|no one|nobody|guarantees?)\b", b.get("text", ""), re.I):
             W.append(f"beat {k}: absolute word in the takeaway {b.get('text', '')[:60]!r}; prefer rarely, usually, often, can")

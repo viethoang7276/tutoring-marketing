@@ -36,6 +36,7 @@ if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (li
 data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env, "nologo": nologo,
         "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "definition", "footnote", "cta", "fx", "cam", "equation", "rung", "chips", "message", "tag") if k in b} for b in T["beats"]]}
 if layout == "ladder": data["rungs"] = json.load(open(f"{d}/script.json")).get("meta", {}).get("rungs", [])   # rung titles for the header
+if layout == "ladder" and json.load(open(f"{d}/script.json")).get("meta", {}).get("rung_label"): data["rungLabel"] = json.load(open(f"{d}/script.json"))["meta"]["rung_label"]   # map reels (13 Nov 2026, opt-in): header pill text such as "STOP {n} OF {N}"
 if layout == "ladder" and json.load(open(f"{d}/script.json")).get("meta", {}).get("ladder_style") == "bleed": data["bleed"] = True   # full-bleed art, captions on top (13 Nov 2026)
 try:   # meta.solid_cuts (7 Nov 2026, opt-in): every scene is complete on its first frame, no fade or draw-on at the cut. Without it, scenes.json is unchanged
     if json.load(open(f"{d}/script.json")).get("meta", {}).get("solid_cuts") is True: data["solidCuts"] = True
