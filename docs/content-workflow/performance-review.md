@@ -101,6 +101,13 @@ Run this every day straight after the first-comment run of the day's last post (
 4. **Update** each slot that went live today to `status: "posted"`, with a one-line `statusNote` (for example "Posted 25 Oct; 24 h: IG 31 reach, Threads 40 views").
 5. **Website traffic (once GA events are live):** in analytics.google.com, read sessions, engaged sessions and key events for the last 7 days by session source, medium, campaign and manual ad content (utm_content). Use the property that matches the date (see "Website analytics"). Add `site: {sessions, engaged, keyEvents, byEvent}` to each post row whose utm_content matches, plus a `siteTotals` block by channel. Untagged visits stay under their channel group.
 6. **Log the refresh** in `runs/daily-<YYYY-MM-DD>` with `{at, postsUpdated, problems}`.
+7. **Hub storage (added 13 Nov 2026, Hoang):** the hub's asset store holds 1 GB, so videos of old posts are moved to the laptop. For every slot with `status: "posted"` and a date more than 7 days ago that still has a `videoUrl`:
+   - Download the card's video with the Artifact tool (`action: "read"`, `path` = the asset id, `out_dir` = `assets/renders/hub-archive/<slot>/`). The folder is not in git.
+   - Verify the saved file: it exists, it has a sensible size and ffmpeg decodes it and reads its duration. If the download or the check fails, leave the card and the blob alone and list the slot under `problems`.
+   - Check that no other hub document points to the same blob. If one does, leave the blob alone.
+   - Update the card first: set `videoArchived: {date, reason, localFile, assetId}` and remove `videoUrl` and `videoAssetId`. Keep the poster, the thumbnail, the platform fields and every data field.
+   - Then delete the video blob. Never delete a blob before its backup is verified and the card is updated.
+   - The performance tables read `perf/latest`, `perfposts` and `runs` by slot id, so they keep updating without the video. Never touch those documents in this step.
 
 If the Mac was asleep and the refresh was missed, the next session's start check runs it once for the missed days.
 

@@ -478,7 +478,66 @@ def install(G):
         o += "".join(f'<circle cx="{cx}" cy="{cy}" r="17" fill="#6B3FA0" stroke="{INK}" stroke-width="3.5"/>' for cx, cy in ((-20, -40), (10, -40), (-5, -66), (-35, -66), (-20, -92), (25, -66), (-5, -16))) + P("M-20 -108 q10 -30 40 -30", "none", 5, "#5E7A4A")
         return o, (-375, -445, 750, 450)
 
-    LM = {"golden_gate": lm_golden_gate, "big_ben": lm_big_ben, "eiffel": lm_eiffel, "erasmus": lm_erasmus, "euro": lm_euro, "minster": lm_minster,
+    # ---- industry spread for a region part (13 Nov 2026): fishing, car making, pharma, farming, fashion
+    def lm_lighthouse():
+        o = water(720, -4)
+        o += P("M-360 -4 Q-300 -120 -200 -110 Q-120 -150 -40 -90 Q20 -70 60 -4 Z", "#B9B4AA", 4) + P("M-300 -60 q40 -20 70 4 M-170 -96 q40 -10 60 20", "none", 3, INK, ' opacity="0.4"')
+        o += P("M-214 -110 L-196 -420 H-124 L-106 -110 Z", WHITE) + P("M-208 -210 H-112 M-202 -320 H-118", "none", 4, INK, ' opacity="0.35"') + R(-176, -180, 32, 70, "#33435E", 4, 14)
+        o += R(-216, -444, 112, 26, "#E0563B", 4, 4) + R(-190, -506, 60, 62, YEL, 4) + P("M-160 -506 V-444", "none", 3) + P("M-202 -506 L-160 -560 L-118 -506 Z", "#E0563B") + P("M-160 -560 V-590", "none", 5)
+        o += P("M-126 -476 L20 -520 M-126 -470 L20 -430", "none", 4, YEL)
+        # a fishing boat with its net and catch
+        o += P("M90 -70 H350 L320 6 H130 Z", "#2F6FB5") + P("M96 -52 H346", "none", 5, WHITE) + R(150, -150, 96, 80, WHITE, 5, 6) + R(166, -136, 30, 30, G["SKY"], 3, 4) + R(206, -136, 30, 30, G["SKY"], 3, 4)
+        o += P("M250 -70 V-280 M250 -270 L340 -110", "none", 6) + P("M340 -110 q-26 34 -52 40 q30 6 52 -40 Z", "#C9D2DE", 3)
+        o += "".join(P(f"M{fx} {fy} q16 -14 34 0 q-18 14 -34 0 Z M{fx + 34} {fy} l12 -9 v18 Z", "#8FB7D9", 3) for fx, fy in ((270, -84), (296, -96), (286, -72)))
+        return o, (-365, -595, 730, 640)
+
+    def lm_motor_city():
+        gl = "#9DB6D6"
+        o = R(-330, -260, 90, 260, "#DCE6F5") + win(-330, -240, -260, 0, 3, 7)
+        for cx, h, w in ((-150, 330, 84), (150, 330, 84), (-60, 250, 70), (60, 250, 70)):
+            o += R(cx - w / 2, -h, w, h, gl, 5, 30) + win(cx - w / 2 + 6, cx + w / 2 - 6, -h + 20, -10, 3, int(h / 30), 0.35)
+        o += R(-52, -520, 104, 520, "#7F9CC4", 5, 40) + win(-46, 46, -500, -10, 3, 16, 0.35) + R(-20, -560, 40, 44, "#59647A", 4, 6) + P("M0 -560 V-610", "none", 5)
+        o += R(-230, -60, 460, 60, "#C9D2DE", 4, 8)
+        # a car on the road in front
+        o += P("M150 -40 Q150 -86 196 -90 L232 -150 Q240 -162 256 -162 H330 Q346 -162 356 -150 L392 -92 Q440 -86 440 -40 Z", "#E0563B") + P("M246 -148 H288 V-96 H214 Z M300 -148 H338 L372 -96 H300 Z", G["SKY"], 4)
+        o += "".join(f'<circle cx="{cx}" cy="-34" r="34" fill="{INK}"/><circle cx="{cx}" cy="-34" r="13" fill="{GREY}"/>' for cx in (216, 380)) + f'<circle cx="434" cy="-70" r="8" fill="{YEL}" stroke="{INK}" stroke-width="3"/>'
+        return o, (-335, -615, 780, 620)
+
+    def lm_pharma():
+        st = "#E4DCCB"
+        o = R(-340, -230, 110, 230, "#DCE6F5") + win(-340, -230, -230, 0, 3, 6) + R(-220, -300, 100, 300, "#CBD9EE") + win(-220, -120, -300, 0, 3, 8)
+        # a stone monument column on a stepped base
+        o += R(-110, -40, 220, 40, st, 5, 4) + R(-84, -90, 168, 50, st, 5, 4) + R(-58, -150, 116, 60, st, 5, 4) + P("M-34 -150 L-22 -520 H22 L34 -150 Z", st) + P("M0 -500 V-170", "none", 3, INK, ' opacity="0.3"')
+        o += R(-34, -548, 68, 28, st, 4, 4) + P("M-14 -548 Q-22 -600 0 -640 Q22 -600 14 -548 Z", "#8FC7B5", 4) + P("M0 -640 V-676", "none", 5)
+        # a medicine bottle, capsules and a flask in front
+        o += R(140, -210, 130, 210, "#F29D52", 5, 16) + R(152, -252, 106, 46, WHITE, 5, 8) + R(152, -150, 106, 96, WHITE, 4, 6) + P("M205 -128 V-76 M179 -102 H231", "none", 9, "#E0563B")
+        o += "".join(f'<g transform="translate({cx} {cy}) rotate({r})"><rect x="-34" y="-15" width="68" height="30" rx="15" fill="{WHITE}" stroke="{INK}" stroke-width="4"/><path d="M0 -15 H19 Q34 -15 34 0 Q34 15 19 15 H0 Z" fill="{c}" stroke="{INK}" stroke-width="4"/></g>' for cx, cy, r, c in ((330, -22, -18, "#E0563B"), (316, -66, 24, BLUE), (372, -52, 70, "#2FA36B")))
+        o += P("M-290 0 L-262 -60 V-110 H-238 V-60 L-210 0 Z", WHITE, 4) + P("M-282 -16 L-268 -46 H-232 L-218 -16 Z", "#8FCBA0", 3) + P("M-270 -110 H-230", "none", 5)
+        return o, (-345, -680, 760, 685)
+
+    def lm_farm():
+        o = P("M-370 0 Q-240 -120 -60 -90 Q120 -150 370 0 Z", "#B9DA94", 4)
+        o += R(-250, -210, 250, 210, "#C8463A") + P("M-270 -210 L-190 -300 H-60 L20 -210 Z", "#8E3027") + P("M-220 -260 L-125 -330 L-30 -260", "none", 5) + R(-170, -120, 90, 120, "#8E3027", 4) + P("M-170 -120 L-80 0 M-80 -120 L-170 0", "none", 4, WHITE) + R(-150, -196, 50, 44, WHITE, 4)
+        o += R(40, -360, 110, 360, "#C9D2DE") + P("M40 -360 Q95 -440 150 -360 Z", "#8A94A6") + P("M40 -290 H150 M40 -210 H150 M40 -130 H150 M40 -60 H150", "none", 3, INK, ' opacity="0.4"') + P("M95 -420 V-450", "none", 5)
+        # corn stalks with ears in front
+        for cx, h in ((210, 230), (262, 270), (314, 240), (-320, 200)):
+            o += P(f"M{cx} 0 V{-h}", "none", 7, "#4E8B3A") + P(f"M{cx} {-h * 0.45} q-44 -30 -58 -80 M{cx} {-h * 0.55} q44 -30 58 -80 M{cx} {-h * 0.8} q-30 -24 -40 -60 M{cx} {-h} q6 -30 20 -44", "none", 6, "#4E8B3A")
+            o += f'<ellipse cx="{cx + 16}" cy="{_f(-h * 0.5)}" rx="15" ry="38" transform="rotate(18 {cx + 16} {_f(-h * 0.5)})" fill="{YEL}" stroke="{INK}" stroke-width="4"/>'
+        return o, (-375, -455, 750, 460)
+
+    def lm_fashion():
+        o = P("M-370 0 Q-250 -150 -90 -120 Q80 -190 250 -110 Q330 -90 370 0 Z", "#E4D2A8", 4)
+        o += R(-250, -250, 300, 250, "#F6E4DC") + R(-250, -280, 300, 34, "#E88FA2", 4, 4) + R(-224, -200, 110, 200, G["SKY"], 4) + R(-80, -200, 104, 200, G["SKY"], 4) + P("M-224 -100 H-114", "none", 3, INK, ' opacity="0.35"')
+        o += palm(-320, 230, 1.0) + palm(100, 300, 1.1)
+        # a dress form in the shop window and a rail of clothes in front
+        o += P("M-190 -180 Q-170 -196 -150 -180 L-140 -120 Q-150 -84 -138 -40 H-202 Q-190 -84 -200 -120 Z", "#E0563B", 4) + P("M-170 -40 V-8 M-196 -8 H-144", "none", 5) + f'<circle cx="-170" cy="-198" r="9" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+        o += P("M150 0 V-230 H360 V0 M130 0 H170 M340 0 H380", "none", 6)
+        for i, c in enumerate(("#467DE3", "#F2C230", "#2FA36B", "#E88FA2")):
+            hx = 180 + i * 50
+            o += P(f"M{hx} -230 v14 M{hx - 22} -196 L{hx} -216 L{hx + 22} -196", "none", 4) + P(f"M{hx - 22} -196 H{hx + 22} L{hx + 28} -70 H{hx - 28} Z", c, 4)
+        return o, (-375, -420, 760, 425)
+
+    LM = {"lighthouse": lm_lighthouse, "motor_city": lm_motor_city, "pharma": lm_pharma, "farm": lm_farm, "fashion": lm_fashion, "golden_gate": lm_golden_gate, "big_ben": lm_big_ben, "eiffel": lm_eiffel, "erasmus": lm_erasmus, "euro": lm_euro, "minster": lm_minster,
           "burj": lm_burj, "mbs": lm_mbs, "hk": lm_hk, "fab": lm_fab, "tokyo_tower": lm_tokyo_tower, "empire": lm_empire,
           "liberty": lm_liberty, "cn_tower": lm_cn_tower, "space_needle": lm_space_needle, "oil_rig": lm_oil_rig, "state_house": lm_state_house, "observatory": lm_observatory,
           "opera_house": lm_opera_house, "flinders": lm_flinders, "haul_truck": lm_haul_truck, "parliament_au": lm_parliament_au, "beehive": lm_beehive, "sky_tower": lm_sky_tower, "wine": lm_wine}
