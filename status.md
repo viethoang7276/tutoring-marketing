@@ -863,3 +863,9 @@ State at handover:
 - Edits route: Hoang wants to try editing/posting reels through Edits, Instagram first then shared to Facebook (Accounts Center auto-share; do not switch it on while Business Suite posts are scheduled to both, or Facebook doubles). First find out whether the connector can schedule, keeps our thumbnail and caption, and re-encodes. The token was pasted in chat: suggest regenerating it
 - Open with Hoang: L2 decision 20 Nov; career cities Parts 4-8 not built; private equity / hedge fund definition reels; stale Chrome tabs to close by hand; 1 Dec reminder (day-in-the-life rework)
 - Update 15 Nov just after midnight: all three new-idea reels are scheduled on fb/ig/li/yt at 14:30 VN (17 Nov EV/EBITDA yt ft8HXGjg-d4, 19 Nov 50% drop yt ln0vKSOSAJA, 21 Nov Work diaries yt Dqvs4c3Sr6A with the corrected caption); TikTok and Threads pending. No agent is running. The 00:04 round of 15 Nov (def-endowment-effect + daily metrics) had NOT been run when the session was handed over
+
+## 14 Nov 2026 (23:54 VN): session restarted, timed runs recreated
+- Git up to date; no slots with status "changes"; no first comments missing in the last 24 h (last done: ladder-marketing-intern-to-cmo 21:41 VN); runs/daily-2026-11-13 and -14 exist
+- Session crons recreated (session-only, recurring ones expire about 21 Nov: renew): generic first-comment run 624bc6ac (fires about :34, so 00:34, 03:34, 16:34, 19:34 VN), ladder run d6411f53 (about 22:04), new-idea reels ae518678 (17, 19, 21 Nov about 15:04), map Part 3 12fe6e24 (18 Nov 18:04), morning refresh 5739379c (about 07:43), weekly review 4239b2fc (Mon about 01:43), Threads/TikTok top-up b835816e (about 09:47), schedule 30 Nov-6 Dec a6e3cb40 (15 Nov 10:23)
+- Created the missing runs doc `howto-charity-restricted` (due 15 Nov 03:00 VN) so the generic run finds it
+- Nothing was missed in the restart gap: the 00:04 round of 15 Nov (def-endowment-effect + daily metrics) runs from the new cron
