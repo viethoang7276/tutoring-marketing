@@ -81,3 +81,7 @@ Before showing Hoang, check mid-move frames as well as the stills: nothing cover
 
 ## Shell rule: never let `$` amounts expand
 When a shell command writes captions, JSON or hub docs that contain dollar amounts, quote the heredoc (`<<'EOF'`) and pass paths as arguments or env vars, or write the JSON from a file. An unquoted heredoc on 27 Oct turned "$3,000" into ",000" in two scheduled puzzle reels (found 29 Oct)
+
+
+## Cadence from the batch after 6 Dec 2026 (Hoang, 14 Nov 2026)
+Two puzzle reels a week, not one a day, and only the money-and-numbers kind (a margin, a price, a headline rate), not abstract logic puzzles. Reason and numbers: "Rules from our own Instagram results" in docs/content-workflow/weekly-content-process.md. Puzzles already built and approved up to 6 Dec 2026 are posted as they are

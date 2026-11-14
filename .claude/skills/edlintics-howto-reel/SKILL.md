@@ -166,3 +166,10 @@ Upload the video and poster (edlintics-definition-reel step 7), then make the Ca
 - the frame-fill mean;
 - the definition-reviewer verdict;
 - any WARN lines left.
+
+
+## Rules from the batch after 6 Dec 2026 (Hoang, 14 Nov 2026)
+- The role is an everyday one most viewers have met or could hold, not a specialist team inside a niche company
+- Title about 60 characters at most
+- Thumbnail: a number or a tension in 8 words at most, never the full title
+Reason and numbers: "Rules from our own Instagram results" in docs/content-workflow/weekly-content-process.md. Reels already built and approved up to 6 Dec 2026 are posted as they are

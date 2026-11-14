@@ -123,3 +123,9 @@ Threads topic: use the primary arm in week 1 (mapping in `docs/research/2026-10-
 
 ## Ledger is not required in every scene (Hoang, 25 Oct 2026)
 Use scenario graphics that show the idea directly: a computer, code on a screen, a robot arm, a chessboard, a toddler with blocks, a meeting table, a store, a chart. Ledger appears where a character helps the story, typically the hook, a story beat and the takeaway, but scenes without Ledger are welcome. Scenes without Ledger use the renderer's content fit and still keep the art big. Add simple hand-drawn presets when a scenario needs one.
+
+
+## Rules from the batch after 6 Dec 2026 (Hoang, 14 Nov 2026)
+- The role is an everyday one most viewers have met or could hold
+- Thumbnail: a number or a tension in 8 words at most ("40 calls 2 deals Awful or not?")
+Reason and numbers: "Rules from our own Instagram results" in docs/content-workflow/weekly-content-process.md. Reels already built and approved up to 6 Dec 2026 are posted as they are
