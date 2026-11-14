@@ -61,6 +61,15 @@ Hoang, on the ladder and map reels: "I realize the sub is still on the top. I wa
 ## Direct opening (Hoang, 13 Nov 2026)
 Hoang, after sharing two "X, explained in 90 seconds" reels: "I think we should avoid the hook and go directly to the point like these video? Like Bid-Ask Spread explained with Ledger in 90s, Understand a day in the life of a manager in ..., avoid the hook just go directly to the point".
 
+**Softened on 14 Nov 2026.** Hoang, when a quiz-first reel was flagged for opening with a question: "it depends some time the hook is good and outperform, learn from our insta page what make the hook in our top video work". So the direct title is the default, not a ban. A different opening (a question, a flat claim, a scene) is allowed when it passes the three-second test below, and the card says which opening was used and why.
+
+**Three-second test (from our own Instagram reels to 13 Nov 2026; 61 voiced reels, 7 above 500 views, so a direction, not proof):**
+- The first sentence names the subject, with no build-up before it. All seven winners did this, whether the sentence was a title ("From audit intern to CFO…"), a claim ("Hard skills are losing value, and soft skills are rising") or a scene ("A day in the life of a salesperson, on a Monday")
+- A stranger can tell within three seconds that it is about them: their own career, skills, pay or interview, or an everyday scene (pizza night). The weak reels opened the same ways but on a concept inside someone else's niche job (bullwhip effect 89 views, GMV at a fashion marketplace 64)
+- The sentence type alone does not decide it: a question hook got 130 views ("Who gets the biggest boost when AI joins the team?") and a bold claim got 116 ("Your first $100K is the slowest one")
+- Thumbnails of the best life-of reels carried a number or a tension ("40 calls 2 deals Awful or not?", "Why slice four is worth less than slice one"); a thumbnail that only repeats a long title did worst
+- Not settled: every reel above 500 views was posted between 08:00 and 18:00 Vietnam time and none of the 21 posted at 00:00 or 03:00 passed 201, but those slots mostly carried how-to and life-of reels, so timing and content are not separated yet
+
 **Rule for new reels:** beat 1 says what the video is, as one full sentence on screen and in the voice, and the story starts in beat 2. No verdict question, no teaser, no "did you know". This replaces the "beat 1 is a verdict question" and "hook question" guidance in the definition, life-of and how-to skills for new reels.
 - **Example openings:** "Bid-ask spread, explained with Ledger in 90 seconds", "A day in the life of a manager, in 90 seconds", "From audit intern to CFO, the career ladder explained with Ledger in 90 seconds".
 - **Only claim a length the video has.** "In 90 seconds" needs a `timing.json` duration of 90 or less; otherwise say "in under two minutes".
