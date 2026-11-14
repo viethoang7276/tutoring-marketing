@@ -137,7 +137,7 @@ def install(G):
         b = box or (0, 0, 1080, 1920)
         return [b[0], b[1], b[2] - b[0], b[3] - b[1]]
 
-    FLAGS = ("ie", "gb", "be", "lu", "nl", "dk", "de", "it", "ch", "fr")
+    FLAGS = ("ie", "gb", "be", "lu", "nl", "dk", "de", "it", "ch", "fr", "no", "se", "fi", "ee", "pl", "at", "gr", "es", "pt")
 
     def _flag(code, h=40):
         """A national flag h tall with an ink outline, top left at (0, 0); returns (svg, width). Shapes and colours checked against the flag-icons 4x3 set on 15 Nov 2026
@@ -145,9 +145,30 @@ def install(G):
         if code not in FLAGS: raise ValueError(f"flag: {code!r}; use {', '.join(FLAGS)}")
         w = h if code == "ch" else h * 1.5
         V = {"ie": ("#009A49", "#FFFFFF", "#FF7900"), "be": ("#111111", "#FFD90C", "#F31830"), "it": ("#009246", "#FFFFFF", "#CE2B37"), "fr": ("#000091", "#FFFFFF", "#E1000F")}
-        Hz = {"lu": ("#ED2939", "#FFFFFF", "#00A1DE"), "nl": ("#AE1C28", "#FFFFFF", "#21468B"), "de": ("#111111", "#DD0000", "#FFCC00")}
+        Hz = {"lu": ("#ED2939", "#FFFFFF", "#00A1DE"), "nl": ("#AE1C28", "#FFFFFF", "#21468B"), "de": ("#111111", "#DD0000", "#FFCC00"), "ee": ("#1791FF", "#111111", "#FFFFFF"), "at": ("#C8102E", "#FFFFFF", "#C8102E")}
+        def bar(x0, y0, bw, bh, c): return f'<rect x="{_f(w * x0)}" y="{_f(h * y0)}" width="{_f(w * bw)}" height="{_f(h * bh)}" fill="{c}" stroke="none"/>'
+        NORDIC = {"no": ("#ED2939", "#FFFFFF", 180 / 640, 120 / 640, 180 / 480, 120 / 480, "#002664"), "se": ("#005293", "#FECB00", 176 / 640, 96 / 640, 192 / 480, 96 / 480, None), "fi": ("#FFFFFF", "#002F6C", 175.5 / 640, 131 / 640, 174.5 / 480, 131 / 480, None)}
         if code in V: body = "".join(f'<rect x="{_f(w * i / 3)}" y="0" width="{_f(w / 3 + 0.5)}" height="{_f(h)}" fill="{c}" stroke="none"/>' for i, c in enumerate(V[code]))
         elif code in Hz: body = "".join(f'<rect x="0" y="{_f(h * i / 3)}" width="{_f(w)}" height="{_f(h / 3 + 0.5)}" fill="{c}" stroke="none"/>' for i, c in enumerate(Hz[code]))
+        elif code in NORDIC:   # a field, a cross set toward the hoist and, for Norway, a blue cross inside the white one
+            fld, cr, cx0, cw, cy0, ch, inner = NORDIC[code]
+            body = bar(0, 0, 1, 1, fld) + bar(cx0, 0, cw, 1, cr) + bar(0, cy0, 1, ch, cr)
+            if inner: body += bar(cx0 + cw / 4, 0, cw / 2, 1, inner) + bar(0, cy0 + ch / 4, 1, ch / 2, inner)
+        elif code == "pl": body = bar(0, 0, 1, 0.5, "#FFFFFF") + bar(0, 0.5, 1, 0.5, "#DC143C")
+        elif code == "gr":   # nine stripes, blue first, and a white cross on a blue square in the canton
+            body = "".join(bar(0, i / 9, 1, 1 / 9 + 0.004, "#0D5EAF" if i % 2 == 0 else "#FFFFFF") for i in range(9))
+            body += (f'<g transform="scale({w / 640:.5f} {h / 480:.5f})" stroke="none"><path fill="#0D5EAF" d="M0 0h266.7v266.7H0z"/><path fill="#FFF" d="M106.7 0H160v266.7h-53.3z"/><path fill="#FFF" d="M0 106.7h266.7V160H0z"/></g>')
+        elif code == "es":   # red, yellow (double height), red; the coat of arms is reduced to a small crowned shield toward the hoist
+            body = bar(0, 0, 1, 1, "#AA151B") + bar(0, 0.25, 1, 0.5, "#F1BF00")
+            sx, sy, k2 = w * 0.3, h * 0.5, h / 100
+            body += (f'<path d="M{_f(sx - 9 * k2)} {_f(sy - 10 * k2)} H{_f(sx + 9 * k2)} V{_f(sy + 4 * k2)} Q{_f(sx + 9 * k2)} {_f(sy + 14 * k2)} {_f(sx)} {_f(sy + 14 * k2)} Q{_f(sx - 9 * k2)} {_f(sy + 14 * k2)} {_f(sx - 9 * k2)} {_f(sy + 4 * k2)} Z" fill="#AD1519" stroke="#7A5A00" stroke-width="{_f(1.6 * k2)}"/>'
+                     f'<rect x="{_f(sx - 7 * k2)}" y="{_f(sy - 17 * k2)}" width="{_f(14 * k2)}" height="{_f(6 * k2)}" rx="{_f(2 * k2)}" fill="#C8A400" stroke="none"/>')
+        elif code == "pt":   # green two fifths, red three fifths; the armillary sphere and shield are reduced to a yellow ring with a small red and white shield
+            body = bar(0, 0, 0.4, 1, "#006600") + bar(0.4, 0, 0.6, 1, "#FF0000")
+            sx, sy, k2 = w * 0.4, h * 0.5, h / 100
+            body += (f'<circle cx="{_f(sx)}" cy="{_f(sy)}" r="{_f(21 * k2)}" fill="#FFE000" stroke="#7A5A00" stroke-width="{_f(1.6 * k2)}"/>'
+                     f'<path d="M{_f(sx - 11 * k2)} {_f(sy - 13 * k2)} H{_f(sx + 11 * k2)} V{_f(sy + 3 * k2)} Q{_f(sx + 11 * k2)} {_f(sy + 14 * k2)} {_f(sx)} {_f(sy + 14 * k2)} Q{_f(sx - 11 * k2)} {_f(sy + 14 * k2)} {_f(sx - 11 * k2)} {_f(sy + 3 * k2)} Z" fill="#FF0000" stroke="#FFFFFF" stroke-width="{_f(1.4 * k2)}"/>'
+                     f'<rect x="{_f(sx - 5 * k2)}" y="{_f(sy - 7 * k2)}" width="{_f(10 * k2)}" height="{_f(12 * k2)}" rx="{_f(3 * k2)}" fill="#FFFFFF" stroke="none"/>')
         elif code == "dk":
             body = (f'<rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" fill="#C8102E" stroke="none"/><rect x="{_f(w * 0.3214)}" y="0" width="{_f(w * 0.1072)}" height="{_f(h)}" fill="#FFFFFF" stroke="none"/>'
                     f'<rect x="0" y="{_f(h * 0.4286)}" width="{_f(w)}" height="{_f(h * 0.1428)}" fill="#FFFFFF" stroke="none"/>')
@@ -163,9 +184,11 @@ def install(G):
                 f'<rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" rx="{_f(h * 0.1)}" fill="none" stroke="{INK}" stroke-width="{_f(max(2.5, h * 0.075))}"/></g>'), w
 
     def flag(x, y, s=1.0, kind="fr", h=60, pole=0, **_):
-        """A national flag (15 Nov 2026, Europe map episode). kind: ie, gb, be, lu, nl, dk, de, it, ch, fr. h: its height in px. pole 0: (x, y) = the flag's centre.
+        """A national flag (15 Nov 2026, Europe map episode). kind: ie, gb, be, lu, nl, dk, de, it, ch, fr, no, se, fi, ee, pl, at, gr, es, pt (Spain and Portugal carry a simplified emblem). h: its height in px. pole 0: (x, y) = the flag's centre.
         pole N: the flag flies from the top of a pole N px tall and (x, y) = the foot of the pole on the ground."""
         body, w = _flag(kind, h)
+        if pole and _.get("pole_only"):   # the bare pole; a second flag item (pole 0) can then rise up it with "move"
+            return _g(x, y, s, f'<path d="M0 0 V{_f(-pole)}" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/><circle cx="0" cy="{_f(-pole - 6)}" r="8" fill="{GOLD}" stroke="{INK}" stroke-width="3.5"/><ellipse cx="0" cy="2" rx="22" ry="6" fill="{INK}" opacity="0.2"/>')
         if pole:
             return _g(x, y, s, f'<path d="M0 0 V{_f(-pole)}" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/><circle cx="0" cy="{_f(-pole - 6)}" r="8" fill="{GOLD}" stroke="{INK}" stroke-width="3.5"/>'
                                f'<g transform="translate(5 {_f(-pole + 4)})">{body}</g><ellipse cx="0" cy="2" rx="22" ry="6" fill="{INK}" opacity="0.2"/>')
@@ -738,24 +761,224 @@ def install(G):
         o += P("M300 -112 V-40 M60 -44 V-30", "none", 6) + "".join(f'<circle cx="{cx}" cy="-20" r="20" fill="{INK}"/><circle cx="{cx}" cy="-20" r="7" fill="{GREY}"/>' for cx in (300, 46, 86))
         return o, (-385, -335, 765, 340)
 
+
+    # ---- Europe, part two (15 Nov 2026)
+    def fish(cx, cy, k=1.0, col="#F2937A"):
+        return (P(f"M{_f(cx - 70 * k)} {cy} Q{cx} {_f(cy - 44 * k)} {_f(cx + 60 * k)} {cy} Q{cx} {_f(cy + 44 * k)} {_f(cx - 70 * k)} {cy} Z M{_f(cx + 56 * k)} {cy} l{_f(34 * k)} {_f(-26 * k)} v{_f(52 * k)} Z", col, 4)
+                + f'<circle cx="{_f(cx - 44 * k)}" cy="{_f(cy - 6 * k)}" r="{_f(5 * k)}" fill="{INK}"/>')
+
+    def gabled(hx, specs, base=0, win_c=None):
+        o = ""
+        for w, h, c, rf in specs:
+            o += R(hx, -h - base, w, h, c) + P(f"M{hx - 4} {-h - base} L{_f(hx + w / 2)} {_f(-h - base - w * 0.62)} L{hx + w + 4} {-h - base} Z", rf)
+            o += "".join(R(hx + w * fx - 10, -h - base + 22 + r * 58, 20, 34, win_c or WHITE, 3.5, 2) for r in range(max(1, int((h - 60) / 58))) for fx in (0.28, 0.72))
+            hx += w
+        return o
+
+    def lm_bryggen(sign="MOWI"):
+        o = water(740, -4)
+        # the old wharf: a row of pointed wooden warehouses in red, ochre and white, a fish crate with the farmer's name and salmon
+        o += gabled(-360, ((96, 230, "#C8463A", "#8E3027"), (90, 250, "#E9B949", "#B5613C"), (96, 220, "#F4EDE2", "#8A94A6"), (90, 250, "#C8463A", "#8E3027"), (96, 230, "#D98A3C", "#8E3027")), 40)
+        o += "".join(P(f"M{x} -40 V{-250}", "none", 2.5, INK, ' opacity="0.25"') for x in range(-340, 100, 24)) + R(-372, -42, 500, 40, "#C9D2DE", 5, 6)
+        o += R(150, -150, 230, 150, "#8FB7D9", 5, 10) + P("M150 -110 H380", "none", 3.5, INK, ' opacity="0.4"') + plate(265, -66, sign, 46) + fish(240, -190, 1.25) + fish(330, -236, 1.0, "#F6A98F")
+        return o, (-375, -420, 770, 460)
+
+    def lm_toy_bricks(sign="LEGO"):
+        def brick(x0, y0, n, c):
+            return "".join(R(x0 + 14 + i * 60, y0 - 16, 32, 18, c, 4, 4) for i in range(n)) + R(x0, y0, n * 60, 70, c, 5, 6)
+        # a house built from studded toy bricks, with loose bricks and a name plate
+        o = brick(-330, -70, 6, "#E0563B") + brick(-330, -140, 6, "#F2C230") + brick(-330, -210, 6, "#E0563B") + brick(-270, -280, 4, "#467DE3") + brick(-210, -350, 2, "#2FA36B")
+        o += R(-190, -150, 80, 150, WHITE, 5, 4) + R(-70, -190, 70, 70, G["SKY"], 4, 4) + f'<circle cx="-126" cy="-76" r="7" fill="{INK}"/>'
+        o += brick(90, -70, 4, "#467DE3") + brick(150, -140, 2, "#F2C230") + brick(60, -210, 2, "#2FA36B") + plate(230, -250, sign, 56, YEL)
+        return o, (-335, -370, 680, 375)
+
+    def lm_cartons(sign="TETRA PAK"):
+        st = "#C9CED6"
+        # the grey twin-towered cathedral, then drink cartons with a straw and a name plate
+        o = R(-250, -210, 250, 210, st) + P("M-250 -210 L-125 -290 L0 -210 Z", "#8A94A6")
+        for tx in (-340, -90):
+            o += R(tx, -400, 90, 400, st) + win(tx, tx + 90, -400, 0, 2, 6, 0.3) + P(f"M{tx - 6} -400 L{tx + 45} -510 L{tx + 96} -400 Z", "#59647A") + P(f"M{tx + 45} -510 V-540", "none", 5)
+            o += "".join(P(f"M{tx + 28} {yy} V{yy - 34} Q{tx + 45} {yy - 54} {tx + 62} {yy - 34} V{yy} Z", "#59647A", 3.5) for yy in (-300, -180))
+        o += P("M-150 0 V-80 Q-125 -120 -100 -80 V0 Z", "#8A5A3C", 4)
+        for cx, c, hh in ((130, "#467DE3", 250), (260, "#2FA36B", 210)):
+            o += R(cx - 55, -hh, 110, hh, WHITE, 5, 4) + P(f"M{cx - 55} {-hh} L{cx - 30} {-hh - 46} H{cx + 30} L{cx + 55} {-hh} Z", WHITE) + P(f"M{cx - 30} {-hh - 46} V{-hh - 62} H{cx + 30} V{-hh - 46}", WHITE, 4) + R(cx - 55, -hh * 0.62, 110, hh * 0.36, c, 4)
+        o += P("M300 -256 L330 -330", "none", 8, "#E0563B") + plate(196, -340, sign, 44)
+        return o, (-350, -545, 720, 550)
+
+    def lm_telecom(sign="NOKIA"):
+        # a lattice mobile mast with panel antennas and dishes, signal arcs, an equipment cabinet with a name plate
+        o = P("M-60 0 L-14 -620 H14 L60 0", "none", 7) + "".join(P(f"M{_f(-60 + 46 * u)} {_f(-620 * u)} L{_f(60 - 46 * (u + 0.12))} {_f(-620 * (u + 0.12))} M{_f(60 - 46 * u)} {_f(-620 * u)} L{_f(-60 + 46 * (u + 0.12))} {_f(-620 * (u + 0.12))}", "none", 4) for u in (0, 0.12, 0.24, 0.36, 0.48, 0.6, 0.72, 0.84))
+        o += "".join(R(x0, y0, 26, 96, WHITE, 5, 6) for x0, y0 in ((-62, -640), (36, -640), (-70, -500), (44, -500))) + f'<circle cx="-56" cy="-380" r="34" fill="{WHITE}" stroke="{INK}" stroke-width="5"/><circle cx="56" cy="-300" r="28" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>' + P("M0 -620 V-690", "none", 6) + f'<circle cx="0" cy="-696" r="9" fill="#E0563B" stroke="{INK}" stroke-width="3"/>'
+        o += "".join(P(f"M{110 + 46 * i} {-640 + 30 * i} q{40 + 10 * i} {60 + 20 * i} 0 {120 + 40 * i}", "none", 7, BLUE) + P(f"M{-110 - 46 * i} {-640 + 30 * i} q{-40 - 10 * i} {60 + 20 * i} 0 {120 + 40 * i}", "none", 7, BLUE) for i in range(3))
+        o += R(130, -200, 230, 200, "#DCE6F5", 5, 10) + win(130, 360, -90, -10, 5, 1, 0.35) + plate(245, -140, sign, 50) + "".join(f'<circle cx="{164 + 30 * i}" cy="-50" r="8" fill="{c}" stroke="{INK}" stroke-width="3"/>' for i, c in enumerate(("#2FA36B", "#2FA36B", YEL)))
+        o += P("M-330 0 l40 -150 l40 150 Z M-250 0 l34 -120 l34 120 Z", "#4E8B3A", 4)
+        return o, (-335, -705, 700, 710)
+
+    def lm_tallinn_gate():
+        st = "#E4DCCB"; rd = "#C8463A"
+        # two round stone gate towers with red cone roofs and a wall between them, a church spire behind, and a laptop showing a digital ID card
+        o = P("M-20 -300 L0 -640 L20 -300 Z", "#59647A", 4) + R(-36, -330, 72, 330, st)
+        o += R(-230, -170, 300, 170, st) + P("M-110 0 V-90 Q-80 -140 -50 -90 V0 Z", "#59647A", 4) + "".join(R(x0, -196, 26, 28, st, 4) for x0 in range(-200, 40, 52))
+        for tx in (-300, 20):
+            o += R(tx - 70, -330, 140, 330, st, 5, 8) + P(f"M{tx - 84} -330 L{tx} -520 L{tx + 84} -330 Z", rd) + P(f"M{tx} -520 V-560", "none", 5) + P(f"M{tx - 70} -110 H{tx + 70} M{tx - 70} -220 H{tx + 70}", "none", 3, INK, ' opacity="0.35"')
+            o += "".join(R(tx + dx, yy, 20, 44, "#59647A", 3.5, 8) for dx, yy in ((-10, -300), (-40, -190), (20, -190)))
+        o += P("M150 0 H410 L384 -26 H176 Z", "#C9D2DE", 4) + R(184, -206, 192, 180, "#33435E", 5, 10) + R(204, -170, 152, 100, WHITE, 4, 8) + f'<circle cx="240" cy="-128" r="18" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>' + P("M270 -140 H340 M270 -116 H324", "none", 5) + R(204, -62, 152, 22, "#2FA36B", 3, 6)
+        return o, (-390, -645, 805, 650)
+
+    def lm_krakow():
+        br = "#B5613C"
+        # the brick basilica with two unequal towers (the taller with a gold-crowned spire), then an office desk with two screens and a headset
+        o = R(-250, -230, 250, 230, br) + P("M-250 -230 L-125 -330 L0 -230 Z", "#8A94A6") + P("M-150 0 V-110 Q-125 -160 -100 -110 V0 Z", "#59647A", 4) + P("M-140 -190 V-240 Q-125 -270 -110 -240 V-190 Z", G["SKY"], 3.5)
+        o += R(-360, -470, 110, 470, br) + win(-360, -250, -470, 0, 2, 7, 0.3) + P("M-366 -470 L-305 -640 L-244 -470 Z", "#59647A") + R(-322, -500, 34, 16, GOLD, 3) + P("M-305 -640 V-690", "none", 5) + f'<circle cx="-305" cy="-644" r="9" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+        o += R(0, -380, 100, 380, br) + win(0, 100, -380, 0, 2, 6, 0.3) + P("M-6 -380 Q50 -470 106 -380 Z", "#8FC7B5") + P("M50 -424 V-470", "none", 5)
+        o += R(150, -120, 250, 16, "#8A5A3C", 4, 4) + P("M170 -104 V0 M380 -104 V0", "none", 7) + R(170, -250, 100, 80, "#33435E", 5, 8) + R(282, -250, 100, 80, "#33435E", 5, 8) + P("M220 -170 V-120 M332 -170 V-120", "none", 6) + P("M186 -226 H254 M186 -206 H236 M298 -226 l22 26 l30 -34", "none", 4, "#8FCBA0")
+        o += P("M214 -310 Q275 -380 336 -310", "none", 7) + R(204, -316, 22, 44, "#E0563B", 4, 8) + R(326, -316, 22, 44, "#E0563B", 4, 8)
+        return o, (-370, -695, 775, 700)
+
+    def lm_crystal(sign="SWAROVSKI"):
+        o = P("M-380 0 L-250 -340 L-150 -180 L-40 -440 L80 -200 L170 -300 L380 0 Z", "#B9C4D6", 4) + P("M-250 -340 L-290 -236 L-250 -262 L-214 -250 Z M-40 -440 L-90 -330 L-40 -356 L4 -344 Z", WHITE, 3.5) + P("M-380 0 Q-200 -90 0 -60 Q200 -100 380 0 Z", "#A9D08E", 4)
+        # a cluster of cut crystals with sparkles in front of the Alps, and a name plate
+        for cx, hh, ww, c in ((-90, 330, 110, "#BFE6F7"), (20, 250, 90, "#D9CCF5"), (-190, 220, 84, "#CDEFE3")):
+            o += P(f"M{cx - ww / 2} 0 V{-hh + 60} L{cx} {-hh} L{cx + ww / 2} {-hh + 60} V0 Z", c) + P(f"M{cx - ww / 2} {-hh + 60} L{cx} {-hh + 96} L{cx + ww / 2} {-hh + 60} M{cx} {-hh + 96} V0 M{cx} {-hh} V{-hh + 96}", "none", 3.5) + P(f"M{cx - ww / 2} 0 V{-hh + 60} L{cx} {-hh + 96} V0 Z", WHITE, 3, INK, ' opacity="0.55"')
+        o += P("M80 -330 v-50 M55 -355 h50 M-260 -290 v-36 M-278 -308 h36 M150 -210 v-30 M135 -225 h30", "none", 6, GOLD) + P("M210 0 V-70 M330 0 V-70", "none", 6) + plate(270, -106, sign, 40)
+        return o, (-385, -445, 770, 450)
+
+    def lm_jewel():
+        mb = "#F1E9DC"
+        # the white two-storey arcaded hall with its green keel roof and a slim clock tower, then a gold ring with a cut stone and a necklace
+        o = R(-120, -560, 60, 560, "#D9A489") + P("M-126 -560 L-90 -640 L-54 -560 Z", "#8FC7B5") + P("M-90 -640 V-676", "none", 5) + f'<circle cx="-90" cy="-470" r="20" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + P("M-90 -470 V-484 M-90 -470 L-80 -464", "none", 3.5)
+        o += P("M-350 -250 Q-200 -390 -50 -250 Z", "#8FC7B5") + R(-360, -250, 320, 250, mb) + P("M-360 -128 H-40", "none", 4)
+        o += "".join(P(f"M{x0} {y0} V{y0 - 62} Q{x0 + 30} {y0 - 100} {x0 + 60} {y0 - 62} V{y0} Z", "#59647A", 3.5) for x0 in (-346, -272, -198, -124) for y0 in (0, -134)) + R(-368, -266, 336, 18, mb, 4, 3)
+        gx = 200; o += f'<circle cx="{gx}" cy="-130" r="112" fill="none" stroke="{INK}" stroke-width="34"/><circle cx="{gx}" cy="-130" r="112" fill="none" stroke="{GOLD}" stroke-width="24"/>'
+        o += P(f"M{gx - 56} -262 L{gx - 30} -296 H{gx + 30} L{gx + 56} -262 L{gx} -196 Z", "#E0563B") + P(f"M{gx - 56} -262 H{gx + 56} M{gx - 30} -296 L{gx - 18} -262 L{gx} -196 L{gx + 18} -262 L{gx + 30} -296", "none", 3) + P(f"M{gx + 96} -330 v-40 M{gx + 76} -350 h40", "none", 6, GOLD)
+        o += P("M20 -360 Q60 -250 100 -360", "none", 6, GOLD) + f'<circle cx="60" cy="-296" r="14" fill="#BFE6F7" stroke="{INK}" stroke-width="3.5"/>'
+        return o, (-370, -680, 720, 685)
+
+    def lm_parthenon():
+        mb = "#F4EDE2"
+        # the columned temple on its rock above the port, with stacked containers on the quay (the ship comes from the cargo_ship prop)
+        o = P("M-380 0 Q-330 -230 -200 -250 H140 Q260 -230 300 0 Z", "#D9C9A3", 4) + P("M-300 -120 q60 -30 110 0 M-40 -90 q70 -24 130 6", "none", 3, INK, ' opacity="0.35"')
+        o += R(-190, -270, 330, 22, mb, 4) + "".join(R(-176 + i * 44, -420, 22, 150, mb, 4, 4) for i in range(8)) + R(-196, -446, 342, 28, mb, 4) + P("M-200 -446 L-25 -530 L150 -446 Z", mb) + P("M-150 -456 L-25 -512 L100 -456", "none", 3, INK, ' opacity="0.4"')
+        cols = ("#E8765F", BLUE, "#E9B949", GREEN, BLUE, "#E8765F")
+        o += "".join(R(180 + (i % 3) * 70, -44 - (i // 3) * 40, 66, 38, cols[i], 4) for i in range(6)) + water(760, -4)
+        return o, (-385, -535, 775, 575)
+
+    def lm_hercules(sign="INDITEX"):
+        st = "#E4DCCB"
+        # the square Roman lighthouse on its headland, a clothes shop with a name board and a rail of clothes
+        o = P("M-380 0 Q-320 -150 -190 -160 Q-80 -150 -20 0 Z", "#A9D08E", 4) + R(-270, -480, 110, 330, st) + P("M-270 -400 L-160 -440 M-270 -300 L-160 -340 M-270 -200 L-160 -240", "none", 3.5, INK, ' opacity="0.45"') + "".join(R(-226, yy, 22, 30, "#59647A", 3, 3) for yy in (-440, -330, -230))
+        o += R(-252, -540, 74, 60, st) + R(-236, -590, 42, 50, YEL, 4) + P("M-242 -590 L-215 -630 L-188 -590 Z", "#59647A", 4) + P("M-194 -566 L-90 -600 M-194 -560 L-90 -530", "none", 4, YEL)
+        o += R(0, -250, 240, 250, "#F6E4DC") + R(-8, -300, 256, 54, "#33435E", 5, 6) + _t(120, -258, sign, 38, 900, WHITE) + R(20, -190, 90, 190, G["SKY"], 4) + R(130, -190, 90, 130, G["SKY"], 4)
+        o += P("M52 -160 Q65 -172 78 -160 L84 -110 Q76 -80 84 -40 H46 Q54 -80 46 -110 Z", "#467DE3", 4) + P("M65 -40 V-10 M46 -10 H84", "none", 5)
+        o += P("M270 0 V-200 H400 V0", "none", 6) + "".join(P(f"M{hx} -200 v12 M{hx - 18} -170 L{hx} -188 L{hx + 18} -170", "none", 4) + P(f"M{hx - 18} -170 H{hx + 18} L{hx + 22} -60 H{hx - 22} Z", c, 4) for hx, c in ((300, "#E0563B"), (340, "#F2C230"), (378, "#2FA36B")))
+        return o, (-385, -635, 795, 640)
+
+    def lm_cork_castle():
+        st = "#D9CDB4"
+        # a hilltop castle with four cone-topped turrets, a cork oak with its bark stripped, and cork stoppers beside a bottle
+        o = P("M-380 0 Q-250 -170 -90 -150 Q60 -170 140 0 Z", "#A9D08E", 4) + R(-270, -330, 240, 190, st) + "".join(R(x0, -354, 30, 26, st, 4) for x0 in range(-262, -40, 52)) + P("M-170 -140 V-230 Q-150 -270 -130 -230 V-140 Z", "#59647A", 4)
+        for tx in (-290, -30):
+            o += R(tx - 34, -430, 68, 290, st) + P(f"M{tx - 44} -430 L{tx} -540 L{tx + 44} -430 Z", "#8A94A6") + R(tx - 9, -380, 18, 40, "#59647A", 3, 6)
+        o += R(-176, -470, 52, 140, st) + P("M-186 -470 L-150 -560 L-114 -470 Z", "#8A94A6")
+        o += P("M190 0 V-200", "none", 30) + P("M190 0 V-200", "none", 22, "#C8763C") + P("M190 -110 V-200", "none", 22, "#6B4A32") + f'<ellipse cx="190" cy="-270" rx="110" ry="84" fill="#4E8B3A" stroke="{INK}" stroke-width="5"/>' + P("M130 -280 q30 -30 60 0 M190 -250 q30 -24 56 4", "none", 3.5, INK, ' opacity="0.4"')
+        o += R(320, -200, 50, 200, "#2F6B4A", 5, 12) + R(334, -260, 22, 64, "#2F6B4A", 5, 4) + R(330, -282, 30, 26, "#D9A04A", 4, 4)
+        o += "".join(f'<g transform="translate({cx} {cy}) rotate({r})"><rect x="-22" y="-34" width="44" height="68" rx="6" fill="#D9A04A" stroke="{INK}" stroke-width="4"/><path d="M-12 -14 h8 M4 6 h10 M-8 20 h6" stroke="{INK}" stroke-width="3" opacity="0.4" fill="none"/></g>' for cx, cy, r in ((270, -36, 0), (232, -24, 80), (400, -36, 12)))
+        return o, (-385, -565, 815, 570)
+
+
+    # ---- small product icons and brand NAME chips (15 Nov 2026, Hoang on Part 4: "make the products appear ... big name brand logo pop up in that region").
+    # A brand is shown as its name in our own lettering and colours with a generic product icon, never as its logo artwork, typeface or brand colours.
+    def _goods(kind):
+        if kind == "plane": return P("M-52 6 Q-54 -8 -38 -10 L30 -16 Q50 -16 56 -4 Q50 8 30 9 Z", WHITE, 4) + P("M-44 -9 L-58 -34 H-42 L-24 -11 Z M-4 2 L-30 30 H-12 L20 3 Z", BLUE, 4)
+        if kind == "book": return R(-46, -34, 92, 68, "#2F6FB5", 4, 6) + R(-34, -24, 78, 48, WHITE, 3, 3) + P("M-22 -8 H34 M-22 8 H34", "none", 3, INK, ' opacity="0.4"')
+        if kind == "diamond": return P("M-46 -14 L-24 -40 H24 L46 -14 L0 44 Z", "#BFE6F7", 4) + P("M-46 -14 H46 M-24 -40 L-14 -14 L0 44 L14 -14 L24 -40", "none", 3)
+        if kind == "coin": return f'<circle r="42" fill="{GOLD}" stroke="{INK}" stroke-width="4"/><circle r="28" fill="none" stroke="{INK}" stroke-width="3" opacity="0.45"/>' + _t(0, 14, "€", 40, 900, INK)
+        if kind == "wafer": return f'<circle r="44" fill="#B9C6F2" stroke="{INK}" stroke-width="4"/>' + "".join(R(-30 + 22 * i, -30 + 22 * j, 16, 16, ("#8C6FE0", "#6FA8E8", "#F2C230")[(i + j) % 3], 2) for i in range(3) for j in range(3))
+        if kind == "car": return (P("M-56 12 Q-56 -8 -38 -10 L-24 -32 Q-20 -38 -12 -38 H16 Q24 -38 28 -32 L42 -10 Q58 -8 58 12 Z", "#3F7FD8", 4) + P("M-18 -32 H-2 V-12 H-30 Z M6 -32 H18 L32 -12 H6 Z", G["SKY"], 3)
+                                  + "".join(f'<circle cx="{c}" cy="14" r="14" fill="{INK}"/><circle cx="{c}" cy="14" r="5" fill="{GREY}"/>' for c in (-30, 34)))
+        if kind == "pill": return R(-30, -30, 60, 74, "#F29D52", 4, 10) + R(-24, -46, 48, 20, WHITE, 4, 5) + R(-22, -10, 44, 36, WHITE, 3, 4) + P("M0 -2 V18 M-10 8 H10", "none", 6, "#E0563B")
+        if kind == "dress": return P("M-16 -44 Q0 -34 16 -44 L22 -12 Q14 4 40 44 H-40 Q-14 4 -22 -12 Z", "#E0563B", 4) + P("M-22 -12 H22", "none", 3)
+        if kind == "watch": return R(-16, -52, 32, 104, "#8A5A3C", 4, 8) + f'<circle r="36" fill="{GOLD}" stroke="{INK}" stroke-width="4"/><circle r="26" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>' + P("M0 0 V-18 M0 0 L13 8", "none", 4)
+        if kind == "fish": return fish(0, 0, 0.72)
+        if kind == "brick": return "".join(R(-44 + i * 46, -34, 26, 16, "#E0563B", 4, 3) for i in range(2)) + R(-50, -20, 100, 52, "#E0563B", 4, 6)
+        if kind == "carton": return R(-28, -24, 56, 68, WHITE, 4, 3) + P("M-28 -24 L-14 -46 H14 L28 -24 Z", WHITE, 4) + R(-28, 0, 56, 26, BLUE, 3) + P("M16 -44 L28 -64", "none", 6, "#E0563B")
+        if kind == "phone": return R(-26, -46, 52, 92, "#33435E", 4, 10) + R(-18, -34, 36, 58, G["SKY"], 3, 4) + P("M40 -30 q14 14 0 30 M54 -42 q24 28 0 54", "none", 5, BLUE)
+        if kind == "idcard": return R(-50, -32, 100, 64, WHITE, 4, 8) + f'<circle cx="-24" cy="-4" r="13" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>' + P("M0 -12 H36 M0 4 H28", "none", 4) + R(-40, 14, 80, 10, "#2FA36B", 2, 4)
+        if kind == "headset": return P("M-36 10 Q-36 -44 0 -44 Q36 -44 36 10", "none", 7) + R(-46, 2, 20, 36, "#E0563B", 4, 7) + R(26, 2, 20, 36, "#E0563B", 4, 7) + P("M36 38 Q30 54 8 52", "none", 5)
+        if kind == "crystal": return P("M-26 44 V-18 L0 -50 L26 -18 V44 Z", "#BFE6F7", 4) + P("M-26 -18 L0 0 L26 -18 M0 0 V44", "none", 3)
+        if kind == "ring": return f'<circle cy="12" r="32" fill="none" stroke="{INK}" stroke-width="16"/><circle cy="12" r="32" fill="none" stroke="{GOLD}" stroke-width="9"/>' + P("M-18 -28 L-9 -42 H9 L18 -28 L0 -8 Z", "#E0563B", 3.5)
+        if kind == "ship": return P("M-56 4 H56 L46 30 H-48 Z", "#33435E", 4) + "".join(R(-44 + i * 30, -20, 28, 22, c, 3) for i, c in enumerate(("#E8765F", BLUE, "#E9B949"))) + R(30, -34, 16, 38, WHITE, 3)
+        if kind == "cork": return R(-22, -36, 44, 72, "#D9A04A", 4, 6) + P("M-12 -14 h8 M4 6 h10 M-8 22 h6", "none", 3, INK, ' opacity="0.4"')
+        if kind == "shirt": return P("M-18 -40 Q0 -28 18 -40 L46 -22 L34 2 L24 -4 V42 H-24 V-4 L-34 2 L-46 -22 Z", "#467DE3", 4)
+        raise ValueError(f"goods: kind {kind!r}; use {', '.join(GOODS)}")
+    GOODS = ("plane", "book", "diamond", "coin", "wafer", "car", "pill", "dress", "watch", "fish", "brick", "carton", "phone", "idcard", "headset", "crystal", "ring", "ship", "cork", "shirt")
+
+    def goods(x, y, s=1.0, kind="diamond", **_):
+        """A small product icon about 110 px wide for map reels, drawn in our style (no brand marks). (x, y) = centre. kind: plane, book, diamond, coin, wafer, car, pill, dress, watch, fish, brick, carton, phone, idcard, headset, crystal, ring, ship, cork, shirt. Add "appear", "move" or "bob" so the products arrive as the voice names them."""
+        return _g(x, y, s, _goods(kind))
+
+    def name_chip(x, y, s=1.0, label="", icon=None, fs=40, **_):
+        """A brand or organisation NAME as plain text in our own lettering on a white pill, with a small generic product icon (a goods kind) on a blue disc. Never a logo, a brand typeface or brand colours. (x, y) = centre."""
+        iw = fs * 1.3 if icon else 0; W = _d_tw(label, fs) + 40 + iw; H = fs * 1.6
+        o = f'<rect x="{_f(-W / 2 + 4)}" y="{_f(-H / 2 + 6)}" width="{_f(W)}" height="{_f(H)}" rx="{_f(H / 2)}" fill="{INK}" opacity="0.18" stroke="none"/><rect x="{_f(-W / 2)}" y="{_f(-H / 2)}" width="{_f(W)}" height="{_f(H)}" rx="{_f(H / 2)}" fill="{WHITE}" stroke="{INK}" stroke-width="4.5"/>'
+        if icon:
+            o += f'<circle cx="{_f(-W / 2 + H / 2)}" cy="0" r="{_f(H / 2 - 7)}" fill="{LB}" stroke="{INK}" stroke-width="3"/><g transform="translate({_f(-W / 2 + H / 2)} 0) scale({_f(fs / 115)})">{_goods(icon)}</g>'
+        o += _t(iw / 2 + (4 if icon else 0), fs * 0.36, str(label), fs, 900, INK)
+        return _g(x, y, s, o)
+
+    def name_chip_box(x, y, s=1.0, label="", icon=None, fs=40, **_):
+        W = _d_tw(label, fs) + 40 + (fs * 1.3 if icon else 0); H = fs * 1.6
+        return [x - W / 2 * s, y - H / 2 * s, W * s, H * s]
+
+
+    def _logo_size(path):
+        """(width, height) of an SVG (viewBox, else width and height) or a PNG file."""
+        import re as _re, struct
+        raw = open(path, "rb").read()
+        if raw[:8] == b"\x89PNG\r\n\x1a\n": return struct.unpack(">II", raw[16:24])
+        head = raw[:4000].decode("utf-8", "ignore"); m = _re.search(r'viewBox="\s*[-\d.eE]+[\s,]+[-\d.eE]+[\s,]+([\d.eE]+)[\s,]+([\d.eE]+)', head)
+        if m: return float(m.group(1)), float(m.group(2))
+        mw = _re.search(r'<svg[^>]*?\swidth="([\d.]+)', head); mh = _re.search(r'<svg[^>]*?\sheight="([\d.]+)', head)
+        if mw and mh: return float(mw.group(1)), float(mh.group(1))
+        raise ValueError(f"logo_chip: no size found in {path}")
+
+    def logo_chip(x, y, s=1.0, file="", w=280, h=92, **_):
+        """A company's own logo, shown exactly as published (no redrawing, recolouring or cropping), centred with clear space on a plain white rounded chip (Hoang, 15 Nov 2026: "Real logos any way").
+        file: the path of an SVG or PNG kept OUTSIDE the engine and outside git (assets/renders/map-reels/_logos/); nothing third-party lives in the skill folder. (x, y) = centre."""
+        import base64
+        if not (file and os.path.exists(file)): raise ValueError(f"logo_chip: file {file!r} not found; keep logos in assets/renders/map-reels/_logos/ or use name_chip")
+        lw, lh = _logo_size(file)
+        if lw / lh < 1.5 and (w, h) == (280, 92): w, h = 136, 136   # a square or round logo gets a square chip, so it is not shown tiny
+        k = min((w - 44) / lw, (h - 30) / lh); iw, ih = lw * k, lh * k
+        mime = "image/png" if file.lower().endswith(".png") else "image/svg+xml"; uri = f"data:{mime};base64," + base64.b64encode(open(file, "rb").read()).decode()
+        o = (f'<g data-nodraw="1"><rect x="{_f(-w / 2 + 4)}" y="{_f(-h / 2 + 6)}" width="{_f(w)}" height="{_f(h)}" rx="18" fill="{INK}" opacity="0.18" stroke="none"/>'
+             f'<rect x="{_f(-w / 2)}" y="{_f(-h / 2)}" width="{_f(w)}" height="{_f(h)}" rx="18" fill="#FFFFFF" stroke="{INK}" stroke-width="4"/>'
+             f'<image href="{uri}" x="{_f(-iw / 2)}" y="{_f(-ih / 2)}" width="{_f(iw)}" height="{_f(ih)}" preserveAspectRatio="xMidYMid meet"/></g>')
+        return _g(x, y, s, o)
+
     LM = {"lighthouse": lm_lighthouse, "motor_city": lm_motor_city, "pharma": lm_pharma, "farm": lm_farm, "fashion": lm_fashion, "golden_gate": lm_golden_gate, "big_ben": lm_big_ben, "eiffel": lm_eiffel, "erasmus": lm_erasmus, "euro": lm_euro, "minster": lm_minster,
           "burj": lm_burj, "mbs": lm_mbs, "hk": lm_hk, "fab": lm_fab, "tokyo_tower": lm_tokyo_tower, "empire": lm_empire,
           "liberty": lm_liberty, "cn_tower": lm_cn_tower, "space_needle": lm_space_needle, "oil_rig": lm_oil_rig, "state_house": lm_state_house, "observatory": lm_observatory,
           "opera_house": lm_opera_house, "flinders": lm_flinders, "haul_truck": lm_haul_truck, "parliament_au": lm_parliament_au, "beehive": lm_beehive, "sky_tower": lm_sky_tower, "wine": lm_wine,
           "harp_bridge": lm_harp_bridge, "books": lm_books, "diamond": lm_diamond, "adolphe": lm_adolphe, "chip_machine": lm_chip_machine, "car_plant": lm_car_plant, "nyhavn": lm_nyhavn, "duomo": lm_duomo,
-          "jet_deau": lm_jet_deau, "airliner": lm_airliner}
-    SIGNED = ("books", "chip_machine", "car_plant", "airliner")   # kinds that carry a plain-text name plate; "sign" replaces the default name
+          "jet_deau": lm_jet_deau, "airliner": lm_airliner,
+          "bryggen": lm_bryggen, "toy_bricks": lm_toy_bricks, "cartons": lm_cartons, "telecom": lm_telecom, "tallinn_gate": lm_tallinn_gate, "krakow": lm_krakow, "crystal": lm_crystal, "jewel": lm_jewel, "parthenon": lm_parthenon,
+          "hercules": lm_hercules, "cork_castle": lm_cork_castle}
+    SIGNED = ("books", "chip_machine", "car_plant", "airliner", "bryggen", "toy_bricks", "cartons", "telecom", "crystal", "hercules")   # kinds that carry a plain-text name plate; "sign" replaces the default name
 
     def landmark(x, y, s=1.0, kind="eiffel", **_):
         """A city landmark as a simple hand-drawn silhouette with flat fills (map reels; no logos or names). (x, y) = centre of its base on the ground. kind: golden_gate, big_ben, eiffel, erasmus (a cable-stayed bridge with one bent pylon), euro (a euro-sign sculpture before bank towers), minster (a red twin-spired cathedral on a river), burj (a very tall stepped spire), mbs (three towers under one roof deck), hk (a faceted tower, a peak and a red-sailed junk), fab (a chip plant with a large microchip), tokyo_tower, empire, liberty, cn_tower, space_needle, oil_rig (a derrick and a pumpjack), state_house (a gold-domed brick state house), observatory (domes on a hill, palms and a film clapperboard), opera_house (white sails and an arch bridge), flinders (a domed yellow station and a tram), haul_truck (a mine truck before an open pit), parliament_au (a flag mast over a low white building on a hill), beehive (a round stepped building), sky_tower, wine (a barrel, a bottle and a glass before vineyard hills)."""
         if kind not in LM: raise ValueError(f"landmark: kind {kind!r}; use {', '.join(LM)}")
-        return _g(x, y, s, (LM[kind](_["sign"]) if kind in SIGNED and _.get("sign") else LM[kind]())[0])
+        art = (LM[kind](_["sign"]) if kind in SIGNED and _.get("sign") else LM[kind]())[0]
+        if _.get("flip"): art = f'<g transform="scale(-1 1)">{art}</g>'   # mirror a landmark that carries no text (opt-in, 15 Nov 2026)
+        return _g(x, y, s, art)
 
     def landmark_box(x, y, s=1.0, kind="eiffel", **_):
         b = LM[kind]()[1]
+        if _.get("flip"): return [x - (b[0] + b[2]) * s, y + b[1] * s, b[2] * s, b[3] * s]
         return [x + b[0] * s, y + b[1] * s, b[2] * s, b[3] * s]
 
     G["PRESETS"].update({"world_map": (world_map, world_map_box), "map_pin": (map_pin, map_pin_box), "flight_path": (flight_path, flight_path_box),
-                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "flag": (flag, flag_box), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
+                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "flag": (flag, flag_box), "goods": (goods, lambda x, y, s=1.0, **_: [x - 60 * s, y - 56 * s, 120 * s, 112 * s]), "name_chip": (name_chip, name_chip_box), "logo_chip": (logo_chip, lambda x, y, s=1.0, w=280, h=92, **_: [x - w / 2 * s, y - h / 2 * s, w * s, h * s]), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
     G["HALF"].update({"cloud": (112, 56), "plane": (140, 80), "cargo_ship": (175, 112)})
     G["LANDMARKS"] = tuple(LM)
