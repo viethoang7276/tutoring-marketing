@@ -5,6 +5,8 @@ with Ledger explain and graphic of important iconic monument, skytower, building
 Props added here and installed into scene_lib by install(): world_map, map_pin, map_dot, map_label, map_plate, flight_path, suitcase, landmark, cloud, plane, cargo_ship.
 Land outlines: map_land.json, simplified from Natural Earth 1:50m land (public domain). Coastlines only: no country borders are
 drawn and nothing but cities is labelled.
+From 15 Nov 2026 (Europe episode, at Hoang's request) a world_map may ask for country borders ("borders": true, from map_borders.json) and
+the flag prop draws ten European flags; both are opt-in, so the earlier map reels are unchanged.
 
 Projection (shared with the script generator through map_xy): a view is {"lon", "lat", "k", "x", "y"}: the point (lon, lat) sits at
 screen (x, y) and one degree of longitude is k pixels; latitude is stretched by 1 / cos(lat) so shapes look natural near the view centre.
@@ -19,6 +21,17 @@ def _land():
     global _LAND
     if _LAND is None: _LAND = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "map_land.json")))
     return _LAND
+
+
+_BORDERS = None
+
+
+def _borders():
+    """Country boundary lines (map_borders.json: Natural Earth 1:50m admin-0 boundary lines, land, public domain; only the lines classed
+    "International boundary"; simplified to 0.02 degrees). Read only when a world_map asks for borders."""
+    global _BORDERS
+    if _BORDERS is None: _BORDERS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "map_borders.json")))
+    return _BORDERS
 
 
 def map_ky(view):
@@ -69,7 +82,7 @@ def install(G):
     INK, BLUE, PAPER, GOLD, GREY, WHITE, CORAL, LB, GREEN = (G[k] for k in ("INK", "BLUE", "PAPER", "GOLD", "GREY", "WHITE", "CORAL", "LB", "GREEN"))
     YEL = "#FFD45C"
 
-    def world_map(x, y, s=1.0, lon=0, lat=30, k=3.0, box=None, sea=True, grid=True, **_):
+    def world_map(x, y, s=1.0, lon=0, lat=30, k=3.0, box=None, sea=True, grid=True, borders=False, **_):
         """A hand-drawn map of the world or a region (map reels): pale sea, cream land with an ink coast, no country borders and no labels. (x, y) = where the point (lon, lat) sits; k = pixels per degree of longitude. box [x0, y0, x1, y1]: the part of the screen it fills (default: the whole 1080x1920 frame and a margin). Place pins with map_props.map_xy."""
         v = {"lon": lon, "lat": lat, "k": k, "x": x, "y": y}; ky = map_ky(v)
         x0, y0, x1, y1 = box or (-160, -200, 1240, 2120)
@@ -102,6 +115,20 @@ def install(G):
         if land:
             out += (f'<path data-nodraw="1" d="{land}" transform="translate(7 9)" fill="{SHADE}" stroke="none"/>'
                     f'<path data-nodraw="1" d="{land}" fill="{LAND}" stroke="{INK}" stroke-width="{4 if k >= 7 else 3}" stroke-linejoin="round"/>')
+        if borders and land:   # opt-in (15 Nov 2026, Europe episode): country border lines over the land; older map reels never set it
+            bd = ""
+            for ln in _borders():
+                lons = [p[0] for p in ln]; lats = [p[1] for p in ln]
+                if x + (max(lons) - lon) * k < x0 - 40 or x + (min(lons) - lon) * k > x1 + 40 or y - (max(lats) - lat) * ky > y1 + 40 or y - (min(lats) - lat) * ky < y0 - 40: continue
+                pts = _dp([(x + (a - lon) * k, y - (b - lat) * ky) for a, b in ln], 1.2)
+                ins = [x0 - 6 <= px <= x1 + 6 and y0 - 6 <= py <= y1 + 6 for px, py in pts]; run = []
+                for i2, pt in enumerate(pts + [None]):   # keep only the runs inside the box (a boxed map must not draw past its frame)
+                    if pt is not None and ins[i2]: run.append(pt); continue
+                    if len(run) > 1: bd += "M" + " L".join(f"{_f(px)} {_f(py)}" for px, py in run) + " "
+                    run = []
+            if bd:
+                bw = 3 if k < 7 else 4 if k < 28 else 5
+                out += f'<path data-nodraw="1" d="{bd}" fill="none" stroke="#7C6A55" stroke-width="{bw}" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="{bw * 3.2:.0f} {bw * 2.2:.0f}" opacity="0.85"/>'
         if box:
             return f'<g><svg x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" viewBox="{_f(x0)} {_f(y0)} {_f(x1 - x0)} {_f(y1 - y0)}" overflow="hidden">{out}</svg></g><rect x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" rx="26" fill="none" stroke="{INK}" stroke-width="6"/>'
         return out
@@ -110,31 +137,71 @@ def install(G):
         b = box or (0, 0, 1080, 1920)
         return [b[0], b[1], b[2] - b[0], b[3] - b[1]]
 
+    FLAGS = ("ie", "gb", "be", "lu", "nl", "dk", "de", "it", "ch", "fr")
+
+    def _flag(code, h=40):
+        """A national flag h tall with an ink outline, top left at (0, 0); returns (svg, width). Shapes and colours checked against the flag-icons 4x3 set on 15 Nov 2026
+        (stripes from the hoist or from the top); Switzerland is square, the others 3:2."""
+        if code not in FLAGS: raise ValueError(f"flag: {code!r}; use {', '.join(FLAGS)}")
+        w = h if code == "ch" else h * 1.5
+        V = {"ie": ("#009A49", "#FFFFFF", "#FF7900"), "be": ("#111111", "#FFD90C", "#F31830"), "it": ("#009246", "#FFFFFF", "#CE2B37"), "fr": ("#000091", "#FFFFFF", "#E1000F")}
+        Hz = {"lu": ("#ED2939", "#FFFFFF", "#00A1DE"), "nl": ("#AE1C28", "#FFFFFF", "#21468B"), "de": ("#111111", "#DD0000", "#FFCC00")}
+        if code in V: body = "".join(f'<rect x="{_f(w * i / 3)}" y="0" width="{_f(w / 3 + 0.5)}" height="{_f(h)}" fill="{c}" stroke="none"/>' for i, c in enumerate(V[code]))
+        elif code in Hz: body = "".join(f'<rect x="0" y="{_f(h * i / 3)}" width="{_f(w)}" height="{_f(h / 3 + 0.5)}" fill="{c}" stroke="none"/>' for i, c in enumerate(Hz[code]))
+        elif code == "dk":
+            body = (f'<rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" fill="#C8102E" stroke="none"/><rect x="{_f(w * 0.3214)}" y="0" width="{_f(w * 0.1072)}" height="{_f(h)}" fill="#FFFFFF" stroke="none"/>'
+                    f'<rect x="0" y="{_f(h * 0.4286)}" width="{_f(w)}" height="{_f(h * 0.1428)}" fill="#FFFFFF" stroke="none"/>')
+        elif code == "ch":
+            body = (f'<rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" fill="#DA291C" stroke="none"/><rect x="{_f(w * 0.1875)}" y="{_f(h * 0.40625)}" width="{_f(w * 0.625)}" height="{_f(h * 0.1875)}" fill="#FFFFFF" stroke="none"/>'
+                    f'<rect x="{_f(w * 0.40625)}" y="{_f(h * 0.1875)}" width="{_f(w * 0.1875)}" height="{_f(h * 0.625)}" fill="#FFFFFF" stroke="none"/>')
+        else:   # gb: the Union Flag, with the counterchanged red saltire
+            body = (f'<g transform="scale({w / 640:.5f} {h / 480:.5f})" stroke="none"><path fill="#012169" d="M0 0h640v480H0z"/><path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z"/>'
+                    '<path fill="#C8102E" d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z"/><path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z"/>'
+                    '<path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z"/></g>')
+        cid = f"fl{code}{int(h * 10)}"
+        return (f'<g data-nodraw="1"><clipPath id="{cid}"><rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" rx="{_f(h * 0.1)}"/></clipPath><g clip-path="url(#{cid})">{body}</g>'
+                f'<rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" rx="{_f(h * 0.1)}" fill="none" stroke="{INK}" stroke-width="{_f(max(2.5, h * 0.075))}"/></g>'), w
+
+    def flag(x, y, s=1.0, kind="fr", h=60, pole=0, **_):
+        """A national flag (15 Nov 2026, Europe map episode). kind: ie, gb, be, lu, nl, dk, de, it, ch, fr. h: its height in px. pole 0: (x, y) = the flag's centre.
+        pole N: the flag flies from the top of a pole N px tall and (x, y) = the foot of the pole on the ground."""
+        body, w = _flag(kind, h)
+        if pole:
+            return _g(x, y, s, f'<path d="M0 0 V{_f(-pole)}" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round"/><circle cx="0" cy="{_f(-pole - 6)}" r="8" fill="{GOLD}" stroke="{INK}" stroke-width="3.5"/>'
+                               f'<g transform="translate(5 {_f(-pole + 4)})">{body}</g><ellipse cx="0" cy="2" rx="22" ry="6" fill="{INK}" opacity="0.2"/>')
+        return _g(x, y, s, f'<g transform="translate({_f(-w / 2)} {_f(-h / 2)})">{body}</g>')
+
+    def flag_box(x, y, s=1.0, kind="fr", h=60, pole=0, **_):
+        w = h if kind == "ch" else h * 1.5
+        return [x - 22 * s, y - (pole + 14) * s, (w + 30) * s, (pole + 20) * s] if pole else [x - w / 2 * s, y - h / 2 * s, w * s, h * s]
+
     def _pin_shape(col, z=1.0):
         return (f'<ellipse cx="0" cy="2" rx="{_f(13 * z)}" ry="{_f(5 * z)}" fill="{INK}" opacity="0.22"/>'
                 f'<path d="M0 0 C{_f(-8 * z)} {_f(-20 * z)} {_f(-26 * z)} {_f(-32 * z)} {_f(-26 * z)} {_f(-54 * z)} A{_f(26 * z)} {_f(26 * z)} 0 1 1 {_f(26 * z)} {_f(-54 * z)} C{_f(26 * z)} {_f(-32 * z)} {_f(8 * z)} {_f(-20 * z)} 0 0 Z" fill="{col}" stroke="{INK}" stroke-width="4.5" stroke-linejoin="round"/>'
                 f'<circle cx="0" cy="{_f(-54 * z)}" r="{_f(9.5 * z)}" fill="{WHITE}" stroke="{INK}" stroke-width="3.5"/>')
 
-    def _pin_label(label, side, fs, fill, z):
+    def _pin_label(label, side, fs, fill, z, flag=None):
         if not label: return 0, 0, 0, 0, ""
-        W = _d_tw(label, fs) + 34; H = fs * 1.5
+        fw = ((fs * 0.92 if flag == "ch" else fs * 0.92 * 1.5) + 10) if flag else 0   # a flag at the start of the pill (opt-in)
+        W = _d_tw(label, fs) + 34 + fw; H = fs * 1.5
         cx, cy = {"r": (34 * z + W / 2, -44 * z), "l": (-34 * z - W / 2, -44 * z), "t": (0, -92 * z - H / 2), "b": (0, 16 + H / 2),
                   "tr": (20 * z + W / 2, -92 * z - H / 2 + 14), "tl": (-20 * z - W / 2, -92 * z - H / 2 + 14), "br": (16 + W / 2, 12 + H / 2), "bl": (-16 - W / 2, 12 + H / 2)}[side]
         return cx, cy, W, H, (f'<rect x="{_f(cx - W / 2)}" y="{_f(cy - H / 2)}" width="{_f(W)}" height="{_f(H)}" rx="{_f(H / 2)}" fill="{fill}" stroke="{INK}" stroke-width="4"/>'
-                              + _t(cx, cy + fs * 0.36, str(label), fs, 900, INK))
+                              + (f'<g transform="translate({_f(cx - W / 2 + 14)} {_f(cy - fs * 0.46)})">{_flag(flag, fs * 0.92)[0]}</g>' if flag else "")
+                              + _t(cx + fw / 2, cy + fs * 0.36, str(label), fs, 900, INK))
 
-    def map_pin(x, y, s=1.0, label="", state="done", side="r", fs=34, num=None, **_):
+    def map_pin(x, y, s=1.0, label="", state="done", side="r", fs=34, num=None, flag=None, **_):
         """A city pin on the world_map. (x, y) = the pin's point (the city). label: the city name in a pill beside it (side r, l, t, b, tr, tl, br, bl). state: done (blue: visited), now (coral pin, yellow label: where Ledger lands) or todo (grey). num: a small number in the pin head (the summary map)."""
         if state not in ("done", "now", "todo"): raise ValueError(f"map_pin: state {state!r}; use done, now or todo")
         col, fill, z = {"done": (BLUE, WHITE, 0.82), "now": ("#E8553B", YEL, 1.12), "todo": (GREY, WHITE, 0.82)}[state]
         out = _pin_shape(col, z)
         if num is not None:
             out += f'<circle cx="0" cy="{_f(-54 * z)}" r="{_f(17 * z)}" fill="{WHITE}" stroke="{INK}" stroke-width="3.5"/>' + _t(0, -54 * z + 9 * z, str(num), 26 * z, 900, INK)
-        out += _pin_label(label, side, fs, fill, z)[4]
+        out += _pin_label(label, side, fs, fill, z, flag)[4]
         return _g(x, y, s, out)
 
-    def map_pin_box(x, y, s=1.0, label="", state="done", side="r", fs=34, **_):
-        z = 1.12 if state == "now" else 0.82; cx, cy, W, H, _s = _pin_label(label, side, fs, WHITE, z)
+    def map_pin_box(x, y, s=1.0, label="", state="done", side="r", fs=34, flag=None, **_):
+        z = 1.12 if state == "now" else 0.82; cx, cy, W, H, _s = _pin_label(label, side, fs, WHITE, z, flag)
         xa = min(-28 * z, cx - W / 2); xb = max(28 * z, cx + W / 2); ya = min(-82 * z, cy - H / 2); yb = max(6, cy + H / 2)
         return [x + xa * s, y + ya * s, (xb - xa) * s, (yb - ya) * s]
 
@@ -537,21 +604,158 @@ def install(G):
             o += P(f"M{hx} -230 v14 M{hx - 22} -196 L{hx} -216 L{hx + 22} -196", "none", 4) + P(f"M{hx - 22} -196 H{hx + 22} L{hx + 28} -70 H{hx - 28} Z", c, 4)
         return o, (-375, -420, 760, 425)
 
+
+    # ---- Europe episode (15 Nov 2026): local monuments, and for company hubs the product or building with the company NAME as plain text on a plate (never a logo)
+    def plate(cx, cy, txt, fs=44, fill=None, col=None):
+        w = _d_tw(txt, fs) + 44; h = fs * 1.5
+        return R(cx - w / 2, cy - h / 2, w, h, fill or WHITE, 5, 10) + _t(cx, cy + fs * 0.36, txt, fs, 900, col or INK)
+
+    def car(cx, col="#E0563B", k=1.0):
+        o = P("M-145 -40 Q-145 -86 -99 -90 L-63 -150 Q-55 -162 -39 -162 H35 Q51 -162 61 -150 L97 -92 Q145 -86 145 -40 Z", col) + P("M-49 -148 H-7 V-96 H-81 Z M5 -148 H43 L77 -96 H5 Z", G["SKY"], 4)
+        o += "".join(f'<circle cx="{c}" cy="-34" r="34" fill="{INK}"/><circle cx="{c}" cy="-34" r="13" fill="{GREY}"/>' for c in (-79, 85)) + f'<circle cx="139" cy="-70" r="8" fill="{YEL}" stroke="{INK}" stroke-width="3"/>'
+        return f'<g transform="translate({cx} 0) scale({k})">{o}</g>'
+
+    def lm_harp_bridge():
+        o = R(-350, -250, 120, 250, "#DCE6F5") + win(-350, -230, -250, 0, 3, 7) + R(250, -200, 100, 200, "#CBD9EE") + win(250, 350, -200, 0, 3, 5) + water(720, -4)
+        # a white cable-stayed bridge shaped like a harp lying on its side: one curved pylon, cables fanning to the deck
+        cab = ""
+        for i in range(11):
+            u = 0.18 + 0.82 * i / 10; w = 1 - u; px = w * w * -190 + 2 * w * u * -120 + u * u * 150; py = w * w * -64 + 2 * w * u * -330 + u * u * -470
+            cab += f"M{_f(px)} {_f(py)} L{_f(-110 + 40 * i)} -64 "
+        o += P(cab, "none", 3, "#59647A") + P("M150 -470 L-330 -64", "none", 4, "#59647A")
+        o += P("M-190 -64 Q-120 -330 150 -470", "none", 26) + P("M-190 -64 Q-120 -330 150 -470", "none", 16, WHITE)
+        o += R(-350, -78, 700, 28, WHITE, 5, 8) + P("M-340 -92 H340", "none", 3, INK, ' opacity="0.5"') + R(-214, -50, 48, 50, "#C9D2DE", 4) + R(120, -50, 36, 50, "#C9D2DE", 4)
+        return o, (-355, -490, 710, 530)
+
+    def lm_books(sign="IFRS"):
+        o = ""
+        for i, (c, w, dx) in enumerate((("#2F6FB5", 250, 0), ("#E0563B", 220, -8), ("#2FA36B", 236, 6), ("#E9B949", 200, -4))):
+            y0 = -62 * (i + 1); o += R(dx - w / 2, y0, w, 62, c, 5, 8) + R(dx - w / 2 + 16, y0 + 12, w - 16, 38, WHITE, 3, 4) + P(f"M{dx - w / 2 + 30} {y0 + 24} H{dx + w / 2 - 14} M{dx - w / 2 + 30} {y0 + 38} H{dx + w / 2 - 14}", "none", 2.5, INK, ' opacity="0.35"')
+        o += P("M0 -248 V-290", "none", 7) + plate(0, -330, sign, 56, YEL)
+        return o, (-130, -376, 260, 380)
+
+    def lm_diamond():
+        o = ""
+        # the cathedral's single lace spire, then a row of guild houses with stepped gables
+        st = "#E7DDC8"; o += R(72, -330, 84, 330, st) + win(72, 156, -330, 0, 2, 5, 0.35) + R(82, -430, 64, 100, st) + P("M82 -430 L114 -640 L146 -430 Z", "#59647A") + P("M114 -640 V-676 M100 -660 H128", "none", 5)
+        o += f'<circle cx="114" cy="-380" r="20" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + P("M114 -380 V-394 M114 -380 L124 -374", "none", 3.5)
+        for hx, w, h, c in ((-340, 104, 250, "#D9A04A"), (-232, 100, 300, "#C8463A"), (-128, 104, 270, "#F1E3C0"), (-20, 96, 240, "#B9785A")):
+            st3 = w / 8; o += P(f"M{hx} 0 V{-h} h{_f(st3)} v-26 h{_f(st3)} v-26 h{_f(st3)} v-26 h{_f(2 * st3)} v26 h{_f(st3)} v26 h{_f(st3)} v26 h{_f(st3)} V0 Z", c)
+            o += "".join(R(hx + w * fx - 13, -h + 34 + r * 62, 26, 38, G["SKY"], 3.5, 3) for r in range(3) for fx in (0.28, 0.72)) + R(hx + w / 2 - 16, -62, 32, 62, "#59647A", 4, 14)
+            o += f'<circle cx="{_f(hx + w / 2)}" cy="{_f(-h - 52)}" r="9" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+        # a big cut diamond in front
+        dx = 290; o += P(f"M{dx - 96} -170 L{dx - 52} -226 H{dx + 52} L{dx + 96} -170 L{dx} -18 Z", "#BFE6F7") + P(f"M{dx - 96} -170 H{dx + 96} M{dx - 52} -226 L{dx - 34} -170 L{dx} -18 L{dx + 34} -170 L{dx + 52} -226 M{dx} -226 L{dx - 34} -170 M{dx} -226 L{dx + 34} -170", "none", 3.5)
+        o += P(f"M{dx - 96} -170 L{dx - 52} -226 H{dx} L{dx - 34} -170 Z", WHITE, 3.5, INK, ' opacity="0.8"') + P(f"M{dx + 120} -260 v-44 M{dx + 98} -282 h44 M{dx - 124} -236 v-30 M{dx - 139} -251 h30", "none", 6, GOLD)
+        return o, (-345, -680, 765, 685)
+
+    def lm_adolphe():
+        st = "#E4D6B4"; gr = "#A9D08E"
+        o = P("M-370 0 Q-330 -150 -250 -200 V0 Z M370 0 Q330 -150 250 -200 V0 Z", gr, 4) + P("M-250 0 Q0 -60 250 0 Z", gr, 4)
+        # a tall stone bridge with one great double arch and small arches on each side; a clock tower with a spire behind it
+        o += R(200, -470, 96, 240, st) + win(200, 296, -470, -250, 2, 4, 0.35) + P("M192 -470 L248 -610 L304 -470 Z", "#59647A") + P("M248 -610 V-646", "none", 5) + f'<circle cx="248" cy="-420" r="24" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + P("M248 -420 V-438 M248 -420 L260 -414", "none", 3.5)
+        o += R(120, -360, 80, 130, "#D9CDB4") + P("M112 -360 L160 -420 L208 -360 Z", "#8A94A6")
+        o += P("M-370 -250 H370 V-196 H330 V0 H250 V-110 Q250 -196 215 -196 H-215 Q-250 -196 -250 -110 V0 H-330 V-196 H-370 Z", st)
+        o += P("M-215 0 Q-215 -170 0 -176 Q215 -170 215 0", "none", 5) + P("M-176 0 Q-176 -140 0 -146 Q176 -140 176 0", "none", 4, INK, ' opacity="0.5"')
+        o += "".join(P(f"M{ax} -196 V-150 Q{ax} -120 {ax + 22} -120 Q{ax + 44} -120 {ax + 44} -150 V-196", "#CDBE98", 4) for ax in (-190, -128, -66, -22, 22 + 0, 84, 146)) 
+        o += R(-378, -276, 756, 28, "#D9CDB4", 5, 4) + P("M-360 -300 H360", "none", 4) + "".join(P(f"M{bx} -300 V-276", "none", 3) for bx in range(-340, 341, 40))
+        return o, (-380, -650, 760, 655)
+
+    def lm_chip_machine(sign="ASML"):
+        pu = "#8C6FE0"
+        o = R(-360, -230, 110, 230, "#DCE6F5") + win(-360, -250, -230, 0, 3, 6)
+        # a chip-making machine the size of a bus: white panels, a window onto the wafer stage, a beam of light and a silicon wafer
+        o += R(-270, -360, 560, 360, WHITE, 6, 22) + R(-270, -360, 560, 56, BLUE, 5, 14) + P("M-90 -304 V0 M110 -304 V0", "none", 4, INK, ' opacity="0.4"')
+        o += R(-236, -250, 120, 150, G["SKY"], 5, 10) + P("M-176 -250 L-176 -170", "none", 12, pu) + P("M-206 -150 H-146", "none", 8) + f'<ellipse cx="-176" cy="-160" rx="40" ry="10" fill="#C9D2DE" stroke="{INK}" stroke-width="4"/>'
+        o += plate(10, -200, sign, 62) + R(-60, -110, 140, 64, "#33435E", 4, 8) + "".join(f'<circle cx="{-36 + 30 * i}" cy="-78" r="9" fill="{c}" stroke="{INK}" stroke-width="3"/>' for i, c in enumerate(("#2FA36B", YEL, "#E0563B", "#2FA36B")))
+        o += R(140, -250, 120, 190, "#EEF2F8", 5, 10) + P("M140 -190 H260 M140 -130 H260", "none", 3.5, INK, ' opacity="0.4"') + R(-270, -24, 560, 24, "#C9D2DE", 5, 6)
+        # the wafer in front, with its grid of chips
+        wx, wy, r = 330, -96, 92
+        o += f'<circle cx="{wx}" cy="{wy}" r="{r}" fill="#B9C6F2" stroke="{INK}" stroke-width="5"/><clipPath id="wafclip"><circle cx="{wx}" cy="{wy}" r="{r - 6}"/></clipPath>'
+        o += f'<g clip-path="url(#wafclip)">' + "".join(f'<rect data-nodraw="1" x="{wx - 92 + 31 * i + 3}" y="{wy - 92 + 31 * j + 3}" width="25" height="25" fill="{(pu, "#6FA8E8", "#F2C230")[(i + 2 * j) % 3]}" opacity="0.85" stroke="none"/>' for i in range(6) for j in range(6)) + "</g>"
+        o += P(f"M{wx - 24} 0 L{wx} {wy + r} L{wx + 24} 0 Z", "#8A94A6", 4)
+        return o, (-365, -365, 800, 370)
+
+    def lm_car_plant(sign="VOLKSWAGEN"):
+        br = "#B5613C"
+        o = water(760, -4)
+        # a long brick power station with four tall chimneys beside a canal, a name board on the roof and a car on the quay
+        for cx in (-6, 60, 126, 192):
+            o += P(f"M{cx - 20} -230 L{cx - 13} -640 H{cx + 13} L{cx + 20} -230 Z", br) + P(f"M{cx - 15} -560 H{cx + 15} M{cx - 17} -470 H{cx + 17}", "none", 3, INK, ' opacity="0.4"') + R(cx - 17, -652, 34, 16, "#8A4A2E", 4, 3)
+        o += R(-370, -250, 600, 220, br) + "".join(R(wx, -210, 30, 130, "#F3E6C4", 4, 15) for wx in range(-346, 200, 50)) + R(-378, -262, 616, 22, "#8A4A2E", 4, 4)
+        o += P("M-290 -262 V-300 M-110 -262 V-300", "none", 6) + plate(-200, -336, sign, 46)
+        o += R(-380, -34, 800, 34, "#C9D2DE", 5, 6) + car(296, "#3F7FD8", 0.8)
+        return o, (-385, -656, 810, 700)
+
+    def lm_nyhavn():
+        o = water(740, -4)
+        # a row of tall, narrow harbour houses in bright colours with steep roofs, and a wooden sailing boat on the canal
+        hx = -360
+        for w, h, c, rf in ((92, 300, "#E9B949", "#B5613C"), (84, 350, "#E0563B", "#59647A"), (96, 280, "#5B9BD5", "#B5613C"), (88, 330, "#F29D52", "#59647A"), (92, 300, "#8FC7B5", "#B5613C"), (84, 340, "#F6E4A8", "#59647A")):
+            o += R(hx, -h - 40, w, h, c) + P(f"M{hx - 4} {-h - 40} L{_f(hx + w / 2)} {-h - 110} L{hx + w + 4} {-h - 40} Z", rf)
+            rows = int((h - 70) / 62); o += "".join(R(hx + w * fx - 11, -h - 14 + r * 62, 22, 36, WHITE, 3.5, 2) for r in range(rows) for fx in (0.22, 0.5, 0.78)) + R(hx + w / 2 - 14, -96, 28, 56, "#59647A", 4, 4)
+            hx += w
+        o += R(-372, -42, 560, 40, "#C9D2DE", 5, 6)
+        o += P("M-250 -30 H10 L-14 16 H-226 Z", "#8A5A3C") + P("M-120 -30 V-270 M-120 -260 L-10 -60 M-120 -250 L-220 -60", "none", 5) + P("M-120 -270 l40 12 l-40 12 Z", "#C8102E", 3)
+        # a medicine bottle and capsules on the quay
+        o += R(222, -200, 124, 200, "#F29D52", 5, 16) + R(234, -240, 100, 44, WHITE, 5, 8) + R(234, -144, 100, 92, WHITE, 4, 6) + P("M284 -122 V-74 M260 -98 H308", "none", 9, "#E0563B")
+        o += "".join(f'<g transform="translate({cx} {cy}) rotate({r})"><rect x="-34" y="-15" width="68" height="30" rx="15" fill="{WHITE}" stroke="{INK}" stroke-width="4"/><path d="M0 -15 H19 Q34 -15 34 0 Q34 15 19 15 H0 Z" fill="{c}" stroke="{INK}" stroke-width="4"/></g>' for cx, cy, r, c in ((392, -22, -18, "#E0563B"), (398, -70, 28, BLUE)))
+        return o, (-375, -460, 815, 500)
+
+    def lm_duomo():
+        mb = "#F4EDE2"
+        # a white marble cathedral front: a wide gable crowded with thin spires, five doors, and a gold statue on the tallest spire behind
+        o = P("M-8 -330 L0 -640 L8 -330 Z", mb, 4) + f'<circle cx="0" cy="-652" r="12" fill="{GOLD}" stroke="{INK}" stroke-width="3.5"/>' + P("M0 -664 V-690", "none", 5, GOLD)
+        o += P("M-290 0 V-190 L-180 -250 L-90 -330 L0 -400 L90 -330 L180 -250 L290 -190 V0 Z", mb)
+        for sx, top in ((-290, -190), (-180, -250), (-90, -330), (0, -400), (90, -330), (180, -250), (290, -190)):
+            o += P(f"M{sx - 12} {top + 40} V{top - 40} L{sx} {top - 120} L{sx + 12} {top - 40} V{top + 40}", mb, 4) + P(f"M{sx - 14} {top - 40} H{sx + 14}", "none", 3.5)
+        o += "".join(P(f"M{sx} 0 V{top}", "none", 4, INK, ' opacity="0.45"') for sx, top in ((-180, -250), (-90, -330), (90, -330), (180, -250)))
+        o += "".join(P(f"M{dx - dw / 2} 0 V{-dh + dw / 2} Q{dx} {-dh - dw / 2} {dx + dw / 2} {-dh + dw / 2} V0 Z", "#8A5A3C", 4) for dx, dw, dh in ((-235, 44, 80), (-135, 50, 96), (0, 64, 120), (135, 50, 96), (235, 44, 80)))
+        o += "".join(P(f"M{wx - 14} {wy} V{wy - 44} Q{wx} {wy - 70} {wx + 14} {wy - 44} V{wy} Z", G["SKY"], 3.5) for wx, wy in ((-235, -110), (-135, -140), (135, -140), (235, -110), (-45, -230), (45, -230)))
+        o += f'<circle cx="0" cy="-180" r="26" fill="{G["SKY"]}" stroke="{INK}" stroke-width="4"/>' + P("M-26 -180 H26 M0 -206 V-154", "none", 3)
+        # a dress form and a rail of clothes in front
+        fx = 372; o += P(f"M{fx - 26} -236 Q{fx} -256 {fx + 26} -236 L{fx + 38} -160 Q{fx + 26} -116 {fx + 42} -60 H{fx - 42} Q{fx - 26} -116 {fx - 38} -160 Z", "#E0563B", 4) + P(f"M{fx} -60 V-8 M{fx - 34} -8 H{fx + 34}", "none", 6) + f'<circle cx="{fx}" cy="-262" r="11" fill="{GOLD}" stroke="{INK}" stroke-width="3"/>'
+        return o, (-305, -695, 725, 700)
+
+    def lm_jet_deau():
+        o = P("M-380 -40 L-250 -330 L-170 -200 L-60 -420 L70 -180 L170 -300 L380 -40 Z", "#B9C4D6", 4) + P("M-250 -330 L-292 -238 L-250 -262 L-214 -252 Z M-60 -420 L-108 -326 L-60 -350 L-18 -340 Z M170 -300 L128 -250 L170 -262 L204 -250 Z", WHITE, 3.5)
+        o += water(760, -44) + water(760, -4)
+        # the lake fountain: one very tall jet of water from a stone jetty, with spray drifting to one side
+        o += R(-290, -30, 190, 26, "#C9D2DE", 4, 6) + R(-150, -52, 44, 26, "#8A94A6", 4, 4)
+        o += P("M-140 -52 Q-150 -380 -128 -610 Q-112 -640 -100 -600 Q-70 -420 -40 -300 Q-70 -250 -96 -300 Q-112 -200 -116 -52 Z", WHITE, 4) + P("M-128 -560 Q-124 -300 -128 -80 M-80 -420 q14 40 30 70 M-20 -260 q10 14 22 18 M-56 -230 q8 14 18 20", "none", 3.5, "#9CC3F0")
+        # a wristwatch in front
+        wx = 250; o += R(wx - 40, -330, 80, 330, "#8A5A3C", 5, 14) + P(f"M{wx - 40} -290 H{wx + 40} M{wx - 40} -40 H{wx + 40}", "none", 3, INK, ' opacity="0.4"')
+        o += f'<circle cx="{wx}" cy="-165" r="98" fill="{GOLD}" stroke="{INK}" stroke-width="5"/><circle cx="{wx}" cy="-165" r="76" fill="{WHITE}" stroke="{INK}" stroke-width="4"/>' + R(wx + 96, -179, 22, 28, GOLD, 4, 5)
+        o += "".join(P(f"M{_f(wx + 62 * math.sin(a))} {_f(-165 - 62 * math.cos(a))} L{_f(wx + 72 * math.sin(a))} {_f(-165 - 72 * math.cos(a))}", "none", 5 if i % 3 == 0 else 3) for i in range(12) for a in (i * math.pi / 6,))
+        o += P(f"M{wx} -165 V-214 M{wx} -165 L{wx + 34} -144", "none", 6) + f'<circle cx="{wx}" cy="-165" r="6" fill="{INK}"/>'
+        return o, (-385, -645, 775, 690)
+
+    def lm_airliner(sign="AIRBUS"):
+        # an assembly hangar with a name board and a finished airliner standing in front of it
+        o = P("M-380 0 V-250 Q-230 -330 -80 -250 V0 Z", "#DCE6F5") + P("M-340 0 V-190 H-120 V0", "#33435E", 4) + P("M-285 -190 V0 M-230 -190 V0 M-175 -190 V0", "none", 3, WHITE, ' opacity="0.5"') + plate(-230, -236, sign, 40)
+        o += P("M-70 -150 Q-74 -196 -20 -200 H250 Q340 -198 372 -150 Q340 -112 250 -110 H-10 Q-60 -112 -70 -150 Z", WHITE) + P("M-52 -190 L-110 -330 H-50 L30 -200 Z", BLUE) + P("M-60 -160 L-130 -176 L-124 -150 L-40 -140 Z", WHITE, 4)
+        o += P("M300 -186 Q334 -180 350 -160 H296 Z", G["SKY"], 4) + P("M10 -160 H270", "none", 6, INK, ' stroke-dasharray="6 18"')
+        o += P("M90 -130 L10 -40 H80 L210 -124 Z", "#C9D2DE") + R(92, -100, 80, 44, "#8A94A6", 5, 20) + f'<ellipse cx="170" cy="-78" rx="8" ry="20" fill="#33435E" stroke="{INK}" stroke-width="3"/>'
+        o += P("M300 -112 V-40 M60 -44 V-30", "none", 6) + "".join(f'<circle cx="{cx}" cy="-20" r="20" fill="{INK}"/><circle cx="{cx}" cy="-20" r="7" fill="{GREY}"/>' for cx in (300, 46, 86))
+        return o, (-385, -335, 765, 340)
+
     LM = {"lighthouse": lm_lighthouse, "motor_city": lm_motor_city, "pharma": lm_pharma, "farm": lm_farm, "fashion": lm_fashion, "golden_gate": lm_golden_gate, "big_ben": lm_big_ben, "eiffel": lm_eiffel, "erasmus": lm_erasmus, "euro": lm_euro, "minster": lm_minster,
           "burj": lm_burj, "mbs": lm_mbs, "hk": lm_hk, "fab": lm_fab, "tokyo_tower": lm_tokyo_tower, "empire": lm_empire,
           "liberty": lm_liberty, "cn_tower": lm_cn_tower, "space_needle": lm_space_needle, "oil_rig": lm_oil_rig, "state_house": lm_state_house, "observatory": lm_observatory,
-          "opera_house": lm_opera_house, "flinders": lm_flinders, "haul_truck": lm_haul_truck, "parliament_au": lm_parliament_au, "beehive": lm_beehive, "sky_tower": lm_sky_tower, "wine": lm_wine}
+          "opera_house": lm_opera_house, "flinders": lm_flinders, "haul_truck": lm_haul_truck, "parliament_au": lm_parliament_au, "beehive": lm_beehive, "sky_tower": lm_sky_tower, "wine": lm_wine,
+          "harp_bridge": lm_harp_bridge, "books": lm_books, "diamond": lm_diamond, "adolphe": lm_adolphe, "chip_machine": lm_chip_machine, "car_plant": lm_car_plant, "nyhavn": lm_nyhavn, "duomo": lm_duomo,
+          "jet_deau": lm_jet_deau, "airliner": lm_airliner}
+    SIGNED = ("books", "chip_machine", "car_plant", "airliner")   # kinds that carry a plain-text name plate; "sign" replaces the default name
 
     def landmark(x, y, s=1.0, kind="eiffel", **_):
         """A city landmark as a simple hand-drawn silhouette with flat fills (map reels; no logos or names). (x, y) = centre of its base on the ground. kind: golden_gate, big_ben, eiffel, erasmus (a cable-stayed bridge with one bent pylon), euro (a euro-sign sculpture before bank towers), minster (a red twin-spired cathedral on a river), burj (a very tall stepped spire), mbs (three towers under one roof deck), hk (a faceted tower, a peak and a red-sailed junk), fab (a chip plant with a large microchip), tokyo_tower, empire, liberty, cn_tower, space_needle, oil_rig (a derrick and a pumpjack), state_house (a gold-domed brick state house), observatory (domes on a hill, palms and a film clapperboard), opera_house (white sails and an arch bridge), flinders (a domed yellow station and a tram), haul_truck (a mine truck before an open pit), parliament_au (a flag mast over a low white building on a hill), beehive (a round stepped building), sky_tower, wine (a barrel, a bottle and a glass before vineyard hills)."""
         if kind not in LM: raise ValueError(f"landmark: kind {kind!r}; use {', '.join(LM)}")
-        return _g(x, y, s, LM[kind]()[0])
+        return _g(x, y, s, (LM[kind](_["sign"]) if kind in SIGNED and _.get("sign") else LM[kind]())[0])
 
     def landmark_box(x, y, s=1.0, kind="eiffel", **_):
         b = LM[kind]()[1]
         return [x + b[0] * s, y + b[1] * s, b[2] * s, b[3] * s]
 
     G["PRESETS"].update({"world_map": (world_map, world_map_box), "map_pin": (map_pin, map_pin_box), "flight_path": (flight_path, flight_path_box),
-                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
+                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "flag": (flag, flag_box), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
     G["HALF"].update({"cloud": (112, 56), "plane": (140, 80), "cargo_ship": (175, 112)})
     G["LANDMARKS"] = tuple(LM)
