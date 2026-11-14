@@ -8,6 +8,9 @@ description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Busi
 Only run on an approved batch: content, design and time approved, and Hoang said "go" in chat.
 
 
+## X IS PAUSED (Hoang, 14 Nov 2026)
+The X account is suspended. Until Hoang says it is back: do not open the X composer, post, schedule, reply, like or repost on X, and skip X in every scheduling, first-comment and swap round. Record X in `runs` as skipped with the note "X suspended, paused by Hoang 14 Nov 2026", not as missed. Keep writing `caption_x` on new cards. Appeals and logins are Hoang's. Sections 2b and the X steps in section 3 apply again only when he lifts this
+
 ## Current Meta route (11 Nov 2026)
 Portfolio **edlintics 1** `1704820277908835` now contains page `108471317472449`. The new home URL was verified: https://business.facebook.com/latest/home?asset_id=108471317472449&business_id=1704820277908835. If a direct composer/feed link fails, use Home → Content; do not switch back to the old portfolio. The revised direct routes below still need verification after the move.
 

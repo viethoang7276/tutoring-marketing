@@ -832,3 +832,6 @@ This log had no entries for 1-5 Nov; for that gap see `git log` and the hub (`ru
 ## 14 Nov 2026 (03:04 and 07:43 VN)
 - 03:04 first-comment run howto-hr-turnover: all 7 platforms done by a Haiku agent; lead checked Instagram (reel liked, comment, repost, like count hidden) and the YouTube comment (both emojis). LinkedIn, X, Threads and TikTok went live with the old v1 cut (swap was never done; needed Hoang to delete)
 - 07:43 morning refresh: no missed first comments in the last 24 h; runs/daily-2026-11-13 exists; one slot with status "changes" (2026-12-04-1300, 5 budget terms list reel) handed to the engine agent for a rebuild, rule and sweep
+- 08:18 list reel 2026-12-04-1300 rebuilt as v2 (no definition end card, one scene per term), back to proposal; voice only, Canva music not done; rule added; sweep found 12 other list reels with a definition end card (15 Nov insurance, 2 Dec cash flow, 6 Dec ESG weakest)
+- 08:48 L1 24 h reading stored (perf/latest v41): Instagram 1,256, Facebook 200, Threads 22, YouTube 16, TikTok 0; saves 18
+- 13:49 Hoang (to the build agent, verified in its transcript): "stop posting on X until further notice, X account got suspended". X skipped in all rounds from now; notice added to the schedule-posts skill and CLAUDE.md; memory x-posting-paused. Session cron prompts still say 7 platforms: skip X when they fire
