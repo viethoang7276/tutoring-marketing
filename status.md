@@ -843,3 +843,22 @@ This log had no entries for 1-5 Nov; for that gap see `git log` and the hub (`ru
 - By 21:00: all approved slots 16-29 Nov (plus 30 Nov 00:00 and 03:00) scheduled on Facebook, Instagram, LinkedIn, YouTube; three carousels 17/19/21 Nov also on TikTok. TikTok hit its cap of 30 scheduled posts (slots from 24 Nov 16:00 are ttPending); Threads at 25 (slots after 18 Nov 16:00 are thPending). YouTube titles cut by words: airline NPS, vineyard, university endowment, city bus. 2026-11-28-1000 Threads text is 501 chars, needs Hoang. Sonnet agents managed only 2-3 slots per context; the default model did 18-26
 - Session crons: daily 09:17 Threads/TikTok top-up; 15 Nov 10:23 schedule 30 Nov-6 Dec (hold streaming cohort how-to and 5 Dec puzzle, check 4 Dec list reel music)
 - Stale Chrome tabs from agents would not close (Meta 682821804, LinkedIn 682821819, TikTok 682821822/829/832, YouTube 682821835): Hoang to close by hand
+
+## RESTART HANDOVER (written 14 Nov 2026, about 23:50 VN): DO THIS FIRST IN THE NEW SESSION
+Hoang restarts the session to load the Edits connector (`metapilot-native`, the Edits desktop app's local MCP, 32 tools, added to user config 14 Nov). All timed runs were session-only and are gone after the restart. Recreate them with CronCreate before anything else, then tell Hoang they are back:
+1. `4 0,3,16,19 * * *` recurring: generic first-comment run. In hub `runs`, find docs whose dueAt is within the last 90 minutes and `done` is empty; run section 3 of the schedule-posts skill through a Haiku agent with the full brief (identity checks; YouTube channel UCUx_KFGdEVdBoKvCS3BxYRA; TikTok via Studio, comment + save only; X PAUSED, do not open, record skipped; note Threads/TikTok pending where no post exists). Lead check after: Instagram action-row heart and the YouTube comment. At the 00:04 run also do the Daily metrics refresh and Ads tab refresh (X not available) and any L1/L2 readings due (L1 72 h on 16 Nov; L2 decision Fri 20 Nov)
+2. `34 21 * * *` recurring until 23 Nov: same for the day's ladder reel (live 21:30 VN; 15 Nov ladder-analyst-to-portfolio-manager, 16 Nov ladder-consultant-to-partner, 17-23 Nov the daily ladders)
+3. `34 14 17,19,21 11 *`: same for the 14:30 VN new-idea reels (17 Nov def-ev-ebitda-which-is-cheaper, 19 Nov maths-50-drop-100-rise, 21 Nov diaries-01-client-disagrees-auditor)
+4. `4 18 18 11 *` one-shot: same for map-career-cities-3-australia-nz (live 18:00 VN 18 Nov)
+5. `13 7 * * *` recurring: morning refresh (session-start checks)
+6. `13 1 * * 1` recurring: weekly performance review (Mondays)
+7. `17 9 * * *` recurring: Threads (cap 25) and TikTok (cap 30) top-up from slots marked thPending / ttPending, earliest first; `2026-11-28-1000` Threads text is 501 chars and needs Hoang
+8. `23 10 15 11 *` one-shot (or run at once if that time has passed): schedule approved slots 30 Nov-6 Dec on Facebook, Instagram, LinkedIn, YouTube with a capable agent (not Sonnet/Haiku), notes in scratchpad batch6/batch7 if they survive; ALL built content goes out, puzzles included (Hoang 14 Nov); hold `howto-streaming-cohort-analysis` and `2026-12-05-1000` until their raw change notes are resolved with Hoang; `2026-12-04-1300` v2 needs its Canva music first
+Runs that may be missed during the restart gap: 00:04 on 15 Nov (def-endowment-effect, runs doc 2026-11-14-1800, plus daily metrics for 14 Nov incl. the marketing ladder's first reading) and 03:04 (howto-charity-restricted). Catch them up if their `done` is empty and they are under 24 h old.
+Recurring crons expire after 7 days: renew.
+
+State at handover:
+- X paused (suspended). Scheduled through 29 Nov on fb/ig/li/yt; TikTok and Threads behind (caps). Three new-idea reels at 14:30 VN on 17, 19, 21 Nov (Hoang's "ok" 14 Nov, repeat rules waived)
+- Rules from Instagram results apply only after the batch ending 6 Dec (weekly-content-process.md, "Rules from our own Instagram results"); timing test to confirm with Hoang before starting
+- Edits route: Hoang wants to try editing/posting reels through Edits, Instagram first then shared to Facebook (Accounts Center auto-share; do not switch it on while Business Suite posts are scheduled to both, or Facebook doubles). First find out whether the connector can schedule, keeps our thumbnail and caption, and re-encodes. The token was pasted in chat: suggest regenerating it
+- Open with Hoang: L2 decision 20 Nov; career cities Parts 4-8 not built; private equity / hedge fund definition reels; stale Chrome tabs to close by hand; 1 Dec reminder (day-in-the-life rework)
