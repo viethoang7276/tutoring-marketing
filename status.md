@@ -869,3 +869,9 @@ State at handover:
 - Session crons recreated (session-only, recurring ones expire about 21 Nov: renew): generic first-comment run 624bc6ac (fires about :34, so 00:34, 03:34, 16:34, 19:34 VN), ladder run d6411f53 (about 22:04), new-idea reels ae518678 (17, 19, 21 Nov about 15:04), map Part 3 12fe6e24 (18 Nov 18:04), morning refresh 5739379c (about 07:43), weekly review 4239b2fc (Mon about 01:43), Threads/TikTok top-up b835816e (about 09:47), schedule 30 Nov-6 Dec a6e3cb40 (15 Nov 10:23)
 - Created the missing runs doc `howto-charity-restricted` (due 15 Nov 03:00 VN) so the generic run finds it
 - Nothing was missed in the restart gap: the 00:04 round of 15 Nov (def-endowment-effect + daily metrics) runs from the new cron
+
+## 15 Nov 2026 (00:10-00:25 VN): Edits connector trial
+- The Edits connector (`metapilot-native`) works. It is an editor only: import, edit, captions, music, export to a file. It has NO tool to post, schedule, write a post caption or set a cover, so posting from Edits would be by hand in the app
+- Edits is sandboxed: importing from the repo fails ("Sandbox bookmark unavailable"). Copy the file into `~/Library/Containers/com.burbn.basel.mac/Data/tmp/` first, and export there too
+- Export always re-encodes to HEVC (no H.264). Default export of the analyst ladder reel (9 MB, 1080x1920 H.264) came out 1440x2560 and 177 MB. With `setExportSettings` resolution 1080x1920, resolutionType HD, aspectRatio nineBySixteen, quality Med, dynamicRange sdr, frameRate 30, bitrate 3000000 it came out 1080x1920 and 36.6 MB (`.../Data/tmp/edlintics-test/out-1080.mp4`). Test project deleted; the "Example project" was opened and closed unchanged
+- Hoang restarted Chrome (stale agent tabs gone)
