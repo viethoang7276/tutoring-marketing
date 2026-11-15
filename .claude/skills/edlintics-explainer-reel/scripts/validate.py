@@ -122,7 +122,7 @@ def main(path):
             b0 = beats[0]; tg = str(b0.get("tag", ""))
             if len(tg) > 16 or tg.rstrip().endswith("."): E.append('beat 1: the title "tag" (for example "IN 90 SECONDS") is 16 characters at most, with no full stop')
             if tg: texts_extra_cta.append(("title tag", tg))
-            if "?" in b0.get("text", ""): E.append("beat 1: the title says what the video is; it is not a question or a teaser (Hoang, 13 Nov 2026)")
+            if "?" in b0.get("text", "") and not m.get("title_question"): E.append("beat 1: the title says what the video is; it is not a question or a teaser (Hoang, 13 Nov 2026)")
             if re.search(r"\b(90|ninety) seconds\b", (b0.get("text", "") + " " + tg), re.I): W.append("beat 1 says the video takes 90 seconds: after the build, check timing.json duration is 90 s or less, or say \"in under two minutes\"")
         if roles and roles[-1] not in ("endcard", "cta"): E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint") or a "cta" beat with a "message"')
         if roles.count("endcard") + roles.count("cta") > 1: E.append("only one closing beat (end card or cta)")

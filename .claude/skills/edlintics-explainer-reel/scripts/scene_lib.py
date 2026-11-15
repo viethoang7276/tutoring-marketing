@@ -250,6 +250,11 @@ _NEW_LOOKS.update({   # hotel front desk ladder (receptionist to general manager
     "ht_gm": ("#14161C", "suit", ("#14161C", 26), ["psq:gold", "glasses", "tufts"]),
 })
 OUTFITS += ["ht_recept", "ht_super", "ht_fom", "ht_rooms", "ht_gm"]; LADDER_OUTFITS += ("ht_recept", "ht_super", "ht_fom", "ht_rooms", "ht_gm")
+_NEW_LOOKS.update({   # who-does-what marketing team reel (15 Nov 2026): the copywriter and the analyst; the other four roles reuse mk_manager, fs_designer, mk_specialist, mk_intern
+    "tm_copy": ("#F2C230", "tee", ("#F2C230", 15), ["glasses"]),
+    "tm_analyst": ("#F4F8FF", "shirt", ("#F4F8FF", 13), ["vest:#6B3F7C", "glasses"]),
+})
+OUTFITS += ["tm_copy", "tm_analyst"]; LADDER_OUTFITS += ("tm_copy", "tm_analyst")
 
 
 def _new_look(outfit, brows, bandp, shirt, lapels, tee, lany, opensh, psq, glc, tufts, gbrow, GL):
