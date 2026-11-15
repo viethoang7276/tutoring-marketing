@@ -48,28 +48,28 @@ S["all"] = allshot()
 S["title2"] = row()
 
 MKOUT = ["mk_intern", "mk_specialist", "mk_manager", "mk_director", "mk_cmo"]; MKTAG = ["INTERN", "SPECIALIST", "MANAGER", "DIRECTOR", "CMO"]
-LDX = 500; LTW = 260
+LDX = 470; LTW = 300
 def mtag(i, state, **kw):
     return dict({"p": "rung_tag", "x": LDX + 162 + LTW / 2, "y": RY[i], "label": MKTAG[i], "state": state, "w": LTW, "h": 96, "fs": 30}, **kw)
 def place(outfit, rung=None, side=False):
     """The stage Ledger beside the marketing ladder from the first reel; the rung he sits on (if any) lights up"""
     items = [{"p": "career_ladder", "x": LDX, "y": RY[0], "n": 5, "gap": 190, "w": 220}]
     items += [mtag(i, "now" if rung == i else "todo", **({"pulse": {"at": "chunk:1", "dur": 0.5, "amp": 0.12}} if rung == i else {})) for i in range(5)]
-    items.append(led(215, 1.9, outfit, mood="happy", arm="point"))
-    if rung is not None: items.append({"p": "arrow", "x": 470, "y": RY[rung] - 10, "dx": -50, "dy": 0, "color": "blue", "s": 0.8, "at": "chunk:2"})
+    items.append(led(200, 1.7, outfit, mood="happy", arm="point"))
+    if rung is not None: items.append({"p": "arrow", "x": 445, "y": RY[rung] - 10, "dx": -50, "dy": 0, "color": "blue", "s": 0.8, "at": "chunk:2"})
     return scene(0, *items)
 S["p1"] = place("mk_manager", 2); S["p2"] = place("tm_copy"); S["p3"] = place("fs_designer"); S["p4"] = place("mk_specialist", 1); S["p5"] = place("mk_intern", 0); S["p6"] = place("tm_analyst")
 def closing():
-    items = [{"p": "career_ladder", "x": LDX - 100, "y": RY[0], "n": 5, "gap": 190, "w": 220}]
-    tg = lambda i, st, **kw: dict(mtag(i, st, **kw), x=LDX - 100 + 162 + 150, w=300, fs=32)
+    items = [{"p": "career_ladder", "x": LDX - 170, "y": RY[0], "n": 5, "gap": 190, "w": 220}]
+    tg = lambda i, st, **kw: dict(mtag(i, st, **kw), x=LDX - 170 + 162 + 135, w=270, fs=26)
     for i in range(5):
         items.append(tg(i, "todo", **({"until": f"chunk:1", } if i < 3 else {})))
         if i < 3: items.append(tg(i, "now", at="chunk:1", pop="cut", pulse={"at": "chunk:1", "delay": 0.15 * i, "dur": 0.5, "amp": 0.12}))
-    items += [{"p": "ledger", "x": LDX - 100 - 10, "y": RY[i], "s": 0.62, "outfit": MKOUT[i], "mood": "smile", "arm": "down", "appear": {"at": "chunk:0", "delay": 0.1 + 0.25 * i}} for i in range(3)]
+    items += [{"p": "ledger", "x": LDX - 170 - 10, "y": RY[i], "s": 0.62, "outfit": MKOUT[i], "mood": "smile", "arm": "down", "appear": {"at": "chunk:0", "delay": 0.1 + 0.25 * i}} for i in range(3)]
     for j, (o, lab) in enumerate([("tm_copy", "COPY"), ("fs_designer", "DESIGN"), ("tm_analyst", "DATA")]):
         y = RY[j] 
-        items += [{"p": "ledger", "x": 860, "y": y, "s": 0.55, "outfit": o, "mood": "happy", "arm": "wave", "appear": {"at": "chunk:2", "delay": 0.25 * j}},
-                  {"p": "order_chip", "x": 860, "y": y - 150, "label": lab, "color": "light", "fs": 34, "appear": {"at": "chunk:2", "delay": 0.25 * j}}]
+        items += [{"p": "ledger", "x": 855, "y": y, "s": 0.58, "outfit": o, "mood": "happy", "arm": "wave", "appear": {"at": "chunk:2", "delay": 0.25 * j}},
+                  {"p": "order_chip", "x": 855, "y": y - 150, "label": lab, "color": "light", "fs": 34, "appear": {"at": "chunk:2", "delay": 0.25 * j}}]
     return scene(0, *items)
 S["closing"] = closing()
 
