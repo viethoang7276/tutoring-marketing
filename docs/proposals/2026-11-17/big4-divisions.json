@@ -1,0 +1,368 @@
+{
+ "seenOn": "2026-11-17",
+ "families": [
+  {
+   "family": "Audit and assurance",
+   "whatItDoes": "These teams check that a company's accounts are a fair picture of its business and then give an independent opinion that investors, lenders and regulators can rely on. They also test the company's internal controls and report on non-financial information such as sustainability figures",
+   "workProduct": "The audit opinion, a signed statement on whether the financial statements are fairly stated",
+   "teams": [
+    {
+     "team": "Financial statement audit",
+     "whatTheyDo": "Auditors test samples of transactions and balances, then sign an opinion on whether the statements give a true and fair view. Deloitte describes this as expressing an opinion on the financial statements and on internal controls over financial reporting"
+    },
+    {
+     "team": "Internal controls and risk assurance",
+     "whatTheyDo": "These specialists test whether the systems that produce the numbers are reliable, and report weaknesses to management. PwC lists risk assurance and internal audit inside its Audit and Assurance page, and EY lists Technology Risk inside Assurance"
+    },
+    {
+     "team": "Sustainability and climate assurance",
+     "whatTheyDo": "They check the figures a company publishes about emissions and sustainability so readers can trust them. PwC lists sustainability assurance services and EY lists Climate Change and Sustainability Services under assurance, and KPMG describes ESG assurance"
+    },
+    {
+     "team": "Financial accounting advisory and reporting",
+     "whatTheyDo": "They help finance teams apply complex reporting standards such as IFRS. EY calls this Financial Accounting Advisory Services and PwC lists IFRS and corporate reporting"
+    }
+   ],
+   "names": {
+    "Deloitte": "Audit and Assurance (two lines on the global services page, with one combined Audit & Assurance page)",
+    "PwC": "Audit and Assurance",
+    "EY": "Assurance",
+    "KPMG": "Audit and Assurance (menu label Audit & Assurance)"
+   },
+   "notes": "Only EY drops the word Audit from the line name, although Audit is its first sub-service. Forensic and technology risk work sits inside EY Assurance, which is why EY has no stand-alone risk line"
+  },
+  {
+   "family": "Tax (and legal)",
+   "whatItDoes": "Tax teams prepare the company's tax returns, advise on how to organise its affairs so it pays the right tax in each country, and handle disputes with tax authorities. Legal teams, where a firm has one, advise on contracts, deals and employment law",
+   "workProduct": "Filed tax returns and written tax advice, such as a plan for where profits are taxed",
+   "teams": [
+    {
+     "team": "Tax compliance",
+     "whatTheyDo": "They prepare and file the returns and keep the company within the rules. Deloitte lists Business Tax and Indirect Tax, and EY lists Tax compliance"
+    },
+    {
+     "team": "International tax and transfer pricing",
+     "whatTheyDo": "They set and document the prices that group companies in different countries charge each other. Deloitte lists International Tax and Transfer Pricing, and KPMG lists Global Transfer Pricing Services"
+    },
+    {
+     "team": "Transaction tax",
+     "whatTheyDo": "They advise on the tax cost of buying, selling or merging businesses. Deloitte calls this M&A Tax, EY calls it Transaction Tax and KPMG places it under Deal Advisory (M&A Tax)"
+    },
+    {
+     "team": "Tax technology and operations",
+     "whatTheyDo": "They automate tax work and sometimes run it for the client. Deloitte lists Tax Transformation Consulting, KPMG lists Tax Transformation and EY lists Tax function operations"
+    },
+    {
+     "team": "Legal and mobility",
+     "whatTheyDo": "They give legal advice and move staff across borders with the right visas and tax. Deloitte lists Legal and Global Employer Services, EY lists Law and People Mobility Solution, and KPMG lists Law and Global Mobility Services"
+    }
+   ],
+   "names": {
+    "Deloitte": "Tax (plus Legal and Global Employer Services)",
+    "PwC": "Tax (plus Legal business solutions)",
+    "EY": "Tax (plus Law)",
+    "KPMG": "Tax (plus Law)"
+   },
+   "notes": "All four have a line called Tax and a separate legal line. Deloitte also lists Global Employer Services for reward, mobility tax and immigration"
+  },
+  {
+   "family": "Consulting",
+   "whatItDoes": "Consultants help a company change how it works, for example by choosing and installing a new software system, redesigning a process or planning a growth strategy. They are paid to improve the business rather than to check it",
+   "workProduct": "A working system or a change plan, such as a new sales platform that is live and in use",
+   "teams": [
+    {
+     "team": "Technology and systems transformation",
+     "whatTheyDo": "They design, install and run enterprise software. Deloitte lists Enterprise Technology & Performance and Engineering, AI & Data, and EY lists Technology transformation"
+    },
+    {
+     "team": "Strategy",
+     "whatTheyDo": "They advise leaders on where to compete and how to grow, which is a written recommendation. PwC houses this in Strategy&, EY in Strategy by EY-Parthenon and KPMG lists Strategy under Advisory"
+    },
+    {
+     "team": "Finance, customer and people transformation",
+     "whatTheyDo": "They rebuild a single function such as finance, sales or HR. Deloitte lists Finance Transformation, Customer and Human Capital, and EY lists Customer & Growth by EY Studio+ and People & workforce"
+    },
+    {
+     "team": "Managed services",
+     "whatTheyDo": "After a project they can run the function for the client on a continuing basis. EY lists Managed services and Deloitte lists Operate offerings"
+    }
+   ],
+   "names": {
+    "Deloitte": "Consulting page grouping Enterprise Technology & Performance, Engineering AI & Data, Finance Transformation, Customer, Human Capital (the 2024 label Technology & Transformation is reported by Wikipedia but not used as a heading on the Deloitte global site)",
+    "PwC": "Consulting (with Strategy& as the strategy practice)",
+    "EY": "Consulting (with Strategy by EY-Parthenon as the strategy practice)",
+    "KPMG": "Advisory, with Consulting and Strategy as its services"
+   },
+   "notes": "KPMG puts consulting, deals and risk work under one umbrella called Advisory. Wikipedia names KPMG's and PwC's combined business simply Advisory"
+  },
+  {
+   "family": "Risk advisory",
+   "whatItDoes": "Risk teams help a company find, measure and reduce the things that could hurt it, such as fraud, cyberattacks, weak internal controls and breaking regulations. They also investigate after something has gone wrong",
+   "workProduct": "A risk assessment or investigation report, often with a list of fixes",
+   "teams": [
+    {
+     "team": "Enterprise risk and controls",
+     "whatTheyDo": "They map the main risks across the whole company and test whether controls work. Deloitte lists Enterprise Risk, and PwC lists Enterprise risk and controls"
+    },
+    {
+     "team": "Regulatory and compliance",
+     "whatTheyDo": "They help the company follow the laws of its industry, for example banking rules. Deloitte lists Regulatory & Financial Risk and PwC lists Regulatory compliance"
+    },
+    {
+     "team": "Forensic and financial crime",
+     "whatTheyDo": "They investigate fraud and misconduct and trace money. Deloitte lists Forensic & Financial Crime, PwC lists Forensics and EY lists Forensic & Integrity Services"
+    },
+    {
+     "team": "Cyber and technology risk",
+     "whatTheyDo": "They test how well systems and data are protected. Deloitte has a Cyber line, PwC lists Cyber and EY lists Technology Risk and Cybersecurity consulting services"
+    },
+    {
+     "team": "Internal audit support",
+     "whatTheyDo": "They run or help the company's own internal audit function. PwC lists Internal audit and EY lists Internal Audit Transformation services"
+    }
+   ],
+   "names": {
+    "Deloitte": "Risk, Regulatory & Forensic",
+    "PwC": "Risk services",
+    "EY": "No stand-alone line: Technology Risk and Forensic & Integrity Services sit in Assurance, and CRO (Risk) and Enterprise Resilience sit in Consulting",
+    "KPMG": "No separate risk heading on the global Advisory page; Risk Consulting appears at member-firm level, for example KPMG in Canada"
+   },
+   "notes": "This is the family that differs most. Deloitte and PwC give risk its own line, while EY and KPMG fold it into other lines at global level"
+  },
+  {
+   "family": "Financial advisory and deals",
+   "whatItDoes": "Deal teams advise companies and investors on buying, selling, financing and fixing businesses. Before a purchase they investigate the target's finances and value it, and when a business is in trouble they help restructure its debt",
+   "workProduct": "A due diligence report, a valuation or a restructuring plan",
+   "teams": [
+    {
+     "team": "M&A and due diligence",
+     "whatTheyDo": "They help buyers and sellers run a deal and investigate the target's finances before the price is agreed. EY lists M&A Advisory Services and Due Diligence Services, and KPMG lists Mergers & Acquisitions and Transaction Services"
+    },
+    {
+     "team": "Valuation",
+     "whatTheyDo": "They estimate what a business or asset is worth, for deals, reporting or disputes. EY lists Valuation, Modeling & Economics Services and KPMG lists Valuation"
+    },
+    {
+     "team": "Restructuring, turnaround and insolvency",
+     "whatTheyDo": "They advise a struggling company and its lenders on fixing finances or winding down in order. KPMG lists Financial Restructuring, Insolvency and Turnaround, and PwC lists Restructuring"
+    },
+    {
+     "team": "Integration, separation and capital raising",
+     "whatTheyDo": "They merge two companies after a deal, split one apart, or help raise debt and equity. KPMG lists Integration and Separation, and Debt Advisory, and EY lists M&A Integration Consulting and Corporate Finance"
+    }
+   ],
+   "names": {
+    "Deloitte": "Strategy & Transactions",
+    "PwC": "Deals",
+    "EY": "Transactions and Corporate Finance, part of EY-Parthenon",
+    "KPMG": "Deal advisory (inside Advisory)"
+   },
+   "notes": "Deloitte's Risk, Regulatory & Forensic line holds forensic investigations, while at KPMG forensic work is not listed among its global deal capabilities and EY places it in Assurance"
+  }
+ ],
+ "firmStructures": {
+  "Deloitte": {
+   "lines": [
+    "Assurance",
+    "Audit",
+    "Business Process Solutions",
+    "Customer",
+    "Cyber",
+    "Deloitte Private",
+    "Engineering, AI & Data",
+    "Enterprise Technology & Performance",
+    "Finance Transformation",
+    "Global Employer Services",
+    "Human Capital",
+    "Legal",
+    "Risk, Regulatory & Forensic",
+    "Strategy & Transactions",
+    "Tax"
+   ],
+   "source": "https://www.deloitte.com/global/en/services.html",
+   "scope": "global, seen 17 Nov 2026, the page lists 15 service lines; Wikipedia reports the broader groupings Strategy, Risk & Transactions and Technology & Transformation, which this page does not use as headings"
+  },
+  "PwC": {
+   "lines": [
+    "Audit and Assurance",
+    "Consulting",
+    "Deals",
+    "Risk services",
+    "Strategy&",
+    "Tax",
+    "Legal business solutions",
+    "Managed Services",
+    "AI services",
+    "Technology",
+    "Workforce",
+    "Sustainability and climate change",
+    "PwC Private"
+   ],
+   "source": "https://www.pwc.com/gx/en/services.html",
+   "scope": "global (pwc.com/gx), seen 17 Nov 2026, read through Claude in Chrome because WebFetch returns 403"
+  },
+  "EY": {
+   "lines": [
+    "Assurance",
+    "Consulting",
+    "Strategy by EY-Parthenon",
+    "Tax",
+    "Transactions and Corporate Finance by EY-Parthenon",
+    "Law",
+    "Managed services",
+    "People & workforce",
+    "EY Private",
+    "Sustainability",
+    "Technology"
+   ],
+   "source": "https://www.ey.com/en_gl/services",
+   "scope": "global (ey.com/en_gl), seen 17 Nov 2026, where Professional Services holds the first five and Focused Services holds the rest"
+  },
+  "KPMG": {
+   "lines": [
+    "Advisory",
+    "AI",
+    "Audit and Assurance",
+    "Law",
+    "Sustainability",
+    "Tax"
+   ],
+   "source": "https://kpmg.com/xx/en/what-we-do/services.html",
+   "scope": "global (kpmg.com/xx), seen 17 Nov 2026, with Advisory holding Deal advisory, Strategy, Consulting and AI services"
+  }
+ },
+ "independenceRule": {
+  "text": "An auditor must be independent of the company it audits, which means it cannot take on work that would make it check its own work or act as part of management. In the United States, the SEC's rules list services that are barred for audit clients of public companies, including bookkeeping, designing and installing financial information systems, valuation, actuarial work, outsourced internal audit and some legal services. That is why a firm that audits a company often cannot also sell it the consulting or deal work that falls on the barred list, and the rules differ by country",
+  "sources": [
+   "https://www.law.cornell.edu/cfr/text/17/210.2-01",
+   "https://viewpoint.pwc.com/dt/us/en/sec/sec_faqs/sec_faqs_US/auditor_independence_US/E-Non-audit-services.html"
+  ]
+ },
+ "sources": [
+  {
+   "claim": "Deloitte global services: 15 service lines and sub-teams (Tax, Legal, Strategy & Transactions, Risk, Regulatory & Forensic and others), seen 17 Nov 2026",
+   "url": "https://www.deloitte.com/global/en/services.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Audit & Assurance: opinion on financial statements and on internal controls over financial reporting",
+   "url": "https://www.deloitte.com/global/en/services/audit-assurance.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Tax: Business Tax, Indirect Tax, International Tax, Transfer Pricing, M&A Tax, Tax Transformation Consulting",
+   "url": "https://www.deloitte.com/global/en/services/tax.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Strategy & Transactions and Risk, Regulatory & Forensic descriptions",
+   "url": "https://www.deloitte.com/global/en/services/consulting.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Risk, Regulatory & Forensic sub-teams: Regulatory & Financial Risk, Forensic & Financial Crime, Enterprise Risk",
+   "url": "https://www.deloitte.com/global/en/services/risk-advisory.html",
+   "opened": true
+  },
+  {
+   "claim": "PwC global services list: Audit and Assurance, Consulting, Deals, Risk services, Strategy&, Tax, Legal business solutions (opened in Chrome)",
+   "url": "https://www.pwc.com/gx/en/services.html",
+   "opened": true
+  },
+  {
+   "claim": "PwC Audit and Assurance sub-pages: Actuarial services, Capital markets, Corporate reporting, IFRS, Internal audit, IPO centre, Financial statement audit services, Risk assurance, Sustainability assurance services (opened in Chrome)",
+   "url": "https://www.pwc.com/gx/en/services/audit-assurance.html",
+   "opened": true
+  },
+  {
+   "claim": "PwC Deals: Pre-deal Insights, Value creation, Acquisitions and integration, Alliances, Capital Markets, Corporate finance, Divestitures and separations, Restructuring (opened in Chrome)",
+   "url": "https://www.pwc.com/gx/en/services/deals.html",
+   "opened": true
+  },
+  {
+   "claim": "PwC Risk services capabilities: Cyber, Enterprise risk and controls, Forensics, Internal audit, Regulatory compliance and others (opened in Chrome)",
+   "url": "https://www.pwc.com/gx/en/services/risk.html",
+   "opened": true
+  },
+  {
+   "claim": "PwC Tax (compliance, Pillar Two, tax function transformation) and Consulting (business model reinvention, AI, data and tech) pages (opened in Chrome)",
+   "url": "https://www.pwc.com/gx/en/services/tax.html",
+   "opened": true
+  },
+  {
+   "claim": "PwC Consulting overview (opened in Chrome)",
+   "url": "https://www.pwc.com/gx/en/services/consulting.html",
+   "opened": true
+  },
+  {
+   "claim": "EY global services: Assurance, Consulting, Strategy by EY-Parthenon, Tax, Transactions and Corporate Finance by EY-Parthenon, Law and others",
+   "url": "https://www.ey.com/en_gl/services",
+   "opened": true
+  },
+  {
+   "claim": "EY Assurance: Audit, Climate Change and Sustainability Services, Financial Accounting Advisory Services, Forensic & Integrity Services, Technology Risk",
+   "url": "https://www.ey.com/en_gl/services/assurance",
+   "opened": true
+  },
+  {
+   "claim": "EY Transactions and Corporate Finance: M&A, due diligence, divestment, corporate finance, valuation, fairness opinions",
+   "url": "https://www.ey.com/en_gl/services/strategy-transactions",
+   "opened": true
+  },
+  {
+   "claim": "EY Consulting focus areas and risk names (CRO (Risk), Enterprise Resilience, Risk Managed Services)",
+   "url": "https://www.ey.com/en_gl/services/consulting",
+   "opened": true
+  },
+  {
+   "claim": "KPMG global services: Advisory, AI, Audit and Assurance, Law, Sustainability, Tax",
+   "url": "https://kpmg.com/xx/en/what-we-do/services.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG Advisory: Deal advisory, Strategy, Consulting, AI services",
+   "url": "https://kpmg.com/xx/en/what-we-do/services/advisory.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG Deal advisory capabilities: Debt Advisory, Financial Restructuring, Insolvency, Integration and Separation, M&A, Transaction Services, Turnaround, Valuation",
+   "url": "https://kpmg.com/xx/en/what-we-do/services/advisory/deal-advisory/our-capabilities.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG Audit and Assurance: AI-enabled audit, ESG assurance, corporate reporting",
+   "url": "https://kpmg.com/xx/en/what-we-do/services/audit.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG Tax sub-services",
+   "url": "https://kpmg.com/xx/en/what-we-do/services/tax.html",
+   "opened": true
+  },
+  {
+   "claim": "Independent source: Big Four overview, Consulting & Advisory names per firm and the UK FRC 2020 call to separate audit and consulting",
+   "url": "https://en.wikipedia.org/wiki/Big_Four_accounting_firms",
+   "opened": true
+  },
+  {
+   "claim": "Independent legal text: SEC Regulation S-X Rule 2-01(c)(4) list of services that impair independence",
+   "url": "https://www.law.cornell.edu/cfr/text/17/210.2-01",
+   "opened": true
+  },
+  {
+   "claim": "PwC Viewpoint SEC FAQ on non-audit services for audit clients (a firm source, secondary for the rule)",
+   "url": "https://viewpoint.pwc.com/dt/us/en/sec/sec_faqs/sec_faqs_US/auditor_independence_US/E-Non-audit-services.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG member-firm risk consulting (KPMG in Canada) and KPMG Advisory leadership 2025 (search result only, not opened)",
+   "url": "https://kpmg.com/ca/en/services/advisory.html",
+   "opened": false
+  },
+  {
+   "claim": "Deloitte's 2024 global restructure into Strategy, Risk & Transactions and Technology & Transformation: reported by Wikipedia only, not shown as headings on deloitte.com",
+   "url": "https://en.wikipedia.org/wiki/Big_Four_accounting_firms",
+   "opened": true
+  }
+ ]
+}

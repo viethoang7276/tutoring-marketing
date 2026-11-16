@@ -15,7 +15,7 @@ GROUP_NAME = {"ladder": "Career ladder reels", "map": "Career cities map reels",
 
 # Lead review notes (Claude, 17 Nov 2026): what Hoang should look at first on each reel
 LEAD = {
-    "team-big4-departments": "Needs your call on the 30-day related rule: the audit ladder (13 Nov) and consultant ladder (16 Nov) are close, so 26 Nov needs a waiver, or it moves to 14 Dec or later. PwC's current department names could not be opened (pwc.com blocked the reader), so the script only uses names confirmed on every firm",
+    "team-big4-departments": "Revised after your note: five departments (audit, tax, consulting, risk, deals), each firm's own names on the board, names from the firms' global sites seen 17 Nov. Still needs your call on the 30-day related rule: 26 Nov with a waiver, or 14 Dec or later",
     "ladder-pharmacy-technician-to-operations-manager": "Weakest ladder: no source names the top rung. My suggestion is to swap it for a backlog career, such as flight attendant to head of cabin services",
     "ladder-bank-teller-to-regional-manager": "Only one source covers the manager rungs; one more is needed before the build",
     "ladder-apprentice-electrician-to-electrical-contractor": "The owner rung rests on two government career pages, and neither describes the owner's daily work in detail",
@@ -39,7 +39,8 @@ def load():
     items = []
     for f in glob.glob(os.path.join(HERE, "*.json")):
         d = json.load(open(f))
-        items.append(d)
+        if "beats" in d and "slug" in d:
+            items.append(d)
 
     def key(d):
         m = re.search(r"cities-(\d+)", d["slug"])
@@ -104,6 +105,29 @@ def card(d):
     )
 
 
+def divisions():
+    p = os.path.join(HERE, "big4-divisions.json")
+    if not os.path.exists(p):
+        return ""
+    d = json.load(open(p))
+    firms = ["Deloitte", "PwC", "EY", "KPMG"]
+    head = "".join("<th>%s</th>" % f for f in firms)
+    rows = "".join("<tr><td><b>%s</b></td>%s</tr>" % (esc(f["family"]), "".join("<td>%s</td>" % esc(f["names"].get(x)) for x in firms)) for f in d["families"])
+    fams = ""
+    for f in d["families"]:
+        teams = "".join("<li><b>%s:</b> %s</li>" % (esc(t["team"]), esc(t["whatTheyDo"])) for t in f["teams"])
+        fams += "<div class='card'><h3>%s</h3><p>%s</p><p><b>What it produces:</b> %s</p><ul class='src'>%s</ul><p class='reg'>%s</p></div>" % (
+            esc(f["family"]), esc(f["whatItDoes"]), esc(f["workProduct"]), teams, esc(f.get("notes")))
+    ind = d.get("independenceRule", {})
+    srcs = "".join("<li>%s <a href='%s' target='_blank' rel='noopener'>%s</a>%s</li>" % (esc(s.get("claim")), esc(s.get("url")), esc(re.sub(r"^https?://(www\.)?", "", s.get("url", ""))[:70]), "" if s.get("opened") else " <span class='warn'>not opened</span>") for s in d.get("sources", []))
+    return ("<section><h2>Big 4 divisions: names and what each team does</h2>"
+            "<p class='sum'>Names from each firm's global website, seen %s; UK and US member firms can use other names</p>"
+            "<div class='box'><table><thead><tr><th>Division</th>%s</tr></thead><tbody>%s</tbody></table></div>%s"
+            "<div class='card'><h3>Why one firm cannot do everything</h3><p>%s</p></div>"
+            "<details><summary>Sources (%d)</summary><ul class='src'>%s</ul></details></section>") % (
+        esc(d.get("seenOn")), head, rows, fams, esc(ind.get("text")), len(d.get("sources", [])), srcs)
+
+
 def main():
     items = load()
     sched = "".join(
@@ -122,7 +146,7 @@ def main():
         backlog = "<section><h2>Ladder backlog for December</h2><p class='sum'>Not scripted yet; each needs two opened sources first</p><ol>%s</ol></section>" % "".join(
             "<li>%s</li>" % esc(l) for l in lines)
 
-    page = TEMPLATE.replace("{SCHED}", sched).replace("{SECTIONS}", "".join(sections)).replace("{BACKLOG}", backlog)
+    page = TEMPLATE.replace("{SCHED}", sched).replace("{SECTIONS}", "".join(sections)).replace("{BACKLOG}", backlog).replace("{DIVISIONS}", divisions())
     out = os.path.join(HERE, "index.html")
     open(out, "w").write(page)
     print(out)
@@ -166,6 +190,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-bottom:1px
 
 <div class="box"><h2 style="margin-top:0">Proposed schedule (all to confirm)</h2>
 <table><thead><tr><th>Slot</th><th>Reel</th><th>Type</th><th>Length</th></tr></thead><tbody>{SCHED}</tbody></table></div>
+{DIVISIONS}
 {SECTIONS}
 {BACKLOG}
 </main></body></html>"""
