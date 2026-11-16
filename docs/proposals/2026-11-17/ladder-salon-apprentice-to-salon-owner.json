@@ -1,0 +1,267 @@
+{
+ "slug": "ladder-salon-apprentice-to-salon-owner",
+ "group": "ladder",
+ "title": "From salon apprentice to salon owner, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Fri 27 Nov 21:30 VN (to confirm)",
+ "estSeconds": 84,
+ "wordCount": 210,
+ "summary": "An everyday service job viewers know from their own haircut, climbing to owning the whole salon.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From salon apprentice to salon owner, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From salon apprentice to salon owner, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the hr_apprentice outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "First, Ledger is the salon apprentice, in a black apron.",
+   "onScreen": [],
+   "visual": "OUTFIT (hr_apprentice: black salon apron, hair clips on the apron strap, comb behind the ear, lanyard). Header THE APPRENTICE. Ledger alone, scale 3.2; arrows pop in on 'apron' and 'comb'; a salon chair and mirror behind"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "Then he greets clients, and washes their hair.",
+   "onScreen": [
+    "GREET CLIENTS",
+    "WASH HAIR"
+   ],
+   "visual": "A client sits; a basin fills; a broom sweeps hair into a bin"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "He watches the stylist cut, and learns simple cuts.",
+   "onScreen": [
+    "LEARN TO CUT"
+   ],
+   "visual": "A stylist figure cuts; Ledger copies with a comb in the air"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "So on this rung, he styles under guidance.",
+   "onScreen": [],
+   "visual": "Slider at 0.06 on 'Styles'"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he becomes a stylist.",
+   "onScreen": [
+    "THE STYLIST"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 THE STYLIST",
+   "voice": "Now he is a stylist, and cuts and colours his own clients.",
+   "onScreen": [
+    "CUT AND COLOUR"
+   ],
+   "visual": "OUTFIT (hr_stylist: purple shirt with rolled sleeves, scissors holster, name tag). Header THE STYLIST. Ledger cuts a client's hair; a colour bowl and brush appear"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 THE STYLIST",
+   "voice": "Then he keeps his own book, and takes payments.",
+   "onScreen": [
+    "BOOK APPOINTMENTS",
+    "TAKE PAYMENTS"
+   ],
+   "visual": "A column of appointments fills; a card reader beeps (the till shows euros)"
+  },
+  {
+   "n": 9,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to senior stylist.",
+   "onScreen": [
+    "SENIOR STYLIST"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 10,
+   "role": "rung",
+   "label": "rung 3 SENIOR STYLIST",
+   "voice": "As senior stylist, he teaches the team, and sets standards.",
+   "onScreen": [
+    "TRAIN THE TEAM"
+   ],
+   "visual": "OUTFIT (hr_lead: teal blazer over a black tee, scissors, headset-style earpiece). Header SENIOR STYLIST. Two junior figures watch Ledger demonstrate a precise cut"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 SENIOR STYLIST",
+   "voice": "He also helps with hiring, and orders from the suppliers.",
+   "onScreen": [
+    "HIRE AND ORDER"
+   ],
+   "visual": "A box of products arrives; a new hire shakes his hand"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 SENIOR STYLIST",
+   "voice": "So he styles a little less, and starts to run.",
+   "onScreen": [],
+   "visual": "Slider at 0.35; a rota on the wall"
+  },
+  {
+   "n": 13,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as salon manager.",
+   "onScreen": [
+    "SALON MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 14,
+   "role": "rung",
+   "label": "rung 4 SALON MANAGER",
+   "voice": "Now, as salon manager, he runs the salon day to day.",
+   "onScreen": [
+    "RUN THE SALON"
+   ],
+   "visual": "OUTFIT (hr_manager: charcoal waistcoat over white shirt, tablet, name plate). Header SALON MANAGER. Wide shot of the salon with four chairs and Ledger at the door"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 SALON MANAGER",
+   "voice": "Then he sets the rota, and controls the stock.",
+   "onScreen": [
+    "SET THE ROTA",
+    "CONTROL STOCK"
+   ],
+   "visual": "A rota fills; shelves of bottles are counted; a small owner figure nods"
+  },
+  {
+   "n": 16,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as salon owner.",
+   "onScreen": [
+    "SALON OWNER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 17,
+   "role": "rung",
+   "label": "rung 5 SALON OWNER",
+   "voice": "Finally, as owner, he runs the business, from finances to marketing.",
+   "onScreen": [
+    "OWN THE SALON"
+   ],
+   "visual": "OUTFIT (hr_owner: black jacket, gold pocket square, glasses, grey temples, a salon key on a chain). Header SALON OWNER. Salon sign above the door lights up; a key is handed to Ledger"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 SALON OWNER",
+   "voice": "He sets prices, hires the team, and wins new clients.",
+   "onScreen": [
+    "SET PRICES",
+    "WIN CLIENTS"
+   ],
+   "visual": "A price board; a poster for the salon goes up in the street"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 SALON OWNER",
+   "voice": "Yet he styles almost no hair himself, and answers for the whole salon.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Runs'; every chair has a happy client"
+  },
+  {
+   "n": 20,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger styled less hair, and ran more of the salon.",
+   "onScreen": [
+    "STYLES to RUNS"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 21,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Styles",
+  "top": "Runs"
+ },
+ "headerTitles": [
+  "THE APPRENTICE",
+  "THE STYLIST",
+  "SENIOR STYLIST",
+  "SALON MANAGER",
+  "SALON OWNER"
+ ],
+ "outfits": [
+  "hr_apprentice: black salon apron, hair clips on the apron strap, comb behind the ear, lanyard",
+  "hr_stylist: purple shirt with rolled sleeves, scissors holster, name tag",
+  "hr_lead: teal blazer over a black tee, scissors, headset-style earpiece",
+  "hr_manager: charcoal waistcoat over white shirt, tablet, name plate",
+  "hr_owner: black jacket, gold pocket square, glasses, grey temples, a salon key on a chain"
+ ],
+ "caption": "From salon apprentice to salon owner, the job changes on every rung\n\nThe apprentice washes hair and learns the first cuts, and the senior stylist cuts and colours his own clients. Then the salon manager runs the salon day to day. Finally, the owner runs the whole business, from finances to marketing\n\nSo each rung up, you style less hair yourself and run more of the salon. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #salon #smallbusiness",
+ "first_comment": "Who cuts your hair, and have you ever wanted to own a salon? Tell us below ✂️🪜",
+ "first_comment_igtt": "Who cuts your hair, and have you ever wanted to own a salon? Tell us below, link in bio ✂️🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#salon",
+  "#smallbusiness"
+ ],
+ "threadsTopic": "Small Business",
+ "threadsReason": "The ladder ends with owning a salon, so Small Business is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "Hairdresser duties (consult clients, wash, cut, colour, order stock, take payments, manage appointments), apprenticeships, progression to senior stylist, salon manager or own salon",
+   "url": "https://nationalcareers.service.gov.uk/job-profiles/hairdresser",
+   "opened": true
+  },
+  {
+   "claim": "Salon steps: assistant or apprentice, senior hairdresser (trains the team or helps with recruitment, suppliers, admin), salon manager, salon owner (finances, marketing, staff)",
+   "url": "https://hji.co.uk/hairdressing-career-paths-in-a-salon",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: beauty and hairdressing not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "The 'team leader' rung is the senior stylist who teaches and helps with hiring (HJI 'Senior Stylist, Education' and 'Management' variants); the National Careers Service names only senior stylist and salon manager. Rung 2 and 3 are both senior-stylist variants, so titles could be stylist and senior stylist.",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}

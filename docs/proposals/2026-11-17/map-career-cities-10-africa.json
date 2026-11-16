@@ -1,0 +1,382 @@
+{
+ "slug": "map-career-cities-10-africa",
+ "group": "map",
+ "title": "Career cities with Ledger, Part 10: Africa, in under 2 minutes",
+ "proposedSlot": "Mon 7 Dec 18:00 VN (to confirm)",
+ "estSeconds": 103,
+ "wordCount": 225,
+ "summary": "Hoang's request: Africa, one industry per stop across eight countries, jobs at each stop, real logos in the city scene (Lagos has three or more).",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "Career cities with Ledger, part ten: Africa, in under two minutes.",
+   "onScreen": [
+    "Career cities with Ledger",
+    "Part 10",
+    "Africa",
+    "IN UNDER 2 MINUTES"
+   ],
+   "visual": "Title card with the series name, the part number and a small lit world strip; earlier parts shown as lit dots; Ledger waves with his suitcase"
+  },
+  {
+   "n": 2,
+   "role": "hop",
+   "label": "stop 1 Tangier (hop)",
+   "voice": "First, Ledger lands in Tangier, a hub for car making.",
+   "onScreen": [
+    "TANGIER, Morocco",
+    "CAR MAKING"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Tangier pin; the Morocco flag rises on the pin; the industry chip pops in when the voice says 'car making'"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Tangier (city)",
+   "voice": "Renault's Tangier and Casablanca plants built about 394,000 cars in 2025.",
+   "onScreen": [
+    "394,000 CARS, 2025",
+    "JOBS: production planner, supplier buyer, export logistics coordinator"
+   ],
+   "visual": "Ferry strait with a port crane, a car body moves down a short assembly line and finished cars roll onto a car carrier; Morocco flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 4,
+   "role": "hop",
+   "label": "stop 2 Ismailia (hop)",
+   "voice": "Then, he flies to Ismailia, a hub for the Suez Canal.",
+   "onScreen": [
+    "ISMAILIA, Egypt",
+    "CANAL SHIPPING"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Ismailia pin; the Egypt flag rises on the pin; the industry chip pops in when the voice says 'canal shipping'"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Ismailia (city)",
+   "voice": "The canal earned 4.67 billion dollars in its 2025 and 2026 fiscal year.",
+   "onScreen": [
+    "$4.67 BILLION, FY 2025/26",
+    "JOBS: port economist, shipping agent, toll revenue analyst"
+   ],
+   "visual": "A canal with a container ship passing between two sand banks; a toll booth sign counts up; Egypt flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 6,
+   "role": "hop",
+   "label": "stop 3 Lagos (hop)",
+   "voice": "Next, he hops to Lagos, a hub for fintech.",
+   "onScreen": [
+    "LAGOS, Nigeria",
+    "FINTECH"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Lagos pin; the Nigeria flag rises on the pin; the industry chip pops in when the voice says 'fintech'"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Lagos (city)",
+   "voice": "Stripe bought Paystack here for 200 million dollars in 2020.",
+   "onScreen": [
+    "$200 MILLION, 2020",
+    "JOBS: payments product analyst, risk analyst, merchant success manager"
+   ],
+   "visual": "Skyline with a lagoon bridge, a phone showing a payment tick, coins flying from phone to shop; Nigeria flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said. Real logos pop in next to Ledger: Paystack, Interswitch, Moniepoint, OPay"
+  },
+  {
+   "n": 8,
+   "role": "hop",
+   "label": "stop 4 Addis Ababa (hop)",
+   "voice": "Then, he flies to Addis Ababa, a hub for aviation.",
+   "onScreen": [
+    "ADDIS ABABA, Ethiopia",
+    "AVIATION"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Addis Ababa pin; the Ethiopia flag rises on the pin; the industry chip pops in when the voice says 'aviation'"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Addis Ababa (city)",
+   "voice": "Ethiopian Airlines, based here, carried 17.1 million passengers in its 2024 financial year.",
+   "onScreen": [
+    "17.1 MILLION PASSENGERS, FY 2024",
+    "JOBS: revenue analyst, route planner, cargo sales assistant"
+   ],
+   "visual": "Airport apron with a jet taxiing, passengers with suitcases line up and a route map lights up from the pin; Ethiopia flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said. Real logos pop in next to Ledger: Ethiopian Airlines"
+  },
+  {
+   "n": 10,
+   "role": "hop",
+   "label": "stop 5 Nairobi (hop)",
+   "voice": "Next, he hops to Nairobi, a hub for mobile money.",
+   "onScreen": [
+    "NAIROBI, Kenya",
+    "MOBILE MONEY"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Nairobi pin; the Kenya flag rises on the pin; the industry chip pops in when the voice says 'mobile money'"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Nairobi (city)",
+   "voice": "Safaricom's M-PESA earned 182.7 billion shillings in its 2026 financial year.",
+   "onScreen": [
+    "KES 182.7 BILLION, FY 2026",
+    "JOBS: fintech product manager, agent network manager, data analyst"
+   ],
+   "visual": "City skyline with a convention tower, a phone sends money bubbles to a kiosk and a shop; a bar rises to the number; Kenya flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said. Real logos pop in next to Ledger: Safaricom, KCB, Equity Bank"
+  },
+  {
+   "n": 12,
+   "role": "hop",
+   "label": "stop 6 Kigali (hop)",
+   "voice": "After that, he reaches Kigali, a hub for coffee.",
+   "onScreen": [
+    "KIGALI, Rwanda",
+    "COFFEE"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Kigali pin; the Rwanda flag rises on the pin; the industry chip pops in when the voice says 'coffee'"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Kigali (city)",
+   "voice": "Rwanda earned 148.6 million dollars from coffee exports in 2025.",
+   "onScreen": [
+    "$148.6 MILLION, 2025",
+    "JOBS: export officer, coffee quality grader, trade finance assistant"
+   ],
+   "visual": "Hilltop city, a coffee cherry branch, sacks of green beans stack up and a cup fills; a bar rises; Rwanda flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 14,
+   "role": "hop",
+   "label": "stop 7 Gaborone (hop)",
+   "voice": "Then, he flies to Gaborone, a hub for diamonds.",
+   "onScreen": [
+    "GABORONE, Botswana",
+    "DIAMONDS"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Gaborone pin; the Botswana flag rises on the pin; the industry chip pops in when the voice says 'diamonds'"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Gaborone (city)",
+   "voice": "Debswana mined 17.9 million carats in 2024.",
+   "onScreen": [
+    "17.9 MILLION CARATS, 2024",
+    "JOBS: mine accountant, diamond sales analyst, sorting and valuation assistant"
+   ],
+   "visual": "Government square, a cut diamond with a mine pit behind it, rough stones roll along a belt into a sorting tray; Botswana flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 16,
+   "role": "hop",
+   "label": "stop 8 Johannesburg (hop)",
+   "voice": "Next, he hops to Johannesburg, a hub for stock trading.",
+   "onScreen": [
+    "JOHANNESBURG, South Africa",
+    "STOCK EXCHANGE"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Johannesburg pin; the South Africa flag rises on the pin; the industry chip pops in when the voice says 'stock exchange'"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Johannesburg (city)",
+   "voice": "Its stock exchange lists 431 companies.",
+   "onScreen": [
+    "431 LISTED COMPANIES, JAN 2026",
+    "JOBS: equity analyst, broker, compliance officer"
+   ],
+   "visual": "Glass towers of Sandton, a ticker board with rising green lines, company boxes drop onto a list one by one; South Africa flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said. Real logos pop in next to Ledger: JSE"
+  },
+  {
+   "n": 18,
+   "role": "hop",
+   "label": "stop 9 Durban (hop)",
+   "voice": "Finally, he lands in Durban, a hub for port logistics.",
+   "onScreen": [
+    "DURBAN, South Africa",
+    "PORT LOGISTICS"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Durban pin; the South Africa flag rises on the pin; the industry chip pops in when the voice says 'port logistics'"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Durban (city)",
+   "voice": "Its port handles up to 31.4 million tons of cargo a year.",
+   "onScreen": [
+    "31.4 MILLION TONS A YEAR",
+    "JOBS: port planner, freight forwarder, customs broker"
+   ],
+   "visual": "Harbour with cranes and stacked containers, cargo ships arrive and boxes fly from ship to truck; South Africa flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 20,
+   "role": "summary",
+   "label": "summary",
+   "voice": "So that was Africa.",
+   "onScreen": [
+    "Africa",
+    "All stops lit on the map"
+   ],
+   "visual": "Map zooms out; all pins light up with a flag each and numbered legend"
+  },
+  {
+   "n": 21,
+   "role": "summary",
+   "label": "next part",
+   "voice": "Next, we map career cities in Part 11: finance careers.",
+   "onScreen": [
+    "Part 11: finance careers"
+   ],
+   "visual": "Next region glows on the world strip; Ledger points at it with his suitcase"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta 1",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "onScreen": [
+    "To climb in these cities, you need a good business foundation"
+   ],
+   "visual": "End card with Ledger"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta 2",
+   "voice": "Go to Edlintics.com to learn technical business skills.",
+   "onScreen": [
+    "Go to Edlintics.com to learn technical business skills"
+   ],
+   "visual": "End card with Ledger and the Edlintics.com wordmark"
+  }
+ ],
+ "caption": "Career cities with Ledger, Part 10, crosses Africa in nine stops, and each stop shows one industry that city is a hub for, with a sourced fact and the jobs you could have there\n\nSo you will meet Tangier for car making, Ismailia for the Suez Canal, Lagos for fintech, Addis Ababa for aviation, Nairobi for mobile money, Kigali for coffee, Gaborone for diamonds, Johannesburg for stock trading, and Durban for port logistics\n\nSave the map for later, because Part 11 starts the career series with finance careers",
+ "first_comment": "Which African city did we miss, and which industry is it a hub for? 🗺️🌍",
+ "first_comment_igtt": "Which African city did we miss, and what industry is it known for? 🗺️🌍 Link in bio for the earlier parts",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of nine African cities, each tied to one industry and the jobs in it, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "Paystack",
+   "city": "Lagos",
+   "why": "Lagos-headquartered per https://techpoint.africa/guide/best-fintech-companies-in-nigeria/ (opened)"
+  },
+  {
+   "brand": "Interswitch",
+   "city": "Lagos",
+   "why": "Lagos-headquartered per https://techpoint.africa/guide/best-fintech-companies-in-nigeria/ (opened)"
+  },
+  {
+   "brand": "Moniepoint",
+   "city": "Lagos",
+   "why": "Lagos-headquartered per https://techpoint.africa/guide/best-fintech-companies-in-nigeria/ (opened); OPay is a fourth option from the same page"
+  },
+  {
+   "brand": "Ethiopian Airlines",
+   "city": "Addis Ababa",
+   "why": "HQ at Bole, Addis Ababa per https://en.wikipedia.org/wiki/Ethiopian_Airlines (opened); single brand"
+  },
+  {
+   "brand": "Safaricom",
+   "city": "Nairobi",
+   "why": "NOT VERIFIED: Nairobi base not confirmed in an opened source; KCB and Equity Bank also candidates, verify before use"
+  },
+  {
+   "brand": "JSE",
+   "city": "Johannesburg",
+   "why": "Located in Sandton, Johannesburg per https://en.wikipedia.org/wiki/Johannesburg_Stock_Exchange (opened); only one brand verified, add listed companies after verification"
+  }
+ ],
+ "sources": [
+  {
+   "claim": "Tangier: Morocco produced about 394,000 vehicles for Renault Group in 2025 at Tangier and Casablanca (Somaca), exported 82 percent; Tangier plant employs about 6,000 (Morocco World News, Jun 2026). Note: 394,000 covers both plants",
+   "url": "https://www.moroccoworldnews.com/2026/06/326502/how-morocco-became-renaults-second-largest-production-hub-worldwide/",
+   "opened": true
+  },
+  {
+   "claim": "Tangier: Tanger Med 11,106,164 TEU in 2025, 526,862 vehicles (port press release; PDF text not readable, figure from search summary)",
+   "url": "https://www.tangermed.ma/wp-content/uploads/press-releases/2026/CP-TMPA-PORT-ACTIVITY-REPORT-IN-2025.pdf",
+   "opened": false
+  },
+  {
+   "claim": "Ismailia: Suez Canal revenue USD 4.67 billion (EGP 230.22 billion) in FY2025/26, up 23 percent, per SCA chair on 28 Jun 2026 (Egyptian Streets, 30 Jun 2026)",
+   "url": "https://egyptianstreets.com/2026/06/30/suez-canal-revenue-rises-23-percent-in-the-2025-2026-fiscal-year-as-regional-tensions-ease/",
+   "opened": true
+  },
+  {
+   "claim": "Ismailia as Suez Canal Authority base: not confirmed in any opened source",
+   "url": "https://english.ahram.org.eg/News/571808.aspx",
+   "opened": false
+  },
+  {
+   "claim": "Lagos: Paystack, Interswitch, Moniepoint, OPay listed as Lagos-headquartered; Stripe acquired Paystack for USD 200 million in 2020 (Techpoint Africa)",
+   "url": "https://techpoint.africa/guide/best-fintech-companies-in-nigeria/",
+   "opened": true
+  },
+  {
+   "claim": "Addis Ababa: Ethiopian Airlines hub and HQ at Bole in Addis Ababa; 17.1 million passengers FY2024 (Wikipedia, single source)",
+   "url": "https://en.wikipedia.org/wiki/Ethiopian_Airlines",
+   "opened": true
+  },
+  {
+   "claim": "Nairobi: Safaricom M-PESA revenue grew 13.4 percent to KES 182.7 billion, year ended 31 Mar 2026 (Techweez, 7 May 2026)",
+   "url": "https://techweez.com/2026/05/07/safaricom-fy26-results/",
+   "opened": true
+  },
+  {
+   "claim": "Nairobi logos: Safaricom, KCB, Equity headquartered in Nairobi (not yet opened, to verify)",
+   "url": "https://hapakenya.com/2026/05/07/safaricom-hits-historic-ksh-118-4b-net-profit-as-kenya-core-business-surges/",
+   "opened": false
+  },
+  {
+   "claim": "Kigali: Rwanda exported 23,860 t of green coffee worth over USD 148.6 million in 2025, up from 17,142 t and USD 89.8 million in 2024 (NAEB)",
+   "url": "https://www.naeb.gov.rw/publications/news/rwanda-coffee-export-revenues-hit-record-150m-in-2025",
+   "opened": true
+  },
+  {
+   "claim": "Gaborone: Debswana cut output 27 percent to 17.93 million carats in 2024; 50-50 joint venture of Botswana government and De Beers (Kitco/Reuters, 6 Jun 2025). Gaborone HQ not confirmed in an opened source",
+   "url": "https://www.kitco.com/news/off-the-wire/2025-06-06/botswanas-debswana-curbs-diamond-production-weak-demand-persists",
+   "opened": true
+  },
+  {
+   "claim": "Johannesburg: JSE market cap R24.22 trillion with 431 listed companies, Jan 2026; located in Sandton, Johannesburg (Wikipedia JSE Limited)",
+   "url": "https://en.wikipedia.org/wiki/Johannesburg_Stock_Exchange",
+   "opened": true
+  },
+  {
+   "claim": "Durban: port handles up to 31.4 million tons of cargo each year, undated; about 4.5 million TEU in 2019 (Wikipedia, single source)",
+   "url": "https://en.wikipedia.org/wiki/Port_of_Durban",
+   "opened": true
+  },
+  {
+   "claim": "Ethiopia coffee earned a record USD 3 billion in FY2025/26 (reserve fact for Addis Ababa, no city named)",
+   "url": "https://www.foodbusinessmea.com/ethiopia-coffee-export-earnings-reach-record-us3b-in-2025-26-fiscal-year/",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear. grep of docs/content-workflow/concept-registry.md for career-cities, africa found no entry; the hub concepts collection (ArtifactData) was NOT queried by this writer, so re-run before building. Concept id proposed: career-cities-map-10-africa. Themes career-cities and careers",
+ "openQuestions": [
+  "Ending line: 'Part 11: finance careers' follows the series plan (Part 11 = first career episode, finance). Confirm that the series plan and slot hold; if Part 11 changes, edit beat 'next part' and the caption.",
+  "Word count is below 250-285 for the same cap reason as Part 9 (Part 5 ran 242 words in 110.9 s).",
+  "Two South Africa stops (Johannesburg, Durban); Durban rests on one undated Wikipedia figure. For more country variety replace Durban with Accra (cocoa), Abidjan (cocoa), Antananarivo (vanilla) or Dakar once a figure is opened. I could not open a source for these.",
+  "Weak: Gaborone HQ of Debswana and Ismailia as Suez Canal Authority base are not confirmed by opened sources; Addis Ababa airline figure is single-source Wikipedia (FY2024); Nairobi logos (Safaricom, KCB, Equity) are unverified; Lagos is the only stop with 3+ verified logos (Paystack, Interswitch, Moniepoint, OPay); Flutterwave is San Francisco-headquartered per Techpoint so it is excluded.",
+  "Politically sensitive: the Suez Canal stop gives only the revenue figure and says nothing about the Red Sea disruption; Ethiopia and Egypt are both shown with neutral facts. Tanger Med port figures were not opened, so the voiced Renault figure is Morocco-wide (Tangier plus Casablanca) and the line says so.",
+  "Jobs lines are example roles in the industry, not sourced vacancies; they sit on screen as chips, not in the voice."
+ ]
+}

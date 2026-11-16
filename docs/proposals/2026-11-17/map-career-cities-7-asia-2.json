@@ -1,0 +1,406 @@
+{
+ "slug": "map-career-cities-7-asia-2",
+ "group": "map",
+ "title": "Career cities Part 7: Asia, part two, with Ledger in under 2 minutes",
+ "proposedSlot": "Mon 30 Nov 18:00 VN (to confirm)",
+ "estSeconds": 108,
+ "wordCount": 270,
+ "summary": "Part 7 of the career cities series covers 9 niche hubs across southeast asia, one sourced fact and the jobs available at each stop, as Hoang asked on 15 Nov.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title card",
+   "voice": "Career cities with Ledger, part seven: Asia, part two, in under two minutes.",
+   "onScreen": [
+    "Career cities with Ledger",
+    "Part 7",
+    "Southeast Asia",
+    "IN UNDER 2 MINUTES"
+   ],
+   "visual": "Title card over a world map with the earlier parts as small lit dots; the pins for this part drop in one by one; Ledger waves with his suitcase"
+  },
+  {
+   "n": 2,
+   "role": "hop",
+   "label": "stop 1 Bac Ninh, Vietnam, phones (arrival)",
+   "voice": "First, Ledger lands in Bac Ninh, Vietnam, a hub for phones.",
+   "onScreen": [
+    "PHONES",
+    "BAC NINH"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Bac Ninh, the pin pops and the Vietnam flag shows in its label (borders drawn); camera drops into the city scene: a phone factory with the plate SAMSUNG and a rice-field edge grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Bac Ninh, Vietnam, phones (fact and jobs)",
+   "voice": "Samsung's plants here and nearby have made 2 billion phones with about 90,000 workers.",
+   "onScreen": [
+    "2 billion phones",
+    "Samsung Vietnam, to June 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: phone, charger, box; the number counts up on a fact card that stamps in; job chips (line technician, quality engineer, supply chain planner) pop beside Ledger; real logos pop up next to Ledger in the scene: Samsung; Ledger changes pose twice"
+  },
+  {
+   "n": 4,
+   "role": "hop",
+   "label": "stop 2 Phnom Penh, Cambodia, garments (arrival)",
+   "voice": "Then, he flies to Phnom Penh, Cambodia, a hub for garments.",
+   "onScreen": [
+    "GARMENTS",
+    "PHNOM PENH"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Phnom Penh, the pin pops and the Cambodia flag shows in its label (borders drawn); camera drops into the city scene: the Royal Palace roofs beside a sewing factory grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Phnom Penh, Cambodia, garments (fact and jobs)",
+   "voice": "Cambodia's garment, shoe and travel goods factories employ over 900,000 people.",
+   "onScreen": [
+    "900,000+ workers",
+    "Garments, shoes, travel goods, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: shirt, shoe, travel bag; the number counts up on a fact card that stamps in; job chips (production planner, merchandiser, compliance officer) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 6,
+   "role": "hop",
+   "label": "stop 3 Rayong, Thailand, cars (arrival)",
+   "voice": "Next, he hops to Rayong, Thailand, a hub for cars.",
+   "onScreen": [
+    "CARS",
+    "RAYONG"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Rayong, the pin pops and the Thailand flag shows in its label (borders drawn); camera drops into the city scene: a new car plant with the plate CHANGAN and a car rolling out grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Rayong, Thailand, cars (fact and jobs)",
+   "voice": "Changan opened a plant here in 2025 for 10 billion baht, hiring planners and engineers.",
+   "onScreen": [
+    "10 billion baht",
+    "Changan plant, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: car, battery, wheel; the number counts up on a fact card that stamps in; job chips (production planner, plant engineer, finance analyst) pop beside Ledger; real logos pop up next to Ledger in the scene: Changan; Ledger changes pose twice"
+  },
+  {
+   "n": 8,
+   "role": "hop",
+   "label": "stop 4 Penang, Malaysia, chip packaging (arrival)",
+   "voice": "After that, he reaches Penang, Malaysia, a hub for chip packaging.",
+   "onScreen": [
+    "CHIP PACKAGING",
+    "PENANG"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Penang, the pin pops and the Malaysia flag shows in its label (borders drawn); camera drops into the city scene: a chip machine with a tray of packaged chips and the George Town clock tower grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Penang, Malaysia, chip packaging (fact and jobs)",
+   "voice": "Intel's site here employs 15,000 people, from technicians to engineers.",
+   "onScreen": [
+    "15,000 people",
+    "Intel Penang, since 1972"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: chip, tray, circuit board; the number counts up on a fact card that stamps in; job chips (test technician, packaging engineer, operations analyst) pop beside Ledger; real logos pop up next to Ledger in the scene: Intel, Infineon, Micron; Ledger changes pose twice"
+  },
+  {
+   "n": 10,
+   "role": "hop",
+   "label": "stop 5 Kuala Lumpur, Malaysia, energy (arrival)",
+   "voice": "Then, he flies to Kuala Lumpur, Malaysia, a hub for energy.",
+   "onScreen": [
+    "ENERGY",
+    "KUALA LUMPUR"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Kuala Lumpur, the pin pops and the Malaysia flag shows in its label (borders drawn); camera drops into the city scene: the Petronas twin towers with a small oil drop and a flame grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Kuala Lumpur, Malaysia, energy (fact and jobs)",
+   "voice": "Petronas reported revenue of 266.1 billion ringgit, so accountants and traders work here.",
+   "onScreen": [
+    "266.1 billion ringgit",
+    "Petronas, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: oil drop, gas flame, tanker; the number counts up on a fact card that stamps in; job chips (financial accountant, energy trader, project analyst) pop beside Ledger; real logos pop up next to Ledger in the scene: Petronas; Ledger changes pose twice"
+  },
+  {
+   "n": 12,
+   "role": "hop",
+   "label": "stop 6 Singapore, Singapore, shipping (arrival)",
+   "voice": "Next, he hops to Singapore, a hub for shipping.",
+   "onScreen": [
+    "SHIPPING",
+    "SINGAPORE"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Singapore, the pin pops and the Singapore flag shows in its label (borders drawn); camera drops into the city scene: a container port with cranes and a cargo ship, the Merlion on the shore grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Singapore, Singapore, shipping (fact and jobs)",
+   "voice": "Its port handled 44.66 million container units in 2025, so brokers and planners work here.",
+   "onScreen": [
+    "44.66 million TEU",
+    "Port of Singapore, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: container, crane, cargo ship; the number counts up on a fact card that stamps in; job chips (ship broker, port planner, trade finance analyst) pop beside Ledger; real logos pop up next to Ledger in the scene: PSA; Ledger changes pose twice"
+  },
+  {
+   "n": 14,
+   "role": "hop",
+   "label": "stop 7 Morowali, Indonesia, nickel (arrival)",
+   "voice": "Then, he flies to Morowali, Indonesia, a hub for nickel.",
+   "onScreen": [
+    "NICKEL",
+    "MOROWALI"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Morowali, the pin pops and the Indonesia flag shows in its label (borders drawn); camera drops into the city scene: smelter chimneys by a seaport with a pile of nickel ore grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Morowali, Indonesia, nickel (fact and jobs)",
+   "voice": "Its industrial park had about 85,000 workers in 2024, from operators to buyers.",
+   "onScreen": [
+    "About 85,000 workers",
+    "Morowali Industrial Park, end 2024"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: nickel ore, steel coil, battery; the number counts up on a fact card that stamps in; job chips (smelter operator, procurement buyer, safety manager) pop beside Ledger; real logos pop up next to Ledger in the scene: Tsingshan, CATL; Ledger changes pose twice"
+  },
+  {
+   "n": 16,
+   "role": "hop",
+   "label": "stop 8 Seria, Brunei, oil (arrival)",
+   "voice": "Next, he hops to Seria, Brunei, a hub for oil.",
+   "onScreen": [
+    "OIL",
+    "SERIA"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Seria, the pin pops and the Brunei flag shows in its label (borders drawn); camera drops into the city scene: an oil rig and pump jack by the coast with a mosque dome in the distance grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Seria, Brunei, oil (fact and jobs)",
+   "voice": "Oil was found here in 1929, and energy is 46.7 percent of Brunei's economy.",
+   "onScreen": [
+    "46.7% of GDP",
+    "Energy sector, Brunei, 2024"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: oil barrel, pump jack, tanker; the number counts up on a fact card that stamps in; job chips (petroleum engineer, analyst, finance officer) pop beside Ledger; real logos pop up next to Ledger in the scene: Brunei Shell Petroleum; Ledger changes pose twice"
+  },
+  {
+   "n": 18,
+   "role": "hop",
+   "label": "stop 9 Manila, the Philippines, outsourced services (arrival)",
+   "voice": "Finally, he lands in Manila, the Philippines, a hub for outsourced services.",
+   "onScreen": [
+    "SERVICES",
+    "MANILA"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Manila, the pin pops and the the Philippines flag shows in its label (borders drawn); camera drops into the city scene: a glass office tower with headsets, a laptop and a jeepney grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Manila, the Philippines, outsourced services (fact and jobs)",
+   "voice": "Its outsourcing industry employed 1.9 million people in 2025, earning over 40 billion dollars.",
+   "onScreen": [
+    "1.9 million workers",
+    "IT and business process industry, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: headset, laptop, chat bubble; the number counts up on a fact card that stamps in; job chips (customer support agent, analyst, team leader) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 20,
+   "role": "ending",
+   "label": "summary",
+   "voice": "So that was Southeast Asia, part two of Asia.",
+   "onScreen": [
+    "All stops lit on the strip map"
+   ],
+   "visual": "Camera pulls back to the region map: every pin lights in order with its flag and a small legend row"
+  },
+  {
+   "n": 21,
+   "role": "ending",
+   "label": "next part",
+   "voice": "Next, we map South Asia, the Gulf and Central Asia in part eight.",
+   "onScreen": [
+    "Part 8: South Asia, Gulf, Central Asia"
+   ],
+   "visual": "Next region glows on the world strip; Ledger points to it and the title of the next part types in"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta 1",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "onScreen": [
+    "To climb in these cities, you need a good business foundation"
+   ],
+   "visual": "Full-width card with the Edlintics logo; Ledger on the campus backdrop"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta 2",
+   "voice": "Go to Ed-lin-tics dot com to learn technical business skills.",
+   "onScreen": [
+    "Go to Edlintics.com to learn technical business skills"
+   ],
+   "visual": "Same card; the website line highlights word by word"
+  }
+ ],
+ "caption": "Career cities with Ledger, Part 7, is the second trip across Asia, through Southeast Asia, with 9 stops, and each stop shows one niche industry that town is a hub for, with a sourced fact and the jobs you could have there\n\nSo you will meet Bac Ninh, Phnom Penh, Rayong, Penang, Kuala Lumpur, Singapore, Morowali, Seria, and Manila\n\nSave the map for later, because Part 8 maps career cities across South Asia, the Gulf and Central Asia",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where niche industries and their careers are concentrated in nine Southeast Asian towns, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "Samsung",
+   "city": "Bac Ninh",
+   "why": "Samsung's phone factories are in Bac Ninh and Thai Nguyen: https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm (opened); Samsung's head office is in Korea, so this is a factory, not a head office"
+  },
+  {
+   "brand": "Changan",
+   "city": "Rayong",
+   "why": "First overseas plant opened in Rayong on 16 May 2025: https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 (opened); plant only, head office is in China"
+  },
+  {
+   "brand": "Intel",
+   "city": "Penang",
+   "why": "Intel's Penang site opened in 1972, 15,000 workforce: https://investpenang.gov.my/?p=23774 (opened); a site, head office is in the US"
+  },
+  {
+   "brand": "Infineon",
+   "city": "Penang",
+   "why": "Same page, silicon carbide site in Malaysia: https://investpenang.gov.my/?p=23774 (opened); the page says Malaysia, not Penang, so check the Kulim versus Penang location before use"
+  },
+  {
+   "brand": "Micron",
+   "city": "Penang",
+   "why": "Second assembly and test site in Penang in 2023: https://investpenang.gov.my/?p=23774 (opened)"
+  },
+  {
+   "brand": "Petronas",
+   "city": "Kuala Lumpur",
+   "why": "Release datelined Kuala Lumpur, 27 Feb 2026: https://www.petronas.com/media/media-releases/petronas-posts-lower-profit-amid-market-headwinds-strengthens-resilience (opened); the page does not state the head office, though Petronas Towers are in KLCC"
+  },
+  {
+   "brand": "PSA",
+   "city": "Singapore",
+   "why": "PSA International, the port operator: no page opened; source to open before the logo step: https://www.globalpsa.com/ (not opened)"
+  },
+  {
+   "brand": "Tsingshan",
+   "city": "Morowali",
+   "why": "Listed as a company in Morowali Industrial Park: https://en.wikipedia.org/wiki/Morowali_Industrial_Park (opened); a plant, head office in China"
+  },
+  {
+   "brand": "CATL",
+   "city": "Morowali",
+   "why": "Same page, battery firm in the park: https://en.wikipedia.org/wiki/Morowali_Industrial_Park (opened); head office in China"
+  },
+  {
+   "brand": "Brunei Shell Petroleum",
+   "city": "Seria",
+   "why": "Largest oil producer, about 90 percent of Brunei's oil and gas revenues: https://www.pa.gov.bn/oil-and-gas-in-brunei/ (opened); Seria as its base is from the field history, not an address"
+  }
+ ],
+ "sources": [
+  {
+   "claim": "Samsung phone plants in Bac Ninh and Thai Nguyen made 2 billion phones by end of June 2025; about 90,000 Vietnamese workers",
+   "url": "https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm",
+   "opened": true
+  },
+  {
+   "claim": "Same milestone (second source, snippet)",
+   "url": "https://www.gizmochina.com/2025/08/28/samsungs-vietnam-factories-cross-2-billion-phone-milestone/",
+   "opened": false
+  },
+  {
+   "claim": "Cambodia garment, footwear and travel goods exports US$15.5bn in 2025; over 900,000 workers, 1,500+ factories",
+   "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/01/20/cambodia-makes-us155bil-from-exports-of-garments-shoes-travel-goods-in-2025",
+   "opened": true
+  },
+  {
+   "claim": "Cambodia exports US$15.5bn (second source, snippet)",
+   "url": "https://en.vietstock.vn/2026/01/cambodia8217s-garment-and-footwear-exports-surge-to-155-billion-in-2025-52000-628379.htm",
+   "opened": false
+  },
+  {
+   "claim": "Changan opened its Rayong plant on 16 May 2025, about THB 10 billion, capacity 100,000 a year",
+   "url": "https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455",
+   "opened": true
+  },
+  {
+   "claim": "Intel Penang opened 1972, workforce 15,000; Penang holds 13% of global chip packaging; Micron, Infineon",
+   "url": "https://investpenang.gov.my/?p=23774",
+   "opened": true
+  },
+  {
+   "claim": "Petronas 2025 revenue RM266.1 billion, profit RM45.4 billion",
+   "url": "https://www.petronas.com/media/media-releases/petronas-posts-lower-profit-amid-market-headwinds-strengthens-resilience",
+   "opened": true
+  },
+  {
+   "claim": "Petronas 2025 revenue RM266.1 billion (second source, snippet)",
+   "url": "https://www.freemalaysiatoday.com/category/nation/2026/02/27/petronass-profit-drops-18-to-rm45-4bil-for-fy2025",
+   "opened": false
+  },
+  {
+   "claim": "Port of Singapore handled 44.66 million TEU in 2025 (MPA, 13 Jan 2026)",
+   "url": "https://www.mpa.gov.sg/media-centre/details/singapore-posts-record-port-performance-in-2025-and-develops-future-readiness-through-industry-collaborations-for-2026",
+   "opened": true
+  },
+  {
+   "claim": "Morowali Industrial Park about 85,000 workers end of 2024; Indonesia nearly half of world nickel (2022)",
+   "url": "https://en.wikipedia.org/wiki/Morowali_Industrial_Park",
+   "opened": true
+  },
+  {
+   "claim": "IMIP about 85,000 local jobs (second source, snippet)",
+   "url": "https://news.metal.com/newscontent/103335559",
+   "opened": false
+  },
+  {
+   "claim": "Seria first oil 1929; BSP about 90% of oil and gas revenues; energy 46.7% of GDP in 2024",
+   "url": "https://www.pa.gov.bn/oil-and-gas-in-brunei/",
+   "opened": true
+  },
+  {
+   "claim": "Philippine IT-BPM 2025: over 40 billion dollars export revenue, 1.9 million workers",
+   "url": "https://www.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark/amp/",
+   "opened": true
+  },
+  {
+   "claim": "Philippine IT-BPM 2025 (second source, snippet)",
+   "url": "https://tribune.net.ph/2026/01/01/it-bpm-sector-posts-strong-growth-in-2025-eyes-nearly-2m-jobs",
+   "opened": false
+  }
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs): clear. The reel names and defines no business concept and no career-cities map concept is registered; concept_id would be new. Themes career-cities and careers",
+ "openQuestions": [
+  "Kuala Lumpur is a second Malaysian stop (Penang is the first) because no other Southeast Asian hub had an opened source; tell me if you want a Thai (Samut Sakhon seafood), Laos or Vietnam (Haiphong, VinFast) swap instead",
+  "Phnom Penh, Rayong, Singapore and Manila facts are country or sector figures, not city figures; Manila's source is datelined Manila only, and the Metro Manila link is the weakest of the part",
+  "Brunei's Seria is a town, not a city; the Lumut LNG plant could not be sourced",
+  "Mixed currencies inside the post (ringgit, baht, dollars) because each figure stays in the currency it was reported in; I can convert nothing without new sources",
+  "New flags to draw and check: Vietnam, Cambodia, Thailand, Malaysia, Singapore, Indonesia, Brunei, the Philippines",
+  "Logos at Bac Ninh, Rayong, Penang and Morowali are foreign plants, not head offices; PSA has no source opened; Infineon's Penang location is not confirmed by the opened page"
+ ]
+}

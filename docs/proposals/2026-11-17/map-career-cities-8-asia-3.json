@@ -1,0 +1,402 @@
+{
+ "slug": "map-career-cities-8-asia-3",
+ "group": "map",
+ "title": "Career cities Part 8: Asia, part three, with Ledger in under 2 minutes",
+ "proposedSlot": "Wed 2 Dec 18:00 VN (to confirm)",
+ "estSeconds": 107,
+ "wordCount": 267,
+ "summary": "Part 8 of the career cities series covers 9 niche hubs across south asia, the gulf and central asia, one sourced fact and the jobs available at each stop, as Hoang asked on 15 Nov.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title card",
+   "voice": "Career cities with Ledger, part eight: Asia, part three, in under two minutes.",
+   "onScreen": [
+    "Career cities with Ledger",
+    "Part 8",
+    "South Asia, the Gulf and Central Asia",
+    "IN UNDER 2 MINUTES"
+   ],
+   "visual": "Title card over a world map with the earlier parts as small lit dots; the pins for this part drop in one by one; Ledger waves with his suitcase"
+  },
+  {
+   "n": 2,
+   "role": "hop",
+   "label": "stop 1 Bengaluru, India, software (arrival)",
+   "voice": "First, Ledger lands in Bengaluru, India, a hub for software.",
+   "onScreen": [
+    "SOFTWARE",
+    "BENGALURU"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Bengaluru, the pin pops and the India flag shows in its label (borders drawn); camera drops into the city scene: a glass tech campus with a laptop and a garden city tree grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Bengaluru, India, software (fact and jobs)",
+   "voice": "Infosys, based here, employs 328,594 people, from developers to consultants.",
+   "onScreen": [
+    "328,594 employees",
+    "Infosys, March 2026"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: laptop, code window, server; the number counts up on a fact card that stamps in; job chips (software developer, consultant, delivery manager) pop beside Ledger; real logos pop up next to Ledger in the scene: Infosys; Ledger changes pose twice"
+  },
+  {
+   "n": 4,
+   "role": "hop",
+   "label": "stop 2 Tiruppur, India, knitwear (arrival)",
+   "voice": "Then, he flies to Tiruppur, India, a hub for knitwear.",
+   "onScreen": [
+    "KNITWEAR",
+    "TIRUPPUR"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Tiruppur, the pin pops and the India flag shows in its label (borders drawn); camera drops into the city scene: a knitting factory with stacked T-shirts and a cotton boll grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Tiruppur, India, knitwear (fact and jobs)",
+   "voice": "Its garment exports reached 42,544 crore rupees in 2025 to 2026, hiring merchandisers and buyers.",
+   "onScreen": [
+    "42,544 crore rupees",
+    "Tiruppur exports, 2025-26"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: T-shirt, yarn spool, cotton boll; the number counts up on a fact card that stamps in; job chips (merchandiser, buyer, production manager) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 6,
+   "role": "hop",
+   "label": "stop 3 Colombo, Sri Lanka, tea (arrival)",
+   "voice": "Next, he hops to Colombo, Sri Lanka, a hub for tea.",
+   "onScreen": [
+    "TEA",
+    "COLOMBO"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Colombo, the pin pops and the Sri Lanka flag shows in its label (borders drawn); camera drops into the city scene: the harbour and a tea-leaf hill with a cup of tea and the Lotus Tower grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Colombo, Sri Lanka, tea (fact and jobs)",
+   "voice": "Sri Lanka's tea exports earned 1.51 billion dollars in 2025, so brokers work here.",
+   "onScreen": [
+    "1.51 billion dollars",
+    "Sri Lanka tea exports, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: tea cup, tea packet, tea leaf; the number counts up on a fact card that stamps in; job chips (tea broker, trader, export manager) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 8,
+   "role": "hop",
+   "label": "stop 4 Dhaka, Bangladesh, garments (arrival)",
+   "voice": "After that, he reaches Dhaka, Bangladesh, a hub for garments.",
+   "onScreen": [
+    "GARMENTS",
+    "DHAKA"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Dhaka, the pin pops and the Bangladesh flag shows in its label (borders drawn); camera drops into the city scene: a sewing factory with a rickshaw and the National Parliament silhouette grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Dhaka, Bangladesh, garments (fact and jobs)",
+   "voice": "Its garment exports earned 39.35 billion dollars in 2025, hiring merchandisers and buyers.",
+   "onScreen": [
+    "39.35 billion dollars",
+    "Garment exports, FY2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: shirt, sewing machine, cargo box; the number counts up on a fact card that stamps in; job chips (merchandiser, buyer, compliance officer) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 10,
+   "role": "hop",
+   "label": "stop 5 Surat, India, diamond cutting (arrival)",
+   "voice": "Then, he flies to Surat, India, a hub for diamond cutting.",
+   "onScreen": [
+    "DIAMONDS",
+    "SURAT"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Surat, the pin pops and the India flag shows in its label (borders drawn); camera drops into the city scene: the Surat Diamond Bourse building and a big cut diamond grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Surat, India, diamond cutting (fact and jobs)",
+   "voice": "Surat gives jobs to nearly 800,000 people, from cutters and polishers to traders.",
+   "onScreen": [
+    "Nearly 800,000 jobs",
+    "Surat diamonds, Oct 2024"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: rough diamond, cut diamond, ring; the number counts up on a fact card that stamps in; job chips (diamond cutter, polisher, trader) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 12,
+   "role": "hop",
+   "label": "stop 6 Sialkot, Pakistan, footballs (arrival)",
+   "voice": "Next, he hops to Sialkot, Pakistan, a hub for footballs.",
+   "onScreen": [
+    "FOOTBALLS",
+    "SIALKOT"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Sialkot, the pin pops and the Pakistan flag shows in its label (borders drawn); camera drops into the city scene: a stitching workshop with a football on a plate reading SIALKOT grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Sialkot, Pakistan, footballs (fact and jobs)",
+   "voice": "It ships about 60 million balls a year, so quality managers and exporters work here.",
+   "onScreen": [
+    "60 million balls a year",
+    "About 70% of world football exports"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: football, boot, goal net; the number counts up on a fact card that stamps in; job chips (stitching supervisor, quality manager, exporter) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 14,
+   "role": "hop",
+   "label": "stop 7 Almaty, Kazakhstan, banking (arrival)",
+   "voice": "Then, he flies to Almaty, Kazakhstan, a hub for banking.",
+   "onScreen": [
+    "BANKING",
+    "ALMATY"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Almaty, the pin pops and the Kazakhstan flag shows in its label (borders drawn); camera drops into the city scene: mountains behind a bank tower with the Ascension Cathedral grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Almaty, Kazakhstan, banking (fact and jobs)",
+   "voice": "Almaty holds about 60 percent of Kazakhstan's bank credit, so bankers work here.",
+   "onScreen": [
+    "About 60% of bank credit",
+    "Almaty, Wikipedia"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: coin, bank card, loan form; the number counts up on a fact card that stamps in; job chips (credit analyst, banker, risk manager) pop beside Ledger; real logos pop up next to Ledger in the scene: Halyk Bank, Kaspi, Air Astana; Ledger changes pose twice"
+  },
+  {
+   "n": 16,
+   "role": "hop",
+   "label": "stop 8 Dubai, the United Arab Emirates, logistics (arrival)",
+   "voice": "Next, he hops to Dubai, the United Arab Emirates, a hub for logistics.",
+   "onScreen": [
+    "LOGISTICS",
+    "DUBAI"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Dubai, the pin pops and the the United Arab Emirates flag shows in its label (borders drawn); camera drops into the city scene: the Burj Khalifa beside a container port with cranes grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Dubai, the United Arab Emirates, logistics (fact and jobs)",
+   "voice": "DP World, based here, reported 24.4 billion dollars of revenue, hiring port planners.",
+   "onScreen": [
+    "24.4 billion dollars",
+    "DP World, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: container, crane, cargo plane; the number counts up on a fact card that stamps in; job chips (port manager, logistics planner, trade analyst) pop beside Ledger; real logos pop up next to Ledger in the scene: DP World; Ledger changes pose twice"
+  },
+  {
+   "n": 18,
+   "role": "hop",
+   "label": "stop 9 Ras Laffan, Qatar, natural gas (arrival)",
+   "voice": "Finally, he lands in Ras Laffan, Qatar, a hub for natural gas.",
+   "onScreen": [
+    "NATURAL GAS",
+    "RAS LAFFAN"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Ras Laffan, the pin pops and the Qatar flag shows in its label (borders drawn); camera drops into the city scene: a gas plant with a flame stack and an LNG tanker grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Ras Laffan, Qatar, natural gas (fact and jobs)",
+   "voice": "Its gas trains can liquefy 77 million tonnes a year, so engineers and traders work here.",
+   "onScreen": [
+    "77 million tonnes a year",
+    "QatarEnergy LNG, 14 trains"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: gas flame, LNG tanker, pipe; the number counts up on a fact card that stamps in; job chips (process engineer, LNG trader, project controller) pop beside Ledger; real logos pop up next to Ledger in the scene: QatarEnergy LNG; Ledger changes pose twice"
+  },
+  {
+   "n": 20,
+   "role": "ending",
+   "label": "summary",
+   "voice": "So that was Asia, part three.",
+   "onScreen": [
+    "All stops lit on the strip map"
+   ],
+   "visual": "Camera pulls back to the region map: every pin lights in order with its flag and a small legend row"
+  },
+  {
+   "n": 21,
+   "role": "ending",
+   "label": "next part",
+   "voice": "Next, we map South America in part nine.",
+   "onScreen": [
+    "Part 9: South America"
+   ],
+   "visual": "Next region glows on the world strip; Ledger points to it and the title of the next part types in"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta 1",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "onScreen": [
+    "To climb in these cities, you need a good business foundation"
+   ],
+   "visual": "Full-width card with the Edlintics logo; Ledger on the campus backdrop"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta 2",
+   "voice": "Go to Ed-lin-tics dot com to learn technical business skills.",
+   "onScreen": [
+    "Go to Edlintics.com to learn technical business skills"
+   ],
+   "visual": "Same card; the website line highlights word by word"
+  }
+ ],
+ "caption": "Career cities with Ledger, Part 8, is the last trip across Asia, through South Asia, Central Asia and the Gulf, with 9 stops, and each stop shows one niche industry that town is a hub for, with a sourced fact and the jobs you could have there\n\nSo you will meet Bengaluru, Tiruppur, Colombo, Dhaka, Surat, Sialkot, Almaty, Dubai, and Ras Laffan\n\nSave the map for later, because Part 9 maps career cities across South America",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where niche industries and their careers are concentrated in nine towns across South Asia, the Gulf and Central Asia, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "Infosys",
+   "city": "Bengaluru",
+   "why": "Headquarters Bengaluru, 328,594 employees March 2026: https://en.wikipedia.org/wiki/Infosys (opened)"
+  },
+  {
+   "brand": "Halyk Bank",
+   "city": "Almaty",
+   "why": "Listed as headquartered in Almaty: https://en.wikipedia.org/wiki/Almaty (opened; dated list)"
+  },
+  {
+   "brand": "Kaspi",
+   "city": "Almaty",
+   "why": "Listed as Kaspi Bank in Almaty: https://en.wikipedia.org/wiki/Almaty (opened); Kaspi.kz's own page lists only 'Kazakhstan', and its Q4 release is datelined Almaty (search snippet only)"
+  },
+  {
+   "brand": "Air Astana",
+   "city": "Almaty",
+   "why": "Headquartered in Almaty 'as of 2010': https://en.wikipedia.org/wiki/Almaty (opened); old, re-check"
+  },
+  {
+   "brand": "DP World",
+   "city": "Dubai",
+   "why": "Headquarters Dubai: https://en.wikipedia.org/wiki/DP_World (opened); results release datelined Dubai: https://www.dpworld.com/en/news/releases/uae/dp-world-reports-record-244-bn-revenue-and-64bn-ebitda-for-2025 (opened)"
+  },
+  {
+   "brand": "QatarEnergy LNG",
+   "city": "Ras Laffan",
+   "why": "Runs the Ras Laffan trains, page lists Ras Laffan facilities: https://www.qatarenergylng.qa/english/aboutus (opened); head office city not stated"
+  }
+ ],
+ "sources": [
+  {
+   "claim": "Infosys headquartered in Bengaluru; 328,594 employees at March 2026",
+   "url": "https://en.wikipedia.org/wiki/Infosys",
+   "opened": true
+  },
+  {
+   "claim": "Infosys headcount 328,594 (second source, snippet)",
+   "url": "https://www.freepressjournal.in/business/infosys-q4-growth-at-41-margins-steady-at-209-fy26-eps-rises-11-deal-wins-hit-15-billion",
+   "opened": false
+  },
+  {
+   "claim": "Tiruppur garment exports Rs 42,544.40 crore (US$4.46bn) in 2025-26, down 4.91%",
+   "url": "https://apparelresources.com/?p=307249",
+   "opened": true
+  },
+  {
+   "claim": "Tiruppur FY26 exports about Rs 46,000 crore, nearly 60% of India's knitwear exports (conflicts with the figure above)",
+   "url": "https://www.constructionworld.in/policy-updates-and-economic-news/tiruppur-posts-record-rs-460-bn-exports-in-fy26/93856",
+   "opened": false
+  },
+  {
+   "claim": "Sri Lanka tea export earnings US$1.51bn in 2025, 257.44 million kg",
+   "url": "https://www.ft.lk/front-page/Tea-exports-top-1-5-b-in-2025-despite-price-pressures/44-787299",
+   "opened": true
+  },
+  {
+   "claim": "Sri Lanka tea exports above US$1.5bn (second source, snippet)",
+   "url": "https://www.sundaytimes.lk/online/business/SL-tea-production-sees-marginal-rise-in-2025/10-1151172",
+   "opened": false
+  },
+  {
+   "claim": "Bangladesh RMG exports US$39.35bn in FY25, 8.52% of nominal GDP (Bangladesh Bank)",
+   "url": "https://apparelresources.com/?p=303872",
+   "opened": true
+  },
+  {
+   "claim": "Bangladesh RMG FY25 US$39.35bn (second source, 403 when opened)",
+   "url": "https://www.bssnews.net/at-a-glance/291544",
+   "opened": false
+  },
+  {
+   "claim": "Surat alone provides jobs to nearly 800,000 workers; over 90% of polished diamond manufacturing (Infomerics, Oct 2024)",
+   "url": "https://infomerics.com/admin/uploads/diamond-industry-outlook-oct24.pdf",
+   "opened": true
+  },
+  {
+   "claim": "About 90% of the world's diamonds cut and polished in Surat (NITI Aayog 2024, via Wikipedia)",
+   "url": "https://en.wikipedia.org/wiki/Surat",
+   "opened": true
+  },
+  {
+   "claim": "Sialkot about 70% of world football exports, around 60 million balls a year (June 2026)",
+   "url": "https://dailytimes.com.pk/1506692/sialkots-footballs-find-their-way-to-the-worlds-biggest-stage/",
+   "opened": true
+  },
+  {
+   "claim": "Sialkot 70% of world footballs (second source, snippet; an older Dawn piece says 40%)",
+   "url": "https://www.dawn.com/news/196287/sialkot-loses-share-in-football-exports",
+   "opened": false
+  },
+  {
+   "claim": "Almaty about 60% of bank credits and 20% of government revenues; Halyk Bank, Kaspi Bank, Air Astana",
+   "url": "https://en.wikipedia.org/wiki/Almaty",
+   "opened": true
+  },
+  {
+   "claim": "DP World 2025 revenue US$24.4bn; headquartered in Dubai, about 101,440 employees",
+   "url": "https://www.dpworld.com/en/news/releases/uae/dp-world-reports-record-244-bn-revenue-and-64bn-ebitda-for-2025",
+   "opened": true
+  },
+  {
+   "claim": "DP World HQ Dubai",
+   "url": "https://en.wikipedia.org/wiki/DP_World",
+   "opened": true
+  },
+  {
+   "claim": "QatarEnergy LNG operates 14 LNG trains, 77 million tonnes a year capacity",
+   "url": "https://www.qatarenergylng.qa/english/aboutus",
+   "opened": true
+  },
+  {
+   "claim": "Ras Laffan capacity 77 MTPA, and reports of 2026 strike damage (snippet only)",
+   "url": "https://globallnghub.com/qatar-lng-capacity-hit-as-ras-laffan-attacks-damage-key-trains/",
+   "opened": false
+  }
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs): clear. The reel names and defines no business concept and no career-cities map concept is registered; concept_id would be new. Themes career-cities and careers",
+ "openQuestions": [
+  "Split kept as agreed; this part mixes South Asia, Central Asia and the Gulf, so the title card says Asia, part three and the caption lists the cities",
+  "Ras Laffan: search snippets (not opened) report that March 2026 strikes damaged LNG trains and cut capacity, and Jebel Ali traffic fell in the same conflict. The voice uses QatarEnergy LNG's own 77 million tonnes capacity statement; decide whether to keep a Gulf stop with this news, swap to Muscat or Riyadh, or add 'rated capacity' wording. I used Ras Laffan, not Doha, because the opened source places the plant at Ras Laffan",
+  "Tiruppur figures conflict between sources (Rs 42,544 crore versus about Rs 46,000 crore); I used the opened one, which is a fall of 4.91 percent",
+  "Colombo, Dhaka and Almaty stops use country or old figures: tea and garments are national totals, the Almaty bank-credit share is from an undated Wikipedia list",
+  "Surat's 90 percent share and the 800,000 workers come from an Infomerics PDF and Wikipedia citing NITI Aayog; a government source would be stronger",
+  "New flags to draw and check: India, Sri Lanka, Bangladesh, Pakistan, Kazakhstan, the UAE, Qatar",
+  "Almaty logos rest on an old Wikipedia list; Kaspi and Air Astana need a head-office check before the logo step"
+ ]
+}

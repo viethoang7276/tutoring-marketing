@@ -1,0 +1,284 @@
+{
+ "slug": "ladder-apprentice-electrician-to-electrical-contractor",
+ "group": "ladder",
+ "title": "From apprentice electrician to electrical contractor, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Thu 26 Nov 21:30 VN (to confirm)",
+ "estSeconds": 88,
+ "wordCount": 219,
+ "summary": "A hands-on trade ladder, apprentice to the person who owns the firm and the licence; fits Hoang's 'technician' and everyday-job direction.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From apprentice electrician to electrical contractor, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From apprentice electrician to electrical contractor, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the el_apprentice outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "First, Ledger is the apprentice electrician, with a hard hat and a tool pouch.",
+   "onScreen": [],
+   "visual": "OUTFIT (el_apprentice: yellow hard hat, hi-vis vest over a grey tee, tool pouch, lanyard). Header THE APPRENTICE. Ledger alone, scale 3.2, yellow hard hat; arrows pop in on 'hard hat' and 'tool pouch'"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "Then he pulls cable and fits sockets, under a journeyman's eye.",
+   "onScreen": [
+    "PULL CABLE",
+    "FIT SOCKETS"
+   ],
+   "visual": "Cable runs along a wall and a socket clicks in; a small journeyman figure watches"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "He also learns the code, and safe habits.",
+   "onScreen": [
+    "LEARN THE CODE"
+   ],
+   "visual": "A code book opens; a safety tick appears on a checklist"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 THE APPRENTICE",
+   "voice": "So on this rung, he installs under supervision.",
+   "onScreen": [],
+   "visual": "Slider at 0.06 on 'Installs'; the journeyman's hand rests on his shoulder"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he climbs to journeyman.",
+   "onScreen": [
+    "JOURNEYMAN"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 JOURNEYMAN",
+   "voice": "Now he is licensed, and works on his own.",
+   "onScreen": [
+    "WORK ALONE"
+   ],
+   "visual": "OUTFIT (el_journeyman: blue work shirt with rolled sleeves, tool belt, voltage tester in pocket, no hard-hat strap). Header JOURNEYMAN. A licence card pops up beside Ledger; he walks into a house alone"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 JOURNEYMAN",
+   "voice": "Then he reads blueprints, and installs and repairs the wiring.",
+   "onScreen": [
+    "READ BLUEPRINTS",
+    "REPAIR WIRING"
+   ],
+   "visual": "A blueprint unrolls; a lamp flickers and then stays on after his repair"
+  },
+  {
+   "n": 9,
+   "role": "rung",
+   "label": "rung 2 JOURNEYMAN",
+   "voice": "And he teaches the apprentices, and tests each circuit.",
+   "onScreen": [
+    "TEACH APPRENTICES",
+    "TEST CIRCUITS"
+   ],
+   "visual": "A new apprentice figure copies his move; a tester shows a green light"
+  },
+  {
+   "n": 10,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to master electrician.",
+   "onScreen": [
+    "THE MASTER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 THE MASTER",
+   "voice": "As master, he signs off the work, and pulls permits.",
+   "onScreen": [
+    "SIGN OFF WORK",
+    "PULL PERMITS"
+   ],
+   "visual": "OUTFIT (el_master: charcoal work jacket, glasses, clipboard, a master badge on the chest). Header THE MASTER. A permit form gets a stamp; Ledger signs a job sheet"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 THE MASTER",
+   "voice": "Then he checks each job against the code, and leads the crew.",
+   "onScreen": [
+    "CHECK THE CODE"
+   ],
+   "visual": "Three crew figures in a row; a code tick passes along them"
+  },
+  {
+   "n": 13,
+   "role": "rung",
+   "label": "rung 3 THE MASTER",
+   "voice": "So he installs less, and starts to run jobs.",
+   "onScreen": [],
+   "visual": "Slider at 0.35; a job board with three jobs behind him"
+  },
+  {
+   "n": 14,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as project manager.",
+   "onScreen": [
+    "PROJECT MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 PROJECT MANAGER",
+   "voice": "Now he plans each job, and estimates the cost.",
+   "onScreen": [
+    "ESTIMATE COSTS"
+   ],
+   "visual": "OUTFIT (el_pm: white hard hat, tablet, grey fleece vest, site boots). Header PROJECT MANAGER. A quote sheet adds up line by line on a tablet"
+  },
+  {
+   "n": 16,
+   "role": "rung",
+   "label": "rung 4 PROJECT MANAGER",
+   "voice": "Then he orders materials, and schedules the crews on site.",
+   "onScreen": [
+    "SCHEDULE CREWS"
+   ],
+   "visual": "A materials delivery arrives; a crew calendar fills in colours"
+  },
+  {
+   "n": 17,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as contractor owner.",
+   "onScreen": [
+    "CONTRACTOR OWNER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 CONTRACTOR OWNER",
+   "voice": "As contractor, he owns the firm, and is legally responsible for the work.",
+   "onScreen": [
+    "OWN THE FIRM"
+   ],
+   "visual": "OUTFIT (el_owner: black jacket with the company name on the chest, gold pocket square, glasses, grey temples). Header CONTRACTOR OWNER. A van with a company sign appears; a licence frame lights up"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 CONTRACTOR OWNER",
+   "voice": "He sets prices, and pays for tools, insurance and crews.",
+   "onScreen": [
+    "SET PRICES",
+    "PAY THE CREWS"
+   ],
+   "visual": "A price list; pots labelled tools, insurance, crews fill from coin pieces"
+  },
+  {
+   "n": 20,
+   "role": "rung",
+   "label": "rung 5 CONTRACTOR OWNER",
+   "voice": "Yet he installs almost nothing himself, and answers for every job.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Runs'; every job on the board gets a tick"
+  },
+  {
+   "n": 21,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger installed less, and ran more.",
+   "onScreen": [
+    "INSTALLS to RUNS"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Installs",
+  "top": "Runs"
+ },
+ "headerTitles": [
+  "THE APPRENTICE",
+  "JOURNEYMAN",
+  "THE MASTER",
+  "PROJECT MANAGER",
+  "CONTRACTOR OWNER"
+ ],
+ "outfits": [
+  "el_apprentice: yellow hard hat, hi-vis vest over a grey tee, tool pouch, lanyard",
+  "el_journeyman: blue work shirt with rolled sleeves, tool belt, voltage tester in pocket, no hard-hat strap",
+  "el_master: charcoal work jacket, glasses, clipboard, a master badge on the chest",
+  "el_pm: white hard hat, tablet, grey fleece vest, site boots",
+  "el_owner: black jacket with the company name on the chest, gold pocket square, glasses, grey temples"
+ ],
+ "caption": "From apprentice electrician to contractor owner, the job changes on every rung\n\nThe apprentice pulls cable under supervision, and the journeyman works on his own and teaches the apprentices. Then the master electrician signs off the work and pulls the permits. Finally, the contractor owns the firm and answers for every job\n\nSo each rung up, you install less yourself and run more. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #trades #smallbusiness",
+ "first_comment": "Which rung would you want to reach first, journeyman or owner? Tell us below ⚡🪜",
+ "first_comment_igtt": "Which rung would you want to reach first, journeyman or owner? Tell us below, link in bio ⚡🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#trades",
+  "#smallbusiness"
+ ],
+ "threadsTopic": "Small Business",
+ "threadsReason": "The ladder ends with owning a firm, so Small Business is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "Electrician path: 4 to 5 year apprenticeship, journeyworker duties (blueprints, wiring, troubleshooting), master electrician, supervisor or project management roles; about 7 percent self-employed",
+   "url": "https://www.bls.gov/ooh/construction-and-extraction/electricians.htm",
+   "opened": true
+  },
+  {
+   "claim": "Electrician duties, apprenticeship, site supervision, estimating and contract management, and setting up your own electrical business",
+   "url": "https://nationalcareers.service.gov.uk/job-profiles/electrician",
+   "opened": true
+  },
+  {
+   "claim": "Apprentice, journeyman, master electrician levels; master can pull permits; contractors are legally responsible for the workers and the work (it does not cover owning a business)",
+   "url": "https://www.fluke.com/en-au/learn/blog/electrical/electrician-career-levels-explained",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: skilled trades and construction not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "Rung 4 'project manager' is from the BLS (supervisor or project management roles) and the National Careers Service (site supervision, estimating, contract management); the rung is optional on some firms. Licence names vary by country (journeyman vs journeyworker, master electrician not offered in every state).",
+  "Top rung 'owns the firm' rests on BLS (7 percent self-employed) and National Careers Service (set up your own business); no source details contractor-owner duties, so the script keeps them to prices, pay and legal responsibility (Fluke). Flagged as the weakest rung.",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}

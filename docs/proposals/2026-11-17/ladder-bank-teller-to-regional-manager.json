@@ -1,0 +1,277 @@
+{
+ "slug": "ladder-bank-teller-to-regional-manager",
+ "group": "ladder",
+ "title": "From bank teller to regional bank manager, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Wed 25 Nov 21:30 VN (to confirm)",
+ "estSeconds": 86,
+ "wordCount": 216,
+ "summary": "The first person you meet in any bank, climbing to the manager who answers for several branches; a ladder for viewers who bank, not only study finance.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From bank teller to regional bank manager, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From bank teller to regional bank manager, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the bk_teller outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 THE TELLER",
+   "voice": "First, Ledger is the bank teller, with a name badge and a cash drawer.",
+   "onScreen": [],
+   "visual": "OUTFIT (bk_teller: light-blue shirt with a bank name badge, small green visor). Header THE TELLER. Ledger alone behind a counter window, scale 3.0; arrows pop in on 'name badge' and 'cash drawer'"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 THE TELLER",
+   "voice": "Then he counts the drawer, and records each payment.",
+   "onScreen": [
+    "COUNT THE DRAWER",
+    "RECORD PAYMENTS"
+   ],
+   "visual": "Notes are counted into a drawer; a ledger screen lists each transaction with a tick"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 THE TELLER",
+   "voice": "He refers loan requests to a loan officer.",
+   "onScreen": [
+    "REFER LOANS"
+   ],
+   "visual": "A form slides from Ledger to a small loan officer figure at a desk"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 THE TELLER",
+   "voice": "So on this rung, he serves every customer himself.",
+   "onScreen": [],
+   "visual": "Slider at 0.06 on 'Serves'; a queue of three customers moves up"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he climbs to head teller.",
+   "onScreen": [
+    "HEAD TELLER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 HEAD TELLER",
+   "voice": "Now he helps the tellers, and fixes account errors.",
+   "onScreen": [
+    "FIX ERRORS"
+   ],
+   "visual": "OUTFIT (bk_head: grey vest over white shirt, name badge, vault key on a lanyard). Header HEAD TELLER. A wrong balance flashes red on a screen; Ledger corrects it and it turns green"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 HEAD TELLER",
+   "voice": "Then he sets the schedule, and stocks each drawer with cash.",
+   "onScreen": [
+    "SET SCHEDULES",
+    "STOCK THE DRAWERS"
+   ],
+   "visual": "A schedule grid fills; Ledger carries a cash tray from the vault to a teller"
+  },
+  {
+   "n": 9,
+   "role": "rung",
+   "label": "rung 2 HEAD TELLER",
+   "voice": "So he serves a little less, and starts to lead.",
+   "onScreen": [],
+   "visual": "Slider at 0.3; two tellers serve the queue behind him"
+  },
+  {
+   "n": 10,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to assistant manager.",
+   "onScreen": [
+    "ASSISTANT MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 ASSISTANT MANAGER",
+   "voice": "As assistant manager, he covers for the branch manager.",
+   "onScreen": [
+    "HELP RUN BRANCH"
+   ],
+   "visual": "OUTFIT (bk_assistant: navy blazer over open shirt, lanyard, pen). Header ASSISTANT MANAGER. Ledger at the manager's desk; the manager's chair is empty and he sits in it"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 ASSISTANT MANAGER",
+   "voice": "He also tracks the branch targets, and the daily budget.",
+   "onScreen": [
+    "TRACK TARGETS"
+   ],
+   "visual": "A target bar and a budget meter fill on the wall"
+  },
+  {
+   "n": 13,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as branch manager.",
+   "onScreen": [
+    "BRANCH MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 14,
+   "role": "rung",
+   "label": "rung 4 BRANCH MANAGER",
+   "voice": "Now, as branch manager, he runs the branch day to day.",
+   "onScreen": [
+    "RUN THE BRANCH"
+   ],
+   "visual": "OUTFIT (bk_manager: dark navy suit, burgundy tie, pocket square). Header BRANCH MANAGER. Full branch cutaway: counter, desks, vault; Ledger stands at the centre"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 BRANCH MANAGER",
+   "voice": "Then he checks lending risk, and builds local ties.",
+   "onScreen": [
+    "LENDING RISK",
+    "LOCAL BUSINESSES"
+   ],
+   "visual": "A risk gauge on a loan form; a shop owner shakes Ledger's hand"
+  },
+  {
+   "n": 16,
+   "role": "rung",
+   "label": "rung 4 BRANCH MANAGER",
+   "voice": "And he motivates staff, and handles complaints.",
+   "onScreen": [
+    "HANDLE COMPLAINTS"
+   ],
+   "visual": "A complaint letter lands on his desk and is stamped resolved"
+  },
+  {
+   "n": 17,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as regional manager.",
+   "onScreen": [
+    "REGIONAL MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 REGIONAL MANAGER",
+   "voice": "Now he oversees several branches, and reports to head office.",
+   "onScreen": [
+    "OVERSEE BRANCHES"
+   ],
+   "visual": "OUTFIT (bk_regional: black suit, gold pocket square, glasses, grey temples). Header REGIONAL MANAGER. Region map with three branch pins and a head office building"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 REGIONAL MANAGER",
+   "voice": "He sets each branch's plan, and counts almost no cash himself.",
+   "onScreen": [
+    "SET BRANCH PLANS"
+   ],
+   "visual": "Three plan sheets slide to three branch managers; no cash in his hands"
+  },
+  {
+   "n": 20,
+   "role": "rung",
+   "label": "rung 5 REGIONAL MANAGER",
+   "voice": "Yet he answers for every branch in the region.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Leads'; all three pins light up"
+  },
+  {
+   "n": 21,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger served fewer customers, and led more branches.",
+   "onScreen": [
+    "SERVES to LEADS"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Serves",
+  "top": "Leads"
+ },
+ "headerTitles": [
+  "THE TELLER",
+  "HEAD TELLER",
+  "ASSISTANT MANAGER",
+  "BRANCH MANAGER",
+  "REGIONAL MANAGER"
+ ],
+ "outfits": [
+  "bk_teller: light-blue shirt with a bank name badge, small green visor",
+  "bk_head: grey vest over white shirt, name badge, vault key on a lanyard",
+  "bk_assistant: navy blazer over open shirt, lanyard, pen",
+  "bk_manager: dark navy suit, burgundy tie, pocket square",
+  "bk_regional: black suit, gold pocket square, glasses, grey temples"
+ ],
+ "caption": "From bank teller to regional manager, the job changes on every rung\n\nThe teller serves customers at the counter, and the head teller fixes errors and stocks the drawers. Then the assistant manager covers for the branch manager. Finally, the regional manager oversees several branches\n\nSo each rung up, you serve fewer customers yourself and lead more branches. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #banking #management",
+ "first_comment": "Have you ever dealt with a bank teller or a branch manager? Tell us below 🏦🪜",
+ "first_comment_igtt": "Have you ever dealt with a bank teller or a branch manager? Tell us below, link in bio 🏦🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#banking",
+  "#management"
+ ],
+ "threadsTopic": "Banking",
+ "threadsReason": "The whole ladder sits inside a retail bank, so Banking is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "Teller duties (count the drawer, accept and record payments, refer customers to the right staff); head teller manages teller operations, schedules, errors and vault cash; tellers may advance to supervisory or managerial roles",
+   "url": "https://www.bls.gov/ooh/office-and-administrative-support/tellers.htm",
+   "opened": true
+  },
+  {
+   "claim": "Bank manager duties (run branch day to day, targets and budgets, lending risk, staff, complaints, local businesses) and progression customer service, assistant manager, manager, then several branches in a region",
+   "url": "https://nationalcareers.service.gov.uk/job-profiles/bank-manager",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: retail banking (the audit ladder is accounting and the investment ladder is asset management, so neither is a bank branch) not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "Title in the sources is 'bank manager'; the script uses 'branch manager' for rung 4 and 'regional manager' (several branches in a region, per National Careers Service) for rung 5. Slug renamed to ...-to-regional-manager to match the title.",
+  "BLS tellers page does not mention a branch manager; the manager rung rests on National Careers Service only plus the BLS line that tellers may reach managerial roles. A third source would be better.",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}

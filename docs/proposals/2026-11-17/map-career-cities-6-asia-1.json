@@ -1,0 +1,426 @@
+{
+ "slug": "map-career-cities-6-asia-1",
+ "group": "map",
+ "title": "Career cities Part 6: Asia, part one, with Ledger in under 2 minutes",
+ "proposedSlot": "Fri 27 Nov 18:00 VN (to confirm)",
+ "estSeconds": 107,
+ "wordCount": 267,
+ "summary": "Part 6 of the career cities series covers 9 niche hubs across east asia, one sourced fact and the jobs available at each stop, as Hoang asked on 15 Nov.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title card",
+   "voice": "Career cities with Ledger, part six: Asia, part one, in under two minutes.",
+   "onScreen": [
+    "Career cities with Ledger",
+    "Part 6",
+    "East Asia",
+    "IN UNDER 2 MINUTES"
+   ],
+   "visual": "Title card over a world map with the earlier parts as small lit dots; the pins for this part drop in one by one; Ledger waves with his suitcase"
+  },
+  {
+   "n": 2,
+   "role": "hop",
+   "label": "stop 1 Jingdezhen, China, porcelain (arrival)",
+   "voice": "First, Ledger lands in Jingdezhen, China, a hub for porcelain.",
+   "onScreen": [
+    "PORCELAIN",
+    "JINGDEZHEN"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Jingdezhen, the pin pops and the China flag shows in its label (borders drawn); camera drops into the city scene: a kiln chimney beside a big blue-and-white vase on a plate reading JINGDEZHEN grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Jingdezhen, China, porcelain (fact and jobs)",
+   "voice": "Handmade porcelain here supported over 50,000 jobs in 2025, from potters to exporters.",
+   "onScreen": [
+    "50,000+ jobs",
+    "Handmade porcelain, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: bowl, vase, teapot; the number counts up on a fact card that stamps in; job chips (potter, glaze designer, export manager) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 4,
+   "role": "hop",
+   "label": "stop 2 Yiwu, China, small goods (arrival)",
+   "voice": "Then, he flies to Yiwu, China, a hub for small goods.",
+   "onScreen": [
+    "SMALL GOODS",
+    "YIWU"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Yiwu, the pin pops and the China flag shows in its label (borders drawn); camera drops into the city scene: a market hall with rows of stalls and an arched gate grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Yiwu, China, small goods (fact and jobs)",
+   "voice": "Its market has 80,000 booths, so traders and buyers work here.",
+   "onScreen": [
+    "80,000 booths",
+    "Yiwu Small Commodity Market, 2026"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: toy, bag, bauble; the number counts up on a fact card that stamps in; job chips (trader, buyer, logistics coordinator) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 6,
+   "role": "hop",
+   "label": "stop 3 Shenzhen, China, electronics and electric cars (arrival)",
+   "voice": "Next, he hops to Shenzhen, China, a hub for electronics and electric cars.",
+   "onScreen": [
+    "ELECTRONICS",
+    "SHENZHEN"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Shenzhen, the pin pops and the China flag shows in its label (borders drawn); camera drops into the city scene: a glass tower skyline with an electric car on a plate reading BYD grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Shenzhen, China, electronics and electric cars (fact and jobs)",
+   "voice": "BYD, based here, sold over 4.6 million vehicles in 2025, hiring engineers and sales managers.",
+   "onScreen": [
+    "4.6 million vehicles",
+    "BYD, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: phone, circuit board, electric car; the number counts up on a fact card that stamps in; job chips (hardware engineer, supply chain planner, sales manager) pop beside Ledger; real logos pop up next to Ledger in the scene: BYD, Tencent, Huawei; Ledger changes pose twice"
+  },
+  {
+   "n": 8,
+   "role": "hop",
+   "label": "stop 4 Qingdao, China, appliances and beer (arrival)",
+   "voice": "After that, he reaches Qingdao, China, a hub for home appliances and beer.",
+   "onScreen": [
+    "APPLIANCES",
+    "QINGDAO"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Qingdao, the pin pops and the China flag shows in its label (borders drawn); camera drops into the city scene: a harbour pier with a fridge and a washing machine on a plate reading HAIER grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Qingdao, China, appliances and beer (fact and jobs)",
+   "voice": "Haier, based here, earned 302 billion yuan in 2025, hiring engineers and planners.",
+   "onScreen": [
+    "302 billion yuan",
+    "Haier Smart Home, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: fridge, washing machine, beer bottle; the number counts up on a fact card that stamps in; job chips (product engineer, brand manager, export planner) pop beside Ledger; real logos pop up next to Ledger in the scene: Haier, Hisense, Tsingtao; Ledger changes pose twice"
+  },
+  {
+   "n": 10,
+   "role": "hop",
+   "label": "stop 5 Hsinchu, Taiwan, chips (arrival)",
+   "voice": "Then, he flies to Hsinchu, Taiwan, a hub for chips.",
+   "onScreen": [
+    "CHIPS",
+    "HSINCHU"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Hsinchu, the pin pops and the Taiwan flag shows in its label (borders drawn); camera drops into the city scene: a chip machine and a glowing silicon wafer on a plate reading TSMC grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Hsinchu, Taiwan, chips (fact and jobs)",
+   "voice": "Its science park employed over 177,000 workers in 2024, from engineers to planners.",
+   "onScreen": [
+    "177,389 workers",
+    "Hsinchu Science Park, Oct 2024"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: wafer, chip, circuit board; the number counts up on a fact card that stamps in; job chips (process engineer, production planner, procurement analyst) pop beside Ledger; real logos pop up next to Ledger in the scene: TSMC, UMC, MediaTek; Ledger changes pose twice"
+  },
+  {
+   "n": 12,
+   "role": "hop",
+   "label": "stop 6 Toyota City, Japan, cars (arrival)",
+   "voice": "Next, he rides to Toyota City, Japan, a hub for cars.",
+   "onScreen": [
+    "CARS",
+    "TOYOTA CITY"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Toyota City, the pin pops and the Japan flag shows in its label (borders drawn); camera drops into the city scene: a car plant with four chimneys and the plate TOYOTA, a car rolling out grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Toyota City, Japan, cars (fact and jobs)",
+   "voice": "Toyota, based here, employs 390,927 people, from buyers to production planners.",
+   "onScreen": [
+    "390,927 employees",
+    "Toyota, March 2026"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: car, engine, steering wheel; the number counts up on a fact card that stamps in; job chips (production planner, buyer, quality manager) pop beside Ledger; real logos pop up next to Ledger in the scene: Toyota; Ledger changes pose twice"
+  },
+  {
+   "n": 14,
+   "role": "hop",
+   "label": "stop 7 Sabae, Japan, eyeglass frames (arrival)",
+   "voice": "Then, he hops to Sabae, Japan, a hub for eyeglass frames.",
+   "onScreen": [
+    "EYEGLASS FRAMES",
+    "SABAE"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Sabae, the pin pops and the Japan flag shows in its label (borders drawn); camera drops into the city scene: a giant pair of glasses beside a small workshop grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Sabae, Japan, eyeglass frames (fact and jobs)",
+   "voice": "Sabae makes about 90 percent of Japan's frames, so designers and exporters work here.",
+   "onScreen": [
+    "About 90%",
+    "Share of Japan's frames, city of Sabae"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: glasses frame, lens, case; the number counts up on a fact card that stamps in; job chips (frame designer, brand manager, export manager) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 16,
+   "role": "hop",
+   "label": "stop 8 Ulsan, South Korea, cars and shipbuilding (arrival)",
+   "voice": "Next, he flies to Ulsan, South Korea, a hub for cars.",
+   "onScreen": [
+    "CARS",
+    "ULSAN"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Ulsan, the pin pops and the South Korea flag shows in its label (borders drawn); camera drops into the city scene: a car plant beside an export dock with a car carrier and the plate HYUNDAI grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Ulsan, South Korea, cars and shipbuilding (fact and jobs)",
+   "voice": "Hyundai's plant here can build 1.5 million cars a year, so logistics managers work here.",
+   "onScreen": [
+    "1.5 million cars a year",
+    "Hyundai plant capacity"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: car, steel plate, container; the number counts up on a fact card that stamps in; job chips (logistics manager, plant planner, export coordinator) pop beside Ledger; real logos pop up next to Ledger in the scene: Hyundai Motor; Ledger changes pose twice"
+  },
+  {
+   "n": 18,
+   "role": "hop",
+   "label": "stop 9 Ulaanbaatar, Mongolia, mining (arrival)",
+   "voice": "Finally, he lands in Ulaanbaatar, Mongolia, a hub for mining.",
+   "onScreen": [
+    "MINING",
+    "ULAANBAATAR"
+   ],
+   "visual": "Map view: a flight path of dots grows from the last pin to Ulaanbaatar, the pin pops and the Mongolia flag shows in its label (borders drawn); camera drops into the city scene: a haul truck, a coal heap and a copper bar with a ger tent grows out of the pin, Ledger walks in with his suitcase, the flag pole pops in and the flag rises and waves, clouds drift"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Ulaanbaatar, Mongolia, mining (fact and jobs)",
+   "voice": "Coal and copper made up 82.3 percent of Mongolia's exports, so traders work here.",
+   "onScreen": [
+    "82.3% of exports",
+    "Coal and copper, Mongolia, 2025"
+   ],
+   "visual": "Products appear one by one as the voice reaches the number: coal, copper bar, haul truck; the number counts up on a fact card that stamps in; job chips (mining analyst, commodity trader, finance manager) pop beside Ledger; no logos here (no single big company sourced), product icons only; Ledger changes pose twice"
+  },
+  {
+   "n": 20,
+   "role": "ending",
+   "label": "summary",
+   "voice": "So that was Asia, part one.",
+   "onScreen": [
+    "All stops lit on the strip map"
+   ],
+   "visual": "Camera pulls back to the region map: every pin lights in order with its flag and a small legend row"
+  },
+  {
+   "n": 21,
+   "role": "ending",
+   "label": "next part",
+   "voice": "Next, we map Southeast Asia in part seven.",
+   "onScreen": [
+    "Part 7: Southeast Asia"
+   ],
+   "visual": "Next region glows on the world strip; Ledger points to it and the title of the next part types in"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta 1",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "onScreen": [
+    "To climb in these cities, you need a good business foundation"
+   ],
+   "visual": "Full-width card with the Edlintics logo; Ledger on the campus backdrop"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta 2",
+   "voice": "Go to Ed-lin-tics dot com to learn technical business skills.",
+   "onScreen": [
+    "Go to Edlintics.com to learn technical business skills"
+   ],
+   "visual": "Same card; the website line highlights word by word"
+  }
+ ],
+ "caption": "Career cities with Ledger, Part 6, is the first of three trips across Asia, starting in East Asia, with 9 stops, and each stop shows one niche industry that town is a hub for, with a sourced fact and the jobs you could have there\n\nSo you will meet Jingdezhen, Yiwu, Shenzhen, Qingdao, Hsinchu, Toyota City, Sabae, Ulsan, and Ulaanbaatar\n\nSave the map for later, because Part 7 maps career cities across Southeast Asia",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where niche industries and their careers are concentrated in nine East Asian towns, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "BYD",
+   "city": "Shenzhen",
+   "why": "Shenzhen is home to BYD's main operations: https://en.wikipedia.org/wiki/Shenzhen (opened); BYD's own head-office page not opened"
+  },
+  {
+   "brand": "Tencent",
+   "city": "Shenzhen",
+   "why": "Tencent's headquarters is Binhai Mansion, Nanshan District (photo caption): https://en.wikipedia.org/wiki/Shenzhen (opened)"
+  },
+  {
+   "brand": "Huawei",
+   "city": "Shenzhen",
+   "why": "Named as a Shenzhen-grown firm on https://en.wikipedia.org/wiki/Shenzhen (opened); the page does not state the headquarters, so confirm on huawei.com before use"
+  },
+  {
+   "brand": "Haier",
+   "city": "Qingdao",
+   "why": "Qingdao 'home to' Haier: https://en.wikipedia.org/wiki/Qingdao (opened); the page does not state head office, confirm on haier.com"
+  },
+  {
+   "brand": "Hisense",
+   "city": "Qingdao",
+   "why": "Qingdao 'home to' Hisense: https://en.wikipedia.org/wiki/Qingdao (opened); head office not stated, confirm on hisense.com"
+  },
+  {
+   "brand": "Tsingtao Brewery",
+   "city": "Qingdao",
+   "why": "Founded in Qingdao in 1903: https://en.wikipedia.org/wiki/Qingdao (opened)"
+  },
+  {
+   "brand": "TSMC",
+   "city": "Hsinchu",
+   "why": "Listed among major companies in Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park (opened)"
+  },
+  {
+   "brand": "UMC",
+   "city": "Hsinchu",
+   "why": "Same page, Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park (opened)"
+  },
+  {
+   "brand": "MediaTek",
+   "city": "Hsinchu",
+   "why": "Same page, Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park (opened)"
+  },
+  {
+   "brand": "Toyota",
+   "city": "Toyota City",
+   "why": "Head office: 1 Toyota-Cho, Toyota City, Aichi: https://global.toyota/en/company/profile/overview/ (opened)"
+  },
+  {
+   "brand": "Hyundai Motor",
+   "city": "Ulsan",
+   "why": "Ulsan plant, described by Hyundai as the largest automobile factory worldwide: https://www.hyundai.com/worldwide/en/brand-journal/heritage/new-dedicated-ev-plant-ulsan (opened); the company's head office is in Seoul, so this is a plant, not a head office. Ulsan is the one stop with a single logo"
+  }
+ ],
+ "sources": [
+  {
+   "claim": "Jingdezhen handmade porcelain supported over 50,000 jobs in 2025, over 10 billion yuan output; UNESCO listing July 2026",
+   "url": "https://en.people.cn/n3/2026/0803/c98649-20484784.html",
+   "opened": true
+  },
+  {
+   "claim": "Jingdezhen ceramic industry above 100 billion yuan in 2025 (second figure, different scope)",
+   "url": "https://english.henan.gov.cn/2026/06-04/3362437.html",
+   "opened": false
+  },
+  {
+   "claim": "Yiwu Small Commodity Market has 80,000 booths (2 Mar 2026)",
+   "url": "https://www.yicaiglobal.com/news/yiwu-wholesale-hub-sees-24-surge-in-visitors-on-first-trading-day-after-lunar-new-year-break",
+   "opened": true
+  },
+  {
+   "claim": "Yiwu 75,000+ booths (second source, Trade City only)",
+   "url": "https://en.wikipedia.org/wiki/Yiwu_International_Trade_City",
+   "opened": false
+  },
+  {
+   "claim": "BYD sold 4,602,436 NEVs in 2025; revenue 803.97 billion yuan",
+   "url": "https://cnevpost.com/2026/03/27/byd-2",
+   "opened": true
+  },
+  {
+   "claim": "BYD's main operations are in Shenzhen; Shenzhen 2025 GDP CN 3,873 billion",
+   "url": "https://en.wikipedia.org/wiki/Shenzhen",
+   "opened": true
+  },
+  {
+   "claim": "Haier Smart Home 2025 revenue about RMB 302.3 billion",
+   "url": "https://en.cheaa.org/contents/468/13229.html",
+   "opened": true
+  },
+  {
+   "claim": "Haier Smart Home audited 2025 revenue RMB 302,329 million (second source)",
+   "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032603144.pdf",
+   "opened": false
+  },
+  {
+   "claim": "Qingdao is home to Haier, Hisense and Tsingtao Brewery (founded 1903)",
+   "url": "https://en.wikipedia.org/wiki/Qingdao",
+   "opened": true
+  },
+  {
+   "claim": "Hsinchu Science Park had 177,389 workers (Oct 2024) and 584 companies (Dec 2024); TSMC, UMC, MediaTek there",
+   "url": "https://en.wikipedia.org/wiki/Hsinchu_Science_Park",
+   "opened": true
+  },
+  {
+   "claim": "TSMC 2025 revenue NT$3.81 trillion (not used in the voice)",
+   "url": "https://focustaiwan.tw/business/202601090012",
+   "opened": false
+  },
+  {
+   "claim": "Toyota head office Toyota City; 390,927 consolidated employees as of 31 Mar 2026",
+   "url": "https://global.toyota/en/company/profile/overview/",
+   "opened": true
+  },
+  {
+   "claim": "Sabae produces about 90% of eyeglass frames made in Japan (city of Sabae)",
+   "url": "https://www.city.sabae.fukui.jp/technology/en/index.html",
+   "opened": true
+  },
+  {
+   "claim": "Sabae 96% / over 90% (second source, snippet)",
+   "url": "https://www.nippon.com/en/articles/-/12356",
+   "opened": false
+  },
+  {
+   "claim": "Hyundai Ulsan plant capacity over 1.5 million cars a year, described as the largest single plant",
+   "url": "https://www.hyundai.com/worldwide/en/brand-journal/heritage/new-dedicated-ev-plant-ulsan",
+   "opened": true
+  },
+  {
+   "claim": "Coal and copper concentrates were 82.3% of Mongolia's merchandise exports in 2025",
+   "url": "https://fortune.com/2026/10/29/mongolia-300-million-copper-exports-china-border-1-2-billion/",
+   "opened": true
+  },
+  {
+   "claim": "Mongolia coal and copper dominant exports (second source, snippet)",
+   "url": "https://eastasiaforum.org/2026/02/24/mining-drives-mongolias-economy-as-reform-momentum-builds/",
+   "opened": false
+  }
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs): clear. The reel names and defines no business concept and no career-cities map concept is registered; concept_id would be new. Themes career-cities and careers",
+ "openQuestions": [
+  "Split kept as agreed: Part 6 East Asia, Part 7 Southeast Asia, Part 8 South Asia plus Gulf plus Central Asia. No better split was obvious; Mongolia sits in Part 6 as East Asia",
+  "Ulsan is billed as 'cars' and the voice says nothing about shipbuilding because only the Hyundai plant figure was opened; I can swap in HD Hyundai Heavy shipyard if you prefer, it needs one more source",
+  "Ulaanbaatar and Hsinchu facts are national or park figures, not company figures; Ulaanbaatar has no named company (Oyu Tolgoi is in the Gobi), so no logos there",
+  "Suggested swaps if you want nicher: Imabari towels, Pohang steel, Suwon (Samsung) for Ulaanbaatar; not sourced yet",
+  "New flags to draw and check: China, Taiwan, Japan, South Korea, Mongolia",
+  "Logos: Huawei, Haier and Hisense head-office sources were not opened (Wikipedia says only 'home to'); confirm before the logo step"
+ ]
+}

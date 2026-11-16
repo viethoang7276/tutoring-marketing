@@ -1,0 +1,320 @@
+{
+ "slug": "team-big4-departments",
+ "group": "big4",
+ "title": "The Big 4 departments, explained with Ledger in under 2 minutes",
+ "proposedSlot": "Thu 26 Nov 14:30 VN (to confirm)",
+ "estSeconds": 108,
+ "wordCount": 270,
+ "summary": "One juice company meets audit, tax, deals and consulting at a Big 4 firm, then learns why the same firm cannot audit it and install its systems, ending on a four-column board with real logos.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "The Big 4 departments, explained with Ledger in under 2 minutes",
+   "onScreen": [
+    "THE BIG 4",
+    "DEPARTMENTS"
+   ],
+   "visual": "Title card on steps: the four official logos on white chips pop in one by one (Deloitte, PwC, EY, KPMG) as the voice reaches the title; Ledger in a suit waves in the middle"
+  },
+  {
+   "n": 2,
+   "role": "intro",
+   "label": "intro",
+   "voice": "First, the Big 4 are Deloitte, PwC, EY and KPMG, and each one sells four similar kinds of work to companies",
+   "onScreen": [
+    "Deloitte",
+    "PwC",
+    "EY",
+    "KPMG"
+   ],
+   "visual": "Four office towers rise left to right; each logo chip lands on its tower as its name is said; four labelled doors open at the base of each tower"
+  },
+  {
+   "n": 3,
+   "role": "client",
+   "label": "intro",
+   "voice": "So let's imagine one client, a juice company called Sunny Press, and follow its year",
+   "onScreen": [
+    "CLIENT: SUNNY PRESS"
+   ],
+   "visual": "A juice stand with an orange logo slides in; a calendar page flips through four seasons; Ledger as the owner holds a juice bottle"
+  },
+  {
+   "n": 4,
+   "role": "audit",
+   "label": "dept",
+   "voice": "First, the auditors check the accounts of Sunny Press, and then they sign an audit opinion saying the numbers are fairly stated",
+   "onScreen": [
+    "AUDIT",
+    "AUDIT OPINION"
+   ],
+   "visual": "Ledger auditor in a suit and glasses ticks rows on a ledger book at the word checks; a document labelled AUDIT OPINION slides out and a green stamp lands on it at the word sign"
+  },
+  {
+   "n": 5,
+   "role": "audit_names",
+   "label": "compare",
+   "voice": "This department is called Audit and Assurance at Deloitte and KPMG, and Assurance at PwC and EY",
+   "onScreen": [
+    "Deloitte: Audit & Assurance",
+    "KPMG: Audit and Assurance",
+    "PwC: Assurance",
+    "EY: Assurance"
+   ],
+   "visual": "Name chips with logos drop under the document, one per firm at the word naming it"
+  },
+  {
+   "n": 6,
+   "role": "tax",
+   "label": "dept",
+   "voice": "Then the tax team prepares the company's tax returns and advises on how to plan its taxes in each country",
+   "onScreen": [
+    "TAX",
+    "TAX RETURN"
+   ],
+   "visual": "Ledger tax adviser at a desk with a calculator; a form labelled TAX RETURN gets a stamp at the word prepares; a small map with two flags (two countries) lights up at the word country"
+  },
+  {
+   "n": 7,
+   "role": "deals",
+   "label": "dept",
+   "voice": "Next, Sunny Press wants to buy a smaller juice brand, so the deals team investigates that company and writes a due diligence report",
+   "onScreen": [
+    "DEALS",
+    "DUE DILIGENCE REPORT"
+   ],
+   "visual": "A small juice stand appears at right with a price tag; Ledger deal adviser holds a magnifying glass over it at the word investigates; a report with a checklist slides out at the word writes"
+  },
+  {
+   "n": 8,
+   "role": "consulting",
+   "label": "dept",
+   "voice": "After that, the consulting team installs a new sales system, so Sunny Press can track every order",
+   "onScreen": [
+    "CONSULTING",
+    "NEW SALES SYSTEM"
+   ],
+   "visual": "Ledger consultant in a hoodie plugs a laptop screen into a big dashboard; orders as small boxes flow into the dashboard at the words every order"
+  },
+  {
+   "n": 9,
+   "role": "twist",
+   "label": "compare",
+   "voice": "But here is the catch, because the same firm cannot do all of this for one client",
+   "onScreen": [
+    "THE CATCH"
+   ],
+   "visual": "All four documents sit in a row; a red cross appears over the audit opinion and the system together at the word cannot"
+  },
+  {
+   "n": 10,
+   "role": "rule",
+   "label": "compare",
+   "voice": "If a firm audits a public company, US rules stop it from also designing that company's financial systems, because it would be auditing its own work",
+   "onScreen": [
+    "INDEPENDENCE RULE",
+    "AUDITING ITS OWN WORK"
+   ],
+   "visual": "Ledger auditor looks at a system diagram he built himself, a mirror loop arrow points from the auditor back to the system at the words own work; a balance scale tips"
+  },
+  {
+   "n": 11,
+   "role": "fix",
+   "label": "compare",
+   "voice": "So Sunny Press hires one firm to audit it and a different firm to install the system",
+   "onScreen": [
+    "ONE FIRM: AUDIT",
+    "ANOTHER FIRM: SYSTEM"
+   ],
+   "visual": "Two towers with different logo chips; each Ledger shakes hands with the owner from its own side"
+  },
+  {
+   "n": 12,
+   "role": "board",
+   "label": "payoff",
+   "voice": "Finally, here is the summary board, with audit, tax, deals and consulting, and the work each one hands over",
+   "onScreen": [
+    "SUMMARY BOARD"
+   ],
+   "visual": "A board with four columns fills in; each column gets its department icon and Ledger outfit at the word naming it"
+  },
+  {
+   "n": 13,
+   "role": "board2",
+   "label": "payoff",
+   "voice": "So audit gives an opinion, tax gives returns and advice, deals gives a diligence report, and consulting gives a working system",
+   "onScreen": [
+    "OPINION",
+    "RETURNS + ADVICE",
+    "DILIGENCE REPORT",
+    "WORKING SYSTEM"
+   ],
+   "visual": "Each work product document lands under its column at the word naming it, with a tick"
+  },
+  {
+   "n": 14,
+   "role": "names",
+   "label": "payoff",
+   "voice": "The names differ by firm, but these four jobs stay the same",
+   "onScreen": [
+    "SAME 4 JOBS"
+   ],
+   "visual": "Four small logo rows sweep across the board; dotted lines show Deals and Consulting grouped under Advisory at KPMG and PwC, and listed separately at EY"
+  },
+  {
+   "n": 15,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics",
+   "onScreen": [
+    "To climb your own",
+    "career ladder",
+    "learn technical",
+    "business concepts",
+    "at Edlintics"
+   ],
+   "visual": "Standard ladder-reel closing scene with all Ledgers on the steps"
+  }
+ ],
+ "caption": "What do the Big 4 actually do all day?\n\nDeloitte, PwC, EY and KPMG each sell four similar kinds of work. Audit checks the accounts and gives an audit opinion, tax prepares returns and advises on tax planning, deals investigates a company before it is bought, and consulting installs systems that change how a business runs\n\nBut one firm cannot do everything for one client, because an auditor must stay independent and must not audit its own work\n\nWhich of these four departments would you want to see from the inside?\n\n#edlintics #big4 #accounting #careers",
+ "first_comment": "Which Big 4 department would you try first, audit, tax, deals or consulting? Tell us below 📊🧾",
+ "first_comment_igtt": "Which Big 4 department would you try first, audit, tax, deals or consulting? Tell us below, link in bio 📊🧾",
+ "hashtags": [
+  "#edlintics",
+  "#big4",
+  "#accounting",
+  "#careers"
+ ],
+ "threadsTopic": "Accounting",
+ "threadsReason": "The reel explains accounting-firm departments, so the Accounting topic fits; if no Accounting community is joined, use the topic Business",
+ "logos": [
+  {
+   "brand": "Deloitte",
+   "city": "London (global HQ of Deloitte Touche Tohmatsu Limited)",
+   "why": "Logo from Wikimedia Commons file page https://commons.wikimedia.org/wiki/File:Deloitte.svg, to be fetched later via fetch_logos.py; use official brand page https://www.deloitte.com as origin check"
+  },
+  {
+   "brand": "PwC",
+   "city": "London",
+   "why": "https://commons.wikimedia.org/wiki/File:PricewaterhouseCoopers_Logo.svg (check the file name at fetch time); origin https://www.pwc.com"
+  },
+  {
+   "brand": "EY",
+   "city": "London",
+   "why": "https://commons.wikimedia.org/wiki/File:EY_logo_2019.svg (check at fetch time); origin https://www.ey.com"
+  },
+  {
+   "brand": "KPMG",
+   "city": "Amstelveen (global HQ) and London",
+   "why": "https://commons.wikimedia.org/wiki/File:KPMG_logo.svg (check at fetch time); origin https://kpmg.com"
+  }
+ ],
+ "sources": [
+  {
+   "claim": "Deloitte service areas and names (global site, read 17 Nov 2026): Audit, Assurance, Tax, Strategy & Transactions, Risk, Regulatory & Forensic, Enterprise Technology & Performance, Engineering AI & Data, Finance Transformation and others",
+   "url": "https://www.deloitte.com/global/en/services.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Audit & Assurance delivers an audit opinion on financial statements and an opinion on internal controls",
+   "url": "https://www.deloitte.com/global/en/services/audit-assurance.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Tax: compliance, planning, international tax, transfer pricing, M&A tax",
+   "url": "https://www.deloitte.com/global/en/services/tax.html",
+   "opened": true
+  },
+  {
+   "claim": "Deloitte Consulting groups Strategy & Transactions, Risk Regulatory & Forensic, Enterprise Technology & Performance, Engineering AI & Data, Cyber, Finance Transformation (the page does not use the label Technology & Transformation; the label comes from Wikipedia)",
+   "url": "https://www.deloitte.com/global/en/services/consulting.html",
+   "opened": true
+  },
+  {
+   "claim": "EY service lines: Assurance, Consulting, Strategy and Transactions by EY-Parthenon, Tax, Law, and others (global site)",
+   "url": "https://www.ey.com/en_gl/services",
+   "opened": true
+  },
+  {
+   "claim": "EY Assurance: audit and other assurance engagements, technology risk, forensic",
+   "url": "https://www.ey.com/en_gl/services/assurance",
+   "opened": true
+  },
+  {
+   "claim": "EY Tax: compliance, planning, transaction tax, controversy",
+   "url": "https://www.ey.com/en_gl/services/tax",
+   "opened": true
+  },
+  {
+   "claim": "EY Consulting: technology and business transformation, finance technology, risk and resilience (page does not say system implementation in words, so the script says installs a system as a plain-words summary)",
+   "url": "https://www.ey.com/en_gl/services/consulting",
+   "opened": true
+  },
+  {
+   "claim": "EY Transactions and Corporate Finance by EY-Parthenon: due diligence, buying and selling businesses",
+   "url": "https://www.ey.com/en_gl/services/strategy-transactions",
+   "opened": true
+  },
+  {
+   "claim": "KPMG global service lines: Advisory, AI, Audit and Assurance, Law, Sustainability, Tax",
+   "url": "https://kpmg.com/xx/en/what-we-do/services.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG Advisory: Deals, Risk, Technology",
+   "url": "https://kpmg.com/xx/en/what-we-do/services/advisory.html",
+   "opened": true
+  },
+  {
+   "claim": "KPMG Tax: international and deal tax, compliance, indirect tax, mobility",
+   "url": "https://kpmg.com/xx/en/what-we-do/services/tax.html",
+   "opened": true
+  },
+  {
+   "claim": "Big Four overview: PwC Advisory, EY Consulting and Strategy and Transactions, KPMG Advisory, Deloitte Strategy Risk & Transactions and Technology & Transformation; FY2025 revenues; UK FRC 2020 call to separate audit and consulting",
+   "url": "https://en.wikipedia.org/wiki/Big_Four_accounting_firms",
+   "opened": true
+  },
+  {
+   "claim": "PwC three global lines Assurance, Advisory, Tax (and Legal); FY2024 revenue US$55.4bn (secondary; PwC's own annual review pages returned 403, so PwC's current names are not confirmed from pwc.com and need a human check)",
+   "url": "https://en.wikipedia.org/wiki/PricewaterhouseCoopers",
+   "opened": true
+  },
+  {
+   "claim": "PwC global annual review lists Assurance, Advisory, Tax and Legal Services, Internal Firm Services (search snippet only, page blocked)",
+   "url": "https://pwc.com/gx/en/global-annual-review/2024/pwc-global-annual-review-2024.pdf",
+   "opened": false
+  },
+  {
+   "claim": "SEC independence FAQ: bookkeeping, financial information system design and implementation, internal audit outsourcing, valuation, actuarial, legal are restricted for audit clients under Rule 2-01(c)(4); auditor must not audit its own work (translation example)",
+   "url": "https://viewpoint.pwc.com/dt/us/en/sec/sec_faqs/sec_faqs_US/auditor_independence_US/E-Non-audit-services.html",
+   "opened": true
+  },
+  {
+   "claim": "SEC release 33-8183 (2003) Strengthening the Commission's Requirements Regarding Auditor Independence; page opened but showed metadata only",
+   "url": "http://www.sec.gov/rule-release/33-8183",
+   "opened": true
+  },
+  {
+   "claim": "Careers source on what graduates do in each Big 4 line (not yet opened): check a careers page such as the Big 4 graduate pages or a Wall Street Oasis / Indeed guide before final",
+   "url": "https://www.deloitte.com/global/en/careers.html",
+   "opened": false
+  }
+ ],
+ "registry_check": "Registry check: the hub concepts collection (124 docs, read 17 Nov) has no audit, consulting or Big 4 entries, and no career-ladder concept ids, so there is no hard 90-day or same-concept block. The audit ladder (13 Nov) and consultant ladder (16 Nov) are related career content: on 26 Nov this is 13 and 10 days later, inside the 30-day related window, so it needs Hoang's waiver or a later slot (on or after 14 Dec). Theme count: career theme at most 2 posts a week",
+ "openQuestions": [
+  "Waiver: OK to publish 26 Nov, 10-13 days after the audit and consultant ladders (30-day related rule), or move to 14 Dec or later?",
+  "PwC's current line names are only confirmed from Wikipedia and a search snippet because pwc.com returned 403; please let a browser check pwc.com global annual review before final. Script avoids stating PwC names beyond Assurance and Advisory",
+  "Deloitte's global site no longer shows the 2024 names Technology & Transformation / Strategy Risk & Transactions as headings; the script says only audit, tax, deals, consulting and avoids that wording",
+  "Caption disclaimer: no non-affiliation line (as for map reels, 15 Nov). Same here, or add one given four real logos in an explainer?",
+  "Risk is left out of the four departments to fit 2 minutes (it sits inside Advisory or Consulting at each firm). Add a fifth Risk beat (about 20 words, would push to about 115 s)?",
+  "The independence rule is stated for US public companies (SEC Rule 2-01); the script says public company and US rules. Local rules differ",
+  "No revenue figures used. Optional: FY2025 Deloitte US$70.5bn, PwC 56.9bn, EY 53.2bn, KPMG 39.8bn are from Wikipedia only, so not used until from firm releases",
+  "Both ladders idea (specialist vs manager) is not used, to keep one story",
+  "Logo files are real-brand marks on white chips on the title and summary board; fetch_logos.py needed later, nothing downloaded now",
+  "CTA copied exactly from ladder_script.py CTA constant (ladder reel version)",
+  "Alternative title/angle: 'Audit, tax, deals or consulting: which Big 4 job is yours?' as a pick-a-lane reel with one Ledger per job"
+ ]
+}

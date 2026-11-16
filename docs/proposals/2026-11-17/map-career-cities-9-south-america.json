@@ -1,0 +1,388 @@
+{
+ "slug": "map-career-cities-9-south-america",
+ "group": "map",
+ "title": "Career cities with Ledger, Part 9: South America, in under 2 minutes",
+ "proposedSlot": "Fri 4 Dec 18:00 VN (to confirm)",
+ "estSeconds": 99,
+ "wordCount": 217,
+ "summary": "Hoang's request: South America, one niche industry per country, jobs at each stop, real logos in the city scene (Medellin has three).",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "Career cities with Ledger, part nine: South America, in under two minutes.",
+   "onScreen": [
+    "Career cities with Ledger",
+    "Part 9",
+    "South America",
+    "IN UNDER 2 MINUTES"
+   ],
+   "visual": "Title card with the series name, the part number and a small lit world strip; earlier parts shown as lit dots; Ledger waves with his suitcase"
+  },
+  {
+   "n": 2,
+   "role": "hop",
+   "label": "stop 1 Medellin (hop)",
+   "voice": "First, Ledger lands in Medellin, a hub for business groups.",
+   "onScreen": [
+    "MEDELLIN, Colombia",
+    "BUSINESS GROUPS"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Medellin pin; the Colombia flag rises on the pin; the industry chip pops in when the voice says 'business groups'"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Medellin (city)",
+   "voice": "Its home-grown group links about 125 companies, from banks to food.",
+   "onScreen": [
+    "ABOUT 125 COMPANIES",
+    "JOBS: group strategy analyst, bank credit analyst, food-company finance assistant"
+   ],
+   "visual": "Metro cable car over the valley, a tower block and a network of linked company boxes (bank, food, cement, insurance) that connect one by one; Colombia flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said. Real logos pop in next to Ledger: Grupo Nutresa, Grupo Argos, Grupo Sura"
+  },
+  {
+   "n": 4,
+   "role": "hop",
+   "label": "stop 2 Guayaquil (hop)",
+   "voice": "Then, he flies to Guayaquil, a hub for shrimp.",
+   "onScreen": [
+    "GUAYAQUIL, Ecuador",
+    "SHRIMP"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Guayaquil pin; the Ecuador flag rises on the pin; the industry chip pops in when the voice says 'shrimp'"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Guayaquil (city)",
+   "voice": "Ecuador sold 8.4 billion dollars of shrimp abroad in 2025.",
+   "onScreen": [
+    "$8.4 BILLION, 2025",
+    "JOBS: export coordinator, aquaculture accountant, port logistics planner"
+   ],
+   "visual": "Riverside port with a cargo ship; three shrimp crates are loaded one by one and a shrimp icon rolls up a bar showing the number; Ecuador flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 6,
+   "role": "hop",
+   "label": "stop 3 Arequipa (hop)",
+   "voice": "Next, he hops to Arequipa, a hub for alpaca fiber.",
+   "onScreen": [
+    "AREQUIPA, Peru",
+    "ALPACA FIBER"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Arequipa pin; the Peru flag rises on the pin; the industry chip pops in when the voice says 'alpaca fiber'"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Arequipa (city)",
+   "voice": "Its region handled 99 percent of Peru's alpaca fiber exports in 2019.",
+   "onScreen": [
+    "99% OF PERU'S ALPACA EXPORTS",
+    "JOBS: textile buyer, export sales assistant, quality controller"
+   ],
+   "visual": "White volcano behind a cathedral, an alpaca walks in, wool skeins and a sweater appear one by one; Peru flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 8,
+   "role": "hop",
+   "label": "stop 4 Antofagasta (hop)",
+   "voice": "Then, he flies to Antofagasta, a hub for copper.",
+   "onScreen": [
+    "ANTOFAGASTA, Chile",
+    "COPPER"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Antofagasta pin; the Chile flag rises on the pin; the industry chip pops in when the voice says 'copper'"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Antofagasta (city)",
+   "voice": "Its region makes about half of Chile's copper.",
+   "onScreen": [
+    "ABOUT HALF OF CHILE'S COPPER",
+    "JOBS: mine planner, cost accountant, shipping and logistics analyst"
+   ],
+   "visual": "Desert coast, a haul truck and a copper-coloured ore pile; copper bars appear and fill half a Chile outline; Chile flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 10,
+   "role": "hop",
+   "label": "stop 5 Mendoza (hop)",
+   "voice": "Next, he hops to Mendoza, a hub for wine.",
+   "onScreen": [
+    "MENDOZA, Argentina",
+    "WINE"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Mendoza pin; the Argentina flag rises on the pin; the industry chip pops in when the voice says 'wine'"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Mendoza (city)",
+   "voice": "Mendoza makes 74 percent of Argentina's wine.",
+   "onScreen": [
+    "74% OF ARGENTINA'S WINE",
+    "JOBS: winery finance assistant, export manager, vineyard operations planner"
+   ],
+   "visual": "Vineyard rows under the Andes, a wine barrel and bottles appear one by one; a pie fills to three quarters; Argentina flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 12,
+   "role": "hop",
+   "label": "stop 6 Montevideo (hop)",
+   "voice": "After that, he reaches Montevideo, a hub for software.",
+   "onScreen": [
+    "MONTEVIDEO, Uruguay",
+    "SOFTWARE"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Montevideo pin; the Uruguay flag rises on the pin; the industry chip pops in when the voice says 'software'"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Montevideo (city)",
+   "voice": "Uruguay sells 82 percent of its software exports to the United States.",
+   "onScreen": [
+    "82% GO TO THE US",
+    "JOBS: software project manager, IT-services account manager, data analyst"
+   ],
+   "visual": "Harbour front, a laptop with code, a software icon flying across a map to the United States; a pie fills to 82 percent; Uruguay flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 14,
+   "role": "hop",
+   "label": "stop 7 Hernandarias (hop)",
+   "voice": "Then, he flies to Hernandarias, a hub for hydropower.",
+   "onScreen": [
+    "HERNANDARIAS, Paraguay",
+    "HYDROPOWER"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Hernandarias pin; the Paraguay flag rises on the pin; the industry chip pops in when the voice says 'hydropower'"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Hernandarias (city)",
+   "voice": "The Itaipu dam here generated almost 73,000 gigawatt hours in 2025.",
+   "onScreen": [
+    "72,879 GWh, 2025",
+    "JOBS: energy trader, plant finance analyst, grid planner"
+   ],
+   "visual": "A wide dam with water spilling, power lines that light up one by one toward two cities; a gauge counts up; Paraguay flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 16,
+   "role": "hop",
+   "label": "stop 8 Manaus (hop)",
+   "voice": "Next, he hops to Manaus, a hub for electronics.",
+   "onScreen": [
+    "MANAUS, Brazil",
+    "ELECTRONICS"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Manaus pin; the Brazil flag rises on the pin; the industry chip pops in when the voice says 'electronics'"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Manaus (city)",
+   "voice": "Its factory zone earned 227.7 billion reais in 2025.",
+   "onScreen": [
+    "R$ 227.7 BILLION, 2025",
+    "JOBS: production planner, import and customs analyst, factory accountant"
+   ],
+   "visual": "River with a boat, the opera house dome and a factory line where phones, TVs and motorbikes appear one by one; Brazil flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said"
+  },
+  {
+   "n": 18,
+   "role": "hop",
+   "label": "stop 9 Sao Jose dos Campos (hop)",
+   "voice": "Finally, he lands in Sao Jose dos Campos, a hub for aircraft.",
+   "onScreen": [
+    "SAO JOSE DOS CAMPOS, Brazil",
+    "AIRCRAFT"
+   ],
+   "visual": "Camera on the map: Ledger flies on a dotted path to the Sao Jose dos Campos pin; the Brazil flag rises on the pin; the industry chip pops in when the voice says 'aircraft'"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Sao Jose dos Campos (city)",
+   "voice": "Embraer, based here, delivered 244 aircraft in 2025.",
+   "onScreen": [
+    "244 AIRCRAFT, 2025",
+    "JOBS: aircraft sales analyst, supply chain planner, programme finance controller"
+   ],
+   "visual": "Hangar with an AIRBUS-style plate reading EMBRAER on a plain plate (name as text), jets roll out and fly off one by one; Brazil flag on a pole. Ledger walks in with his suitcase and changes pose twice; the fact card stamps in when the number is said. Real logos pop in next to Ledger: Embraer"
+  },
+  {
+   "n": 20,
+   "role": "summary",
+   "label": "summary",
+   "voice": "So that was South America.",
+   "onScreen": [
+    "South America",
+    "All stops lit on the map"
+   ],
+   "visual": "Map zooms out; all pins light up with a flag each and numbered legend"
+  },
+  {
+   "n": 21,
+   "role": "summary",
+   "label": "next part",
+   "voice": "Next, we map career cities across Africa.",
+   "onScreen": [
+    "Part 10: Africa"
+   ],
+   "visual": "Next region glows on the world strip; Ledger points at it with his suitcase"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta 1",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "onScreen": [
+    "To climb in these cities, you need a good business foundation"
+   ],
+   "visual": "End card with Ledger"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta 2",
+   "voice": "Go to Edlintics.com to learn technical business skills.",
+   "onScreen": [
+    "Go to Edlintics.com to learn technical business skills"
+   ],
+   "visual": "End card with Ledger and the Edlintics.com wordmark"
+  }
+ ],
+ "caption": "Career cities with Ledger, Part 9, crosses South America in nine stops, and each stop shows one niche industry that city is a hub for, with a sourced fact and the jobs you could have there\n\nSo you will meet Medellin for business groups, Guayaquil for shrimp, Arequipa for alpaca fiber, Antofagasta for copper, Mendoza for wine, Montevideo for software, Hernandarias for hydropower, Manaus for electronics, and Sao Jose dos Campos for aircraft\n\nSave the map for later, because Part 10 maps career cities across Africa",
+ "first_comment": "Which South American city did we miss, and which industry is it a hub for? 🗺️🌎",
+ "first_comment_igtt": "Which South American city did we miss, and what industry is it known for? 🗺️🌎 Link in bio for the earlier parts",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of nine South American cities, each tied to one niche industry and the jobs in it, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "Grupo Nutresa",
+   "city": "Medellin",
+   "why": "Headquartered in Medellin per https://en.wikipedia.org/wiki/Grupo_Nutresa (opened); confirm on company site before use"
+  },
+  {
+   "brand": "Grupo Argos",
+   "city": "Medellin",
+   "why": "Headquartered in Medellin per https://en.wikipedia.org/wiki/Grupo_Argos (opened)"
+  },
+  {
+   "brand": "Grupo Sura",
+   "city": "Medellin",
+   "why": "Headquartered in Medellin per https://en.wikipedia.org/wiki/Grupo_Sura (opened)"
+  },
+  {
+   "brand": "Embraer",
+   "city": "Sao Jose dos Campos",
+   "why": "Headquartered there per https://en.wikipedia.org/wiki/Embraer (opened); only one big brand found in this city, so below the 3-logo rule"
+  }
+ ],
+ "sources": [
+  {
+   "claim": "Medellin: GEA is a conglomerate of about 125 companies, most in Antioquia, with Bancolombia, Argos, Sura and Nutresa as main companies",
+   "url": "https://en.wikipedia.org/wiki/Grupo_Empresarial_Antioque%C3%B1o",
+   "opened": true
+  },
+  {
+   "claim": "Guayaquil: Ecuador shrimp exports USD 8.4 billion in 2025, up 20 percent, top export ahead of oil (Reuters via Baird Maritime). Seafoodsource gives USD 7.47 billion (CNA basis) so the figures differ by source",
+   "url": "https://www.bairdmaritime.com/fishing/aquaculture/shrimp-overtakes-oil-as-ecuadors-top-export-in-2025",
+   "opened": true
+  },
+  {
+   "claim": "Guayaquil as shrimp hub: Songa headquartered in Guayaquil (search snippet only, Seafoodsource directory returned 403)",
+   "url": "https://www.seafoodsource.com/supplier-directory/songa",
+   "opened": false
+  },
+  {
+   "claim": "Arequipa: region is main department for alpaca fiber exports, 99 percent of sales (Peru.info, 6 Nov 2019)",
+   "url": "https://peru.info/en-us/foreign-trade/news/7/32/peru-is-the-world-s-leading-producer-of-alpaca-fiber",
+   "opened": true
+  },
+  {
+   "claim": "Antofagasta: Cochilco says the region is the top copper area with about half of national output, share projected to fall 5 points by 2034 (Jan 2025, via Mining Reporters)",
+   "url": "https://miningreporters.com/noticia/news/2025/01/chile-will-raise-share-global-copper-production-2034",
+   "opened": true
+  },
+  {
+   "claim": "Mendoza: 74 percent of Argentine wine output, over 70 percent of planted area (Great Wine Capitals)",
+   "url": "https://www.greatwinecapitals.com/?p=34232",
+   "opened": true
+  },
+  {
+   "claim": "Mendoza: Mendoza government release says 80 percent (differs; 70 percent and 65 percent also published)",
+   "url": "https://www.mendoza.gov.ar/prensa/mendoza-reune-el-80-de-la-produccion-del-vino-de-argentina/",
+   "opened": false
+  },
+  {
+   "claim": "Montevideo: US buys 82 percent of Uruguay's software exports (US Commercial Service guide, undated)",
+   "url": "https://www.trade.gov/country-commercial-guides/uruguay-information-and-communication-technology",
+   "opened": true
+  },
+  {
+   "claim": "Hernandarias: Itaipu generated 72,879 GWh in 2025 (La Nacion, 12 Jan 2026); location Foz do Iguacu and Hernandarias (Wikipedia Itaipu Dam)",
+   "url": "https://www.lanacion.com.py/negocios/2026/01/12/itaipu-suministro-un-264-mas-de-energia-electrica-durante-el-2025/ and https://en.wikipedia.org/wiki/Itaipu_Dam",
+   "opened": true
+  },
+  {
+   "claim": "Manaus: Polo Industrial de Manaus revenue R$ 227.67 billion in 2025 (US$ 40.90 billion), sectors electronics, IT goods, two-wheelers (Suframa)",
+   "url": "https://www.gov.br/suframa/pt-br/assuntos/invest-pt/zfm",
+   "opened": true
+  },
+  {
+   "claim": "Manaus: R$ 227.6 billion in 2025, up 11.02 percent; 131,401 direct jobs average (Portal Amazonia)",
+   "url": "https://www.portalamazonia.com/economia/faturamento-pim-2025-2/",
+   "opened": true
+  },
+  {
+   "claim": "Sao Jose dos Campos: Embraer delivered 244 aircraft in 2025 versus 206 in 2024 (Aviacion al Dia); headquarters Sao Jose dos Campos (Wikipedia Embraer)",
+   "url": "https://aviacionaldia.com/en/2026/01/embraer-delivered-244-aircraft-in-2025.html and https://en.wikipedia.org/wiki/Embraer",
+   "opened": true
+  },
+  {
+   "claim": "Embraer 233 deliveries (commercial and executive only; 244 includes 11 defence aircraft) (ch-aviation)",
+   "url": "https://www.ch-aviation.com/news/163425-embraer-delivered-233-commercial-and-executive-jets-in-2025",
+   "opened": true
+  },
+  {
+   "claim": "Logos: Grupo Nutresa headquartered in Medellin",
+   "url": "https://en.wikipedia.org/wiki/Grupo_Nutresa",
+   "opened": true
+  },
+  {
+   "claim": "Logos: Grupo Argos headquartered in Medellin",
+   "url": "https://en.wikipedia.org/wiki/Grupo_Argos",
+   "opened": true
+  },
+  {
+   "claim": "Logos: Grupo Sura headquartered in Medellin",
+   "url": "https://en.wikipedia.org/wiki/Grupo_Sura",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear. grep of docs/content-workflow/concept-registry.md for career-cities, south america, africa found no entry; the hub concepts collection (ArtifactData) was NOT queried by this writer, so re-run against the hub before building. Concept ids proposed: career-cities-map-9-south-america. Themes career-cities and careers",
+ "openQuestions": [
+  "Slot: Part 9 Fri 4 Dec 18:00 VN is a proposal; Part 8 (Asia) must name Part 9 South America.",
+  "Word count is below the 250-285 in the task because Part 5 used 242 words for 110.9 s; 285 words would run about 130 s and break the 2-minute cap. Hoang to confirm that cap wins.",
+  "Only 3 logos in the city scene are met for Medellin (Nutresa, Argos, Sura). Sao Jose dos Campos has one (Embraer). Other stops show no logos. Logo files must be obtained by the lead, none downloaded here.",
+  "Hernandarias is a small town; Itaipu is binational (Brazil and Paraguay), so keep the wording neutral and show only the Paraguay flag at this stop. Alternatively use Foz do Iguacu or Ciudad del Este.",
+  "Weak: Arequipa's 99 percent is a 2019 figure; Montevideo's 82 percent is undated and national; Mendoza share varies by source (65 to 80 percent); Guayaquil shrimp figure is national (USD 8.4 billion Reuters vs USD 7.47 billion CNA) and the Guayaquil hub claim rests on a snippet; Antofagasta share is a Cochilco projection from Jan 2025.",
+  "Two Brazil stops (Manaus and Sao Jose dos Campos). Swap one for a new country (for example Santa Cruz in Bolivia or Georgetown in Guyana) if Hoang wants maximum variety; I left Guyana and Venezuela out because of the border dispute.",
+  "Jobs lines are examples of roles that exist in such industries, not sourced vacancies; they sit on screen as chips, not in the voice."
+ ]
+}

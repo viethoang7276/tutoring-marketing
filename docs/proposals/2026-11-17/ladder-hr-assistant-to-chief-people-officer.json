@@ -1,0 +1,284 @@
+{
+ "slug": "ladder-hr-assistant-to-chief-people-officer",
+ "group": "ladder",
+ "title": "From HR assistant to chief people officer, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Sun 29 Nov 21:30 VN (to confirm)",
+ "estSeconds": 87,
+ "wordCount": 218,
+ "summary": "Office-side ladder for business viewers: from the person who files new-hire paperwork to the executive who sets people strategy.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From HR assistant to chief people officer, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From HR assistant to chief people officer, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the hr2_assistant outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 HR ASSISTANT",
+   "voice": "First, Ledger is the HR assistant, with a stack of folders.",
+   "onScreen": [],
+   "visual": "OUTFIT (hr2_assistant: light-green cardigan, lanyard, a stack of folders, laptop bag). Header HR ASSISTANT. Ledger alone, scale 3.2; arrows pop in on 'lanyard' and 'folders'"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 HR ASSISTANT",
+   "voice": "Then he files the paperwork for each new hire.",
+   "onScreen": [
+    "NEW HIRE FILES",
+    "LEAVER FILES"
+   ],
+   "visual": "A new-hire folder stamped and filed; a leaver folder moves to the archive"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 HR ASSISTANT",
+   "voice": "He also books interviews, and helps with company events.",
+   "onScreen": [
+    "BOOK INTERVIEWS"
+   ],
+   "visual": "A calendar books slots; a balloon arch appears for an event"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 HR ASSISTANT",
+   "voice": "So on this rung, he supports every HR task himself.",
+   "onScreen": [],
+   "visual": "Slider at 0.06 on 'Supports'"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he climbs to HR specialist.",
+   "onScreen": [
+    "HR SPECIALIST"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 HR SPECIALIST",
+   "voice": "Now he owns one area, such as hiring, and screens each applicant.",
+   "onScreen": [
+    "OWN RECRUITING"
+   ],
+   "visual": "OUTFIT (hr2_specialist: mustard cardigan over a white shirt, headphone around neck, pen). Header HR SPECIALIST. A stack of CVs narrows to a short list"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 HR SPECIALIST",
+   "voice": "Then he interviews them, and passes the best to the hiring manager.",
+   "onScreen": [
+    "INTERVIEW",
+    "SHORTLIST"
+   ],
+   "visual": "Ledger interviews a candidate; a short list moves to a manager figure"
+  },
+  {
+   "n": 9,
+   "role": "rung",
+   "label": "rung 2 HR SPECIALIST",
+   "voice": "So he supports a little less, and starts to specialise.",
+   "onScreen": [],
+   "visual": "Slider at 0.3"
+  },
+  {
+   "n": 10,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to generalist.",
+   "onScreen": [
+    "HR GENERALIST"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 HR GENERALIST",
+   "voice": "As generalist, he covers pay, benefits, training and employee questions.",
+   "onScreen": [
+    "PAY AND BENEFITS",
+    "TRAIN STAFF"
+   ],
+   "visual": "OUTFIT (hr2_generalist: teal blazer, name badge, notebook, glasses). Header HR GENERALIST. Four small icons (pay slip, health card, book, question mark) circle him"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 HR GENERALIST",
+   "voice": "He also reviews the policies, and recommends changes.",
+   "onScreen": [
+    "REVIEW POLICIES"
+   ],
+   "visual": "A policy page gets a pen note and a tick"
+  },
+  {
+   "n": 13,
+   "role": "rung",
+   "label": "rung 3 HR GENERALIST",
+   "voice": "Then he advises managers on leave and the law.",
+   "onScreen": [
+    "ADVISE MANAGERS"
+   ],
+   "visual": "A manager figure asks; a leave rule card slides across"
+  },
+  {
+   "n": 14,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as HR manager.",
+   "onScreen": [
+    "HR MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 HR MANAGER",
+   "voice": "Now, as HR manager, he owns the policies.",
+   "onScreen": [
+    "OWN THE POLICIES"
+   ],
+   "visual": "OUTFIT (hr2_manager: navy blazer, white shirt, lanyard, tablet). Header HR MANAGER. A policy binder with a legal stamp"
+  },
+  {
+   "n": 16,
+   "role": "rung",
+   "label": "rung 4 HR MANAGER",
+   "voice": "Then he leads the assistants and specialists, and handles the disputes.",
+   "onScreen": [
+    "LEAD THE TEAM",
+    "HANDLE DISPUTES"
+   ],
+   "visual": "Two team figures in a row; a dispute card turns into a handshake"
+  },
+  {
+   "n": 17,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as chief people officer.",
+   "onScreen": [
+    "PEOPLE OFFICER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 PEOPLE OFFICER",
+   "voice": "Finally, as chief people officer, he reports to the chief executive.",
+   "onScreen": [
+    "REPORT TO CEO"
+   ],
+   "visual": "OUTFIT (hr2_cpo: black suit, gold pocket square, glasses, grey temples). Header PEOPLE OFFICER. A CEO figure at a boardroom table, Ledger beside"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 PEOPLE OFFICER",
+   "voice": "He sets the people strategy, and leads HR.",
+   "onScreen": [
+    "SET THE STRATEGY",
+    "LEAD HR"
+   ],
+   "visual": "A strategy slide; org chart of HR below him"
+  },
+  {
+   "n": 20,
+   "role": "rung",
+   "label": "rung 5 PEOPLE OFFICER",
+   "voice": "Yet he files almost no paperwork himself, and answers for the workforce.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Shapes'; a staff group appears"
+  },
+  {
+   "n": 21,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger supported less, and shaped more.",
+   "onScreen": [
+    "SUPPORTS to SHAPES"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Supports",
+  "top": "Shapes"
+ },
+ "headerTitles": [
+  "HR ASSISTANT",
+  "HR SPECIALIST",
+  "HR GENERALIST",
+  "HR MANAGER",
+  "PEOPLE OFFICER"
+ ],
+ "outfits": [
+  "hr2_assistant: light-green cardigan, lanyard, a stack of folders, laptop bag",
+  "hr2_specialist: mustard cardigan over a white shirt, headphone around neck, pen",
+  "hr2_generalist: teal blazer, name badge, notebook, glasses",
+  "hr2_manager: navy blazer, white shirt, lanyard, tablet",
+  "hr2_cpo: black suit, gold pocket square, glasses, grey temples"
+ ],
+ "caption": "From HR assistant to chief people officer, the job changes on every rung\n\nThe HR assistant files new-hire paperwork and books interviews, and the specialist screens the applicants. Then the HR manager oversees the policies and leads the team. Finally, the chief people officer sets the people strategy with the chief executive\n\nSo each rung up, you support fewer tasks yourself and shape more of the company. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #humanresources #management",
+ "first_comment": "Which rung of HR would you want to reach first? Tell us below 👥🪜",
+ "first_comment_igtt": "Which rung of HR would you want to reach first? Tell us below, link in bio 👥🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#humanresources",
+  "#management"
+ ],
+ "threadsTopic": "Human Resources",
+ "threadsReason": "The whole ladder is inside an HR department, so Human Resources is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "HR path HR assistant or coordinator, manager, director, then CHRO or chief people officer reporting to the CEO, with duties of each level; generalist vs specialist",
+   "url": "https://lattice.com/articles/the-comprehensive-guide-to-hr-career-paths",
+   "opened": true
+  },
+  {
+   "claim": "HR assistant (paperwork, events), specialist, generalist, manager or business partner, director, CHRO (also called chief people officer) with duties",
+   "url": "https://www.techtarget.com/searchhrsoftware/feature/The-human-resources-career-path-From-HR-assistant-to-CHRO",
+   "opened": true
+  },
+  {
+   "claim": "HR specialists recruit, screen and interview applicants; HR managers oversee recruiting, disputes and discipline and supervise specialists; some managers start as specialists",
+   "url": "https://www.bls.gov/ooh/management/human-resources-managers.htm",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: human resources (the receptionist-to-hotel-manager ladder is hospitality; the employee-turnover concept is not named here) not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "The Lattice and TechTarget pages are career guides, not official bodies (no government career guide for the top rungs); the BLS page backs only specialist and manager. Lattice and TechTarget list years of experience, which the script leaves out (they disagree).",
+  "The director rung is skipped to keep five rungs (HR director sits between manager and chief people officer in both guides); the climb line goes manager to chief people officer. Say if you want the director kept and the assistant dropped.",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}

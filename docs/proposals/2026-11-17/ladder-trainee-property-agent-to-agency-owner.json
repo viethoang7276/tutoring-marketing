@@ -1,0 +1,279 @@
+{
+ "slug": "ladder-trainee-property-agent-to-agency-owner",
+ "group": "ladder",
+ "title": "From trainee property agent to agency owner, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Sat 28 Nov 21:30 VN (to confirm)",
+ "estSeconds": 88,
+ "wordCount": 220,
+ "summary": "Viewers see agents on every street corner; the ladder shows the licence step and the move from selling to running an agency.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From trainee property agent to agency owner, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From trainee property agent to agency owner, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the re_trainee outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 THE TRAINEE",
+   "voice": "First, Ledger is the trainee agent, with a folder of listings.",
+   "onScreen": [],
+   "visual": "OUTFIT (re_trainee: white shirt with a lanyard, blue agency tie, folder of listings, backpack). Header THE TRAINEE. Ledger alone, scale 3.2; arrows pop in on 'folder' and 'lanyard'"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 THE TRAINEE",
+   "voice": "Then he books viewings, and shows clients around the homes.",
+   "onScreen": [
+    "BOOK VIEWINGS",
+    "SHOW HOMES"
+   ],
+   "visual": "A calendar books slots; Ledger opens a door for two clients"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 THE TRAINEE",
+   "voice": "He passes each offer to his agent, who talks to the seller.",
+   "onScreen": [
+    "PASS ON OFFERS"
+   ],
+   "visual": "An offer sheet moves from Ledger to a licensed agent figure"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 THE TRAINEE",
+   "voice": "So on this rung, he shows homes under a licensed agent.",
+   "onScreen": [],
+   "visual": "Slider at 0.06 on 'Shows'"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he climbs to sales agent.",
+   "onScreen": [
+    "SALES AGENT"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 SALES AGENT",
+   "voice": "Now he is a licensed sales agent, and works for a broker.",
+   "onScreen": [
+    "LICENSED AGENT"
+   ],
+   "visual": "OUTFIT (re_agent: navy blazer, agency pin, phone in hand, no backpack). Header SALES AGENT. A licence card appears beside Ledger and a broker figure stands behind"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 SALES AGENT",
+   "voice": "Then he promotes listings, and presents offers.",
+   "onScreen": [
+    "PROMOTE LISTINGS",
+    "PRESENT OFFERS"
+   ],
+   "visual": "A listing poster goes up; Ledger shows an offer paper to a seller"
+  },
+  {
+   "n": 9,
+   "role": "rung",
+   "label": "rung 2 SALES AGENT",
+   "voice": "And he negotiates, until both sides agree.",
+   "onScreen": [
+    "NEGOTIATE"
+   ],
+   "visual": "Two figures, a price arrow moves between them until a handshake"
+  },
+  {
+   "n": 10,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to senior agent.",
+   "onScreen": [
+    "SENIOR AGENT"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 SENIOR AGENT",
+   "voice": "As senior agent, he mentors new agents.",
+   "onScreen": [
+    "MENTOR AGENTS"
+   ],
+   "visual": "OUTFIT (re_senior: grey suit, red pocket square, car key, glasses). Header SENIOR AGENT. A trainee follows Ledger through a viewing"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 SENIOR AGENT",
+   "voice": "He also works with the solicitor, and the surveyor.",
+   "onScreen": [
+    "CLOSE THE SALE"
+   ],
+   "visual": "Two figures, a solicitor and a surveyor, each pass a document to Ledger"
+  },
+  {
+   "n": 13,
+   "role": "rung",
+   "label": "rung 3 SENIOR AGENT",
+   "voice": "So he shows a little less, and starts to lead.",
+   "onScreen": [],
+   "visual": "Slider at 0.35"
+  },
+  {
+   "n": 14,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as associate broker.",
+   "onScreen": [
+    "ASSOCIATE BROKER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 ASSOCIATE BROKER",
+   "voice": "Now he holds a broker licence, and manages an office.",
+   "onScreen": [
+    "BROKER LICENCE",
+    "MANAGE AN OFFICE"
+   ],
+   "visual": "OUTFIT (re_broker: charcoal suit, broker licence badge, tablet, glasses). Header ASSOCIATE BROKER. A licence is upgraded to a broker licence; an office with three desks"
+  },
+  {
+   "n": 16,
+   "role": "rung",
+   "label": "rung 4 ASSOCIATE BROKER",
+   "voice": "Then he hires and trains agents, and reviews their deals.",
+   "onScreen": [
+    "HIRE AND TRAIN",
+    "REVIEW DEALS"
+   ],
+   "visual": "A new agent figure joins; Ledger ticks each deal on a clipboard"
+  },
+  {
+   "n": 17,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as agency owner.",
+   "onScreen": [
+    "AGENCY OWNER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 AGENCY OWNER",
+   "voice": "Finally, he opens his own agency, and runs the whole business.",
+   "onScreen": [
+    "OWN THE AGENCY"
+   ],
+   "visual": "OUTFIT (re_owner: black suit, gold pocket square, glasses, grey temples, a sign key). Header AGENCY OWNER. An agency sign goes up over a shopfront, Ledger cuts a ribbon"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 AGENCY OWNER",
+   "voice": "He sets the fees, and oversees the work of every agent.",
+   "onScreen": [
+    "SET THE FEES",
+    "OVERSEE AGENTS"
+   ],
+   "visual": "A fee sheet; a row of agent desks with Ledger above"
+  },
+  {
+   "n": 20,
+   "role": "rung",
+   "label": "rung 5 AGENCY OWNER",
+   "voice": "Yet he shows almost no homes himself, and answers for every deal.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Leads'; every desk has a signed deal"
+  },
+  {
+   "n": 21,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger showed fewer homes, and led more agents.",
+   "onScreen": [
+    "SHOWS to LEADS"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Shows",
+  "top": "Leads"
+ },
+ "headerTitles": [
+  "THE TRAINEE",
+  "SALES AGENT",
+  "SENIOR AGENT",
+  "ASSOCIATE BROKER",
+  "AGENCY OWNER"
+ ],
+ "outfits": [
+  "re_trainee: white shirt with a lanyard, blue agency tie, folder of listings, backpack",
+  "re_agent: navy blazer, agency pin, phone in hand, no backpack",
+  "re_senior: grey suit, red pocket square, car key, glasses",
+  "re_broker: charcoal suit, broker licence badge, tablet, glasses",
+  "re_owner: black suit, gold pocket square, glasses, grey temples, a sign key"
+ ],
+ "caption": "From trainee property agent to agency owner, the job changes on every rung\n\nThe trainee books viewings and shows homes, and the sales agent presents offers and negotiates. Then the associate broker manages an office and trains new agents. Finally, the owner runs the whole agency\n\nSo each rung up, you show fewer homes yourself and lead more agents. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #realestate #management",
+ "first_comment": "Would you rather show homes or run the agency? Tell us below 🏠🪜",
+ "first_comment_igtt": "Would you rather show homes or run the agency? Tell us below, link in bio 🏠🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#realestate",
+  "#management"
+ ],
+ "threadsTopic": "Real Estate",
+ "threadsReason": "The whole ladder is in property sales, so Real Estate is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "Brokers are licensed to run their own real estate businesses and oversee sales agents; sales agents must work with a broker; agents advance by getting a broker's licence (usually 2 years as a licensed agent in most states); brokers open their own company or manage an office as associate brokers, hiring and training agents",
+   "url": "https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm",
+   "opened": true
+  },
+  {
+   "claim": "Estate agent duties (valuations, viewings, negotiation, work with surveyors and solicitors) and progression to senior negotiator, branch manager, or own agency",
+   "url": "https://nationalcareers.service.gov.uk/job-profiles/estate-agent",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: real estate not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "BLS describes the US licence route (agent, broker); the UK National Careers Service uses senior negotiator and branch manager. The script follows the BLS names (sales agent, associate broker) and the UK 'own agency'. A trainee rung is not in either source (it is the entry role before licensing); say if you prefer to start at 'sales agent' and drop the trainee.",
+  "Soft claim: 'handles the biggest sales' on rung 3 has no source; reword to 'handles more of the sales' if Hoang prefers.",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}

@@ -1,0 +1,283 @@
+{
+ "slug": "ladder-pharmacy-technician-to-operations-manager",
+ "group": "ladder",
+ "title": "From pharmacy technician to pharmacy operations manager, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Mon 30 Nov 21:30 VN (to confirm)",
+ "estSeconds": 85,
+ "wordCount": 213,
+ "summary": "A healthcare job viewers meet at the counter; the ladder shows the support rungs around the pharmacist. Weakest sourced of the seven, so replace it if Hoang prefers.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From pharmacy technician to pharmacy operations manager, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From pharmacy technician to pharmacy operations manager, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the ph_tech outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 PHARMACY TECH",
+   "voice": "First, Ledger is the pharmacy technician, in scrubs.",
+   "onScreen": [],
+   "visual": "OUTFIT (ph_tech: pale-green scrub top, white lab coat unbuttoned, name tag, hair cap not used). Header PHARMACY TECH. Ledger alone, scale 3.2; arrows pop in on 'scrubs' and 'name tag'; pharmacy shelves behind"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 PHARMACY TECH",
+   "voice": "Then he labels each prescription, and logs it.",
+   "onScreen": [
+    "LABEL MEDICINES",
+    "LOG ON SYSTEM"
+   ],
+   "visual": "Tablets count into a bottle; a label prints; a screen logs it"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 PHARMACY TECH",
+   "voice": "He passes each one to the pharmacist, who checks it.",
+   "onScreen": [
+    "PHARMACIST CHECKS"
+   ],
+   "visual": "A bag slides to a pharmacist figure who stamps it"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 PHARMACY TECH",
+   "voice": "So on this rung, he fills every prescription himself.",
+   "onScreen": [],
+   "visual": "Slider at 0.06 on 'Fills'"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he climbs to lead technician.",
+   "onScreen": [
+    "LEAD TECHNICIAN"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 LEAD TECHNICIAN",
+   "voice": "Now he leads the other technicians, and trains the new ones.",
+   "onScreen": [
+    "TRAIN NEW STAFF"
+   ],
+   "visual": "OUTFIT (ph_lead: white lab coat over teal scrubs, lanyard, pen, clipboard). Header LEAD TECHNICIAN. Two technician figures follow him along the shelves"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 LEAD TECHNICIAN",
+   "voice": "Then he tracks stock, and alerts the pharmacist to shortages.",
+   "onScreen": [
+    "TRACK STOCK",
+    "REPORT SHORTAGES"
+   ],
+   "visual": "A stock meter drops into red; a note goes to the pharmacist"
+  },
+  {
+   "n": 9,
+   "role": "rung",
+   "label": "rung 2 LEAD TECHNICIAN",
+   "voice": "So he fills a little less, and starts to direct.",
+   "onScreen": [],
+   "visual": "Slider at 0.3"
+  },
+  {
+   "n": 10,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to technician specialist.",
+   "onScreen": [
+    "TECH SPECIALIST"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 TECH SPECIALIST",
+   "voice": "As specialist, he handles insurance claims and prior approvals.",
+   "onScreen": [
+    "INSURANCE CLAIMS"
+   ],
+   "visual": "OUTFIT (ph_specialist: dark-blue scrubs, glasses, headset, laptop). Header TECH SPECIALIST. A claim form gets a green tick on a laptop"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 TECH SPECIALIST",
+   "voice": "He also calls doctors' offices, to confirm each dose.",
+   "onScreen": [
+    "CONFIRM DOSES"
+   ],
+   "visual": "A phone shows a doctor's office; a dose is ticked"
+  },
+  {
+   "n": 13,
+   "role": "rung",
+   "label": "rung 3 TECH SPECIALIST",
+   "voice": "And he plans the schedule.",
+   "onScreen": [
+    "PLAN THE SCHEDULE"
+   ],
+   "visual": "A weekly schedule grid fills"
+  },
+  {
+   "n": 14,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as assistant manager.",
+   "onScreen": [
+    "ASSISTANT MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 ASSISTANT MANAGER",
+   "voice": "Now he helps manage the pharmacy, and oversees a larger team.",
+   "onScreen": [
+    "HELP MANAGE"
+   ],
+   "visual": "OUTFIT (ph_assistant: navy blazer over scrubs top, lanyard, tablet). Header ASSISTANT MANAGER. Org chart with six small figures below Ledger"
+  },
+  {
+   "n": 16,
+   "role": "rung",
+   "label": "rung 4 ASSISTANT MANAGER",
+   "voice": "Then he covers for the manager, and handles the staff rota.",
+   "onScreen": [
+    "COVER THE MANAGER",
+    "SET THE ROTA"
+   ],
+   "visual": "He sits at the manager's desk; a rota fills"
+  },
+  {
+   "n": 17,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as operations manager.",
+   "onScreen": [
+    "OPS MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 OPS MANAGER",
+   "voice": "Finally, as operations manager, he runs the pharmacy's daily work.",
+   "onScreen": [
+    "RUN OPERATIONS"
+   ],
+   "visual": "OUTFIT (ph_manager: dark suit with a white coat over it, glasses, grey temples, gold pin). Header OPS MANAGER. Full pharmacy cutaway with counter, shelves and back room"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 OPS MANAGER",
+   "voice": "He sets the staffing and the budget, while pharmacists check each prescription.",
+   "onScreen": [
+    "SET STAFFING",
+    "SET BUDGET"
+   ],
+   "visual": "A staffing board and a budget meter; pharmacists stamp at a counter"
+  },
+  {
+   "n": 20,
+   "role": "rung",
+   "label": "rung 5 OPS MANAGER",
+   "voice": "Yet he fills almost nothing himself, and answers for the whole pharmacy.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Directs'; every counter has a tick"
+  },
+  {
+   "n": 21,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger filled less, and directed more.",
+   "onScreen": [
+    "FILLS to DIRECTS"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Fills",
+  "top": "Directs"
+ },
+ "headerTitles": [
+  "PHARMACY TECH",
+  "LEAD TECHNICIAN",
+  "TECH SPECIALIST",
+  "ASSISTANT MANAGER",
+  "OPS MANAGER"
+ ],
+ "outfits": [
+  "ph_tech: pale-green scrub top, white lab coat unbuttoned, name tag, hair cap not used",
+  "ph_lead: white lab coat over teal scrubs, lanyard, pen, clipboard",
+  "ph_specialist: dark-blue scrubs, glasses, headset, laptop",
+  "ph_assistant: navy blazer over scrubs top, lanyard, tablet",
+  "ph_manager: dark suit with a white coat over it, glasses, grey temples, gold pin"
+ ],
+ "caption": "From pharmacy technician to operations manager, the job changes on every rung\n\nThe pharmacy technician labels each prescription, and the lead technician trains the team and tracks the stock. Then the assistant manager covers for the manager. Finally, the operations manager runs the pharmacy's daily work, while pharmacists check each prescription\n\nSo each rung up, you fill fewer prescriptions yourself and direct more of the pharmacy. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #pharmacy #healthcare",
+ "first_comment": "Have you ever asked a pharmacy team for help with a prescription? Tell us below 💊🪜",
+ "first_comment_igtt": "Have you ever asked a pharmacy team for help with a prescription? Tell us below, link in bio 💊🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#pharmacy",
+  "#healthcare"
+ ],
+ "threadsTopic": "Healthcare",
+ "threadsReason": "The ladder is inside a pharmacy, so Healthcare is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "Pharmacy technician duties (measure, package and label prescriptions, track inventory and alert pharmacists to shortages, process insurance claims, work under pharmacists); experienced technicians train staff or take supervisory duties",
+   "url": "https://www.bls.gov/ooh/healthcare/pharmacy-technicians.htm",
+   "opened": true
+  },
+  {
+   "claim": "One technician's path: lead technician, tech specialist (scheduling, inventory, training, prior authorisations), assistant manager overseeing a team",
+   "url": "https://www.pharmacytimes.com/view/the-career-journey-of-a-pharmacy-technician",
+   "opened": true
+  },
+  {
+   "claim": "Pharmacy technicians prepare prescriptions, check dosage details and supervise assistants; progression to lead technician or department manager",
+   "url": "https://nationalcareers.service.gov.uk/job-profiles/pharmacy-technician",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: pharmacy and healthcare retail not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "Weakest ladder: the sources describe the technician, lead and specialist rungs but none names a 'pharmacy operations manager'. The Pharmacy Times article is one person's career, the BLS says only that technicians may take supervisory roles, and the National Careers Service says 'lead pharmacy technician or department manager'. In many countries the pharmacy manager is a pharmacist, so 'operations manager' avoids that claim. Recommend swapping this slot for another ladder from the backlog unless Hoang accepts it.",
+  "Pharmacy Times says the example technician 'oversaw 16 employees'; the script states no number.",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}

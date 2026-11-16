@@ -1,0 +1,276 @@
+{
+ "slug": "ladder-sales-associate-to-regional-manager",
+ "group": "ladder",
+ "title": "From sales associate to regional manager, the career ladder explained with Ledger in 90 seconds",
+ "proposedSlot": "Tue 24 Nov 21:30 VN (to confirm)",
+ "estSeconds": 90,
+ "wordCount": 224,
+ "summary": "Everyday shop-floor job that most viewers have done or seen, climbing to the person who plans a whole region.",
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "From sales associate to regional manager, the career ladder explained with Ledger in ninety seconds.",
+   "onScreen": [
+    "From sales associate to regional manager, the career ladder explained with Ledger",
+    "IN 90 SECONDS"
+   ],
+   "visual": "Title scene: full-bleed room, a ladder on the right, the five steps below, small Ledger in the rt_associate outfit waving on the bottom step; a dashed arrow climbs to the top; the title card and the 90-second pill appear on the title words"
+  },
+  {
+   "n": 2,
+   "role": "rung",
+   "label": "rung 1 THE ASSOCIATE",
+   "voice": "First, Ledger is the sales associate, in a store apron and name tag.",
+   "onScreen": [],
+   "visual": "OUTFIT (rt_associate: coral store apron over a white tee, name tag, lanyard with a till key). Header THE ASSOCIATE. Ledger alone, scale 3.2, coral apron and name tag; two arrows pop in on 'apron' and 'name tag'; a clothes rail behind him"
+  },
+  {
+   "n": 3,
+   "role": "rung",
+   "label": "rung 1 THE ASSOCIATE",
+   "voice": "Then he greets shoppers, and rings up each sale at the till.",
+   "onScreen": [
+    "GREET SHOPPERS",
+    "RING UP SALES"
+   ],
+   "visual": "A shopper walks in and waves; Ledger scans a shirt at a till and the receipt prints"
+  },
+  {
+   "n": 4,
+   "role": "rung",
+   "label": "rung 1 THE ASSOCIATE",
+   "voice": "He restocks shelves, and tells his supervisor what runs low.",
+   "onScreen": [
+    "RESTOCK SHELVES"
+   ],
+   "visual": "Ledger folds shirts onto a shelf and hands a stock note to a small supervisor figure"
+  },
+  {
+   "n": 5,
+   "role": "rung",
+   "label": "rung 1 THE ASSOCIATE",
+   "voice": "So on this rung, he sells everything himself.",
+   "onScreen": [],
+   "visual": "Slider dial at 0.06 on 'Sells'; Ledger holds a shirt toward the shopper"
+  },
+  {
+   "n": 6,
+   "role": "climb",
+   "label": "climb 1 to 2",
+   "voice": "After that, he climbs to department supervisor.",
+   "onScreen": [
+    "DEPT SUPERVISOR"
+   ],
+   "visual": "Ledger climbs the ladder from rung 1 to rung 2; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 7,
+   "role": "rung",
+   "label": "rung 2 DEPT SUPERVISOR",
+   "voice": "Now he leads one department, and schedules the sales associates.",
+   "onScreen": [
+    "LEAD A TEAM"
+   ],
+   "visual": "OUTFIT (rt_supervisor: teal polo, headset, clipboard). Header DEPT SUPERVISOR. Three associate figures appear one by one; Ledger points at them with a clipboard"
+  },
+  {
+   "n": 8,
+   "role": "rung",
+   "label": "rung 2 DEPT SUPERVISOR",
+   "voice": "Then he writes the weekly rota, and checks each stock note.",
+   "onScreen": [
+    "WRITE THE ROTA"
+   ],
+   "visual": "A weekly rota grid fills with names; Ledger ticks a stock note from the associate"
+  },
+  {
+   "n": 9,
+   "role": "rung",
+   "label": "rung 2 DEPT SUPERVISOR",
+   "voice": "So he sells a little less, and starts to plan.",
+   "onScreen": [],
+   "visual": "Slider moves to 0.35; the rota grid stays behind him"
+  },
+  {
+   "n": 10,
+   "role": "climb",
+   "label": "climb 2 to 3",
+   "voice": "Then he climbs again, to store manager.",
+   "onScreen": [
+    "STORE MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 2 to rung 3; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 11,
+   "role": "rung",
+   "label": "rung 3 STORE MANAGER",
+   "voice": "As store manager, he runs the store, and answers for its sales.",
+   "onScreen": [
+    "RUN THE STORE"
+   ],
+   "visual": "OUTFIT (rt_manager: navy blazer over a white shirt, pocket square, store keys on belt). Header STORE MANAGER. Wide shot of the shop with Ledger at the door; a sales bar chart grows on the wall"
+  },
+  {
+   "n": 12,
+   "role": "rung",
+   "label": "rung 3 STORE MANAGER",
+   "voice": "Then he sets the store budget, and hires new associates.",
+   "onScreen": [
+    "SET THE BUDGET",
+    "HIRE STAFF"
+   ],
+   "visual": "A budget meter fills; a new associate figure in an apron walks in and shakes his hand"
+  },
+  {
+   "n": 13,
+   "role": "rung",
+   "label": "rung 3 STORE MANAGER",
+   "voice": "He also turns sales figures into the next promotion.",
+   "onScreen": [
+    "PLAN PROMOTIONS"
+   ],
+   "visual": "A sales chart turns into a sale poster that the supervisor hangs up"
+  },
+  {
+   "n": 14,
+   "role": "climb",
+   "label": "climb 3 to 4",
+   "voice": "Next, he steps up as area manager.",
+   "onScreen": [
+    "AREA MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 3 to rung 4; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 15,
+   "role": "rung",
+   "label": "rung 4 AREA MANAGER",
+   "voice": "Now he oversees several stores, and coaches each store manager.",
+   "onScreen": [
+    "OVERSEE STORES"
+   ],
+   "visual": "OUTFIT (rt_area: charcoal suit, lanyard with ID card, travel bag). Header AREA MANAGER. Org chart: Ledger on top, three small store icons below, three manager figures"
+  },
+  {
+   "n": 16,
+   "role": "rung",
+   "label": "rung 4 AREA MANAGER",
+   "voice": "Then he reviews each store's sales, and agrees its targets.",
+   "onScreen": [
+    "REVIEW REPORTS"
+   ],
+   "visual": "Three report sheets slide in; a target line is drawn on each"
+  },
+  {
+   "n": 17,
+   "role": "climb",
+   "label": "climb 4 to 5",
+   "voice": "Finally, he reaches the top rung, as regional manager.",
+   "onScreen": [
+    "REGIONAL MANAGER"
+   ],
+   "visual": "Ledger climbs the ladder from rung 4 to rung 5; his outfit swaps mid-climb to the next set; the next rung tag lights up on the naming word"
+  },
+  {
+   "n": 18,
+   "role": "rung",
+   "label": "rung 5 REGIONAL MANAGER",
+   "voice": "Now he sets the plan for the region, and reports to head office.",
+   "onScreen": [
+    "SET THE PLAN"
+   ],
+   "visual": "OUTFIT (rt_regional: black suit, gold pocket square, glasses, grey temples). Header REGIONAL MANAGER. A region map with store pins; a report goes up to a head office building"
+  },
+  {
+   "n": 19,
+   "role": "rung",
+   "label": "rung 5 REGIONAL MANAGER",
+   "voice": "He agrees each area's budget, and hardly sells anything himself.",
+   "onScreen": [
+    "AGREE BUDGETS"
+   ],
+   "visual": "Three budget meters, one per area; Ledger holds no shirt"
+  },
+  {
+   "n": 20,
+   "role": "rung",
+   "label": "rung 5 REGIONAL MANAGER",
+   "voice": "Yet he answers for every store in the region.",
+   "onScreen": [
+    "OWN THE RESULTS"
+   ],
+   "visual": "Slider at 0.95 on 'Plans'; all store pins light up"
+  },
+  {
+   "n": 21,
+   "role": "payoff",
+   "label": "payoff",
+   "voice": "So with each rung, Ledger sold less, and planned more.",
+   "onScreen": [
+    "SELLS to PLANS"
+   ],
+   "visual": "Five Ledgers on the ladder, all five tags ticked, the slider runs from the bottom word to the top word"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb your own career ladder, learn technical business concepts at Edlintics.",
+   "onScreen": [
+    "To climb your own career ladder, learn technical business concepts at Edlintics"
+   ],
+   "visual": "Fixed closing scene (L.cta_beat): full-width card with the sentence in about four lines, logo, five Ledgers on steps"
+  }
+ ],
+ "slider": {
+  "bottom": "Sells",
+  "top": "Plans"
+ },
+ "headerTitles": [
+  "THE ASSOCIATE",
+  "DEPT SUPERVISOR",
+  "STORE MANAGER",
+  "AREA MANAGER",
+  "REGIONAL MANAGER"
+ ],
+ "outfits": [
+  "rt_associate: coral store apron over a white tee, name tag, lanyard with a till key",
+  "rt_supervisor: teal polo, headset, clipboard",
+  "rt_manager: navy blazer over a white shirt, pocket square, store keys on belt",
+  "rt_area: charcoal suit, lanyard with ID card, travel bag",
+  "rt_regional: black suit, gold pocket square, glasses, grey temples"
+ ],
+ "caption": "From sales associate to regional manager, the job changes on every rung\n\nThe sales associate serves shoppers and restocks shelves, and the department supervisor runs the rota. Then the store manager owns the budget and the promotions. Finally, the area and regional managers plan for several stores at once\n\nSo each rung up, you sell less yourself and plan more. Walk up the ladder with Ledger and note which rung you are on\n\n#edlintics #businessstudents #retail #management",
+ "first_comment": "Which rung of a shop would you want to reach first? Tell us below 🛍️🪜",
+ "first_comment_igtt": "Which rung of a shop would you want to reach first? Tell us below, link in bio 🛍️🪜",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#retail",
+  "#management"
+ ],
+ "threadsTopic": "Retail",
+ "threadsReason": "Most viewers have worked a shop floor, so Retail is the closest topic",
+ "logos": [],
+ "sources": [
+  {
+   "claim": "Retail sales workers greet customers, recommend products, run the register, restock and track inventory; many move into supervisory or managerial roles",
+   "url": "https://www.bls.gov/ooh/sales/retail-sales-workers.htm",
+   "opened": true
+  },
+  {
+   "claim": "Retail manager duties (lead a store team, stock, promotions, budgets, recruiting, reporting) and the path sales assistant, supervisor or departmental manager, then several stores across a region",
+   "url": "https://nationalcareers.service.gov.uk/job-profiles/retail-manager",
+   "opened": true
+  }
+ ],
+ "registry_check": "registry check: clear on the hub concepts collection (124 documents read 17 Nov 2026; no career, trade, retail, banking, salon, real estate, HR or pharmacy concept; no concept is named or defined in this reel). Industry check: clothing and general retail (the shop-assistant-to-florist ladder is a single flower shop, a different job and industry) not used in a ladder reel or scheduled post in the last 30 days. Theme career-ladder: the 2-per-week cap does not apply, cleared by Hoang for daily ladder reels (13 Nov 2026)",
+ "openQuestions": [
+  "Titles differ by chain (department supervisor may be team leader, area manager may be district manager); the script says 'department supervisor' and 'area manager' and the sources do not use the words area or regional manager, only 'several stores across a region'.",
+  "Thumbnail tag suggestion: ASSOCIATE / REGIONAL",
+  "Titles vary by employer and country; the caption says nothing about pay or years"
+ ]
+}
