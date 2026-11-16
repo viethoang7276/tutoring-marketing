@@ -183,11 +183,12 @@ S["small"] = scene(0,
 def big_team():
     xs = [115, 345, 575, 805]; labs = ["CONTENT", "DESIGN", "ADS", "DATA"]; outs = [COPY, DES, SPEC, ANA]; cols = ["blue", "amber", "green", "light"]
     items = []
+    for i, x in enumerate(xs):   # ladders, labels and the bottom-rung Ledgers are there from the first frame; the climb follows the voice
+        items += [{"p": "career_ladder", "x": x, "y": 1400, "n": 3, "gap": 150, "w": 100},
+                  {"p": "order_chip", "x": x, "y": 880, "label": labs[i], "color": cols[i], "fs": 34}]
     for i, x in enumerate(xs):
-        items += [{"p": "career_ladder", "x": x, "y": 1400, "n": 3, "gap": 150, "w": 100, "appear": {"at": C(1), "delay": 0.2 * i}},
-                  {"p": "order_chip", "x": x, "y": 880, "label": labs[i], "color": cols[i], "fs": 34, "appear": {"at": C(1), "delay": 0.2 * i}}]
-    for i, x in enumerate(xs):
-        items += [{"p": "ledger", "x": x, "y": 1400 - 150 * j, "s": 0.55, "outfit": outs[i], "mood": "happy", "arm": "wave" if j == 2 else "down", "appear": {"at": C(3), "delay": 0.15 * i + 0.12 * j}} for j in range(3)]
+        items.append({"p": "ledger", "x": x, "y": 1400, "s": 0.55, "outfit": outs[i], "mood": "smile", "arm": "down"})
+        items += [{"p": "ledger", "x": x, "y": 1400 - 150 * j, "s": 0.55, "outfit": outs[i], "mood": "happy", "arm": "wave" if j == 2 else "down", "appear": {"at": C(2), "delay": 0.1 * i + 0.25 * (j - 1)}} for j in (1, 2)]
     return scene(0, *items)
 S["big"] = big_team()
 
