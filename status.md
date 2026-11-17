@@ -961,3 +961,4 @@ State at handover:
 - 17 Nov ~13:05 VN: pixel config verified: clean signed-out browser sent PageView + ViewContent to 1178793404712949 (HTTP 200). Events Manager confirmation and video ad warning check due ~13:35 VN
 - 17 Nov ~13:20 VN: new pixel live: first events in Meta (3 PageView, 1 ViewContent), second test HTTP 200, video ads no errors. CAPI token proven only at the first booking or purchase
 - 17 Nov ~13:30 VN: checked all four static ads in Ads Manager: Website events already ticked with Edlintics Meta Pixel 1178793404712949 on each (video ads too), so nothing was changed or published. ads/latest v24
+- 17 Nov 14:50 VN: first comments for def-ev-ebitda-which-is-cheaper (14:30 VN) done on fb, ig (reel Df1ZhN9jQ7N), li, th, yt, tt (comment from Studio + save, no self-like); x skipped. Lead check: IG heart red, YT comment present with both emojis. Hub runs doc v3
