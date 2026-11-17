@@ -154,8 +154,33 @@ Read only. Nothing was changed. Figures are for 7 Oct to 3 Nov 2026
 - No live account. 622-861-8576 (linked to GA4) is Closed, 116-786-5935 is Closed, and 393-090-6286 is Cancelled with outstanding charges shown. Phase 2 starts with a new account or a reopened one. Hoang to settle or ignore the old one's balance notice himself
 - GA4 still links to the closed 622-861-8576. Unlink it when the new account is linked
 
+## Addendum, 17 Nov 2026: conversion structure for tutoring and course ads (Hoang: "yes send it, also for the courses puchasing as well")
+
+Context: the site moved to the new pixel 1178793404712949 on 17 Nov (REQ-0009). Hoang named the conversions he wants the ads to count: the contact message on a tutor page, any form sent, the tutoring booking and the course purchase. Read-only check of tutoring-web (main, 17 Nov) found what exists and one gap.
+
+| Visitor action | Meta event (params) | Browser / server | Today | Role in ads |
+|---|---|---|---|---|
+| Opens a tutor page | ViewContent (tutoring-1to1) | browser | built | retargeting audience |
+| Opens a course page | ViewContent (course slug) | browser | built | retargeting audience |
+| Adds a course or a tutor slot to the cart | AddToCart (value, ids) | browser | built | funnel step |
+| Starts checkout (course or tutoring) | InitiateCheckout (value, ids) | browser | built | funnel step |
+| **Sends the tutor contact message** (`inquiry_sent`, TutorInquiryForm) | **Lead, `lead_type: tutoring_inquiry`** | **browser and server, same event_id `lead.<inquiryId>`** | **missing: inquiry_sent sends nothing to Meta** | **main optimisation event for tutoring ads** |
+| Joins the launch or course waitlist, signs up for the brief | Lead (`lead_type` launch_waitlist / course_waitlist / markets_brief) | browser | built | secondary |
+| Clicks email / WhatsApp / message tutor link | Contact (channel) | browser | built | secondary |
+| Creates an account | CompleteRegistration | browser + server (Google) | built | secondary |
+| **Pays for a tutoring booking** | **Schedule + Purchase (EUR value, tutoring ids)** | browser and server, deduped | built, unverified (no order yet) | **main money result, tutoring** |
+| **Buys a course** | **Purchase (EUR value, course slug ids, `content_type: product`)** | browser and server, deduped | built, unverified (no order yet) | **main money result, courses** |
+
+Asks for the CTO:
+1. `inquiry_sent` -> Meta **Lead** with `lead_type: tutoring_inquiry` (and `content_ids: [tutoring-1to1]`), browser through the funnel registry, plus a server Lead from the inquiry API with the same event_id so ad-blocked visitors still count. Same consent gate as the other Lead events (marketing). No message text, names or contact details in the event; hashed email only in user_data, as for Purchase.
+2. Add `content_category: tutoring | course` to InitiateCheckout and Purchase (browser and server) so a mixed cart and the two product lines are easy to split in Events Manager. Optional if the CTO prefers to split on content_ids.
+3. Send marketing a verify checklist as for the FT batches (Test events code on a preview deploy, not on Production).
+
+Marketing does after the build (no code): custom conversions in Events Manager: **Tutoring enquiry** (Lead where lead_type = tutoring_inquiry), **Tutoring booking** (Schedule), **Course purchase** (Purchase where content_category = course, or content_ids contain a course slug). Ad plan: a new tutoring campaign optimised for Tutoring enquiry (enough weekly volume for Meta to learn), reporting bookings and revenue next to it; course ads optimise for Course purchase once purchases arrive, until then for AddToCart or InitiateCheckout. The current LPV ad sets cannot change goal (Meta #1504040).
+
 ## Decision log
 - 2026-11-04 — requested by Hoang; tutoring-web supplied the event inventory from main at 67adbdaf (PR #102 live on prod 4 Nov); CMO drafted this request
 - 2026-11-04 — tutoring-web drafted the FT spec (36 tasks, 12 decisions for Hoang). CMO review: agreed with all 12 defaults; asked for a ready Phase 2 list (Google Ads 622-861-8576, edlintics@gmail.com, closed, Hoang plans to reactivate; keep its GA4 link), a test path given staff exclusion (a non-staff test account Hoang creates, FT097), groupBy utm_term and click_id_type, and pricing_viewed + booking_calendar_opened in the first batch (FT029). All four accepted in 7a829ebda
 - 2026-11-05 — Hoang opened a new Google Ads account (customer ID from the overview URL: 938-406-8284; Hoang to confirm the ID shown in the account header). It replaces reactivating 622-861-8576 (FT190). Next: link it to GA4 263808863 and unlink 622-861-8576, turn on auto-tagging, accept the enhanced conversions terms; Phase 2 (FT110-FT114) can be scheduled
 - 2026-11-05 — Hoang approved D1-D12 (all defaults) in the tutoring-web session; FT build started (FT010, FT011, then A/B/C). Split agreed: CTO builds and sends a verify checklist per batch; marketing verifies in Events Manager and GA4 and owns GA4 admin, the hub funnel view and UTMs; Hoang owns credentials and sign-off
+- 2026-11-17 — Hoang asked for the contact message, form sends, bookings and course purchases to count as conversions. Addendum above written by the CMO; gap: the tutor contact message (inquiry_sent) sends no Meta event. Asks 1-3 to the CTO
