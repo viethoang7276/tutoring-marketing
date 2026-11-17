@@ -1,0 +1,529 @@
+{
+ "slug": "map-career-cities-6-asia-1",
+ "group": "map",
+ "version": "v2 (18 Nov 2026, as built)",
+ "title": "Career hub cities in Asia with Ledger, part 6",
+ "proposedSlot": "Fri 27 Nov 18:00 VN (to confirm)",
+ "seconds": 108.54,
+ "wordCount": 221,
+ "summary": "Part 6 of the career cities series covers 9 career hubs, one sourced fact each; rebuilt 18 Nov 2026 with Hoang's notes (plain title, new creative industries, logos with names in the city scene, paper and flat versions)",
+ "changesFromV1": [
+  "Title is now plain and direct (Hoang, 18 Nov): 'Career hub cities in Asia with Ledger, part six.' with a PART 6 pill; no 'Asia, part one', no length",
+  "New creative stops (Hoang, 18 Nov: film, anime, game development, cosmetics): Hengdian for film and TV, Seoul for cosmetics, Kyoto for video games, Tokyo for anime",
+  "Dropped to stay under 2:00 and keep the map readable: Qingdao and Ulaanbaatar (lead's first picks), Ulsan (a second car stop next to Toyota City) and Yiwu (30 km from Hengdian, so the two pins sat on top of each other)",
+  "Voice lines shortened (no job lists); logos with company names appear in the city scene next to Ledger; the fact number counts up",
+  "Built in two styles with the same voice and timing: paper (as Parts 4 and 5) and flat"
+ ],
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "Career hub cities in Asia with Ledger, part six.",
+   "start": 0.15,
+   "captions": [
+    "Career hub cities",
+    "in Asia",
+    "with Ledger",
+    "part six"
+   ],
+   "img": "title"
+  },
+  {
+   "n": 2,
+   "role": "stop",
+   "label": "stop 1 Shenzhen",
+   "voice": "First, Ledger lands in Shenzhen, China, a hub for tech and electric cars.",
+   "start": 4.11,
+   "captions": [
+    "First, Ledger lands",
+    "in Shenzhen, China",
+    "a hub for tech",
+    "and electric cars"
+   ],
+   "img": "hop1"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Shenzhen",
+   "voice": "BYD, based here, sold over 4.6 million vehicles in 2025.",
+   "start": 9.39,
+   "captions": [
+    "BYD, based here",
+    "sold over 4.6 million",
+    "vehicles in 2025"
+   ],
+   "img": "city1"
+  },
+  {
+   "n": 4,
+   "role": "stop",
+   "label": "stop 2 Jingdezhen",
+   "voice": "Then, he flies to Jingdezhen, China, a hub for porcelain.",
+   "start": 15.18,
+   "captions": [
+    "Then, he flies",
+    "to Jingdezhen, China",
+    "a hub for",
+    "porcelain"
+   ],
+   "img": "hop2"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Jingdezhen",
+   "voice": "Handmade porcelain here supported over 50,000 jobs in 2025.",
+   "start": 18.93,
+   "captions": [
+    "Handmade porcelain here",
+    "supported over 50,000",
+    "jobs in 2025"
+   ],
+   "img": "city2"
+  },
+  {
+   "n": 6,
+   "role": "stop",
+   "label": "stop 3 Hengdian",
+   "voice": "Next, he hops to Hengdian, China, a hub for film and TV.",
+   "start": 24.12,
+   "captions": [
+    "Next, he hops",
+    "to Hengdian, China",
+    "a hub for",
+    "film and TV"
+   ],
+   "img": "hop3"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Hengdian",
+   "voice": "In 2025, 4,016 new short-drama crews started filming here.",
+   "start": 28.12,
+   "captions": [
+    "In 2025",
+    "4,016 new",
+    "short-drama crews",
+    "started filming here"
+   ],
+   "img": "city3"
+  },
+  {
+   "n": 8,
+   "role": "stop",
+   "label": "stop 4 Hsinchu",
+   "voice": "Then, he flies to Hsinchu, Taiwan, a hub for chips.",
+   "start": 34.41,
+   "captions": [
+    "Then, he flies",
+    "to Hsinchu, Taiwan",
+    "a hub for",
+    "chips"
+   ],
+   "img": "hop4"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Hsinchu",
+   "voice": "Its science park employed over 177,000 workers in 2024.",
+   "start": 38.28,
+   "captions": [
+    "Its science park",
+    "employed over 177,000",
+    "workers in 2024"
+   ],
+   "img": "city4"
+  },
+  {
+   "n": 10,
+   "role": "stop",
+   "label": "stop 5 Seoul",
+   "voice": "Next, he flies to Seoul, South Korea, a hub for cosmetics.",
+   "start": 44.13,
+   "captions": [
+    "Next, he flies",
+    "to Seoul, South Korea",
+    "a hub for",
+    "cosmetics"
+   ],
+   "img": "hop5"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Seoul",
+   "voice": "Korea exported 11.4 billion dollars of cosmetics in 2025.",
+   "start": 48.27,
+   "captions": [
+    "Korea exported",
+    "11.4 billion dollars",
+    "of cosmetics in 2025"
+   ],
+   "img": "city5"
+  },
+  {
+   "n": 12,
+   "role": "stop",
+   "label": "stop 6 Kyoto",
+   "voice": "Then, he lands in Kyoto, Japan, a hub for video games.",
+   "start": 53.42,
+   "captions": [
+    "Then, he lands",
+    "in Kyoto, Japan",
+    "a hub for",
+    "video games"
+   ],
+   "img": "hop6"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Kyoto",
+   "voice": "Nintendo, based here, has shipped 26.35 million Switch 2 consoles.",
+   "start": 58.0,
+   "captions": [
+    "Nintendo, based here",
+    "has shipped 26.35 million",
+    "Switch 2 consoles"
+   ],
+   "img": "city6"
+  },
+  {
+   "n": 14,
+   "role": "stop",
+   "label": "stop 7 Sabae",
+   "voice": "Next, he hops to Sabae, Japan, a hub for eyeglass frames.",
+   "start": 64.42,
+   "captions": [
+    "Next, he hops",
+    "to Sabae, Japan",
+    "a hub for",
+    "eyeglass frames"
+   ],
+   "img": "hop7"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Sabae",
+   "voice": "Sabae makes about 90 percent of Japan's frames.",
+   "start": 68.92,
+   "captions": [
+    "Sabae makes",
+    "about 90 percent",
+    "of Japan's frames"
+   ],
+   "img": "city7"
+  },
+  {
+   "n": 16,
+   "role": "stop",
+   "label": "stop 8 Toyota City",
+   "voice": "Then, he rides to Toyota City, Japan, a hub for cars.",
+   "start": 72.46,
+   "captions": [
+    "Then, he rides",
+    "to Toyota City, Japan",
+    "a hub for",
+    "cars"
+   ],
+   "img": "hop8"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Toyota City",
+   "voice": "Toyota, based here, employs 390,927 people.",
+   "start": 76.95,
+   "captions": [
+    "Toyota, based here",
+    "employs 390,927 people"
+   ],
+   "img": "city8"
+  },
+  {
+   "n": 18,
+   "role": "stop",
+   "label": "stop 9 Tokyo",
+   "voice": "Finally, he lands in Tokyo, Japan, a hub for anime.",
+   "start": 83.12,
+   "captions": [
+    "Finally, he lands",
+    "in Tokyo, Japan",
+    "a hub for",
+    "anime"
+   ],
+   "img": "hop9"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Tokyo",
+   "voice": "Japan's anime market reached 4.45 trillion yen in 2025.",
+   "start": 87.34,
+   "captions": [
+    "Japan's anime market",
+    "reached 4.45 trillion",
+    "yen in 2025"
+   ],
+   "img": "city9"
+  },
+  {
+   "n": 20,
+   "role": "summary",
+   "label": "summary",
+   "voice": "So that was East Asia, from Shenzhen to Tokyo.",
+   "start": 92.68,
+   "captions": [
+    "So that was",
+    "East Asia",
+    "from Shenzhen to Tokyo"
+   ],
+   "img": "sum"
+  },
+  {
+   "n": 21,
+   "role": "summary",
+   "label": "summary",
+   "voice": "Next, part seven maps Southeast Asia.",
+   "start": 96.33,
+   "captions": [
+    "Next, part seven",
+    "maps Southeast Asia"
+   ],
+   "img": "next"
+  },
+  {
+   "n": 22,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "start": 99.33,
+   "captions": [
+    "To climb",
+    "in these cities",
+    "you need a good",
+    "business foundation"
+   ],
+   "img": "cta"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta",
+   "voice": "Go to Edlintics.com to learn technical business skills.",
+   "start": 102.9,
+   "captions": [
+    "Go to Edlintics.com",
+    "to learn technical",
+    "business skills"
+   ],
+   "img": "cta"
+  }
+ ],
+ "stops": [
+  {
+   "city": "Shenzhen",
+   "country_flag": "cn",
+   "industry": "Tech and electric cars",
+   "fact": "BYD, whose main operations are in Shenzhen, sold 4,602,436 new energy vehicles in 2025 (revenue 803.97 billion yuan)",
+   "source": "CnEVPost on BYD's 2025 annual report, 27 Mar 2026: https://cnevpost.com/2026/03/27/byd-2 ; Shenzhen: https://en.wikipedia.org/wiki/Shenzhen",
+   "figureDate": "2025 (published 27 March 2026)",
+   "logos": [
+    "BYD",
+    "Huawei",
+    "Tencent"
+   ]
+  },
+  {
+   "city": "Jingdezhen",
+   "country_flag": "cn",
+   "industry": "Porcelain",
+   "fact": "Jingdezhen's handmade porcelain sector supported over 50,000 jobs in 2025, with output above 10 billion yuan",
+   "source": "People's Daily Online, 3 Aug 2026: https://en.people.cn/n3/2026/0803/c98649-20484784.html",
+   "figureDate": "2025 (published 3 August 2026)",
+   "logos": []
+  },
+  {
+   "city": "Hengdian",
+   "country_flag": "cn",
+   "industry": "Film and TV",
+   "fact": "In 2025, 4,016 new vertical micro-drama (short-drama) crews started filming at Hengdian, up 237% on 2024; Hengdian World Studios (Hengdian Group) is at No. 58 Wansheng South Street, Hengdian Town, Dongyang",
+   "source": "China News Weekly via Sina, 30 Aug 2026: https://news.sina.cn/sh/2026-08-30/detail-inipzxrx3050361.d.html ; Hengdian World Studios: https://www.hengdianworld.com/en/",
+   "figureDate": "2025 (published 30 August 2026)",
+   "logos": [
+    "Hengdian Group"
+   ]
+  },
+  {
+   "city": "Hsinchu",
+   "country_flag": "tw",
+   "industry": "Chips",
+   "fact": "Hsinchu Science Park had 177,389 workers (October 2024) and 584 companies (December 2024); TSMC, UMC and MediaTek are based in the park",
+   "source": "Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park",
+   "figureDate": "October 2024",
+   "logos": [
+    "TSMC",
+    "UMC",
+    "MediaTek"
+   ]
+  },
+  {
+   "city": "Seoul",
+   "country_flag": "kr",
+   "industry": "Cosmetics",
+   "fact": "South Korea's cosmetics exports reached USD 11.4 billion in 2025, up 11.8% on 2024 (Ministry of Food and Drug Safety); Amorepacific's head office is at 100 Hangang-daero, Yongsan-gu, Seoul, and LG H&H's head office is in Seoul",
+   "source": "Korea.net, 26 May 2026: https://www.korea.net/NewsFocus/Business/view?articleId=292940 ; Amorepacific HQ: https://www.apgroup.com/int/en/careers/global-network/hq/seoul.html ; LG H&H HQ move (Insight, 19 Dec 2025): https://www.insight.co.kr/news/534423",
+   "figureDate": "2025 (published 26 May 2026)",
+   "logos": [
+    "Amorepacific",
+    "LG H&H"
+   ]
+  },
+  {
+   "city": "Kyoto",
+   "country_flag": "jp",
+   "industry": "Video games",
+   "fact": "Nintendo, head office 11-1 Hokotate-cho, Kamitoba, Minami-ku, Kyoto, had shipped 26.35 million Nintendo Switch 2 units worldwide as of 30 September 2026",
+   "source": "Nintendo IR, hardware and software sales units: https://www.nintendo.co.jp/ir/en/finance/hard_soft/index.html ; company outline: https://www.nintendo.co.jp/corporate/en/outline/index.html",
+   "figureDate": "30 September 2026",
+   "logos": [
+    "Nintendo"
+   ]
+  },
+  {
+   "city": "Sabae",
+   "country_flag": "jp",
+   "industry": "Eyeglass frames",
+   "fact": "Sabae produces about 90% of the eyeglass frames made in Japan (City of Sabae)",
+   "source": "City of Sabae, technology pages: https://www.city.sabae.fukui.jp/technology/en/index.html",
+   "figureDate": "City of Sabae page, read 17 November 2026",
+   "logos": []
+  },
+  {
+   "city": "Toyota City",
+   "country_flag": "jp",
+   "industry": "Cars",
+   "fact": "Toyota Motor Corporation, head office 1 Toyota-cho, Toyota City, Aichi, had 390,927 consolidated employees as of 31 March 2026",
+   "source": "Toyota, company overview: https://global.toyota/en/company/profile/overview/",
+   "figureDate": "31 March 2026",
+   "logos": [
+    "Toyota"
+   ]
+  },
+  {
+   "city": "Tokyo",
+   "country_flag": "jp",
+   "industry": "Anime",
+   "fact": "The Association of Japanese Animations puts Japan's anime market in 2025 at JPY 4.4491 trillion, up 15.8% (preliminary); Toei Animation and TMS Entertainment have their head offices in Nakano, Tokyo, and Bandai Namco Filmworks (Sunrise) is in Ogikubo, Suginami, Tokyo",
+   "source": "AJA release on PR Times, 30 Oct 2026: https://prtimes.jp/main/html/rd/p/000000007.000039770.html ; Toei Animation: https://corp.toei-anim.co.jp/en/company/outline.html ; TMS: https://www.tms-e.co.jp/company/ ; Bandai Namco Filmworks: http://www.bnfw.co.jp/en/",
+   "figureDate": "2025, preliminary (published 30 October 2026)",
+   "logos": [
+    "Toei Animation",
+    "TMS Entertainment",
+    "Sunrise"
+   ]
+  }
+ ],
+ "caption": "Career hub cities in Asia with Ledger, Part 6, starts in East Asia with nine stops, and each stop shows one industry that city is a hub for, with a sourced fact\n\nSo you will meet Shenzhen for tech and electric cars, Jingdezhen for porcelain, Hengdian for film and TV, Hsinchu for chips, Seoul for cosmetics, Kyoto for video games, Sabae for eyeglass frames, Toyota City for cars, and Tokyo for anime\n\nSave the map for later, because Part 7 maps career hub cities across Southeast Asia\n\n#edlintics #businessstudents #careeradvice #careers",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where industries and their careers are concentrated in ten East Asian cities, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "BYD",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/BYD_Company (\"Pingshan District, Shenzhen\"); Rayong plant: The Thaiger, BYD opens first EV plant in Thailand (\"within the WHA Industrial Estate in Rayong\")"
+  },
+  {
+   "brand": "Huawei",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/Huawei (\"headquartered in Longgang, Shenzhen\")"
+  },
+  {
+   "brand": "Tencent",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/Tencent (\"Tencent Binhai Mansion\", Nanshan, Shenzhen)"
+  },
+  {
+   "brand": "Hengdian Group",
+   "type": "site (Hengdian World Studios, owned by Hengdian Group)",
+   "source": "https://www.hengdianworld.com/en/ (\"No. 58, Wansheng South Street, Hengdian Town, Dongyang City\")"
+  },
+  {
+   "brand": "TSMC",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/TSMC (\"Headquartered in Hsinchu Science Park\")"
+  },
+  {
+   "brand": "UMC",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/United_Microelectronics_Corporation (\"based in Hsinchu, Taiwan\")"
+  },
+  {
+   "brand": "MediaTek",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/MediaTek (\"headquartered in Hsinchu, Taiwan\")"
+  },
+  {
+   "brand": "Amorepacific",
+   "type": "head office",
+   "source": "https://www.apgroup.com/int/en/careers/global-network/hq/seoul.html (\"100 Hangang-daero, Yongsan-gu, Seoul\")"
+  },
+  {
+   "brand": "LG H&H",
+   "type": "head office",
+   "source": "https://www.insight.co.kr/news/534423 (head office moving to the LG Seoul Station Building, Huam-ro 98, Jung-gu, Seoul, April 2026)"
+  },
+  {
+   "brand": "Nintendo",
+   "type": "head office",
+   "source": "https://www.nintendo.co.jp/corporate/en/outline/index.html (\"11-1 Hokotate-cho, Kamitoba, Minami-ku, Kyoto\")"
+  },
+  {
+   "brand": "Toyota",
+   "type": "head office",
+   "source": "https://global.toyota/en/company/profile/overview/ (1 Toyota-cho, Toyota City)"
+  },
+  {
+   "brand": "Toei Animation",
+   "type": "head office",
+   "source": "https://corp.toei-anim.co.jp/en/company/outline.html (head office in Nakano, Tokyo; Oizumi Studio in Nerima, Tokyo)"
+  },
+  {
+   "brand": "TMS Entertainment",
+   "type": "head office",
+   "source": "https://www.tms-e.co.jp/company/ (\"東京都中野区中野3丁目31番1号\")"
+  },
+  {
+   "brand": "Sunrise",
+   "type": "office (Bandai Namco Filmworks)",
+   "source": "http://www.bnfw.co.jp/en/ (\"4-30-16, Ogikubo, Suginami-ku, Tokyo\")"
+  }
+ ],
+ "sources": [
+  "CnEVPost on BYD's 2025 annual report, 27 Mar 2026: https://cnevpost.com/2026/03/27/byd-2 ; Shenzhen: https://en.wikipedia.org/wiki/Shenzhen",
+  "People's Daily Online, 3 Aug 2026: https://en.people.cn/n3/2026/0803/c98649-20484784.html",
+  "China News Weekly via Sina, 30 Aug 2026: https://news.sina.cn/sh/2026-08-30/detail-inipzxrx3050361.d.html ; Hengdian World Studios: https://www.hengdianworld.com/en/",
+  "Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park",
+  "Korea.net, 26 May 2026: https://www.korea.net/NewsFocus/Business/view?articleId=292940 ; Amorepacific HQ: https://www.apgroup.com/int/en/careers/global-network/hq/seoul.html ; LG H&H HQ move (Insight, 19 Dec 2025): https://www.insight.co.kr/news/534423",
+  "Nintendo IR, hardware and software sales units: https://www.nintendo.co.jp/ir/en/finance/hard_soft/index.html ; company outline: https://www.nintendo.co.jp/corporate/en/outline/index.html",
+  "City of Sabae, technology pages: https://www.city.sabae.fukui.jp/technology/en/index.html",
+  "Toyota, company overview: https://global.toyota/en/company/profile/overview/",
+  "AJA release on PR Times, 30 Oct 2026: https://prtimes.jp/main/html/rd/p/000000007.000039770.html ; Toei Animation: https://corp.toei-anim.co.jp/en/company/outline.html ; TMS: https://www.tms-e.co.jp/company/ ; Bandai Namco Filmworks: http://www.bnfw.co.jp/en/"
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs) and rechecked 18 Nov 2026: clear. The reel names and defines no business concept; concept_id career-cities-map-6-asia-1 is new. Themes career-cities and careers",
+ "maths_check": "No sums in the voice. Figures as reported: 4,602,436 vehicles, voiced as 'over 4.6 million' (BYD, 2025); over 50,000 jobs (Jingdezhen handmade porcelain, 2025); 4,016 new short-drama crews (Hengdian, 2025); 177,389 workers, voiced as 'over 177,000' (Hsinchu Science Park, October 2024); USD 11.4 billion (Korea cosmetics exports, 2025); 26.35 million Switch 2 units shipped (Nintendo, to 30 September 2026); about 90% (Sabae's share of Japan's frames); 390,927 employees (Toyota, 31 March 2026); JPY 4.4491 trillion, voiced as '4.45 trillion yen' (AJA, 2025, preliminary). Two currencies appear because each figure stays in the currency it was reported in: US dollars for Korea's exports and yen for Japan's anime market",
+ "not_verified": "Hengdian's 4,016 are vertical micro-drama (short-drama) crews, not feature films, from a magazine report on Sina; shooting fell sharply in early 2026, so the line is dated 2025. Seoul and Tokyo use country figures (Korea's cosmetics exports, Japan's anime market); Tokyo's figure is AJA's preliminary estimate. Nintendo's figure is units shipped to shops. Hsinchu's worker count is from Wikipedia's Hsinchu Science Park page. LG H&H's 2026 move inside Seoul was not confirmed as finished (both addresses are in Seoul). Hengdian's logo is the Hengdian Group's, the owner of Hengdian World Studios"
+}

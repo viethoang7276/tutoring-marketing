@@ -91,6 +91,32 @@ body.caplow.full #logo{top:232px}
 body.caplow.ad #cap{top:1300px;height:220px;left:120px;right:120px}
 body.caplow.ad #logo{top:296px}
 body.caplow.talk #cap{top:1300px;height:230px;left:40px;right:40px}
+/* quiz scoreboard (17 Nov 2026, ledger-talks with meta.board): 1-8 list at the top, answers fill in as they are revealed */
+#board{z-index:5;position:absolute;left:44px;right:44px;top:318px;height:384px;box-sizing:border-box;display:none;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(4,1fr);gap:10px 26px;padding:18px 22px;background:rgba(251,250,246,0.93);border:6px solid #0F172A;border-radius:34px 28px 36px 26px}
+#board .r{display:flex;align-items:center;gap:16px;min-width:0}
+#board .n{flex:none;width:66px;height:66px;border-radius:50%;box-sizing:border-box;border:5px solid #94A3B8;color:#94A3B8;font:900 40px/56px Inter,sans-serif;text-align:center}
+#board .t{font:900 46px/1.05 Inter,sans-serif;color:#0F172A;white-space:nowrap;min-width:0;letter-spacing:-0.01em;transform-origin:0 50%}
+#board .r.ask .n{background:#FFD45C;border-color:#0F172A;color:#0F172A}
+#board .r.done .n{background:#467DE3;border-color:#0F172A;color:#FFFFFF}
+#board .r.ask .t{color:#467DE3}
+body.clean #board,body.parts #board{display:none !important}
+/* flat style (meta.style "flat", 17 Nov 2026, opt-in; Hoang: "More neat clean and less paper like"): no pencil grain, line boil, ghost pass, paper
+   texture or draw-on; the art is one continuous full-bleed world the camera ("cam") moves through, edge to edge (the right edge is not protected
+   for this test). Captions sit in the middle of the bottom half (y 1320-1530) on a clean white pill, the key word in Edlintics blue; small logo on top */
+html.flat,body.flat{background:#EFF6FF}
+body.flat #paper,body.flat #grain,body.flat #ghostPass{display:none !important}
+body.flat #art{-webkit-mask-image:none;mask-image:none;clip-path:none}
+body.flat #cap{top:1320px;height:210px;left:56px;right:56px}
+body.flat #cap .c{font:900 76px/1.12 Inter,sans-serif;color:#0F172A;-webkit-text-stroke:0;letter-spacing:-0.01em;display:inline-block;background:#FFFFFF;border-radius:34px;padding:14px 34px 20px;box-shadow:0 10px 0 rgba(30,58,138,0.16)}
+body.flat #cap .k{background:none;color:#467DE3;padding:0}
+body.flat #logo{top:228px;width:150px;opacity:1;background:#FFFFFF;padding:12px 22px;border-radius:999px;box-shadow:0 6px 0 rgba(30,58,138,0.14)}
+body.flat #card .rule{background:#467DE3}
+/* flat + ladder bleed (map reels, 18 Nov 2026, opt-in: only a map script with meta.style "flat" gets both classes): the bleed captions, stop header, chips and closing card in the clean flat look */
+body.flat.ladder.bleed #cap .c{font:900 80px/1.12 Inter,sans-serif;color:#0F172A;-webkit-text-stroke:0;background:#FFFFFF;border-radius:34px;padding:12px 32px 18px;box-shadow:0 10px 0 rgba(30,58,138,0.16)}
+body.flat.ladder.bleed #cap .k{background:none;color:#467DE3;padding:0}
+body.flat.ladder.bleed #rung .rt{background:#FFFFFF;box-shadow:0 6px 0 rgba(30,58,138,0.14)}
+body.flat.ladder #rung .chip{border:0;background:#FFD45C;box-shadow:0 6px 0 rgba(30,58,138,0.16)}
+body.flat.ladder #ctab{border:0;background:#FFFFFF;box-shadow:0 14px 0 rgba(30,58,138,0.16)}
 /* ladder "cta" beat (13 Nov 2026): the closing message on a card beside the ladder, with the logo; no end card */
 #ctab{display:none}
 body.ladder #ctab{position:absolute;left:400px;top:640px;width:520px;box-sizing:border-box;background:#FBFAF6;border:5px solid #0F172A;border-radius:36px;padding:34px 28px 30px;text-align:center;transform-origin:50% 50%}
@@ -120,6 +146,7 @@ body.clean #cap,body.clean #logo,body.clean #card{display:none !important}
 html.parts,body.parts{background:transparent}body.parts #paper,body.parts #art,body.parts #stage>svg,body.parts #cap,body.parts #logo{display:none !important}
 body.parts #card{display:flex !important}
 </style></head><body>
+<div id="board"></div>
 <div id="stage">
 <svg id="paper" width="1080" height="1920" viewBox="0 0 1080 1920">
  <defs>
@@ -150,11 +177,11 @@ body.parts #card{display:flex !important}
   </filter>
  </defs>
  <g id="cam"><g id="pop">
-  <g filter="url(#ghost)" opacity="0.3" transform="translate(2 -2)"><use href="#artBody"/></g>
-  <g filter="url(#pencil)"><g id="artBody"></g></g>
+  <g id="ghostPass" filter="url(#ghost)" opacity="0.3" transform="translate(2 -2)"><use href="#artBody"/></g>
+  <g id="pencilPass" filter="url(#pencil)"><g id="artBody"></g></g>
  </g></g>
 </svg>
-<svg width="1080" height="1920" viewBox="0 0 1080 1920" style="pointer-events:none">
+<svg id="grain" width="1080" height="1920" viewBox="0 0 1080 1920" style="pointer-events:none">
  <rect width="1080" height="1920" filter="url(#fibers)"/><rect width="1080" height="1920" filter="url(#paperTex)"/>
 </svg>
 <div id="cap"><div class="c"></div></div>
@@ -170,7 +197,7 @@ body.parts #card{display:flex !important}
 // in the 1080x1920 art, fitted into the box x 40-1040, y 530-1310). A new scene comes in with a quick 0.15 s fade and a fast draw-on; no zoom, pan or reframe.
 // Captions show 2-5 word chunks timed to the voice, key word highlighted. The last beat (role "endcard") hides
 // the art and shows the term, a one-line key point and the logo.
-let D=null, curImg=null, els=[], fxEls=[], cut=0, TALK=false, sceneBeat=0, LAD=false;
+let D=null, curImg=null, els=[], fxEls=[], ledEls=[], cut=0, TALK=false, sceneBeat=0, LAD=false;
 let BX=40, BW=1000, BY=530, BH=780;
 const artBody=document.getElementById('artBody'), capC=document.querySelector('#cap .c');
 async function init(){ D=await (await fetch('scenes.json')).json(); await document.fonts.ready;
@@ -182,7 +209,11 @@ async function init(){ D=await (await fetch('scenes.json')).json(); await docume
     if(D.bleed){ document.body.classList.add('bleed'); BX=0; BW=1080; BY=0; BH=1920; if(D.capLow) document.body.classList.add('caplow'); } }   // full-bleed style (13 Nov 2026): the art is the whole screen
   if(D.clean) document.body.classList.add('clean');
   if(D.nologo) document.body.classList.add('nologo');
+  if(D.board){ const bd=document.getElementById('board'); bd.innerHTML=D.board.map((x,k)=>`<div class="r"><div class="n">${k+1}</div><div class="t" data-l="${String(x).replace(/"/g,'')}"></div></div>`).join(''); }
   if(D.layout==='talk'){ TALK=true; document.body.classList.add('talk'); BX=0; BW=1080; BY=0; BH=1920; }
+  if(D.flat){ document.body.classList.add('flat'); document.documentElement.classList.add('flat'); BX=0; BW=1080; BY=0; BH=1920;   // flat style (17 Nov 2026, opt-in): clean vector art, full frame
+    document.getElementById('pencilPass').removeAttribute('filter'); document.getElementById('ghostPass').remove();
+    try{ await Promise.all([document.fonts.load('900 76px Inter'),document.fonts.load('800 40px Inter')]); }catch(_){} }   // the SVG cards and tables use Inter 800/900: ready before frame 0
   return D.duration; }
 const clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>1-Math.pow(1-x,3), mix=(a,b,p)=>a.map((v,i)=>v+(b[i]-v)*p);
 const back=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
@@ -192,6 +223,8 @@ function load(img){
   artBody.innerHTML=(s.wall?'<rect x="-3000" y="-3000" width="7080" height="4480" fill="#E8F0FC" opacity="0.55"/>':'')+s.body;
   els=[...artBody.querySelectorAll('path,line,rect,circle,ellipse,polygon,polyline,text')].filter((e,k)=>!(s.wall&&k===0)).filter(e=>!e.closest('[data-nodraw]'));   // data-nodraw: the motion layer owns that element's geometry
   fxEls=[...artBody.querySelectorAll('[data-fx]')];
+  if(D.flat){ els=[]; fitLoad(); }   // flat style: no draw-on, every shape is solid from its first frame (and a big world stays fast); texts shrink to fit their cards
+  ledEls=[...artBody.querySelectorAll('[data-led2]')].map(e=>({e,S:JSON.parse(e.dataset.led2),q:{}}));   // Ledger v2 rigs (flat style)
   const n=els.length;
   els.forEach((e,k)=>{ const st=e.getAttribute('stroke'), dashed=e.getAttribute('stroke-dasharray');
     let L=0; try{L=e.getTotalLength();}catch(_){}
@@ -245,13 +278,24 @@ function rungRender(t,i,b,B){
   rt.style.opacity=j0===0?1:clamp((u+1/24)/0.15); rt.style.transform=`translateX(${(j0===0?0:-40*(1-ease(clamp(u/0.3)))).toFixed(1)}px)`;
   rungEl.querySelectorAll('.chip').forEach(e=>{ const q=t-e._t; e.style.visibility=q<0?'hidden':'visible'; e.style.transform=`scale(${(q<0?1:0.6+0.4*back(clamp(q/0.28))).toFixed(3)})`; });
 }
+// quiz scoreboard: from the time alone. Row n shows "?" while its question is on, then its answer from the start of the answer beat
+const boardEl=document.getElementById('board');
+function boardRender(t,i,b,B,a){
+  if(!D.board||b.role==='endcard'){ boardEl.style.display='none'; return; }
+  boardEl.style.display='grid'; const rows=boardEl.children, rev={}; let ask=0;
+  B.forEach((x,k)=>{ if(k<=i&&x.reveal) rev[x.reveal]=(k===0?0:x.start-0.08); }); if(b.ask) ask=b.ask;
+  for(let k=0;k<rows.length;k++){ const r=rows[k], tt=r.querySelector('.t'), n=k+1, done=rev[n]!==undefined, label=tt.dataset.l;
+    r.classList.toggle('done',done); r.classList.toggle('ask',!done&&ask===n);
+    const want=done?label:(ask===n?'?':''); if(tt.textContent!==want){ tt.textContent=want; tt.style.transform='none'; const w=tt.parentNode.clientWidth-66-16; if(tt.scrollWidth>w&&w>0) tt.style.transform=`scaleX(${(w/tt.scrollWidth).toFixed(3)})`; }
+    const q=done?t-rev[n]:99; tt.style.opacity=done?clamp(q/0.12):1; r.style.transform=done&&q<0.45?`scale(${(0.9+0.1*back(clamp(q/0.35))).toFixed(4)})`:''; r.style.transformOrigin='0 50%'; }
+}
 function render(t){
   const B=D.beats, i=beatAt(t), b=B[i], a=(i===0?0:b.start-0.08);
   if(LAD) rungRender(t,i,b,B);
   const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
   // "defcard" (in-lesson videos, 5 Nov 2026): the same card mid-video, with the definition in place of the key point and no logo
-  if(b.role==='endcard'||b.role==='defcard'){
-    const ct=t-a; art.style.opacity=0; cap.style.display='none'; logo.style.display='none'; card.style.display='flex';
+  if((b.role==='endcard'||b.role==='defcard')&&!(D.flat&&b.img)){   // flat style (17 Nov 2026): an end card with an img is drawn in the world by the script
+    boardEl.style.display='none'; const ct=t-a; art.style.opacity=0; cap.style.display='none'; logo.style.display='none'; card.style.display='flex';
     const term=card.querySelector('.term'), kp=card.querySelector('.kp span'), kt=b.role==='defcard'?b.definition:b.keypoint;
     if(term.textContent!==b.term||kp.textContent!==kt){ term.textContent=b.term; kp.textContent=kt; }
     if(b.role==='defcard') curImg=null;   // the next scene draws on again after the card
@@ -267,6 +311,7 @@ function render(t){
     return;
   }
   card.style.display='none'; cap.style.display='flex'; logo.style.display='block';
+  boardRender(t,i,b,B,a);
   if(LAD){ const cb=document.getElementById('ctab');   // ladder "cta" beat: the message card replaces the captions and the corner logo
     if(b.role==='cta'||b.role==='title'){ const TT=b.role==='title'; cap.style.display='none'; logo.style.display=TT?'block':'none'; cb.style.display='block';   // "title" (13 Nov 2026): the opening title card, complete on frame 1, with an optional tag pill ("IN 90 SECONDS") and no logo inside
       cb.classList.toggle('ttl',TT); const tg=cb.querySelector('.tg'); tg.textContent=TT?(b.tag||''):''; tg.style.display=TT&&b.tag?'block':'none';
@@ -302,17 +347,19 @@ function render(t){
       const q=ease(clamp((t-t0)/0.2)), k=0.7+0.3*back(clamp((t-t0)/0.3));
       g.setAttribute('opacity',String(gone?0:q)); g.setAttribute('transform',`translate(${g.dataset.ax} ${g.dataset.ay}) scale(${k.toFixed(3)}) translate(${-g.dataset.ax} ${-g.dataset.ay})`); }); }
   if(fxEls.length){ const ch=[]; for(let j=sceneBeat;j<B.length&&B[j].img===b.img;j++) ch.push(...B[j].chunks); fxRender(t,ch); }
+  if(ledEls.length){ const ch=[]; for(let j=sceneBeat;j<B.length&&B[j].img===b.img;j++) ch.push(...B[j].chunks); led2Render(t,ch); }
   // steady frame: no push-in, pan or reframe
   const F=b.cam?camAt(t,b,B):(b.focus==='auto'||!b.focus)?autoFit:fit(b.focus);
   // camera scenes (paid ads, 30 Oct 2026): the art is clipped below the caption band and above the logo, and the pencil
   // noise is scaled against the zoom so a close-up boils like a normal frame (no bigger wobble). Other scenes are untouched
-  document.getElementById('art').style.clipPath=b.cam?(D.capLow?`inset(${BY}px 0 ${1920-BY-BH-26}px 0)`:'inset(530px 0 584px 0)'):'';
+  document.getElementById('art').style.clipPath=D.flat?'':b.cam?(D.capLow?`inset(${BY}px 0 ${1920-BY-BH-26}px 0)`:'inset(530px 0 584px 0)'):'';
   const zr=b.cam?F.s:1;
-  if(b.cam||document.body.dataset.camz){ document.body.dataset.camz=b.cam?'1':'';
+  if(!D.flat&&(b.cam||document.body.dataset.camz)){ document.body.dataset.camz=b.cam?'1':'';
     document.querySelectorAll('#pencil feDisplacementMap').forEach(e=>e.setAttribute('scale',String(4/zr)));
     document.querySelectorAll('#ghost feDisplacementMap').forEach(e=>e.setAttribute('scale',String(7/zr)));
     document.getElementById('t1').setAttribute('baseFrequency',String(0.03*zr)); document.getElementById('t2').setAttribute('baseFrequency',String(0.75*zr)); document.getElementById('t3').setAttribute('baseFrequency',String(0.025*zr)); }
   document.getElementById('cam').setAttribute('transform',`translate(${BX+BW/2} ${BY+BH/2}) scale(${F.s}) translate(${-F.cx} ${-F.cy})`);
+  if(D.flat) panFade(t,b,B,F);
   if(AD){ const k=0.97+0.03*ease(clamp(sceneT/0.12)), cx=BX+BW/2, cy=BY+BH/2;   // whole-group settle, no fade: ink is full from the first frame
     document.getElementById('pop').setAttribute('transform',newScene?`translate(${cx} ${cy}) scale(${k.toFixed(4)}) translate(${-cx} ${-cy})`:''); art.style.opacity=1; }
   else { document.getElementById('pop').setAttribute('transform','');
@@ -353,7 +400,8 @@ const fx={
     e.setAttribute('stroke-dasharray',`${p.toFixed(4)} 1`); e.setAttribute('opacity',(0.6*(S.fade>0?1-clamp((t-t0-S.dur)/S.fade):1)).toFixed(3)); },
   clip(e,S,T,t){ const t0=T(S), p=t<t0?0:(EZ[S.ease]||inout)(clamp((t-t0)/S.dur)), [x,y,w,h]=S.box;
     const horiz=S.dir==='right'||S.dir==='left'; e.setAttribute('x',S.dir==='left'?x+w*(1-p):x); e.setAttribute('width',horiz?w*p:w); e.setAttribute('y',S.dir==='up'?y+h*(1-p):y); e.setAttribute('height',horiz?h:h*p); },
-  count(e,S,T,t){ let v=S.from; for(const q of S.keys||[]){ const t0=T(q); if(t<t0) break; v+=(q.to-v)*(EZ[S.ease]||ease)(q.dur>0?clamp((t-t0)/q.dur):1); } setTxt(e,fmtN(v,S)); },
+  wd(e,S,T,t){ const q=t-T(S), p=q<0?0:ease(clamp(q/0.22)); e.setAttribute('fill-opacity',(S.g+(1-S.g)*p).toFixed(3)); },   // flat_sentence (18 Nov 2026): a word lights up from its ghost opacity at its chunk
+  count(e,S,T,t){ let v=S.from; for(const q of S.keys||[]){ const t0=T(q); if(t<t0) break; v+=(q.to-v)*(EZ[S.ease]||ease)(q.dur>0?clamp((t-t0)/q.dur):1); } const s0=e.textContent; setTxt(e,fmtN(v,S)); if(D.flat&&e._fb&&e.textContent!==s0) fitText(e); },
   stream(e,S,T,t){ const t0=T(S); e._p=e._p||[...e.querySelectorAll('.sp')];
     e._p.forEach((g,i)=>{ const u=(t-t0-i*S.stagger)/S.dur; if(u<0||u>1){ g.setAttribute('opacity','0'); return; } const p=inout(u), w=1-p, cx=(S.x+S.to[0])/2, cy=(S.y+S.to[1])/2-S.arc;
       const x=w*w*S.x+2*w*p*cx+p*p*S.to[0], y=w*w*S.y+2*w*p*cy+p*p*S.to[1];
@@ -405,6 +453,124 @@ const fx={
 };
 function fxRender(t,ch){ const T=o=>{ const n=o&&o.at?+String(o.at).split(':')[1]:0; return (ch[n]?ch[n].t:(ch.length?ch[ch.length-1].t:0))+((o&&o.delay)||0); };
   for(const e of fxEls){ const S=e._s||(e._s=JSON.parse(e.dataset.spec)), f=fx[e.dataset.fx]; if(f) f(e,S,T,t); } }
+// ---- flat fit (18 Nov 2026; Hoang: "avoid spill over text over box"). fitLoad: every text in a flat card or pill (data-fb) is assigned to the
+// smallest box of its item that holds its centre and shrinks (font-size) until it keeps 20 px (cards) or 12 px (pills, under 110 px tall) to the
+// box edge; counting numbers refit as they change. fitReport(t): the findings flat_fit_check.js collects. Only flat scripts reach this code
+const artEl=document.getElementById('art');
+function effOp(e){ let o=1; for(let n=e;n&&n!==artBody;n=n.parentNode){ if(n.nodeType!==1) continue; if(n.getAttribute('display')==='none'||n.style.display==='none') return 0; const a=n.style.opacity!==''?n.style.opacity:n.getAttribute('opacity'); if(a!==null) o*=+a; } return o*+(artEl.style.opacity||1); }
+function fitPad(q,k){ return (q.height/k<110?12:20)*k; }
+function fitText(te){ const b=te._fb; if(!b) return; if(te._fs0===undefined) te._fs0=parseFloat(te.getAttribute('font-size'));
+  te.setAttribute('font-size',te._fs0); const q=b.getBoundingClientRect(), r=te.getBoundingClientRect(); let bw=1; try{ bw=b.getBBox().width; }catch(_){}
+  const k=q.width/(bw||1), pad=fitPad(q,k), an=te.getAttribute('text-anchor')||'start', cx=r.left+r.width/2;
+  const avail=an==='middle'?2*Math.min(cx-q.left,q.right-cx)-2*pad:an==='end'?r.right-q.left-pad:q.right-pad-r.left;
+  if(r.width>avail&&avail>0) te.setAttribute('font-size',(te._fs0*avail/r.width*0.99).toFixed(2)); }
+function fitLoad(){ artBody.querySelectorAll('[data-p]').forEach(it=>{ const bx=[...it.querySelectorAll('[data-fb]')].map(b=>({b,q:b.getBoundingClientRect()}));
+  it.querySelectorAll('text').forEach(te=>{ const r=te.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2; let best=null, ba=1e18;
+    for(const {b,q} of bx){ if(cx>=q.left&&cx<=q.right&&cy>=q.top&&cy<=q.bottom&&q.width*q.height<ba){ ba=q.width*q.height; best=b; } }
+    te._fb=best; if(best) fitText(te); }); }); }
+const FIT_SKIP=new Set(['flat_icon','flat_logo','flat_house','flat_ruler','ledger2']);   // decorative glyphs, not labels
+function fitUnits(){ const U=[];
+  artBody.querySelectorAll('[data-p]').forEach((it,ii)=>{ if(effOp(it)<0.6||FIT_SKIP.has(it.dataset.p)||it.dataset.fit==='skip') return; const on=it.dataset.fit==='on'; const tx=(it.querySelector('text')||{}).textContent||''; const name=it.dataset.p+(tx?' "'+tx.trim().slice(0,28)+'"':'');
+    const fb=[...it.querySelectorAll('[data-fb]')].filter(b=>effOp(b)>0.6).map(b=>({e:b,r:b.getBoundingClientRect()}));
+    for(const a of fb){ if(!fb.some(c=>c!==a&&c.r.left<=a.r.left+1&&c.r.right>=a.r.right-1&&c.r.top<=a.r.top+1&&c.r.bottom>=a.r.bottom-1&&c.r.width*c.r.height>a.r.width*a.r.height)) U.push({e:a.e,r:a.r,it:ii,name,kind:'box',on}); }
+    it.querySelectorAll('text').forEach(te=>{ if(effOp(te)<0.6||!te.textContent.trim()) return; const r=te.getBoundingClientRect();
+      if(!te._fb) U.push({e:te,r,it:ii,name:it.dataset.p+' "'+te.textContent.trim().slice(0,28)+'"',kind:'text',loose:true,own:fb,on});
+      else if(effOp(te._fb)>0.6) U.push({e:te,r,it:ii,name:it.dataset.p+' "'+te.textContent.trim().slice(0,28)+'"',kind:'text',box:te._fb.getBoundingClientRect(),pad:0}); }); });
+  return U; }
+const ovl=(a,b,m=3)=>Math.min(a.right,b.right)-Math.max(a.left,b.left)>m&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>m;
+function fitReport(t,dt){ dt=dt||0.125; const snap=()=>{ const m=new Map(); for(const u of fitUnits()) m.set(u.e,u.r); return m; };
+  render(t-dt); const A=snap(); render(t+dt); const B=snap(); render(t); if(+(artEl.style.opacity||1)<0.6||document.getElementById('card').style.display==='flex') return [];
+  const U=fitUnits(), same=(x,y)=>x&&y&&Math.abs(x.left-y.left)<1.5&&Math.abs(x.top-y.top)<1.5&&Math.abs(x.width-y.width)<1.5&&Math.abs(x.height-y.height)<1.5;
+  const onS=r=>r.right>0&&r.left<1080&&r.bottom>0&&r.top<1920;
+  const held=u=>same(A.get(u.e),u.r)&&same(B.get(u.e),u.r), F=[], r4=r=>[r.left,r.top,r.width,r.height].map(Math.round);
+  for(const u of U){ if(u.kind!=='text'||!held(u)||!onS(u.r)) continue;
+    if(u.box){ const q=u.box, k=1, pad=fitPad(q,k)-2; if(u.r.left<q.left+pad||u.r.right>q.right-pad||u.r.top<q.top-1||u.r.bottom>q.bottom+1) F.push({kind:'text-spill',a:u.name,box:r4(u.r)}); }
+    else if(u.own&&u.own.some(c=>ovl(c.r,u.r,1)&&!(u.r.left>=c.r.left&&u.r.right<=c.r.right&&u.r.top>=c.r.top&&u.r.bottom<=c.r.bottom))) F.push({kind:'text-spill',a:u.name,box:r4(u.r)}); }
+  const top=U.filter(u=>(u.kind==='box'||u.loose)&&onS(u.r));   // only what is on screen; cards keep 10 px apart
+  for(let i=0;i<top.length;i++) for(let j=i+1;j<top.length;j++){ const a=top[i], b=top[j]; if(a.it===b.it||a.on||b.on) continue; if(ovl(a.r,b.r,a.kind==='box'&&b.kind==='box'?-10:3)&&held(a)&&held(b)) F.push({kind:'overlap',a:a.name,b:b.name,box:r4(a.r)}); }
+  const posts=[...artBody.querySelectorAll('[data-fp]')].filter(e=>effOp(e)>0.6).map(e=>e.getBoundingClientRect()), hold=[...artBody.querySelectorAll('[data-fh]')].filter(e=>effOp(e)>0.6).map(e=>e.getBoundingClientRect());
+  for(const u of top){ if(!held(u)) continue;
+    if(posts.some(p=>ovl(p,u.r))) F.push({kind:'overlap',a:u.name,b:'board post',box:r4(u.r)});
+    if(hold.some(h=>ovl(h,u.r,1)&&!(u.r.left>=h.left-1&&u.r.right<=h.right+1&&u.r.top>=h.top-1&&u.r.bottom<=h.bottom+1))) F.push({kind:'overlap',a:u.name,b:'board edge',box:r4(u.r)});
+    const R=u.r; if(R.right>0&&R.left<1080&&R.bottom>0&&R.top<1920&&(R.left<0||R.right>1080||R.top<0||R.bottom>1920)) F.push({kind:'edge',a:u.name,box:r4(R)}); }
+  const led=[...artBody.querySelectorAll('[data-led2]')].filter(e=>effOp(e)>0.6).map(e=>{ const q=e.querySelector('[data-r="root"]')||e, M=q.getScreenCTM(), P=[[64,26],[176,26],[64,236],[176,236]].map(([x,y])=>({x:M.a*x+M.c*y+M.e,y:M.b*x+M.d*y+M.f}));   // his body: the book and legs (rig units x 64-176, y 26-236), arms not counted
+    return {left:Math.min(...P.map(p=>p.x)),right:Math.max(...P.map(p=>p.x)),top:Math.min(...P.map(p=>p.y)),bottom:Math.max(...P.map(p=>p.y))}; });
+  const capE=document.querySelector('#cap .c'), cap=document.getElementById('cap').style.display!=='none'&&capE.textContent&&+(capE.style.opacity||1)>0.5?capE.getBoundingClientRect():null;
+  const lg=document.getElementById('logo'), lr=lg.style.display!=='none'?lg.getBoundingClientRect():null, lrm=lr?{left:lr.left-16,right:lr.right+16,top:lr.top-16,bottom:lr.bottom+16}:null;
+  for(const u of top){ if(!held(u)) continue;
+    for(const L of led) if(ovl(L,u.r,4)) F.push({kind:'ledger',a:u.name,box:r4(u.r)});
+    if(cap&&ovl(cap,u.r,2)) F.push({kind:'caption',a:u.name,box:r4(u.r)});
+    if(lrm&&ovl(lrm,u.r,0)) F.push({kind:'logo',a:u.name,box:r4(u.r)}); }
+  return F; }
+window.fitReport=fitReport;
+// pan fade (18 Nov 2026, flat only; Hoang: no text cut by the box or the frame): while the camera moves, a card or pill that the frame edge cuts
+// fades with how much of it is off screen (fully shown at 99.5% inside, gone at 92%), so a card is never seen sliced by the edge mid-pan. At rest nothing changes
+let panItems=null, panImg=null;
+function panFade(t,b,B,F){ if(panImg!==curImg){ panImg=curImg; panItems=[...artBody.querySelectorAll('[data-p]')].filter(it=>it.querySelector('[data-fb]')&&!FIT_SKIP.has(it.dataset.p)); }
+  let moving=false; if(b.cam){ const G=camAt(t+0.04,b,B); moving=Math.abs(G.cx-F.cx)>0.5||Math.abs(G.cy-F.cy)>0.5||Math.abs(G.s-F.s)>1e-4; if(!moving){ const H=camAt(t-0.04,b,B); moving=Math.abs(H.cx-F.cx)>0.5||Math.abs(H.cy-F.cy)>0.5||Math.abs(H.s-F.s)>1e-4; } }
+  for(const it of panItems){ if(!moving){ if(it._pf){ it.style.opacity=''; it._pf=0; } continue; }
+    const r=it.getBoundingClientRect(), A=r.width*r.height; if(!A){ continue; }
+    const iw=Math.max(0,Math.min(r.right,1080)-Math.max(r.left,0)), ih=Math.max(0,Math.min(r.bottom,1920)-Math.max(r.top,0)), fr=iw*ih/A;
+    const k=fr>=0.995?1:fr<=0.92?0:(x=>x*x*(3-2*x))((fr-0.92)/0.075), a=it.getAttribute('opacity'), base=a===null?1:+a;
+    if(k<1){ it.style.opacity=(base*k).toFixed(3); it._pf=1; } else if(it._pf){ it.style.opacity=''; it._pf=0; } } }
+// ---- Ledger v2 rig driver (flat style, 17 Nov 2026). Channel names, pivots, arm maths, mouth shapes and idle motion follow the hand-off's RIG.md
+// (assets/brand-handoff/ledger-v2). Every value comes from the time alone (frames are rendered by seeking): poses blend in 0.28 s (quadratic in-out),
+// blink every 3-6 s on a seeded schedule, breathing 3.4 s, sway 7.3 s, arm drift, bookmark lag, a leg cycle while walking, lip sync from D.env
+const L2REST={x:0,y:0,rot:0,faceY:0,aL1:31,aL2:-14,aLn:1,aR1:31,aR2:-14,aRn:1,finL:0,finR:0,lookX:0,lookY:0,lid:0,glad:0,brow:0,browY:0,browT:0,browA:0};
+const L2MOUTH={smile:[14,0,12,12],calm:[10,2,5,5],grin:[15,-1,5,21],open:[9,1,-1,17],oh:[6,2,-5,13],mid:[11,1,4,11],shut:[11,1,6,7],hmm:[7,3,1,1]};
+const L2POSE={idle:{},talk:{aR1:62,aR2:118,_talkArm:1},wave:{aL1:115,aL2:169,aLn:1.25,_wave:1,mouth:'grin'},
+  point_right:{aR1:100,aR2:100,aRn:1.2,finR:1,rot:4,x:5}, point_left:{aL1:100,aL2:100,aLn:1.2,finL:1,rot:-4,x:-5},
+  point_up:{aR1:145,aR2:150,aRn:1.2,finR:1,rot:3,lookX:2,lookY:-2.4}, think:{aR1:112,aR2:212,aRn:1.2,layR:'f',lookX:-2.5,lookY:-2.3,rot:-3,brow:1,browT:6,mouth:'hmm'},
+  happy:{aL1:125,aL2:168,aLn:1.2,aR1:125,aR2:168,aRn:1.2,glad:1,mouth:'grin'}, shrug:{aL1:62,aL2:118,aR1:62,aR2:118,brow:1,browY:-3,browT:-6,lookX:2,mouth:'hmm'},
+  hold_ruler:{aR1:70,aR2:150,aRn:1.05,prop:'ruler',lookX:2.4,lookY:-1.5}, point_ruler:{aR1:100,aR2:100,aRn:1.2,prop:'ruler',rot:4,x:5,lookX:3},
+  hold_magnifier:{aR1:70,aR2:150,aRn:1.05,prop:'magnifier',lookX:2.4,lookY:-1.5}, nod:{_nod:1,mouth:'grin'}};
+const io=x=>x<0.5?2*x*x:1-Math.pow(-2*x+2,2)/2, n1=v=>Math.round(v*10)/10;
+function l2frac(x){ const v=Math.sin(x)*43758.5453; return v-Math.floor(v); }
+function led2Render(t,ch){ const T=o=>{ const n=o&&o.at?+String(o.at).split(':')[1]:0; return (ch[n]?ch[n].t:(ch.length?ch[ch.length-1].t:0))+((o&&o.delay)||0); };
+  for(const L of ledEls){ const {e,S,q}=L, $=k=>q[k]||(q[k]=e.querySelector(`[data-r="${k}"]`)), set=(k,a)=>{ const n=$(k); if(n) for(const z in a) n.setAttribute(z,a[z]); };
+    // pose: blend each keyframe in over 0.28 s from wherever the last one had reached
+    let c={...L2REST}, mouth='smile', prop='', layR='b', flags={}, tp=0;
+    for(const k of S.poses){ const tk=T(k); if(t<tk) break; const P=L2POSE[k.pose]||{}, p=io(clamp((t-tk)/0.28)), tgt={...L2REST,...P};
+      for(const z in L2REST) c[z]+=(tgt[z]-c[z])*p;
+      if(p>0.5){ mouth=P.mouth||'smile'; prop=P.prop||''; layR=P.layR||'b'; flags=P; tp=tk; } }
+    // walking: a leg cycle (3.2 Hz, +-22 deg) and a small bounce while a walk runs
+    let legL=0, legR=0, wy=0, walking=false;
+    for(const w of S.walks){ const a=t-T(w); if(a>=0&&a<=w.dur){ const ph=2*Math.PI*3.2*a, k=Math.min(1,a/0.12,(w.dur-a)/0.12); legL=22*k*Math.sin(ph); legR=-legL; wy=-5*k*Math.abs(Math.sin(ph)); walking=true; } }
+    if(flags._wave) c.aL2=169+19*Math.sin(2*Math.PI*4.5*(t-tp));
+    if(flags._talkArm) c.aR2+=5*Math.sin(2*Math.PI*t/1.3);
+    if(flags._nod){ const a=t-tp; if(a<0.9){ c.y+=6*Math.max(0,Math.sin(Math.PI*a/0.45)); c.faceY+=3*Math.max(0,Math.sin(Math.PI*a/0.45)); } }
+    if(c.finR>0.5||c.finL>0.5){ const poke=Math.max(0,Math.sin(2*Math.PI*t/1.8)); if(c.finR>0.5) c.aRn+=0.04*poke; if(c.finL>0.5) c.aLn+=0.04*poke; }
+    // idle layer (RIG.md): breathing, sway, arm drift
+    const br=Math.sin(2*Math.PI*t/3.4), sy=1+0.015*br, sx=1-0.006*br, rot=c.rot+Math.sin(2*Math.PI*t/7.3);
+    set('root',{transform:`translate(${n1(c.x)} ${n1(c.y+wy)})`});
+    set('torso',{transform:`rotate(${rot.toFixed(2)} 120 198) translate(120 222) scale(${sx.toFixed(4)} ${sy.toFixed(4)}) translate(-120 -222)`});
+    set('legL',{transform:`rotate(${n1(legL)} 102 188)`}); set('legR',{transform:`rotate(${n1(legR)} 138 188)`});
+    set('face',{transform:`translate(0 ${n1(c.faceY)})`}); set('eyes',{transform:`translate(${c.lookX.toFixed(2)} ${c.lookY.toFixed(2)})`});
+    // blink: a seeded 3-6 s schedule, 290 ms each (0 to 1 in 60 ms, held to 100 ms, open by 200 ms)
+    let blink=0; { let bt=1.1+l2frac(S.seed)*1.5, k=0; while(bt<=t){ const d=(t-bt)*1000; if(d<290){ blink=d<60?d/60:d<100?1:d<200?1-(d-100)/100:0; break; } k++; bt+=3+3*l2frac(S.seed*7.13+k*12.9898); } }
+    const bs=(1-0.92*blink).toFixed(3), glad=clamp(c.glad), lid=clamp(c.lid), brow=clamp(c.brow);
+    for(const [Sd,sg,cx] of [['L',-1,102],['R',1,138]]){
+      set('eye'+Sd,{transform:`translate(${cx} 110) scale(1 ${bs}) translate(-${cx} -110)`,opacity:(1-glad).toFixed(2)}); set('arc'+Sd,{opacity:glad.toFixed(2)});
+      set('lid'+Sd,{opacity:lid>0.02?1:0,transform:`rotate(${n1(sg*c.browT*Math.min(1,lid*3))} ${cx} 110) translate(0 ${n1(lid*10)})`});
+      set('brow'+Sd,{opacity:brow.toFixed(2),transform:`translate(0 ${n1(c.browY+(Sd==='R'?c.browA:0))}) rotate(${n1(sg*c.browT)} ${cx} 95.5)`}); }
+    // mouth: the pose's shape, opened by the voice (lip sync at 12 fps, smoothed over neighbouring frames, alternating open and mid shapes)
+    let M=L2MOUTH[mouth]||L2MOUTH.smile;
+    if(S.talk&&D.env&&D.env.length){ const i=t*12, k=Math.floor(i), f=i-k, ev=j=>D.env[Math.max(0,Math.min(D.env.length-1,j))]||0, a=clamp(ev(k)*(1-f)+ev(k+1)*f);
+      const O=k%3===2?L2MOUTH.mid:L2MOUTH.open, base=a>0?L2MOUTH.calm:M; M=base.map((v,j)=>v+(O[j]-v)*a); }
+    const [mw,me,mt,mb]=M, my=134+me;
+    set('mouth',{d:`M${n1(120-mw)} ${n1(my)} Q120 ${n1(my+mt)} ${n1(120+mw)} ${n1(my)} Q120 ${n1(my+mb)} ${n1(120-mw)} ${n1(my)}Z`});
+    // arms (RIG.md arm maths), the pointing finger, and which copy (behind or in front of the book) is shown
+    const SH={L:[62,152],R:[178,152]};
+    for(const [Sd,sg] of [['L',-1],['R',1]]){ const a1=c['a'+Sd+'1']+1.6*Math.sin(2*Math.PI*t/3.4-(Sd==='L'?0.7:1)), a2=c['a'+Sd+'2'], kk=c['a'+Sd+'n'], r=Math.PI/180, [sx0,sy0]=SH[Sd];
+      const ex=sx0+sg*23.3*kk*Math.sin(a1*r), ey=sy0+23.3*kk*Math.cos(a1*r), wx=ex+sg*16.5*kk*Math.sin(a2*r), wy2=ey+16.5*kk*Math.cos(a2*r), ux=sg*Math.sin(a2*r), uy=Math.cos(a2*r);
+      const front=Sd==='R'&&layR==='f', fin=clamp(c['fin'+Sd]), frot=Sd==='R'?90-a2:90+a2;
+      for(const cp of ['b','f']){ const on=(cp==='f')===front, d=`M${sx0} ${sy0} Q${n1(ex)} ${n1(ey)} ${n1(wx)} ${n1(wy2)}`;
+        set(`arm${Sd}-${cp}`,{display:on?'inline':'none'}); set(`arm${Sd}-${cp}-o`,{d}); set(`arm${Sd}-${cp}-i`,{d});
+        set(`arm${Sd}-${cp}-hand`,{transform:`translate(${n1(wx+2*ux)} ${n1(wy2+2*uy)})`,display:on?'inline':'none'});
+        set(`arm${Sd}-${cp}-fing`,{transform:`rotate(${n1(frot)}) scale(${(0.4+0.6*fin).toFixed(2)})`,opacity:fin.toFixed(2)});
+        const h=$(`arm${Sd}-${cp}-hand`); if(h){ h._p=h._p||[...h.querySelectorAll('[data-r2]')]; h._p.forEach(g=>g.setAttribute('display',Sd==='R'&&g.dataset.r2===prop?'inline':'none')); } } }
+    set('bm',{transform:`rotate(${n1(-3*Math.sin(2*Math.PI*(t-0.1)/7.3)+(walking?6*Math.sin(2*Math.PI*3.2*t):0))} 159 37)`});
+  } }
 // end-card layers for the editable kit: show the finished card on a transparent page with only one part visible,
 // and return that part's box so the caller can screenshot it. part: term, kp, rule, fn, logo, all
 function cardPart(part){ document.body.classList.add('parts'); document.documentElement.classList.add('parts'); const b=D.beats[D.beats.length-1]; const card=document.getElementById('card');

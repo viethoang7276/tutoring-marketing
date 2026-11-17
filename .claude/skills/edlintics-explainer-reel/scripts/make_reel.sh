@@ -64,6 +64,10 @@ echo "== 6/7 stills";        cd "$HERE"; [ -d node_modules ] || npm install --no
 TS=$("$PY" -c "import json;T=json.load(open('$W/timing.json'));print(','.join(str(round(min(b['end']-0.05, (b['chunks'][-1]['t']+0.45) if b.get('chunks') else b['start']+1.6),2)) for b in T['beats']))")
 rm -rf "$W/stills"; SCENES="$W/scenes.json" OUT="$W/stills" node render.js stills "$TS"; lap stills
 [ "$STILLS_ONLY" = "1" ] && { "$PY" "$HERE/postcheck.py" "$W" "$SLUG" >/dev/null 2>&1 || true; "$PY" "$HERE/framefill.py" "$W" || true; echo "STILLS_ONLY: stills and contact sheet only"; exit 0; }
+FLAT=$("$PY" -c "import json,sys;print(int(json.load(open(sys.argv[1])).get('meta',{}).get('style')=='flat'))" "$W/script.json")
+if [ "$FLAT" = "1" ] && [ "$FLAT_FIT" != "off" ]; then   # flat style (18 Nov 2026): fit check before the video; FAIL stops the build (FLAT_FIT=warn reports only, =off skips)
+  echo "== 6b/7 flat fit check"; SCENES="$W/scenes.json" node flat_fit_check.js "$W" "${FLAT_FIT_STEP:-0.25}"; lap "flat fit check"
+fi
 echo "== 7/7 render video";  SCENES="$W/scenes.json" ./build.sh "$W" "$SLUG"; lap "render video (build.sh)"
 # poster: the first still by time (numeric sort, never by name), saved as <slug>-poster.jpg
 # lessons: full size 1080x1920 for the in-app player

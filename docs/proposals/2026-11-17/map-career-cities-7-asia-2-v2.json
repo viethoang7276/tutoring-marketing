@@ -1,0 +1,469 @@
+{
+ "slug": "map-career-cities-7-asia-2",
+ "group": "map",
+ "version": "v2 (18 Nov 2026, as built)",
+ "title": "Career hub cities in Asia with Ledger, part 7",
+ "proposedSlot": "Mon 30 Nov 18:00 VN (to confirm)",
+ "seconds": 97.0,
+ "wordCount": 212,
+ "summary": "Part 7 of the career cities series covers 8 career hubs, one sourced fact each; rebuilt 18 Nov 2026 with Hoang's notes (plain title, new creative industries, logos with names in the city scene, paper and flat versions)",
+ "changesFromV1": [
+  "Title is now plain and direct (Hoang, 18 Nov): 'Career hub cities in Asia with Ledger, part seven.' with a PART 7 pill",
+  "New creative stops (Hoang, 18 Nov): Bangkok for film and Singapore for video games (Sea's Garena)",
+  "Dropped to stay under 2:00: Seria and Kuala Lumpur (lead's first picks); Singapore moved from shipping to video games (shipping was already in Part 5 with Piraeus); Jakarta cosmetics and Manila animation were researched but had weaker sources",
+  "Voice lines shortened; Rayong now shows Changan, BYD and Great Wall Motor (all with plants in Rayong); logos with names in the city scene; the fact number counts up",
+  "Built in two styles with the same voice and timing: paper and flat"
+ ],
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "Career hub cities in Asia with Ledger, part seven.",
+   "start": 0.15,
+   "captions": [
+    "Career hub cities",
+    "in Asia",
+    "with Ledger",
+    "part seven"
+   ],
+   "img": "title"
+  },
+  {
+   "n": 2,
+   "role": "stop",
+   "label": "stop 1 Bac Ninh",
+   "voice": "First, Ledger lands in Bac Ninh, Vietnam, a hub for phones.",
+   "start": 4.13,
+   "captions": [
+    "First, Ledger lands",
+    "in Bac Ninh, Vietnam",
+    "a hub for",
+    "phones"
+   ],
+   "img": "hop1"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Bac Ninh",
+   "voice": "Samsung's plants here and nearby have made 2 billion phones.",
+   "start": 8.34,
+   "captions": [
+    "Samsung's plants",
+    "here and nearby",
+    "have made 2 billion",
+    "phones"
+   ],
+   "img": "city1"
+  },
+  {
+   "n": 4,
+   "role": "stop",
+   "label": "stop 2 Phnom Penh",
+   "voice": "Then, he flies to Phnom Penh, Cambodia, a hub for garments.",
+   "start": 12.65,
+   "captions": [
+    "Then, he flies",
+    "to Phnom Penh, Cambodia",
+    "a hub for",
+    "garments"
+   ],
+   "img": "hop2"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Phnom Penh",
+   "voice": "Cambodia's garment, shoe and travel goods factories employ over 900,000 people.",
+   "start": 16.63,
+   "captions": [
+    "Cambodia's garment, shoe",
+    "and travel goods factories",
+    "employ over 900,000",
+    "people"
+   ],
+   "img": "city2"
+  },
+  {
+   "n": 6,
+   "role": "stop",
+   "label": "stop 3 Bangkok",
+   "voice": "Next, he hops to Bangkok, Thailand, a hub for film.",
+   "start": 22.58,
+   "captions": [
+    "Next, he hops",
+    "to Bangkok, Thailand",
+    "a hub for",
+    "film"
+   ],
+   "img": "hop3"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Bangkok",
+   "voice": "In 2025, Thailand hosted 546 foreign film productions.",
+   "start": 26.14,
+   "captions": [
+    "In 2025",
+    "Thailand hosted 546",
+    "foreign film productions"
+   ],
+   "img": "city3"
+  },
+  {
+   "n": 8,
+   "role": "stop",
+   "label": "stop 4 Rayong",
+   "voice": "Then, he rides to Rayong, Thailand, a hub for cars.",
+   "start": 32.02,
+   "captions": [
+    "Then, he rides",
+    "to Rayong, Thailand",
+    "a hub for",
+    "cars"
+   ],
+   "img": "hop4"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Rayong",
+   "voice": "Changan opened a plant here in 2025 for 10 billion baht.",
+   "start": 35.87,
+   "captions": [
+    "Changan opened",
+    "a plant here",
+    "in 2025",
+    "for 10 billion baht"
+   ],
+   "img": "city4"
+  },
+  {
+   "n": 10,
+   "role": "stop",
+   "label": "stop 5 Penang",
+   "voice": "Next, he flies to Penang, Malaysia, a hub for chips.",
+   "start": 40.21,
+   "captions": [
+    "Next, he flies",
+    "to Penang, Malaysia",
+    "a hub for",
+    "chips"
+   ],
+   "img": "hop5"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Penang",
+   "voice": "Intel's site here, opened in 1972, employs 15,000 people.",
+   "start": 44.25,
+   "captions": [
+    "Intel's site here",
+    "opened in 1972",
+    "employs 15,000 people"
+   ],
+   "img": "city5"
+  },
+  {
+   "n": 12,
+   "role": "stop",
+   "label": "stop 6 Singapore",
+   "voice": "Then, he flies to Singapore, a hub for video games.",
+   "start": 50.1,
+   "captions": [
+    "Then, he flies",
+    "to Singapore",
+    "a hub for",
+    "video games"
+   ],
+   "img": "hop6"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Singapore",
+   "voice": "Sea, based here, drew over 100 million Garena players a day.",
+   "start": 53.73,
+   "captions": [
+    "Sea, based here",
+    "drew over 100 million",
+    "Garena players a day"
+   ],
+   "img": "city6"
+  },
+  {
+   "n": 14,
+   "role": "stop",
+   "label": "stop 7 Morowali",
+   "voice": "Next, he hops to Morowali, Indonesia, a hub for nickel.",
+   "start": 58.94,
+   "captions": [
+    "Next, he hops",
+    "to Morowali, Indonesia",
+    "a hub for",
+    "nickel"
+   ],
+   "img": "hop7"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Morowali",
+   "voice": "Its industrial park had about 85,000 workers in 2024.",
+   "start": 63.08,
+   "captions": [
+    "Its industrial park",
+    "had about 85,000",
+    "workers in 2024"
+   ],
+   "img": "city7"
+  },
+  {
+   "n": 16,
+   "role": "stop",
+   "label": "stop 8 Manila",
+   "voice": "Finally, he lands in Manila, the Philippines, a hub for outsourced services.",
+   "start": 67.8,
+   "captions": [
+    "Finally, he lands",
+    "in Manila",
+    "the Philippines",
+    "a hub for",
+    "outsourced services"
+   ],
+   "img": "hop8"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Manila",
+   "voice": "The country's outsourcing industry employed 1.9 million people in 2025.",
+   "start": 72.97,
+   "captions": [
+    "The country's",
+    "outsourcing industry",
+    "employed 1.9 million",
+    "people in 2025"
+   ],
+   "img": "city8"
+  },
+  {
+   "n": 18,
+   "role": "summary",
+   "label": "summary",
+   "voice": "So that was Southeast Asia, from Bac Ninh to Manila.",
+   "start": 79.03,
+   "captions": [
+    "So that was",
+    "Southeast Asia",
+    "from Bac Ninh",
+    "to Manila"
+   ],
+   "img": "sum"
+  },
+  {
+   "n": 19,
+   "role": "summary",
+   "label": "summary",
+   "voice": "Next, part eight maps South Asia, the Gulf and Central Asia.",
+   "start": 83.35,
+   "captions": [
+    "Next, part eight",
+    "maps South Asia",
+    "the Gulf",
+    "and Central Asia"
+   ],
+   "img": "next"
+  },
+  {
+   "n": 20,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "start": 87.78,
+   "captions": [
+    "To climb",
+    "in these cities",
+    "you need a good",
+    "business foundation"
+   ],
+   "img": "cta"
+  },
+  {
+   "n": 21,
+   "role": "cta",
+   "label": "cta",
+   "voice": "Go to Edlintics.com to learn technical business skills.",
+   "start": 91.36,
+   "captions": [
+    "Go to Edlintics.com",
+    "to learn technical",
+    "business skills"
+   ],
+   "img": "cta"
+  }
+ ],
+ "stops": [
+  {
+   "city": "Bac Ninh",
+   "country_flag": "vn",
+   "industry": "Phones",
+   "fact": "Samsung's phone plants in Bac Ninh and Thai Nguyen had made 2 billion phones by the end of June 2025, with about 90,000 Vietnamese workers (plants, not a head office)",
+   "source": "Vietnam Government News, Samsung produces 2 billionth mobile phone in Viet Nam: https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm",
+   "figureDate": "End of June 2025",
+   "logos": [
+    "Samsung"
+   ]
+  },
+  {
+   "city": "Phnom Penh",
+   "country_flag": "kh",
+   "industry": "Garments",
+   "fact": "Cambodia's garment, footwear and travel goods sector employs over 900,000 workers in more than 1,500 factories; its exports were US$15.5 billion in 2025 (a country figure; Phnom Penh is the capital)",
+   "source": "The Star (Asia News Network), 20 Jan 2026: https://www.thestar.com.my/aseanplus/aseanplus-news/2026/01/20/cambodia-makes-us155bil-from-exports-of-garments-shoes-travel-goods-in-2025",
+   "figureDate": "2025 (published 20 January 2026)",
+   "logos": []
+  },
+  {
+   "city": "Bangkok",
+   "country_flag": "th",
+   "industry": "Film",
+   "fact": "Thailand hosted 546 foreign film productions in 2025, spending over 7.717 billion baht (Department of Tourism); Bangkok is among the most in-demand filming locations; GDH 559's head office is on Sukhumvit 31, Watthana, Bangkok",
+   "source": "The Nation, 14 Jan 2026: https://www.nationthailand.com/news/tourism/40061194 ; Government Public Relations Department, 21 Jul 2025: https://thailand.prd.go.th/en/content/category/detail/id/52/iid/407372 ; GDH 559 contact page: https://www.gdh559.com/contact",
+   "figureDate": "2025 (published 14 January 2026)",
+   "logos": [
+    "GDH"
+   ]
+  },
+  {
+   "city": "Rayong",
+   "country_flag": "th",
+   "industry": "Cars",
+   "fact": "Changan Automobile began production at its first overseas plant, in Rayong, on 16 May 2025, an investment of about THB 10 billion with a capacity of 100,000 vehicles a year (a plant; the head office is in China); BYD (WHA Industrial Estate, Rayong) and Great Wall Motor (Pluak Daeng, Rayong) also have car plants in Rayong",
+   "source": "Gasgoo, 16 May 2025: https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 ; BYD plant: The Thaiger, BYD opens first EV plant in Thailand ; GWM Rayong plant: https://www.gwm-global.com/news/3401476.html",
+   "figureDate": "16 May 2025",
+   "logos": [
+    "Changan",
+    "BYD",
+    "Great Wall Motor"
+   ]
+  },
+  {
+   "city": "Penang",
+   "country_flag": "my",
+   "industry": "Chips",
+   "fact": "Intel's Penang site, opened in 1972, has a workforce of 15,000; Micron opened its second assembly and test site in Penang in 2023; Penang holds about 13% of global chip packaging (sites, not head offices)",
+   "source": "InvestPenang: https://investpenang.gov.my/?p=23774",
+   "figureDate": "InvestPenang page, read 17 November 2026",
+   "logos": [
+    "Intel",
+    "Micron"
+   ]
+  },
+  {
+   "city": "Singapore",
+   "country_flag": "sg",
+   "industry": "Video games",
+   "fact": "Sea Limited (address 1 Fusionopolis Place, Galaxis, Singapore) says its games arm Garena connected on average with more than 100 million players daily throughout 2025",
+   "source": "Sea Limited, fourth quarter and full year 2025 results, Singapore, 3 Mar 2026 (cdn.sea.com results PDF) ; Sea contact page: https://www.sea.com/contact",
+   "figureDate": "2025 (published 3 March 2026)",
+   "logos": [
+    "Sea"
+   ]
+  },
+  {
+   "city": "Morowali",
+   "country_flag": "id",
+   "industry": "Nickel",
+   "fact": "The Indonesia Morowali Industrial Park (IMIP) had about 85,000 workers at the end of 2024; Indonesia produced nearly half of the world's nickel in 2022; Tsingshan owns a nickel smelter inside the park (a plant)",
+   "source": "Morowali Industrial Park: https://en.wikipedia.org/wiki/Morowali_Industrial_Park",
+   "figureDate": "End of 2024",
+   "logos": [
+    "Tsingshan"
+   ]
+  },
+  {
+   "city": "Manila",
+   "country_flag": "ph",
+   "industry": "Outsourced services",
+   "fact": "The Philippine IT and business process management industry employed 1.9 million people in 2025 and earned over USD 40 billion in export revenue (a country figure; Metro Manila is its main hub)",
+   "source": "Philstar, 29 Jan 2026: https://www.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark/amp/",
+   "figureDate": "2025 (published 29 January 2026)",
+   "logos": []
+  }
+ ],
+ "caption": "Career hub cities in Asia with Ledger, Part 7, goes to Southeast Asia with eight stops, and each stop shows one industry that city is a hub for, with a sourced fact\n\nSo you will meet Bac Ninh for phones, Phnom Penh for garments, Bangkok for film, Rayong for cars, Penang for chips, Singapore for video games, Morowali for nickel, and Manila for outsourced services\n\nSave the map for later, because Part 8 maps career hub cities across South Asia, the Gulf and Central Asia\n\n#edlintics #businessstudents #careeradvice #careers",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where industries and their careers are concentrated in eight Southeast Asian cities, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "BYD",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/BYD_Company (\"Pingshan District, Shenzhen\"); Rayong plant: The Thaiger, BYD opens first EV plant in Thailand (\"within the WHA Industrial Estate in Rayong\")"
+  },
+  {
+   "brand": "Samsung",
+   "type": "plant",
+   "source": "https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm (\"Samsung's mobile phone factories in Bac Ninh and Thai Nguyen provinces\")"
+  },
+  {
+   "brand": "GDH",
+   "type": "head office",
+   "source": "https://www.gdh559.com/contact (Sukhumvit 31, Watthana, Bangkok)"
+  },
+  {
+   "brand": "Changan",
+   "type": "plant",
+   "source": "https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 (\"the launch of its Rayong plant in Thailand\")"
+  },
+  {
+   "brand": "Great Wall Motor",
+   "type": "plant",
+   "source": "https://www.gwm-global.com/news/3401476.html (\"Located in Pluak Daeng District, Rayong Province\")"
+  },
+  {
+   "brand": "Intel",
+   "type": "site",
+   "source": "https://investpenang.gov.my/?p=23774 (\"the first production facility outside the US for Intel\", in Penang)"
+  },
+  {
+   "brand": "Micron",
+   "type": "site",
+   "source": "https://investpenang.gov.my/?p=23774 (\"its second facility for assembly and testing in Penang\")"
+  },
+  {
+   "brand": "Sea",
+   "type": "head office",
+   "source": "https://www.sea.com/contact (\"1 Fusionopolis Place, #17-10, Galaxis, Singapore 138522\"); results release datelined Singapore, 3 Mar 2026"
+  },
+  {
+   "brand": "Tsingshan",
+   "type": "plant",
+   "source": "https://en.wikipedia.org/wiki/Indonesia_Morowali_Industrial_Park (\"Tsingshan-owned nickel smelter inside the facility\")"
+  }
+ ],
+ "sources": [
+  "Vietnam Government News, Samsung produces 2 billionth mobile phone in Viet Nam: https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm",
+  "The Star (Asia News Network), 20 Jan 2026: https://www.thestar.com.my/aseanplus/aseanplus-news/2026/01/20/cambodia-makes-us155bil-from-exports-of-garments-shoes-travel-goods-in-2025",
+  "The Nation, 14 Jan 2026: https://www.nationthailand.com/news/tourism/40061194 ; Government Public Relations Department, 21 Jul 2025: https://thailand.prd.go.th/en/content/category/detail/id/52/iid/407372 ; GDH 559 contact page: https://www.gdh559.com/contact",
+  "Gasgoo, 16 May 2025: https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 ; BYD plant: The Thaiger, BYD opens first EV plant in Thailand ; GWM Rayong plant: https://www.gwm-global.com/news/3401476.html",
+  "InvestPenang: https://investpenang.gov.my/?p=23774",
+  "Sea Limited, fourth quarter and full year 2025 results, Singapore, 3 Mar 2026 (cdn.sea.com results PDF) ; Sea contact page: https://www.sea.com/contact",
+  "Morowali Industrial Park: https://en.wikipedia.org/wiki/Morowali_Industrial_Park",
+  "Philstar, 29 Jan 2026: https://www.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark/amp/"
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs) and rechecked 18 Nov 2026: clear. The reel names and defines no business concept; concept_id career-cities-map-7-asia-2 is new. Themes career-cities and careers",
+ "maths_check": "No sums in the voice. Figures as reported: 2 billion phones (Samsung Vietnam, to June 2025); over 900,000 workers (Cambodia's garment, footwear and travel goods sector, 2025); 546 foreign film productions (Thailand, 2025); about THB 10 billion (Changan's Rayong plant, May 2025); 15,000 people (Intel Penang); more than 100 million Garena players a day (Sea, 2025); about 85,000 workers (IMIP, end of 2024); 1.9 million people (Philippine IT-BPM, 2025). One currency appears (Thai baht, as reported)",
+ "not_verified": "Phnom Penh, Bangkok and Manila use country figures (Cambodia's garment sector, Thailand's foreign film shoots, the Philippine IT-BPM industry). Bac Ninh's 2 billion phones include Samsung's Thai Nguyen plants ('here and nearby'). Morowali's worker count is from Wikipedia's IMIP page. Sea's head-office address is from its contact page footer, and Garena's player figure from Sea's results release"
+}

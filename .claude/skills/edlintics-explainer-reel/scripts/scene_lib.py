@@ -3657,6 +3657,8 @@ PRESETS.update({"bouquet": (bouquet, None)}); HALF.update({"bouquet": (150, 270)
 # ---- MAP REELS BLOCK START (13 Nov 2026, opt-in): world_map, map_pin, flight_path, suitcase, cloud, map_label and landmark live in map_props.py
 import map_props as _map_props; _map_props.install(globals())
 # ---- MAP REELS BLOCK END
+# ---- FLAT STYLE BLOCK (17 Nov 2026, opt-in with meta.style "flat"): flat_* props live in flat_props.py; no other prop changes
+import flat_props as _flat_props; _flat_props.install(globals())
 
 
 PRESET_HELP ={k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}
@@ -3706,6 +3708,7 @@ def scene_body(spec):
         if it.get("at") and it["p"] not in SELF_TIMED: a += f' data-at="{it["at"]}"'   # "chunk:N": pops in when caption chunk N of this scene starts
         if it.get("until"): a += f' data-until="{it["until"]}"'   # "chunk:N" (30 Oct 2026): hidden from the start of caption chunk N
         if it.get("pop"): a += f' data-pop="{it["pop"]}"'   # "cut": appears at once on its chunk, no fade or scale (a state swap)
+        if it.get("fit"): a += f' data-fit="{it["fit"]}"'   # flat fit check (18 Nov 2026): "on" = sits on another card on purpose, "skip" = not checked
         return a
     tint = spec.get("tint")   # {"color", "opacity"}: a wash over the whole scene (dim cool night, warm morning); drawn over the content
     tint_svg = f'<rect class="tint" x="-3000" y="-3000" width="7080" height="7840" fill="{tint["color"]}" fill-opacity="{tint.get("opacity", 0.3)}" stroke="none"/>' if tint else ""

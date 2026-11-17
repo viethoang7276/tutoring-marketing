@@ -260,12 +260,13 @@ def main(d):
             frames[name] = ledger_first(spec)   # props are nudged/scaled before the art is drawn
         for w in hand_check(name, spec): print("WARN ", w)
         for w in data_check(name, spec): print("WARN ", w)
-        for w in motion_check(name, spec, S.get("beats", []), S.get("meta", {}).get("layout") == "full", (LADDER["bleed_box"] if S.get("meta", {}).get("ladder_style") == "bleed" else LADDER["box"]) if ladder else None): print("WARN ", w)
+        flat = S.get("meta", {}).get("style") == "flat"   # flat style (17 Nov 2026): one world larger than the screen, framed by the camera, so the art-box check does not apply
+        for w in motion_check(name, spec, S.get("beats", []), S.get("meta", {}).get("layout") == "full", (-1e6, -1e6, 1e6, 1e6) if flat else (LADDER["bleed_box"] if S.get("meta", {}).get("ladder_style") == "bleed" else LADDER["box"]) if ladder else None): print("WARN ", w)
         open(os.path.join(d, f"{name}.svg"), "w").write(L.scene_svg(spec))
     beats = []
     for k, b in enumerate(S["beats"], 1):
         nb = dict(b); nb.pop("focus_end", None)
-        if b.get("role") in ("endcard", "defcard"):
+        if b.get("role") in ("endcard", "defcard") and not (S.get("meta", {}).get("style") == "flat" and b.get("img")):   # flat (17 Nov 2026): an end card with an img is drawn in the world
             nb.pop("img", None); nb["focus"] = [0, 0, 1080, 1920]; nb.setdefault("chunks", [])
         else:
             spec = S["scenes"][b["img"]]

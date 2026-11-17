@@ -15,6 +15,20 @@ else:
     k = Kokoro("models/kokoro-v1.0.onnx", "models/voices-v1.0.bin")
 src = d + "/beats.json" if os.path.exists(d + "/beats.json") else d + "/script.json"
 beats = json.load(open(src)); beats = beats["beats"] if isinstance(beats, dict) else beats; sr = 24000; lead = 0.15
+# voice delivery (18 Nov 2026, opt-in): meta.voice {"id", "tempo", "stability", "tag"} sets the ElevenLabs voice, pace, v3 stability and an
+# audio tag put in front of every line (a beat's own "voice_tag" replaces it, "" drops it). Flat-style scripts default to tempo 1.0 (calm explainer pace).
+# Order for the pace: beat "tempo" > meta.voice.tempo > ELEVEN_TEMPO > 1.0 for flat, else 1.12. Scripts without meta.voice or style flat are unchanged
+try: META = json.load(open(d + "/script.json")).get("meta", {})
+except Exception: META = {}
+VM = META.get("voice") if isinstance(META.get("voice"), dict) else {}
+V_TEMPO = VM.get("tempo", None if "ELEVEN_TEMPO" in os.environ or META.get("style") != "flat" else 1.0)
+if ELEVEN and (VM or META.get("style") == "flat"):
+    print("voice:", VM.get("id") or eleven_tts.VOICE, "| tempo", V_TEMPO if V_TEMPO is not None else eleven_tts.TEMPO, "| stability", VM.get("stability", eleven_tts.STABILITY), "| tag", repr(VM.get("tag", "")))
+VOICED = bool(VM) or META.get("style") == "flat"
+def line_text(b):
+    """the text sent to ElevenLabs: "say" (or "text") with the beat's or the reel's audio tag in front, unless it already starts with a tag"""
+    s = b.get("say") or b["text"]; tag = b.get("voice_tag", VM.get("tag", ""))   # not "tag": ladder title beats use "tag" for their pill
+    return s if not tag or s.lstrip().startswith("[") else f"{tag} {s}"
 out = [np.zeros(int(lead * sr), dtype=np.float32)]; t = lead
 def speech_segments(a, sr, thr=0.02, gap=0.28):
     """(start, end) seconds of the audible runs in a line, runs closer than `gap` merged"""
@@ -34,9 +48,46 @@ def speech_segments(a, sr, thr=0.02, gap=0.28):
 def w(s):  # spoken weight of a caption chunk: letters, numbers read as words
     s = re.sub(r"\$?([\d,]+)", lambda m: "x" * (8 * len(m.group(1).replace(",", "")) // 3 + 6), s)
     return max(1, len(re.sub(r"[^A-Za-z]", "", s)))
+def _wd(z):
+    return re.sub(r"[^\w€$£%]", "", z.lower())
+
+
+def phrase_timing(b, ch, raw, t, snap=0.35):
+    """Voiced-time chunk timing (18 Nov 2026, flat style or meta.voice only). The line's pauses are matched to the pause marks in its
+    "say" text ("...", an em dash, a comma, a sentence end): the phrases are fitted to runs of speech segments by length, then each phrase's
+    chunks are spread over its spoken time only (pauses skipped) and a chunk start within `snap` s of a segment start snaps onto it, so a
+    caption, and every pop-in keyed to it, starts when the voice says it, not in the silence before"""
+    say = re.sub(r"\[[^\]]*\]", " ", b.get("say") or b["text"])
+    phr = [p for p in re.split(r"\.\.\.|…|—|–|[,;:.?!](?=\s|$)", say) if _wd(p)]
+    sw = [_wd(z) for z in say.split() if _wd(z)]; cw = [[_wd(z) for z in c["text"].split() if _wd(z)] for c in ch]
+    if sum(map(len, cw)) == len(sw) and 1 <= len(phr) <= len(raw):   # same words in captions and voice: fit phrases to segment runs
+        pid, k = [], 0
+        for pi, p in enumerate(phr): pid += [pi] * len([z for z in p.split() if _wd(z)])
+        wts = [sum(w(z) for z in p.split()) for p in phr]; W = sum(wts) or 1
+        import itertools
+        best = None
+        for cuts in itertools.combinations(range(1, len(raw)), len(phr) - 1):
+            bounds = [0, *cuts, len(raw)]; spans = [(raw[bounds[i]][0], raw[bounds[i + 1] - 1][1]) for i in range(len(phr))]; tot = spans[-1][1] - spans[0][0] or 1
+            cost = sum(((e - s0) / tot - wt / W) ** 2 for (s0, e), wt in zip(spans, wts)) - 0.02 * sum(raw[c][0] - raw[c - 1][1] for c in cuts)
+            if best is None or cost < best[0]: best = (cost, bounds)
+        bounds = best[1]; gch = [[] for _ in phr]; k = 0
+        for c, ws_ in zip(ch, cw): gch[pid[min(k, len(pid) - 1)]].append(c); k += len(ws_)
+        runs = [raw[bounds[i]:bounds[i + 1]] for i in range(len(phr))]
+    else: gch, runs = [ch], [raw]
+    for grp, run in zip(gch, runs):
+        if not grp: continue
+        V = sum(y - x for x, y in run) or 1; gw = [w(c["text"]) for c in grp]; gt = sum(gw) or 1; ga = 0; prev = -1
+        for c, xw in zip(grp, gw):
+            v = V * ga / gt; at = run[0][0]
+            for x, y in run:
+                if v < (y - x) - 1e-6: at = x + v; break
+                v -= y - x; at = y
+            near = min((x for x, _y in run), key=lambda x: abs(x - at))
+            if abs(near - at) <= snap and near > prev + 0.05: at = near
+            prev = at; c["t"] = round(t + at - 0.08, 3); ga += xw
 for b in beats:
     if ELEVEN:
-        a, sr = eleven_tts.say(b.get("say") or b["text"], b.get("tempo")), eleven_tts.SR   # "tempo": per-beat pace (struggle lines slower)  # "say": TTS spelling override (e.g. Ed-lin-tics); captions and checks use "text"
+        a, sr = eleven_tts.say(line_text(b), b.get("tempo", V_TEMPO), VM.get("id"), VM.get("stability")), eleven_tts.SR   # "tempo": per-beat pace (struggle lines slower)  # "say": TTS spelling override (e.g. Ed-lin-tics); captions and checks use "text"
     else:
         a, sr = k.create(b["text"], voice="af_heart", speed=speed, lang="en-us")
         a = a.astype(np.float32); nz = np.where(np.abs(a) > 0.01)[0]
@@ -48,7 +99,7 @@ for b in beats:
     for c, x in zip(b.get("chunks", []), ws): c["t"] = round(t + dur * acc / tot - 0.08, 3); acc += x
     # pause-aware timing (29 Oct 2026): when the line's speech segments (pauses >= 0.28 s) match the chunks grouped by
     # sentence end (? . ! …), each group starts at its measured onset and spreads its chunks inside that segment
-    segs = speech_segments(a, sr, gap=0.15); ch = b.get("chunks", [])
+    segs = speech_segments(a, sr, gap=0.15); ch = b.get("chunks", []); raw = speech_segments(a, sr, gap=0.08) if VOICED else []
     groups, g = [], []
     for c in ch:
         g.append(c)
@@ -65,7 +116,8 @@ for b in beats:
         for (s0, e), grp in zip(segs, groups):
             gw = [w(c["text"]) for c in grp]; gt = sum(gw) or 1; ga = 0
             for c, x in zip(grp, gw): c["t"] = round(t + s0 + (e - s0) * ga / gt - 0.08, 3); ga += x
-    g = float(b.get("gap", gap))   # a beat may ask for more room after its line ("gap": seconds), e.g. short hooks
+    if VOICED and ch and raw: phrase_timing(b, ch, raw, t)
+    g = float(b.get("pause_after", b.get("gap", gap)))   # "pause_after" (18 Nov 2026) is the same as "gap": seconds of silence after this line   # a beat may ask for more room after its line ("gap": seconds), e.g. short hooks
     out.append(a); t += dur; out.append(np.zeros(int(g * sr), dtype=np.float32)); t += g
 out.append(np.zeros(int(tail * sr), dtype=np.float32)); t += tail
 sf.write(d + "/voiceover.wav", np.concatenate(out), sr)

@@ -15,6 +15,7 @@ import json, math, os
 
 _LAND = None
 SEA = "#D3E4FA"; LAND = "#FBF4DF"; SHADE = "#B4CDEF"
+FLAT_SEA = "#BFDBFE"; FLAT_LAND = "#F3F8EE"; FLAT_COAST = "#7FA6DE"; FLAT_BORDER = "#3B5B92"   # world_map style "flat" (18 Nov 2026)
 
 
 def _land():
@@ -32,6 +33,23 @@ def _borders():
     global _BORDERS
     if _BORDERS is None: _BORDERS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "map_borders.json")))
     return _BORDERS
+
+
+def flag_aspect(code):
+    """Width / height of a flag kind: 1 for Switzerland, the Commons ratio for the Asia flags (map_flags.py, 18 Nov 2026), else 3:2."""
+    if code == "ch": return 1.0
+    if code in _asia_flags(): return _asia_flags()[code]["aspect"]
+    return 1.5
+
+
+_AFL = None
+
+
+def _asia_flags():
+    global _AFL
+    if _AFL is None:
+        import map_flags; _AFL = map_flags.FLAGS
+    return _AFL
 
 
 def map_ky(view):
@@ -82,12 +100,13 @@ def install(G):
     INK, BLUE, PAPER, GOLD, GREY, WHITE, CORAL, LB, GREEN = (G[k] for k in ("INK", "BLUE", "PAPER", "GOLD", "GREY", "WHITE", "CORAL", "LB", "GREEN"))
     YEL = "#FFD45C"
 
-    def world_map(x, y, s=1.0, lon=0, lat=30, k=3.0, box=None, sea=True, grid=True, borders=False, **_):
+    def world_map(x, y, s=1.0, lon=0, lat=30, k=3.0, box=None, sea=True, grid=True, borders=False, style=None, **_):
         """A hand-drawn map of the world or a region (map reels): pale sea, cream land with an ink coast, no country borders and no labels. (x, y) = where the point (lon, lat) sits; k = pixels per degree of longitude. box [x0, y0, x1, y1]: the part of the screen it fills (default: the whole 1080x1920 frame and a margin). Place pins with map_props.map_xy."""
         v = {"lon": lon, "lat": lat, "k": k, "x": x, "y": y}; ky = map_ky(v)
         x0, y0, x1, y1 = box or (-160, -200, 1240, 2120)
-        out = f'<rect x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" fill="{SEA}" stroke="none"/>' if sea else ""
-        if grid:   # faint graticule, every 10 or 30 degrees
+        FL = style == "flat"   # flat style (18 Nov 2026, opt-in): flat sea and land, a thin coast, solid borders, no graticule and no offset shadow
+        out = f'<rect x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" fill="{FLAT_SEA if FL else SEA}" stroke="none"/>' if sea else ""
+        if grid and not FL:   # faint graticule, every 10 or 30 degrees
             st = 30 if k < 7 else 10 if k < 28 else 5; g = ""
             lo = math.floor((lon + (x0 - x) / k) / st) * st
             while lo <= lon + (x1 - x) / k:
@@ -112,7 +131,9 @@ def install(G):
             if len(pts) < 3: continue
             d = "M" + " L".join(f"{_f(px)} {_f(py)}" for px, py in pts) + " Z "
             land += d
-        if land:
+        if land and FL:
+            out += f'<path data-nodraw="1" d="{land}" fill="{FLAT_LAND}" stroke="{FLAT_COAST}" stroke-width="{3 if k >= 7 else 2}" stroke-linejoin="round"/>'
+        elif land:
             out += (f'<path data-nodraw="1" d="{land}" transform="translate(7 9)" fill="{SHADE}" stroke="none"/>'
                     f'<path data-nodraw="1" d="{land}" fill="{LAND}" stroke="{INK}" stroke-width="{4 if k >= 7 else 3}" stroke-linejoin="round"/>')
         if borders and land:   # opt-in (15 Nov 2026, Europe episode): country border lines over the land; older map reels never set it
@@ -126,10 +147,14 @@ def install(G):
                     if pt is not None and ins[i2]: run.append(pt); continue
                     if len(run) > 1: bd += "M" + " L".join(f"{_f(px)} {_f(py)}" for px, py in run) + " "
                     run = []
-            if bd:
+            if bd and FL:
+                bw = 2.5 if k < 7 else 3.5 if k < 28 else 4.5
+                out += f'<path data-nodraw="1" d="{bd}" fill="none" stroke="{FLAT_BORDER}" stroke-width="{bw}" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="{bw * 3:.0f} {bw * 1.6:.0f}"/>'
+            elif bd:
                 bw = 3 if k < 7 else 4 if k < 28 else 5
                 out += f'<path data-nodraw="1" d="{bd}" fill="none" stroke="#7C6A55" stroke-width="{bw}" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="{bw * 3.2:.0f} {bw * 2.2:.0f}" opacity="0.85"/>'
         if box:
+            if FL: return f'<g><svg x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" viewBox="{_f(x0)} {_f(y0)} {_f(x1 - x0)} {_f(y1 - y0)}" overflow="hidden">{out}</svg></g><rect x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" rx="26" fill="none" stroke="#FFFFFF" stroke-width="8"/>'
             return f'<g><svg x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" viewBox="{_f(x0)} {_f(y0)} {_f(x1 - x0)} {_f(y1 - y0)}" overflow="hidden">{out}</svg></g><rect x="{_f(x0)}" y="{_f(y0)}" width="{_f(x1 - x0)}" height="{_f(y1 - y0)}" rx="26" fill="none" stroke="{INK}" stroke-width="6"/>'
         return out
 
@@ -142,13 +167,15 @@ def install(G):
     def _flag(code, h=40):
         """A national flag h tall with an ink outline, top left at (0, 0); returns (svg, width). Shapes and colours checked against the flag-icons 4x3 set on 15 Nov 2026
         (stripes from the hoist or from the top); Switzerland is square, the others 3:2."""
-        if code not in FLAGS: raise ValueError(f"flag: {code!r}; use {', '.join(FLAGS)}")
-        w = h if code == "ch" else h * 1.5
+        if code not in FLAGS and code not in _asia_flags(): raise ValueError(f"flag: {code!r}; use {', '.join(FLAGS + tuple(_asia_flags()))}")
+        w = h * flag_aspect(code)
         V = {"ie": ("#009A49", "#FFFFFF", "#FF7900"), "be": ("#111111", "#FFD90C", "#F31830"), "it": ("#009246", "#FFFFFF", "#CE2B37"), "fr": ("#000091", "#FFFFFF", "#E1000F")}
         Hz = {"lu": ("#ED2939", "#FFFFFF", "#00A1DE"), "nl": ("#AE1C28", "#FFFFFF", "#21468B"), "de": ("#111111", "#DD0000", "#FFCC00"), "ee": ("#1791FF", "#111111", "#FFFFFF"), "at": ("#C8102E", "#FFFFFF", "#C8102E")}
         def bar(x0, y0, bw, bh, c): return f'<rect x="{_f(w * x0)}" y="{_f(h * y0)}" width="{_f(w * bw)}" height="{_f(h * bh)}" fill="{c}" stroke="none"/>'
         NORDIC = {"no": ("#ED2939", "#FFFFFF", 180 / 640, 120 / 640, 180 / 480, 120 / 480, "#002664"), "se": ("#005293", "#FECB00", 176 / 640, 96 / 640, 192 / 480, 96 / 480, None), "fi": ("#FFFFFF", "#002F6C", 175.5 / 640, 131 / 640, 174.5 / 480, 131 / 480, None)}
-        if code in V: body = "".join(f'<rect x="{_f(w * i / 3)}" y="0" width="{_f(w / 3 + 0.5)}" height="{_f(h)}" fill="{c}" stroke="none"/>' for i, c in enumerate(V[code]))
+        if code in _asia_flags():   # Asia (18 Nov 2026): the Commons flag SVG as published, in its own viewBox
+            af = _asia_flags()[code]; body = f'<svg x="0" y="0" width="{_f(w)}" height="{_f(h)}" viewBox="{af['viewBox']}" preserveAspectRatio="none" overflow="hidden">{af['svg']}</svg>'
+        elif code in V: body = "".join(f'<rect x="{_f(w * i / 3)}" y="0" width="{_f(w / 3 + 0.5)}" height="{_f(h)}" fill="{c}" stroke="none"/>' for i, c in enumerate(V[code]))
         elif code in Hz: body = "".join(f'<rect x="0" y="{_f(h * i / 3)}" width="{_f(w)}" height="{_f(h / 3 + 0.5)}" fill="{c}" stroke="none"/>' for i, c in enumerate(Hz[code]))
         elif code in NORDIC:   # a field, a cross set toward the hoist and, for Norway, a blue cross inside the white one
             fld, cr, cx0, cw, cy0, ch, inner = NORDIC[code]
@@ -184,7 +211,7 @@ def install(G):
                 f'<rect x="0" y="0" width="{_f(w)}" height="{_f(h)}" rx="{_f(h * 0.1)}" fill="none" stroke="{INK}" stroke-width="{_f(max(2.5, h * 0.075))}"/></g>'), w
 
     def flag(x, y, s=1.0, kind="fr", h=60, pole=0, **_):
-        """A national flag (15 Nov 2026, Europe map episode). kind: ie, gb, be, lu, nl, dk, de, it, ch, fr, no, se, fi, ee, pl, at, gr, es, pt (Spain and Portugal carry a simplified emblem). h: its height in px. pole 0: (x, y) = the flag's centre.
+        """A national flag (15 Nov 2026, Europe map episode). kind: ie, gb, be, lu, nl, dk, de, it, ch, fr, no, se, fi, ee, pl, at, gr, es, pt (Spain and Portugal carry a simplified emblem); Asia (18 Nov 2026, the Commons SVGs in map_flags.py): cn, tw, jp, kr, mn, vn, kh, th, my, sg, id, bn, ph. h: its height in px. pole 0: (x, y) = the flag's centre.
         pole N: the flag flies from the top of a pole N px tall and (x, y) = the foot of the pole on the ground."""
         body, w = _flag(kind, h)
         if pole and _.get("pole_only"):   # the bare pole; a second flag item (pole 0) can then rise up it with "move"
@@ -195,7 +222,7 @@ def install(G):
         return _g(x, y, s, f'<g transform="translate({_f(-w / 2)} {_f(-h / 2)})">{body}</g>')
 
     def flag_box(x, y, s=1.0, kind="fr", h=60, pole=0, **_):
-        w = h if kind == "ch" else h * 1.5
+        w = h * flag_aspect(kind)
         return [x - 22 * s, y - (pole + 14) * s, (w + 30) * s, (pole + 20) * s] if pole else [x - w / 2 * s, y - h / 2 * s, w * s, h * s]
 
     def _pin_shape(col, z=1.0):
@@ -205,7 +232,7 @@ def install(G):
 
     def _pin_label(label, side, fs, fill, z, flag=None):
         if not label: return 0, 0, 0, 0, ""
-        fw = ((fs * 0.92 if flag == "ch" else fs * 0.92 * 1.5) + 10) if flag else 0   # a flag at the start of the pill (opt-in)
+        fw = (fs * 0.92 * flag_aspect(flag) + 10) if flag else 0   # a flag at the start of the pill (opt-in)
         W = _d_tw(label, fs) + 34 + fw; H = fs * 1.5
         cx, cy = {"r": (34 * z + W / 2, -44 * z), "l": (-34 * z - W / 2, -44 * z), "t": (0, -92 * z - H / 2), "b": (0, 16 + H / 2),
                   "tr": (20 * z + W / 2, -92 * z - H / 2 + 14), "tl": (-20 * z - W / 2, -92 * z - H / 2 + 14), "br": (16 + W / 2, 12 + H / 2), "bl": (-16 - W / 2, 12 + H / 2)}[side]
@@ -910,7 +937,8 @@ def install(G):
         if kind == "ship": return P("M-56 4 H56 L46 30 H-48 Z", "#33435E", 4) + "".join(R(-44 + i * 30, -20, 28, 22, c, 3) for i, c in enumerate(("#E8765F", BLUE, "#E9B949"))) + R(30, -34, 16, 38, WHITE, 3)
         if kind == "cork": return R(-22, -36, 44, 72, "#D9A04A", 4, 6) + P("M-12 -14 h8 M4 6 h10 M-8 22 h6", "none", 3, INK, ' opacity="0.4"')
         if kind == "shirt": return P("M-18 -40 Q0 -28 18 -40 L46 -22 L34 2 L24 -4 V42 H-24 V-4 L-34 2 L-46 -22 Z", "#467DE3", 4)
-        raise ValueError(f"goods: kind {kind!r}; use {', '.join(GOODS)}")
+        if kind in GOODS_ASIA: return GOODS_ASIA[kind]()
+        raise ValueError(f"goods: kind {kind!r}; use {', '.join(GOODS + tuple(GOODS_ASIA))}")
     GOODS = ("plane", "book", "diamond", "coin", "wafer", "car", "pill", "dress", "watch", "fish", "brick", "carton", "phone", "idcard", "headset", "crystal", "ring", "ship", "cork", "shirt")
 
     def goods(x, y, s=1.0, kind="diamond", **_):
@@ -942,7 +970,7 @@ def install(G):
         if mw and mh: return float(mw.group(1)), float(mh.group(1))
         raise ValueError(f"logo_chip: no size found in {path}")
 
-    def logo_chip(x, y, s=1.0, file="", w=280, h=92, **_):
+    def logo_chip(x, y, s=1.0, file="", w=280, h=92, name="", nfs=30, **_):
         """A company's own logo, shown exactly as published (no redrawing, recolouring or cropping), centred with clear space on a plain white rounded chip (Hoang, 15 Nov 2026: "Real logos any way").
         file: the path of an SVG or PNG kept OUTSIDE the engine and outside git (assets/renders/map-reels/_logos/); nothing third-party lives in the skill folder. (x, y) = centre."""
         import base64
@@ -950,11 +978,30 @@ def install(G):
         lw, lh = _logo_size(file)
         if lw / lh < 1.5 and (w, h) == (280, 92): w, h = 136, 136   # a square or round logo gets a square chip, so it is not shown tiny
         k = min((w - 44) / lw, (h - 30) / lh); iw, ih = lw * k, lh * k
+        if name: return _logo_named(file, w, h, iw, ih, name, nfs, x, y, s)
         mime = "image/png" if file.lower().endswith(".png") else "image/svg+xml"; uri = f"data:{mime};base64," + base64.b64encode(open(file, "rb").read()).decode()
         o = (f'<g data-nodraw="1"><rect x="{_f(-w / 2 + 4)}" y="{_f(-h / 2 + 6)}" width="{_f(w)}" height="{_f(h)}" rx="18" fill="{INK}" opacity="0.18" stroke="none"/>'
              f'<rect x="{_f(-w / 2)}" y="{_f(-h / 2)}" width="{_f(w)}" height="{_f(h)}" rx="18" fill="#FFFFFF" stroke="{INK}" stroke-width="4"/>'
              f'<image href="{uri}" x="{_f(-iw / 2)}" y="{_f(-ih / 2)}" width="{_f(iw)}" height="{_f(ih)}" preserveAspectRatio="xMidYMid meet"/></g>')
         return _g(x, y, s, o)
+
+    def _logo_named(file, w, h, iw, ih, name, nfs, x, y, s):
+        """logo_chip with "name" (18 Nov 2026, Hoang: "Remember to add companies name"): the logo as published on top, the company name in our own lettering under it, both inside one white chip with 20 px padding."""
+        import base64
+        tw = _d_tw(name, nfs); W = max(w, tw + 44); H = h + nfs * 1.25 + 6; top = -H / 2
+        mime = "image/png" if file.lower().endswith(".png") else "image/svg+xml"; uri = f"data:{mime};base64," + base64.b64encode(open(file, "rb").read()).decode()
+        o = (f'<g data-nodraw="1"><rect x="{_f(-W / 2 + 4)}" y="{_f(top + 6)}" width="{_f(W)}" height="{_f(H)}" rx="18" fill="{INK}" opacity="0.18" stroke="none"/>'
+             f'<rect x="{_f(-W / 2)}" y="{_f(top)}" width="{_f(W)}" height="{_f(H)}" rx="18" fill="#FFFFFF" stroke="{INK}" stroke-width="4"/>'
+             f'<image href="{uri}" x="{_f(-iw / 2)}" y="{_f(top + h / 2 - ih / 2)}" width="{_f(iw)}" height="{_f(ih)}" preserveAspectRatio="xMidYMid meet"/>'
+             f'<path d="M{_f(-W / 2 + 22)} {_f(top + h)} H{_f(W / 2 - 22)}" stroke="{INK}" stroke-width="2" opacity="0.15"/></g>' + _t(0, top + h + nfs * 0.98, str(name), nfs, 900, INK))
+        return _g(x, y, s, o)
+
+    def logo_chip_size(file, w=280, h=92, name="", nfs=30):
+        """(width, height) of a logo_chip, for layout."""
+        lw, lh = _logo_size(file)
+        if lw / lh < 1.5 and (w, h) == (280, 92): w, h = 136, 136
+        return (max(w, _d_tw(name, nfs) + 44), h + nfs * 1.25 + 6) if name else (w, h)
+    G["logo_chip_size"] = logo_chip_size
 
     LM = {"lighthouse": lm_lighthouse, "motor_city": lm_motor_city, "pharma": lm_pharma, "farm": lm_farm, "fashion": lm_fashion, "golden_gate": lm_golden_gate, "big_ben": lm_big_ben, "eiffel": lm_eiffel, "erasmus": lm_erasmus, "euro": lm_euro, "minster": lm_minster,
           "burj": lm_burj, "mbs": lm_mbs, "hk": lm_hk, "fab": lm_fab, "tokyo_tower": lm_tokyo_tower, "empire": lm_empire,
@@ -965,6 +1012,9 @@ def install(G):
           "bryggen": lm_bryggen, "toy_bricks": lm_toy_bricks, "cartons": lm_cartons, "telecom": lm_telecom, "tallinn_gate": lm_tallinn_gate, "krakow": lm_krakow, "crystal": lm_crystal, "jewel": lm_jewel, "parthenon": lm_parthenon,
           "hercules": lm_hercules, "cork_castle": lm_cork_castle}
     SIGNED = ("books", "chip_machine", "car_plant", "airliner", "bryggen", "toy_bricks", "cartons", "telecom", "crystal", "hercules")   # kinds that carry a plain-text name plate; "sign" replaces the default name
+    _asia = _install_asia(dict(P=P, R=R, win=win, water=water, plate=plate, car=car, palm=palm, lm_tokyo_tower=lm_tokyo_tower, _goods=_goods, _t=_t, _f=_f, _d_tw=_d_tw,
+                               INK=INK, BLUE=BLUE, WHITE=WHITE, GOLD=GOLD, GREY=GREY, GREEN=GREEN, LB=LB, YEL=YEL, SKY=G["SKY"], G=G))
+    LM.update(_asia["LM"]); SIGNED = SIGNED + _asia["SIGNED"]; GOODS_ASIA = _asia["GOODS"]
 
     def landmark(x, y, s=1.0, kind="eiffel", **_):
         """A city landmark as a simple hand-drawn silhouette with flat fills (map reels; no logos or names). (x, y) = centre of its base on the ground. kind: golden_gate, big_ben, eiffel, erasmus (a cable-stayed bridge with one bent pylon), euro (a euro-sign sculpture before bank towers), minster (a red twin-spired cathedral on a river), burj (a very tall stepped spire), mbs (three towers under one roof deck), hk (a faceted tower, a peak and a red-sailed junk), fab (a chip plant with a large microchip), tokyo_tower, empire, liberty, cn_tower, space_needle, oil_rig (a derrick and a pumpjack), state_house (a gold-domed brick state house), observatory (domes on a hill, palms and a film clapperboard), opera_house (white sails and an arch bridge), flinders (a domed yellow station and a tram), haul_truck (a mine truck before an open pit), parliament_au (a flag mast over a low white building on a hill), beehive (a round stepped building), sky_tower, wine (a barrel, a bottle and a glass before vineyard hills)."""
@@ -979,6 +1029,191 @@ def install(G):
         return [x + b[0] * s, y + b[1] * s, b[2] * s, b[3] * s]
 
     G["PRESETS"].update({"world_map": (world_map, world_map_box), "map_pin": (map_pin, map_pin_box), "flight_path": (flight_path, flight_path_box),
-                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "flag": (flag, flag_box), "goods": (goods, lambda x, y, s=1.0, **_: [x - 60 * s, y - 56 * s, 120 * s, 112 * s]), "name_chip": (name_chip, name_chip_box), "logo_chip": (logo_chip, lambda x, y, s=1.0, w=280, h=92, **_: [x - w / 2 * s, y - h / 2 * s, w * s, h * s]), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
+                         "suitcase": (suitcase, lambda x, y, s=1.0, **_: [x - 40 * s, y - 128 * s, 80 * s, 132 * s]), "cloud": (cloud, None), "map_label": (map_label, map_label_box), "landmark": (landmark, landmark_box), "flag": (flag, flag_box), "goods": (goods, lambda x, y, s=1.0, **_: [x - 60 * s, y - 56 * s, 120 * s, 112 * s]), "name_chip": (name_chip, name_chip_box), "logo_chip": (logo_chip, lambda x, y, s=1.0, w=280, h=92, **_: ([x - logo_chip_size(_["file"], w, h, _["name"], _.get("nfs", 30))[0] / 2 * s, y - logo_chip_size(_["file"], w, h, _["name"], _.get("nfs", 30))[1] / 2 * s, logo_chip_size(_["file"], w, h, _["name"], _.get("nfs", 30))[0] * s, logo_chip_size(_["file"], w, h, _["name"], _.get("nfs", 30))[1] * s] if _.get("name") else [x - w / 2 * s, y - h / 2 * s, w * s, h * s])), "map_dot": (map_dot, map_dot_box), "map_plate": (map_plate, lambda x, y, s=1.0, w=190, h=58, **_: [x - w / 2, y - h / 2, w, h]), "plane": (plane, None), "cargo_ship": (cargo_ship, None), "delivery_van": (delivery_van, lambda x, y, s=1.0, **_: [x - 256 * s, y - 276 * s, 512 * s, 276 * s])})
     G["HALF"].update({"cloud": (112, 56), "plane": (140, 80), "cargo_ship": (175, 112)})
     G["LANDMARKS"] = tuple(LM)
+
+
+def _install_asia(H):
+    """Asia map episodes (18 Nov 2026, opt-in kinds): landmarks for Parts 6 and 7 and small product icons. Same hand-drawn line art as the Europe kinds;
+    companies are never drawn as logos here (logos come only from logo_chip). H: the helpers from install()."""
+    P, R, win, water, plate, car, palm, _t, _f = (H[k] for k in ("P", "R", "win", "water", "plate", "car", "palm", "_t", "_f"))
+    INK, BLUE, WHITE, GOLD, GREY, GREEN, LB, YEL, SKY = (H[k] for k in ("INK", "BLUE", "WHITE", "GOLD", "GREY", "GREEN", "LB", "YEL", "SKY"))
+    RED = "#E0563B"; COB = "#1F4FA8"; GL = "#BFD6F2"; GL2 = "#CBD9EE"
+
+    def cam(cx, k=1.0):   # a film camera on a tripod with two reels
+        o = P("M-6 -150 L-60 0 M6 -150 L60 0 M0 -150 V0", "none", 6)
+        o += R(-70, -250, 130, 100, "#33435E", 5, 12) + R(60, -226, 50, 52, "#59647A", 5, 8) + f'<circle cx="112" cy="-200" r="14" fill="{SKY}" stroke="{INK}" stroke-width="4"/>'
+        o += "".join(f'<circle cx="{c}" cy="-292" r="42" fill="#59647A" stroke="{INK}" stroke-width="5"/><circle cx="{c}" cy="-292" r="12" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>' for c in (-38, 40))
+        return f'<g transform="translate({cx} 0) scale({k})">{o}</g>'
+
+    def clap(cx, cy, k=1.0):
+        o = R(-70, -40, 140, 92, "#33435E", 5, 8) + P("M-70 -40 L-62 -78 L74 -66 L66 -30 Z", WHITE, 5) + P("M-40 -74 L-48 -36 M-6 -71 L-14 -33 M28 -68 L20 -30", "none", 9, INK)
+        o += P("M-50 0 H50 M-50 24 H30", "none", 4, WHITE)
+        return f'<g transform="translate({cx} {cy}) scale({k})">{o}</g>'
+
+    def beauty(cx, k=1.0):   # a cream jar, a dropper bottle, a lipstick and a tube
+        o = R(-150, -70, 100, 70, "#F7D6DE", 5, 14) + R(-156, -96, 112, 30, WHITE, 5, 10)
+        o += R(-26, -170, 64, 170, "#E9B949", 5, 16) + R(-14, -214, 40, 46, "#33435E", 5, 8) + P("M6 -214 V-250", "none", 8) + f'<circle cx="6" cy="-256" r="12" fill="#33435E" stroke="{INK}" stroke-width="4"/>'
+        o += R(60, -120, 44, 120, GOLD, 5, 6) + P("M64 -120 V-176 Q82 -196 100 -176 V-120 Z", "#D6455A", 5)
+        o += P("M126 0 V-110 L136 -128 H176 L186 -110 V0 Z", "#9ED3C8", 5) + R(140, -150, 32, 22, WHITE, 4, 4)
+        return f'<g transform="translate({cx} 0) scale({k})">{o}</g>'
+
+    def lm_ev_city():   # Shenzhen: a spired super-tall tower, glass towers and an electric car at a charger
+        o = R(-330, -420, 130, 420, GL2) + win(-330, -200, -420, 0, 3, 9) + R(170, -520, 140, 520, GL) + win(170, 310, -520, 0, 3, 11)
+        o += P("M-80 0 L-62 -660 L-30 -730 L0 -840 L30 -730 L62 -660 L80 0 Z", "#9FBEE6") + P("M-40 0 L-30 -690 M0 0 V-800 M40 0 L30 -690", "none", 3, INK, ' opacity="0.4"')
+        o += win(-70, 70, -620, -40, 1, 12, 0.35)
+        o += R(60, -120, 34, 120, "#2FA36B", 5, 8) + R(68, -106, 18, 26, WHITE, 3, 3) + P("M94 -70 Q130 -60 150 -40", "none", 5)
+        o += f'<g transform="translate(250 0) scale(0.62)">{car(0, "#2FA36B", 1.0)}</g>' + P("M236 -86 l14 -22 h-12 l10 -20", "none", 5, YEL)
+        return o, (-335, -845, 680, 850)
+
+    def lm_porcelain():   # Jingdezhen: an egg-shaped brick kiln with its chimney, and a big blue-and-white vase
+        br = "#B5613C"
+        o = P("M-330 0 Q-340 -200 -230 -260 Q-150 -300 -90 -250 Q-30 -190 -40 0 Z", br) + R(-150, -470, 50, 230, "#9A4E30") + R(-160, -484, 70, 22, "#8A4A2E", 4, 4)
+        o += R(-250, -110, 90, 110, "#59647A", 4, 40) + "".join(P(f"M{-320 + 40 * i} {-30 - 50 * j} h30", "none", 3, INK, ' opacity="0.35"') for i in range(6) for j in range(3))
+        o += f'<circle cx="-110" cy="-540" r="34" fill="{WHITE}" stroke="{INK}" stroke-width="4" opacity="0.9"/><circle cx="-70" cy="-590" r="24" fill="{WHITE}" stroke="{INK}" stroke-width="4" opacity="0.8"/>'
+        vx = 140
+        o += P(f"M{vx - 70} 0 Q{vx - 120} -90 {vx - 104} -200 Q{vx - 90} -280 {vx - 44} -306 L{vx - 36} -360 H{vx + 36} L{vx + 44} -306 Q{vx + 90} -280 {vx + 104} -200 Q{vx + 120} -90 {vx + 70} 0 Z", WHITE, 6)
+        o += P(f"M{vx - 100} -230 Q{vx} -250 {vx + 100} -230 M{vx - 108} -80 Q{vx} -60 {vx + 108} -80 M{vx - 40} -336 H{vx + 40}", "none", 6, COB)
+        o += f'<circle cx="{vx}" cy="-160" r="44" fill="none" stroke="{COB}" stroke-width="6"/>' + P(f"M{vx} -204 V-116 M{vx - 44} -160 H{vx + 44} M{vx - 30} -190 L{vx + 30} -130 M{vx + 30} -190 L{vx - 30} -130", "none", 4, COB)
+        o += R(240, -60, 100, 60, "#E7DDC8", 5, 6) + P("M252 -60 Q290 -110 328 -60 Z", WHITE, 5) + P("M262 -78 Q290 -90 318 -78", "none", 4, COB)
+        return o, (-345, -630, 690, 635)
+
+    def lm_palace_gate():   # Hengdian (film): a red palace gate with a double yellow roof, a film camera and a clapperboard
+        red = "#C8463A"; yel = "#E9B949"
+        o = R(-360, -230, 520, 230, red) + "".join(P(f"M{cx - 44} 0 V-110 Q{cx} -170 {cx + 44} -110 V0 Z", "#7A2A22", 5) for cx in (-250, -100, 50))
+        o += R(-330, -330, 460, 100, red) + win(-330, 130, -330, -230, 8, 1, 0.45)
+        o += P("M-380 -330 Q-100 -350 150 -330 L120 -380 Q-100 -400 -350 -380 Z", yel) + P("M-400 -230 Q-100 -250 180 -230 L150 -264 H-370 Z", yel)
+        o += P("M-330 -380 Q-100 -460 120 -380 Q-100 -420 -330 -380 Z", yel, 5) + P("M-120 -430 V-450", "none", 6)
+        o += cam(280, 0.95) + clap(200, -40, 0.7)
+        return o, (-405, -460, 795, 465)
+
+    def lm_market_hall():   # Yiwu: a long trade hall with an arched gate and stalls under striped awnings
+        o = R(-370, -330, 740, 330, "#E7EDF7") + P("M-380 -330 Q0 -430 380 -330 Z", BLUE) + win(-370, 370, -320, -220, 12, 1, 0.4)
+        o += P("M-90 0 V-200 Q0 -290 90 -200 V0 Z", "#9FBEE6", 5) + plate(0, -250, "MARKET", 34, YEL)
+        for i, cx in enumerate((-300, -190, 190, 300)):
+            col = (RED, "#2FA36B", "#E9B949", BLUE)[i]
+            o += R(cx - 50, -120, 100, 120, WHITE, 4, 4) + "".join(P(f"M{cx - 54 + 18 * j} -150 h18 l-4 34 h-10 Z", col if j % 2 == 0 else WHITE, 3) for j in range(6))
+            o += R(cx - 40, -60, 34, 34, "#D9A04A", 3, 3) + R(cx + 2, -50, 30, 24, "#E8765F", 3, 3)
+        return o, (-385, -435, 770, 440)
+
+    def lm_seoul_tower():   # Seoul (cosmetics): Namsan hill with N Seoul Tower, and beauty products in front
+        o = P("M-370 0 Q-280 -300 -60 -330 Q120 -320 220 -180 Q280 -90 330 0 Z", "#8FCBA0", 5)
+        o += P("M-84 -330 L-76 -560 H-56 L-48 -330 Z", WHITE) + P("M-66 -560 V-740", "none", 7) + R(-110, -620, 88, 46, LB, 5, 18) + R(-100, -660, 68, 40, WHITE, 5, 14)
+        o += P("M-66 -740 V-800", "none", 4) + f'<circle cx="-66" cy="-806" r="7" fill="{RED}" stroke="{INK}" stroke-width="3"/>'
+        o += beauty(160, 1.0)
+        return o, (-375, -815, 740, 820)
+
+    def lm_pagoda():   # Kyoto (games): a five-storey pagoda, a red torii and a big handheld game console
+        wood = "#8A4A2E"; roof = "#59647A"
+        o = P("M-330 0 V-250 M-230 0 V-250", "none", 16, "#D6455A") + P("M-360 -250 Q-280 -262 -200 -250 L-206 -270 Q-280 -282 -354 -270 Z", "#D6455A", 5) + R(-344, -228, 128, 16, "#D6455A", 4)
+        for i in range(5):
+            w = 190 - 26 * i; y = -90 - 110 * i
+            o += R(-w / 2 + 20, y, w - 40, 90 if i == 0 else 80, "#E7DDC8", 4) + P(f"M{_f(-w / 2 - 30)} {y + 8} Q0 {y - 20} {_f(w / 2 + 30)} {y + 8} L{_f(w / 2)} {y - 22} H{_f(-w / 2)} Z", roof)
+        o += P("M0 -640 V-720", "none", 6) + "".join(P(f"M-14 {-660 - 14 * j} H14", "none", 4, GOLD) for j in range(4))
+        gx = 230
+        o += R(gx - 120, -250, 240, 250, WHITE, 6, 30) + R(gx - 90, -220, 180, 120, "#33435E", 5, 10) + R(gx - 76, -206, 152, 92, "#9ED3C8", 3, 6)
+        o += f'<circle cx="{gx}" cy="-160" r="22" fill="{YEL}" stroke="{INK}" stroke-width="4"/>' + P(f"M{gx - 8} -168 v6 M{gx + 8} -168 v6 M{gx - 8} -150 q8 6 16 0", "none", 3)
+        o += P(f"M{gx - 80} -60 h44 M{gx - 58} -82 v44", "none", 12) + "".join(f'<circle cx="{gx + 46 + dx}" cy="{-62 + dy}" r="13" fill="{c}" stroke="{INK}" stroke-width="4"/>' for dx, dy, c in ((0, -18, RED), (26, 6, BLUE)))
+        return o, (-365, -725, 720, 730)
+
+    def lm_glasses():   # Sabae (eyeglass frames): a small workshop and a giant pair of glasses on a stand
+        o = R(-340, -230, 230, 230, "#E7DDC8") + P("M-356 -230 L-225 -330 L-94 -230 Z", "#B5613C") + R(-300, -170, 60, 60, SKY, 4, 4) + R(-210, -110, 60, 110, "#59647A", 4, 4)
+        o += P("M125 -175 V0 M65 0 H185", "none", 8)
+        o += f'<circle cx="20" cy="-260" r="90" fill="{SKY}" stroke="{INK}" stroke-width="16"/><circle cx="230" cy="-260" r="90" fill="{SKY}" stroke="{INK}" stroke-width="16"/>'
+        o += P("M110 -270 Q125 -296 140 -270", "none", 14) + P("M-70 -270 L-110 -300 M320 -270 L360 -300", "none", 12)
+        o += P("M-20 -300 q20 -16 40 0 M190 -300 q20 -16 40 0", "none", 5, WHITE)
+        return o, (-360, -365, 735, 370)
+
+    def lm_anime_tokyo():   # Tokyo (anime): Tokyo Tower and an animator's board of drawn frames
+        t, _b = H["lm_tokyo_tower"]()
+        o = f'<g transform="translate(-170 0) scale(0.78)">{t}</g>'
+        o += P("M140 0 L170 -300 M330 0 L300 -300", "none", 7, "#8A5A3C") + R(90, -470, 290, 220, WHITE, 6, 10)
+        for i in range(2):
+            for j in range(2):
+                fx, fy = 106 + 136 * i, -456 + 102 * j
+                o += R(fx, fy, 124, 90, "#EEF2F8", 3.5, 4)
+                o += f'<circle cx="{fx + 62}" cy="{fy + 42}" r="{18 + 4 * (i + j)}" fill="{(YEL, "#F7D6DE", "#9ED3C8", LB)[2 * i + j]}" stroke="{INK}" stroke-width="3"/>'
+                o += P(f"M{fx + 54} {fy + 38} v4 M{fx + 70} {fy + 38} v4 M{fx + 54} {fy + 50} q8 6 16 0", "none", 2.5)
+        o += P("M260 -250 L330 -170", "none", 10, YEL) + P("M326 -174 L340 -158", "none", 10, INK)
+        return o, (-415, -690, 800, 695)
+
+    def lm_phone_plant(sign=""):   # Bac Ninh (phones): a long white factory with a blue band, a giant phone, and rice fields in front
+        o = R(-370, -280, 560, 280, "#EEF2F8") + R(-370, -280, 560, 50, BLUE, 5) + win(-370, 190, -210, -60, 9, 2, 0.4) + R(-120, -80, 100, 80, "#59647A", 4)
+        if sign: o += plate(-90, -320, sign, 44)
+        o += R(210, -400, 150, 290, "#33435E", 6, 24) + R(224, -380, 122, 230, "#9ED3C8", 4, 10) + f'<circle cx="285" cy="-130" r="9" fill="{WHITE}" stroke="{INK}" stroke-width="3"/>'
+        o += R(-380, -24, 760, 24, "#B6D98F", 4, 6) + "".join(P(f"M{x} -24 q-6 -26 -2 -40 M{x} -24 q8 -22 10 -36", "none", 3.5, "#3F8F4F") for x in range(-350, 380, 40))
+        return o, (-385, -405, 770, 410)
+
+    def lm_royal_palace():   # Phnom Penh: a Khmer palace hall with tiered roofs and a golden spire, and a rail of new clothes
+        o = R(-300, -170, 400, 170, "#F6E9C9") + "".join(P(f"M{cx - 26} 0 V-110 Q{cx} -146 {cx + 26} -110 V0 Z", "#59647A", 4) for cx in (-240, -170, -30, 40))
+        o += P("M-340 -170 L-100 -300 L140 -170 Z", "#E8A23B") + P("M-280 -250 L-100 -360 L80 -250 Z", "#D6455A") + P("M-230 -320 L-100 -410 L30 -320 Z", "#E8A23B")
+        o += P("M-130 -400 L-100 -620 L-70 -400 Z", GOLD) + P("M-100 -620 V-660", "none", 5) + P("M-340 -170 l-20 -30 M140 -170 l20 -30", "none", 6, GOLD)
+        o += P("M170 0 V-300 M360 0 V-300 M160 -300 H370", "none", 7, "#59647A")
+        o += "".join(P(f"M{x - 34} -290 L{x - 50} -270 L{x - 40} -250 L{x - 30} -258 V-160 H{x + 30} V-258 L{x + 40} -250 L{x + 50} -270 L{x + 34} -290 Q{x} -276 {x - 34} -290 Z", c, 4) for x, c in ((210, "#467DE3"), (270, "#E8765F"), (330, "#2FA36B")))
+        return o, (-365, -665, 740, 670)
+
+    def lm_thai_temple():   # Bangkok (film): a temple prang with tiered roofs, a film camera and a clapperboard
+        o = P("M-300 0 L-280 -200 Q-250 -420 -190 -600 Q-130 -420 -100 -200 L-80 0 Z", "#F3E6C4") + "".join(P(f"M{-280 + 8 * j} {-60 - 70 * j} H{-100 - 8 * j}", "none", 4, "#D9A04A") for j in range(7))
+        o += P("M-190 -600 V-660", "none", 5) + R(-360, -110, 340, 110, "#F6E9C9") + P("M-380 -110 L-190 -190 L0 -110 Z", "#D6455A") + P("M-380 -110 l-18 -26 M0 -110 l18 -26", "none", 6, GOLD)
+        o += cam(190, 1.05) + clap(310, -40, 0.65)
+        return o, (-400, -665, 790, 670)
+
+    def lm_monas():   # Jakarta (cosmetics): the National Monument with its gold flame, and beauty products in front
+        o = R(-360, -60, 340, 60, "#E7DDC8") + P("M-330 -60 L-300 -150 H-80 L-50 -60 Z", "#F3E6C4") + P("M-210 -150 L-200 -620 H-180 L-170 -150 Z", WHITE)
+        o += R(-214, -640, 48, 24, "#E7DDC8", 4) + P("M-190 -640 Q-224 -680 -196 -720 Q-196 -690 -182 -700 Q-170 -730 -190 -760 Q-140 -720 -160 -660 Q-158 -646 -190 -640 Z", GOLD)
+        o += beauty(150, 1.0)
+        return o, (-365, -765, 715, 770)
+
+    def lm_smelter():   # Morowali (nickel): smelter chimneys with smoke, a shed, a conveyor, an ore pile and the sea
+        o = water(760, -4) + R(-360, -230, 400, 200, "#9AA3B2") + R(-360, -250, 400, 24, "#59647A", 4)
+        for cx in (-300, -200, -100):
+            o += R(cx - 20, -520, 40, 290, "#C9D2DE") + R(cx - 20, -480, 40, 20, RED, 3) + f'<circle cx="{cx + 10}" cy="-560" r="30" fill="{WHITE}" stroke="{INK}" stroke-width="4" opacity="0.85"/>'
+        o += P("M40 -200 L260 -60", "none", 14, "#59647A") + P("M40 -200 L260 -60", "none", 6, "#C9D2DE")
+        o += P("M180 -30 Q260 -170 360 -30 Z", "#6B7A5A", 5) + "".join(f'<circle cx="{x}" cy="{y}" r="8" fill="#8FA07A" stroke="{INK}" stroke-width="3"/>' for x, y in ((240, -80), (280, -110), (310, -60), (260, -50)))
+        o += R(-380, -34, 760, 34, "#C9D2DE", 5, 6)
+        return o, (-385, -595, 770, 600)
+
+    def lm_bpo_tower():   # Manila (outsourced services): glass office towers with a headset sign, and a jeepney
+        o = R(-360, -560, 170, 560, GL) + win(-360, -190, -560, 0, 3, 12) + R(-170, -680, 190, 680, "#9FBEE6") + win(-170, 20, -680, 0, 4, 14) + R(40, -420, 150, 420, GL2) + win(40, 190, -420, 0, 3, 9)
+        o += f'<circle cx="-75" cy="-560" r="56" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>' + P("M-110 -550 Q-110 -600 -75 -600 Q-40 -600 -40 -550", "none", 6) + R(-118, -560, 16, 28, RED, 3, 5) + R(-48, -560, 16, 28, RED, 3, 5)
+        jx = 250
+        o += R(jx - 110, -170, 220, 120, "#E9B949", 5, 12) + P(f"M{jx - 120} -170 H{jx + 120} L{jx + 100} -196 H{jx - 100} Z", "#D6455A", 5) + "".join(R(jx - 96 + 52 * i, -150, 40, 40, SKY, 3, 4) for i in range(4))
+        o += P(f"M{jx - 110} -80 H{jx + 110}", "none", 6, BLUE) + "".join(f'<circle cx="{jx + c}" cy="-46" r="26" fill="{INK}"/><circle cx="{jx + c}" cy="-46" r="9" fill="{GREY}"/>' for c in (-66, 66))
+        o += f'<circle cx="{jx + 110}" cy="-120" r="9" fill="{YEL}" stroke="{INK}" stroke-width="3"/>'
+        return o, (-365, -685, 740, 690)
+
+    LMA = {"ev_city": lm_ev_city, "porcelain": lm_porcelain, "palace_gate": lm_palace_gate, "market_hall": lm_market_hall, "seoul_tower": lm_seoul_tower, "pagoda": lm_pagoda,
+           "glasses": lm_glasses, "anime_tokyo": lm_anime_tokyo, "phone_plant": lm_phone_plant, "royal_palace": lm_royal_palace, "thai_temple": lm_thai_temple, "monas": lm_monas,
+           "smelter": lm_smelter, "bpo_tower": lm_bpo_tower}
+
+    def g_vase(): return P("M-20 40 Q-40 10 -32 -16 Q-26 -30 -12 -34 V-46 H12 V-34 Q26 -30 32 -16 Q40 10 20 40 Z", WHITE, 4) + P("M-30 -4 H30 M-22 26 H22", "none", 4, COB) + f'<circle cy="8" r="9" fill="none" stroke="{COB}" stroke-width="3.5"/>'
+    def g_clapper(): return clap(0, 6, 0.6)
+    def g_gift(): return R(-40, -24, 80, 64, RED, 4, 6) + R(-46, -40, 92, 20, "#F29D52", 4, 4) + P("M0 -40 V40", "none", 8, YEL) + P("M0 -40 q-24 -24 -30 -6 q10 8 30 6 q24 -24 30 -6 q-10 8 -30 6", "none", 4)
+    def g_cosmetic(): return R(-20, -20, 40, 64, "#E9B949", 4, 10) + R(-12, -46, 24, 28, "#33435E", 4, 6) + P("M0 -46 V-60", "none", 6)
+    def g_gamepad(): return P("M-50 -14 Q-50 -30 -32 -30 H32 Q50 -30 50 -14 L58 22 Q60 38 44 38 Q34 38 26 22 H-26 Q-34 38 -44 38 Q-60 38 -58 22 Z", WHITE, 4) + P("M-30 -6 h20 M-20 -16 v20", "none", 6) + f'<circle cx="24" cy="-10" r="7" fill="{RED}" stroke="{INK}" stroke-width="3"/><circle cx="36" cy="2" r="7" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>'
+    def g_glasses(): return f'<circle cx="-26" cy="0" r="22" fill="{SKY}" stroke="{INK}" stroke-width="7"/><circle cx="26" cy="0" r="22" fill="{SKY}" stroke="{INK}" stroke-width="7"/>' + P("M-4 -4 Q0 -12 4 -4 M-48 -4 L-60 -14 M48 -4 L60 -14", "none", 6)
+    def g_cel(): return R(-48, -34, 96, 68, WHITE, 4, 4) + "".join(R(-44 + 14 * i, -30, 8, 8, INK, 0, 1) + R(-44 + 14 * i, 22, 8, 8, INK, 0, 1) for i in range(7)) + f'<circle cy="0" r="14" fill="{YEL}" stroke="{INK}" stroke-width="3"/>'
+    def g_battery(): return R(-26, -40, 52, 84, "#2FA36B", 4, 8) + R(-12, -52, 24, 14, GREY, 4, 3) + P("M4 -24 l-14 24 h14 l-8 22", "none", 5, WHITE)
+    GOODS = {"vase": g_vase, "clapper": g_clapper, "gift": g_gift, "cosmetic": g_cosmetic, "gamepad": g_gamepad, "glasses": g_glasses, "cel": g_cel, "battery": g_battery}
+    G = H["G"]
+
+    def count_note(x, y, s=1.0, value=0, start=0, pre="", suf="", dec=0, comp="", lines=None, w=480, fs=42, rot=0, count_at=None, count_delay=0.1, dur=0.9, **_):
+        """The pinned fact note of a map stop (note_card look) whose blue title is a number that counts up from start to value when the voice reaches it
+        (18 Nov 2026, Hoang: "numbers count up on the fact card"). pre/suf/dec/comp format it ("€" 19.9 " billion"; "" 50000 "+ jobs"); lines: the small lines under it.
+        The count starts at count_at (default the item's "at") + count_delay over dur s. (x, y) = centre."""
+        title = G["_m_fmt"](value, dec, pre, suf, comp)
+        size, tl, wr, Hh = G["_nc_layout"](title, lines, w, fs)
+        if len(tl) != 1: raise ValueError(f"count_note: {title!r} must fit on one line at w {w}")
+        art = G["note_card"](0, 0, 1.0, title=title, lines=lines, w=w, fs=fs)
+        yy = -Hh / 2 + 24 + size; old = G["_t"](0, yy, tl[0], size, 900, G["ED_BLUE"])
+        if old not in art: raise ValueError("count_note: title text not found")
+        S = {"from": float(start), "keys": [dict(G["_m_at"]({"at": count_at or _.get("at") or "chunk:0", "delay": count_delay}), dur=float(dur), to=float(value))], "dec": dec, "pre": pre, "suf": suf, "comp": comp, "plus": False, "ease": "out"}
+        art = art.replace(old, G["_m_count"](0, yy, S, G["_m_fmt"](start, dec, pre, suf, comp), size, 900, G["ED_BLUE"]))
+        return G["_g"](x, y, s, art, rot)
+
+    def count_note_box(x, y, s=1.0, value=0, pre="", suf="", dec=0, comp="", lines=None, w=480, fs=42, **_):
+        return G["note_card_box"](x, y, s, title=G["_m_fmt"](value, dec, pre, suf, comp), lines=lines, w=w, fs=fs)
+
+    G["PRESETS"].update({"count_note": (count_note, count_note_box)})
+    return {"LM": LMA, "SIGNED": ("phone_plant",), "GOODS": GOODS}

@@ -84,6 +84,25 @@ def main(path):
         E.append('meta.type must be "definition", "life-of", "ledger-talks", "howto", "ad", "lesson", "ladder" or "map"'); t = "definition"
     P = SPEC[t]; WPS_T = P["wps"]
     beats, scenes = S.get("beats", []), S.get("scenes", {})
+    if m.get("style") not in (None, "flat"): E.append('meta.style must be "flat" (the clean flat style, 17 Nov 2026) or left out')   # flat style: opt-in, every other script is checked as before
+    vm = m.get("voice")   # voice delivery (18 Nov 2026, opt-in): {"id", "tempo", "stability", "tag"}, read by vo.py
+    if vm is not None:
+        if not isinstance(vm, dict) or set(vm) - {"id", "tempo", "stability", "tag"}: E.append('meta.voice must be {"id", "tempo", "stability", "tag"} (all optional)')
+        else:
+            if "tempo" in vm and not 0.8 <= float(vm["tempo"]) <= 1.3: E.append(f'meta.voice.tempo {vm["tempo"]}; use 0.8-1.3')
+            if "stability" in vm and float(vm["stability"]) not in (0.0, 0.5, 1.0): E.append('meta.voice.stability must be 0.0 (Creative), 0.5 (Natural) or 1.0 (Robust)')
+            if vm.get("tag") and not re.fullmatch(r"(\[[^\[\]]+\]\s*)+", str(vm["tag"])): E.append(f'meta.voice.tag {vm["tag"]!r} must be audio tags in [brackets]')
+    if m.get("style") == "flat":   # flat (18 Nov 2026): no full stop at the end of any on-screen text in the world's props
+        for name, sp in scenes.items():
+            for it in sp.get("items", []) if isinstance(sp, dict) else []:
+                if not str(it.get("p", "")).startswith("flat_"): continue
+                tx = [it.get(k) for k in ("text", "label", "title", "pill", "credit", "big")] + [ln[0] for ln in it.get("lines") or [] if isinstance(ln, (list, tuple)) and ln]
+                tx += [" ".join(map(str, it.get("parts") or []))] + [(q.get("label") if isinstance(q, dict) else None) for q in it.get("steps") or []]
+                tx += [(q.get("t") if isinstance(q, dict) else q) for q in (it.get("terms") or [])[-1:]] + [(q.get("note") if isinstance(q, dict) else None) for q in it.get("terms") or []]
+                for x in tx:
+                    if isinstance(x, str) and x.rstrip().endswith(".") and not x.rstrip().endswith("..."): E.append(f'scene {name}: {it["p"]} text ends with a full stop: {x[-50:]!r}')
+                if it.get("p") == "flat_sentence" and isinstance(it.get("part_at"), list) and len(it["part_at"]) != len(it.get("parts") or []): E.append(f'scene {name}: flat_sentence part_at has {len(it["part_at"])} entries for {len(it.get("parts") or [])} parts')
+    if m.get("style") == "flat" and not any(sp.get("cam") for sp in scenes.values()): W.append('flat style: no scene has "cam" keyframes, so the camera never moves through the world')
     # Ledger's arm and hand proportions (Hoang, 25 Oct 2026: "the hands are not proportional, check that every time")
     for e in L.check_proportions(): E.append(f"scene_lib: {e}")
     # scenes and presets
@@ -109,7 +128,7 @@ def main(path):
     for r, n in R.get("max", {}).items():
         if roles.count(r) > n: E.append(f'at most {n} beat(s) with role "{r}" (has {roles.count(r)})')
     texts_extra_cta = []
-    bad = [r for r in roles if r not in R["order"]]
+    bad = [r for r in roles if r not in R["order"] and not (r == "cta" and m.get("style") == "flat" and roles and roles[-1] == "cta")]   # flat: a closing cta after the end card
     if bad: E.append(f"unknown roles {sorted(set(map(str, bad)))}; {t} roles are {R['order']}")
     seq = [R["order"].index(r) for r in roles if r in R["order"]]
     if t == "lesson":   # any order; the hook, when there is one, opens the video as a direct question
@@ -210,14 +229,16 @@ def main(path):
             if not any(it.get("p") == "landmark" for sp in sc for it in sp.get("items", [])): E.append(f"map: stop {n} shows no landmark (prop \"landmark\")")
         if "summary" in roles and "stop" in roles[roles.index("summary"):]: E.append("map: the summary map comes after the last stop")
         for name, sp in scenes.items():   # Ledger is on every scene; no country borders or labels exist in world_map, so only cities can be named
-            if not any(it.get("p") == "ledger" for it in sp.get("items", [])): E.append(f"map: scene {name} has no Ledger (he must be visible on every scene)")
+            if not any(it.get("p") in (("ledger", "ledger2") if m.get("style") == "flat" else ("ledger",)) for it in sp.get("items", [])): E.append(f"map: scene {name} has no Ledger (he must be visible on every scene)")   # flat map (18 Nov 2026): Ledger v2 counts
         if not m.get("superlative_source"):   # "best" and "highest paying" need a source that says exactly that (owner's brief, 13 Nov 2026)
             for k, b in enumerate(beats, 1):
                 if re.search(r"\b(best|highest[- ]paying|top[- ]paying|richest)\b", b.get("text", ""), re.I): E.append(f'beat {k}: "best" or "highest paying" needs a source that says exactly that (set meta.superlative_source), or say "a hub for"')
     else:
+        flat_cta = m.get("style") == "flat" and len(roles) > 1 and roles[-1] == "cta" and roles[-2] == "endcard" and roles.count("cta") == 1   # flat (17 Nov 2026): one closing cta line may follow the in-world end card
+        if flat_cta: seq = seq[:-1] if len(seq) == len(roles) else seq
         if seq != sorted(seq): E.append(f"roles out of order; keep {' > '.join(R['order'])}")
         if roles and roles[0] != "hook": E.append("beat 1 must be the hook")
-        if roles and roles[-1] != "endcard": E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint")')
+        if roles and roles[-1] != "endcard" and not flat_cta: E.append('the last beat must be the end card (role "endcard" with "term" and "keypoint")')
         if roles.count("endcard") > 1: E.append("only one end card")
     for name, sp in scenes.items():   # summary pointer (Hoang, 1 Nov 2026): the boxes must leave the small Ledger room on the left
         if sp.get("pointer"):
@@ -302,7 +323,12 @@ def main(path):
         where = f"beat {k}"
         if "focus" in b or "focus_end" in b: E.append(f"{where}: no camera moves; remove focus/focus_end and set the scene's \"frame\" instead")
         tx = b.get("text", ""); total += len(words(tx))
-        if "gap" in b and not 0 <= float(b["gap"]) <= 1.5: E.append(f"{where}: gap {b['gap']} s; use 0-1.5")
+        for kk in ("pause_after",):   # voice delivery (18 Nov 2026, opt-in): pause_after = gap, tempo per line, voice_tag = an audio tag in [brackets]
+            if kk in b and not 0 <= float(b[kk]) <= (2.5 if t == "ledger-talks" or m.get("style") == "flat" else 1.5): E.append(f"{where}: pause_after {b[kk]} s; use 0-{2.5 if t == 'ledger-talks' or m.get('style') == 'flat' else 1.5}")
+        if "tempo" in b and not 0.8 <= float(b["tempo"]) <= 1.3: E.append(f"{where}: tempo {b['tempo']}; use 0.8-1.3 (1.0 = the voice's own pace)")
+        if b.get("voice_tag") and not re.fullmatch(r"(\[[^\[\]]+\]\s*)+", str(b["voice_tag"])): E.append(f'{where}: voice_tag {b["voice_tag"]!r} must be one or more audio tags in [brackets], such as "[warm]"')
+        if b.get("say") and re.search(r"<break|<speak|<phoneme", str(b["say"])): E.append(f"{where}: say: eleven_v3 has no SSML; use \"...\" or an em dash for a pause")
+        if "gap" in b and not 0 <= float(b["gap"]) <= (2.5 if t == "ledger-talks" else 1.5): E.append(f"{where}: gap {b['gap']} s; use 0-{2.5 if t == 'ledger-talks' else 1.5}")   # ledger-talks quiz (17 Nov 2026): up to 2.5 s of think time after a question
         if not tx: E.append(f"{where}: empty voice text")
         if t == "lesson" and tx and b.get("role") != "defcard":   # full sentences (Hoang, 5 Nov 2026): no fragments or keyword lists
             if len(words(tx)) < 5 or not re.search(r"[.?]['\"”’)]?$", tx.strip()): E.append(f"{where}: lesson voice must be full sentences ending in . or ?: {tx[:60]!r}")
@@ -342,8 +368,10 @@ def main(path):
             if cta and t != "ad": E.append(f"{where}: \"cta\" on the end card is for ads only")
             if cta and (len(cta) > 32 or cta.rstrip().endswith(".")): E.append(f"{where}: cta pill text {cta!r}: 32 characters at most, no closing full stop")
             if cta: texts_extra.append(("endcard cta", cta))
+            inworld = m.get("style") == "flat" and b.get("img")   # flat (17 Nov 2026): an in-world end card may close on a takeaway line when the reel says the term earlier
             if term and _n(term) not in _n(tx) and not (cta and _n(cta.replace(".com", " dot com")) in _n(tx)):
-                E.append(f"{where}: the voice must say the term on the end card (or, for an ad with a cta pill, the cta line)")
+                if inworld and any(_n(term) in _n(x.get("text", "")) for x in beats): W.append(f"{where}: the end card voice does not say the term; it is said earlier in the reel (flat in-world end card)")
+                else: E.append(f"{where}: the voice must say the term on the end card (or, for an ad with a cta pill, the cta line)")
             q = b.get("equation")   # how-to end card (1 Nov 2026): the term's equation with the story's numbers
             if q is not None:
                 if not isinstance(q, dict) or not q.get("lhs") or not q.get("num"): E.append(f'{where}: "equation" must be {{"lhs", "num", "den" (optional), "example" (optional)}}')
