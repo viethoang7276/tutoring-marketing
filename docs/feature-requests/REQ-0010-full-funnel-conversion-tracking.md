@@ -178,9 +178,32 @@ Asks for the CTO:
 
 Marketing does after the build (no code): custom conversions in Events Manager: **Tutoring enquiry** (Lead where lead_type = tutoring_inquiry), **Tutoring booking** (Schedule), **Course purchase** (Purchase where content_category = course, or content_ids contain a course slug). Ad plan: a new tutoring campaign optimised for Tutoring enquiry (enough weekly volume for Meta to learn), reporting bookings and revenue next to it; course ads optimise for Course purchase once purchases arrive, until then for AddToCart or InitiateCheckout. The current LPV ad sets cannot change goal (Meta #1504040).
 
+## Addendum, 17 Nov 2026: if we move to a subscription model (Hoang: "think about if we change to subscription model what else we need to track")
+
+Not a build request yet: no subscription product exists. Ask: design today's tracking so it extends to subscriptions without rework.
+
+Events:
+
+| Moment | Meta | GA4 / Google Ads | Source |
+|---|---|---|---|
+| Free trial starts | **StartTrial** (`value`, `currency`, `predicted_ltv`, `content_ids` plan) | `start_trial` (custom) | browser + server, same event_id `trial.<subscriptionId>` |
+| Trial converts / first paid charge | **Subscribe** (`value` = first charge, `currency`, `predicted_ltv`, plan) | `purchase` (transaction_id = first invoice id) + Google Ads conversion upload by stored `gclid` | **server only**, Stripe `invoice.paid` (first invoice) |
+| Renewal | none (would double count the customer) | `subscription_renewed` (internal) | server, Stripe `invoice.paid` (later invoices) |
+| Upgrade / downgrade / pause / cancel / refund | none | internal events | server, Stripe `customer.subscription.updated` / `.deleted`, `charge.refunded` |
+
+Requirements:
+1. Store attribution on the customer when the trial or subscription starts, not only on orders: first-touch and last-touch UTMs, `_fbp`, `_fbc` (or fbclid), `gclid`, consent state at that moment. Server events days later read it from there.
+2. Server events only for customers whose marketing consent was given at sign-up (same rule as Purchase today); hashed email in user_data only.
+3. `predicted_ltv`: start with a simple rule (monthly price x expected months, annual = price); marketing supplies the months from real churn once known.
+4. Active subscribers as a Meta custom audience (server-defined, no customer list upload) so acquisition campaigns can exclude them.
+5. Reporting endpoint (`/api/v1/marketing/conversions`) gains: trials, trial-to-paid rate, new MRR, churned MRR, refunds, revenue to date per customer, grouped by utm_campaign / utm_content and by first touch, so CAC payback per campaign can be read.
+
+Ads plan under subscriptions (marketing): optimise for StartTrial (paid conversion can fall outside Meta's 7-day click window), report Subscribe beside it, exclude active subscribers, move to value optimisation on Subscribe with predicted_ltv once volume allows.
+
 ## Decision log
 - 2026-11-04 — requested by Hoang; tutoring-web supplied the event inventory from main at 67adbdaf (PR #102 live on prod 4 Nov); CMO drafted this request
 - 2026-11-04 — tutoring-web drafted the FT spec (36 tasks, 12 decisions for Hoang). CMO review: agreed with all 12 defaults; asked for a ready Phase 2 list (Google Ads 622-861-8576, edlintics@gmail.com, closed, Hoang plans to reactivate; keep its GA4 link), a test path given staff exclusion (a non-staff test account Hoang creates, FT097), groupBy utm_term and click_id_type, and pricing_viewed + booking_calendar_opened in the first batch (FT029). All four accepted in 7a829ebda
 - 2026-11-05 — Hoang opened a new Google Ads account (customer ID from the overview URL: 938-406-8284; Hoang to confirm the ID shown in the account header). It replaces reactivating 622-861-8576 (FT190). Next: link it to GA4 263808863 and unlink 622-861-8576, turn on auto-tagging, accept the enhanced conversions terms; Phase 2 (FT110-FT114) can be scheduled
 - 2026-11-05 — Hoang approved D1-D12 (all defaults) in the tutoring-web session; FT build started (FT010, FT011, then A/B/C). Split agreed: CTO builds and sends a verify checklist per batch; marketing verifies in Events Manager and GA4 and owns GA4 admin, the hub funnel view and UTMs; Hoang owns credentials and sign-off
 - 2026-11-17 — Hoang asked for the contact message, form sends, bookings and course purchases to count as conversions. Addendum above written by the CMO; gap: the tutor contact message (inquiry_sent) sends no Meta event. Asks 1-3 to the CTO
+- 2026-11-17 — Hoang asked what a subscription model would add; second addendum written (StartTrial, server-only Subscribe from Stripe, attribution stored on the customer, subscriber audience, MRR and churn in the reporting endpoint). Design request, not a build
