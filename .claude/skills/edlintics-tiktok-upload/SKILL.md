@@ -97,6 +97,7 @@ Do this for every post once it is live (now posts straight away; scheduled posts
 - Blank lines between paragraphs show as three newlines in `innerText` but count correctly (counter = caption length).
 - Typing `IE Tower` without first clicking the search box sends the keys nowhere, or puts a stray letter in the box (we saw `rIE Tower`); always cmd+a before typing.
 - `edl_go` waits for the "Continue to post?" dialog and confirms it; without that the page stays on the upload form.
+- **Never re-submit because a row is missing (17 Nov 2026).** After "Post now" on "Continue to post?", the new row can take a minute or more to appear in Posts. On 17 Nov a re-submit made a duplicate of lifeof-marketer-attribution. Wait 60 s, reload Posts, search the caption's first words, and only then decide; if still unsure, stop and report instead of uploading again.
 - The schedule pickers list only valid hours for today; pick the date first, then the time (`edl_sched` does).
 - A photo post's "Favourites" label always reads "Add to Favourites…"; it does not flip when saved. Judge by the yellow icon, the toast "Added to Favourites" or the count. Never click save twice (it un-saves).
 - 25 Oct: the free-rider test reel was scheduled with the IE location before the no-location rule; it cannot be edited (see Hard rules).
