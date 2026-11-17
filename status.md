@@ -951,3 +951,4 @@ State at handover:
 
 - 17 Nov 04:05 VN: first comments for howto-hospital-incident-response (03:00 VN) done on fb, ig (reel Df0KieQAvAo), li, th, yt, tt (comment + save, no self-like); x skipped (paused). Lead check: IG heart red, YT comment present with both emojis. Hub runs doc v3. Threads needed 3 send attempts, no duplicate
 - 17 Nov 06:37 VN, video ad check (read only): both video ads passed review and are delivering, no errors. No price 120251906975940036: 230,087 VND, 2,239 impressions, 31 link clicks, 27 landing page views (lifetime); price 120251907016640036: 2,394 VND, 33 impressions, no clicks. ads/latest v23. Nothing changed
+- 17 Nov 07:45 VN, morning refresh: pulled (up to date). Safeguard clean: 5 posts live in the last 24 h (16 Nov 10:00 and 13:00, consultant-to-partner ladder, shrinkflation, hospital incident response) all have first comments, likes and reposts done and lead-checked. daily-2026-11-16 present. No slots in "changes"
