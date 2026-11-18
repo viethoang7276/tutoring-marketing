@@ -14,16 +14,16 @@ White background, Ledger's flat hand works real cards, a subject chip on top cha
 | 21-24 s | Chip "Statistics", z-score calculator | Find out how unusual a result really is. |
 | 24-28 s | End card "Understand the process. Question the result", edlintics.com pill | Try a card free on edlintics.com. LAUNCH: More than 1,000 lessons, and an AI tutor guides you along the way. |
 
-## B. Ledger meets a hard word (about 30 s, after Duolingo chess). Episode 1: accrued expenses
+## B. Ledger meets a hard word (about 30 s, after Duolingo chess). Episode 1: accrued expense
 | Time | On screen | Voice |
 |---|---|---|
-| 0-4 s | Ledger reads a company report, the line "Accrued expenses" glows | Ledger is reading a company report, and one line stops him. |
+| 0-4 s | Ledger reads a company report, the line "Accrued expense" glows | Ledger is reading a company report, and one line stops him. |
 | 4-8 s | He takes out a phone, the real glossary page opens | So he looks it up in the Edlintics glossary. |
-| 8-15 s | Definition card | Accrued expenses are costs a business has already incurred but has not paid yet, such as wages staff have earned before payday. |
+| 8-15 s | Definition card | An accrued expense is a cost a business has already incurred but has not paid yet, such as wages staff have earned before payday. |
 | 15-20 s | He taps the Check yourself answer, it turns green | Then he checks himself with one practice question. |
 | 20-25 s | Back to the report, the line now has a tick | Now the line makes sense: the work is done, and the bill is still to come. |
 | 25-30 s | End card "Your entrance into the language of business" | Look up any business word free on edlintics.com. |
-To confirm when recording: the glossary page and its Check yourself card for "accrued expenses"; the definition goes through the definition-reviewer.
+To confirm when recording: glossary page /en/wiki/accrued-expense exists with a Check yourself card (checked 18 Nov); the definition goes through the definition-reviewer.
 
 ## C. Through the screen (30 s, brand film, after the Duocon teaser)
 One flat camera move, no cuts.
