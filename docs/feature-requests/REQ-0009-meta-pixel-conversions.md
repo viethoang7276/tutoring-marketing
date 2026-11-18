@@ -22,6 +22,22 @@ Hoang moved the Facebook page to **edlintics 1**, business `1704820277908835`. B
 
 No application-code change is needed: `tutoring-web/lib/meta-pixel.ts` and `server/logic/meta/capi-client.ts` both use `NEXT_PUBLIC_META_PIXEL_ID`. The migration is environment configuration plus rebuild/redeploy; the browser ID is embedded at build time. The new dataset needs an authorized CAPI token; access of the existing token is unverified. Preview-only test settings are `META_TEST_EVENT_CODE` and `NEXT_PUBLIC_META_PIXEL_TEST_MODE=1`, not Production settings. The website deployment runbook (§9 Meta) and `docs/STATUS.md` still name the old pixel and should be updated by the Claude website session. No website files, environment variables, credentials or deployments were changed by Codex.
 
+## 18 Nov 2026: finish the Conversions API for the new pixel (Hoang: "ask cto to set up conversion api")
+
+Read in Events Manager by the marketing lead, 18 Nov:
+- Pixel `1178793404712949` receives **browser** events only (Test events: PageView, ViewContent, PricingViewed, EngagedVisit; Overview 21 Oct-17 Nov: PageView 15). **No server events at all**, and Meta still shows "Set up the Conversions API".
+- History tab: Hoang generated a Conversions API access token on 17 Nov 12:06 and shared the dataset with "Conversions API System User". Whether that token is in Vercel Production as `META_CAPI_ACCESS_TOKEN` is not known.
+- Hoang's own test enquiry showed no Lead (he had an ad blocker; consent may not have been given).
+- Code (read-only): `lib/funnel-events.ts` maps `inquiry_sent` to browser `Lead` + CAPI `Lead` with event id `lead.<inquiryId>`; `waitlist_joined`, `waitlist_signup` and `brief_signup_submitted` also send browser `Lead`, with no parameter that tells them apart.
+
+Hoang pasted Meta's "Conversions API Gateway" (AWS-hosted) setup guide. CMO recommendation: **do not deploy the Gateway**. The site already has a direct CAPI integration (`server/logic/meta/capi-client.ts`), this REQ says not to add a second automatic CAPI, and the Gateway needs an AWS account and monthly hosting spend (Hoang's decision). Finish the direct integration instead:
+1. Production env: `NEXT_PUBLIC_META_PIXEL_ID=1178793404712949` and `META_CAPI_ACCESS_TOKEN` = the token authorised for this dataset (Hoang sets the values; agents never read or print them), then redeploy.
+2. Verify server delivery: a consented, non-staff test enquiry (or `META_TEST_EVENT_CODE` on Preview) shows **Lead** from Server and Browser, deduplicated.
+3. Add `lead_type` to the browser Lead too (`tutoring_inquiry` for `inquiry_sent`; distinct values for waitlist and brief sign-ups) so marketing can build the custom conversion "Tutoring enquiry" (waitlist Leads must not count, Hoang 17 Nov).
+4. Test events lists PageView as a "Custom event": check it is sent with `fbq('track','PageView')`, not `trackCustom`.
+5. Update the deployment runbook section 9 and `docs/STATUS.md` with the new pixel.
+Keep consent gating, withdrawal cleanup and event-id deduplication. Marketing then builds the custom conversion and a separate conversion campaign (the draft ad set 120252005615290036 cannot share the landing-page-view campaign: Meta error #1885760).
+
 ## Summary (original request)
 Hoang is launching Meta ads for tutoring (4 static variants, each with and without the €45/hr price) and later for the courses. Meta can only optimise for bookings and purchases if edlintics.com reports them. There is no Meta Pixel in tutoring-web today (checked 3 Nov 2026: no `fbq`, no pixel ID). Until it exists, the ads run on the Traffic objective (landing page views) and bookings are judged by hand from the `utm_content` split
 
