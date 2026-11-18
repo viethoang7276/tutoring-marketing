@@ -24,7 +24,12 @@ const srv = http.createServer((q, r) => {
   const p = await b.newPage(); await p.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1 });
   await p.goto(`http://127.0.0.1:${srv.address().port}/render.html`, { waitUntil: 'networkidle0' });
   const dur = await p.evaluate(() => window.init());
-  if (!(await p.evaluate(() => !!D.flat))) { console.log('flat fit check: not a flat script, skipped'); await b.close(); srv.close(); return; }
+  if (!(await p.evaluate(() => !!D.flat))) {
+    if (process.env.FIT_ANY !== '1') { console.log('flat fit check: not a flat script, skipped'); await b.close(); srv.close(); return; }
+    // FIT_ANY=1 (18 Nov 2026): a paper script with boxed props (paper_card, paper_tag, paper_sentence, sd_graph carry data-fb). The texts are
+    // assigned to their boxes on every rendered frame (pop-ins scale), without the flat auto-shrink, so a spill in the real paper render is reported
+    await p.evaluate(() => { const r0 = window.render; window.render = t => { r0(t); fitAssign(); }; });
+  }
   const runs = new Map();   // one entry per (kind, a, b), with its time ranges
   for (let t = STEP; t < dur - 0.05; t += STEP) {
     const F = await p.evaluate((t) => window.fitReport(t), +t.toFixed(3));

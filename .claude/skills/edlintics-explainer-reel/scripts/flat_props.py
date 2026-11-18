@@ -826,7 +826,7 @@ def install(G):
         return f'<g data-fx="m" data-spec="{_mat(S)}">{inner}</g>'
 
     def flat_sd_graph(x, y, s=1.0, w=700, h=620, q_max=11, p_max=10, fs=34, x_title="Quantity", y_title="Price", axes_at=None, axes_dur=0.7,
-                      curves=None, points=None, gaps=None, arrows=None, ml=100, mr=160, mt=78, mb=78, x_title_at=None, y_title_at=None, **_):
+                      curves=None, points=None, gaps=None, arrows=None, ml=100, mr=160, mt=78, mb=78, x_title_at=None, y_title_at=None, pill_pad=0, **_):
         """A supply and demand graph on a clean card, (x, y) = the card centre; data units Q 0-q_max (x) and P 0-p_max (y).
         axes_at: the axes draw on (else shown); x_title_at, y_title_at pop each axis title on its own word. curves: [{"kind": "supply"|"demand", "pts": [[q, p], [q, p]], "label", "color", "at", "delay",
         "dur" (draw-on; no "at" = shown), "show"/"hide" (fade in or out, for a copy), "moves": [{"at", "delay", "dur", "dx"}] (slide the whole
@@ -835,7 +835,8 @@ def install(G):
         "plabel_at", "qlabel_at", "color", "pulse": [{"at", "delay"}], "label" (a pill to the right of the dot), "label_at", "label_hide"}]. gaps: [{"p", "q1", "q2", "label", "tone"
         "surplus"|"shortage", "line": "slate"|"red" (red = solid ceiling line), "line_label" (a pill under the band, "Price ceiling"), "at", "band_at",
         "delay", "hide", "settle": {"at", "delay", "dur", "p"} (the line slides to p and the band closes into the point there)}].
-        arrows: [{"axis": "p"|"q", "a", "b", "color" green|red, "at", "delay", "hide"}] drawn along that axis from a to b."""
+        arrows: [{"axis": "p"|"q", "a", "b", "color" green|red, "at", "delay", "hide"}] drawn along that axis from a to b. pill_pad: extra width
+        for the point and line-label pills (0 = as before; the paper twin sd_graph uses it, as it has no flat auto-shrink)."""
         W, H = float(w), float(h)
         X0, X1, Y0, Y1 = -W / 2 + ml, W / 2 - mr, -H / 2 + mt, H / 2 - mb
         QX = lambda q: X0 + (X1 - X0) * q / q_max
@@ -868,7 +869,7 @@ def install(G):
                     + f'<circle cx="{xa:.1f}" cy="{yv:.1f}" r="10" fill="{INK}"/><circle cx="{xb:.1f}" cy="{yv:.1f}" r="10" fill="{INK}"/>')
             ll = ""
             if gp.get("line_label"):
-                t = gp["line_label"]; f2 = fs * 0.86; pw = _tw(t, f2) + 40; ph = f2 * 1.7; ly = yv + bh / 2 + ph / 2 + 14
+                t = gp["line_label"]; f2 = fs * 0.86; pw = _tw(t, f2) + 40 + pill_pad; ph = f2 * 1.7; ly = yv + bh / 2 + ph / 2 + 14
                 ll = (f'<rect data-fb="1" x="{cx - pw / 2:.1f}" y="{ly - ph / 2:.1f}" width="{pw:.1f}" height="{ph:.1f}" rx="{ph / 2:.1f}" fill="{FLAT["red"]}"/>'
                       + _text(cx, ly + f2 * 0.36, t, f2, "white", 900))
                 ll = _win(ll, show=dict(_q(gp.get("line_label_at") or gp.get("at")), delay=_q(gp.get("line_label_at") or gp.get("at"))["delay"] + 0.15), px=cx, py=ly, pop=True)
@@ -921,7 +922,7 @@ def install(G):
                 dot = f'<g data-fx="m" data-spec="{_mat({"x": cx, "y": cy, "pulse": [dict(_q(z), dur=float(z.get("dur", 0.6)), amp=float(z.get("amp", 0.5))) for z in pt["pulse"]]})}">{dot}</g>'
             lab = ""
             if pt.get("label"):
-                t = pt["label"]; f2 = fs * 0.86; pw = _tw(t, f2) + 36; ph = f2 * 1.7; lx = cx + 34 + pw / 2
+                t = pt["label"]; f2 = fs * 0.86; pw = _tw(t, f2) + 36 + pill_pad; ph = f2 * 1.7; lx = cx + 34 + pw / 2
                 lab = _win(f'<rect data-fb="1" x="{lx - pw / 2:.1f}" y="{cy - ph / 2:.1f}" width="{pw:.1f}" height="{ph:.1f}" rx="{ph / 2:.1f}" fill="{col}"/>' + _text(lx, cy + f2 * 0.36, t, f2, "white", 900),
                            show=(_q(pt["label_at"]) if pt.get("label_at") else dict(_q(show), delay=_q(show)["delay"] + 0.35) if show else None), hide=pt.get("label_hide"), px=lx, py=cy, pop=True)
             inner = _win(g_ + lab_, show=gq, fade=0.25) + _win(dot, show=show, px=cx, py=cy, pop=True) + lab

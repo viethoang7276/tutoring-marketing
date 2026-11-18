@@ -266,7 +266,7 @@ def main(d):
     beats = []
     for k, b in enumerate(S["beats"], 1):
         nb = dict(b); nb.pop("focus_end", None)
-        if b.get("role") in ("endcard", "defcard") and not (S.get("meta", {}).get("style") == "flat" and b.get("img")):   # flat (17 Nov 2026): an end card with an img is drawn in the world
+        if b.get("role") in ("endcard", "defcard") and not ((S.get("meta", {}).get("style") == "flat" or b.get("inworld") is True) and b.get("img")):   # flat (17 Nov 2026): an end card with an img is drawn in the world; any style with "inworld": true (18 Nov 2026)
             nb.pop("img", None); nb["focus"] = [0, 0, 1080, 1920]; nb.setdefault("chunks", [])
         else:
             spec = S["scenes"][b["img"]]

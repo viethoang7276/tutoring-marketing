@@ -3659,6 +3659,8 @@ import map_props as _map_props; _map_props.install(globals())
 # ---- MAP REELS BLOCK END
 # ---- FLAT STYLE BLOCK (17 Nov 2026, opt-in with meta.style "flat"): flat_* props live in flat_props.py; no other prop changes
 import flat_props as _flat_props; _flat_props.install(globals())
+# ---- PAPER TWINS (18 Nov 2026, opt-in by prop name): paper_card, paper_tag, paper_sentence, paper_arrow, sd_graph in paper_props.py (flat props with a paper skin)
+import paper_props as _paper_props; _paper_props.install(globals())
 
 
 PRESET_HELP ={k: (v[0].__doc__ or "").strip() for k, v in PRESETS.items()}

@@ -368,9 +368,9 @@ def main(path):
             if cta and t != "ad": E.append(f"{where}: \"cta\" on the end card is for ads only")
             if cta and (len(cta) > 32 or cta.rstrip().endswith(".")): E.append(f"{where}: cta pill text {cta!r}: 32 characters at most, no closing full stop")
             if cta: texts_extra.append(("endcard cta", cta))
-            inworld = m.get("style") == "flat" and b.get("img")   # flat (17 Nov 2026): an in-world end card may close on a takeaway line when the reel says the term earlier
+            inworld = (m.get("style") == "flat" or b.get("inworld") is True) and b.get("img")   # flat (17 Nov 2026): an in-world end card may close on a takeaway line when the reel says the term earlier; any style with "inworld": true (18 Nov 2026, paper twin of a flat reel)
             if term and _n(term) not in _n(tx) and not (cta and _n(cta.replace(".com", " dot com")) in _n(tx)):
-                if inworld and any(_n(term) in _n(x.get("text", "")) for x in beats): W.append(f"{where}: the end card voice does not say the term; it is said earlier in the reel (flat in-world end card)")
+                if inworld and any(_n(term) in _n(x.get("text", "")) for x in beats): W.append(f"{where}: the end card voice does not say the term; it is said earlier in the reel (in-world end card)")
                 else: E.append(f"{where}: the voice must say the term on the end card (or, for an ad with a cta pill, the cta line)")
             q = b.get("equation")   # how-to end card (1 Nov 2026): the term's equation with the story's numbers
             if q is not None:

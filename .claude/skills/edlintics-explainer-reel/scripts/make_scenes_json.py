@@ -34,7 +34,7 @@ if layout == "talk":   # mouth open/closed at 12 fps from the voice loudness (li
     for k in range(1, len(env) - 1):   # a mouth that flaps every frame looks jittery: hold open frames for 2
         if env[k - 1] and not env[k] and env[k + 1]: env[k] = 1
 data = {"duration": T["duration"], "scenes": scenes, "layout": layout, "env": env, "nologo": nologo,
-        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "definition", "footnote", "cta", "fx", "cam", "equation", "rung", "chips", "message", "tag", "ask", "reveal") if k in b} for b in T["beats"]]}
+        "beats": [{k: b[k] for k in ("img", "focus", "start", "end", "chunks", "role", "term", "keypoint", "definition", "footnote", "cta", "fx", "cam", "equation", "rung", "chips", "message", "tag", "ask", "reveal", "inworld") if k in b} for b in T["beats"]]}
 if layout == "ladder": data["rungs"] = json.load(open(f"{d}/script.json")).get("meta", {}).get("rungs", [])   # rung titles for the header
 try:   # quiz scoreboard (17 Nov 2026, opt-in, ledger-talks): meta.board = the short answer labels; beats carry "ask": n (question n is on) and "reveal": n (answer n joins the board)
     if layout == "talk" and json.load(open(f"{d}/script.json")).get("meta", {}).get("board"): data["board"] = json.load(open(f"{d}/script.json"))["meta"]["board"]

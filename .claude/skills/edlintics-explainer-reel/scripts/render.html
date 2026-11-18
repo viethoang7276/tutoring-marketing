@@ -294,7 +294,7 @@ function render(t){
   if(LAD) rungRender(t,i,b,B);
   const card=document.getElementById('card'), art=document.getElementById('art'), cap=document.getElementById('cap'), logo=document.getElementById('logo');
   // "defcard" (in-lesson videos, 5 Nov 2026): the same card mid-video, with the definition in place of the key point and no logo
-  if((b.role==='endcard'||b.role==='defcard')&&!(D.flat&&b.img)){   // flat style (17 Nov 2026): an end card with an img is drawn in the world by the script
+  if((b.role==='endcard'||b.role==='defcard')&&!((D.flat||b.inworld)&&b.img)){   // flat style (17 Nov 2026): an end card with an img is drawn in the world by the script; any style with "inworld": true on the beat (18 Nov 2026, the paper twin of a flat reel)
     boardEl.style.display='none'; const ct=t-a; art.style.opacity=0; cap.style.display='none'; logo.style.display='none'; card.style.display='flex';
     const term=card.querySelector('.term'), kp=card.querySelector('.kp span'), kt=b.role==='defcard'?b.definition:b.keypoint;
     if(term.textContent!==b.term||kp.textContent!==kt){ term.textContent=b.term; kp.textContent=kt; }
@@ -470,6 +470,11 @@ function fitLoad(){ artBody.querySelectorAll('[data-p]').forEach(it=>{ const bx=
   it.querySelectorAll('text').forEach(te=>{ const r=te.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2; let best=null, ba=1e18;
     for(const {b,q} of bx){ if(cx>=q.left&&cx<=q.right&&cy>=q.top&&cy<=q.bottom&&q.width*q.height<ba){ ba=q.width*q.height; best=b; } }
     te._fb=best; if(best) fitText(te); }); }); }
+function fitAssign(){ artBody.querySelectorAll('[data-p]').forEach(it=>{ const bx=[...it.querySelectorAll('[data-fb]')].map(b=>({b,q:b.getBoundingClientRect()}));   // paper scripts (FIT_ANY=1 flat_fit_check.js, 18 Nov 2026): the same text-to-box assignment as fitLoad, without shrinking any text, so the check sees the real render
+  it.querySelectorAll('text').forEach(te=>{ const r=te.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2; let best=null, ba=1e18;
+    for(const {b,q} of bx){ if(cx>=q.left&&cx<=q.right&&cy>=q.top&&cy<=q.bottom&&q.width*q.height<ba){ ba=q.width*q.height; best=b; } }
+    te._fb=best; }); }); }
+window.fitAssign=fitAssign;
 const FIT_SKIP=new Set(['flat_icon','flat_logo','flat_house','flat_ruler','ledger2']);   // decorative glyphs, not labels
 function fitUnits(){ const U=[];
   artBody.querySelectorAll('[data-p]').forEach((it,ii)=>{ if(effOp(it)<0.6||FIT_SKIP.has(it.dataset.p)||it.dataset.fit==='skip') return; const on=it.dataset.fit==='on'; const tx=(it.querySelector('text')||{}).textContent||''; const name=it.dataset.p+(tx?' "'+tx.trim().slice(0,28)+'"':'');
