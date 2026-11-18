@@ -6,7 +6,7 @@ Moves to ~/.Trash/edlintics-renders-cleanup-<date>/ (repo tree kept, MANIFEST.ts
   A  media of posts that are fully posted (status posted/published, no thPending/ttPending/igManual true)
   B  check images (stills/ mid/ review/ v0/ v1/ frames/ tiles/ spill/ contact/ previous/, contact sheets, fps tiles)
      and mixed audio.wav / audio-yt.wav in folders whose posts are all scheduled or posted
-Kept always: final mp4s of anything not fully posted, voiceover.wav, thumbnails, scripts/json/md, and the
+Kept always: final mp4s of anything not fully posted or not yet archived off the hub (step 7), voiceover.wav, thumbnails, scripts/json/md, and the
 protected folders below. Anything modified in the last 48 h is kept (it may be mid-build).
 Usage: cleanup_renders.py <slots_json_dir>            (dry run, prints the summary)
        cleanup_renders.py <slots_json_dir> --apply    (moves the files)
@@ -36,12 +36,14 @@ def main():
         print(__doc__); sys.exit(1)
     slots_dir, apply = sys.argv[1], '--apply' in sys.argv
     os.chdir(REPO)
-    st, refs = {}, []
+    st, refs, on_hub = {}, [], set()
     for f in glob.glob(os.path.join(slots_dir, '**', '*.json'), recursive=True):
         d = json.load(open(f)); d = d.get('data', d)
         sid = os.path.basename(f)[:-5]
         pend = any(d.get(k) is True for k in ('thPending', 'ttPending', 'igManual'))
         st[sid] = (d.get('status'), pend)
+        if d.get('videoUrl') and not d.get('videoArchived'):
+            on_hub.add(sid)
         s = set(); walk_refs(d, s)
         refs += [(p, sid) for p in s]
     if not st:
@@ -75,7 +77,12 @@ def main():
             for f in fs:
                 if not f.lower().endswith(MEDIA): continue
                 p = os.path.join(r, f)
-                if fully_posted: add('A_posted', p)
+                if fully_posted:
+                    # Keep the top-level final mp4s until the step-7 archive has taken the hub video
+                    # (19 Nov 2026: three posts lost their only copies when the hub blob was already gone).
+                    if rel == ['.'] and f.lower().endswith('.mp4') and ids & on_hub:
+                        continue
+                    add('A_posted', p)
                 elif all_sched:
                     if rel[0] in INTER: add('B_checks', p)
                     elif rel == ['.'] and f in ('audio.wav', 'audio-yt.wav'): add('B_mixwav', p)
