@@ -394,12 +394,14 @@ const fx={
     if(S.bob) y+=S.bob.amp*Math.sin(2*Math.PI*S.bob.hz*t);
     for(const q of S.out||[]){ const t0=T(q); if(t>=t0) op=Math.min(op,1-clamp((t-t0)/q.dur)); }
     if(S.hide&&t<T(S.hide)) op=0;
+    if(S.fadein){ const q=t-T(S.fadein); op=Math.min(op,q<0?0:clamp(S.fadein.dur>0?q/S.fadein.dur:1)); }   // fadein (18 Nov 2026, flat_sd_graph): fades in at its chunk plus delay, no scale
     if(S.appear){ const q=t-T(S.appear); if(q<0) op=0; else { op=Math.min(op,clamp(q/0.1+0.2)); k*=0.55+0.45*back(clamp(q/0.3)); } }   // appear (12 Nov 2026): pops in at its chunk plus delay
     e.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${k.toFixed(4)}) translate(${-S.x} ${-S.y})`); e.setAttribute('opacity',op.toFixed(3)); },
   trail(e,S,T,t){ const t0=T(S); if(t<t0){ e.setAttribute('opacity','0'); return; } const p=(EZ[S.ease]||inout)(clamp((t-t0)/S.dur));
     e.setAttribute('stroke-dasharray',`${p.toFixed(4)} 1`); e.setAttribute('opacity',(0.6*(S.fade>0?1-clamp((t-t0-S.dur)/S.fade):1)).toFixed(3)); },
   clip(e,S,T,t){ const t0=T(S), p=t<t0?0:(EZ[S.ease]||inout)(clamp((t-t0)/S.dur)), [x,y,w,h]=S.box;
     const horiz=S.dir==='right'||S.dir==='left'; e.setAttribute('x',S.dir==='left'?x+w*(1-p):x); e.setAttribute('width',horiz?w*p:w); e.setAttribute('y',S.dir==='up'?y+h*(1-p):y); e.setAttribute('height',horiz?h:h*p); },
+  draw(e,S,T,t){ const t0=T(S); if(t<t0){ e.setAttribute('opacity','0'); return; } const p=(EZ[S.ease]||inout)(clamp(S.dur>0?(t-t0)/S.dur:1)); e.setAttribute('stroke-dasharray',`${p.toFixed(4)} 1`); e.setAttribute('opacity','1'); },   // draw (18 Nov 2026, flat_sd_graph): a path with pathLength 1 draws on from its start
   wd(e,S,T,t){ const q=t-T(S), p=q<0?0:ease(clamp(q/0.22)); e.setAttribute('fill-opacity',(S.g+(1-S.g)*p).toFixed(3)); },   // flat_sentence (18 Nov 2026): a word lights up from its ghost opacity at its chunk
   count(e,S,T,t){ let v=S.from; for(const q of S.keys||[]){ const t0=T(q); if(t<t0) break; v+=(q.to-v)*(EZ[S.ease]||ease)(q.dur>0?clamp((t-t0)/q.dur):1); } const s0=e.textContent; setTxt(e,fmtN(v,S)); if(D.flat&&e._fb&&e.textContent!==s0) fitText(e); },
   stream(e,S,T,t){ const t0=T(S); e._p=e._p||[...e.querySelectorAll('.sp')];

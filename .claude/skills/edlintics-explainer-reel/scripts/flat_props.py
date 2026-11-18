@@ -8,7 +8,7 @@ moves through with scene "cam" keyframes, instead of one boxed picture per beat.
 Installed into scene_lib by install(): flat_rect, flat_path, flat_sun, flat_cloud, flat_tree, flat_house, flat_sparkle,
 flat_arrow, flat_tag, flat_card, flat_board, flat_brochure, flat_table, flat_bar, flat_bracket, flat_list, flat_bubble,
 flat_person, flat_ring, flat_building, and (18 Nov 2026) flat_number, flat_equation, flat_waterfall, flat_sentence (numbers and key
-sentences on screen, in step with the voice). (x, y) is the centre unless the docstring says "bottom centre".
+sentences on screen, in step with the voice) and flat_sd_graph (a supply and demand graph with curve shifts). (x, y) is the centre unless the docstring says "bottom centre".
 """
 import hashlib, html as _h
 
@@ -811,6 +811,139 @@ def install(G):
         H = _sent_layout(text, parts, key, fs, w, pad, pill)[3]
         return [x - w * s / 2, y - H * s / 2, w * s, H * s]
 
+    # ---- supply and demand graph (18 Nov 2026, first used by "Supply and demand in 80 seconds"): axes, an upward supply line and a
+    # downward demand line that draw on as the voice names them, equilibrium dots with dashed guides and P*/Q* labels, a price line with the
+    # gap between the curves highlighted (surplus, shortage, price ceiling) that can settle back to equilibrium, curve shifts that slide the
+    # whole curve while a dashed copy stays where it was, and green or red arrows drawn along the axes for the change in price and quantity.
+    def _win(inner, show=None, hide=None, fade=0.25, px=0.0, py=0.0, pop=False):
+        """inner shown from `show` (fade in, or pop with a small scale about (px, py)) until `hide` (fade out); a missing key = always"""
+        S = {"x": px, "y": py}
+        if show is not None:
+            if pop: S["appear"] = _q(show)
+            else: S["fadein"] = dict(_q(show), dur=float(fade))
+        if hide is not None: S["out"] = [dict(_q(hide), dur=float(fade))]
+        if len(S) == 2: return inner
+        return f'<g data-fx="m" data-spec="{_mat(S)}">{inner}</g>'
+
+    def flat_sd_graph(x, y, s=1.0, w=700, h=620, q_max=11, p_max=10, fs=34, x_title="Quantity", y_title="Price", axes_at=None, axes_dur=0.7,
+                      curves=None, points=None, gaps=None, arrows=None, ml=100, mr=160, mt=78, mb=78, x_title_at=None, y_title_at=None, **_):
+        """A supply and demand graph on a clean card, (x, y) = the card centre; data units Q 0-q_max (x) and P 0-p_max (y).
+        axes_at: the axes draw on (else shown); x_title_at, y_title_at pop each axis title on its own word. curves: [{"kind": "supply"|"demand", "pts": [[q, p], [q, p]], "label", "color", "at", "delay",
+        "dur" (draw-on; no "at" = shown), "show"/"hide" (fade in or out, for a copy), "moves": [{"at", "delay", "dur", "dx"}] (slide the whole
+        curve by dx Q units), "ghost": {"at", "delay", "until"} (a pale dashed copy stays at the old place from at to until)}].
+        points: [{"q", "p", "at", "delay", "hide", "guides" (dashed lines to both axes, default true), "plabel" "P*", "qlabel" "Q*",
+        "plabel_at", "qlabel_at", "color", "pulse": [{"at", "delay"}], "label" (a pill to the right of the dot), "label_at", "label_hide"}]. gaps: [{"p", "q1", "q2", "label", "tone"
+        "surplus"|"shortage", "line": "slate"|"red" (red = solid ceiling line), "line_label" (a pill under the band, "Price ceiling"), "at", "band_at",
+        "delay", "hide", "settle": {"at", "delay", "dur", "p"} (the line slides to p and the band closes into the point there)}].
+        arrows: [{"axis": "p"|"q", "a", "b", "color" green|red, "at", "delay", "hide"}] drawn along that axis from a to b."""
+        W, H = float(w), float(h)
+        X0, X1, Y0, Y1 = -W / 2 + ml, W / 2 - mr, -H / 2 + mt, H / 2 - mb
+        QX = lambda q: X0 + (X1 - X0) * q / q_max
+        PY = lambda p: Y1 - (Y1 - Y0) * p / p_max
+        INK, SL = FLAT["ink"], FLAT["slate"]
+        out = _shadow_card(W, H)
+        # axes, with arrow tips and titles
+        ax = f'<path d="M{X0:.1f} {Y0 - 16:.1f} V{Y1:.1f} H{X1 + 34:.1f}" fill="none" stroke="{INK}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"'
+        tips = (f'<path d="M{X0 - 13:.1f} {Y0 + 2:.1f} L{X0:.1f} {Y0 - 22:.1f} L{X0 + 13:.1f} {Y0 + 2:.1f} Z" fill="{INK}"/>'
+                f'<path d="M{X1 + 26:.1f} {Y1 - 13:.1f} L{X1 + 50:.1f} {Y1:.1f} L{X1 + 26:.1f} {Y1 + 13:.1f} Z" fill="{INK}"/>')
+        ytt = _text(X0, Y0 - 38, y_title, fs, "ink", 900); xtt = _text(X1 + 50, Y1 + fs + 18, x_title, fs, "ink", 900, "end")
+        tw_ = _tw(x_title, fs)
+        if axes_at:
+            q = _q(axes_at); qe = dict(q, delay=q["delay"] + axes_dur * 0.8)
+            out += ax + f' pathLength="1" stroke-dasharray="0 1" opacity="0" data-fx="draw" data-nodraw="1" data-spec="{_mat(dict(q, dur=float(axes_dur)))}"/>'
+            out += _win(tips, show=qe, fade=0.2)
+            out += _win(ytt, show=_q(y_title_at) if y_title_at else qe, px=X0, py=Y0 - 50, pop=True) + _win(xtt, show=_q(x_title_at) if x_title_at else qe, px=X1 + 50 - tw_ / 2, py=Y1 + fs + 6, pop=True)
+        else: out += ax + "/>" + tips + ytt + xtt
+        # gaps (under the curves): price line, the tinted band between the curves with its label, an optional pill under it
+        TONE = {"surplus": ("#FFE6BA", "#8A5A12"), "shortage": ("#FBDDDA", "#B4232A")}
+        for gp in gaps or []:
+            p = float(gp["p"]); yv = PY(p); q1, q2 = float(gp["q1"]), float(gp["q2"]); xa, xb = QX(q1), QX(q2); cx = (xa + xb) / 2
+            red = gp.get("line") == "red"; bf, tc = TONE.get(gp.get("tone", "surplus"), TONE["surplus"])
+            line = (f'<path d="M{X0:.1f} {yv:.1f} H{X1 + 10:.1f}" stroke="{FLAT["red"] if red else SL}" stroke-width="{7 if red else 5}" stroke-linecap="round"'
+                    + ('' if red else ' stroke-dasharray="16 12"') + '/>')
+            bh = fs * 1.62
+            bq = gp.get("band_at")
+            band = (f'<rect data-fb="1" x="{xa:.1f}" y="{yv - bh / 2:.1f}" width="{xb - xa:.1f}" height="{bh:.1f}" rx="{bh / 2:.1f}" fill="{bf}"/>'
+                    + _text(cx, yv + fs * 0.34, gp.get("label", ""), fs * 0.92, tc, 900)
+                    + f'<circle cx="{xa:.1f}" cy="{yv:.1f}" r="10" fill="{INK}"/><circle cx="{xb:.1f}" cy="{yv:.1f}" r="10" fill="{INK}"/>')
+            ll = ""
+            if gp.get("line_label"):
+                t = gp["line_label"]; f2 = fs * 0.86; pw = _tw(t, f2) + 40; ph = f2 * 1.7; ly = yv + bh / 2 + ph / 2 + 14
+                ll = (f'<rect data-fb="1" x="{cx - pw / 2:.1f}" y="{ly - ph / 2:.1f}" width="{pw:.1f}" height="{ph:.1f}" rx="{ph / 2:.1f}" fill="{FLAT["red"]}"/>'
+                      + _text(cx, ly + f2 * 0.36, t, f2, "white", 900))
+                ll = _win(ll, show=dict(_q(gp.get("line_label_at") or gp.get("at")), delay=_q(gp.get("line_label_at") or gp.get("at"))["delay"] + 0.15), px=cx, py=ly, pop=True)
+            st = gp.get("settle")
+            if st:
+                sq = _q(st); dur = float(st.get("dur", 0.9)); y2 = PY(float(st.get("p", p)))
+                LM = {"x": 0, "y": 0, "move": [dict(sq, dur=dur, to=[0, y2 - yv], arc=0.0, ease="inout")], "out": [dict(sq, delay=sq["delay"] + dur, dur=0.25)]}
+                BM = {"x": cx, "y": yv, "move": [dict(sq, dur=dur, to=[cx, y2], arc=0.0, ease="inout", scale=0.05)], "out": [dict(sq, delay=sq["delay"] + dur * 0.75, dur=0.2)]}
+                line = f'<g data-fx="m" data-spec="{_mat(LM)}">{line}</g>'; band = f'<g data-fx="m" data-spec="{_mat(BM)}">{band}</g>'
+                ll = f'<g data-fx="m" data-spec="{_mat({"x": 0, "y": 0, "out": [dict(sq, dur=0.2)]})}">{ll}</g>' if ll else ""
+            show = gp.get("at")
+            inner = _win(line, show=show, fade=0.2) + _win(band, show=(_q(bq) if bq else dict(_q(show), delay=_q(show)["delay"] + 0.2) if show else None), px=cx, py=yv, pop=True) + ll
+            out += _win(inner, hide=gp.get("hide"))
+        # curves
+        for cv in curves or []:
+            kind = cv.get("kind", "supply"); col = _c(cv.get("color") or ("blue" if kind == "supply" else "#F08C2E"))
+            pts = cv.get("pts") or ([[1, 1.5], [7.5, 8]] if kind == "supply" else [[1.5, 8], [8, 1.5]])
+            (qa, pa), (qb, pb) = pts; d = f"M{QX(qa):.1f} {PY(pa):.1f} L{QX(qb):.1f} {PY(pb):.1f}"
+            if cv.get("ghost"):
+                gh = cv["ghost"]
+                out += _win(f'<path d="{d}" fill="none" stroke="{col}" stroke-width="6" stroke-dasharray="14 12" stroke-linecap="round" opacity="0.5"/>',
+                            show=gh.get("at") and _q(gh["at"], gh.get("delay", 0)), hide=gh.get("until"), fade=0.3)
+            lab = cv.get("label", "Supply" if kind == "supply" else "Demand")
+            lx, ly = (QX(qb) + 16, PY(pb) + fs * 0.36) if kind == "supply" else (QX(qb) + 16, PY(pb) + fs * 0.36)
+            labsvg = _text(lx, ly, lab, fs, col, 900, "start") if lab else ""
+            if cv.get("at"):
+                q = _q(cv["at"], cv.get("delay", 0)); dur = float(cv.get("dur", 0.9))
+                body = (f'<path d="{d}" fill="none" stroke="{col}" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1" opacity="0" '
+                        f'data-fx="draw" data-nodraw="1" data-spec="{_mat(dict(q, dur=dur))}"/>' + _win(labsvg, show=dict(q, delay=q["delay"] + dur * 0.85), fade=0.2))
+            else:
+                body = f'<path d="{d}" fill="none" stroke="{col}" stroke-width="10" stroke-linecap="round"/>' + labsvg
+            mv = []
+            for m in cv.get("moves") or []:
+                acc = sum(float(z.get("dx", 0)) for z in (cv.get("moves") or [])[:len(mv) + 1]) if m.get("abs") is None else float(m["abs"])
+                mv.append(dict(_q(m), dur=float(m.get("dur", 0.9)), to=[(X1 - X0) * acc / q_max, 0], arc=0.0, ease=m.get("ease", "inout")))
+            if mv: body = f'<g data-fx="m" data-spec="{_mat({"x": 0, "y": 0, "move": mv})}">{body}</g>'
+            out += _win(body, show=cv.get("show"), hide=cv.get("hide"), fade=0.3)
+        # equilibrium points: guides, labels, the dot, a pulse ring
+        for pt in points or []:
+            cx, cy = QX(float(pt["q"])), PY(float(pt["p"])); col = _c(pt.get("color", "blue")); show = pt.get("at")
+            g_ = ""
+            if pt.get("guides", True):
+                g_ += (f'<path d="M{cx:.1f} {cy:.1f} H{X0:.1f} M{cx:.1f} {cy:.1f} V{Y1:.1f}" fill="none" stroke="{SL}" stroke-width="4" stroke-dasharray="10 9"/>')
+            gq = (dict(_q(show), delay=_q(show)["delay"] + 0.25) if show else None)
+            lab_ = ""
+            if pt.get("plabel"): lab_ += _win(_text(X0 - 16, cy + fs * 0.36, pt["plabel"], fs, col, 900, "end"), show=_q(pt["plabel_at"]) if pt.get("plabel_at") else None, px=X0 - 40, py=cy, pop=True)
+            if pt.get("qlabel"): lab_ += _win(_text(cx, Y1 + fs + 18, pt["qlabel"], fs, col, 900), show=_q(pt["qlabel_at"]) if pt.get("qlabel_at") else None, px=cx, py=Y1 + fs + 6, pop=True)
+            dot = f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="17" fill="{col}" stroke="#FFFFFF" stroke-width="6"/>'
+            if pt.get("pulse"):
+                dot = f'<g data-fx="m" data-spec="{_mat({"x": cx, "y": cy, "pulse": [dict(_q(z), dur=float(z.get("dur", 0.6)), amp=float(z.get("amp", 0.5))) for z in pt["pulse"]]})}">{dot}</g>'
+            lab = ""
+            if pt.get("label"):
+                t = pt["label"]; f2 = fs * 0.86; pw = _tw(t, f2) + 36; ph = f2 * 1.7; lx = cx + 34 + pw / 2
+                lab = _win(f'<rect data-fb="1" x="{lx - pw / 2:.1f}" y="{cy - ph / 2:.1f}" width="{pw:.1f}" height="{ph:.1f}" rx="{ph / 2:.1f}" fill="{col}"/>' + _text(lx, cy + f2 * 0.36, t, f2, "white", 900),
+                           show=(_q(pt["label_at"]) if pt.get("label_at") else dict(_q(show), delay=_q(show)["delay"] + 0.35) if show else None), hide=pt.get("label_hide"), px=lx, py=cy, pop=True)
+            inner = _win(g_ + lab_, show=gq, fade=0.25) + _win(dot, show=show, px=cx, py=cy, pop=True) + lab
+            out += _win(inner, hide=pt.get("hide"))
+        # arrows along the axes: the change in price (on the price axis) and in quantity (on the quantity axis)
+        for ar in arrows or []:
+            col = _c(ar.get("color", "green")); a, b2 = float(ar["a"]), float(ar["b"])
+            if ar.get("axis", "p") == "p":
+                y1, y2 = PY(a), PY(b2); sg = -1 if y2 < y1 else 1
+                d = f"M{X0:.1f} {y1:.1f} V{y2 - sg * 14:.1f}"; tip = f'M{X0 - 17:.1f} {y2 - sg * 18:.1f} L{X0:.1f} {y2 + sg * 8:.1f} L{X0 + 17:.1f} {y2 - sg * 18:.1f} Z'
+            else:
+                x1, x2 = QX(a), QX(b2); sg = 1 if x2 > x1 else -1
+                d = f"M{x1:.1f} {Y1:.1f} H{x2 - sg * 14:.1f}"; tip = f'M{x2 - sg * 18:.1f} {Y1 - 17:.1f} L{x2 + sg * 8:.1f} {Y1:.1f} L{x2 - sg * 18:.1f} {Y1 + 17:.1f} Z'
+            q = _q(ar.get("at"))
+            body = (f'<path d="{d}" fill="none" stroke="{col}" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray="0 1" opacity="0" '
+                    f'data-fx="draw" data-nodraw="1" data-spec="{_mat(dict(q, dur=0.45))}"/>' + _win(f'<path d="{tip}" fill="{col}"/>', show=dict(q, delay=q["delay"] + 0.38), fade=0.12))
+            out += _win(body, hide=ar.get("hide"))
+        return g(x, y, s, out)
+
+    def flat_sd_graph_box(x, y, s=1.0, w=700, h=620, **_):
+        return [x - w * s / 2, y - h * s / 2, w * s, h * s]
+
     # ---- Ledger v2 (17 Nov 2026, flat style only): the website's revamped rigged Ledger, read at build time from the brand hand-off
     # folder (assets/brand-handoff/ledger-v2/rig/ledger-rig.svg, git-ignored; override with LEDGER_V2_DIR). Never copied into tracked
     # files: the art lands only in the render work folder (assets/renders, also git-ignored). render.html drives the parts per frame.
@@ -870,5 +1003,5 @@ def install(G):
         "flat_ruler": (flat_ruler, flat_ruler_box), "flat_magnifier": (flat_magnifier, None), "flat_checklist": (flat_checklist, flat_checklist_box),
         "flat_quote": (flat_quote, flat_quote_box), "flat_rank": (flat_rank, flat_rank_box), "flat_connector": (flat_connector, flat_connector_box),
         "flat_stat": (flat_stat, flat_stat_box), "flat_number": (flat_number, flat_number_box), "flat_equation": (flat_equation, flat_equation_box),
-        "flat_waterfall": (flat_waterfall, flat_waterfall_box), "flat_sentence": (flat_sentence, flat_sentence_box), "flat_bush": (flat_bush, None), "flat_fence": (flat_fence, None), "flat_campus": (flat_campus, None), "flat_logo": (flat_logo, None)})
+        "flat_waterfall": (flat_waterfall, flat_waterfall_box), "flat_sentence": (flat_sentence, flat_sentence_box), "flat_sd_graph": (flat_sd_graph, flat_sd_graph_box), "flat_bush": (flat_bush, None), "flat_fence": (flat_fence, None), "flat_campus": (flat_campus, None), "flat_logo": (flat_logo, None)})
     G["HALF"].update({"flat_sun": (150, 150), "flat_cloud": (110, 90), "flat_tree": (62, 100), "flat_sparkle": (34, 34), "flat_arrow": (34, 40), "flat_bracket": (60, 120), "flat_icon": (50, 50), "flat_magnifier": (130, 130), "flat_bush": (100, 110), "flat_fence": (140, 50), "flat_campus": (300, 300)})
