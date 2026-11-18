@@ -1,0 +1,108 @@
+{
+ "slug": "pilot-journal-entry",
+ "url": "https://edlintics.com/en/wiki/journal-entry",
+ "viewport": [
+  410,
+  500
+ ],
+ "dsf": 2.5,
+ "title": "Pick the right journal entry in one tap",
+ "voice": "vChnJZ1Cu89g2XXumPfT",
+ "tempo": 1.0,
+ "tag": "[calm]",
+ "lead_in": 0.5,
+ "gap": 0.45,
+ "end_card": {
+  "line1": "Try it free on",
+  "line2": "edlintics.com",
+  "ledger": "ledger-point-left"
+ },
+ "lines": [
+  {
+   "say": "Let's record a journal entry with a free practice card from the Edlintics glossary.",
+   "caption": "Let's record a journal entry with a free practice card from the Edlintics glossary",
+   "actions": [
+    {
+     "t": 1.2,
+     "do": "finger",
+     "text": "Journal entry is the first record",
+     "dur": 1.0
+    }
+   ]
+  },
+  {
+   "say": "A business buys four thousand five hundred euros of office supplies on credit, and it uses them straight away.",
+   "caption": "A business buys €4,500 of office supplies on credit, and it uses them straight away",
+   "actions": [
+    {
+     "t": -0.3,
+     "do": "swipeTo",
+     "text": "Check yourself",
+     "top": 70,
+     "dur": 1.6
+    }
+   ]
+  },
+  {
+   "say": "Every transaction touches at least two accounts, and total debits equal total credits.",
+   "caption": "Every transaction touches at least two accounts, and total debits equal total credits",
+   "actions": [
+    {
+     "t": 0.2,
+     "do": "scrollTo",
+     "text": "A business purchases",
+     "top": 88,
+     "dur": 0.9
+    }
+   ]
+  },
+  {
+   "say": "The supplies are used up at once, so office supplies expense goes up with a debit.",
+   "caption": "The supplies are used up at once, so office supplies expense goes up with a debit",
+   "actions": [
+    {
+     "t": 0.4,
+     "do": "finger",
+     "buttonText": "Expense €4,500; Credit Accounts Payable",
+     "dur": 0.9,
+     "fx": 0.75,
+     "fy": 0.8
+    }
+   ]
+  },
+  {
+   "say": "The business has not paid yet, so it owes the supplier, and accounts payable goes up with a credit.",
+   "caption": "The business has not paid yet, so it owes the supplier, and accounts payable goes up with a credit",
+   "actions": [
+    {
+     "t": "end-0.2",
+     "do": "tap",
+     "buttonText": "Expense €4,500; Credit Accounts Payable",
+     "id": "answer",
+     "fx": 0.75,
+     "fy": 0.8
+    }
+   ]
+  },
+  {
+   "say": "That is answer B, with four thousand five hundred on each side, so the entry balances.",
+   "caption": "That is answer B, with €4,500 on each side, so the entry balances",
+   "actions": [
+    {
+     "t": 0.3,
+     "do": "scrollTo",
+     "buttonText": "Expense €4,500; Credit Accounts Payable",
+     "top": 88,
+     "dur": 0.8
+    }
+   ],
+   "zoom": "answer"
+  },
+  {
+   "say": "Try this card for free in the Edlintics glossary on edlintics dot com.",
+   "caption": "Try this card for free in the Edlintics glossary on edlintics.com",
+   "end": true
+  }
+ ],
+ "zoom_top_css": 77
+}
