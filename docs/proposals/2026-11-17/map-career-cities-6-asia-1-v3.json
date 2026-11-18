@@ -1,0 +1,585 @@
+{
+ "slug": "map-career-cities-6-asia-1",
+ "group": "map",
+ "version": "v3 (18 Nov 2026, as built after Hoang's change request)",
+ "title": "Career hub cities in Asia with Ledger, part 6",
+ "proposedSlot": "Fri 27 Nov 18:00 VN (to confirm)",
+ "seconds": 114.2,
+ "wordCount": 243,
+ "summary": "Part 6 of the career cities series covers 10 career hubs in East and North Asia, one sourced fact each; revised 18 Nov 2026 for Hoang's change request; paper and flat versions with the same voice",
+ "changesFromV2": [
+  "Hoang, 18 Nov 2026: \"We need to add Hongkong, Mongolia, or region in Russia as well, we can remove film and TV, Kyoto. Potentially oil and gas?\"",
+  "Removed: Hengdian (film and TV) and Kyoto (video games)",
+  "Added: Hong Kong as stop 1 (finance: about HK$286 billion raised in new listings in 2025, HKEX; HKEX, HSBC and AIA logos), Tyumen, Russia (oil and gas: Yugra, in the Tyumen region, pumps about 40 percent of Russia oil; no company or logo because of sanctions), Ulaanbaatar, Mongolia (mining: Oyu Tolgoi made 345,000 tonnes of copper in 2025; Rio Tinto logo and an Oyu Tolgoi name chip)",
+  "New route, ten stops: Hong Kong, Shenzhen, Hsinchu, Jingdezhen, Tyumen, Ulaanbaatar, Seoul, Sabae, Toyota City, Tokyo; the summary map now spans Western Siberia to Japan and says East and North Asia",
+  "Trimmed to stay under 2:00 (114.2 s), voice not sped up: Shenzhen line drops China, Toyota says over 390,000, summary line is So that was East and North Asia",
+  "New flags hk and ru; new landmarks ub_mine and siberia_oil; same voice and settings as before (ElevenLabs gPiEpcKoaZywgOzc0Zn9, tempo 1.12, speed 1.08); the flat copy reuses the paper voice"
+ ],
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "Career hub cities in Asia with Ledger, part six.",
+   "start": 0.15,
+   "captions": [
+    "Career hub cities",
+    "in Asia",
+    "with Ledger",
+    "part six"
+   ],
+   "img": "title"
+  },
+  {
+   "n": 2,
+   "role": "stop",
+   "label": "stop 1 Hong Kong",
+   "voice": "First, Ledger lands in Hong Kong, a hub for finance.",
+   "start": 4.109,
+   "captions": [
+    "First, Ledger lands",
+    "in Hong Kong",
+    "a hub for",
+    "finance"
+   ],
+   "img": "hop1"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Hong Kong",
+   "voice": "Listings here raised about 286 billion Hong Kong dollars in 2025.",
+   "start": 7.849,
+   "captions": [
+    "Listings here",
+    "raised about 286 billion",
+    "Hong Kong dollars",
+    "in 2025"
+   ],
+   "img": "city1"
+  },
+  {
+   "n": 4,
+   "role": "stop",
+   "label": "stop 2 Shenzhen",
+   "voice": "Then, he crosses to Shenzhen, a hub for tech and electric cars.",
+   "start": 13.483,
+   "captions": [
+    "Then, he crosses",
+    "to Shenzhen",
+    "a hub for tech",
+    "and electric cars"
+   ],
+   "img": "hop2"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Shenzhen",
+   "voice": "BYD, based here, sold over 4.6 million vehicles in 2025.",
+   "start": 18.199,
+   "captions": [
+    "BYD, based here",
+    "sold over 4.6 million",
+    "vehicles in 2025"
+   ],
+   "img": "city2"
+  },
+  {
+   "n": 6,
+   "role": "stop",
+   "label": "stop 3 Hsinchu",
+   "voice": "Next, he flies to Hsinchu, Taiwan, a hub for chips.",
+   "start": 23.986,
+   "captions": [
+    "Next, he flies",
+    "to Hsinchu, Taiwan",
+    "a hub for",
+    "chips"
+   ],
+   "img": "hop3"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Hsinchu",
+   "voice": "Its science park employed over 177,000 workers in 2024.",
+   "start": 27.702,
+   "captions": [
+    "Its science park",
+    "employed over 177,000",
+    "workers in 2024"
+   ],
+   "img": "city3"
+  },
+  {
+   "n": 8,
+   "role": "stop",
+   "label": "stop 4 Jingdezhen",
+   "voice": "Then, he flies to Jingdezhen, China, a hub for porcelain.",
+   "start": 33.554,
+   "captions": [
+    "Then, he flies",
+    "to Jingdezhen, China",
+    "a hub for",
+    "porcelain"
+   ],
+   "img": "hop4"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Jingdezhen",
+   "voice": "Handmade porcelain here supported over 50,000 jobs in 2025.",
+   "start": 37.307,
+   "captions": [
+    "Handmade porcelain here",
+    "supported over 50,000",
+    "jobs in 2025"
+   ],
+   "img": "city4"
+  },
+  {
+   "n": 10,
+   "role": "stop",
+   "label": "stop 5 Tyumen",
+   "voice": "Next, he flies to Tyumen, Russia, a hub for oil and gas.",
+   "start": 42.494,
+   "captions": [
+    "Next, he flies",
+    "to Tyumen, Russia",
+    "a hub for",
+    "oil and gas"
+   ],
+   "img": "hop5"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Tyumen",
+   "voice": "Yugra, in the Tyumen region, pumps about 40 percent of Russia's oil.",
+   "start": 46.766,
+   "captions": [
+    "Yugra, in",
+    "the Tyumen region",
+    "pumps about 40 percent",
+    "of Russia's oil"
+   ],
+   "img": "city5"
+  },
+  {
+   "n": 12,
+   "role": "stop",
+   "label": "stop 6 Ulaanbaatar",
+   "voice": "Then, he flies to Ulaanbaatar, Mongolia, a hub for mining.",
+   "start": 51.223,
+   "captions": [
+    "Then, he flies",
+    "to Ulaanbaatar, Mongolia",
+    "a hub for",
+    "mining"
+   ],
+   "img": "hop6"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Ulaanbaatar",
+   "voice": "Mongolia's Oyu Tolgoi mine made 345,000 tonnes of copper in 2025.",
+   "start": 55.851,
+   "captions": [
+    "Mongolia's Oyu Tolgoi mine",
+    "made 345,000 tonnes",
+    "of copper in 2025"
+   ],
+   "img": "city6"
+  },
+  {
+   "n": 14,
+   "role": "stop",
+   "label": "stop 7 Seoul",
+   "voice": "Next, he flies to Seoul, South Korea, a hub for cosmetics.",
+   "start": 63.698,
+   "captions": [
+    "Next, he flies",
+    "to Seoul, South Korea",
+    "a hub for",
+    "cosmetics"
+   ],
+   "img": "hop7"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Seoul",
+   "voice": "Korea exported 11.4 billion dollars of cosmetics in 2025.",
+   "start": 67.84,
+   "captions": [
+    "Korea exported",
+    "11.4 billion dollars",
+    "of cosmetics in 2025"
+   ],
+   "img": "city7"
+  },
+  {
+   "n": 16,
+   "role": "stop",
+   "label": "stop 8 Sabae",
+   "voice": "Then, he hops to Sabae, Japan, a hub for eyeglass frames.",
+   "start": 72.986,
+   "captions": [
+    "Then, he hops",
+    "to Sabae, Japan",
+    "a hub for",
+    "eyeglass frames"
+   ],
+   "img": "hop8"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Sabae",
+   "voice": "Sabae makes about 90 percent of Japan's frames.",
+   "start": 77.907,
+   "captions": [
+    "Sabae makes",
+    "about 90 percent",
+    "of Japan's frames"
+   ],
+   "img": "city8"
+  },
+  {
+   "n": 18,
+   "role": "stop",
+   "label": "stop 9 Toyota City",
+   "voice": "Next, he rides to Toyota City, Japan, a hub for cars.",
+   "start": 81.443,
+   "captions": [
+    "Next, he rides",
+    "to Toyota City, Japan",
+    "a hub for",
+    "cars"
+   ],
+   "img": "hop9"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Toyota City",
+   "voice": "Toyota, based here, employs over 390,000 people.",
+   "start": 85.722,
+   "captions": [
+    "Toyota, based here",
+    "employs over 390,000 people"
+   ],
+   "img": "city9"
+  },
+  {
+   "n": 20,
+   "role": "stop",
+   "label": "stop 10 Tokyo",
+   "voice": "Finally, he lands in Tokyo, Japan, a hub for anime.",
+   "start": 90.067,
+   "captions": [
+    "Finally, he lands",
+    "in Tokyo, Japan",
+    "a hub for",
+    "anime"
+   ],
+   "img": "hop10"
+  },
+  {
+   "n": 21,
+   "role": "stop",
+   "label": "stop 10 Tokyo",
+   "voice": "Japan's anime market reached 4.45 trillion yen in 2025.",
+   "start": 94.285,
+   "captions": [
+    "Japan's anime market",
+    "reached 4.45 trillion",
+    "yen in 2025"
+   ],
+   "img": "city10"
+  },
+  {
+   "n": 22,
+   "role": "summary",
+   "label": "summary",
+   "voice": "So that was East and North Asia.",
+   "start": 99.63,
+   "captions": [
+    "So that was",
+    "East and North Asia"
+   ],
+   "img": "sum"
+  },
+  {
+   "n": 23,
+   "role": "summary",
+   "label": "summary",
+   "voice": "Next, part seven maps Southeast Asia.",
+   "start": 101.984,
+   "captions": [
+    "Next, part seven",
+    "maps Southeast Asia"
+   ],
+   "img": "next"
+  },
+  {
+   "n": 24,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "start": 104.985,
+   "captions": [
+    "To climb",
+    "in these cities",
+    "you need a good",
+    "business foundation"
+   ],
+   "img": "cta"
+  },
+  {
+   "n": 25,
+   "role": "cta",
+   "label": "cta",
+   "voice": "Go to Edlintics.com to learn technical business skills.",
+   "start": 108.56,
+   "captions": [
+    "Go to Edlintics.com",
+    "to learn technical",
+    "business skills"
+   ],
+   "img": "cta"
+  }
+ ],
+ "stops": [
+  {
+   "city": "Hong Kong",
+   "country_flag": "hk",
+   "industry": "Finance",
+   "fact": "Hong Kong Exchanges and Clearing (HKEX) reports HK$285,842.7 million raised in IPOs in 2025 (provisional), from 119 newly listed companies, up 224.9% on 2024; The Standard reports over HK$286.9 billion from 119 listings; voiced as about 286 billion. HKEX (Two Exchange Square, Central), HSBC (Hong Kong headquarters at 1 Queen's Road Central) and AIA (AIA Central, 1 Connaught Road Central) have their head offices here",
+   "source": "HKEX, 2025 Annual Market Statistics (figures as at 31 Dec 2025, generated 21 Jan 2026): https://www.hkex.com.hk/Market-Data/Statistics/Consolidated-Reports/Annual-Market-Statistics/2025-Annual-Market-Statistics?sc_lang=en ; The Standard, 26 Feb 2026: https://www.thestandard.com.hk/finance/article/325321/HKEX-profit-soars-36-percent-to-a-new-high",
+   "figureDate": "2025, provisional (HKEX, 21 January 2026)"
+  },
+  {
+   "city": "Shenzhen",
+   "country_flag": "cn",
+   "industry": "Tech and electric cars",
+   "fact": "BYD, whose main operations are in Shenzhen, sold 4,602,436 new energy vehicles in 2025 (revenue 803.97 billion yuan)",
+   "source": "CnEVPost on BYD's 2025 annual report, 27 Mar 2026: https://cnevpost.com/2026/03/27/byd-2 ; Shenzhen: https://en.wikipedia.org/wiki/Shenzhen",
+   "figureDate": "2025 (published 27 March 2026)"
+  },
+  {
+   "city": "Hsinchu",
+   "country_flag": "tw",
+   "industry": "Chips",
+   "fact": "Hsinchu Science Park had 177,389 workers (October 2024) and 584 companies (December 2024); TSMC, UMC and MediaTek are based in the park",
+   "source": "Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park",
+   "figureDate": "October 2024"
+  },
+  {
+   "city": "Jingdezhen",
+   "country_flag": "cn",
+   "industry": "Porcelain",
+   "fact": "Jingdezhen's handmade porcelain sector supported over 50,000 jobs in 2025, with output above 10 billion yuan",
+   "source": "People's Daily Online, 3 Aug 2026: https://en.people.cn/n3/2026/0803/c98649-20484784.html",
+   "figureDate": "2025 (published 3 August 2026)"
+  },
+  {
+   "city": "Tyumen",
+   "country_flag": "ru",
+   "industry": "Oil and gas",
+   "fact": "The Khanty-Mansi Autonomous Okrug (Yugra) produces roughly 40% of Russia's oil, more than any other region (a standing share, no single year); Yugra and Yamal-Nenets (about 80% of Russia's natural gas, Novatek) lie within Tyumen Oblast and are also federal subjects in their own right; the pin is the city of Tyumen (57.15 N, 65.53 E). No company is named or shown: Western sanctions limit foreign companies there",
+   "source": "Meduza, 23 Jun 2026: https://meduza.io/en/news/2026/06/23/the-region-that-produces-40-of-russia-s-oil-is-now-rationing-fuel ; Reuters via Kitco, 24 Apr 2023: https://www.kitco.com/news/off-the-wire/2023-04-24/russiaaposs-oil-heartland-siberia-boosts-drilling-march-data ; Tyumen Oblast and its okrugs: https://en.wikipedia.org/wiki/Tyumen_Oblast ; Novatek: https://www.novatek.ru/en/about/",
+   "figureDate": "Standing share (Meduza, 23 June 2026; Reuters, April 2023)"
+  },
+  {
+   "city": "Ulaanbaatar",
+   "country_flag": "mn",
+   "industry": "Mining",
+   "fact": "Oyu Tolgoi produced 345.2 thousand tonnes of copper in concentrates in 2025 (100% basis), up 61% on 2024; the mine is in the South Gobi, about 550 km south of the capital, and is operated by Rio Tinto, which opened an office in Ulaanbaatar in 2018; Oyu Tolgoi LLC's head office is Monnis Tower, Ulaanbaatar",
+   "source": "Rio Tinto, Q4 2025 operations review (SEC 6-K, 21 Jan 2026): https://www.sec.gov/Archives/edgar/data/863064/000086306426000006/ex1_2025-q4results.htm ; Argus, Rio Tinto raises global copper output in 2025: https://www.argusmedia.com/en/news-and-insights/latest-market-news/2778240-rio-tinto-raises-global-copper-output-in-2025 ; Oyu Tolgoi LLC, Q4 2025 results, 29 Jan 2026: https://www.ot.mn/en/news/q4-2025-performance-results ; Rio Tinto Ulaanbaatar office: https://www.mining.com/rio-tinto-bets-big-mongolia-opens-local-office/",
+   "figureDate": "2025 (published 21 January 2026)"
+  },
+  {
+   "city": "Seoul",
+   "country_flag": "kr",
+   "industry": "Cosmetics",
+   "fact": "South Korea's cosmetics exports reached USD 11.4 billion in 2025, up 11.8% on 2024 (Ministry of Food and Drug Safety); Amorepacific's head office is at 100 Hangang-daero, Yongsan-gu, Seoul, and LG H&H's head office is in Seoul",
+   "source": "Korea.net, 26 May 2026: https://www.korea.net/NewsFocus/Business/view?articleId=292940 ; Amorepacific HQ: https://www.apgroup.com/int/en/careers/global-network/hq/seoul.html ; LG H&H HQ move (Insight, 19 Dec 2025): https://www.insight.co.kr/news/534423",
+   "figureDate": "2025 (published 26 May 2026)"
+  },
+  {
+   "city": "Sabae",
+   "country_flag": "jp",
+   "industry": "Eyeglass frames",
+   "fact": "Sabae produces about 90% of the eyeglass frames made in Japan (City of Sabae)",
+   "source": "City of Sabae, technology pages: https://www.city.sabae.fukui.jp/technology/en/index.html",
+   "figureDate": "City of Sabae page, read 17 November 2026"
+  },
+  {
+   "city": "Toyota City",
+   "country_flag": "jp",
+   "industry": "Cars",
+   "fact": "Toyota Motor Corporation, head office 1 Toyota-cho, Toyota City, Aichi, had 390,927 consolidated employees as of 31 March 2026",
+   "source": "Toyota, company overview: https://global.toyota/en/company/profile/overview/",
+   "figureDate": "31 March 2026"
+  },
+  {
+   "city": "Tokyo",
+   "country_flag": "jp",
+   "industry": "Anime",
+   "fact": "The Association of Japanese Animations puts Japan's anime market in 2025 at JPY 4.4491 trillion, up 15.8% (preliminary); Toei Animation and TMS Entertainment have their head offices in Nakano, Tokyo, and Bandai Namco Filmworks (Sunrise) is in Ogikubo, Suginami, Tokyo",
+   "source": "AJA release on PR Times, 30 Oct 2026: https://prtimes.jp/main/html/rd/p/000000007.000039770.html ; Toei Animation: https://corp.toei-anim.co.jp/en/company/outline.html ; TMS: https://www.tms-e.co.jp/company/ ; Bandai Namco Filmworks: http://www.bnfw.co.jp/en/",
+   "figureDate": "2025, preliminary (published 30 October 2026)"
+  }
+ ],
+ "caption": "Career hub cities in Asia with Ledger, Part 6, covers East and North Asia with ten stops, and each stop shows one industry that city is a hub for, with a sourced fact\n\nSo you will meet Hong Kong for finance, Shenzhen for tech and electric cars, Hsinchu for chips, Jingdezhen for porcelain, Tyumen for oil and gas, Ulaanbaatar for mining, Seoul for cosmetics, Sabae for eyeglass frames, Toyota City for cars, and Tokyo for anime\n\nSave the map for later, because Part 7 maps career hub cities across Southeast Asia\n\n#edlintics #businessstudents #careeradvice #careers",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where industries and their careers are concentrated in ten cities across East and North Asia, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "HKEX",
+   "city": "Hong Kong",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "HKEX contact page, registered office 8/F, Two Exchange Square, 8 Connaught Place, Central (https://www.hkexgroup.com/Global/HKEX-Group/Contact?sc_lang=en); Mondo Visione, 24 Apr 2025 (permanent group headquarters at Exchange Square)"
+  },
+  {
+   "brand": "HSBC",
+   "city": "Hong Kong",
+   "shownAs": "logo + name",
+   "type": "Hong Kong headquarters",
+   "source": "https://www.hsbc.com/who-we-are/purpose-values-and-strategy/our-history/history-timeline (\"1 Queen's Road Central remains our Hong Kong headquarters today\")"
+  },
+  {
+   "brand": "AIA",
+   "city": "Hong Kong",
+   "shownAs": "logo + name",
+   "type": "registered office",
+   "source": "AIA 2024 AGM circular on HKEXnews (\"35/F, AIA Central, No. 1 Connaught Road Central, Hong Kong\"): https://www1.hkexnews.hk/listedco/listconews/sehk/2024/0412/2024041200346.pdf"
+  },
+  {
+   "brand": "BYD",
+   "city": "Shenzhen",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/BYD_Company (\"Pingshan District, Shenzhen\"); Rayong plant: The Thaiger, BYD opens first EV plant in Thailand (\"within the WHA Industrial Estate in Rayong\")"
+  },
+  {
+   "brand": "Huawei",
+   "city": "Shenzhen",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/Huawei (\"headquartered in Longgang, Shenzhen\")"
+  },
+  {
+   "brand": "Tencent",
+   "city": "Shenzhen",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/Tencent (\"Tencent Binhai Mansion\", Nanshan, Shenzhen)"
+  },
+  {
+   "brand": "TSMC",
+   "city": "Hsinchu",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/TSMC (\"Headquartered in Hsinchu Science Park\")"
+  },
+  {
+   "brand": "UMC",
+   "city": "Hsinchu",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/United_Microelectronics_Corporation (\"based in Hsinchu, Taiwan\")"
+  },
+  {
+   "brand": "MediaTek",
+   "city": "Hsinchu",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/MediaTek (\"headquartered in Hsinchu, Taiwan\")"
+  },
+  {
+   "brand": "Rio Tinto",
+   "city": "Ulaanbaatar",
+   "shownAs": "logo + name",
+   "type": "office",
+   "source": "Rio Tinto release, 22 Jan 2018 (\"Rio Tinto will establish a new office in Ulaanbaatar\"): https://riotinto.com/en/news/releases/2019/presence-in-mongolia-strengthened ; Mining.com, Jan 2018: https://www.mining.com/rio-tinto-bets-big-mongolia-opens-local-office/ (Rio Tinto operates Oyu Tolgoi)"
+  },
+  {
+   "brand": "Oyu Tolgoi",
+   "city": "Ulaanbaatar",
+   "shownAs": "name chip",
+   "type": "head office",
+   "source": "Monnis Tower, Chinggis Avenue 15, Sukhbaatar District, Ulaanbaatar (Oyu Tolgoi contact and tender pages, Business Council of Mongolia directory; seen in search results, the pages blocked the fetcher)"
+  },
+  {
+   "brand": "Amorepacific",
+   "city": "Seoul",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://www.apgroup.com/int/en/careers/global-network/hq/seoul.html (\"100 Hangang-daero, Yongsan-gu, Seoul\")"
+  },
+  {
+   "brand": "LG H&H",
+   "city": "Seoul",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://www.insight.co.kr/news/534423 (head office moving to the LG Seoul Station Building, Huam-ro 98, Jung-gu, Seoul, April 2026)"
+  },
+  {
+   "brand": "Toyota",
+   "city": "Toyota City",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://global.toyota/en/company/profile/overview/ (1 Toyota-cho, Toyota City)"
+  },
+  {
+   "brand": "Toei Animation",
+   "city": "Tokyo",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://corp.toei-anim.co.jp/en/company/outline.html (head office in Nakano, Tokyo; Oizumi Studio in Nerima, Tokyo)"
+  },
+  {
+   "brand": "TMS Entertainment",
+   "city": "Tokyo",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://www.tms-e.co.jp/company/ (\"東京都中野区中野3丁目31番1号\")"
+  },
+  {
+   "brand": "Sunrise",
+   "city": "Tokyo",
+   "shownAs": "logo + name",
+   "type": "office (Bandai Namco Filmworks)",
+   "source": "http://www.bnfw.co.jp/en/ (\"4-30-16, Ogikubo, Suginami-ku, Tokyo\")"
+  }
+ ],
+ "sources": [
+  "HKEX, 2025 Annual Market Statistics (figures as at 31 Dec 2025, generated 21 Jan 2026): https://www.hkex.com.hk/Market-Data/Statistics/Consolidated-Reports/Annual-Market-Statistics/2025-Annual-Market-Statistics?sc_lang=en ; The Standard, 26 Feb 2026: https://www.thestandard.com.hk/finance/article/325321/HKEX-profit-soars-36-percent-to-a-new-high",
+  "CnEVPost on BYD's 2025 annual report, 27 Mar 2026: https://cnevpost.com/2026/03/27/byd-2 ; Shenzhen: https://en.wikipedia.org/wiki/Shenzhen",
+  "Hsinchu Science Park: https://en.wikipedia.org/wiki/Hsinchu_Science_Park",
+  "People's Daily Online, 3 Aug 2026: https://en.people.cn/n3/2026/0803/c98649-20484784.html",
+  "Meduza, 23 Jun 2026: https://meduza.io/en/news/2026/06/23/the-region-that-produces-40-of-russia-s-oil-is-now-rationing-fuel ; Reuters via Kitco, 24 Apr 2023: https://www.kitco.com/news/off-the-wire/2023-04-24/russiaaposs-oil-heartland-siberia-boosts-drilling-march-data ; Tyumen Oblast and its okrugs: https://en.wikipedia.org/wiki/Tyumen_Oblast ; Novatek: https://www.novatek.ru/en/about/",
+  "Rio Tinto, Q4 2025 operations review (SEC 6-K, 21 Jan 2026): https://www.sec.gov/Archives/edgar/data/863064/000086306426000006/ex1_2025-q4results.htm ; Argus, Rio Tinto raises global copper output in 2025: https://www.argusmedia.com/en/news-and-insights/latest-market-news/2778240-rio-tinto-raises-global-copper-output-in-2025 ; Oyu Tolgoi LLC, Q4 2025 results, 29 Jan 2026: https://www.ot.mn/en/news/q4-2025-performance-results ; Rio Tinto Ulaanbaatar office: https://www.mining.com/rio-tinto-bets-big-mongolia-opens-local-office/",
+  "Korea.net, 26 May 2026: https://www.korea.net/NewsFocus/Business/view?articleId=292940 ; Amorepacific HQ: https://www.apgroup.com/int/en/careers/global-network/hq/seoul.html ; LG H&H HQ move (Insight, 19 Dec 2025): https://www.insight.co.kr/news/534423",
+  "City of Sabae, technology pages: https://www.city.sabae.fukui.jp/technology/en/index.html",
+  "Toyota, company overview: https://global.toyota/en/company/profile/overview/",
+  "AJA release on PR Times, 30 Oct 2026: https://prtimes.jp/main/html/rd/p/000000007.000039770.html ; Toei Animation: https://corp.toei-anim.co.jp/en/company/outline.html ; TMS: https://www.tms-e.co.jp/company/ ; Bandai Namco Filmworks: http://www.bnfw.co.jp/en/"
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs) and rechecked 18 Nov 2026: clear. The reel names and defines no business concept; concept_id career-cities-map-6-asia-1 is new. Themes career-cities and careers",
+ "maths_check": "No sums in the voice. Figures as reported: HK$285,842.7 million IPO funds raised (HKEX, 2025, provisional; The Standard: over HK$286.9 billion), voiced as 'about 286 billion Hong Kong dollars'; 4,602,436 vehicles, voiced as 'over 4.6 million' (BYD, 2025); 177,389 workers, voiced as 'over 177,000' (Hsinchu Science Park, October 2024); over 50,000 jobs (Jingdezhen handmade porcelain, 2025); roughly 40% of Russia's oil (Yugra, standing share); 345.2 thousand tonnes of copper, voiced as '345,000 tonnes' (Oyu Tolgoi, 2025); USD 11.4 billion (Korea cosmetics exports, 2025); about 90% (Sabae's share of Japan's frames); 390,927 employees, voiced as 'over 390,000' (Toyota, 31 March 2026); JPY 4.4491 trillion, voiced as '4.45 trillion yen' (AJA, 2025, preliminary). Three currencies appear because each figure stays in the currency it was reported in: Hong Kong dollars for Hong Kong's listings, US dollars for Korea's exports and yen for Japan's anime market",
+ "not_verified": "Hong Kong's IPO total is HKEX's provisional figure (HK$285.8 billion; The Standard gives over HK$286.9 billion), so the voice says 'about 286 billion'. Yugra's 'about 40 percent' is a standing share with no single year (Meduza 2026, Reuters 2023; one estimate implies about 36%). Oyu Tolgoi's mine is in the South Gobi, not in Ulaanbaatar; the capital holds the operator's head office (Monnis Tower, from Oyu Tolgoi's contact pages seen in search results) and Rio Tinto's Mongolia office (opened 2018; not rechecked for 2026); Oyu Tolgoi has no logo file, so it shows as a name chip. Seoul and Tokyo use country figures (Korea's cosmetics exports, Japan's anime market); Tokyo's figure is AJA's preliminary estimate. Hsinchu's worker count is from Wikipedia's Hsinchu Science Park page. LG H&H's 2026 move inside Seoul was not confirmed as finished (both addresses are in Seoul)"
+}

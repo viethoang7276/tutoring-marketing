@@ -1012,7 +1012,7 @@ def install(G):
           "bryggen": lm_bryggen, "toy_bricks": lm_toy_bricks, "cartons": lm_cartons, "telecom": lm_telecom, "tallinn_gate": lm_tallinn_gate, "krakow": lm_krakow, "crystal": lm_crystal, "jewel": lm_jewel, "parthenon": lm_parthenon,
           "hercules": lm_hercules, "cork_castle": lm_cork_castle}
     SIGNED = ("books", "chip_machine", "car_plant", "airliner", "bryggen", "toy_bricks", "cartons", "telecom", "crystal", "hercules")   # kinds that carry a plain-text name plate; "sign" replaces the default name
-    _asia = _install_asia(dict(P=P, R=R, win=win, water=water, plate=plate, car=car, palm=palm, lm_tokyo_tower=lm_tokyo_tower, _goods=_goods, _t=_t, _f=_f, _d_tw=_d_tw,
+    _asia = _install_asia(dict(P=P, R=R, win=win, water=water, plate=plate, car=car, palm=palm, lm_tokyo_tower=lm_tokyo_tower, lm_haul_truck=lm_haul_truck, lm_oil_rig=lm_oil_rig, _goods=_goods, _t=_t, _f=_f, _d_tw=_d_tw,
                                INK=INK, BLUE=BLUE, WHITE=WHITE, GOLD=GOLD, GREY=GREY, GREEN=GREEN, LB=LB, YEL=YEL, SKY=G["SKY"], G=G))
     LM.update(_asia["LM"]); SIGNED = SIGNED + _asia["SIGNED"]; GOODS_ASIA = _asia["GOODS"]
 
@@ -1183,9 +1183,43 @@ def _install_asia(H):
         o += f'<circle cx="{jx + 110}" cy="-120" r="9" fill="{YEL}" stroke="{INK}" stroke-width="3"/>'
         return o, (-365, -685, 740, 690)
 
+
+    # 18 Nov 2026 rebuild of Parts 6 and 7 (Hoang: add Hong Kong, Mongolia and Asian Russia oil and gas; Ho Chi Minh City; Singapore wealth management)
+    def ger(cx, k=1.0):   # a Mongolian ger (round felt tent) with an orange door
+        o = P("M-120 0 V-110 Q0 -150 120 -110 V0 Z", WHITE, 5) + P("M-130 -108 Q0 -230 130 -108 Q0 -150 -130 -108 Z", "#EEF2F8", 5) + R(-16, -192, 32, 14, "#E8A23B", 4, 4)
+        o += R(-34, -96, 68, 96, "#E8A23B", 5, 4) + P("M-34 -48 H34 M0 -96 V0", "none", 3, INK, ' opacity="0.45"') + P("M-120 -60 Q0 -84 120 -60", "none", 4, BLUE)
+        return f'<g transform="translate({cx} 0) scale({k})">{o}</g>'
+
+    def lm_ub_mine():   # Ulaanbaatar (mining): steppe hills, a ger and a mine haul truck before an open pit
+        o = P("M-380 0 Q-260 -180 -120 -150 Q0 -230 140 -160 Q260 -210 380 0 Z", "#C7D9A0", 4)
+        o += ger(-250, 0.95)
+        t, _b = H["lm_haul_truck"]()
+        o += f'<g transform="translate(130 0) scale(0.66)">{t}</g>'
+        return o, (-385, -270, 770, 275)
+
+    def lm_siberia_oil():   # Tyumen region (oil and gas): a derrick and a pumpjack, a gas flare stack, a pipeline and taiga pines
+        t, _b = H["lm_oil_rig"]()
+        o = f'<g transform="translate(-40 0)">{t}</g>'
+        o += R(-372, -36, 744, 26, "#9AA3B2", 4, 13) + "".join(R(x, -46, 14, 46, "#59647A", 3, 2) for x in (-330, -170, 30, 230))
+        o += R(316, -470, 30, 434, "#C9D2DE", 4) + P("M331 -470 Q300 -520 326 -566 Q330 -536 344 -548 Q352 -580 334 -606 Q382 -560 360 -500 Q356 -480 331 -470 Z", "#F29D52", 4)
+        for px in (-370, 400):
+            o += P(f"M{px} -10 L{px - 44} -10 L{px - 8} -80 L{px - 34} -80 L{px} -150 L{px + 34} -80 L{px + 8} -80 L{px + 44} -10 Z", "#3F8F4F", 4)
+        return o, (-415, -610, 860, 615)
+
+    def lm_saigon():   # Ho Chi Minh City (business and finance): a stepped super-tall tower, a tapered tower with a helipad, the river, and a phone wallet with coins
+        o = water(760, -4)
+        o += R(-330, -420, 60, 416, GL2) + R(-270, -560, 60, 556, "#9FBEE6") + R(-210, -700, 60, 696, GL) + R(-150, -500, 60, 496, GL2)
+        o += win(-330, -90, -560, -6, 4, 14, 0.35) + P("M-180 -700 V-760", "none", 5)
+        o += P("M-40 -6 L-30 -560 Q0 -640 30 -560 L40 -6 Z", "#DCE6F5") + win(-40, 40, -540, -6, 2, 14, 0.35)
+        o += P("M30 -430 Q120 -440 120 -416 Q120 -396 30 -402 Z", "#9AA3B2", 4) + P("M58 -428 H104", "none", 3, WHITE)
+        o += R(140, -360, 180, 356, "#EEF2F8") + win(140, 320, -340, -6, 4, 8, 0.35) + R(170, -300, 120, 120, "#33435E", 5, 16) + R(182, -288, 96, 96, "#9ED3C8", 3, 8)
+        o += "".join(R(196 + 22 * i, -272 + 22 * j, 14, 14, INK if (i + j) % 2 == 0 else WHITE, 0, 1) for i in range(3) for j in range(3))
+        o += "".join(f'<circle cx="{x}" cy="-150" r="22" fill="{GOLD}" stroke="{INK}" stroke-width="4"/>' for x in (190, 240, 290))
+        return o, (-345, -765, 690, 805)
+
     LMA = {"ev_city": lm_ev_city, "porcelain": lm_porcelain, "palace_gate": lm_palace_gate, "market_hall": lm_market_hall, "seoul_tower": lm_seoul_tower, "pagoda": lm_pagoda,
            "glasses": lm_glasses, "anime_tokyo": lm_anime_tokyo, "phone_plant": lm_phone_plant, "royal_palace": lm_royal_palace, "thai_temple": lm_thai_temple, "monas": lm_monas,
-           "smelter": lm_smelter, "bpo_tower": lm_bpo_tower}
+           "smelter": lm_smelter, "bpo_tower": lm_bpo_tower, "ub_mine": lm_ub_mine, "siberia_oil": lm_siberia_oil, "saigon": lm_saigon}
 
     def g_vase(): return P("M-20 40 Q-40 10 -32 -16 Q-26 -30 -12 -34 V-46 H12 V-34 Q26 -30 32 -16 Q40 10 20 40 Z", WHITE, 4) + P("M-30 -4 H30 M-22 26 H22", "none", 4, COB) + f'<circle cy="8" r="9" fill="none" stroke="{COB}" stroke-width="3.5"/>'
     def g_clapper(): return clap(0, 6, 0.6)
@@ -1195,7 +1229,12 @@ def _install_asia(H):
     def g_glasses(): return f'<circle cx="-26" cy="0" r="22" fill="{SKY}" stroke="{INK}" stroke-width="7"/><circle cx="26" cy="0" r="22" fill="{SKY}" stroke="{INK}" stroke-width="7"/>' + P("M-4 -4 Q0 -12 4 -4 M-48 -4 L-60 -14 M48 -4 L60 -14", "none", 6)
     def g_cel(): return R(-48, -34, 96, 68, WHITE, 4, 4) + "".join(R(-44 + 14 * i, -30, 8, 8, INK, 0, 1) + R(-44 + 14 * i, 22, 8, 8, INK, 0, 1) for i in range(7)) + f'<circle cy="0" r="14" fill="{YEL}" stroke="{INK}" stroke-width="3"/>'
     def g_battery(): return R(-26, -40, 52, 84, "#2FA36B", 4, 8) + R(-12, -52, 24, 14, GREY, 4, 3) + P("M4 -24 l-14 24 h14 l-8 22", "none", 5, WHITE)
-    GOODS = {"vase": g_vase, "clapper": g_clapper, "gift": g_gift, "cosmetic": g_cosmetic, "gamepad": g_gamepad, "glasses": g_glasses, "cel": g_cel, "battery": g_battery}
+    def g_barrel(): return R(-30, -44, 60, 88, "#3F6FB5", 4, 8) + P("M-30 -16 H30 M-30 16 H30", "none", 4) + P("M0 -30 Q-12 -14 -12 -6 Q-12 6 0 6 Q12 6 12 -6 Q12 -14 0 -30 Z", INK, 2.5)
+    def g_ore(): return P("M-44 30 L-36 -10 L-10 -36 L24 -30 L44 0 L36 32 Z", "#B5613C", 4) + "".join(f'<circle cx="{x}" cy="{y}" r="7" fill="#3FA79A" stroke="{INK}" stroke-width="2.5"/>' for x, y in ((-18, -8), (10, 6), (20, -16), (-6, 18)))
+    def g_chart(): return R(-46, -38, 92, 76, WHITE, 4, 8) + P("M-34 22 L-12 2 L6 12 L32 -22", "none", 6, "#2FA36B") + P("M18 -24 L33 -23 L32 -8", "none", 5, "#2FA36B") + P("M-34 30 H36", "none", 3, INK, ' opacity="0.4"')
+    def g_gold(): return P("M-46 36 L-36 8 H-2 L8 36 Z M2 36 L12 8 H46 L56 36 Z", GOLD, 4) + P("M-24 8 L-14 -20 H20 L30 8 Z", GOLD, 4) + P("M-8 -12 H14", "none", 3, WHITE)
+    def g_bankcard(): return R(-48, -32, 96, 64, "#467DE3", 4, 8) + R(-34, -14, 22, 18, GOLD, 3, 3) + P("M-34 18 H8 M16 18 H34", "none", 4, WHITE)
+    GOODS = {"vase": g_vase, "clapper": g_clapper, "gift": g_gift, "cosmetic": g_cosmetic, "gamepad": g_gamepad, "glasses": g_glasses, "cel": g_cel, "battery": g_battery, "barrel": g_barrel, "ore": g_ore, "chart": g_chart, "gold": g_gold, "bankcard": g_bankcard}
     G = H["G"]
 
     def count_note(x, y, s=1.0, value=0, start=0, pre="", suf="", dec=0, comp="", lines=None, w=480, fs=42, rot=0, count_at=None, count_delay=0.1, dur=0.9, **_):

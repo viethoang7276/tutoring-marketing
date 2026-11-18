@@ -1,0 +1,571 @@
+{
+ "slug": "map-career-cities-7-asia-2",
+ "group": "map",
+ "version": "v3 (18 Nov 2026, as built after Hoang's change request)",
+ "title": "Career hub cities in Asia with Ledger, part 7",
+ "proposedSlot": "Mon 30 Nov 18:00 VN (to confirm)",
+ "seconds": 112.0,
+ "wordCount": 245,
+ "summary": "Part 7 of the career cities series covers 9 career hubs in Southeast Asia, one sourced fact each; revised 18 Nov 2026 for Hoang's change request; paper and flat versions with the same voice",
+ "changesFromV2": [
+  "Hoang, 18 Nov 2026: \"Singapore should be wealth managemnet and video game, move it to first and then BAc Ninh, add in Ho Chi Minh City as well\"",
+  "Singapore is now stop 1 with two industries in two fact beats on the same city scene: wealth management (S$6.7 trillion assets under management, MAS, end of 2025; OCBC, Bank of Singapore and UOB logos) and video games (Sea: over 100 million Garena players a day in 2025; Sea, Ubisoft and Virtuos logos)",
+  "Bac Ninh is stop 2 (was 1); Ho Chi Minh City is new as stop 3 (business and finance: about 23 percent of Vietnam GDP in 2025; Vinamilk, Masan and ACB logos)",
+  "The other stops keep their order: Phnom Penh, Bangkok, Rayong, Penang, Morowali, Manila; nine stops instead of eight",
+  "Summary line shortened to So that was Southeast Asia, to stay under 2:00 (112.0 s); the voice was not sped up",
+  "Same voice and settings as before (ElevenLabs gPiEpcKoaZywgOzc0Zn9, tempo 1.12, speed 1.08); the flat copy reuses the paper voice"
+ ],
+ "beats": [
+  {
+   "n": 1,
+   "role": "title",
+   "label": "title",
+   "voice": "Career hub cities in Asia with Ledger, part seven.",
+   "start": 0.15,
+   "captions": [
+    "Career hub cities",
+    "in Asia",
+    "with Ledger",
+    "part seven"
+   ],
+   "img": "title"
+  },
+  {
+   "n": 2,
+   "role": "stop",
+   "label": "stop 1 Singapore",
+   "voice": "First, Ledger lands in Singapore, a hub for wealth management and video games.",
+   "start": 4.133,
+   "captions": [
+    "First, Ledger lands",
+    "in Singapore",
+    "a hub for",
+    "wealth management",
+    "and video games"
+   ],
+   "img": "hop1"
+  },
+  {
+   "n": 3,
+   "role": "stop",
+   "label": "stop 1 Singapore",
+   "voice": "Asset managers here oversaw 6.7 trillion Singapore dollars in 2025.",
+   "start": 9.737,
+   "captions": [
+    "Asset managers here",
+    "oversaw 6.7 trillion",
+    "Singapore dollars",
+    "in 2025"
+   ],
+   "img": "city1"
+  },
+  {
+   "n": 4,
+   "role": "stop",
+   "label": "stop 1 Singapore",
+   "voice": "Sea, based here, drew over 100 million Garena players a day.",
+   "start": 15.939,
+   "captions": [
+    "Sea, based here",
+    "drew over 100 million",
+    "Garena players a day"
+   ],
+   "img": "city1b"
+  },
+  {
+   "n": 5,
+   "role": "stop",
+   "label": "stop 2 Bac Ninh",
+   "voice": "Then, he flies to Bac Ninh, Vietnam, a hub for phones.",
+   "start": 21.155,
+   "captions": [
+    "Then, he flies",
+    "to Bac Ninh, Vietnam",
+    "a hub for",
+    "phones"
+   ],
+   "img": "hop2"
+  },
+  {
+   "n": 6,
+   "role": "stop",
+   "label": "stop 2 Bac Ninh",
+   "voice": "Samsung's plants here and nearby have made 2 billion phones.",
+   "start": 25.717,
+   "captions": [
+    "Samsung's plants",
+    "here and nearby",
+    "have made 2 billion",
+    "phones"
+   ],
+   "img": "city2"
+  },
+  {
+   "n": 7,
+   "role": "stop",
+   "label": "stop 3 Ho Chi Minh City",
+   "voice": "Next, he flies to Ho Chi Minh City, a hub for business and finance.",
+   "start": 30.027,
+   "captions": [
+    "Next, he flies to",
+    "Ho Chi Minh City",
+    "a hub for",
+    "business and finance"
+   ],
+   "img": "hop3"
+  },
+  {
+   "n": 8,
+   "role": "stop",
+   "label": "stop 3 Ho Chi Minh City",
+   "voice": "The city made about 23 percent of Vietnam's GDP in 2025.",
+   "start": 34.309,
+   "captions": [
+    "The city made",
+    "about 23 percent",
+    "of Vietnam's GDP",
+    "in 2025"
+   ],
+   "img": "city3"
+  },
+  {
+   "n": 9,
+   "role": "stop",
+   "label": "stop 4 Phnom Penh",
+   "voice": "Then, he hops to Phnom Penh, Cambodia, a hub for garments.",
+   "start": 38.81,
+   "captions": [
+    "Then, he hops",
+    "to Phnom Penh, Cambodia",
+    "a hub for",
+    "garments"
+   ],
+   "img": "hop4"
+  },
+  {
+   "n": 10,
+   "role": "stop",
+   "label": "stop 4 Phnom Penh",
+   "voice": "Cambodia's garment, shoe and travel goods factories employ over 900,000 people.",
+   "start": 42.721,
+   "captions": [
+    "Cambodia's garment, shoe",
+    "and travel goods factories",
+    "employ over 900,000",
+    "people"
+   ],
+   "img": "city4"
+  },
+  {
+   "n": 11,
+   "role": "stop",
+   "label": "stop 5 Bangkok",
+   "voice": "Next, he hops to Bangkok, Thailand, a hub for film.",
+   "start": 48.664,
+   "captions": [
+    "Next, he hops",
+    "to Bangkok, Thailand",
+    "a hub for",
+    "film"
+   ],
+   "img": "hop5"
+  },
+  {
+   "n": 12,
+   "role": "stop",
+   "label": "stop 5 Bangkok",
+   "voice": "In 2025, Thailand hosted 546 foreign film productions.",
+   "start": 52.231,
+   "captions": [
+    "In 2025",
+    "Thailand hosted 546",
+    "foreign film productions"
+   ],
+   "img": "city5"
+  },
+  {
+   "n": 13,
+   "role": "stop",
+   "label": "stop 6 Rayong",
+   "voice": "Then, he rides to Rayong, Thailand, a hub for cars.",
+   "start": 58.106,
+   "captions": [
+    "Then, he rides",
+    "to Rayong, Thailand",
+    "a hub for",
+    "cars"
+   ],
+   "img": "hop6"
+  },
+  {
+   "n": 14,
+   "role": "stop",
+   "label": "stop 6 Rayong",
+   "voice": "Changan opened a plant here in 2025 for 10 billion baht.",
+   "start": 61.954,
+   "captions": [
+    "Changan opened",
+    "a plant here",
+    "in 2025",
+    "for 10 billion baht"
+   ],
+   "img": "city6"
+  },
+  {
+   "n": 15,
+   "role": "stop",
+   "label": "stop 7 Penang",
+   "voice": "Next, he flies to Penang, Malaysia, a hub for chips.",
+   "start": 66.293,
+   "captions": [
+    "Next, he flies",
+    "to Penang, Malaysia",
+    "a hub for",
+    "chips"
+   ],
+   "img": "hop7"
+  },
+  {
+   "n": 16,
+   "role": "stop",
+   "label": "stop 7 Penang",
+   "voice": "Intel's site here, opened in 1972, employs 15,000 people.",
+   "start": 70.337,
+   "captions": [
+    "Intel's site here",
+    "opened in 1972",
+    "employs 15,000 people"
+   ],
+   "img": "city7"
+  },
+  {
+   "n": 17,
+   "role": "stop",
+   "label": "stop 8 Morowali",
+   "voice": "Then, he flies to Morowali, Indonesia, a hub for nickel.",
+   "start": 76.185,
+   "captions": [
+    "Then, he flies",
+    "to Morowali, Indonesia",
+    "a hub for",
+    "nickel"
+   ],
+   "img": "hop8"
+  },
+  {
+   "n": 18,
+   "role": "stop",
+   "label": "stop 8 Morowali",
+   "voice": "Its industrial park had about 85,000 workers in 2024.",
+   "start": 80.322,
+   "captions": [
+    "Its industrial park",
+    "had about 85,000",
+    "workers in 2024"
+   ],
+   "img": "city8"
+  },
+  {
+   "n": 19,
+   "role": "stop",
+   "label": "stop 9 Manila",
+   "voice": "Finally, he lands in Manila, the Philippines, a hub for outsourced services.",
+   "start": 85.04,
+   "captions": [
+    "Finally, he lands",
+    "in Manila",
+    "the Philippines",
+    "a hub for",
+    "outsourced services"
+   ],
+   "img": "hop9"
+  },
+  {
+   "n": 20,
+   "role": "stop",
+   "label": "stop 9 Manila",
+   "voice": "The country's outsourcing industry employed 1.9 million people in 2025.",
+   "start": 90.212,
+   "captions": [
+    "The country's",
+    "outsourcing industry",
+    "employed 1.9 million",
+    "people in 2025"
+   ],
+   "img": "city9"
+  },
+  {
+   "n": 21,
+   "role": "summary",
+   "label": "summary",
+   "voice": "So that was Southeast Asia.",
+   "start": 96.278,
+   "captions": [
+    "So that was",
+    "Southeast Asia"
+   ],
+   "img": "sum"
+  },
+  {
+   "n": 22,
+   "role": "summary",
+   "label": "summary",
+   "voice": "Next, part eight maps South Asia, the Gulf and Central Asia.",
+   "start": 98.354,
+   "captions": [
+    "Next, part eight",
+    "maps South Asia",
+    "the Gulf",
+    "and Central Asia"
+   ],
+   "img": "next"
+  },
+  {
+   "n": 23,
+   "role": "cta",
+   "label": "cta",
+   "voice": "To climb in these cities, you need a good business foundation.",
+   "start": 102.786,
+   "captions": [
+    "To climb",
+    "in these cities",
+    "you need a good",
+    "business foundation"
+   ],
+   "img": "cta"
+  },
+  {
+   "n": 24,
+   "role": "cta",
+   "label": "cta",
+   "voice": "Go to Edlintics.com to learn technical business skills.",
+   "start": 106.361,
+   "captions": [
+    "Go to Edlintics.com",
+    "to learn technical",
+    "business skills"
+   ],
+   "img": "cta"
+  }
+ ],
+ "stops": [
+  {
+   "city": "Singapore",
+   "country_flag": "sg",
+   "industry": "Wealth management and video games",
+   "fact": "Singapore's asset management industry grew 10.1% in 2025 to record assets under management of S$6.7 trillion (MAS), and more than 2,000 single-family offices had MAS tax incentives at end-2025; OCBC (63 Chulia Street), its private bank Bank of Singapore (63 Market Street) and UOB (80 Raffles Place) have their head offices here. Sea Limited (1 Fusionopolis Place) says Garena connected on average with more than 100 million players daily throughout 2025; Ubisoft has had a studio here since 2008 (1 Fusionopolis Walk) and Virtuos has its head office here",
+   "source": "MAS, written parliamentary reply on single family offices, 5 Aug 2026: https://www.mas.gov.sg/news/parliamentary-replies/2026/written-reply-on-sfos ; Business Times, 29 Jul 2026 (MAS asset management survey, 28 Jul 2026) ; OCBC international network: https://www.ocbc.com/group/about-us/international-network ; UOB 4Q25 release: https://www.uobgroup.com/investor-relations/assets/pdfs/investor/financial/2025/news-release-4q-2025.pdf ; Sea Limited, fourth quarter and full year 2025 results, 3 Mar 2026 (cdn.sea.com results PDF) ; Sea contact page: https://www.sea.com/contact ; Ubisoft Singapore: https://www.ubisoft.com/en-us/studio/singapore.aspx ; Virtuos HQ: GamesBeat, 15 Mar 2018, and https://en.wikipedia.org/wiki/Virtuos",
+   "figureDate": "End of 2025 (MAS, July and August 2026); Garena: 2025 (published 3 March 2026)"
+  },
+  {
+   "city": "Bac Ninh",
+   "country_flag": "vn",
+   "industry": "Phones",
+   "fact": "Samsung's phone plants in Bac Ninh and Thai Nguyen had made 2 billion phones by the end of June 2025, with about 90,000 Vietnamese workers (plants, not a head office)",
+   "source": "Vietnam Government News, Samsung produces 2 billionth mobile phone in Viet Nam: https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm",
+   "figureDate": "End of June 2025"
+  },
+  {
+   "city": "Ho Chi Minh City",
+   "country_flag": "vn",
+   "industry": "Business and finance",
+   "fact": "Ho Chi Minh City (the city as merged in July 2025) made about 23% of Vietnam's GDP in 2025: 23.11% in the national statistics office's figure (GRDP near 2.7 quadrillion dong, up 7.53%), 23.5% in the city's December estimate; Vinamilk (10 Tan Trao), Masan Group (23 Le Duan) and ACB (442 Nguyen Thi Minh Khai) have their head offices here",
+   "source": "Znews, 8 Jan 2026, citing the national statistics office: https://znews.vn/tphcm-gop-gan-14-tang-truong-ca-nuoc-post1617427.html ; VietnamPlus, 9 Dec 2025: https://en.vietnamplus.vn/hcm-city-projects-strong-8-growth-for-2025-post333949.vnp ; Vinamilk 2025 AGM minutes: https://static2.vietstock.vn/vietstock/2025/4/29/20250429_20250429___vnm___minutes___resolution_of_the_2025_agm.pdf ; Masan head office: https://en.wikipedia.org/wiki/Masan_Group ; ACB head office: https://acb.com.vn/en/about-us/inauguration-of-acb-headquarters-building-in-ho-chi-minh-city",
+   "figureDate": "2025 (published 8 January 2026)"
+  },
+  {
+   "city": "Phnom Penh",
+   "country_flag": "kh",
+   "industry": "Garments",
+   "fact": "Cambodia's garment, footwear and travel goods sector employs over 900,000 workers in more than 1,500 factories; its exports were US$15.5 billion in 2025 (a country figure; Phnom Penh is the capital)",
+   "source": "The Star (Asia News Network), 20 Jan 2026: https://www.thestar.com.my/aseanplus/aseanplus-news/2026/01/20/cambodia-makes-us155bil-from-exports-of-garments-shoes-travel-goods-in-2025",
+   "figureDate": "2025 (published 20 January 2026)"
+  },
+  {
+   "city": "Bangkok",
+   "country_flag": "th",
+   "industry": "Film",
+   "fact": "Thailand hosted 546 foreign film productions in 2025, spending over 7.717 billion baht (Department of Tourism); Bangkok is among the most in-demand filming locations; GDH 559's head office is on Sukhumvit 31, Watthana, Bangkok",
+   "source": "The Nation, 14 Jan 2026: https://www.nationthailand.com/news/tourism/40061194 ; Government Public Relations Department, 21 Jul 2025: https://thailand.prd.go.th/en/content/category/detail/id/52/iid/407372 ; GDH 559 contact page: https://www.gdh559.com/contact",
+   "figureDate": "2025 (published 14 January 2026)"
+  },
+  {
+   "city": "Rayong",
+   "country_flag": "th",
+   "industry": "Cars",
+   "fact": "Changan Automobile began production at its first overseas plant, in Rayong, on 16 May 2025, an investment of about THB 10 billion with a capacity of 100,000 vehicles a year (a plant; the head office is in China); BYD (WHA Industrial Estate, Rayong) and Great Wall Motor (Pluak Daeng, Rayong) also have car plants in Rayong",
+   "source": "Gasgoo, 16 May 2025: https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 ; BYD plant: The Thaiger, BYD opens first EV plant in Thailand ; GWM Rayong plant: https://www.gwm-global.com/news/3401476.html",
+   "figureDate": "16 May 2025"
+  },
+  {
+   "city": "Penang",
+   "country_flag": "my",
+   "industry": "Chips",
+   "fact": "Intel's Penang site, opened in 1972, has a workforce of 15,000; Micron opened its second assembly and test site in Penang in 2023; Penang holds about 13% of global chip packaging (sites, not head offices)",
+   "source": "InvestPenang: https://investpenang.gov.my/?p=23774",
+   "figureDate": "InvestPenang page, read 17 November 2026"
+  },
+  {
+   "city": "Morowali",
+   "country_flag": "id",
+   "industry": "Nickel",
+   "fact": "The Indonesia Morowali Industrial Park (IMIP) had about 85,000 workers at the end of 2024; Indonesia produced nearly half of the world's nickel in 2022; Tsingshan owns a nickel smelter inside the park (a plant)",
+   "source": "Morowali Industrial Park: https://en.wikipedia.org/wiki/Morowali_Industrial_Park",
+   "figureDate": "End of 2024"
+  },
+  {
+   "city": "Manila",
+   "country_flag": "ph",
+   "industry": "Outsourced services",
+   "fact": "The Philippine IT and business process management industry employed 1.9 million people in 2025 and earned over USD 40 billion in export revenue (a country figure; Metro Manila is its main hub)",
+   "source": "Philstar, 29 Jan 2026: https://www.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark/amp/",
+   "figureDate": "2025 (published 29 January 2026)"
+  }
+ ],
+ "caption": "Career hub cities in Asia with Ledger, Part 7, goes to Southeast Asia with nine stops, and each stop shows one industry that city is a hub for, with a sourced fact\n\nSo you will meet Singapore for wealth management and video games, Bac Ninh for phones, Ho Chi Minh City for business and finance, Phnom Penh for garments, Bangkok for film, Rayong for cars, Penang for chips, Morowali for nickel, and Manila for outsourced services\n\nSave the map for later, because Part 8 maps career hub cities across South Asia, the Gulf and Central Asia\n\n#edlintics #businessstudents #careeradvice #careers",
+ "first_comment": "Which Asian city did we miss, and which industry is it a hub for? 🗺️🌏",
+ "first_comment_igtt": "Which Asian city did we miss, and which industry is it a hub for? Tell us below 🗺️🌏",
+ "hashtags": [
+  "#edlintics",
+  "#businessstudents",
+  "#careeradvice",
+  "#careers"
+ ],
+ "threadsTopic": "Career Advice",
+ "threadsReason": "The reel is a saveable list of where industries and their careers are concentrated in nine Southeast Asian cities, which fits people asking where to build a career",
+ "logos": [
+  {
+   "brand": "OCBC",
+   "city": "Singapore",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://www.ocbc.com/group/about-us/international-network (\"Head Office 63 Chulia Street #10-00 OCBC Centre East Singapore 049514\")"
+  },
+  {
+   "brand": "Bank of Singapore",
+   "city": "Singapore",
+   "shownAs": "logo + name",
+   "type": "head office (OCBC's private bank)",
+   "source": "https://www.ocbc.com/group/about-us/international-network (\"63 Market Street, #22-00 Bank of Singapore Centre, Singapore 048942\")"
+  },
+  {
+   "brand": "UOB",
+   "city": "Singapore",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "UOB 4Q25 news release, 24 Feb 2026 (\"80 Raffles Place UOB Plaza\"; high-net-worth AUM S$201 billion): https://www.uobgroup.com/investor-relations/assets/pdfs/investor/financial/2025/news-release-4q-2025.pdf"
+  },
+  {
+   "brand": "Sea",
+   "city": "Singapore",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://www.sea.com/contact (\"1 Fusionopolis Place, #17-10, Galaxis, Singapore 138522\"); results release datelined Singapore, 3 Mar 2026"
+  },
+  {
+   "brand": "Ubisoft",
+   "city": "Singapore",
+   "shownAs": "logo + name",
+   "type": "studio",
+   "source": "https://www.ubisoft.com/en-us/studio/singapore.aspx (\"1 Fusionopolis Walk #04-11 Solaris Singapore 138628\", opened 2008); Game Developer, 18 Jun 2013"
+  },
+  {
+   "brand": "Virtuos",
+   "city": "Singapore",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "GamesBeat, 15 Mar 2018 (\"moving its headquarters from Shanghai to Singapore\"); https://en.wikipedia.org/wiki/Virtuos (\"headquartered in Fusionopolis, Singapore\")"
+  },
+  {
+   "brand": "Samsung",
+   "city": "Bac Ninh",
+   "shownAs": "logo + name",
+   "type": "plant",
+   "source": "https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm (\"Samsung's mobile phone factories in Bac Ninh and Thai Nguyen provinces\")"
+  },
+  {
+   "brand": "Vinamilk",
+   "city": "Ho Chi Minh City",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "Vinamilk 2025 AGM minutes (\"No. 10 Tan Trao, Tan Phu Ward, District 7, Ho Chi Minh City\"): https://static2.vietstock.vn/vietstock/2025/4/29/20250429_20250429___vnm___minutes___resolution_of_the_2025_agm.pdf ; https://en.wikipedia.org/wiki/Vinamilk"
+  },
+  {
+   "brand": "Masan",
+   "city": "Ho Chi Minh City",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "MarketScreener notice (\"No.23 Le Duan, Ben Nghe ward, district 1\", from 7 Sep 2023); https://en.wikipedia.org/wiki/Masan_Group"
+  },
+  {
+   "brand": "ACB",
+   "city": "Ho Chi Minh City",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://acb.com.vn/en/about-us/inauguration-of-acb-headquarters-building-in-ho-chi-minh-city (442 Nguyen Thi Minh Khai, District 3, opened 21 Jan 2022)"
+  },
+  {
+   "brand": "GDH",
+   "city": "Bangkok",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://www.gdh559.com/contact (Sukhumvit 31, Watthana, Bangkok)"
+  },
+  {
+   "brand": "Changan",
+   "city": "Rayong",
+   "shownAs": "logo + name",
+   "type": "plant",
+   "source": "https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 (\"the launch of its Rayong plant in Thailand\")"
+  },
+  {
+   "brand": "BYD",
+   "city": "Rayong",
+   "shownAs": "logo + name",
+   "type": "head office",
+   "source": "https://en.wikipedia.org/wiki/BYD_Company (\"Pingshan District, Shenzhen\"); Rayong plant: The Thaiger, BYD opens first EV plant in Thailand (\"within the WHA Industrial Estate in Rayong\")"
+  },
+  {
+   "brand": "Great Wall Motor",
+   "city": "Rayong",
+   "shownAs": "logo + name",
+   "type": "plant",
+   "source": "https://www.gwm-global.com/news/3401476.html (\"Located in Pluak Daeng District, Rayong Province\")"
+  },
+  {
+   "brand": "Intel",
+   "city": "Penang",
+   "shownAs": "logo + name",
+   "type": "site",
+   "source": "https://investpenang.gov.my/?p=23774 (\"the first production facility outside the US for Intel\", in Penang)"
+  },
+  {
+   "brand": "Micron",
+   "city": "Penang",
+   "shownAs": "logo + name",
+   "type": "site",
+   "source": "https://investpenang.gov.my/?p=23774 (\"its second facility for assembly and testing in Penang\")"
+  },
+  {
+   "brand": "Tsingshan",
+   "city": "Morowali",
+   "shownAs": "logo + name",
+   "type": "plant",
+   "source": "https://en.wikipedia.org/wiki/Indonesia_Morowali_Industrial_Park (\"Tsingshan-owned nickel smelter inside the facility\")"
+  }
+ ],
+ "sources": [
+  "MAS, written parliamentary reply on single family offices, 5 Aug 2026: https://www.mas.gov.sg/news/parliamentary-replies/2026/written-reply-on-sfos ; Business Times, 29 Jul 2026 (MAS asset management survey, 28 Jul 2026) ; OCBC international network: https://www.ocbc.com/group/about-us/international-network ; UOB 4Q25 release: https://www.uobgroup.com/investor-relations/assets/pdfs/investor/financial/2025/news-release-4q-2025.pdf ; Sea Limited, fourth quarter and full year 2025 results, 3 Mar 2026 (cdn.sea.com results PDF) ; Sea contact page: https://www.sea.com/contact ; Ubisoft Singapore: https://www.ubisoft.com/en-us/studio/singapore.aspx ; Virtuos HQ: GamesBeat, 15 Mar 2018, and https://en.wikipedia.org/wiki/Virtuos",
+  "Vietnam Government News, Samsung produces 2 billionth mobile phone in Viet Nam: https://en.baochinhphu.vn/samsung-produces-2-billionth-mobile-phone-in-viet-nam-1112508271304324.htm",
+  "Znews, 8 Jan 2026, citing the national statistics office: https://znews.vn/tphcm-gop-gan-14-tang-truong-ca-nuoc-post1617427.html ; VietnamPlus, 9 Dec 2025: https://en.vietnamplus.vn/hcm-city-projects-strong-8-growth-for-2025-post333949.vnp ; Vinamilk 2025 AGM minutes: https://static2.vietstock.vn/vietstock/2025/4/29/20250429_20250429___vnm___minutes___resolution_of_the_2025_agm.pdf ; Masan head office: https://en.wikipedia.org/wiki/Masan_Group ; ACB head office: https://acb.com.vn/en/about-us/inauguration-of-acb-headquarters-building-in-ho-chi-minh-city",
+  "The Star (Asia News Network), 20 Jan 2026: https://www.thestar.com.my/aseanplus/aseanplus-news/2026/01/20/cambodia-makes-us155bil-from-exports-of-garments-shoes-travel-goods-in-2025",
+  "The Nation, 14 Jan 2026: https://www.nationthailand.com/news/tourism/40061194 ; Government Public Relations Department, 21 Jul 2025: https://thailand.prd.go.th/en/content/category/detail/id/52/iid/407372 ; GDH 559 contact page: https://www.gdh559.com/contact",
+  "Gasgoo, 16 May 2025: https://autonews.gasgoo.com/articles/market-industry/changan-automobile-begins-production-at-rayong-plant-in-thailand-70037455 ; BYD plant: The Thaiger, BYD opens first EV plant in Thailand ; GWM Rayong plant: https://www.gwm-global.com/news/3401476.html",
+  "InvestPenang: https://investpenang.gov.my/?p=23774",
+  "Morowali Industrial Park: https://en.wikipedia.org/wiki/Morowali_Industrial_Park",
+  "Philstar, 29 Jan 2026: https://www.philstar.com/business/2026/01/29/2504140/it-bpm-revenues-breach-40-billion-mark/amp/"
+ ],
+ "registry_check": "registry check, run 17 Nov 2026 against hub concepts (124 docs) and rechecked 18 Nov 2026: clear. The reel names and defines no business concept; concept_id career-cities-map-7-asia-2 is new. Themes career-cities and careers",
+ "maths_check": "No sums in the voice. Figures as reported: S$6.7 trillion assets under management (MAS, end of 2025); more than 100 million Garena players a day (Sea, 2025); about 23% of Vietnam's GDP (Ho Chi Minh City, 2025: 23.11% statistics office, 23.5% city estimate); 2 billion phones (Samsung Vietnam, to June 2025); over 900,000 workers (Cambodia's garment, footwear and travel goods sector, 2025); 546 foreign film productions (Thailand, 2025); about THB 10 billion (Changan's Rayong plant, May 2025); 15,000 people (Intel Penang); about 85,000 workers (IMIP, end of 2024); 1.9 million people (Philippine IT-BPM, 2025). Two currencies appear because each figure stays in the currency it was reported in: Singapore dollars for Singapore's asset managers and Thai baht for Changan's plant",
+ "not_verified": "Singapore's S$6.7 trillion is all asset management (not only private wealth), from MAS's parliamentary reply and the Business Times report on the MAS survey; the survey page itself was not opened. DBS has no usable Commons logo, so the wealth stop shows OCBC, Bank of Singapore and UOB. Virtuos's head office rests on GamesBeat (2018) and Wikipedia (its own page blocked the fetcher). Ho Chi Minh City's share is for the city as merged in July 2025 (23.11% statistics office, 23.5% city estimate). Masan's logo file on Commons was uploaded on 26 Oct 2026 and checked by eye. Phnom Penh, Bangkok and Manila use country figures (Cambodia's garment sector, Thailand's foreign film shoots, the Philippine IT-BPM industry). Bac Ninh's 2 billion phones include Samsung's Thai Nguyen plants ('here and nearby'). Morowali's worker count is from Wikipedia's IMIP page. Sea's head-office address is from its contact page footer, and Garena's player figure from Sea's results release"
+}
