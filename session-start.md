@@ -33,6 +33,13 @@ Read the hub's `runs` collection (ArtifactData, https://claude.ai/artifact/HbKxz
 
 If `runs/daily-<yesterday>` is missing in the hub, run the "Daily metrics refresh" in docs/content-workflow/performance-review.md once now.
 
+## Daily clean-up of old files (Hoang, 18 Nov 2026: "make it the rules with every day session to delete old files")
+
+Run once a day in the morning refresh, after the metrics catch-up. Report what was removed in the status.md line.
+1. **Hub assets (permanent, the hub has no trash):** save every document of every hub collection with ArtifactData `out_dir`, read the page itself, and collect every 32-hex id. List the asset store (Artifact `list`, scope `assets`, all pages). Delete only assets that no document or the page references AND that were uploaded more than 48 hours ago (an asset younger than that may belong to a build whose card is not written yet). Re-read slots and runs right before deleting. Never delete a referenced asset; the step-7 video archive in docs/content-workflow/performance-review.md stays the way posted videos leave the hub.
+2. **Local renders (reversible):** save the hub `slots` collection to a folder and run `tools/tts/.venv/bin/python tools/cleanup/cleanup_renders.py <folder> --apply`. It moves to `~/.Trash/edlintics-renders-cleanup-<date>/` the media of fully posted posts and the check images and mixed audio of scheduled posts, keeps everything touched in the last 48 h, and never touches lessons/, ads/, hub-archive/, social/, cover-templates/, thumbnails-v2/, hub/, scripts or notes. Folders no card references are left for a person to judge.
+3. **Our own Trash folders:** permanently remove `~/.Trash/edlintics-renders-cleanup-*` folders that are more than 7 days old (only these; never empty the rest of the Trash).
+
 ## Hoang's review requests (do this every session, after the safeguard)
 
 Query the hub's `slots` collection for `status == "changes"`. Each one is a "Request change" Hoang clicked in the Review tab; his instruction is in `statusNote`. Apply each change (Canva design, caption, first comment; keep every content rule), commit the Canva transaction, then set the slot back to `status: "proposal"` with a `statusNote` that starts "Revised <date>:" and says what changed. Then follow "Learning from change requests" in docs/content-workflow/weekly-content-process.md: turn each note into a general rule in that list, and sweep the other upcoming posts for the same problem. Report the fixes, the new rules and the sweep to Hoang. Clicking the button does not notify any running session; this check is how the requests get picked up.
