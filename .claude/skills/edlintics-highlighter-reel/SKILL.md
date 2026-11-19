@@ -59,3 +59,9 @@ Reference build: `examples/compounding/` (`make_sheet.py` → `sheet.svg`, `scri
 | `edlintics-logo.png` | Logo, the same one the puzzle reel uses |
 
 Uses the explainer engine's `scene_lib.py` (Ledger), node_modules (puppeteer-core) and `tools/tts/.venv` (numpy, soundfile, imageio-ffmpeg, Pillow). No installs.
+
+## Quiz-sheet variant (19 Nov 2026)
+A printed multiple-choice quiz on the same desk: a drawn hand with a blue pen underlines each question while the voice reads it, a 5-second countdown ring replaces the question's icon, then the pen ticks the right box on the word that names it; the sheet scrolls question by question and ends on "How many did you get?" with Ledger. No karaoke captions (the sheet is the text). Spec: `quiz.json` (title, subtitle, intro, questions with say, options, correct, icon, answer, tick_at, outro, end_lines); icons: receipt, certificate, card, payslip, chart, scale, book.
+- Build: `tools/tts/.venv/bin/python .claude/skills/edlintics-highlighter-reel/scripts/quiz_build.py <quiz.json> <outdir>` (`STILLS_ONLY=1` first). Renderer `scripts/quiz.html`. First reel: `assets/renders/explainer-reels/w47/paper-accounting-quiz-7/` (7 questions, 110.8 s)
+- Keep every video under 2 minutes: 7 questions with one-sentence answers land at about 111 s; longer answers went over (121 s)
+- Run the definition-reviewer on the questions and every wrong option (an option that is arguably right, such as "Bank loan" for an overdraft, must go)
