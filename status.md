@@ -1021,3 +1021,55 @@ State at handover:
 - 20 Nov: Hoang confirmed the Edlintics ad account 2038169006901956 is not restricted; the Business Suite "Ad account restricted" banner is not about it, so stop reporting it
 - 20 Nov ~01:30 VN, Hoang: "remove all files in renders". All media in assets/renders (1,384 files, 2.7 GB) moved to ~/.Trash/edlintics-renders-cleanup-2026-11-20; renders now 76 MB of scripts, specs and notes. Every unposted post has its video or images on its hub card, posted ones are on the platforms and Canva, ads creatives are in Meta. Rule added to session-start.md (clean-up step 5): steps that need a local file fetch the hub blob. The Trash folder is purged with the daily clean-up after 2 days
 - 20 Nov ~03:00-04:00 VN: shot-by-shot analysis of the three demo-video inspirations (Brilliant TV spot, Duolingo chess, Duocon 2021) next to scripts A-E: local page docs/proposals/2026-11-18/brand-demo-analysis.html (linked from the preview) and a new section in the scripts doc (rev 14, before Decisions). Brilliant voice transcribed via Edits (ElevenLabs STT returned 401). The renders clear-out had removed the preview page media and the Trash was already emptied: storyboard frames re-shot from edlintics.com at phone width, pilot video and stills re-fetched from hub blobs; session-start clean-up step 5 now keeps media that open proposal pages use
+
+### Demo videos: shot-by-shot analysis against the inspirations (20 Nov 2026)
+Also in the scripts doc https://claude.ai/artifact/2TrgLa7LyqneEoohsQAbuM (section "Shot-by-shot against the inspirations"). Inspiration voice lines are paraphrased. Headline: all three inspirations change the picture every 1.5-3 s and say fewer words than our drafts.
+
+| Video | Inspiration | Format | Voice, words per second (theirs vs ours) | Picture changes |
+|---|---|---|---|---|
+| A | Brilliant TV spot | 30 s, 16:9, voice and music | 2.9 vs 2.8 | every 2-3 s vs every 5 s |
+| B | Learn chess on Duolingo | 25 s, 16:9, mascot speaks | 1.6 vs 2.5 | every 1.5-2 s vs every 4-7 s |
+| C | Duocon 2021 teaser | 30 s, 16:9, music only | none vs 69 words | 12 worlds vs 5 |
+
+**A vs Brilliant**
+
+| Brilliant | What happens | Our A | Change |
+|---|---|---|---|
+| 0-2.4 s | Hand presses a blue "Math" button; voice asks what learning maths there feels like | 0-3 s static title | Open on Ledger's hand pressing a blue "Business" chip |
+| 2.7-5.2 s | "Geometry": circle wedges unroll into a rectangle; learn by doing | 3-11 s journal-entry card, tap B | Split: 3-6 s debit and credit dragged onto a balancing T-account, 6-9 s real card goes green |
+| 5.5-8.7 s | "Everyday math", then "Calculus": range of topics | 11-16 s compound interest, 10 to 20 years | Keep; add a growing bar so the change reads on a phone |
+| 9.5-13.4 s | Pythagoras squares dragged, then the real card with "Show explanation" | 16-21 s break-even, price up, units down | Cost and revenue lines cross, then the real calculator from its defaults (EUR 4,000 / 25 / 15 = 400) |
+| 13.7-17.8 s | Pull-back to three cards: thousands of lessons | 21-24 s z-score | End the run with a pull-back of our four cards |
+| 17.9-24.7 s | "6x more effective" (a study), then "million" users | no proof beat | Before launch: Ledger + "Understand the process. Question the result"; at launch: "More than 1,000 lessons". No study claim, no user count |
+| 24.8-30 s | URL pill, "Get started for free", hand taps it | 24-28 s end card | Keep; hand taps the pill on the last word |
+
+**B vs Duolingo chess** (mascot speaks in the first person, about 35 words in 22 s, ends on a joke)
+
+| Duolingo | What happens | Our B | Change |
+|---|---|---|---|
+| 0-3 s | Owl in a spotlight on a checkerboard, asks if you want to learn chess | 0-4 s Ledger reads a report, "Accrued expense" glows | Keep; option: Ledger speaks himself |
+| 4-5.5 s | A hand moves a piece, a coach steps in | 4-8 s phone, glossary opens | Phone fills most of the frame |
+| 6.5-9 s | Coach and owl play: learn the moves | 8-15 s definition card | Cut to about 4 s, use the site's wording ("incurred in the current period but not yet paid or invoiced by the period end"), definition-reviewer |
+| 10-11.5 s | Puzzle tiles: short but tricky | 15-20 s Check yourself tap | Show the site's question (EUR 4,000 wages unpaid at 31 Dec) for 1 s before the tap |
+| 12.7-17.7 s | Real puzzle screen in a phone, owl peeks round it | (shown earlier) | Borrow the peek pose |
+| 18.9-20.2 s | Coach loses, shocked; owl flies off | 20-25 s tick, Ledger relaxes | Payoff visible with sound off: tick on the last word, Ledger nods |
+| 21.4-25 s | Logo and store badges, music only | 25-30 s end card | Keep; music alone for the last 1-2 s |
+Voice target for B: about 55 words (now 76).
+
+**C vs Duocon** (no cuts because every world holds the next rectangle: phone, frame, door, window)
+
+| Duocon | What happens | Our C | Change |
+|---|---|---|---|
+| 0-1.7 s | Owl pops out of a lesson screen, camera goes in | 0-4 s phone, dive in | Real Edlintics card on that phone |
+| 3.2-12.2 s | Gallery of phone-shaped frames, doors, hill, boat, road, a giant hand | 4-12 s cafe, cost of one coffee | The till screen is the next rectangle; one scale jump is enough |
+| 13.7-15.2 s | Out of a phone into a night city | 12-16 s trading screen | The monitor is the next rectangle; curve moves on the voice |
+| 16.7-18.2 s | Pull-back to a wall of lesson cards | 16-20 s factory | Control panel becomes one card on a wall of Edlintics cards |
+| 19.7-24.2 s | Onion domes, app-screen window | 20-25 s city skyline | Use the career-cities map skyline style |
+| 25.7-30 s | Cast bursts out, logo and date | 25-30 s cast and logo | Keep; no date yet; music alone on the logo |
+Open choice: voice with 5 worlds (my pick) or music only with 8-10 worlds.
+
+**D and E vs the live calculators**
+- D: break-even opens on EUR 4,000 / 25 / 15 = 400 already, the same answer as our EUR 6,000 / 25 / 10. Change one field per tap from the defaults, or clear the fields so 400 appears only after tap 3.
+- E: markup vs margin asks Cost first, then Price (opens on EUR 60 / 100 = 40% margin). Type the EUR 7 cost, then the EUR 12 price.
+
+**For Hoang:** build first (my pick A and D); Ledger first person in B; C with voice or music only
