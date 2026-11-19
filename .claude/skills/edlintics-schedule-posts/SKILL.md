@@ -8,6 +8,9 @@ description: Schedule approved Edlintics posts to Facebook, Instagram (Meta Busi
 Only run on an approved batch: content, design and time approved, and Hoang said "go" in chat.
 
 
+## TIKTOK IS PAUSED (Hoang, 19 Nov 2026)
+No new TikTok uploads or top-ups, and first-comment rounds skip TikTok (record tt skipped, note "TikTok paused 19 Nov"). Already-scheduled TikTok posts stay. Resume only when Hoang says so.
+
 ## X IS PAUSED (Hoang, 14 Nov 2026)
 The X account is suspended. Until Hoang says it is back: do not open the X composer, post, schedule, reply, like or repost on X, and skip X in every scheduling, first-comment and swap round. Record X in `runs` as skipped with the note "X suspended, paused by Hoang 14 Nov 2026", not as missed. Keep writing `caption_x` on new cards. Appeals and logins are Hoang's. Sections 2b and the X steps in section 3 apply again only when he lifts this
 

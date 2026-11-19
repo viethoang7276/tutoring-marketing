@@ -19,6 +19,7 @@ Read these before any Edlintics social content work:
 - **Posting (option A, Chrome):** Meta Business Suite, business_id 1704820277908835, asset_id 108471317472449 (Facebook + Instagram). LinkedIn company page admin: https://www.linkedin.com/company/31541400/admin/
 - **Meta migration (11 Nov 2026):** portfolio "edlintics 1" `1704820277908835`; ad account "Edlintics" `2038169006901956` (VND, Madrid time). The old portfolio/ad account are historical, not current defaults. New pixel **Edlintics Meta Pixel** `1178793404712949` is created and connected to the new ad account. Website/CAPI migration and event verification remain pending; see REQ-0009. Old pixel `1000075088350707` is historical.
 - **X and Threads (added 23 Oct 2026):** https://x.com/edlintics and https://www.threads.com/@edlintics. Chrome is logged in as Edlintics on both. Schedule with each site's own web composer. **X is paused from 14 Nov 2026 (account suspended): no posting, scheduling, replies or likes on X until Hoang says it is back.**
+- **TikTok is paused from 19 Nov 2026 (Hoang: "We can pause tiktok as well since it is not distributing"; 1 view from 32 posts in the 9-15 Nov week, 0 views on 18 Nov):** no new TikTok uploads, no TikTok top-ups, and first-comment rounds skip TikTok (record `tt` skipped). Posts already scheduled in TikTok Studio stay as they are. Resume only when Hoang says so.
 - **Scheduled task:** "Edlintics weekly content plan", Thursdays 07:59 Vietnam time. It plans content only.
 
 ## Hard rules

@@ -5,6 +5,11 @@ description: Upload and schedule approved Edlintics posts to the Edlintics TikTo
 
 # Upload Edlintics posts to TikTok
 
+## TIKTOK IS PAUSED (Hoang, 19 Nov 2026)
+No new TikTok uploads or top-ups, and first-comment rounds skip TikTok (record tt skipped, note "TikTok paused 19 Nov"). Already-scheduled TikTok posts stay. Resume only when Hoang says so.
+
+
+
 Account: **Edlintics Organization, @edlintics** (user id 7599269275379876881).
 Upload page: `https://www.tiktok.com/tiktokstudio/upload?from=creator_center&tab=video` (photos: `&tab=photo`).
 Posts list: `https://www.tiktok.com/tiktokstudio/content`. Public profile: `https://www.tiktok.com/@edlintics`.
