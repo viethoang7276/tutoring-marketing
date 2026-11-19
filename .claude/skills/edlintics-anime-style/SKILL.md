@@ -20,7 +20,7 @@ Reference studied: "This is…THE FINAL TEST | Duolingo Anime - All episodes" (D
 | Backgrounds | Change with the emotion: orange-red speed lines for rage, pink sparkles and bubbles for cute, dark vignette for menace, painted blue sky with clouds for calm, split diagonal panels for a reaction cut-in | Same idea, palette pulled towards blue, cream and one accent per scene |
 | Camera | Extreme close-up on eyes, low angle for power, wide establishing shot with tiny figures, top-down fisheye room | Same |
 | Text | Title cards in bold 3D-styled lettering; subtitles in yellow | Our titles in Rubik bold; captions stay in the bottom half, full sentences |
-| Proportions | Chibi-like: big heads, small bodies, simple hands | Ledger is already chibi: square book body about 85% of his height, stub legs about one tenth of the body, short thin arms |
+| Proportions | Chibi-like: big heads, small bodies, simple hands | Ledger is already chibi: see 2a for his exact proportions |
 
 ## 2. Ledger's reaction library
 
@@ -40,6 +40,23 @@ Ledger's face is on his cover: two eyes, two brow lines, one mouth, the blue boo
 
 Rule: one reaction per frame, and it must be readable with the sound off.
 
+## 2a. Ledger is not redesigned: the website rig is the model (Hoang, 20 Nov 2026: "You are changing too much")
+
+Source of truth: `assets/brand/ledger.svg` and `assets/brand-handoff/ledger-v2/` (RIG.md, states/, rig/), the same rig the website runs. Numbers in rig units (viewBox 240 x 270):
+
+| Part | Rig value | As a share |
+|---|---|---|
+| Book | 136 wide x 154 tall, corner radius 18, outline 5 | Almost square: width is 88% of height |
+| Legs and shoes | Leg lines 9 thick, shoes 29 x 14, 30 units show below the book | 19% of the book's height; the book is 84% of his total height |
+| Arms | Shoulders on the book's side at the suit line; rest length about 40, outline 13 with a cream 8 core | 26% of the book's height at rest; the rig's longest reach is 1.7 times that, never more |
+| Hands | Circle radius 9, outline 3; at rest they hang at the book's bottom corners | 13% of the book's width |
+| Suit | Navy panel printed on the bottom 27% of the cover, white collar, blue tie | |
+| Face | Eyes radius 7.5 with one white highlight, 36 apart, 47% of the way down; mouth below; brows only in some states | |
+| Bookmark | Blue, top right, sticks 4 above the cover | |
+| Colours | ink #0F172A, cream #FBFAF6, suit #222C3D, blue #467DE3, rule lines #E6E3DA | |
+
+Rules: keep these proportions in every style. A style changes the line, the shading and the background, and adds reaction marks around him; it does not change his body, limb length, eye size or outfit. Prefer the real rig states (idle, hello, talk, think, happy, nod, sad, point, cheer, peek, type, watch, scratch, aha, joy, confused) and compose them into the scene; use an image generator only for backgrounds and props, or with the real PNG as the reference and this table in the prompt. Turnaround drawn from these numbers: `assets/brand-handoff/ledger-v2/turnaround/ledger-turnaround.svg` (front, 3/4 front, side, 3/4 back, back).
+
 ## 2b. Body rules: short limbs, movement instead of reach, angles (Hoang, 20 Nov 2026)
 
 - **Arms and legs never stretch.** Arms are short and thin with small round hands that reach no further than the edge of the book; legs are stubs. A frame where an arm crosses half the screen to touch something fails.
@@ -47,15 +64,13 @@ Rule: one reaction per frame, and it must be readable with the sound off.
 - **Scale the props to him.** Blocks, sliders and dots are about the size of his hands or body, low on the screen, with steps or platforms up to anything higher.
 - **Angles.** He is a book with thickness (about a quarter of his width): the spine on his right-hand side, page edges on the other, a plain back cover. Use the turnaround sheet (front, 3/4 front, side, 3/4 back, back) and pick the angle that fits the action: 3/4 for walking and carrying, side for climbing and pushing, back when he looks at a big screen, front for talking to the viewer. The face stays on the front cover only. All 2D: thickness is drawn with flat shapes and one shadow tone.
 
-Turnaround sheet, first draft 20 Nov 2026 (not yet approved by Hoang): Canva media `MAHbZagH7aM` (front, 3/4 front, side, 3/4 back, back; short arms and stub legs, book thickness with page edges). Pass it as a second image reference next to MAHZsMM4Awc when a scene needs a turned view.
-
 Prompt lines to add: "Arms stay short: his hands never reach beyond the edge of his own body. He is shown in {front | three-quarter | side | back} view and the book has visible thickness with a spine. He {walks up three small steps | stands on a ladder | carries the block in both hands}."
 
 ## 3. Prompt template (Canva generate-image, reference MAHZsMM4Awc, PORTRAIT_9_16)
 
 ```
 Still frame from a 2D comedy TV anime, vertical 9:16. Hand-drawn cel animation look: clean dark navy outlines of even weight with a thicker silhouette, flat saturated colour fills, exactly one hard-edged shadow tone per shape, no gradients on characters, no 3D, no CGI, no realistic textures. Main colour is blue #467FE3 with cream and navy.
-Character: the mascot from the reference image, same design: a cream square book with a face on its cover, a dark navy suit bottom, a blue tie and a blue bookmark. The book body is about 85% of his height, legs are very short stubs (one tenth of the body) with flat dark shoes, arms thin and short. Never a human body, never long legs.
+Character: the mascot from the reference image, same design: a cream square book with a face on its cover, a dark navy suit bottom, a blue tie and a blue bookmark. The book body is about 85% of his height, legs and flat dark shoes together are about one fifth of the book height, arms are thin and about a quarter of the book height with small round hands, the book is almost square (width 88% of height). Never a human body, never long legs.
 Reaction: {REACTION ROW: eyes, brows, mouth, marks}.
 Background: {BACKGROUND FROM THE ROW}.
 Shot: {close-up | medium | wide | low angle}.
