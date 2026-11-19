@@ -6,7 +6,7 @@ Moves to ~/.Trash/edlintics-renders-cleanup-<date>/ (repo tree kept, MANIFEST.ts
   A  media of posts that are fully posted (status posted/published, no thPending/ttPending/igManual true)
   B  check images (stills/ mid/ review/ v0/ v1/ frames/ tiles/ spill/ contact/ previous/, contact sheets, fps tiles)
      and mixed audio.wav / audio-yt.wav in folders whose posts are all scheduled or posted
-Kept always: final mp4s of anything not fully posted or not yet archived off the hub (step 7), voiceover.wav, thumbnails, scripts/json/md, and the
+Kept always: final mp4s of anything not fully posted (posted content is not kept locally, Hoang 19 Nov 2026), voiceover.wav, thumbnails, scripts/json/md, and the
 protected folders below. Anything modified in the last 48 h is kept (it may be mid-build).
 Usage: cleanup_renders.py <slots_json_dir>            (dry run, prints the summary)
        cleanup_renders.py <slots_json_dir> --apply    (moves the files)
@@ -17,7 +17,7 @@ REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 RENDERS = 'assets/renders'
 MEDIA = ('.mp4', '.mov', '.wav', '.mp3', '.m4a', '.png', '.jpg', '.jpeg', '.webm', '.gif', '.webp', '.aac')
 PROTECT = ['assets/renders/lessons/', 'assets/renders/ads/', 'assets/renders/social/', 'assets/renders/cover-templates/',
-           'assets/renders/thumbnails-v2/', 'assets/renders/hub/', 'assets/renders/hub-archive/']
+           'assets/renders/thumbnails-v2/', 'assets/renders/hub/', 'assets/renders/demo-reels/']
 INTER = {'stills', 'mid', 'review', 'frames', 'sheets', 'v0', 'v1', 'tiles', 'spill', 'contact', 'previous', '_fps', '_thumb'}
 RECENT_S = 48 * 3600
 
@@ -36,12 +36,13 @@ def main():
         print(__doc__); sys.exit(1)
     slots_dir, apply = sys.argv[1], '--apply' in sys.argv
     os.chdir(REPO)
-    st, refs, on_hub = {}, [], set()
+    st, refs, on_hub, plat = {}, [], set(), {}
     for f in glob.glob(os.path.join(slots_dir, '**', '*.json'), recursive=True):
         d = json.load(open(f)); d = d.get('data', d)
         sid = os.path.basename(f)[:-5]
         pend = any(d.get(k) is True for k in ('thPending', 'ttPending', 'igManual'))
         st[sid] = (d.get('status'), pend)
+        plat[sid] = {k: ((d.get(k) or {}).get('status') if isinstance(d.get(k), dict) else None) for k in ('ig', 'youtube', 'fb', 'li')}
         if d.get('videoUrl') and not d.get('videoArchived'):
             on_hub.add(sid)
         s = set(); walk_refs(d, s)
@@ -78,20 +79,37 @@ def main():
                 if not f.lower().endswith(MEDIA): continue
                 p = os.path.join(r, f)
                 if fully_posted:
-                    # Keep the top-level final mp4s until the step-7 archive has taken the hub video
-                    # (19 Nov 2026: three posts lost their only copies when the hub blob was already gone).
-                    if rel == ['.'] and f.lower().endswith('.mp4') and ids & on_hub:
-                        continue
+                    # Storage budget rule (Hoang, 19 Nov 2026): posted content is not kept locally;
+                    # the platforms hold the live copies.
                     add('A_posted', p)
+                elif rel[0] == 'previous' and all(s != 'changes' for s, _ in sts):
+                    add('B_checks', p)  # superseded build kept only while a change request is open
                 elif all_sched:
+                    done_on = lambda k: all(plat.get(i, {}).get(k) in ('scheduled', 'posted') for i in ids if i in plat)
                     if rel[0] in INTER: add('B_checks', p)
-                    elif rel == ['.'] and f in ('audio.wav', 'audio-yt.wav'): add('B_mixwav', p)
+                    elif f.lower().endswith('.wav'): add('D_scheduled_extras', p)
+                    elif f.endswith('-youtube.mp4') and done_on('youtube'): add('D_scheduled_extras', p)
+                    elif f.endswith('-voice-only.mp4') and done_on('ig'): add('D_scheduled_extras', p)
                     elif rel == ['.'] and f.endswith('.png') and re.search(r'contact|sheet|fps|tile', f): add('B_checks', p)
     seen, tot = set(), {}
     for k in sorted(man):
         man[k] = [x for x in man[k] if not (x[0] in seen or seen.add(x[0]))]
         tot[k] = (len(man[k]), round(sum(s for _, s in man[k]) / 1e9, 2))
     print('summary (files, GB):', tot, 'total GB', round(sum(v[1] for v in tot.values()), 2))
+    # hub-archive is no longer kept (19 Nov 2026): everything in it is posted content
+    for r, _, fs in os.walk(os.path.join(RENDERS, 'hub-archive')):
+        for f in fs:
+            p = os.path.join(r, f)
+            if f.lower().endswith(MEDIA): man['C_hub_archive'].append((p, os.path.getsize(p)))
+    def du(path, skip=()):
+        t = 0
+        for r, _, fs in os.walk(path):
+            if any((r + '/').startswith(x) for x in skip): continue
+            t += sum(os.path.getsize(os.path.join(r, f)) for f in fs)
+        return t
+    budget = du(RENDERS, skip=('assets/renders/lessons/',)) - sum(s for k in man for _, s in man[k])
+    print('marketing renders after clean-up (lessons/ excluded): %.2f GB of the 2 GB budget' % (budget / 1e9))
+    if budget > 2e9: print('OVER BUDGET: report the biggest folders to Hoang')
     if not apply:
         return
     T = os.path.expanduser('~/.Trash/edlintics-renders-cleanup-' + datetime.date.today().isoformat())
