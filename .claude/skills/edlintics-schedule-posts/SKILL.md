@@ -126,6 +126,8 @@ Run by one-shot CronCreate jobs, so this session and Chrome must stay open. Ever
 1. Open `https://www.threads.com/@edlintics` and `find` "Like, Reply, Repost buttons of the newest thread". Click Like, then Repost › **Repost** (the toast says "Reposted").
 2. Click Reply. It opens the thread page with a "Reply to edlintics…" box. Click it, wait 1 s, type with `shift+Enter` between paragraphs, then click the round send arrow. Our own reply appears as part 2 of 2 of the thread.
 
+**YouTube emojis (19 Nov 2026):** after `execCommand('insertText')` into the YouTube comment box, the emojis become `<img alt="🧾">` tags, so `innerText` does not show them. Check the `alt` values of the box's `img` elements (or zoom), not `innerText`, before deciding they were dropped. A Haiku agent skipped a comment over this.
+
 **F. TikTok (added 25 Oct 2026):** after each TikTok post goes live, follow section 5 of `.claude/skills/edlintics-tiktok-upload/SKILL.md`: confirm it is live on the Edlintics profile, then like, save (Favourites) and comment with the slot's `first_comment` (short, emoji ending). Record `tiktok.engaged` on the slot.
 
 **Record (safeguard, 23 Oct 2026):** after each platform, write the result to the hub database (ArtifactData, url https://claude.ai/artifact/HbKxzWUcWhaBaaNb9buZM6, collection `runs`, doc `<YYYY-MM-DD-HHMM>` in Madrid time): `done.<fb|ig|li|x|th> = {comment, like, repost}` as booleans, plus `done.ig.story` and `done.fb.story` (true once the post is on the Story), plus `at` and a `note` for anything skipped. When a batch is scheduled, create one `runs` doc per slot with `title`, `dueAt` (UTC ISO), `platforms` and `igManual` (true when Instagram is posted by hand from the phone), so the hub can flag misses.
