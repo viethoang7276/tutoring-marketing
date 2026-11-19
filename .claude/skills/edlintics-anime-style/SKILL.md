@@ -40,6 +40,17 @@ Ledger's face is on his cover: two eyes, two brow lines, one mouth, the blue boo
 
 Rule: one reaction per frame, and it must be readable with the sound off.
 
+## 2b. Body rules: short limbs, movement instead of reach, angles (Hoang, 20 Nov 2026)
+
+- **Arms and legs never stretch.** Arms are short and thin with small round hands that reach no further than the edge of the book; legs are stubs. A frame where an arm crosses half the screen to touch something fails.
+- **He moves to the thing.** To reach, drag or place something he walks to it, climbs a short set of steps or a ladder, hops onto a stool, jumps, pushes with his whole body, or carries the object against his cover with both small hands and drops it in place. "Drag and drop" is: pick up, carry, walk or climb, drop. Write that movement into the scene line and the prompt ("he stands on the third step of a small staircase holding the block in both hands").
+- **Scale the props to him.** Blocks, sliders and dots are about the size of his hands or body, low on the screen, with steps or platforms up to anything higher.
+- **Angles.** He is a book with thickness (about a quarter of his width): the spine on his right-hand side, page edges on the other, a plain back cover. Use the turnaround sheet (front, 3/4 front, side, 3/4 back, back) and pick the angle that fits the action: 3/4 for walking and carrying, side for climbing and pushing, back when he looks at a big screen, front for talking to the viewer. The face stays on the front cover only. All 2D: thickness is drawn with flat shapes and one shadow tone.
+
+Turnaround sheet, first draft 20 Nov 2026 (not yet approved by Hoang): Canva media `MAHbZagH7aM` (front, 3/4 front, side, 3/4 back, back; short arms and stub legs, book thickness with page edges). Pass it as a second image reference next to MAHZsMM4Awc when a scene needs a turned view.
+
+Prompt lines to add: "Arms stay short: his hands never reach beyond the edge of his own body. He is shown in {front | three-quarter | side | back} view and the book has visible thickness with a spine. He {walks up three small steps | stands on a ladder | carries the block in both hands}."
+
 ## 3. Prompt template (Canva generate-image, reference MAHZsMM4Awc, PORTRAIT_9_16)
 
 ```
@@ -56,7 +67,7 @@ No other brand's logos, mascots or characters. {TEXT ON SCREEN or "No text"}.
 
 1. Flat cel shading: one shadow tone, hard edge. Fail if soft gradients, 3D or painted realism.
 2. Outline: even dark line, thicker silhouette.
-3. Ledger on model: square book, stub legs, bookmark, tie, suit bottom, face on the cover.
+3. Ledger on model: square book, stub legs, short arms that do not stretch past his body, bookmark, tie, suit bottom, face on the cover; turned views show thickness.
 4. The reaction reads in under a second and uses the anime marks from the table.
 5. The background carries the emotion and is not a neutral room unless the row says so.
 6. Blue is the lead colour; at most one strong accent.
