@@ -18,10 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 OUT = os.environ.get('FILM_OUT', os.path.join(HERE, 'film-out'))
 W, H, FPS = 1080, 1920, 30
-VOICE_AT = 0.25                                  # the voice starts this long after its scene starts
-TIMELINE = [('A1', 6.4), ('T1', 0.9), ('A2', 7.0), ('T2', 0.9), ('A3', 7.0), ('T3', 1.0), ('A4', 5.9), ('T4', 1.0),
-            ('A5', 4.9), ('T5', 0.9), ('A6', 6.5), ('T6', 1.0), ('A7', 3.4), ('T7', 0.9), ('A8', 4.6)]
-DUR = dict(TIMELINE)
+from timeline_a import TIMELINE, DUR, VOICE
 
 
 def scenes():
@@ -65,14 +62,9 @@ def frames_of(names):
 def voice_track(total):
     vdir = os.path.join(OUT, 'voice')
     a = np.zeros(int(total * 24000) + 24000, dtype=np.float32)
-    t0 = 0.0
-    for n, d in TIMELINE:
-        f = os.path.join(vdir, f'{n}.wav')
-        if os.path.exists(f):
-            x, sr = sf.read(f, dtype='float32'); assert sr == 24000
-            assert len(x) / sr + VOICE_AT <= d + 0.05, f'{n}: voice {len(x) / sr:.2f} s does not fit {d} s'
-            i = int((t0 + VOICE_AT) * sr); a[i:i + len(x)] += x
-        t0 += d
+    for n, t0 in VOICE:
+        x, sr = sf.read(os.path.join(vdir, f'{n}.wav'), dtype='float32'); assert sr == 24000
+        i = int(t0 * sr); a[i:i + len(x)] += x
     out = os.path.join(OUT, 'voice.wav'); sf.write(out, a[:int(total * 24000)], 24000)
     return out
 

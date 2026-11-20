@@ -19,11 +19,11 @@ import frames_a as F
 from frames_a import (T, rrect, line, path, circle, arrow_head, INK, CREAM, SUIT, BLUE, RULE, GREEN, WHITE, PAGES,
                       TINT, SLATE, EMER, ORANGE, VIOLET, PINK, YEL, EMER_D, ORANGE_D, VIOLET_D, YEL_D,
                       GREEN_T, RED_T, GREEN_D, RED_D, RED2, W, H)
+from timeline_a import DUR
 from anim_util import clamp, seg, ease, ease_out, ease_in, back_out, lerp, lerp2, bez, hop, pop, fade, shift, squash
 
 TAU = 2 * math.pi
 DUST = '#FFF3C4'
-VOICE = 0.25
 
 
 # ---------------------------------------------------------------------------------------------
@@ -294,9 +294,16 @@ def kick(ph, amp=24):
 FL1, DX1, DT1 = 1560, 520, 560
 HX1, HY1 = DX1 + 122, FL1 - 250
 A1_END = (HX1 - 262, FL1 + 20, 2.9)                      # Ledger's place in the static frame
-A1_DUR = 6.4
-PH = ((926, 370, -4, 'Languages', 0.30), (926, 860, 3, 'Coding', 0.95), (926, 1350, -3, 'Science', 1.52))
-A1_TURN = 3.67                                           # "but business ..."
+A1_DUR = DUR['A1']
+
+
+def b1(sec):
+    """A beat of A1, written for the 5.35 s cut and scaled with the timeline."""
+    return sec * A1_DUR / 5.35
+
+
+PH = ((926, 370, -4, 'Languages', b1(0.25)), (926, 860, 3, 'Coding', b1(0.78)), (926, 1350, -3, 'Science', b1(1.28)))
+A1_TURN = b1(3.4)                                           # "but business ..."
 
 
 @functools.lru_cache(None)
@@ -423,11 +430,11 @@ def a1_phones(t, end, dx=0.0):
     s = ''
     inners = a1_lessons(t, end)
     for i, ((cx, cy, r, label, t0), inner) in enumerate(zip(PH, inners)):
-        p = seg(t, t0, t0 + 0.34)
+        p = seg(t, t0, t0 + 0.3)
         if p <= 0:
             continue
         cx += dx * (1 + 0.25 * i)
-        bob = 6 * math.sin(TAU * (t - end) / 1.9) * math.cos(i * 0.9) + 6 * (1 - math.cos(TAU * (t - end) / 1.9)) * 0.5 + 18 * bump(t, 2.5 + 0.14 * i, 0.4)
+        bob = 6 * math.sin(TAU * (t - end) / 1.9) * math.cos(i * 0.9) + 6 * (1 - math.cos(TAU * (t - end) / 1.9)) * 0.5 + 18 * bump(t, b1(2.0) + 0.12 * i, 0.4)
         tilt = r + 1.6 * wave(t, end, 2.6, i * 1.3)
         body = (rrect(-104, -157, 224, 330, 30, INK, None) + rrect(-112, -165, 224, 330, 30, WHITE, INK, 5) + rrect(-30, -150, 60, 10, 5, INK, None) + inner)
         mk = 0.5 + 0.5 * math.sin(TAU * 1.5 * t + i)
@@ -439,50 +446,49 @@ def a1_phones(t, end, dx=0.0):
 
 
 def a1_ledger(t, end):
+    """Back view: he walks up into the frame, watches the phones, walks to the door and takes the handle."""
     X1, Y1, sc = A1_END
-    X0, Y0 = 610, 2096                                    # he starts low in the frame, looking up at the phones
-    wk = smooth(seg(t, 3.55, 5.45))
-    x, y = bez((X0, Y0), (620, 1880), (400, 1800), (X1, Y1), wk)
-    walking = 1 if 3.55 < t < 5.45 else 0
-    ph = TAU * 3.2 * (t - 3.55)
+    P0, P1 = (585, 2096), (570, 1846)
+    wa, wb, wc, wd = b1(0.45), b1(1.45), b1(3.0), b1(4.4)
+    w2 = smooth(seg(t, wc, wd))
+    x, y = lerp2(P0, P1, smooth(seg(t, wa, wb))) if w2 <= 0 else bez(P1, (600, 1720), (420, 1700), (X1, Y1), w2)
+    walking = 1 if (wa < t < wb or wc < t < wd) else 0
+    ph = TAU * 3.2 * (t - (wa if t < wb else wc))
     legs = tuple(a * walking for a in kick(ph, 22))
     y -= 12 * abs(math.sin(ph)) * walking
-    pre = 1 - seg(t, 3.3, 3.6)                            # before the walk: he bobs and hops when a phone pops
-    y -= pre * (hops(t, [p[4] + 0.06 for p in PH], 0.3, 34) + 6 * math.sin(TAU * t / 1.05))
-    tilt = keys(t, [(0, 0), (0.3, 4), (2.9, 4), (3.35, -5), (3.6, -3), (5.45, -1.5), (5.75, 0)])
-    tilt += 2.2 * math.sin(ph) * walking + pre * 1.5 * math.sin(TAU * t / 1.6)
-    # hand to the handle, then it rattles
-    reach = ease(seg(t, 5.38, 5.82))
-    rt = math.sin(math.pi * seg(t, 5.86, end)) * math.sin(TAU * 6 * (t - end))
+    idle = (1 - walking) * (1 - seg(t, wd, wd + 0.2))      # standing: he bobs, and hops when the phones jump
+    y -= idle * (hops(t, [PH[0][4] + 0.05, b1(2.0)], 0.3, 30) + 6 * math.sin(TAU * t / 1.05))
+    tilt = keys(t, [(0, 0), (b1(0.3), 3), (b1(2.8), 4), (b1(3.05), -5), (b1(3.3), -3), (wd, -1.5), (wd + 0.2, 0)])
+    tilt += 2.2 * math.sin(ph) * walking + idle * 1.5 * math.sin(TAU * t / 1.6)
+    reach = ease(seg(t, b1(4.45), b1(4.85)))
+    rt = math.sin(math.pi * seg(t, b1(4.88), end)) * math.sin(TAU * 6 * (t - end))
     L = F.Ledger('back', x, y, sc, rot=round(tilt, 2))
     armR = None
     if reach > 0:
         tx, ty = L.r((HX1 - 2, HY1 + 6 + 5 * rt))
         hx_, hy_ = lerp2((186, 188), (tx, ty), reach)
         armR = {'hand': (hx_ + 14 * math.sin(math.pi * reach), hy_), 'front': True, 'bend': 1}
-    k = 1 - 0.05 * bump(t, 5.84, 0.2) + pre * 0.02 * math.sin(TAU * t / 1.05)
+    k = 1 - 0.05 * bump(t, b1(4.86), 0.2) + idle * 0.02 * math.sin(TAU * t / 1.05)
     s = shadow(x, y + 40.6 + 12 * abs(math.sin(ph)) * walking, 122, 0.08)
     s += squash(back_ledger(x, y, sc, tilt, None, armR, legs), x, y, k)
-    # speed lines: he has just walked up
-    g = ease_out(seg(t, 4.5, 5.3))
+    g = ease_out(seg(t, b1(3.9), b1(4.45)))                # speed lines: he has just walked up
     if g > 0:
         lx, ly = X1 - 236, FL1 + 60
         pulse = 1 + 0.12 * wave(t, end, 0.6)
         for i in range(3):
-            ln = (90 - (i % 2) * 22) * g * pulse
-            s += line(lx, ly + i * 34, lx - ln, ly + i * 34, WHITE, 9)
-    # the handle rattles
-    g = seg(t, 5.8, 6.0)
+            s += line(lx, ly + i * 34, lx - (90 - (i % 2) * 22) * g * pulse, ly + i * 34, WHITE, 9)
+    g = seg(t, b1(4.85), b1(5.0))                          # the handle rattles
     if g > 0:
         d = 6 * wave(t, end, 0.3)
-        s += pop(path(f'M{HX1 - 30} {HY1 - 96 - d:.1f} q30 -34 60 0', stroke=WHITE, sw=7) + path(f'M{HX1 - 16} {HY1 - 120 - 2 * d:.1f} q16 -18 32 0', stroke=WHITE, sw=7), HX1, HY1 - 100, g)
+        s += pop(path(f'M{HX1 - 30} {HY1 - 96 - d:.1f} q30 -34 60 0', stroke=WHITE, sw=7) +
+                 path(f'M{HX1 - 16} {HY1 - 120 - 2 * d:.1f} q16 -18 32 0', stroke=WHITE, sw=7), HX1, HY1 - 100, g)
     return s, 5 * rt
 
 
 def A1(t, dur):
     turn = seg(t, A1_TURN, A1_TURN + 0.3)
     s = F.floor(FL1 - 40, YEL_D)
-    shake = bump(t, 4.85, 0.75)                           # "... stuck in books"
+    shake = bump(t, b1(4.2), 0.7)                           # "... stuck in books"
     s += a1_pile(t, dur, shake)
     led, rattle = a1_ledger(t, dur)
     inside, door = a1_door(0, rattle * 0.6)
@@ -504,9 +510,16 @@ ZY2, BW2, BH2 = TY2 + 86, 200, 100
 HOME2 = (540, 1076)
 DEB2, CRE2 = (340, ZY2 + BH2 / 2), (740, ZY2 + BH2 / 2)
 MX2, MY2 = 742, DT2 + 46
-A2_DUR = 7.0
-A2_GO, A2_DROP, A2_POP, A2_HOP = 3.38, 4.55, 5.98, (6.14, 6.60)
-A2_HOP_P = (0.44, 0.80)                                   # the second hop peaks exactly at the end, as in the static frame
+A2_DUR = DUR['A2']
+
+
+def b2(sec):
+    return sec * A2_DUR / 2.49
+
+
+A2_GO, A2_DROP, A2_POP = b2(0.62), b2(1.36), b2(1.5)      # the drag starts, the block lands, Correct pops
+A2_HOP_P = b2(0.6)
+A2_HOP = A2_DUR - A2_HOP_P / 2                            # one hop that peaks exactly at the end, as in the static frame
 
 
 @functools.lru_cache(None)
@@ -520,15 +533,11 @@ def a2_qstrip():
 
 
 def a2_block_pos(t):
-    """(x, y, held, u_left): the block follows the cursor: two tries, then the real drag onto Debit."""
+    """(x, y, held, u_left): the block follows the cursor: one wobble towards Credit, then the drag onto Debit."""
     L = lambda u: qb(HOME2, (330, 1080), DEB2, u)
     R = lambda u: qb(HOME2, (750, 1080), CRE2, u)
     if t < A2_GO:
-        ur = keys(t, [(0.75, 0), (1.15, 0.52), (1.5, 0)]) + keys(t, [(2.45, 0), (2.68, 0.16), (2.92, 0)])
-        ul = keys(t, [(1.62, 0), (1.98, 0.4), (2.34, 0)])
-        if ur > 0:
-            return (*R(ur), True, 0.0)
-        return (*L(ul), True, 0.0)
+        return (*R(keys(t, [(b2(0.2), 0), (b2(0.38), 0.3), (b2(0.56), 0)])), True, 0.0)
     u = ease(seg(t, A2_GO, A2_DROP))
     return (*L(u), t < A2_DROP, u)
 
@@ -537,9 +546,8 @@ def a2_screen(t, q=1.0, block=True):
     s = a2_monitor()
     s += pop(a2_qstrip(), 540, 513, q, rot0=-3)
     bx, by, held, u = a2_block_pos(t)
-    lit = seg(t, A2_DROP, A2_DROP + 0.25)
-    tau = t - A2_DROP - 0.02                              # the T tips like a scale under the block, then levels: "watch them balance"
-    tilt = -5.5 * math.exp(-1.9 * tau) * math.sin(TAU * 1.45 * tau) * (1 - seg(t, 5.7, 5.94)) if 0 < tau < 1.4 else 0.0
+    lit = seg(t, A2_DROP, A2_DROP + 0.15)
+    tilt = 0.0
     s += T(TM2, TY2 - 22, 'Cash account', 46)
     g = line(140, TY2, 940, TY2, INK, 8) + line(TM2, TY2, TM2, TB2, INK, 8)
     g += T(340, TY2 + 58, 'Debit', 46, fill=SLATE) + T(740, TY2 + 58, 'Credit', 46, fill=SLATE)
@@ -550,17 +558,17 @@ def a2_screen(t, q=1.0, block=True):
     if lit <= 0:
         g += scale(rrect(240, ZY2, BW2, BH2, 16, WHITE, SLATE, 5, dash), 340, ZY2 + 50, 1 + 0.06 * near_l)
     else:
-        glow = bump(t, A2_DROP, 0.5)
+        glow = bump(t, A2_DROP, 0.4)
         g += pop(rrect(230, ZY2 - 10, BW2 + 20, BH2 + 20, 22, GREEN_T, GREEN, 6), 340, ZY2 + 50, 0.4 + 0.6 * lit)
         if glow > 0:
-            g += fade(rrect(230 - 18 * glow, ZY2 - 10 - 18 * glow, BW2 + 20 + 36 * glow, BH2 + 20 + 36 * glow, 30, 'none', GREEN, 8), 1 - seg(t, A2_DROP, A2_DROP + 0.5))
+            g += fade(rrect(230 - 18 * glow, ZY2 - 10 - 18 * glow, BW2 + 20 + 36 * glow, BH2 + 20 + 36 * glow, 30, 'none', GREEN, 8), 1 - seg(t, A2_DROP, A2_DROP + 0.4))
     away = clamp(math.hypot(bx - HOME2[0], by - HOME2[1]) / 90)
     s += fade(rrect(HOME2[0] - BW2 / 2, HOME2[1] - 46, BW2, BH2 - 8, 16, 'none', SLATE, 5, dash), away)
-    ga = 1 - seg(t, A2_GO, A2_GO + 0.25)
+    ga = 1 - seg(t, A2_GO, A2_GO + 0.15)
     s += ghost_q((HOME2[0] - 108, HOME2[1] - 20), (330, HOME2[1] - 30), (340, ZY2 + BH2 + 22), t, SLATE, ga)
     s += ghost_q((HOME2[0] + 108, HOME2[1] - 20), (750, HOME2[1] - 30), (740, ZY2 + BH2 + 22), t, SLATE, ga)
     s += qarrow((HOME2[0] - 108, HOME2[1] - 4), (330, HOME2[1]), (338, ZY2 + BH2 + 26), seg(u, 0.12, 0.98), BLUE, 8, 30)
-    press = bump(t, 0.5, 0.26) + bump(t, A2_GO - 0.16, 0.24) + bump(t, A2_DROP, 0.22)
+    press = bump(t, A2_GO - 0.12, 0.2) + bump(t, A2_DROP, 0.2)
     cur = cursor(bx + 84, by + lerp(-6, 4, u), press)
     if held:
         s += rot(g, TM2, TY2, tilt)
@@ -573,7 +581,7 @@ def a2_screen(t, q=1.0, block=True):
             g += scale(F.block(DEB2[0], DEB2[1], w=BW2, h=BH2 - 8, fill=BLUE), DEB2[0], DEB2[1], k)
         g += cur
         s += rot(g, TM2, TY2, tilt)
-    s += popup(772, 958, 'Correct', 56, None, seg(t, A2_POP, A2_POP + 0.34), t, A2_DUR, col=GREEN, sw=7, corners=(1, 2), n1=44)
+    s += popup(772, 958, 'Correct', 56, None, seg(t, A2_POP, A2_POP + 0.26), t, A2_DUR, col=GREEN, sw=7, corners=(1, 2), n1=44)
     return s, (bx, by, tilt)
 
 
@@ -602,30 +610,26 @@ A2_TOP = FL2 + (34 - 222) * 2.3
 
 
 def a2_ledger(t, bx, by, tiltT):
-    """Back view at the desk: scratching and leaning while he hesitates, the mouse hand dragging, then both arms up."""
+    """Back view at the desk: scratches and leans for one wobble, the mouse hand drags, then both arms up and one hop."""
     sc, FL = 2.3, FL2
-    h1, h2 = A2_HOP
-    up = hop(t, h1, A2_HOP_P[0], 52, 1) + hop(t, h2, A2_HOP_P[1], 44, 1) + 9 * abs(math.sin(TAU * 1.45 * (t - A2_DROP))) * seg(t, A2_DROP + 0.1, A2_DROP + 0.3) * (1 - seg(t, 5.7, 5.9))
-    tilt = keys(t, [(0, -5), (0.75, -5), (1.12, 4), (1.5, -3), (1.98, -8), (2.34, -4), (2.68, 2), (2.95, -5), (3.2, -7),
-                    (3.5, -1), (A2_DROP, -3.5), (A2_DROP + 0.25, 0)]) + tiltT * 1.1
-    tilt += 0.8 * math.sin(TAU * t / 1.3) * (1 - seg(t, h1 - 0.2, h1))
-    mdx = clamp((bx - HOME2[0]) * 0.16, -34, 34) * (1 - seg(t, A2_DROP + 0.25, A2_DROP + 0.6))
-    mdy = clamp((by - HOME2[1]) * 0.05, -10, 0) * (1 - seg(t, A2_DROP + 0.25, A2_DROP + 0.6))
+    h1 = A2_HOP
+    up = hop(t, h1, A2_HOP_P, 44, 1)
+    tilt = keys(t, [(0, -5), (b2(0.2), -5), (b2(0.38), 4), (b2(0.56), -6), (b2(0.78), -1), (A2_DROP, -3.5), (A2_DROP + 0.12, 0)]) + tiltT
+    tilt += 0.8 * math.sin(TAU * t / 1.3) * (1 - seg(t, A2_POP, A2_POP + 0.1))
+    rel = 1 - seg(t, A2_DROP + 0.08, A2_DROP + 0.25)
+    mdx = clamp((bx - HOME2[0]) * 0.16, -34, 34) * rel
+    mdy = clamp((by - HOME2[1]) * 0.05, -10, 0) * rel
     L = F.Ledger('back', 540, FL - up, sc, rot=round(tilt, 2))
-    cheer = ease_out(seg(t, h1 - 0.02, h1 + 0.2))
-    # left hand: scratches his head, then drops to the keyboard, then up
-    scr = math.sin(TAU * 4.6 * t) * (1 if (t % 1.2) < 0.75 else 0.2)
-    down = ease(seg(t, 3.05, 3.4))
-    drum = 3 * abs(math.sin(TAU * 3.2 * t)) * seg(t, A2_DROP, A2_DROP + 0.2)
-    kb = L.r((356, DT2 + 50 - drum))
-    hl = lerp2((45 + 3.5 * scr, 93 - 1.5 * scr), kb, down)
+    cheer = ease_out(seg(t, A2_POP + 0.03, A2_POP + 0.22))
+    scr = math.sin(TAU * 4.6 * t)
+    down = ease(seg(t, b2(0.5), b2(0.7)))                  # left hand: off his head and onto the keyboard
+    hl = lerp2((45 + 3.5 * scr, 93 - 1.5 * scr), L.r((356, DT2 + 50)), down)
     hl = lerp2(hl, (26, 104), cheer)
     hr = lerp2(L.r((MX2 + mdx, MY2 + mdy - 2)), (214, 104), cheer)
-    wavey = 5 * math.sin(TAU * 3 * t) * cheer * (1 - seg(t, A2_DUR - 0.25, A2_DUR))
+    wavey = 5 * math.sin(TAU * 3 * (t - A2_DUR)) * cheer * (1 - seg(t, A2_DUR - 0.25, A2_DUR))
     armL = {'hand': (hl[0] - wavey * 0.5, hl[1] + wavey * 0.3), 'bend': -1}
     armR = {'hand': (hr[0] + wavey * 0.5, hr[1] + wavey * 0.3), 'bend': 1}
-    k = 1 - 0.06 * bump(t, h1 - 0.15, 0.17) + 0.04 * bump(t, h1, 0.26) - 0.06 * bump(t, h1 + A2_HOP_P[0] - 0.03, 0.14) \
-        - 0.035 * bump(t, A2_DROP + 0.05, 0.3)
+    k = 1 - 0.06 * bump(t, h1 - 0.15, 0.17) + 0.04 * bump(t, h1, 0.26) - 0.035 * bump(t, A2_DROP + 0.03, 0.2) + 0.04 * bump(t, A2_POP + 0.03, 0.22)
     s = shadow(540, FL + 32, lerp(96, 74, clamp(up / 44)))
     body = squash(back_ledger(540, FL - up, sc, tilt, armL, armR), 540, FL - up, k)
     return body, s, (mdx, mdy), up
@@ -634,21 +638,20 @@ def a2_ledger(t, bx, by, tiltT):
 def a2_marks(t, up):
     """Question marks and the scratch squiggle while he hesitates; sparks, confetti and hop lines when he has it."""
     top = A2_TOP
-    s = qmarks(A2_Q(top), t, A2_DUR, 0.12, 0.14, out=3.0)
-    sq = (1 - seg(t, 3.0, 3.2)) * seg(t, 0.1, 0.3)
+    s = qmarks(A2_Q(top), t, A2_DUR, 0.04, 0.07, out=b2(0.52))
+    sq = (1 - seg(t, b2(0.5), b2(0.6))) * seg(t, 0.04, 0.15)
     if sq > 0:
         x, y = 540 + (46 - 120) * 2.3 - 40, FL2 + (70 - 222) * 2.3
         d = 5 * math.sin(TAU * 4.6 * t)
         s += fade(path(f'M{x + d:.0f} {y:.0f} q-14 14 0 28 q14 14 0 28', stroke=WHITE, sw=7), sq)
-    h1 = A2_HOP[0]
-    j = seg(t, h1, h1 + 0.3)
+    h1 = A2_POP + 0.03
+    j = seg(t, h1, h1 + 0.25)
     if j > 0:
-        topj = top - up
         pulse = wave(t, A2_DUR, 0.5)
-        s += sparks(540, topj + 150, 205, 252, (-126, -106, -74, -54), WHITE, 9, back_out(j) * (1 + 0.12 * pulse), 6 * pulse)
+        s += sparks(540, top - up + 150, 205, 252, (-126, -106, -74, -54), WHITE, 9, back_out(j) * (1 + 0.12 * pulse), 6 * pulse)
         base = top - 44
         s += confetti([(250, base + 10, -20), (205, base + 110, 30), (150, base + 30, 60), (930, base - 30, 25), (968, base + 80, -35), (700, base - 96, 10)],
-                      (540, top - 40), seg(t, h1, h1 + 0.6), t, A2_DUR)
+                      (540, top - 40), seg(t, h1, h1 + 0.5), t, A2_DUR)
         g = seg(up, 6, 30)
         for x in (478, 602):
             s += line(x - 22 * g, FL2 + 6, x + 22 * g, FL2 + 6, WHITE, 8) if g > 0 else ''
@@ -656,10 +659,10 @@ def a2_marks(t, up):
 
 
 def a2_parts(t, q=None):
-    q = seg(t, 0.05, 0.42) if q is None else q
+    q = seg(t, 0.02, 0.26) if q is None else q
     screen, (bx, by, tiltT) = a2_screen(t, q)
     body, sh, (mdx, mdy), up = a2_ledger(t, bx, by, tiltT)
-    click = seg(t, A2_DROP, A2_DROP + 0.15)
+    click = seg(t, A2_DROP, A2_DROP + 0.1)
     return dict(floor=F.floor(FL2 - 60, EMER_D), head=a2_header(), screen=screen, desk=a2_desk(mdx, mdy, click) + sh, led=body, marks=a2_marks(t, up))
 
 
@@ -677,40 +680,41 @@ def A2(t, dur):
 # T1  the door opens, he leaps through at us, green takes over, he lands at the desk
 # ---------------------------------------------------------------------------------------------
 def T1(t, dur):
-    cover = seg(t, 0.14, 0.60)                            # the green burst out of the doorway
-    arrive = seg(t, 0.50, 0.88)                           # the accounting scene assembling
+    """One move: the door flies open, he leaps in, green bursts out over everything, and he drops in at the desk."""
+    p = t / dur
+    cover = seg(p, 0.12, 0.62)                            # the green burst out of the doorway
+    arrive = seg(p, 0.50, 0.95)                           # the accounting scene assembling
     s = ''
     if cover < 1:
         s += F.floor(FL1 - 40, YEL_D)
-        opened = ease_out(seg(t, 0.0, 0.24))
+        opened = ease_out(seg(p, 0.0, 0.25))
         inside, door = a1_door(opened, 0, EMER_D)
-        zoom = 1 + 5.5 * ease_in(seg(t, 0.2, 0.6))        # the camera goes through the doorway
+        zoom = 1 + 5.5 * ease_in(seg(p, 0.2, 0.62))       # the camera goes through the doorway
         bx, by = DX1, 1090
         s += scale(inside, bx, by, zoom)
         led_back = ''
-        if t < 0.34:                                      # back view: lets go, crouches, jumps into the doorway and is swallowed by the green
+        if p < 0.4:                                       # back view: lets go, crouches, leaps into the doorway and is swallowed by the green
             X1, Y1, sc1 = A1_END
-            g = ease_in(seg(t, 0.13, 0.32))
-            k = 1 - 0.06 * bump(t, 0.0, 0.16)
-            rel = 1 - ease(seg(t, 0.0, 0.1))
+            g = ease_in(seg(p, 0.1, 0.38))
+            k = 1 - 0.06 * bump(p, 0.0, 0.14)
+            rel = 1 - ease(seg(p, 0.0, 0.1))
             L = F.Ledger('back', X1, Y1, sc1)
             armR = {'hand': lerp2((186, 188), L.r((HX1 - 2, HY1 + 6)), rel), 'front': True, 'bend': 1} if rel > 0.02 else None
             a = 20 * g
             body = scale(squash(back_ledger(X1, Y1, sc1, -3 * g, None, armR, (a, -a)), X1, Y1, k), X1, Y1, 1 - 0.5 * g)
             led_back = shift(body, (DX1 - X1) * g, -230 * g)
-        if t >= 0.13:
+        if p >= 0.12:
             s += led_back
         r = 1900 * ease_in(cover) + 300 * ease_out(cover)
         if r > 4:
-            a0 = 40 * t
+            a0 = 36 * p
             pts = [(bx + (r if i % 2 == 0 else r * 0.81) * math.cos(math.radians(i * 360 / 32 + 4 + a0)),
                     by + (r if i % 2 == 0 else r * 0.81) * math.sin(math.radians(i * 360 / 32 + 4 + a0))) for i in range(32)]
             s += F.wipe(pts, EMER, EMER_D, 26)
         s += scale(door, bx, by, zoom)
-        u = max(0.0, t - 0.1)
-        pile = a1_pile(A1_DUR, A1_DUR, 0, tumble=u)
-        if t < 0.13:                                      # still in front of the door and the books while he lets go of the handle
-            g0 = 1 - seg(t, 0.0, 0.1)
+        pile = a1_pile(A1_DUR, A1_DUR, 0, tumble=max(0.0, p - 0.1) * 0.8)
+        if p < 0.12:                                      # still in front of the door and the books while he lets go of the handle
+            g0 = 1 - seg(p, 0.0, 0.1)
             s += pile + shadow(A1_END[0], A1_END[1] + 40.6, 122, 0.08) + led_back
             marks = sparks(DX1, 400, 300, 350, (-158, -168, -180, 168), WHITE, 8, g0) + sparks(DX1, 330, 100, 150, (-110, -90, -70), WHITE, 8, g0)
             marks += F.speed(A1_END[0] - 236, FL1 + 60, 3, 90 * g0, 34, WHITE, 9) if g0 > 0.3 else ''
@@ -718,43 +722,32 @@ def T1(t, dur):
             s += fade(marks, g0)
         else:
             s += pile
-        k = ease_in(seg(t, 0.1, 0.55))
+        k = ease_in(seg(p, 0.1, 0.55))
         board = F.panel(DX1 - 270, 330, 540, 140, 24) + T(DX1, 421, 'Learning business', 56, check=False)
         s += f'<g transform="translate({260 * k:.1f} {-620 * k:.1f}) rotate({38 * k:.1f} {DX1} 400)">{board}</g>'
-        if t < 0.12:
+        if p < 0.12:
             s += line(DX1 - 130, 470, DX1 - 130, DT1, INK, 6) + line(DX1 + 130, 470, DX1 + 130, DT1, INK, 6)
-        s += a1_phones(A1_DUR, A1_DUR, dx=700 * ease_in(seg(t, 0.0, 0.32)))
+        s += a1_phones(A1_DUR, A1_DUR, dx=700 * ease_in(seg(p, 0.0, 0.35)))
     bg = YEL if cover < 1 else EMER
-    # the accounting scene drops, rises and pops into place
-    if arrive > 0:
+    if arrive > 0:                                        # the accounting scene drops, rises and pops into place
         e = ease_out(arrive)
         p2 = a2_parts(0.0, q=0.0)
         s += shift(p2['floor'], 0, 260 * (1 - e))
         s += shift(p2['head'], 0, -460 * (1 - e))
         s += pop(p2['screen'], 540, 800, arrive)
         s += shift(p2['desk'], 0, 520 * (1 - e))
-    # Ledger: back view crouches and jumps in; front view flies at us; back view lands at the desk
-    if 0.28 <= t < 0.78:
-        g = ease_out(seg(t, 0.28, 0.54))
-        d = ease(seg(t, 0.56, 0.80))
-        sc = lerp(lerp(1.3, 4.4, g), 2.3, d)
-        cx, cy = lerp(lerp(DX1, 610, g), 540, d), lerp(lerp(1130, 1160, g), FL2 - 107 * 2.3, d)
-        tilt = lerp(-7 * g, 0, d)
-        a = lerp(20, 0, d)
-        zs = seg(t, 0.3, 0.5) * (1 - seg(t, 0.56, 0.66))
-        if zs > 0:
-            s += fade(sparks(cx, cy, 118 * sc, 139 * sc, (-128, -112, -62, -48, 48, 62, 118, 132), WHITE, 10, 1, 60 * g), zs)
-        m = F.Mover(cx, cy, sc, round(tilt, 2))
-        s += m.draw((round(a, 1), round(-a, 1)), F.UPL, F.UPR, F.JOY)
-    if t >= 0.78:
-        g = seg(t, 0.78, dur)
-        e = ease(g)
-        tilt = -5 * e
-        L = F.Ledger('back', 540, FL2, 2.3, rot=round(tilt, 2))
-        armL = {'hand': lerp2((26, 104), (45, 93), e), 'bend': -1}
-        armR = {'hand': lerp2((214, 104), L.r((MX2, MY2 - 2)), e), 'bend': 1}
-        k = 1 - 0.06 * bump(t, 0.77, 0.12)
-        s += shadow(540, FL2 + 32, 96) + squash(back_ledger(540, FL2, 2.3, tilt, armL, armR), 540, FL2, k)
+    if p >= 0.55:                                         # the same back view drops in from above and lands at the desk
+        e = ease_in(seg(p, 0.55, 0.86))
+        e2 = ease(seg(p, 0.84, 1.0))
+        y = FL2 - 1500 * (1 - e)
+        tilt = -5 * e2
+        L = F.Ledger('back', 540, y, 2.3, rot=round(tilt, 2))
+        armL = {'hand': lerp2((26, 104), (45, 93), e2), 'bend': -1}
+        armR = {'hand': lerp2((214, 104), L.r((MX2, y - FL2 + MY2 - 2)), e2), 'bend': 1}
+        k = 1 + 0.05 * (1 - e) - 0.06 * bump(p, 0.85, 0.14)
+        s += squash(back_ledger(540, y, 2.3, tilt, armL, armR), 540, y, k)
+        if e < 1:
+            s += sparks(540, y - 420, 60, 150, (-100, -90, -80), WHITE, 9)
     return s, bg
 
 
@@ -767,10 +760,16 @@ X3 = lambda yr: OX3 + 44 + yr * 35
 Y3 = lambda v: OY3 - v * PPE3
 V3 = lambda yr: 1000 * 1.05 ** yr
 RY3 = 1222
-A3_DUR = 7.0
-A3_GRAB, A3_D0, A3_D1 = 1.28, 1.48, 4.08
-A3_JOY = 4.34
-A3_HOPS = (A3_JOY, A3_JOY + 0.42)
+A3_DUR = DUR['A3']
+
+
+def b3(sec):
+    return sec * A3_DUR / 2.62
+
+
+A3_GRAB, A3_D0, A3_D1 = b3(0.42), b3(0.55), b3(1.55)      # press the knob, glide, arrive at year 15
+A3_JOY = b3(1.7)
+A3_HOPS = (A3_JOY,)
 TOP3 = FL3 - 188 * SC3
 
 
@@ -804,21 +803,21 @@ def a3_year(t):
 
 def a3_chart(t):
     yr = a3_year(t)
-    yi = int(yr + 1e-6)
-    done = seg(t, A3_D1, A3_D1 + 0.3)
+    yi = 3 * int(yr / 3 + 0.5)                            # the label counts in steps of three years and ends on 15
+    done = seg(t, A3_D1, A3_D1 + 0.2)
     s = a3_static()
     # the Double line: it flashes when the savings cross it
-    fl = bump(t, A3_D1 - 0.1, 0.6)
+    fl = bump(t, A3_D1 - 0.1, 0.5)
     s += line(OX3, Y3(2000), X3(20) + 20, Y3(2000), GREEN, 5 + 5 * fl, dash='16 12', extra=f'stroke-dashoffset="{-18 * t:.1f}"')
     s += scale(T(X3(20) + 20, Y3(2000) - 16, 'Double', 32, anchor='end', fill=GREEN_D), X3(20) - 30, Y3(2000) - 28, 1 + 0.18 * fl)
     # coin stacks: year 0 from the start, then 5, 10 and 15 stack up as the slider reaches them
     for k in (0, 5, 10, 15):
         n = round(V3(k) / 125)
         ch = V3(k) * PPE3 / n
-        g = 1.0 if k == 0 else seg(yr, k - 1.6, k)
+        g = 1.0 if k == 0 else seg(yr, k - 3, k)
         if g <= 0:
             continue
-        land_ = bump(t, 0.0, 0.3) if k == 0 else 0.0           # the coin from the transition lands on the first stack
+        land_ = bump(t, 0.0, 0.22) if k == 0 else 0.0           # the coin from the transition lands on the first stack
         shine = loop(t - 0.15 * k / 5, A3_DUR, 1.6)
         for j in range(n):
             pj = seg(g * n, j, j + 1)
@@ -828,7 +827,7 @@ def a3_chart(t):
             lit = '#FFE89A' if abs(shine * (n + 8) - j) < 0.8 and g >= 1 and t < A3_DUR - 0.05 else YEL
             s += fade(rrect(X3(k) - 27 - 4 * land_, OY3 - 3 - ch * (j + 1) * (1 - 0.1 * land_) + dy, 54 + 8 * land_, ch, 7, lit, INK, 3), clamp(pj * 3))
     cv = lambda a, b: 'M' + ' L'.join(f'{X3(a + (b - a) * i / 40):.1f} {Y3(V3(a + (b - a) * i / 40)):.1f}' for i in range(41))
-    pj = seg(t, A3_JOY + 0.3, A3_JOY + 1.3)
+    pj = seg(t, A3_JOY + 0.15, A3_JOY + 0.7)
     if pj > 0:
         s += path(cv(15, 15 + 5 * ease(pj)), stroke=SLATE, sw=5, dash='3 13')
     if yr > 0.05:
@@ -837,13 +836,13 @@ def a3_chart(t):
     if fl > 0.05:
         s += fade(circle(px, py, 15 + 60 * seg(t, A3_D1 - 0.1, A3_D1 + 0.5), 'none', GREEN, 7), fl)
     ring = loop(t, A3_DUR, 1.1)
-    s += fade(circle(px, py, 15 + 26 * ring, 'none', BLUE, 4), (1 - ring) * 0.7 * seg(t, 0.4, 0.7))
+    s += fade(circle(px, py, 15 + 26 * ring, 'none', BLUE, 4), (1 - ring) * 0.7 * seg(t, 0.1, 0.3))
     s += circle(px, py, 15, BLUE, INK, 4)
     lab = f'Year {yi}: ${V3(yi):,.0f}'
     lw = F.tw(lab, 40) + 56
     bx = px + lerp(lw / 2 - 30, -70, ease(seg(yr, 0.3, 8)))
     by = py - 118
-    tickk = 1 + 0.04 * (1 - (yr % 1)) ** 3 if 0 < yr < 15 else 1          # a small tick each time the year changes
+    tickk = 1 + 0.05 * (1 - (yr % 3) / 3) ** 3 if 0 < yr < 15 else 1      # a small tick each time the label changes
     b = rrect(bx - lw / 2, by, lw, 74, 20, BLUE, INK, 5) + T(bx, by + 51, lab, 40, fill=WHITE)
     s += scale(b, bx, by + 37, tickk * (1 + 0.1 * bump(t, A3_D1, 0.3)))
     s += path(f'M{px - 16} {by + 72} L{px} {py - 22} L{px + 16} {by + 72} Z', fill=BLUE, stroke=None)
@@ -852,13 +851,13 @@ def a3_chart(t):
     if yr > 0:
         s += rrect(X3(0) - 11, RY3 - 9, X3(yr) - X3(0) + 11, 18, 9, BLUE, None)
         s += fade(circle(X3(0), RY3, 30, 'none', SLATE, 5).replace('/>', ' stroke-dasharray="10 8"/>'), moved)
-    s += ghost_line(X3(0) + 52, RY3 - 52, X3(8), RY3 - 52, t, SLATE, 1 - seg(t, A3_D0, A3_D0 + 0.3))
+    s += ghost_line(X3(0) + 52, RY3 - 52, X3(8), RY3 - 52, t, SLATE, 1 - seg(t, A3_D0, A3_D0 + 0.15))
     ax = X3(yr) - 50
     if ax > X3(0) + 80:
         s += F.arrow(X3(0) + 44, RY3 - 52, ax, RY3 - 52, BLUE, 9, head=30)
-    press = bump(t, A3_GRAB - 0.1, 0.3) + bump(t, A3_D1 + 0.02, 0.24)
+    press = bump(t, A3_GRAB - 0.08, 0.2) + bump(t, A3_D1 + 0.02, 0.2)
     hold = 1 if A3_GRAB < t < A3_D1 else 0
-    wig = 5 * math.sin(TAU * 1.5 * t) * (1 - seg(t, A3_GRAB - 0.25, A3_GRAB)) * seg(t, 0.3, 0.6)
+    wig = 5 * math.sin(TAU * 3 * t) * (1 - seg(t, A3_GRAB - 0.15, A3_GRAB)) * seg(t, 0.08, 0.2)
     kn = 1 + 0.12 * hold + 0.06 * wave(t, A3_DUR, 0.9) * (1 - hold) * done
     s += scale(circle(X3(yr), RY3, 32, WHITE, INK, 5) + circle(X3(yr), RY3, 13, BLUE, None), X3(yr), RY3, kn)
     s += cursor(X3(yr) + 20 + wig, RY3 + 2 + abs(wig) * 0.5, press)
@@ -866,39 +865,36 @@ def a3_chart(t):
 
 
 def a3_ledger(t):
-    """Think (watching the slider) -> joy with hops; the marks of each moment round him."""
+    """Think (watching the slider) -> joy with one hop; the marks of each moment round him."""
     yr = a3_year(t)
     cut = A3_JOY
     up = hops(t, A3_HOPS, 0.42, 54)
-    s = ''
-    dance = seg(t, A3_HOPS[1] + 0.5, A3_HOPS[1] + 0.7) * (1 - seg(t, A3_DUR - 0.4, A3_DUR - 0.05))
-    up += 16 * abs(math.sin(TAU * 1.15 * (t - A3_DUR))) * dance
     if t < cut:
-        look = (lerp(0, 5.6, seg(yr, 0, 15)) + 2.2 * seg(t, 0.9, 1.3), 1.8 * seg(t, 0.9, 1.3))
-        tilt = keys(t, [(0, 0), (0.9, 0), (1.3, 3), (A3_D1, 6), (cut - 0.1, 2)])
-        sy = 1 - 0.06 * bump(t, cut - 0.16, 0.18)
-        nod = 5 * abs(math.sin(TAU * 0.9 * t)) * (1 if t < A3_D0 else 0.4)
-        s += rig('think', LX3, FL3, SC3, t, nod, tilt, look, sy=sy)
+        lk = seg(t, b3(0.3), b3(0.5))
+        look = (lerp(0, 5.6, seg(yr, 0, 15)) + 2.2 * lk, 1.8 * lk)
+        tilt = keys(t, [(0, 0), (b3(0.3), 0), (b3(0.5), 3), (A3_D1, 6), (cut - 0.08, 2)])
+        sy = 1 - 0.06 * bump(t, cut - 0.15, 0.17)
+        nod = 5 * abs(math.sin(TAU * 1.4 * t)) * (1 if t < A3_D0 else 0.4)
+        s = rig('think', LX3, FL3, SC3, t, nod, tilt, look, sy=sy)
     else:
-        sy = land(t, A3_HOPS, 0.42)
-        tilt = 4 * math.sin(TAU * 1.15 * (t - A3_DUR)) * (1 - seg(t, A3_DUR - 0.5, A3_DUR))
-        s += rig('joy', LX3, FL3, SC3, t, up, tilt, sy=sy, alive=1 - seg(t, A3_DUR - 0.4, A3_DUR))
-    marks = qmarks(((LX3 - 170, TOP3 + 14, 92, -16), (LX3 - 70, TOP3 - 26, 112, 4), (LX3 + 150, TOP3 + 6, 80, 16)), t, A3_DUR, 0.25, 0.14, out=cut - 0.25)
-    j = seg(t, cut, cut + 0.3)
+        calm = 1 - seg(t, A3_DUR - 0.3, A3_DUR)
+        s = rig('joy', LX3, FL3, SC3, t, up, 4 * math.sin(TAU * 1.6 * (t - A3_DUR)) * calm, sy=land(t, A3_HOPS, 0.42), alive=calm)
+    marks = qmarks(((LX3 - 170, TOP3 + 14, 92, -16), (LX3 - 70, TOP3 - 26, 112, 4), (LX3 + 150, TOP3 + 6, 80, 16)), t, A3_DUR, 0.05, 0.07, out=cut - 0.16)
+    j = seg(t, cut, cut + 0.25)
     if j > 0:
         pulse = wave(t, A3_DUR, 0.5)
         marks += sparks(LX3, TOP3 + 150 - up, 215, 262, (-128, -106, -74, -52), WHITE, 9, back_out(j) * (1 + 0.12 * pulse), 6 * pulse)
         wide = min(136 * SC3 / 2 + 110, LX3 - 50)
         marks += confetti([(LX3 - wide, TOP3 - 20, -20), (LX3 - wide + 26, TOP3 + 120, 30), (LX3 + wide, TOP3 - 40, 25),
-                           (LX3 + wide - 10, TOP3 + 110, -35), (LX3 - wide + 70, TOP3 - 70, 60)], (LX3, TOP3 - 30), seg(t, cut, cut + 0.6), t, A3_DUR)
+                           (LX3 + wide - 10, TOP3 + 110, -35), (LX3 - wide + 70, TOP3 - 70, 60)], (LX3, TOP3 - 30), seg(t, cut, cut + 0.5), t, A3_DUR)
     return s, marks
 
 
 def a3_parts(t, q=None):
-    q = seg(t, 0.05, 0.42) if q is None else q
+    q = seg(t, 0.02, 0.26) if q is None else q
     led, marks = a3_ledger(t)
-    extra = thought(720, FL3 - 300, t, 0.42, A3_JOY - 0.2)
-    extra += popup(762, FL3 - 260, 'Correct', 68, 'It doubles in year 15', seg(t, A3_JOY + 0.12, A3_JOY + 0.48), t, A3_DUR)
+    extra = thought(720, FL3 - 300, t, 0.08, A3_JOY - 0.14)
+    extra += popup(762, FL3 - 260, 'Correct', 68, 'It doubles in year 15', seg(t, A3_JOY + 0.06, A3_JOY + 0.32), t, A3_DUR)
     return dict(floor=F.floor(FL3 - 60, ORANGE_D), head=a3_head(), q=pop(a3_qcard(), 540, 490, q, rot0=-3), chart=a3_chart(t), led=led, marks=marks, extra=extra)
 
 
@@ -911,6 +907,7 @@ def A3(t, dur):
 # T2  the $500 block becomes a coin, he runs right with it, green wipes to orange
 # ---------------------------------------------------------------------------------------------
 def T2(t, dur):
+    t = t / dur * 0.9                                     # beats below are written on a 0.9 scale of the transition
     e = ease(seg(t, 0.10, 0.78))
     p2, p3 = a2_parts(A2_DUR), a3_parts(0.0, q=0.0)
     scr2, _ = a2_screen(A2_DUR, 1.0, block=False)
@@ -931,7 +928,7 @@ def T2(t, dur):
     # the block leaves the screen, turns into a coin in the air and lands in his hands
     f = seg(t, 0.0, 0.30)
     R = 36 * sc
-    m = F.Mover.on_feet(fx, fyy - 14 * abs(math.sin(TAU * 4.6 * ph)) * run, sc, round(10 * run, 2))
+    m = F.Mover.on_feet(fx, fyy - 14 * abs(math.sin(TAU * 2.2 * ph)) * run, sc, round(10 * run, 2))
     hx_, hy_ = m.w((120, 182))
     coin_svg = ''
     held = ''
@@ -961,14 +958,14 @@ def T2(t, dur):
         aL = {'hand': lerp2((28, 106), (84, 180), catch), 'front': True, 'bend': -1}
         aR = {'hand': lerp2((212, 106), (156, 180), catch), 'front': True, 'bend': 1}
         face = {'brows': 2, 'mouth': 'smile', 'look': (3, 0)} if toss <= 0.3 else {'brows': 3, 'mouth': 'open', 'look': (0, -2.4)}
-        legs = tuple(a * run for a in kick(TAU * 4.6 * ph, 26))
+        legs = tuple(a * run for a in kick(TAU * 2.2 * ph + 1.2, 26))
         body = m.draw(tuple(round(a, 1) for a in legs), aL, aR, face, held)
         k = 1 - 0.05 * bump(t, cutA, 0.1) - 0.05 * bump(t, 0.79, 0.08)
         s += shadow(fx + 6, fyy + 30, 78 * sc / 2.3)
         if run > 0.3:
             s += fade(F.speed(fx - 200, fyy - 330, 3, 110 + 30 * math.sin(TAU * 6 * t), 90, WHITE, 9), run)
             for i in range(3):
-                u = (t * 5 + i / 3) % 1
+                u = (t * 2 + i / 3) % 1
                 s += fade(circle(fx - 120 - 130 * u, fyy - 8 - 30 * u, 20 * (1 - u) + 5, WHITE, None), run * (1 - u))
         s += squash(body, fx, fyy, k)
     if t >= cutB:
@@ -986,8 +983,15 @@ FY4, CY4 = 790, 1222
 XA4, XB4 = CX4 - 3.15 * SG4, CX4 + 3.15 * SG4
 XL4, XR4 = CX4 - 1.96 * SG4, CX4 + 1.96 * SG4
 CHX4 = 540 - (300 + 470 + 30) / 2
-A4_DUR = 5.9
-A4_GRAB, A4_CROSS, A4_CLICK, A4_POP = 1.26, 2.46, 3.22, 3.46
+A4_DUR = DUR['A4']
+
+
+def b4(sec):
+    return sec * A4_DUR / 2.5
+
+
+A4_GRAB, A4_Z0, A4_Z1, A4_CLICK, A4_POP = b4(0.4), b4(0.5), b4(1.2), b4(1.5), b4(1.62)
+A4_CROSS = A4_Z0 + (A4_Z1 - A4_Z0) * 0.918                # smooth(0.918) = 0.98: the moment z passes 1.96
 TOP4 = FL4 - 188 * SC4
 hy4 = lambda x: BL4 - HH4 * math.exp(-((x - CX4) / SG4) ** 2 / 2)
 
@@ -1027,8 +1031,8 @@ def a4_static(curve=True):
 
 
 def a4_z(t):
-    """The marker: a first pull to 1.7, a short stop, then the push over 1.96 to 2.0."""
-    return keys(t, [(A4_GRAB + 0.14, 0), (2.0, 1.7), (2.2, 1.72), (2.6, 2.0)], smooth)
+    """The marker: one drag from 0 to 2.0."""
+    return 2.0 * smooth(seg(t, A4_Z0, A4_Z1))
 
 
 def a4_chip(i, on, k=1.0):
@@ -1048,7 +1052,7 @@ def a4_chart(t, curve=True):
     zx, z2 = CX4 + z * SG4, CX4 + 2.0 * SG4
     s = a4_static(curve)
     crossed = t >= A4_CROSS
-    fl = bump(t, A4_CROSS, 0.55)
+    fl = bump(t, A4_CROSS, 0.45)
     if fl > 0:                                            # the crossing: the green tail lights up
         s += fade(rrect(XR4, TP4, XB4 - XR4, BL4 - TP4, 0, GREEN, None), 0.55 * fl)
         s += T((XR4 + XB4) / 2, TP4 + 48, 'Reject H_0', 31, fill=WHITE, check=False) if fl > 0.4 else ''
@@ -1059,23 +1063,22 @@ def a4_chart(t, curve=True):
         if zx - 136 > CX4 + 60:
             s += F.arrow(CX4 + 20, FY4 + 40, zx - 136, FY4 + 40, INK, 9, head=30)
     s += ghost_line(zx + 132, FY4 + 40, z2 - 6, FY4 + 40, t, INK, (1 - seg(z, 0.0, 0.5)) if zx + 190 < z2 else 0)
-    wig = 4 * math.sin(TAU * 1.4 * t) * (1 - seg(t, A4_GRAB - 0.25, A4_GRAB)) * seg(t, 0.3, 0.6)
-    stuck = 3 * math.sin(TAU * 7 * t) * (1 if 2.0 < t < 2.2 else 0)
-    mx_ = zx + wig * 0.5 + stuck
-    green = (1 - seg(t, A4_POP + 0.2, A4_POP + 0.5)) if crossed else 0.0
+    wig = 4 * math.sin(TAU * 3 * t) * (1 - seg(t, A4_GRAB - 0.15, A4_GRAB)) * seg(t, 0.08, 0.2)
+    mx_ = zx + wig * 0.5
+    green = (1 - seg(t, A4_POP + 0.15, A4_POP + 0.4)) if crossed else 0.0
     s += line(mx_, BL4, mx_, FY4 + 40, INK, 7) + circle(mx_, BL4, 14 + 5 * fl, INK, None)
     box = rrect(mx_ - 110 + 8, FY4 + 8, 220, 80, 18, INK, None) + rrect(mx_ - 110, FY4, 220, 80, 18, YEL, INK, 5)
     if green > 0:
         box += fade(rrect(mx_ - 110, FY4, 220, 80, 18, GREEN, INK, 5), green)
     lab = 'z = 0' if z < 0.05 else f'z = {z:.1f}'
     box += T(mx_, FY4 + 56, lab, 46, fill=WHITE if green > 0.5 else INK)
-    hold = 1 if A4_GRAB < t < 2.62 else 0
-    s += scale(box, mx_, FY4 + 40, 1 + 0.05 * hold + 0.16 * fl + 0.03 * wave(t, A4_DUR, 0.9) * seg(t, 2.8, 3.0))
+    hold = 1 if A4_GRAB < t < A4_Z1 + 0.02 else 0
+    s += scale(box, mx_, FY4 + 40, 1 + 0.05 * hold + 0.16 * fl + 0.03 * wave(t, A4_DUR, 0.9) * seg(t, A4_CLICK, A4_CLICK + 0.1))
     if fl > 0:
-        e = seg(t, A4_CROSS, A4_CROSS + 0.55)
+        e = seg(t, A4_CROSS, A4_CROSS + 0.45)
         s += fade(circle(XR4, hy4(XR4) - 10, 20 + 90 * e, 'none', WHITE, 9), 1 - e) + F.star4(XR4 + 6, TP4 + 110, 34 * fl)
     # zoom lens: 2.0 lies just beyond 1.96
-    zp = seg(t, 2.64, 2.94)
+    zp = seg(t, A4_Z1, A4_Z1 + 0.22)
     if zp > 0:
         ix, iy, ir = 934, 982, 94
         bob = 4 * wave(t, A4_DUR, 1.3)
@@ -1088,69 +1091,65 @@ def a4_chart(t, curve=True):
     # chips and the click
     on = t >= A4_CLICK
     s += a4_chip(1, False)
-    hov = seg(t, A4_CLICK - 0.2, A4_CLICK)
-    s += a4_chip(0, on, 1 + 0.04 * hov * (0 if on else 1) + 0.09 * bump(t, A4_CLICK, 0.3) - 0.05 * bump(t, A4_CLICK - 0.08, 0.1))
+    hov = seg(t, A4_CLICK - 0.12, A4_CLICK)
+    s += a4_chip(0, on, 1 + 0.04 * hov * (0 if on else 1) + 0.09 * bump(t, A4_CLICK, 0.25) - 0.05 * bump(t, A4_CLICK - 0.06, 0.08))
     # cursor: on the marker, then along a dotted path to the chip
     c0 = (z2 - 104, FY4 + 62)
     c1 = (CHX4 + 300 - 16, CY4 + 66)
     cc = (400, 1000)
-    go = ease(seg(t, 2.72, 3.14))
-    press = bump(t, A4_GRAB - 0.1, 0.3) + bump(t, 2.6, 0.2) + bump(t, A4_CLICK - 0.1, 0.24)
+    go = ease(seg(t, A4_Z1 + 0.04, A4_CLICK - 0.03))
+    press = bump(t, A4_GRAB - 0.08, 0.2) + bump(t, A4_Z1, 0.12) + bump(t, A4_CLICK - 0.07, 0.16)
     if go <= 0:
         s += cursor(mx_ - 104 + wig * 0.5, FY4 + 62 + abs(wig) * 0.5, press)
     else:
-        trail = 1 - seg(t, A4_CLICK + 0.1, A4_CLICK + 0.5)
+        trail = 1 - seg(t, A4_CLICK + 0.05, A4_CLICK + 0.3)
         if trail > 0:
             pts = [qb(c0, cc, c1, go * i / 14) for i in range(15)]
             s += fade(path('M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in pts), stroke=SLATE, sw=6, dash='4 16'), trail)
         x, y = qb(c0, cc, c1, go)
-        s += click_burst(x, y, seg(t, A4_CLICK, A4_CLICK + 0.35), WHITE)
-        wob = 3 * wave(t, A4_DUR, 1.0) * seg(t, A4_CLICK + 0.4, A4_CLICK + 0.7)
+        s += click_burst(x, y, seg(t, A4_CLICK, A4_CLICK + 0.3), WHITE)
+        wob = 3 * wave(t, A4_DUR, 1.0) * seg(t, A4_CLICK + 0.3, A4_CLICK + 0.5)
         s += cursor(x + wob, y + wob * 0.6, press)
     return s
 
 
 def a4_ledger(t):
-    """confused -> aha when the marker crosses 1.96 -> cheer when the explanation pops."""
+    """confused -> aha when the marker crosses 1.96 -> cheer with one hop when the explanation pops."""
     z = a4_z(t)
-    c1, c2 = A4_CROSS + 0.04, A4_POP
-    hop_t = (c2, c2 + 0.42)
-    up = hop(t, c1, 0.36, 30, 1) + hops(t, hop_t, 0.42, 56)
-    s = ''
-    dance = seg(t, hop_t[1] + 0.5, hop_t[1] + 0.7) * (1 - seg(t, A4_DUR - 0.4, A4_DUR - 0.05))
-    up += 16 * abs(math.sin(TAU * 1.15 * (t - A4_DUR))) * dance
+    c1, c2 = A4_CROSS + 0.03, A4_POP
+    hop_t = (c2,)
+    up = hop(t, c1, 0.3, 26, 1) + hops(t, hop_t, 0.42, 56)
     if t < c1:
-        look = (lerp(1.5, 3.4, z / 2) + 1.2 * math.sin(TAU * 0.7 * t), -1.6)
-        tilt = keys(t, [(0, 0), (0.7, -2), (1.2, 2), (2.0, 5), (2.2, 6.5), (c1, 4)])
-        nod = 4 * abs(math.sin(TAU * 0.8 * t))
-        s += rig('confused', LX4, FL4, SC4, t, nod, tilt, look, sy=1 - 0.05 * bump(t, c1 - 0.15, 0.17))
+        look = (lerp(1.5, 3.4, z / 2) + 1.2 * math.sin(TAU * 1.2 * t), -1.6)
+        tilt = keys(t, [(0, 0), (b4(0.22), -2), (b4(0.45), 2), (c1, 5)])
+        nod = 4 * abs(math.sin(TAU * 1.3 * t))
+        s = rig('confused', LX4, FL4, SC4, t, nod, tilt, look, sy=1 - 0.05 * bump(t, c1 - 0.14, 0.16))
     elif t < c2:
-        sy = 1 + 0.05 * bump(t, c1, 0.2) - 0.05 * bump(t, c1 + 0.33, 0.14) - 0.06 * bump(t, c2 - 0.15, 0.17)
-        look = (keys(t, [(c1, 3), (2.75, 3), (3.1, 1.5)]), keys(t, [(c1, 0), (2.75, 0), (3.1, 2.6)]))
-        s += rig('aha', LX4, FL4, SC4, t, up, 3 * (1 - seg(t, c1, c1 + 0.4)), look, sy=sy)
+        sy = 1 + 0.05 * bump(t, c1, 0.18) - 0.05 * bump(t, c1 + 0.27, 0.1) - 0.06 * bump(t, c2 - 0.13, 0.14)
+        g = seg(t, A4_Z1 + 0.04, A4_CLICK - 0.03)
+        s = rig('aha', LX4, FL4, SC4, t, up, 3 * (1 - seg(t, c1, c1 + 0.3)), (lerp(3, 1.5, g), 2.6 * g), sy=sy)
     else:
-        sy = land(t, hop_t, 0.42)
-        tilt = 4 * math.sin(TAU * 1.15 * (t - A4_DUR)) * (1 - seg(t, A4_DUR - 0.5, A4_DUR))
-        s += rig('cheer', LX4, FL4, SC4, t, up, tilt, sy=sy, alive=1 - seg(t, A4_DUR - 0.4, A4_DUR))
-    marks = qmarks(((LX4 - 170, TOP4 + 14, 92, -16), (LX4 - 70, TOP4 - 26, 112, 4), (LX4 + 150, TOP4 + 6, 80, 16)), t, A4_DUR, 0.25, 0.14, out=c1 - 0.12)
-    a = seg(t, c1, c1 + 0.2) * (1 - seg(t, c2 - 0.15, c2))
+        calm = 1 - seg(t, A4_DUR - 0.3, A4_DUR)
+        s = rig('cheer', LX4, FL4, SC4, t, up, 4 * math.sin(TAU * 1.6 * (t - A4_DUR)) * calm, sy=land(t, hop_t, 0.42), alive=calm)
+    marks = qmarks(((LX4 - 170, TOP4 + 14, 92, -16), (LX4 - 70, TOP4 - 26, 112, 4), (LX4 + 150, TOP4 + 6, 80, 16)), t, A4_DUR, 0.05, 0.07, out=c1 - 0.12)
+    a = seg(t, c1, c1 + 0.15) * (1 - seg(t, c2 - 0.12, c2))
     if a > 0:                                             # aha: a ring of short lines over his head
-        marks += fade(sparks(LX4, TOP4 + 40 - up, 150, 196, (-120, -100, -80, -60), YEL, 9, back_out(seg(t, c1, c1 + 0.25)), 10 * math.sin(TAU * 2 * t)), a)
-    j = seg(t, c2, c2 + 0.3)
+        marks += fade(sparks(LX4, TOP4 + 40 - up, 150, 196, (-120, -100, -80, -60), YEL, 9, back_out(seg(t, c1, c1 + 0.2)), 10 * math.sin(TAU * 2 * t)), a)
+    j = seg(t, c2, c2 + 0.25)
     if j > 0:
         pulse = wave(t, A4_DUR, 0.5)
         marks += sparks(LX4, TOP4 + 150 - up, 215, 262, (-128, -106, -74, -52), WHITE, 9, back_out(j) * (1 + 0.12 * pulse), 6 * pulse)
         wide = min(136 * SC4 / 2 + 110, LX4 - 50)
         marks += confetti([(LX4 - wide, TOP4 - 20, -20), (LX4 - wide + 26, TOP4 + 120, 30), (LX4 + wide, TOP4 - 40, 25),
-                           (LX4 + wide - 10, TOP4 + 110, -35), (LX4 - wide + 70, TOP4 - 70, 60)], (LX4, TOP4 - 30), seg(t, c2, c2 + 0.6), t, A4_DUR)
+                           (LX4 + wide - 10, TOP4 + 110, -35), (LX4 - wide + 70, TOP4 - 70, 60)], (LX4, TOP4 - 30), seg(t, c2, c2 + 0.5), t, A4_DUR)
     return s, marks
 
 
 def a4_parts(t, q=None, curve=True):
-    q = seg(t, 0.05, 0.42) if q is None else q
+    q = seg(t, 0.02, 0.26) if q is None else q
     led, marks = a4_ledger(t)
-    extra = thought(720, FL4 - 290, t, 0.42, A4_CROSS - 0.05)
-    extra += popup(762, FL4 - 260, 'Reject H_0', 66, '2.0 is beyond 1.96', seg(t, A4_POP, A4_POP + 0.36), t, A4_DUR)
+    extra = thought(720, FL4 - 290, t, 0.08, A4_CROSS - 0.05)
+    extra += popup(762, FL4 - 260, 'Reject H_0', 66, '2.0 is beyond 1.96', seg(t, A4_POP, A4_POP + 0.28), t, A4_DUR)
     return dict(floor=F.floor(FL4 - 60, VIOLET_D), head=a4_head(), q=pop(a4_qcard(), 540, 490, q, rot0=-3), chart=a4_chart(t, curve), led=led, marks=marks, extra=extra)
 
 
@@ -1166,6 +1165,7 @@ BIG = (1760, 900, 330, 1050)                              # the big curve of the
 
 
 def T3(t, dur):
+    t = t / dur                                           # beats below are shares of the transition
     f, df = F.bell_fn(*BIG)
     out = ease_in(seg(t, 0.0, 0.26))
     s = F.floor(FL3 - 60, ORANGE_D)
@@ -1230,7 +1230,7 @@ def T3(t, dur):
             legs = (a, -a)
         if 0.2 < t < 0.56:
             for i, (dx, r) in enumerate(((-80, 30), (-125, 25), (-168, 20), (-200, 15))):
-                u = (t * 4 + i * 0.25) % 1
+                u = (t * 1.6 + i * 0.25) % 1
                 x = fx + dx - 90 * u
                 s += fade(F.coin(x + 70, f(x) + 110 + (-dx) * 0.5 + 160 * u * u, r), 1 - u)
             s += sparks(fx + 40, fy_ - 250, 300, 350, (-150, -168, 174), WHITE, 9, 1, 30 * math.sin(TAU * 5 * t))
@@ -1249,7 +1249,6 @@ SCENES = {'A1': A1, 'T1': T1, 'A2': A2, 'T2': T2, 'A3': A3, 'T3': T3, 'A4': A4}
 
 if __name__ == '__main__':
     import time
-    DUR = {'A1': 6.4, 'T1': 0.9, 'A2': 7.0, 'T2': 0.9, 'A3': 7.0, 'T3': 1.0, 'A4': 5.9}
     for name, fn in SCENES.items():
         n = round(DUR[name] * 30)
         t0 = time.time()

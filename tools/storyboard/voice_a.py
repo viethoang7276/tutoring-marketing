@@ -6,15 +6,15 @@ import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../.claude/skills/edlintics-explainer-reel/scripts'))
 import eleven_tts
 
-VOICE, TEMPO, TAG = 'vChnJZ1Cu89g2XXumPfT', 1.0, '[warm] '
+VOICE, TEMPO, TAG = 'vChnJZ1Cu89g2XXumPfT', float(os.environ.get('VOICE_TEMPO', '1.18')), '[warm] '
 LINES = [
-    ('A1', 'Languages, coding and science have moved onto your phone, but business is still stuck in books'),
-    ('A2', 'So we opened the door. In accounting, you drag a debit and a credit, and watch them balance'),
-    ('A3', 'In finance, change one number and watch interest earn interest, from personal savings to corporate decisions'),
-    ('A4', 'In statistics, you solve real problems, and get a simple explanation for every answer'),
-    ('A5', 'Lessons in accounting, finance, economics and statistics, all in one place'),
-    ('A6', 'From your first journal entry in accounting, to complex models like I S and L M in economics'),
-    ('A7', 'Every topic starts with a free card'),
+    ('A1', 'Languages, coding and science have moved to interactive learning, but business is still stuck in books'),
+    ('A2', 'On Edlintics, every business lesson is interactive'),
+    ('A3', 'Lessons are designed with simple theory, followed by levelled exercises'),
+    ('A4', 'You learn difficult concepts with clear explanations'),
+    ('A6', 'From your first journal entry, to complex models like I S and L M'),
+    ('A7', 'Edlintics has more than one thousand lessons in accounting, finance, economics and statistics'),
+    ('R', 'Research shows learning by doing is six times more effective than watching'),
     ('A8', 'Get started for free, on Edlintics dot com'),
 ]
 out = sys.argv[1]; os.makedirs(out, exist_ok=True)
