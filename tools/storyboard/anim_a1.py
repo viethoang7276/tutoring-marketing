@@ -676,6 +676,33 @@ def A2(t, dur):
     return p['floor'] + p['head'] + p['screen'] + p['desk'] + p['led'] + p['marks'], EMER
 
 
+def a2_arrive(p):
+    """Second half of a transition into A2 (p = share of the transition): the accounting scene assembles and the
+    back-view Ledger drops in from above; at p = 1 it is exactly A2's first frame."""
+    arrive = seg(p, 0.50, 0.95)
+    s = ''
+    if arrive > 0:                                        # the accounting scene drops, rises and pops into place
+        e = ease_out(arrive)
+        p2 = a2_parts(0.0, q=0.0)
+        s += shift(p2['floor'], 0, 260 * (1 - e))
+        s += shift(p2['head'], 0, -460 * (1 - e))
+        s += pop(p2['screen'], 540, 800, arrive)
+        s += shift(p2['desk'], 0, 520 * (1 - e))
+    if p >= 0.55:                                         # the same back view drops in from above and lands at the desk
+        e = ease_in(seg(p, 0.55, 0.86))
+        e2 = ease(seg(p, 0.84, 1.0))
+        y = FL2 - 1500 * (1 - e)
+        tilt = -5 * e2
+        L = F.Ledger('back', 540, y, 2.3, rot=round(tilt, 2))
+        armL = {'hand': lerp2((26, 104), (45, 93), e2), 'bend': -1}
+        armR = {'hand': lerp2((214, 104), L.r((MX2, y - FL2 + MY2 - 2)), e2), 'bend': 1}
+        k = 1 + 0.05 * (1 - e) - 0.06 * bump(p, 0.85, 0.14)
+        s += squash(back_ledger(540, y, 2.3, tilt, armL, armR), 540, y, k)
+        if e < 1:
+            s += sparks(540, y - 420, 60, 150, (-100, -90, -80), WHITE, 9)
+    return s
+
+
 # ---------------------------------------------------------------------------------------------
 # T1  the door opens, he leaps through at us, green takes over, he lands at the desk
 # ---------------------------------------------------------------------------------------------
@@ -683,7 +710,6 @@ def T1(t, dur):
     """One move: the door flies open, he leaps in, green bursts out over everything, and he drops in at the desk."""
     p = t / dur
     cover = seg(p, 0.12, 0.62)                            # the green burst out of the doorway
-    arrive = seg(p, 0.50, 0.95)                           # the accounting scene assembling
     s = ''
     if cover < 1:
         s += F.floor(FL1 - 40, YEL_D)
@@ -729,25 +755,7 @@ def T1(t, dur):
             s += line(DX1 - 130, 470, DX1 - 130, DT1, INK, 6) + line(DX1 + 130, 470, DX1 + 130, DT1, INK, 6)
         s += a1_phones(A1_DUR, A1_DUR, dx=700 * ease_in(seg(p, 0.0, 0.35)))
     bg = YEL if cover < 1 else EMER
-    if arrive > 0:                                        # the accounting scene drops, rises and pops into place
-        e = ease_out(arrive)
-        p2 = a2_parts(0.0, q=0.0)
-        s += shift(p2['floor'], 0, 260 * (1 - e))
-        s += shift(p2['head'], 0, -460 * (1 - e))
-        s += pop(p2['screen'], 540, 800, arrive)
-        s += shift(p2['desk'], 0, 520 * (1 - e))
-    if p >= 0.55:                                         # the same back view drops in from above and lands at the desk
-        e = ease_in(seg(p, 0.55, 0.86))
-        e2 = ease(seg(p, 0.84, 1.0))
-        y = FL2 - 1500 * (1 - e)
-        tilt = -5 * e2
-        L = F.Ledger('back', 540, y, 2.3, rot=round(tilt, 2))
-        armL = {'hand': lerp2((26, 104), (45, 93), e2), 'bend': -1}
-        armR = {'hand': lerp2((214, 104), L.r((MX2, y - FL2 + MY2 - 2)), e2), 'bend': 1}
-        k = 1 + 0.05 * (1 - e) - 0.06 * bump(p, 0.85, 0.14)
-        s += squash(back_ledger(540, y, 2.3, tilt, armL, armR), 540, y, k)
-        if e < 1:
-            s += sparks(540, y - 420, 60, 150, (-100, -90, -80), WHITE, 9)
+    s += a2_arrive(p)
     return s, bg
 
 
@@ -1244,7 +1252,103 @@ def T3(t, dur):
     return s, ORANGE
 
 
-SCENES = {'A1': A1, 'T1': T1, 'A2': A2, 'T2': T2, 'A3': A3, 'T3': T3, 'A4': A4}
+# ---------------------------------------------------------------------------------------------
+# B1 / TB  the other opening (version b): a computer screen asks the question, the cursor presses Open, green bursts through
+# ---------------------------------------------------------------------------------------------
+B1_DUR = DUR['B1']
+BM = (44, 150, 992, 1030)                                 # the monitor, as in the ending scene
+BTN = (540, 930, 500, 160)                                # the Open button: centre x, centre y, width, height
+
+
+def bB(sec):
+    return sec * B1_DUR / 2.91
+
+
+B1_CLICK = bB(2.3)
+B1_LINES = (('What is it like', bB(0.28), 566), ('to learn business', bB(1.08), 668), ('on Edlintics?', bB(1.62), 770))
+
+
+@functools.lru_cache(None)
+def b1_static():
+    ix, iy, iw = BM[0] + 22, BM[1] + 22, BM[2] - 44
+    s = F.monitor(*BM)
+    s += rrect(ix, iy, iw, 100, 14, TINT, None) + rrect(ix, iy + 50, iw, 50, 0, TINT, None)
+    for i, col in enumerate((F.RED, YEL, GREEN)):
+        s += circle(ix + 54 + i * 44, iy + 50, 14, col, None)
+    s += rrect(ix + 190, iy + 18, iw - 240, 64, 32, WHITE, INK, 3) + T(ix + 190 + (iw - 240) / 2, iy + 64, 'www.edlintics.com', 40)
+    return s
+
+
+@functools.lru_cache(None)
+def b1_logo():
+    return F.embed_logo(540 - 210, BM[1] + 22 + 128, 420)
+
+
+def b1_scene(t):
+    """The whole of B1 at time t (no Ledger). TB zooms the last frame of this."""
+    end = B1_DUR
+    bx, by, bw, bh = BTN
+    s = F.floor(1730, F.BLUE_D)
+    for i, (x, y, r) in enumerate(((130, 1400, 30), (950, 1440, 24), (230, 1640, 20), (860, 1650, 32), (560, 1500, 18), (70, 110, 20), (1010, 90, 26))):
+        k = 0.55 + 0.45 * math.sin(TAU * (t * 1.25 + i * 0.37))
+        s += rot(F.star4(x, y, round(r * k, 1), WHITE, INK, 3), x, y, 40 * math.sin(TAU * (t * 0.5 + i * 0.2)))
+    s += b1_static()
+    s += pop(b1_logo(), 540, 380, seg(t, 0.04, 0.3))
+    for txt, t0, y in B1_LINES:                           # the headline pops in line by line with the voice
+        g = seg(t, t0, t0 + 0.24)
+        s += pop(T(540, y, txt, 82, maxw=BM[2] - 110), 540, y - 28, g, rot0=-4)
+    # the Open button: it breathes, sinks under the press and turns green
+    clicked = t >= B1_CLICK
+    k = (1 + 0.03 * math.sin(TAU * 1.3 * t)) * (1 - 0.07 * bump(t, B1_CLICK - 0.06, 0.2)) + 0.06 * bump(t, B1_CLICK + 0.1, 0.25)
+    btn = rrect(bx - bw / 2 + 10, by - bh / 2 + 10, bw, bh, 80, INK, None) + rrect(bx - bw / 2, by - bh / 2, bw, bh, 80, GREEN if clicked else BLUE, INK, 5)
+    btn += T(bx, by + 30, 'Open', 84, fill=WHITE)
+    s += pop(scale(btn, bx, by, k), bx, by, seg(t, 0.12, 0.42))
+    # a drawn arrow points at the button and pulses
+    ad = seg(t, bB(1.0), bB(1.35))
+    if ad > 0:
+        pulse = math.sin(TAU * 1.8 * t) * seg(t, bB(1.35), bB(1.5))
+        s += shift(qarrow((960, 800), (1000, 960), (bx + bw / 2 + 36, by + 6), ease_out(ad), F.ORANGE, 12, 44), 10 * pulse, -3 * pulse)
+    # the cursor comes in along a dotted curve and presses the button
+    c0, cc, c1 = (120, 1060), (330, 1150), (bx + 130, by + 30)
+    go = ease(seg(t, bB(1.4), bB(2.18)))
+    if go > 0:
+        trail = 1 - seg(t, B1_CLICK + 0.05, B1_CLICK + 0.3)
+        if trail > 0:
+            pts = [qb(c0, cc, c1, go * i / 16) for i in range(17)]
+            s += fade(path('M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in pts), stroke=SLATE, sw=7, dash='4 18'), trail)
+        x, y = qb(c0, cc, c1, go)
+        for j in range(2):                                # rings from the press, again and again until the screen opens
+            u = ((t - B1_CLICK) / 0.42 - j * 0.5) % 1
+            if clicked and (t - B1_CLICK) / 0.42 - j * 0.5 >= 0:
+                s += fade(rrect(bx - bw / 2 - 60 * u, by - bh / 2 - 60 * u, bw + 120 * u, bh + 120 * u, 80 + 60 * u, 'none', GREEN, 9), 1 - u)
+        s += click_burst(x, y, seg(t, B1_CLICK, B1_CLICK + 0.3), INK)
+        wob = 3 * math.sin(TAU * 1.5 * t) * seg(t, B1_CLICK + 0.3, B1_CLICK + 0.45)
+        s += cursor(x + wob, y + wob * 0.5, bump(t, B1_CLICK - 0.08, 0.18), 1.9)
+    return s
+
+
+def B1(t, dur):
+    return b1_scene(t), BLUE
+
+
+def TB(t, dur):
+    """One move: the page rushes at us from the Open button, green bursts through it, and the accounting scene lands."""
+    p = t / dur
+    cover = seg(p, 0.04, 0.60)
+    bx, by = BTN[0], BTN[1]
+    s = ''
+    if cover < 1:
+        s += scale(b1_scene(B1_DUR), bx, by, 1 + 5 * ease_in(seg(p, 0.0, 0.6)))
+        r = 1900 * ease_in(cover) + 320 * ease_out(cover)
+        a0 = 36 * p
+        pts = [(bx + (r if i % 2 == 0 else r * 0.81) * math.cos(math.radians(i * 360 / 32 + 4 + a0)),
+                by + (r if i % 2 == 0 else r * 0.81) * math.sin(math.radians(i * 360 / 32 + 4 + a0))) for i in range(32)]
+        if r > 4:
+            s += F.wipe(pts, EMER, EMER_D, 26)
+    return s + a2_arrive(p), (BLUE if cover < 1 else EMER)
+
+
+SCENES = {'A1': A1, 'T1': T1, 'A2': A2, 'T2': T2, 'A3': A3, 'T3': T3, 'A4': A4, 'B1': B1, 'TB': TB}
 
 
 if __name__ == '__main__':

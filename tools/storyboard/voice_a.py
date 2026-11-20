@@ -6,9 +6,10 @@ import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../.claude/skills/edlintics-explainer-reel/scripts'))
 import eleven_tts
 
-VOICE, TEMPO, TAG = 'vChnJZ1Cu89g2XXumPfT', float(os.environ.get('VOICE_TEMPO', '1.18')), '[warm] '
+VOICE, TEMPO, TAG = 'vChnJZ1Cu89g2XXumPfT', float(os.environ.get('VOICE_TEMPO', '1.06')), '[warm] '
 LINES = [
     ('A1', 'Languages, coding and science have moved to interactive learning, but business is still stuck in books'),
+    ('B1', 'What is it like, learning business on Edlintics?'),
     ('A2', 'On Edlintics, every business lesson is interactive'),
     ('A3', 'Lessons are designed with simple theory, followed by levelled exercises'),
     ('A4', 'You learn difficult concepts with clear explanations'),

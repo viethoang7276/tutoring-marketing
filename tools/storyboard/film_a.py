@@ -18,7 +18,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 OUT = os.environ.get('FILM_OUT', os.path.join(HERE, 'film-out'))
 W, H, FPS = 1080, 1920, 30
-from timeline_a import TIMELINE, DUR, VOICE
+import timeline_a
+from timeline_a import DUR
+VER = os.environ.get('FILM_VER', 'a')
+TIMELINE = timeline_a.TIMELINE_B if VER == 'b' else timeline_a.TIMELINE
+VOICE = timeline_a.VOICE_B if VER == 'b' else timeline_a.VOICE
 
 
 def scenes():
@@ -99,5 +103,5 @@ if __name__ == '__main__':
     elif mode == 'render':
         folder = os.path.join(OUT, 'frames')
         write(folder, frames_of([n for n, _ in TIMELINE]))
-        total = sum(d for _, d in TIMELINE); out = os.path.join(OUT, 'demo-a.mp4')
+        total = sum(d for _, d in TIMELINE); out = os.path.join(OUT, f'demo-a-{VER}.mp4')
         node('video', folder, out, FPS, voice_track(total)); shutil.rmtree(folder); print(out, total, 's')
