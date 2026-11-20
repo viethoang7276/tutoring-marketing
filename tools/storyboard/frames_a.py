@@ -386,7 +386,7 @@ def mini_sd(w, h):
     return s
 
 
-def block(cx, cy, label='€500', w=200, h=110, fill=BLUE, lift=0):
+def block(cx, cy, label='$500', w=200, h=110, fill=BLUE, lift=0):
     s = rrect(cx - w / 2 + lift, cy - h / 2 + lift, w, h, 16, INK, None) if lift else ''
     return s + rrect(cx - w / 2, cy - h / 2, w, h, 16, fill, INK, 5) + T(cx, cy + 18, label, 52, fill=WHITE)
 
@@ -647,7 +647,7 @@ def A2(solved):
     mx, my, mw, mh = 50, 400, 980, 770
     s += monitor_desk(mx, my, mw, mh, FL - 228)
     sx, sy, sw_ = mx + 22, my + 22, mw - 44
-    s += qstrip(sx + 18, sy + 16, sw_ - 36, 150, [('Cash sale of €500', 42, SLATE, 600), ('Does Cash go on Debit or Credit?', 46, INK, 700)])
+    s += qstrip(sx + 18, sy + 16, sw_ - 36, 150, [('Cash sale of $500', 42, SLATE, 600), ('Does Cash go on Debit or Credit?', 46, INK, 700)])
     # T-account for Cash
     ty, tb, tm = 690, 1000, 540
     s += T(tm, ty - 22, 'Cash account', 46)
@@ -677,7 +677,7 @@ def A2(solved):
 def A3(solved):
     FL = 1850
     s = floor(FL - 60, ORANGE_D) + header('FINANCE', 'Compound interest')
-    s += qcard(400, 180, [('€1,000 grows at 5% a year', 42, SLATE, 600), ('In which year does it double?', 48, INK, 700)])
+    s += qcard(400, 180, [('$1,000 grows at 5% a year', 42, SLATE, 600), ('In which year does it double?', 48, INK, 700)])
     s += panel(50, 612, 980, 700)
     ox, oy, top_v, ppe = 200, 1100, 3000, 370 / 3000
     X = lambda t: ox + 44 + t * 35
@@ -687,7 +687,7 @@ def A3(solved):
     assert val(14) < 2000 < val(15) and round(val(15)) == 2079
     s += T(ox + 4, 676, 'Savings', 40, anchor='start')
     s += path(f'M{ox} {Y(top_v) - 14} V{oy} H{X(20) + 30}', sw=6)
-    for v, lab in ((1000, '€1,000'), (2000, '€2,000')):
+    for v, lab in ((1000, '$1,000'), (2000, '$2,000')):
         s += line(ox - 12, Y(v), ox, Y(v), INK, 5) + T(ox - 20, Y(v) + 11, lab, 30, anchor='end', fill=SLATE)
     s += line(ox, Y(2000), X(20) + 20, Y(2000), GREEN, 5, dash='16 12') + T(X(20) + 20, Y(2000) - 16, 'Double', 32, anchor='end', fill=GREEN_D)
     for t in ((0, 5, 10, 15) if solved else (0,)):
@@ -699,7 +699,7 @@ def A3(solved):
     if solved:
         s += path(pts(15, 20), stroke=SLATE, sw=5, dash='3 13') + path(pts(0, 15), stroke=BLUE, sw=9)
     s += circle(X(year), Y(val(year)), 15, BLUE, INK, 4)
-    lab = f'Year {year}: €{val(year):,.0f}'
+    lab = f'Year {year}: ${val(year):,.0f}'
     lw = tw(lab, 40) + 56
     px, py = X(year), Y(val(year))
     bx = px - 70 if solved else px + lw / 2 - 30
@@ -914,7 +914,7 @@ def A7():
     b1 += T(-95, -74, 'Debit', 26, check=False) + T(95, -74, 'Credit', 26, check=False)
     b1 += rrect(-160, -40, 130, 56, 10, WHITE, SLATE, 4, 'stroke-dasharray="9 7"') + rrect(30, -40, 130, 56, 10, WHITE, SLATE, 4, 'stroke-dasharray="9 7"')
     b1 += curve_arrow(26, 70, -80, 80, -95, 30, SLATE, 4, '3 10', 16)
-    b1 += rrect(34, 44, 130, 56, 10, INK, None) + rrect(28, 38, 130, 56, 10, BLUE, INK, 4) + T(93, 77, '€500', 30, fill=WHITE, check=False) + cur(142, 78)
+    b1 += rrect(34, 44, 130, 56, 10, INK, None) + rrect(28, 38, 130, 56, 10, BLUE, INK, 4) + T(93, 77, '$500', 30, fill=WHITE, check=False) + cur(142, 78)
     i1 = line(-13, -9, 13, -9, INK, 5) + line(0, -9, 0, 14, INK, 5)
     # 2 compound interest: slider under a growing curve
     gy_ = lambda i: 30 - 19 * 1.026 ** i
@@ -926,7 +926,7 @@ def A7():
     b2 += path(cv, stroke=BLUE, sw=7) + circle(-160 + 3.3 * 70, gy_(70), 9, BLUE, INK, 3)
     b2 += rrect(-180, 82, 370, 16, 8, WHITE, INK, 4) + rrect(-176, 86, 250, 8, 4, BLUE, None) + circle(74, 90, 18, WHITE, INK, 4) + circle(74, 90, 8, BLUE, None)
     b2 += arrow(-70, 58, 40, 58, BLUE, 5, head=16) + cur(84, 88)
-    i2 = T(0, 13, '€', 36, check=False)
+    i2 = T(0, 13, '$', 36, check=False)
     # 3 hypothesis testing: drag the marker along the bell curve
     hb = lambda x: 90 - 150 * math.exp(-(x / 62) ** 2 / 2)
     seg = lambda a, b_: ' L'.join(f'{a + (b_ - a) * i / 30:.1f} {hb(a + (b_ - a) * i / 30):.1f}' for i in range(31))
@@ -944,8 +944,8 @@ def A7():
     i4 = line(-13, -12, 13, 12, INK, 5) + line(-13, 12, 13, -12, PINK, 5)
     # 5 break-even point: pick the right answer
     assert 1000 / 4 == 250
-    b5 = T(0, -52, '€1,000 fixed costs ÷ €4 a unit', 26, check=False)
-    assert tw('€1,000 fixed costs ÷ €4 a unit', 26) < CW - 50
+    b5 = T(0, -52, '$1,000 fixed costs ÷ $4 a unit', 26, check=False)
+    assert tw('$1,000 fixed costs ÷ $4 a unit', 26) < CW - 50
     for i, (t, on) in enumerate((('150 units', False), ('250 units', True), ('400 units', False))):
         yy = -30 + i * 44
         b5 += rrect(-150, yy, 300, 36, 18, GREEN if on else WHITE, INK, 4) + T(-10 if on else 0, yy + 27, t, 26, fill=WHITE if on else INK, check=False)
@@ -1091,7 +1091,7 @@ def star4(cx, cy, r, fill=WHITE, stroke=INK, sw=4):
     return path('M' + ' L'.join(p) + ' Z', fill=fill, stroke=stroke, sw=sw)
 
 
-def coin(cx, cy, r, label='€'):
+def coin(cx, cy, r, label='$'):
     s = circle(cx, cy, r, YEL, INK, max(2.5, r * 0.09)) + circle(cx, cy, r * 0.74, 'none', YEL_D, max(2, r * 0.07))
     if label:
         size = r * (0.95 if len(label) == 1 else 0.56)
@@ -1181,7 +1181,7 @@ def T1():
 
 
 def T2():
-    """Accounting -> finance: the €500 block is now a big coin and Ledger runs right with it."""
+    """Accounting -> finance: the $500 block is now a big coin and Ledger runs right with it."""
     GY = 1560
     ex = lambda y: 800 - 240 * y / 1920
     s = floor(GY, EMER_D)
@@ -1196,7 +1196,7 @@ def T2():
     # finance is waiting on the right: coin stacks
     s += coin_stack(925, GY + 60, 3) + coin_stack(1022, GY + 60, 6)
     s += star4(930, GY - 60, 20) + star4(1010, GY - 130, 14)
-    held = coin(120, 182, 36, '€500')
+    held = coin(120, 182, 36, '$500')
     legs = (24, -24)
     s += Mover.on_feet(310, GY - 56, 4.1, 10).draw((-24, 24), opacity=0.2)
     s += speed(96, 1010, 3, 84, 120, WHITE, 10)
