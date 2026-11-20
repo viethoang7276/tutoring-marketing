@@ -3,16 +3,21 @@
 
 Run:  python3 frames_a.py            (all frames + sheet.png)
       python3 frames_a.py A3 A5      (only those frames, sheet rebuilt from what exists)
+Output goes next to this file, or to the folder named in the FRAMES_OUT environment variable.
+
+Look (v3, after Hoang's notes of 20 Nov 2026): one flat saturated background per subject, a big
+subject name with the topic under it, white cards with a flat offset block, no gradients.
 
 Ledger is drawn from the website rig numbers (assets/brand-handoff/ledger-v2/RIG.md) and the
 turnaround sheet (front, 3/4 front, side, 3/4 back, back). Arms use the rig's two-segment arm
 (upper 23.3, forearm 16.5, reach n <= 1.7); the script refuses to draw a longer arm.
-A8 embeds the real rig state file ledger-point-left.svg unchanged.
+A8 embeds the real rig state file ledger-hello.svg unchanged.
 """
 import math, os, re, subprocess, sys
 from PIL import Image, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.environ.get('FRAMES_OUT', HERE)
 STATES = '/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/assets/brand-handoff/ledger-v2/states'
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 W, H = 1080, 1920
@@ -21,6 +26,10 @@ INK, CREAM, SUIT, BLUE, RULE = '#0F172A', '#FBFAF6', '#222C3D', '#467DE3', '#E6E
 GREEN, RED, WHITE, BG, PAGES = '#16A34A', '#DC2626', '#FFFFFF', '#F3F7FE', '#F1EEE4'
 TINT = '#DCE8FB'      # light blue tint of the lead colour
 SLATE = '#64748B'     # secondary text
+# one flat background per subject (accounting = emerald as in config/brand.ts), each with a darker floor tone
+EMER, ORANGE, VIOLET, PINK, YEL = '#10B981', '#F97316', '#8B5CF6', '#EC4899', '#FBBF24'
+EMER_D, ORANGE_D, VIOLET_D, PINK_D, YEL_D, BLUE_D = '#0B9468', '#DD5C0A', '#7443E0', '#D2307F', '#F2A60C', '#3565C4'
+GREEN_T, RED_T, GREEN_D, RED_D, RED2 = '#DCFCE7', '#FEE2E2', '#15803D', '#B91C1C', '#EF4444'
 FONT = "Rubik, Arial, Helvetica, sans-serif"
 _F = {}
 
@@ -43,7 +52,7 @@ WARN = []
 def T(x, y, s, size, weight=700, anchor='middle', fill=INK, maxw=None, check=True, extra=''):
     """Text. Measures with Arial and warns when it leaves the frame or its box. No trailing full stop."""
     assert not s.rstrip().endswith('.'), 'no full stop at the end of on-screen text: ' + s
-    w = tw(s, size, weight >= 600)
+    w = tw(s.replace('_', ''), size, weight >= 600)
     if check:
         x0 = x - w / 2 if anchor == 'middle' else (x if anchor == 'start' else x - w)
         if x0 < 24 or x0 + w > W - 24:
@@ -51,6 +60,12 @@ def T(x, y, s, size, weight=700, anchor='middle', fill=INK, maxw=None, check=Tru
         if maxw and w > maxw:
             WARN.append(f'text wider than its box: "{s}" {w:.0f} > {maxw}')
     s = s.replace('&', '&amp;').replace('<', '&lt;')
+    if '_' in s:                                # "H_0" draws the 0 as a subscript
+        a, b = s.split('_', 1)
+        d = size * 0.18
+        s = f'{a}<tspan dy="{d:.1f}" font-size="{size * 0.62:.1f}">{b[0]}</tspan>'
+        if b[1:]:
+            s += f'<tspan dy="{-d:.1f}" font-size="{size}">{b[1:]}</tspan>'
     return (f'<text x="{x:.1f}" y="{y:.1f}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" '
             f'text-anchor="{anchor}" fill="{fill}" {extra}>{s}</text>')
 
@@ -301,362 +316,416 @@ def embed_state(name, X, Y, sc):
 # ---------------------------------------------------------------------------------------------
 # Small reusable pictures
 # ---------------------------------------------------------------------------------------------
-def card(w, h, inner, r=24):
-    return rrect(-w / 2, -h / 2, w, h, r, WHITE, INK, 5) + inner
+def card(w, h, inner, r=24, fill=WHITE):
+    return rrect(-w / 2 + 9, -h / 2 + 9, w, h, r, INK, None) + rrect(-w / 2, -h / 2, w, h, r, fill, INK, 5) + inner
 
 
-def mini_t(w, h, labels=True):
+def panel(x, y, w, h, r=30, fill=WHITE, off=12):
+    """Flat card with a flat offset block behind it (no blur, no gradient)."""
+    return rrect(x + off, y + off, w, h, r, INK, None) + rrect(x, y, w, h, r, fill, INK, 5)
+
+
+def floor(y, col):
+    return rrect(0, y, W, H - y, 0, col, None)
+
+
+def header(cat, topic, fg=WHITE):
+    """Big subject name with the topic on a pill under it."""
+    size = 126
+    while tw(cat, size) > 980:
+        size -= 2
+    s = ''
+    if fg != INK:
+        s += T(546, 216, cat, size, fill=INK, check=False)
+    s += T(540, 210, cat, size, fill=fg)
+    w = tw(topic, 60) + 100
+    s += rrect(540 - w / 2 + 8, 266, w, 104, 52, INK, None) + rrect(540 - w / 2, 258, w, 104, 52, WHITE, INK, 5)
+    s += T(540, 331, topic, 60, maxw=w - 60)
+    return s
+
+
+def monitor(x, y, w, h, screen=WHITE):
+    """Flat monitor: bezel, screen, neck and foot. The screen is inset 22 px."""
+    cx = x + w / 2
+    s = rrect(cx - 46, y + h - 6, 92, 66, 0, SUIT, None)
+    s += rrect(cx - 180, y + h + 54, 360, 28, 14, SUIT, None)
+    s += rrect(x, y, w, h, 34, INK, None) + rrect(x + 22, y + 22, w - 44, h - 44, 14, screen, None)
+    return s
+
+
+def cursor(x, y, sc=1.8):
+    pts = [(0, 0), (0, 50), (12, 39), (21, 59), (30, 55), (21, 36), (37, 36)]
+    d = 'M' + ' L'.join(f'{x + px * sc:.1f} {y + py * sc:.1f}' for px, py in pts) + ' Z'
+    return path(d, fill=WHITE, stroke=INK, sw=5)
+
+
+def mini_t(w, h, labels=True, c1=BLUE, c2=TINT):
     s = line(-w / 2, -h / 2 + (34 if labels else 0), w / 2, -h / 2 + (34 if labels else 0), INK, 5)
     s += line(0, -h / 2 + (34 if labels else 0), 0, h / 2, INK, 5)
     if labels:
         s += T(-w / 4, -h / 2 + 18, 'Debit', 24, check=False) + T(w / 4, -h / 2 + 18, 'Credit', 24, check=False)
     y0 = -h / 2 + (60 if labels else 22)
-    s += rrect(-w / 2 + 14, y0, w / 2 - 34, 22, 8, BLUE, None)
-    s += rrect(14, y0, w / 2 - 34, 22, 8, TINT, None)
-    s += rrect(-w / 2 + 14, y0 + 34, w / 2 - 70, 22, 8, TINT, None)
+    s += rrect(-w / 2 + 14, y0, w / 2 - 34, 22, 8, c1, None)
+    s += rrect(14, y0, w / 2 - 34, 22, 8, c2, None)
+    s += rrect(-w / 2 + 14, y0 + 34, w / 2 - 70, 22, 8, c2, None)
     if labels:
-        s += rrect(14, y0 + 34, w / 2 - 80, 22, 8, BLUE, None) + rrect(-w / 2 + 14, y0 + 68, w / 2 - 50, 22, 8, BLUE, None)
-        s += rrect(14, y0 + 68, w / 2 - 54, 22, 8, TINT, None)
+        s += rrect(14, y0 + 34, w / 2 - 80, 22, 8, c1, None) + rrect(-w / 2 + 14, y0 + 68, w / 2 - 50, 22, 8, c1, None)
+        s += rrect(14, y0 + 68, w / 2 - 54, 22, 8, c2, None)
     return s
 
 
-def mini_growth(w, h):
-    s = path(f'M{-w / 2} {-h / 2} V{h / 2} H{w / 2}', sw=4)
-    s += path(f'M{-w / 2 + 6} {h / 2 - 12} Q{w * 0.2} {h / 2 - 16} {w / 2 - 6} {-h / 2 + 6}', stroke=BLUE, sw=6)
-    return s
-
-
-def mini_bell(w, h):
-    pts = []
-    for i in range(41):
-        z = -3 + 6 * i / 40
-        pts.append(f'{z * w / 6:.1f} {h / 2 - (h - 8) * math.exp(-z * z / 2):.1f}')
-    s = path('M' + ' L'.join(pts), stroke=BLUE, sw=6)
-    s += line(-w / 2, h / 2, w / 2, h / 2, INK, 4)
-    return s
-
-
-def mini_sd(w, h, labels=False):
-    top = -h / 2 + (44 if labels else 26)
+def mini_sd(w, h):
+    top = -h / 2 + 44
     s = path(f'M{-w / 2} {-h / 2} V{h / 2} H{w / 2}', sw=5)
     s += line(-w / 2 + 24, h / 2 - 22, w / 2 - 30, top, INK, 6)
-    s += line(-w / 2 + 24, top, w / 2 - 30, h / 2 - 22, BLUE, 6)
+    s += line(-w / 2 + 24, top, w / 2 - 30, h / 2 - 22, PINK, 6)
     s += circle(-3, (top + h / 2 - 22) / 2, 9, WHITE, INK, 4)
-    if labels:
-        s += T(w / 2 - 6, -h / 2 + 22, 'Supply', 24, anchor='end', check=False)
-        s += T(-w / 2 + 18, -h / 2 + 22, 'Demand', 24, anchor='start', fill=BLUE, check=False)
-        s += T(-w / 2 - 4, -h / 2 - 16, 'Price', 22, anchor='start', fill=SLATE, check=False)
-        s += T(w / 2, h / 2 + 32, 'Quantity', 22, anchor='end', fill=SLATE, check=False)
+    s += T(w / 2 - 6, -h / 2 + 22, 'Supply', 24, anchor='end', check=False)
+    s += T(-w / 2 + 18, -h / 2 + 22, 'Demand', 24, anchor='start', fill=PINK_D, check=False)
+    s += T(-w / 2 - 4, -h / 2 - 16, 'Price', 22, anchor='start', fill=SLATE, check=False)
+    s += T(w / 2, h / 2 + 32, 'Quantity', 22, anchor='end', fill=SLATE, check=False)
     return s
 
 
-def block(cx, cy, label='€500', w=160, h=88):
-    return rrect(cx - w / 2, cy - h / 2, w, h, 14, BLUE, INK, 5) + T(cx, cy + 15, label, 42, fill=WHITE)
+def block(cx, cy, label='€500', w=200, h=110, fill=BLUE, lift=0):
+    s = rrect(cx - w / 2 + lift, cy - h / 2 + lift, w, h, 16, INK, None) if lift else ''
+    return s + rrect(cx - w / 2, cy - h / 2, w, h, 16, fill, INK, 5) + T(cx, cy + 18, label, 52, fill=WHITE)
 
 
 def tick(cx, cy, r=34):
-    return circle(cx, cy, r, GREEN, None) + path(f'M{cx - r * 0.42} {cy + r * 0.02} L{cx - r * 0.1} {cy + r * 0.34} L{cx + r * 0.46} {cy - r * 0.3}', stroke=WHITE, sw=r * 0.2)
+    return (circle(cx, cy, r, GREEN, INK, 5) +
+            path(f'M{cx - r * 0.42} {cy + r * 0.02} L{cx - r * 0.1} {cy + r * 0.34} L{cx + r * 0.46} {cy - r * 0.3}', stroke=WHITE, sw=r * 0.2))
+
+
+def sparks(cx, cy, r0, r1, angles, col=WHITE, sw=8):
+    s = ''
+    for ang in angles:
+        a = math.radians(ang)
+        s += line(cx + r0 * math.cos(a), cy + r0 * math.sin(a), cx + r1 * math.cos(a), cy + r1 * math.sin(a), col, sw)
+    return s
 
 
 # ---------------------------------------------------------------------------------------------
-# Frames
+# Frames. Each returns (svg, Ledger or None, background colour)
 # ---------------------------------------------------------------------------------------------
 def A1():
-    FL = 1340
-    s = floor_line(24, 740, FL)
-    # pile of thick dusty textbooks
-    books = [(236, 78, SUIT), (212, 66, CREAM), (228, 74, TINT), (200, 62, RULE), (224, 76, SUIT), (206, 64, CREAM), (190, 70, TINT)]
+    FL = 1560
+    s = floor(FL - 40, YEL_D)
+    # pile of thick dusty textbooks in the four subject colours
+    k = 1.2
+    books = [(236, 78, EMER), (212, 66, CREAM), (228, 74, VIOLET), (200, 62, PINK), (224, 76, SUIT), (206, 64, ORANGE), (190, 70, TINT)]
     offs = [0, 12, -6, 14, 4, -8, 10]
     y = FL - 3
     for (bw, bh, col), off in zip(books, offs):
-        x = 30 + off + (236 - bw) / 2
+        bw, bh = bw * k, bh * k
+        x = 30 + off + (236 * k - bw) / 2
         y -= bh
         s += rrect(x, y, bw, bh, 9, col, INK, 5)
-        s += rrect(x + bw - 34, y + 9, 26, bh - 18, 4, PAGES, INK, 3)                 # page edges
-        s += line(x + 22, y + 6, x + 22, y + bh - 6, INK if col != SUIT else CREAM, 3, extra='opacity="0.5"')
-        s += rrect(x + 46, y + bh / 2 - 7, bw * 0.38, 14, 7, CREAM if col in (SUIT, RULE) else RULE, None)
-        s += rrect(x + 12, y - 5, bw * 0.55, 9, 4.5, '#CBD5E1', None)                 # dust lying on the book
+        s += rrect(x + bw - 40, y + 10, 30, bh - 20, 4, PAGES, INK, 3)                # page edges
+        s += line(x + 26, y + 7, x + 26, y + bh - 7, CREAM if col in (SUIT, VIOLET, PINK, EMER, ORANGE) else INK, 3, extra='opacity="0.6"')
+        s += rrect(x + 54, y + bh / 2 - 8, bw * 0.38, 16, 8, RULE if col in (CREAM, TINT) else CREAM, None)
+        s += rrect(x + 14, y - 6, bw * 0.55, 10, 5, '#FFF3C4', None)                  # dust lying on the book
         y -= 3
     top = y
-    for dx, dy, r in ((30, -40, 9), (70, -84, 6), (130, -54, 8), (186, -96, 6), (222, -34, 7), (104, -122, 5)):
-        s += circle(34 + dx, top + dy, r, '#CBD5E1', None)                            # dust in the air
+    for dx, dy, r in ((30, -40, 11), (80, -90, 8), (150, -54, 10), (216, -104, 8), (256, -34, 9), (120, -136, 6)):
+        s += circle(34 + dx, top + dy, r, '#FFF3C4', None)                            # dust in the air
     # door with its sign
-    DX = 500
-    s += rrect(DX - 178, 670, 356, FL - 670, 10, WHITE, INK, 5)
-    s += rrect(DX - 152, 696, 304, FL - 696 - 3, 6, BLUE, INK, 5)
-    s += rrect(DX - 120, 730, 240, 250, 8, 'none', INK, 4, 'opacity="0.55"')
-    s += rrect(DX - 120, 1020, 240, 270, 8, 'none', INK, 4, 'opacity="0.55"')
-    hx, hy = DX + 108, 1104
-    s += rrect(hx - 20, hy - 50, 40, 100, 12, CREAM, INK, 4)
-    s += rrect(DX - 226, 508, 452, 116, 22, WHITE, INK, 5) + T(DX, 583, 'Learning business', 46, maxw=420)
-    s += line(DX - 110, 624, DX - 110, 670, INK, 5) + line(DX + 110, 624, DX + 110, 670, INK, 5)
+    DX, DT = 500, 560
+    s += rrect(DX - 200, DT, 400, FL - DT, 10, WHITE, INK, 5)
+    s += rrect(DX - 172, DT + 28, 344, FL - DT - 31, 6, BLUE, INK, 5)
+    s += rrect(DX - 136, DT + 66, 272, 380, 8, 'none', INK, 4, 'opacity="0.55"')
+    s += rrect(DX - 136, DT + 490, 272, 450, 8, 'none', INK, 4, 'opacity="0.55"')
+    hx, hy = DX + 122, FL - 250
+    s += rrect(hx - 22, hy - 54, 44, 108, 12, CREAM, INK, 4)
+    s += panel(DX - 270, 330, 540, 140, 24) + T(DX, 421, 'Learning business', 56, maxw=500)
+    s += line(DX - 130, 470, DX - 130, DT, INK, 6) + line(DX + 130, 470, DX + 130, DT, INK, 6)
     # three floating phones
     def phone(cx, cy, rot, label, inner):
-        p = rrect(-112, -165, 224, 330, 30, WHITE, INK, 5) + rrect(-30, -150, 60, 10, 5, INK, None) + inner
-        p += rrect(-78, 108, 156, 34, 17, BLUE, None)
-        return group(p, cx, cy, rot) + T(cx, cy + 226, label, 40)
+        p = rrect(-104, -157, 224, 330, 30, INK, None) + rrect(-112, -165, 224, 330, 30, WHITE, INK, 5) + rrect(-30, -150, 60, 10, 5, INK, None) + inner
+        return group(p, cx, cy, rot) + T(cx, cy + 230, label, 42)
     def tile(x, y, t, w, fill=WHITE, col=INK):
         return rrect(x, y, w, 40, 10, fill, INK, 3) + T(x + w / 2, y + 28, t, 22, fill=col, check=False)
     lang = rrect(-84, -122, 110, 12, 6, RULE, None)
-    lang += tile(-88, -96, 'I', 40, BLUE, WHITE) + tile(-40, -96, 'read', 68, BLUE, WHITE) + rrect(36, -96, 56, 40, 10, 'none', BLUE, 3, 'stroke-dasharray="7 6"')
+    lang += tile(-88, -96, 'I', 40, EMER, WHITE) + tile(-40, -96, 'read', 68, EMER, WHITE) + rrect(36, -96, 56, 40, 10, 'none', EMER, 3, 'stroke-dasharray="7 6"')
     lang += line(-88, -38, 88, -38, RULE, 4)
     lang += tile(-88, -14, 'books', 84) + tile(6, -14, 'blue', 70) + tile(-52, 40, 'run', 62)
+    lang += rrect(-78, 108, 156, 34, 17, EMER, None)
     code = ''
-    for i, (ind, ww, col) in enumerate(((0, 150, SUIT), (22, 120, BLUE), (44, 96, TINT), (22, 132, BLUE), (0, 90, SUIT))):
+    for i, (ind, ww, col) in enumerate(((0, 150, SUIT), (22, 120, VIOLET), (44, 96, PINK), (22, 132, VIOLET), (0, 90, SUIT))):
         code += rrect(-84 + ind, -120 + i * 44, ww, 34, 9, col, INK, 3)
+    code += rrect(-78, 108, 156, 34, 17, VIOLET, None)
     mol = line(0, -40, -52, 28, INK, 6) + line(0, -40, 52, 28, INK, 6) + line(0, -40, 0, -104, INK, 6)
-    mol += circle(0, -40, 34, BLUE, INK, 5) + circle(-52, 28, 22, CREAM, INK, 5) + circle(52, 28, 22, CREAM, INK, 5) + circle(0, -104, 18, TINT, INK, 5)
-    s += phone(912, 500, -4, 'Languages', lang)
-    s += phone(912, 980, 3, 'Coding', code)
-    s += phone(912, 1460, -3, 'Science', mol)
+    mol += circle(0, -40, 34, ORANGE, INK, 5) + circle(-52, 28, 22, CREAM, INK, 5) + circle(52, 28, 22, CREAM, INK, 5) + circle(0, -104, 18, YEL, INK, 5)
+    mol += rrect(-78, 108, 156, 34, 17, ORANGE, None)
+    s += phone(916, 370, -4, 'Languages', lang)
+    s += phone(916, 860, 3, 'Coding', code)
+    s += phone(916, 1350, -3, 'Science', mol)
     # Ledger from 3/4 back, one hand on the handle
-    L = Ledger('34b_r', hx - 222, FL + 26, 2.5)
-    b, f = L.draw(armR={'hand': L.r((hx - 2, hy + 4)), 'front': True, 'bend': 1}, shadow=False)
-    return s + b + f, L
+    L = Ledger('34b_r', hx - 258, FL + 20, 2.9)
+    b, f = L.draw(armR={'hand': L.r((hx - 2, hy + 4)), 'front': True, 'bend': 1})
+    return s + b + f, L, YEL
 
 
 def A2():
-    FL = 1450
-    s = chip('Accounting') + floor_line(24, 1056, FL)
-    # T-account
-    tx0, tx1, tm, ty = 506, 1046, 776, 760
-    s += T((tx0 + tm) / 2, ty - 32, 'Debit', 54) + T((tm + tx1) / 2, ty - 32, 'Credit', 54)
-    s += line(tx0, ty, tx1, ty, INK, 7) + line(tm, ty, tm, 1230, INK, 7)
-    s += T((tx0 + tm) / 2, ty + 72, 'Cash', 44, fill=SLATE) + T((tm + tx1) / 2, ty + 72, 'Sales', 44, fill=SLATE)
-    slot = ((tx0 + tm) / 2 - 80, ty + 110, 160, 88)
-    s += rrect(*slot, 14, 'none', BLUE, 5, 'stroke-dasharray="14 10"')
-    s += rrect((tm + tx1) / 2 - 80, ty + 110, 160, 88, 14, 'none', BLUE, 5, 'stroke-dasharray="14 10"')
-    # balance scale under the T-account
-    cx = 690
-    s += path(f'M{cx - 46} {FL - 3} L{cx} {FL - 46} L{cx + 46} {FL - 3} Z', fill=WHITE)
-    s += line(cx, FL - 46, cx, FL - 150, INK, 6) + line(cx - 110, FL - 142, cx + 110, FL - 142, INK, 6) + circle(cx, FL - 148, 9, BLUE, INK, 4)
-    for px in (cx - 110, cx + 110):
-        s += line(px, FL - 142, px - 34, FL - 72, INK, 3) + line(px, FL - 142, px + 34, FL - 72, INK, 3)
-        s += path(f'M{px - 44} {FL - 72} H{px + 44} Q{px} {FL - 40} {px - 44} {FL - 72} Z', fill=TINT, sw=4)
-    # second block waiting on the floor by the credit side
-    s += block(958, FL - 47)
-    # three small steps
-    st = [(30, FL - 80), (120, FL - 160), (208, FL - 240)]
-    R = 408
-    s += path(f'M{st[0][0]} {FL} V{st[0][1]} H{st[1][0]} V{st[1][1]} H{st[2][0]} V{st[2][1]} H{R} V{FL} Z', fill=WHITE)
-    s += line(st[1][0], st[0][1], R, st[0][1], RULE, 4) + line(st[2][0], st[1][1], R, st[1][1], RULE, 4)
-    # Ledger on the top step, block against his cover in both hands
-    sc = 2.5
-    L = Ledger('34f_r', (st[2][0] + R) / 2 - 5 * sc, FL - 240, sc)
-    bc = L.w((127, 167))
-    b, f = L.draw(armL={'hand': L.r((bc[0] - 82, bc[1] + 6)), 'front': True, 'bend': 1},
-                  armR={'hand': L.r((bc[0] + 82, bc[1] + 6)), 'front': True, 'bend': -1},
-                  face={'look': (3, -1.5), 'mouth': 'smile'}, shadow=False)
-    s += b + block(bc[0], bc[1]) + f
-    s += curve_arrow(bc[0] + 96, bc[1] - 50, slot[0] - 40, slot[1] - 30, slot[0] + 44, slot[1] + 40)
-    return s, L
+    FL = 1740
+    s = floor(FL - 60, EMER_D) + header('ACCOUNTING', 'Journal entries')
+    mx, my, mw, mh = 70, 410, 940, 650
+    s += monitor(mx, my, mw, mh)
+    s += rrect(270, my + mh + 82, 540, 26, 8, CREAM, INK, 5)                          # wall shelf
+    # T-account on the screen
+    tm, ty = 540, my + 138
+    s += T(315, ty - 30, 'Debit', 58) + T(765, ty - 30, 'Credit', 58)
+    s += line(130, ty, 950, ty, INK, 8) + line(tm, ty, tm, my + mh - 50, INK, 8)
+    s += T(315, ty + 66, 'Cash', 44, fill=SLATE) + T(765, ty + 66, 'Sales', 44, fill=SLATE)
+    s += rrect(215, ty + 100, 200, 110, 16, TINT, BLUE, 5, 'stroke-dasharray="14 10"')   # where the block goes
+    s += block(765, ty + 155, fill=ORANGE)
+    # the source of the entry and the drag trail
+    s += rrect(650, my + mh - 150, 300, 86, 43, CREAM, INK, 4) + T(800, my + mh - 95, 'Cash sale €500', 34, maxw=280)
+    bx, by = 388, ty + 228
+    s += path(f'M648 {my + mh - 110} Q 560 {my + mh - 96} {bx + 122} {by + 110}', stroke=INK, sw=6, dash='3 15')
+    s += block(bx, by, fill=BLUE, lift=10)
+    s += cursor(bx + 56, by + 22)
+    # Ledger at a small desk, 3/4 back, one hand on the mouse
+    L = Ledger('34b_r', 400, FL, 2.7)
+    hx, hy = L.w((214, 168))
+    top = hy + 42
+    dx0 = L.w((192, 0))[0]
+    s += line(dx0 + 40, top + 20, dx0 + 40, FL + 16, INK, 10) + line(dx0 + 320, top + 20, dx0 + 320, FL + 16, INK, 10)
+    s += rrect(dx0, top, 360, 30, 8, CREAM, INK, 5)
+    s += path(f'M{hx + 46} {hy + 16} C {hx + 190} {hy - 30} 930 1330 800 {my + mh + 108}', stroke=INK, sw=5)   # mouse cable
+    b, f = L.draw(armR={'hand': L.r((hx, hy)), 'front': True, 'bend': 1})
+    s += b
+    s += rrect(hx - 38, hy - 8, 88, 50, 24, WHITE, INK, 5) + line(hx + 6, hy - 8, hx + 6, hy + 12, INK, 4)
+    s += f
+    return s, L, EMER
 
 
 def A3():
-    FL = 1560
-    s = chip('Finance')
-    # savings chart
-    s += rrect(80, 400, 920, 660, 30, WHITE, INK, 5)
-    ox, oy, xr, yt = 170, 970, 930, 480
-    s += T(ox, 462, 'Savings', 38, anchor='start')
+    FL = 1700
+    s = floor(FL - 60, ORANGE_D) + header('FINANCE', 'Compound interest')
+    s += panel(60, 410, 960, 640)
+    ox, oy, xr, yt = 150, 970, 940, 530
+    s += T(ox, 490, 'Savings', 42, anchor='start')
     k = math.log((oy - yt - 30) / 60)
     cy = lambda t: oy - 60 * math.exp(k * t)
     for i in range(5):
         t = 0.16 + 0.19 * i
         x = ox + (xr - ox) * t
-        n = max(1, int((oy - cy(t) - 34) // 22))
+        n = max(1, int((oy - cy(t) - 34) // 24))
         for j in range(n):
-            s += rrect(x - 36, oy - 3 - 22 * (j + 1), 72, 22, 11, BLUE, INK, 3)
+            s += rrect(x - 40, oy - 3 - 24 * (j + 1), 80, 24, 12, YEL, INK, 3)
     pts = ' L'.join(f'{ox + (xr - ox) * i / 60:.1f} {cy(i / 60):.1f}' for i in range(61))
-    s += path('M' + pts, sw=7) + circle(xr, cy(1), 12, INK, None)
-    s += path(f'M{ox} {yt - 4} V{oy} H{xr + 14}', sw=5)
+    s += path('M' + pts, stroke=BLUE, sw=9) + circle(xr, cy(1), 15, BLUE, INK, 4)
+    s += path(f'M{ox} {yt - 4} V{oy} H{xr + 14}', sw=6)
     # slider rail on two posts
-    x0, x1, ry = 140, 940, 1400
+    sc = 2.8
+    x0, x1, ry = 110, 970, FL - 196
     kx = x0 + (x1 - x0) * 0.7
-    s += floor_line(60, 1020, FL)
-    s += line(x0, ry, x0, FL, INK, 7) + line(x1, ry, x1, FL, INK, 7)
-    s += rrect(x0 - 14, ry - 14, x1 - x0 + 28, 28, 14, WHITE, INK, 5)
-    s += rrect(x0 - 9, ry - 9, kx - x0 + 9, 18, 9, BLUE, None)
+    s += line(x0, ry, x0, FL, INK, 9) + line(x1, ry, x1, FL, INK, 9)
+    s += rrect(x0 - 18, ry - 18, x1 - x0 + 36, 36, 18, WHITE, INK, 5)
+    s += rrect(x0 - 12, ry - 12, kx - x0 + 12, 24, 12, BLUE, None)
     for i in range(11):
         x = x0 + (x1 - x0) * i / 10
-        s += line(x, ry + 22, x, ry + 40, INK, 4)
-    s += T(x0, ry - 44, '10', 44) + T(x1, ry - 44, '20', 44)
-    s += T(540, FL + 78, 'Years', 46)
-    s += circle(kx, ry, 48, WHITE, INK, 5) + circle(kx, ry, 18, BLUE, None)
-    s += rrect(kx - 50, ry - 150, 100, 70, 18, BLUE, None) + T(kx, ry - 99, '17', 44, fill=WHITE)
-    s += path(f'M{kx - 14} {ry - 82} L{kx} {ry - 62} L{kx + 14} {ry - 82} Z', fill=BLUE, stroke=None)
-    # Ledger in side view leans into the knob with both hands
-    L = Ledger('side_r', 0, FL, 2.3, rot=9)
-    L.X = (kx - 48 - 18) - (L.w((156, 150))[0] - L.X)
-    b, f = L.draw(armL={'hand': L.r((kx - 50, ry - 24)), 'front': True, 'bend': -1},
-                  armR={'hand': L.r((kx - 54, ry + 14)), 'front': True, 'bend': 1}, shadow=False)
-    s += b + f
+        s += line(x, ry + 28, x, ry + 48, INK, 5)
+    s += T(x0, ry - 50, '10', 50) + T(x1, ry - 50, '20', 50)
+    # Ledger 3/4 front, one hand pushing the knob
+    L = Ledger('34f_r', (kx - 62) - 105 * sc, FL, sc)
+    b, f = L.draw(armR={'hand': L.r((kx - 62, ry)), 'front': True, 'bend': -1},
+                  face={'look': (3, 0.5), 'mouth': 'grin', 'brows': 2})
+    s += b
+    s += circle(kx, ry, 54, WHITE, INK, 5) + circle(kx, ry, 22, BLUE, None)
+    s += rrect(kx - 122, ry - 196, 244, 90, 22, BLUE, INK, 5) + T(kx, ry - 134, '17 years', 50, fill=WHITE)
+    s += path(f'M{kx - 18} {ry - 108} L{kx} {ry - 78} L{kx + 18} {ry - 108} Z', fill=BLUE, stroke=None)
+    s += f
+    lx = L.w((58, 0))[0]
     for i in range(3):
-        s += line(L.X - 110 - i * 8, 1210 + i * 52, L.X - 172 - i * 8, 1210 + i * 52, BLUE, 6)   # push lines
-    return s, L
+        s += line(lx - 36, FL - 500 + i * 64, lx - 120 + i * 16, FL - 500 + i * 64, WHITE, 9)   # push lines
+    return s, L, ORANGE
 
 
 def A4():
-    BL, CX, SG, HH = 1150, 430, 180, 440
+    FL = 1800
+    s = floor(FL - 70, VIOLET_D) + header('STATISTICS', 'Hypothesis testing')
+    s += panel(40, 410, 1000, 780)
+    BL, CX, SG, HH, TOP = 1090, 540, 148, 430, 440
     hy = lambda x: BL - HH * math.exp(-((x - CX) / SG) ** 2 / 2)
-    s = chip('Statistics')
-    # shaded right tail (z above 2)
-    x2 = CX + 2 * SG
-    tail = f'M{x2} {BL} L' + ' L'.join(f'{x:.1f} {hy(x):.1f}' for x in range(int(x2), 1041, 6)) + f' L1040 {BL} Z'
-    s += path(tail, fill=BLUE, stroke=None)
-    hill = 'M40 %.1f L' % hy(40) + ' L'.join(f'{x} {hy(x):.1f}' for x in range(46, 1041, 6))
-    s += path(hill + f' L1040 {BL} L40 {BL} Z', fill=TINT, stroke=None) + path(tail, fill=BLUE, stroke=None)
-    # steps down the right slope
-    xs = [502, 634, 766]
-    for a, b_ in zip(xs, xs[1:]):
-        w = f'M{a} {hy(a):.1f} H{b_} V{hy(b_):.1f} L' + ' L'.join(f'{x:.1f} {hy(x):.1f}' for x in range(b_, a - 1, -6)) + ' Z'
-        s += path(w, fill=WHITE, sw=5)
-    s += path(hill, sw=7)
-    s += line(30, BL, 1050, BL, INK, 5)
-    for z in range(-2, 4):
-        x = CX + z * SG
-        s += line(x, BL, x, BL + 16, INK, 4) + T(x, BL + 58, str(z).replace('-', '−'), 34, fill=SLATE if z != 2 else INK)
-    s += line(x2, BL, x2, hy(x2), INK, 4, dash='8 8')
-    # Ledger on the lower step carrying the dot toward the tail
-    ty = hy(xs[1])
-    L = Ledger('34f_r', (xs[1] + xs[2]) / 2 - 5 * 1.9 + 4, ty, 1.9)
-    bc = L.w((126, 164))
-    b, f = L.draw(armL={'hand': L.r((bc[0] - 40, bc[1] + 12)), 'front': True, 'bend': 1},
-                  armR={'hand': L.r((bc[0] + 40, bc[1] + 12)), 'front': True, 'bend': -1},
-                  face={'look': (3, 2), 'mouth': 'smile'}, shadow=False)
-    s += b + circle(bc[0], bc[1], 36, BLUE, INK, 5) + f
-    tx, tyy = x2 + 96, BL - 22
-    s += curve_arrow(L.w((196, 150))[0], bc[1] + 10, tx + 10, bc[1] + 30, tx + 4, tyy - 54)
-    s += circle(tx, tyy, 14, 'none', WHITE, 4)
-    # card
-    s += rrect(100, 1310, 880, 250, 30, WHITE, INK, 5)
-    s += T(150, 1412, 'z = 2.0', 76, anchor='start') + tick(150 + tw('z = 2.0', 76) + 62, 1386, 36)
-    s += T(150, 1500, 'Only about 2% of results are this high', 40, weight=600, anchor='start', maxw=790)
-    return s, L
+    xa, xb = CX - 3.15 * SG, CX + 3.15 * SG
+    xl, xr = CX - 1.96 * SG, CX + 1.96 * SG
+    s += rrect(xa, TOP, xl - xa, BL - TOP, 0, GREEN_T, None) + rrect(xl, TOP, xr - xl, BL - TOP, 0, RED_T, None)
+    s += rrect(xr, TOP, xb - xr, BL - TOP, 0, GREEN_T, None)
+    def area(a, b_, col):
+        n = max(2, int((b_ - a) / 5))
+        p = ' L'.join(f'{a + (b_ - a) * i / n:.1f} {hy(a + (b_ - a) * i / n):.1f}' for i in range(n + 1))
+        return path(f'M{a:.1f} {BL} L{p} L{b_:.1f} {BL} Z', fill=col, stroke=None)
+    s += area(xa, xl, GREEN) + area(xl, xr, RED2) + area(xr, xb, GREEN)
+    n = 120
+    s += path('M' + ' L'.join(f'{xa + (xb - xa) * i / n:.1f} {hy(xa + (xb - xa) * i / n):.1f}' for i in range(n + 1)), sw=7)
+    s += line(xl, BL, xl, hy(xl), INK, 5) + line(xr, BL, xr, hy(xr), INK, 5)
+    s += line(xa - 10, BL, xb + 10, BL, INK, 6)
+    for x, lab in ((xl, '−1.96'), (CX, '0'), (xr, '1.96')):
+        s += line(x, BL, x, BL + 18, INK, 5) + T(x, BL + 64, lab, 40)
+    s += T((xa + xl) / 2, TOP + 52, 'Reject H_0', 31, fill=GREEN_D, maxw=xl - xa)
+    s += T((xr + xb) / 2, TOP + 52, 'Reject H_0', 31, fill=GREEN_D, maxw=xb - xr)
+    s += T(CX, TOP + 66, 'Do not reject H_0', 50, fill=RED_D)
+    # the z marker, planted just past 1.96
+    zx = CX + 2.0 * SG
+    s += line(zx, BL, zx, 700, INK, 7) + circle(zx, BL, 14, INK, None)
+    s += rrect(zx - 118 + 8, 628, 236, 92, 18, INK, None) + rrect(zx - 118, 620, 236, 92, 18, YEL, INK, 5) + T(zx, 684, 'z = 2.0', 50)
+    # result badge
+    s += panel(40, 1290, 556, 300)
+    s += tick(128, 1392, 58) + T(206, 1418, 'Reject H_0', 70, anchor='start', maxw=380)
+    s += T(78, 1530, 'z = 2.0 is beyond 1.96', 42, weight=600, anchor='start', fill=SLATE, maxw=520)
+    # Ledger, happy, pointing up at the marker
+    L = Ledger('34f_l', 868, FL, 2.5)
+    b, f = L.draw(armL={'hand': (30, 110), 'front': True, 'bend': -1},
+                  face={'look': (-2, -2), 'glad': True, 'mouth': 'grin'})
+    s += b + f
+    return s, L, VIOLET
 
 
 def A5():
-    ox, oy, xr, yt = 150, 1330, 1010, 560
-    m = 0.21                                             # demand: x falls by m for each px up
-    s = chip('Economics')
-    # three small cards floating behind
-    s += group(card(190, 140, mini_t(140, 96, False)), 300, 400, -6)
-    s += group(card(190, 140, mini_growth(130, 86)), 550, 380, 4)
-    s += group(card(190, 140, mini_bell(140, 84)), 800, 404, -3)
-    # chart
-    s += path(f'M{ox} {yt - 10} V{oy} H{xr + 10}', sw=6)
-    s += T(ox - 22, yt - 34, 'Price', 40, anchor='start') + T(xr + 14, oy + 62, 'Quantity', 40, anchor='end')
-    S = lambda x: 1280 - 0.9067 * (x - 230)
-    s += line(230, S(230), 990, S(990), INK, 7) + T(982, S(990) - 26, 'Supply', 40, anchor='end')
-    d1b, d2b = 650, 840
-    D = lambda b, y: b - (oy - y) * m
-    s += line(D(d1b, yt + 30), yt + 30, d1b, oy, BLUE, 6, dash='16 14', extra='opacity="0.7"')
-    s += line(D(d2b, yt + 30), yt + 30, d2b, oy, BLUE, 8)
-    s += T(D(d2b, yt + 30) + 22, yt + 62, 'Demand', 40, anchor='start', fill=BLUE)
-    def eq(b):
-        y = (1280 - 0.9067 * (b - oy * m - 230)) / (1 + 0.9067 * m)
-        return D(b, y), y
-    (e1x, e1y), (e2x, e2y) = eq(d1b), eq(d2b)
-    s += line(ox, e1y, e1x, e1y, SLATE, 4, dash='4 12') + line(ox, e2y, e2x, e2y, SLATE, 4, dash='4 12')
-    s += circle(e1x, e1y, 12, WHITE, INK, 5) + circle(e2x, e2y, 14, INK, None)
-    s += arrow(ox + 44, e1y - 16, ox + 44, e2y + 14, GREEN, 10, head=34)
-    s += arrow(D(d1b, 668) + 40, 668, D(d2b, 668) - 30, 668, BLUE, 6, head=24)   # the line moves right
-    # Ledger in side view pushes the new demand line: shoulder (top corner) and both hands
-    L = Ledger('side_r', 0, oy, 2.2, rot=4)
-    cxw, cyw = L.w((140.5, 40))
-    L.X += D(d2b, cyw) - cxw - 6
-    h1y, h2y = L.w((0, 128))[1], L.w((0, 153))[1]
-    b, f = L.draw(armL={'hand': L.r((D(d2b, h1y) - 24, h1y)), 'front': True, 'bend': -1},
-                  armR={'hand': L.r((D(d2b, h2y) - 24, h2y)), 'front': True, 'bend': 1}, shadow=False)
+    s = header('ECONOMICS', 'Market equilibrium')
+    s += panel(30, 410, 1016, 1350)
+    ox, oy, yt, xr = 130, 1640, 500, 1000
+    m, ex, ey, sh = 1.25, 480, 1050, 130
+    S = lambda x: ey - m * (x - ex)
+    D2 = lambda x: ey + m * (x - ex)
+    D1 = lambda x: ey + m * (x - ex + sh)
+    e1x = ex - sh / 2
+    e1y = S(e1x)
+    # platform for Ledger between the two lines
+    sc, LX, LY = 2.5, 862, 1300
+    s += rrect(LX + 8, LY + 26, 26, oy - LY - 26, 0, PINK_D, INK, 5)
+    s += path(f'M{ox} {yt - 10} V{oy} H{xr + 10}', sw=7)
+    s += arrow_head(ox, yt - 30, -90, 30) + arrow_head(xr + 30, oy, 0, 30)
+    s += T(ox + 30, 492, 'Price', 40, anchor='start', fill=SLATE) + T(xr + 20, oy + 68, 'Quantity', 40, anchor='end', fill=SLATE)
+    s += line(ox, ey, ex, ey, SLATE, 5, dash='3 14') + line(ex, ey, ex, oy, SLATE, 5, dash='3 14')
+    s += line(175, D1(175), 700, D1(700), PINK, 7, dash='18 16')                       # where demand was
+    s += line(180, S(180), 850, S(850), INK, 10) + T(876, S(850) - 26, 'Supply', 48, anchor='end')
+    s += line(205, D2(205), 810, D2(810), PINK, 11)
+    s += T(214, D2(205) - 30, 'Demand', 48, anchor='start', fill=PINK_D)
+    for yy in (880, 1400):
+        xa, xb = ex - sh + (yy - ey) / m, ex + (yy - ey) / m
+        s += arrow(xa + 22, yy, xb - 20, yy, PINK_D, 8, head=26)
+    s += circle(e1x, e1y, 14, WHITE, INK, 5) + circle(ex, ey, 20, GREEN, INK, 6)
+    s += T(78, ey + 18, 'P*', 52) + T(ex, oy + 72, 'Q*', 52)
+    s += rrect(LX - 126, LY, 290, 30, 8, PINK, INK, 5)
+    # Ledger on the platform, 3/4 front, one hand on the grip of the demand line
+    L = Ledger('34f_l', LX, LY, sc)
+    gx, gy = 606, D2(606)
+    b, f = L.draw(armL={'hand': L.r((gx + 16, gy - 12)), 'front': True, 'bend': 1},
+                  face={'look': (-3, 1.5), 'mouth': 'smile', 'brows': 2}, shadow=False)
     s += b + f
-    return s, L
+    return s, L, PINK
 
 
 def A6():
-    ox, oy, xr, yt = 140, 1340, 1010, 600
-    sl = 0.40
-    e2 = (770, 990)
-    IS2 = lambda x: e2[1] + sl * (x - e2[0])
-    IS1 = lambda x: IS2(x) + 140
-    LM = lambda x: e2[1] - 0.85 * (x - e2[0])
-    d = -140 / (0.85 + sl)
-    e1 = (e2[0] + d, LM(e2[0] + d))
-    s = path(f'M{ox} {yt - 10} V{oy} H{xr + 10}', sw=6)
-    s += T(ox - 22, yt - 36, 'Interest rate', 40, anchor='start') + T(xr + 14, oy + 62, 'Output', 40, anchor='end')
-    s += line(560, LM(560), 1000, LM(1000), INK, 7) + T(1000, LM(1000) - 26, 'LM', 44, anchor='end')
-    s += line(ox + 20, IS1(ox + 20), 990, IS1(990), BLUE, 6, dash='16 14', extra='opacity="0.7"')
-    s += line(ox + 20, IS2(ox + 20), 990, IS2(990), BLUE, 8)
-    s += T(1004, IS2(990) - 34, 'IS', 44, anchor='end', fill=BLUE)
-    # crossing point moves along LM
-    off = 34
-    s += curve_arrow(e1[0] + off, e1[1] + 10, (e1[0] + e2[0]) / 2 + off + 16, (e1[1] + e2[1]) / 2 + 20, e2[0] + off - 4, e2[1] + 22, stroke=INK, sw=5, dash='3 13', head=22)
-    s += circle(e1[0], e1[1], 12, WHITE, INK, 5) + circle(e2[0], e2[1], 15, INK, None)
-    for i in range(3):
-        x = 850 + i * 40
-        s += arrow(x, IS1(x) - 22, x, IS2(x) + 30, BLUE, 6, head=22) if i != 1 else ''
-    # ladder and Ledger from the back, both hands under the IS line
-    LX, sc = 400, 2.1
-    LY = IS2(LX) + (222 - 136) * sc
-    s += line(LX - 62, LY + 8, LX - 112, oy - 3, INK, 9) + line(LX + 62, LY + 8, LX + 112, oy - 3, INK, 9)
-    n = 3
-    for i in range(1, n + 1):
-        t = i / (n + 0.6)
-        yy = LY + 8 + (oy - LY - 8) * t
-        xx = 62 + 50 * t
-        s += line(LX - xx, yy, LX + xx, yy, INK, 7)
-    s += rrect(LX - 86, LY, 172, 18, 6, WHITE, INK, 5)
-    L = Ledger('back', LX, LY, sc)
-    hl = L.w((39, 0))[0]
-    hr = L.w((201, 0))[0]
-    b, f = L.draw(armL={'hand': L.r((hl, IS2(hl) + 9 * sc + 4)), 'bend': 1},
-                  armR={'hand': L.r((hr, IS2(hr) + 9 * sc + 4)), 'bend': -1}, shadow=False)
+    FL = 1800
+    s = floor(FL - 70, PINK_D) + header('ECONOMICS', 'The IS-LM model')
+    mx, my, mw, mh = 40, 410, 1000, 730
+    s += monitor(mx, my, mw, mh)
+    s += rrect(250, my + mh + 82, 580, 26, 8, CREAM, INK, 5)
+    ox, oy, yt, xr = 150, 1040, 480, 990
+    y1, y2, m = 650, 830, 1.125
+    e1, e2 = (700, y1), (700 + (y2 - y1) / m, y2)
+    IS = lambda x: y1 + m * (x - 700)
+    s += path(f'M{ox} {yt - 6} V{oy} H{xr + 6}', sw=7)
+    s += arrow_head(ox, yt - 24, -90, 28) + arrow_head(xr + 24, oy, 0, 28)
+    s += T(ox + 26, yt - 4, 'Interest rate i', 38, anchor='start', fill=SLATE)
+    s += T(ox + 20, oy + 56, 'Output Y', 38, anchor='start', fill=SLATE)
+    s += line(e1[0], y1, e1[0], oy, SLATE, 5, dash='3 14') + line(e2[0], y2, e2[0], oy, SLATE, 5, dash='3 14')
+    s += line(ox, y1, xr - 20, y1, SLATE, 7, dash='18 16')
+    s += line(ox, y2, xr - 20, y2, INK, 10)
+    s += line(540, IS(540), 905, IS(905), BLUE, 10) + T(524, IS(540) + 34, 'IS', 54, anchor='end', fill=BLUE)
+    s += T(ox + 26, y2 + 56, 'LM (set by the central bank)', 38, anchor='start', maxw=530)
+    s += arrow(330, y1 + 26, 330, y2 - 22, PINK, 14, head=40)
+    s += circle(e1[0], y1, 14, WHITE, INK, 5) + circle(e2[0], y2, 20, GREEN, INK, 6)
+    s += T(e1[0], oy + 58, 'Y_1', 46) + T(e2[0], oy + 58, 'Y_2', 46)
+    s += arrow(e1[0] + 44, oy + 42, e2[0] - 44, oy + 42, GREEN, 8, head=24)
+    cxp = 940
+    s += line(cxp, y1 + 14, cxp, y2 - 16, INK, 6, dash='3 15') + cursor(cxp - 4, y2 - 4)
+    # Ledger from the back, game controller in both hands
+    sc = 2.4
+    L = Ledger('back', 540, FL, sc)
+    pad = rrect(8, 146, 224, 46, 23, WHITE, INK, 4)
+    pad += rrect(8, 160, 46, 56, 22, WHITE, INK, 4) + rrect(186, 160, 46, 56, 22, WHITE, INK, 4)
+    pad += rrect(12, 150, 216, 38, 19, WHITE, None)
+    pad += rrect(24, 156, 8, 24, 2, INK, None) + rrect(16, 164, 24, 8, 2, INK, None)                 # D-pad
+    pad += circle(206, 160, 5.5, GREEN, INK, 2) + circle(218, 171, 5.5, RED, INK, 2) + circle(205, 177, 5.5, YEL, INK, 2)
+    s += f'<g transform="translate({L.X - 120 * sc:.2f} {L.Y - 222 * sc:.2f}) scale({sc})">{pad}</g>'
+    b, f = L.draw(armL={'hand': (30, 200), 'bend': 1}, armR={'hand': (210, 200), 'bend': -1})
     s += b + f
-    return s, L
+    top = L.w((0, 34))[1]
+    for r in (22, 44, 66):
+        s += path(f'M{540 - r} {top - 16} A{r} {r} 0 0 1 {540 + r} {top - 16}', stroke=WHITE, sw=9)   # wireless signal
+    return s, L, PINK
 
 
 def A7():
-    s = ''
+    s = floor(1740, YEL_D)
     def lines(rows, size, lh=None, weight=700, fill=INK):
         lh = lh or size * 1.32
         y0 = -lh * (len(rows) - 1) / 2 + size * 0.35
         return ''.join(T(0, y0 + i * lh, r, size, weight, fill=fill, check=False) for i, r in enumerate(rows))
-    be = lines(['Break-even units =', 'Fixed costs ÷', '(Price − Variable cost per unit)'], 32)
-    npv = T(0, -34, 'NPV =', 42, check=False)
-    npv += (f'<text x="0" y="38" font-family="{FONT}" font-size="36" font-weight="700" text-anchor="middle" fill="{INK}">'
+    be = lines(['Break-even units =', 'Fixed costs ÷', '(Price − Variable cost per unit)'], 32, fill=WHITE)
+    npv = T(0, -34, 'NPV =', 44, check=False, fill=WHITE)
+    npv += (f'<text x="0" y="38" font-family="{FONT}" font-size="36" font-weight="700" text-anchor="middle" fill="{WHITE}">'
             f'Σ CF<tspan dy="10" font-size="24">t</tspan><tspan dy="-10"> ÷ (1 + r)</tspan><tspan dy="-16" font-size="24">t</tspan>'
             f'<tspan dy="16"> − Initial cost</tspan></text>')
-    zf = lines(['z = (x − μ) ÷ σ'], 54)
-    ale = lines(['Assets =', 'Liabilities + Equity'], 44)
+    zf = lines(['z = (x − μ) ÷ σ'], 54, fill=WHITE)
+    ale = lines(['Assets =', 'Liabilities + Equity'], 44, fill=WHITE)
     cards = [
-        (300, 400, -4, 532, 250, be),
-        (824, 366, 5, 404, 170, zf),
-        (800, 700, -3, 420, 360, group(mini_sd(290, 230, True), 0, 4)),
-        (304, 760, 3, 540, 220, npv),
-        (274, 1110, -5, 430, 270, group(mini_t(340, 200), 0, 0)),
-        (784, 1110, 4, 500, 210, ale),
+        (300, 300, -4, 532, 250, be, EMER_D),
+        (824, 266, 5, 404, 170, zf, VIOLET),
+        (800, 610, -3, 420, 360, group(mini_sd(290, 230), 0, 4), WHITE),
+        (304, 670, 3, 540, 220, npv, ORANGE),
+        (274, 1030, -5, 430, 270, group(mini_t(340, 200, True, EMER, '#A7F3D0'), 0, 0), WHITE),
+        (784, 1030, 4, 500, 210, ale, BLUE),
     ]
-    for cx, cy, rot, w, h, inner in cards:
-        s += group(card(w, h, inner), cx, cy, rot)
-    s += floor_line(300, 780, 1720)
-    L = Ledger('back', 540, 1720, 1.7)
-    b, f = L.draw(armL={'hand': (25, 127), 'bend': 1}, armR={'hand': (215, 127), 'bend': -1}, shadow=False)
+    for cx, cy, rot, w, h, inner, fill in cards:
+        s += group(card(w, h, inner, fill=fill), cx, cy, rot)
+    L = Ledger('back', 540, 1800, 2.5)
+    b, f = L.draw(armL={'hand': (25, 127), 'bend': 1}, armR={'hand': (215, 127), 'bend': -1})
     s += b + f
-    for dx, dy, r in ((-250, -330, 40), (0, -400, 44), (250, -330, 40)):
-        s += line(540 + dx * 0.72, 1720 + dy * 0.72 - 60, 540 + dx * 0.86, 1720 + dy * 0.86 - 60, BLUE, 6)
-    return s, L
+    top = L.w((0, 34))[1]
+    s += sparks(540, top + 150, 215, 268, (-145, -118, -90, -62, -35), WHITE, 10)
+    return s, L, YEL
 
 
 def A8():
-    s = T(540, 560, 'Get started', 124) + T(540, 706, 'for free', 124)
-    sc, X, Y = 2.4, 846, 1262
-    py = Y - (222 - 152.9) * sc
-    s += rrect(64, py - 74, 540, 148, 74, BLUE, None) + T(292, py + 20, 'edlintics.com', 56, fill=WHITE, maxw=400)
-    s += embed_state('point-left', X, Y, sc)
-    hxw = X + (3.65 - 120) * sc
-    for ang in (-140, -100, -60):
-        a = math.radians(ang)
-        s += line(hxw - 16 + 92 * math.cos(a), py + 92 * math.sin(a), hxw - 16 + 132 * math.cos(a), py + 132 * math.sin(a), INK, 7)
-    return s, None
+    FL = 1800
+    s = floor(FL - 70, BLUE_D)
+    mx, my, mw, mh = 44, 150, 992, 1030
+    s += monitor(mx, my, mw, mh)
+    ix, iy, iw = mx + 22, my + 22, mw - 44
+    # browser bar
+    s += rrect(ix, iy, iw, 100, 14, TINT, None) + rrect(ix, iy + 50, iw, 50, 0, TINT, None)
+    for i, col in enumerate((RED, YEL, GREEN)):
+        s += circle(ix + 54 + i * 44, iy + 50, 14, col, None)
+    s += rrect(ix + 190, iy + 18, iw - 240, 64, 32, WHITE, INK, 3) + T(ix + 190 + (iw - 240) / 2, iy + 65, 'edlintics.com', 40)
+    # page
+    wm, a_, b_ = 120, 'Ed', 'lintics'
+    wa, wb = tw(a_, wm), tw(b_, wm)
+    x0 = 540 - (wa + wb) / 2
+    s += T(x0, iy + 270, a_, wm, anchor='start') + T(x0 + wa, iy + 270, b_, wm, anchor='start', fill=BLUE)
+    s += T(540, iy + 370, 'Learn the language of business', 54, maxw=iw - 60)
+    rows = [(('Accounting', EMER_D), ('Finance', ORANGE)), (('Economics', PINK), ('Statistics', VIOLET))]
+    for r, row in enumerate(rows):
+        ws = [tw(t, 46) + 76 for t, _ in row]
+        x = 540 - (sum(ws) + 28) / 2
+        y = iy + 430 + r * 112
+        for (t, col), w_ in zip(row, ws):
+            s += rrect(x, y, w_, 88, 44, col, INK, 4) + T(x + w_ / 2, y + 60, t, 46, fill=WHITE)
+            x += w_ + 28
+    by = iy + 700
+    s += rrect(160, by + 10, 780, 160, 80, INK, None) + rrect(150, by, 780, 160, 80, BLUE, INK, 5)
+    s += T(540, by + 102, 'Get started for free', 66, fill=WHITE, maxw=700)
+    s += cursor(862, by + 104, 2.1)
+    # Ledger below the monitor, waving
+    sc = 2.5
+    s += embed_state('hello', 540, FL, sc)
+    s += sparks(540, FL - 300, 300, 360, (-160, -20), WHITE, 10) + sparks(540, FL - 300, 300, 360, (-172, -8), WHITE, 10)
+    return s, None, BLUE
 
 
 FRAMES = {'A1': A1, 'A2': A2, 'A3': A3, 'A4': A4, 'A5': A5, 'A6': A6, 'A7': A7, 'A8': A8}
@@ -664,13 +733,13 @@ FRAMES = {'A1': A1, 'A2': A2, 'A3': A3, 'A4': A4, 'A5': A5, 'A6': A6, 'A7': A7, 
 
 def build(name):
     WARN.clear()
-    inner, L = FRAMES[name]()
+    inner, L, bg = FRAMES[name]()
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">'
-           f'<rect width="{W}" height="{H}" fill="{BG}"/>{inner}</svg>')
-    open(os.path.join(HERE, f'{name}.svg'), 'w').write(svg)
-    html = os.path.join(HERE, f'_{name}.html')
-    open(html, 'w').write(f'<!doctype html><meta charset="utf-8"><style>html,body{{margin:0;background:{BG}}}svg{{display:block}}</style>{svg}')
-    png = os.path.join(HERE, f'{name}.png')
+           f'<rect width="{W}" height="{H}" fill="{bg}"/>{inner}</svg>')
+    open(os.path.join(OUT, f'{name}.svg'), 'w').write(svg)
+    html = os.path.join(OUT, f'_{name}.html')
+    open(html, 'w').write(f'<!doctype html><meta charset="utf-8"><style>html,body{{margin:0;background:{bg}}}svg{{display:block}}</style>{svg}')
+    png = os.path.join(OUT, f'{name}.png')
     subprocess.run([CHROME, '--headless=new', '--hide-scrollbars', '--force-device-scale-factor=1', f'--window-size={W},{H}',
                     f'--screenshot={png}', 'file://' + html], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     os.remove(html)
@@ -684,16 +753,17 @@ def build(name):
 
 
 def sheet():
-    names = [n for n in FRAMES if os.path.exists(os.path.join(HERE, f'{n}.png'))]
+    names = [n for n in FRAMES if os.path.exists(os.path.join(OUT, f'{n}.png'))]
     tw_, th = 250, 444
     im = Image.new('RGB', (tw_ * len(names), th), 'white')
     for i, n in enumerate(names):
-        im.paste(Image.open(os.path.join(HERE, f'{n}.png')).convert('RGB').resize((tw_ - 4, th - 4), Image.Resampling.LANCZOS), (i * tw_ + 2, 2))
-    im.save(os.path.join(HERE, 'sheet.png'))
+        im.paste(Image.open(os.path.join(OUT, f'{n}.png')).convert('RGB').resize((tw_ - 4, th - 4), Image.Resampling.LANCZOS), (i * tw_ + 2, 2))
+    im.save(os.path.join(OUT, 'sheet.png'))
     print('sheet.png', im.size)
 
 
 if __name__ == '__main__':
+    os.makedirs(OUT, exist_ok=True)
     for n in (sys.argv[1:] or list(FRAMES)):
         build(n)
     sheet()
