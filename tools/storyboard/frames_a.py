@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Edlintics demo video A: 13 storyboard stills, drawn in code (SVG) and rendered with headless Chrome.
+"""Edlintics demo video A: 13 storyboard stills plus 7 transition frames (T1..T7), drawn in code (SVG) and rendered with headless Chrome.
 
 Run:  python3 frames_a.py            (all frames + sheet.png)
       python3 frames_a.py A3a A5b    (only those frames, sheet rebuilt from what exists)
@@ -1015,9 +1015,341 @@ def A8():
     return s, None, BLUE
 
 
-FRAMES = {'A1': A1, 'A2a': lambda: A2(False), 'A2b': lambda: A2(True), 'A3a': lambda: A3(False), 'A3b': lambda: A3(True),
-          'A4a': lambda: A4(False), 'A4b': lambda: A4(True), 'A5a': lambda: A5(False), 'A5b': lambda: A5(True),
-          'A6a': lambda: A6(False), 'A6b': lambda: A6(True), 'A7': A7, 'A8': A8}
+# ---------------------------------------------------------------------------------------------
+# Transition frames T1..T7 (Hoang, 20 Nov 2026: "Ledger stands still too much at the bottom").
+# Between every pair of scenes Ledger is the thing that travels: he leaps, runs, rides, slides, drops
+# and hops, the camera changes distance, and the next subject's colour wipes in along his path.
+# He is the front rig drawn from the rig numbers; only the whole book is rotated, the legs swing
+# about the rig's hip pivots (at most 30 degrees) and the arms keep the 1.7 reach cap.
+# ---------------------------------------------------------------------------------------------
+class Mover:
+    """Front-view Ledger for travelling shots. (cx, cy) is the frame position of the book centre
+    (rig 120,115); tilt rotates the whole figure about it. Nothing is scaled unevenly."""
+
+    def __init__(self, cx, cy, sc, tilt=0):
+        self.cx, self.cy, self.sc, self.tilt = cx, cy, sc, tilt
+        self.view = f'front, whole book tilted {tilt}'
+        self.reach = []
+
+    @classmethod
+    def on_feet(cls, fx, fy, sc, tilt=0):
+        a, d = math.radians(tilt), 107 * sc
+        return cls(fx + d * math.sin(a), fy - d * math.cos(a), sc, tilt)
+
+    def w(self, p):
+        a = math.radians(self.tilt)
+        dx, dy = (p[0] - 120) * self.sc, (p[1] - 115) * self.sc
+        return (self.cx + dx * math.cos(a) - dy * math.sin(a), self.cy + dx * math.sin(a) + dy * math.cos(a))
+
+    def draw(self, legs=(0, 0), armL=None, armR=None, face=None, held='', opacity=1):
+        R = Ledger('front', 0, 0, 1)
+        back = front = ''
+        for side, spec in (('L', armL or {}), ('R', armR or {})):
+            a = R._arm(side, spec)
+            if spec.get('front'):
+                front += a
+            else:
+                back += a
+        self.reach += R.reach
+        lg = ''
+        for lx, sx, a in zip((102, 138), (87.5, 123.5), legs):
+            assert abs(a) <= 30, 'leg swing beyond the rig walk cycle'
+            lg += (f'<g transform="rotate({a} {lx} 188)"><line x1="{lx}" y1="186" x2="{lx}" y2="210" stroke="{INK}" stroke-width="9" stroke-linecap="round"/>'
+                   f'<rect x="{sx}" y="208" width="29" height="14" rx="7" fill="{INK}"/></g>')
+        body = R._cover(52, 1, face)
+        return (f'<g transform="translate({self.cx:.1f} {self.cy:.1f}) rotate({self.tilt}) scale({self.sc}) translate(-120 -115)" '
+                f'opacity="{opacity}">{lg}{back}{body}{held}{front}</g>')
+
+
+UPL, UPR = {'hand': (28, 106), 'bend': -1}, {'hand': (212, 106), 'bend': 1}        # both arms up, as in the rig's cheer
+JOY = {'glad': True, 'mouth': 'grin'}
+
+
+def wipe(pts, col, band, bw=34):
+    """The next scene's colour coming in: a flat region with a darker band on its leading edge."""
+    d = 'M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in pts) + ' Z'
+    return (f'<path d="{d}" fill="{band}" stroke="{band}" stroke-width="{2 * bw}" stroke-linejoin="round"/>'
+            f'<path d="{d}" fill="{col}"/>')
+
+
+def travel(p0, c1, c2, p3, ring=True, head=True, col=INK):
+    """Storyboard path arrow: dashed curve from where he came (ring) to where he goes (head)."""
+    s = path(f'M{p0[0]} {p0[1]} C{c1[0]} {c1[1]} {c2[0]} {c2[1]} {p3[0]} {p3[1]}', stroke=col, sw=8, dash='10 20')
+    if ring:
+        s += circle(p0[0], p0[1], 14, WHITE, col, 6)
+    if head:
+        ang = math.degrees(math.atan2(p3[1] - c2[1], p3[0] - c2[0]))
+        s += arrow_head(p3[0] + 22 * math.cos(math.radians(ang)), p3[1] + 22 * math.sin(math.radians(ang)), ang, 34, col)
+    return s
+
+
+def star4(cx, cy, r, fill=WHITE, stroke=INK, sw=4):
+    p = []
+    for i in range(8):
+        rr, a = (r if i % 2 == 0 else r * 0.34), math.radians(i * 45 - 90)
+        p.append(f'{cx + rr * math.cos(a):.1f} {cy + rr * math.sin(a):.1f}')
+    return path('M' + ' L'.join(p) + ' Z', fill=fill, stroke=stroke, sw=sw)
+
+
+def coin(cx, cy, r, label='€'):
+    s = circle(cx, cy, r, YEL, INK, max(2.5, r * 0.09)) + circle(cx, cy, r * 0.74, 'none', YEL_D, max(2, r * 0.07))
+    if label:
+        size = r * (0.95 if len(label) == 1 else 0.56)
+        s += T(cx, cy + size * 0.36, label, size, check=False)
+    return s
+
+
+def coin_stack(x, base, n, w=84, ch=22):
+    return ''.join(rrect(x - w / 2, base - 3 - ch * (j + 1), w, ch, 8, YEL, INK, 3) for j in range(n))
+
+
+def bell_fn(BL, CX, SG, HH):
+    g = lambda x: HH * math.exp(-((x - CX) / SG) ** 2 / 2)
+    return (lambda x: BL - g(x)), (lambda x: g(x) * (x - CX) / SG ** 2)
+
+
+def fpts(f, a, b, n=80):
+    return ' L'.join(f'{a + (b - a) * i / n:.1f} {f(a + (b - a) * i / n):.1f}' for i in range(n + 1))
+
+
+def tbook(cx, cy, rot, col, bw=210, bh=74):
+    dark = col in (SUIT, VIOLET, PINK, EMER, ORANGE)
+    g = rrect(-bw / 2, -bh / 2, bw, bh, 9, col, INK, 5) + rrect(bw / 2 - 40, -bh / 2 + 10, 30, bh - 20, 4, PAGES, INK, 3)
+    g += rrect(-bw / 2 + 40, -8, bw * 0.38, 16, 8, CREAM if dark else RULE, None)
+    return group(g, cx, cy, rot)
+
+
+def mini_lesson(col, kind, w=280, h=200):
+    """Small lesson card without words: coloured header, icon dot, a title bar and one picture."""
+    x, y = -w / 2, -h / 2
+    g = rrect(x + 9, y + 9, w, h, 22, INK, None) + rrect(x, y, w, h, 22, WHITE, INK, 5)
+    g += path(f'M{x} {y + 54} V{y + 22} Q{x} {y} {x + 22} {y} H{-x - 22} Q{-x} {y} {-x} {y + 22} V{y + 54} Z', fill=col, stroke=INK, sw=5)
+    g += circle(x + 34, y + 27, 15, WHITE, INK, 3) + rrect(x + 62, y + 18, w * 0.5, 18, 9, WHITE, None)
+    b = ''
+    if kind == 't':
+        b = line(-96, -30, 96, -30, INK, 5) + line(0, -30, 0, 52, INK, 5) + rrect(-84, -14, 64, 30, 8, BLUE, None) + rrect(20, -14, 64, 30, 8, TINT, None)
+        b += rrect(-84, 22, 44, 22, 8, TINT, None)
+    elif kind == 'curve':
+        f = lambda i: 46 - 12 * 1.03 ** i
+        b = path('M-100 -44 V46 H104', sw=5) + path('M' + ' L'.join(f'{-90 + 2.6 * i:.1f} {f(i):.1f}' for i in range(71)), stroke=BLUE, sw=7)
+        b += coin_stack(-50, 49, 1, 34, 10) + coin_stack(10, 49, 3, 34, 10) + coin_stack(66, 49, 5, 34, 10)
+    elif kind == 'bell':
+        f = lambda xx: 48 - 86 * math.exp(-(xx / 40) ** 2 / 2)
+        b = path(f'M-104 48 L{fpts(f, -104, 104, 40)} L104 48 Z', fill=RED2, stroke=INK, sw=5) + line(-110, 48, 110, 48, INK, 5)
+    elif kind == 'x':
+        b = path('M-100 -44 V48 H104', sw=5) + line(-76, 36, 70, -36, INK, 6) + line(-76, -36, 70, 36, PINK, 7) + circle(-3, 0, 9, GREEN, INK, 3)
+    elif kind == 'bars':
+        b = line(-100, 10, 100, 10, INK, 5) + rrect(-86, 10, 34, 36, 4, RED2, INK, 4)
+        for i, hh in enumerate((24, 36, 46, 58)):
+            b += rrect(-36 + i * 34, 10 - hh, 24, hh, 4, GREEN, INK, 4)
+    else:
+        for i, on in enumerate((False, True, False)):
+            b += rrect(-100, -44 + i * 34, 200, 26, 13, GREEN if on else WHITE, INK, 4)
+    return g + group(b, 0, 30)
+
+
+def T1():
+    """Door -> accounting: the door is open and Ledger leaps through it at the camera."""
+    FL = 1560
+    s = floor(FL - 40, YEL_D)
+    bx, by = 470, 1090                                                                 # the green bursts out of the doorway
+    pts = []
+    for i in range(32):
+        r, a = (690 if i % 2 == 0 else 560), math.radians(i * 360 / 32 + 4)
+        pts.append((bx + r * math.cos(a), by + r * math.sin(a)))
+    s += wipe(pts, EMER, EMER_D, 26)
+    D0, D1, DT = 150, 760, 480
+    s += rrect(D0, DT, D1 - D0, FL - DT, 10, WHITE, INK, 5) + rrect(D0 + 30, DT + 30, D1 - D0 - 60, FL - DT - 33, 6, EMER_D, INK, 5)
+    s += rrect(D0 - 104, DT + 14, 104, FL - DT + 16, 8, BLUE, INK, 5)                  # the door leaf, swung wide open
+    s += rrect(D0 - 84, DT + 54, 64, 400, 6, 'none', INK, 4, 'opacity="0.55"') + rrect(D0 - 84, DT + 500, 64, 520, 6, 'none', INK, 4, 'opacity="0.55"')
+    s += rrect(D0 - 92, FL - 290, 26, 96, 10, CREAM, INK, 4)
+    s += path(f'M{D0 - 120} {DT - 20} q-34 30 -34 80', stroke=WHITE, sw=8) + path(f'M{D0 - 96} {DT - 56} q-70 44 -74 130', stroke=WHITE, sw=8)
+    # the sign is knocked off and the old textbooks tumble aside
+    s += group(panel(-270, -70, 540, 140, 24) + T(0, 21, 'Learning business', 56, check=False), 730, 250, 13)
+    s += sparks(730, 250, 330, 380, (-28, -10, 8), WHITE, 8)
+    for cx, cy, rot, col in ((110, 300, -24, CREAM), (960, 640, 38, SUIT), (120, 1730, 28, VIOLET), (350, 1830, -10, PINK), (955, 1690, -34, ORANGE)):
+        s += tbook(cx, cy, rot, col)
+    s += path('M40 1630 q-20 -50 20 -90', stroke=WHITE, sw=7) + path('M1030 1590 q22 -46 -12 -90', stroke=WHITE, sw=7)
+    s += path('M1010 540 q30 -40 4 -86', stroke=WHITE, sw=7) + path('M50 220 q-14 -40 14 -70', stroke=WHITE, sw=7)
+    # Ledger himself, big and in the air; the zoom lines say he is coming at the camera
+    m = Mover(610, 1160, 4.4, -7)
+    s += sparks(610, 1160, 520, 610, (-128, -112, -62, -48, 48, 62, 118, 132), WHITE, 10)
+    s += f'<ellipse cx="640" cy="1722" rx="170" ry="20" fill="{INK}" opacity="0.14"/>'
+    s += m.draw((20, -20), UPL, UPR, JOY)
+    s += travel((250, 1520), (250, 1700), (560, 1850), (900, 1830))
+    return s, m, YEL
+
+
+def T2():
+    """Accounting -> finance: the €500 block is now a big coin and Ledger runs right with it."""
+    GY = 1560
+    ex = lambda y: 800 - 240 * y / 1920
+    s = floor(GY, EMER_D)
+    s += wipe([(ex(-100), -100), (W + 200, -100), (W + 200, H + 100), (ex(H + 100), H + 100)], ORANGE, ORANGE_D)
+    s += path(f'M{ex(GY):.0f} {GY} H{W} V{H} H{ex(H):.0f} Z', fill=ORANGE_D, stroke=None)
+    # the T-account slides away behind him
+    t = line(-230, 0, 230, 0, INK, 8) + line(0, 0, 0, 290, INK, 8)
+    t += T(-115, 62, 'Debit', 44, fill=WHITE, check=False) + T(115, 62, 'Credit', 44, fill=WHITE, check=False)
+    t += rrect(-200, 96, 170, 90, 16, 'none', WHITE, 5, 'stroke-dasharray="14 10"') + rrect(30, 96, 170, 90, 16, 'none', WHITE, 5, 'stroke-dasharray="14 10"')
+    t += line(270, 70, 370, 70, WHITE, 9) + line(270, 130, 340, 130, WHITE, 9) + line(270, 190, 360, 190, WHITE, 9)
+    s += group(t, 200, 300, -12)
+    # finance is waiting on the right: coin stacks
+    s += coin_stack(925, GY + 60, 3) + coin_stack(1022, GY + 60, 6)
+    s += star4(930, GY - 60, 20) + star4(1010, GY - 130, 14)
+    held = coin(120, 182, 36, '€500')
+    legs = (24, -24)
+    s += Mover.on_feet(310, GY - 56, 4.1, 10).draw((-24, 24), opacity=0.2)
+    s += speed(96, 1010, 3, 84, 120, WHITE, 10)
+    m = Mover.on_feet(600, GY - 30, 4.1, 10)
+    s += f'<ellipse cx="610" cy="{GY + 18}" rx="165" ry="18" fill="{INK}" opacity="0.14"/>'
+    for x, y, r in ((420, GY + 2, 26), (366, GY - 20, 16), (326, GY + 8, 10)):
+        s += circle(x, y, r, WHITE, None)
+    s += m.draw(legs, {'hand': (84, 180), 'front': True, 'bend': -1}, {'hand': (156, 180), 'front': True, 'bend': 1},
+                {'brows': 2, 'mouth': 'smile', 'look': (3, 0)}, held)
+    sx, sy = m.w((150, 138))
+    s += star4(sx, sy, 26)
+    s += travel((110, 1800), (380, 1720), (700, 1720), (950, 1800))
+    return s, m, EMER
+
+
+def T3():
+    """Finance -> statistics: he surfs up the growth curve, which is already bending into the bell."""
+    BL = 1760
+    f, df = bell_fn(BL, 900, 330, 1050)
+    s = floor(BL, ORANGE_D)
+    s += wipe([(105, -200), (1300, -200), (1300, 1440), (1215, 1440)], VIOLET, VIOLET_D)
+    for x in (140, 300, 460):
+        s += coin_stack(x, BL + 3, int((BL - f(x) - 20) // 22))
+    xt = 840
+    s += path(f'M{fpts(f, xt, W + 20, 30)}', stroke=WHITE, sw=9, dash='18 18')
+    s += path(f'M{fpts(f, -20, xt)}', stroke=INK, sw=22) + path(f'M{fpts(f, -20, xt)}', stroke=BLUE, sw=11)
+    for x, r in ((760, 30), (715, 25), (672, 20), (640, 15)):                          # coins flung off behind him
+        y = f(x) + 110 + (760 - x) * 0.5
+        s += coin(x + 70, y, r) + line(x + 70 - r - 30, y + r + 14, x + 70 - r - 12, y + r - 6, WHITE, 7)
+    tl = lambda x: math.degrees(math.atan(df(x))) * 0.45
+    s += Mover.on_feet(610, f(610) - 12, 2.5, tl(610)).draw((14, -14), {'hand': (24, 146), 'bend': -1}, {'hand': (213, 124), 'bend': 1}, JOY, opacity=0.18)
+    m = Mover.on_feet(xt, f(xt) - 14, 2.5, -15)
+    s += sparks(m.cx, m.cy, 300, 350, (-150, -168, 174), WHITE, 9)
+    s += m.draw((14, -14), {'hand': (24, 146), 'bend': -1}, {'hand': (213, 124), 'bend': 1}, JOY)
+    s += circle(xt + 44, f(xt + 44), 15, BLUE, INK, 5)
+    s += travel((70, 1560), (230, 1520), (300, 1400), (320, 1230))
+    return s, m, ORANGE
+
+
+def T4():
+    """Statistics -> economics: he slides down the bell curve, whose tail becomes supply and demand."""
+    BL = 1640
+    f, df = bell_fn(BL, 300, 330, 900)
+    s = wipe([(1207, 500), (1300, 500), (1300, 2220), (113, 2220)], PINK, PINK_D)
+    xf = 800                                                                           # where the curve turns into straight lines
+    mF = df(xf)
+    x2 = 1050
+    ec = ((xf + x2) / 2, f(xf) + mF * (x2 - xf) / 2)
+    s += line(-10, BL, 640, BL, INK, 6) + line(300, BL, 300, f(300) + 30, WHITE, 6, dash='12 12')
+    zx = 130                                                                           # the z marker is left behind
+    s += line(zx, BL, zx, BL - 510, INK, 7) + circle(zx, BL, 14, INK, None)
+    s += rrect(zx - 100 + 8, BL - 582, 200, 80, 18, INK, None) + rrect(zx - 100, BL - 590, 200, 80, 18, YEL, INK, 5) + T(zx, BL - 534, 'z = 2.0', 44)
+    lo = (xf, ec[1] + (ec[1] - f(xf)))                                                 # lower end of the supply line
+    s += path(f'M{xf} {f(xf):.0f} C{xf - 90} {f(xf) + 90:.0f} {xf - 90} {lo[1] - 70:.0f} {lo[0]} {lo[1]:.0f}', stroke=WHITE, sw=7, dash='4 16')
+    s += line(lo[0], lo[1], x2, f(xf), WHITE, 12)
+    s += path(f'M{fpts(f, -20, xf)} L{x2} {f(xf) + mF * (x2 - xf):.1f}', sw=11)
+    s += circle(ec[0], ec[1], 20, WHITE, INK, 6)
+    tl = lambda x: math.degrees(math.atan(df(x))) * 0.55
+    s += Mover.on_feet(350, f(350) - 10, 2.4, tl(350)).draw((0, 0), UPL, UPR, JOY, opacity=0.14)
+    s += Mover.on_feet(465, f(465) - 10, 2.4, tl(465)).draw((-8, -20), UPL, UPR, JOY, opacity=0.28)
+    m = Mover.on_feet(600, f(600) - 10, 2.4, 30)
+    s += m.draw((-8, -24), UPL, UPR, JOY)
+    s += travel((850, 1000), (960, 1080), (1000, 1180), (ec[0] + 40, ec[1] - 110), ring=False)
+    return s, m, VIOLET
+
+
+def T5():
+    """Market equilibrium -> IS-LM: the camera jumps in to an extreme close-up of his face."""
+    cx, cy = 540, 1000
+    s = ''
+    for i in range(12):                                                                # flat burst behind him
+        a0, a1 = math.radians(i * 30 - 8), math.radians(i * 30 + 8)
+        s += path(f'M{cx} {cy} L{cx + 2400 * math.cos(a0):.0f} {cy + 2400 * math.sin(a0):.0f} L{cx + 2400 * math.cos(a1):.0f} {cy + 2400 * math.sin(a1):.0f} Z', fill=PINK_D, stroke=None)
+    m = Mover(530, 1100, 11, -5)                                                       # so close that his sides, arms and legs are out of frame
+    s += m.draw((0, 0), face={'brows': 5, 'mouth': 'grin', 'look': (1.5, -2)})
+    for ex in (102, 138):                                                              # star highlights: the "aha" eyes
+        x, y = m.w((ex - 2.6 + 1.5, 113.4 - 2))
+        s += star4(x, y, 30, WHITE, None)
+    for px, py, r in ((930, 700, 44), (840, 820, 22), (150, 880, 34)):                 # sparkle marks on the cover
+        s += star4(px, py, r)
+    # the question drops in from the top edge
+    s += panel(60, -80, 960, 250) + qbadge(150, 84, 46)
+    s += T(224, 104, 'What happens to output Y?', 54, anchor='start', maxw=760)
+    s += line(300, 214, 300, 262, WHITE, 8) + line(540, 214, 540, 280, WHITE, 8) + line(700, 214, 700, 262, WHITE, 8)   # it has just dropped in
+    # the supply and demand cross shrinks away to the corner
+    g = panel(-180, -160, 360, 320, 26) + group(mini_sd(250, 200), 0, 4)
+    s += group(g, 840, 1650, 6)
+    s += pop_lines(640, 1478, 400, 340, WHITE, 8, 14, 52, (0,))
+    return s, m, PINK
+
+
+def T6():
+    """IS-LM -> lesson cards: wide shot, he rides the LM line down like a lift while the cards fly in."""
+    ox, oy, y0, y1 = 130, 1560, 560, 980
+    isx = lambda y: 580 + (y - 330) * 420 / 970
+    s = wipe([(-100, 1337), (W + 100, 1123), (W + 100, H + 100), (-100, H + 100)], YEL, YEL_D)
+    s += path(f'M{ox} 250 V{oy} H1010', sw=7) + arrow_head(ox, 226, -90, 28) + arrow_head(1034, oy, 0, 28)
+    s += T(ox + 26, 262, 'Interest rate i', 38, anchor='start') + T(1000, oy + 58, 'Output Y', 38, anchor='end')
+    s += line(580, 330, 1000, 1300, INK, 20) + line(580, 330, 1000, 1300, BLUE, 10) + T(640, 330, 'IS', 56, anchor='start')
+    s += line(ox, y0, 1000, y0, WHITE, 8, dash='18 18') + circle(isx(y0), y0, 14, WHITE, INK, 5)
+    s += line(ox, y1, 1000, y1, INK, 13) + T(1000, y1 - 26, 'LM', 56, anchor='end')
+    s += circle(isx(y1), y1, 22, GREEN, INK, 6)
+    LX, pose = 390, dict(armL={'hand': (24, 142), 'bend': -1}, armR={'hand': (216, 142), 'bend': 1})
+    s += Mover.on_feet(LX, y0 - 6, 1.35).draw((0, 0), face={'mouth': 'smile'}, opacity=0.16, **pose)
+    s += Mover.on_feet(LX, (y0 + y1) / 2 - 6, 1.35).draw((0, 0), face={'mouth': 'oh', 'look': (0, 2)}, opacity=0.3, **pose)
+    m = Mover.on_feet(LX, y1 - 8, 1.35, -4)
+    s += m.draw((8, -8), face={'mouth': 'oh', 'brows': 3, 'look': (0, 2.5)}, **pose)
+    for dx in (-150, 150):                                                             # drop lines either side of him
+        s += line(LX + dx, y1 - 330, LX + dx, y1 - 230, WHITE, 8) + line(LX + dx * 0.72, y1 - 400, LX + dx * 0.72, y1 - 320, WHITE, 8)
+    s += arrow(215, y0 + 26, 215, y1 - 40, INK, 8, dash='10 20', head=32) + circle(215, y0, 14, WHITE, INK, 6)
+    s += arrow(215, y1 + 40, 215, 1280, INK, 8, dash='10 20', head=32)
+    # lesson cards fly in from the edges
+    cards = ((250, 1730, -12, EMER_D, 't', 180), (840, 1420, 10, ORANGE, 'curve', 0), (610, 1760, 6, VIOLET, 'bell', 90), (880, 190, 12, SUIT, 'bars', -30))
+    for cx, cy, rot, col, kind, ang in cards:
+        a = math.radians(ang)
+        for k in (-1, 0, 1):
+            px, py = cx + 190 * math.cos(a) - k * 60 * math.sin(a), cy + 190 * math.sin(a) + k * 60 * math.cos(a)
+            ln = 70 - abs(k) * 22
+            s += line(px, py, px + ln * math.cos(a), py + ln * math.sin(a), WHITE if cy < 1000 else INK, 8)
+        s += group(mini_lesson(col, kind), cx, cy, rot)
+    return s, m, PINK
+
+
+def T7():
+    """Lesson cards -> ending: he hops up the cards like stepping stones towards the button."""
+    s = wipe([(32, -200), (1300, -200), (1300, 1250), (1248, 1250)], BLUE, BLUE_D)
+    s += monitor(520, -360, 1500, 740)
+    for t, col, x in (('Economics', PINK, 572), ('Statistics', VIOLET, 824)):
+        w_ = tw(t, 36) + 56
+        s += rrect(x, 56, w_, 76, 38, col, INK, 4) + T(x + w_ / 2, 107, t, 36, fill=WHITE)
+    s += rrect(582, 200, 470, 126, 63, INK, None) + rrect(572, 190, 470, 126, 63, BLUE, INK, 5)
+    s += T(807, 268, 'Get started for free', 42, fill=WHITE, maxw=420)
+    s += group(mini_lesson(SUIT, 'bars'), 850, 1640, 9) + group(mini_lesson(BLUE, 'pick'), 170, 900, -9)
+    stones = ((180, 1700, -7, EMER_D, 't'), (490, 1400, 6, ORANGE, 'curve'), (800, 1110, -6, VIOLET, 'bell'))
+    tops = [(cx, cy - 104) for cx, cy, *_ in stones]
+    hop = lambda a, b, lift, **k: travel(a, (a[0] + (b[0] - a[0]) * 0.15, a[1] - lift), (b[0] - (b[0] - a[0]) * 0.4, b[1] - lift), b, **k)
+    s += hop((30, 1800), tops[0], 150, head=False)
+    s += hop(tops[0], tops[1], 230, ring=False, head=False) + hop(tops[1], tops[2], 230, ring=False, head=False)
+    for cx, cy, rot, col, kind in stones:
+        s += group(mini_lesson(col, kind), cx, cy, rot)
+        s += line(cx - 80, cy - 126, cx - 108, cy - 156, WHITE, 8) + line(cx + 80, cy - 126, cx + 108, cy - 156, WHITE, 8)
+    s += Mover.on_feet(tops[1][0], tops[1][1] + 4, 1.9, 6).draw((10, -10), UPL, UPR, JOY, opacity=0.22)
+    m = Mover(790, 740, 2.0, 12)
+    s += sparks(m.cx - 20, m.cy + 40, 250, 300, (112, 130, 148), WHITE, 9)
+    s += m.draw((22, -22), UPL, UPR, JOY)
+    s += travel((960, 560), (1010, 500), (1000, 420), (950, 356), ring=False)
+    return s, m, YEL
+
+
+FRAMES = {'A1': A1, 'T1': T1, 'A2a': lambda: A2(False), 'A2b': lambda: A2(True), 'T2': T2,
+          'A3a': lambda: A3(False), 'A3b': lambda: A3(True), 'T3': T3, 'A4a': lambda: A4(False), 'A4b': lambda: A4(True), 'T4': T4,
+          'A5a': lambda: A5(False), 'A5b': lambda: A5(True), 'T5': T5, 'A6a': lambda: A6(False), 'A6b': lambda: A6(True), 'T6': T6,
+          'A7': A7, 'T7': T7, 'A8': A8}
 
 
 def build(name):
