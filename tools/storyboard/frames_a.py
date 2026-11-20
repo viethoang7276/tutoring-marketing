@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
-"""Edlintics demo video A: 8 storyboard stills, drawn in code (SVG) and rendered with headless Chrome.
+"""Edlintics demo video A: 13 storyboard stills, drawn in code (SVG) and rendered with headless Chrome.
 
 Run:  python3 frames_a.py            (all frames + sheet.png)
-      python3 frames_a.py A3 A5      (only those frames, sheet rebuilt from what exists)
+      python3 frames_a.py A3a A5b    (only those frames, sheet rebuilt from what exists)
 Output goes next to this file, or to the folder named in the FRAMES_OUT environment variable.
 
-Look (v3, after Hoang's notes of 20 Nov 2026): one flat saturated background per subject, a big
-subject name with the topic under it, white cards with a flat offset block, no gradients.
+Look (v4, after Hoang's notes of 20 Nov 2026): one flat saturated background per subject, a big
+subject name with the topic under it, white cards with a flat offset block, no gradients (the
+embedded logo file keeps its own). Every subject scene is two frames: "a" the question moment
+(question card, object at its start, ghost arrow, Ledger puzzled) and "b" the solved moment
+(object moved with an arrow, answer pop-up with a green tick, Ledger joyful).
 
-Ledger is drawn from the website rig numbers (assets/brand-handoff/ledger-v2/RIG.md) and the
-turnaround sheet (front, 3/4 front, side, 3/4 back, back). Arms use the rig's two-segment arm
-(upper 23.3, forearm 16.5, reach n <= 1.7); the script refuses to draw a longer arm.
-A8 embeds the real rig state file ledger-hello.svg unchanged.
+Ledger: front-facing frames embed the real website rig states unchanged (think, confused, scratch,
+joy, cheer). Frames where he works at something behind him use the straight back view drawn from
+the rig numbers (assets/brand-handoff/ledger-v2/RIG.md); the three-quarter back view is gone
+because its exposed page block read wrongly. Arms use the rig's two-segment arm (upper 23.3,
+forearm 16.5, reach n <= 1.7); the script refuses to draw a longer arm.
 """
 import math, os, re, subprocess, sys
 from PIL import Image, ImageFont
@@ -19,6 +23,7 @@ from PIL import Image, ImageFont
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.environ.get('FRAMES_OUT', HERE)
 STATES = '/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/assets/brand-handoff/ledger-v2/states'
+LOGO = '/Users/hoangtruong/Desktop/WebDevelopment/tutoring/edlintics-marketing/assets/brand/edlintics-logo.svg'
 CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 W, H = 1080, 1920
 
@@ -139,8 +144,6 @@ VIEWS = {
     'back':  dict(sh=(62, 178), legs=(102, 138), shoes=(87.5, 123.5)),
     '34f_l': dict(sh=(60, 176), legs=(98, 132), shoes=(83.5, 117.5)),    # faces viewer-left, page edges show on the right
     '34f_r': dict(sh=(64, 180), legs=(108, 142), shoes=(93.5, 127.5)),   # faces viewer-right, spine shows on the left
-    '34b_r': dict(sh=(64, 180), legs=(108, 142), shoes=(93.5, 127.5)),   # back, turned right, page edges on the left
-    '34b_l': dict(sh=(60, 176), legs=(98, 132), shoes=(83.5, 117.5)),    # back, turned left, spine on the right
     'side_l': dict(sh=(120, 120), legs=(120,), shoes=(99.5,)),           # faces left, page edges
     'side_r': dict(sh=(120, 120), legs=(120,), shoes=(111.5,)),          # faces right, spine
 }
@@ -273,7 +276,7 @@ class Ledger:
         k = 109 / 136
         back_arms, front_arms, body = '', '', ''
         # default layering from the turnaround sheet: which arm sits in front of the book
-        near = {'34f_l': 'R', '34f_r': 'L', '34b_r': 'L', '34b_l': 'R', 'side_l': 'R', 'side_r': 'R'}.get(view)
+        near = {'34f_l': 'R', '34f_r': 'L', 'side_l': 'R', 'side_r': 'R'}.get(view)
         for side, spec in (('L', armL), ('R', armR)):
             if view.startswith('side') and side == 'L' and not spec.get('hand'):
                 continue                          # side view at rest shows one arm
@@ -290,10 +293,6 @@ class Ledger:
             body = self._slab(157, 'pages') + self._cover(52, k, face)
         elif view == '34f_r':
             body = self._slab(58, 'spine') + self._cover(79, k, face)
-        elif view == '34b_r':
-            body = self._slab(58, 'pages') + self._cover(79, k, back=True, spine_side='right')
-        elif view == '34b_l':
-            body = self._slab(157, 'spine') + self._cover(52, k, back=True, spine_side='right')
         else:
             body = self._slab(103, 'pages' if view == 'side_l' else 'spine', 34)
             for cx in (100, 133):
@@ -405,6 +404,136 @@ def sparks(cx, cy, r0, r1, angles, col=WHITE, sw=8):
     return s
 
 
+def embed_logo(x, y, w):
+    """The real Edlintics logo file (mark + wordmark), unchanged, w pixels wide."""
+    s = open(LOGO).read()
+    vb = re.search(r'viewBox="([^"]+)"', s).group(1)
+    inner = re.sub(r'^<svg[^>]*>', '', s).rsplit('</svg>', 1)[0]
+    inner = re.sub(r'<title>.*?</title>', '', inner, count=1)
+    vw, vh = [float(v) for v in vb.split()[2:]]
+    return f'<svg x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{w * vh / vw:.1f}" viewBox="{vb}">{inner}</svg>'
+
+
+def monitor_desk(x, y, w, h, desk_y, screen=WHITE):
+    """Monitor on a tall stand that goes down to the desk top at desk_y."""
+    cx = x + w / 2
+    s = rrect(cx - 40, y + h - 6, 80, desk_y - y - h + 30, 0, SUIT, None)
+    s += rrect(cx - 190, desk_y + 14, 380, 26, 13, SUIT, None)
+    s += rrect(x, y, w, h, 34, INK, None) + rrect(x + 22, y + 22, w - 44, h - 44, 14, screen, None)
+    return s
+
+
+def qbadge(cx, cy, r=50):
+    return circle(cx, cy, r, BLUE, INK, 5) + T(cx, cy + r * 0.44, '?', r * 1.3, fill=WHITE)
+
+
+def qcard(y, h, rows, ctx=None):
+    """Question card: blue question badge on the left, optional context chip, then the rows of text."""
+    s = panel(50, y, 980, h) + qbadge(136, y + h / 2)
+    x = 216
+    yy = y + 34
+    if ctx:
+        cw = tw(ctx, 38) + 56
+        s += rrect(x, yy, cw, 66, 33, YEL, INK, 4) + T(x + cw / 2, yy + 46, ctx, 38, maxw=cw - 30)
+        yy += 66 + 14
+    n = len(rows)
+    free = y + h - 30 - yy
+    step = free / n
+    for i, (t, size, fill, wt) in enumerate(rows):
+        s += T(x, yy + step * i + step / 2 + size * 0.35, t, size, wt, anchor='start', fill=fill, maxw=790)
+    return s
+
+
+def qstrip(x, y, w, h, rows):
+    """Question strip inside a monitor screen."""
+    s = rrect(x, y, w, h, 22, TINT, INK, 4) + qbadge(x + 70, y + h / 2, 42)
+    step = (h - 24) / len(rows)
+    for i, (t, size, fill, wt) in enumerate(rows):
+        s += T(x + 134, y + 12 + step * i + step / 2 + size * 0.35, t, size, wt, anchor='start', fill=fill, maxw=w - 160)
+    return s
+
+
+def pop_lines(x, y, w, h, col=WHITE, sw=8, n0=16, n1=50, corners=(0, 1, 2, 3)):
+    """Short lines bursting from the four corners of a box: the pop-up cue."""
+    s = ''
+    for i, (cx, cy, base) in enumerate(((x, y, 225), (x + w, y, 315), (x + w, y + h, 45), (x, y + h, 135))):
+        if i not in corners:
+            continue
+        for da in (-28, 0, 28):
+            a = math.radians(base + da)
+            s += line(cx + n0 * math.cos(a), cy + n0 * math.sin(a), cx + n1 * math.cos(a), cy + n1 * math.sin(a), col, sw)
+    return s
+
+
+def popup(cx, cy, text, size=64, sub=None, col=WHITE, sw=8, corners=(0, 1, 2), h=None, n1=50):
+    """Answer pop-up: white pill, green tick, the answer, an optional second line, burst lines."""
+    wm = tw(text.replace('_', ''), size) + 96
+    ws = tw(sub, 38, True) if sub else 0
+    w = max(wm, ws) + 80
+    h = h or (196 if sub else 124)
+    x, y = cx - w / 2, cy - h / 2
+    s = pop_lines(x, y, w, h, col, sw, 16, n1, corners)
+    s += rrect(x + 10, y + 10, w, h, 30, INK, None) + rrect(x, y, w, h, 30, WHITE, GREEN, 8)
+    my = y + (62 if sub else h / 2)
+    x0 = cx - wm / 2
+    s += tick(x0 + 36, my, min(36, h * 0.32)) + T(x0 + 96, my + size * 0.35, text, size, anchor='start', fill=GREEN_D)
+    if sub:
+        s += T(cx, y + h - 34, sub, 38, 600, fill=SLATE, maxw=w - 40)
+    return s
+
+
+def confetti(pts):
+    cols = (WHITE, YEL, TINT)
+    s = ''
+    for i, (x, y, rot) in enumerate(pts):
+        c = cols[i % len(cols)]
+        if i % 3 == 2:
+            s += circle(x, y, 10, c, INK, 3)
+        else:
+            s += f'<rect x="{x - 14}" y="{y - 7}" width="28" height="14" rx="3" fill="{c}" stroke="{INK}" stroke-width="3" transform="rotate({rot} {x} {y})"/>'
+    return s
+
+
+def qmark(x, y, size, rot=0, col=WHITE):
+    g = T(4, 4, '?', size, fill=INK, check=False) + T(0, 0, '?', size, fill=col, check=False)
+    return f'<g transform="translate({x} {y}) rotate({rot})">{g}</g>'
+
+
+def thought(cx, cy, to=(-1, 1)):
+    """Thought bubble with a question mark; two small circles trail towards Ledger."""
+    dx, dy = to
+    s = circle(cx + dx * 150, cy + dy * 118, 13, WHITE, INK, 5) + circle(cx + dx * 112, cy + dy * 86, 21, WHITE, INK, 5)
+    s += f'<ellipse cx="{cx + 8}" cy="{cy + 8}" rx="110" ry="88" fill="{INK}"/>'
+    s += f'<ellipse cx="{cx}" cy="{cy}" rx="110" ry="88" fill="{WHITE}" stroke="{INK}" stroke-width="5"/>'
+    s += T(cx, cy + 44, '?', 124, fill=BLUE)
+    return s
+
+
+def speed(x, y, n=3, length=70, gap=30, col=WHITE, sw=8, d=-1):
+    """Horizontal speed lines starting at x and running in direction d."""
+    return ''.join(line(x, y + i * gap, x + d * (length - (i % 2) * 22), y + i * gap, col, sw) for i in range(n))
+
+
+def solved_marks(X, top, wide=250):
+    """Joy marks round Ledger: spark lines over his head and confetti either side."""
+    s = sparks(X, top + 150, 215, 262, (-128, -106, -74, -52), WHITE, 9)
+    wide = min(wide, X - 50)
+    s += confetti([(X - wide, top - 20, -20), (X - wide + 26, top + 120, 30), (X + wide, top - 40, 25),
+                   (X + wide - 10, top + 110, -35), (X - wide + 70, top - 70, 60)])
+    return s
+
+
+def state_ledger(name, X, FL, sc, solved, hop=0):
+    """A real rig state at the bottom of a frame with the marks of the moment."""
+    s = embed_state(name, X, FL - hop, sc)
+    top = FL - hop - 188 * sc
+    if solved:
+        s += solved_marks(X, top, 136 * sc / 2 + 110)
+    else:
+        s += qmark(X - 170, top + 14, 92, -16) + qmark(X - 70, top - 26, 112, 4) + qmark(X + 150, top + 6, 80, 16)
+    return s
+
+
 # ---------------------------------------------------------------------------------------------
 # Frames. Each returns (svg, Ledger or None, background colour)
 # ---------------------------------------------------------------------------------------------
@@ -430,19 +559,21 @@ def A1():
     for dx, dy, r in ((30, -40, 11), (80, -90, 8), (150, -54, 10), (216, -104, 8), (256, -34, 9), (120, -136, 6)):
         s += circle(34 + dx, top + dy, r, '#FFF3C4', None)                            # dust in the air
     # door with its sign
-    DX, DT = 500, 560
+    DX, DT = 520, 560
     s += rrect(DX - 200, DT, 400, FL - DT, 10, WHITE, INK, 5)
     s += rrect(DX - 172, DT + 28, 344, FL - DT - 31, 6, BLUE, INK, 5)
     s += rrect(DX - 136, DT + 66, 272, 380, 8, 'none', INK, 4, 'opacity="0.55"')
     s += rrect(DX - 136, DT + 490, 272, 450, 8, 'none', INK, 4, 'opacity="0.55"')
     hx, hy = DX + 122, FL - 250
     s += rrect(hx - 22, hy - 54, 44, 108, 12, CREAM, INK, 4)
+    s += sparks(DX, 400, 300, 350, (-158, -168, -180, 168), WHITE, 8) + sparks(DX, 330, 100, 150, (-110, -90, -70), WHITE, 8)
     s += panel(DX - 270, 330, 540, 140, 24) + T(DX, 421, 'Learning business', 56, maxw=500)
     s += line(DX - 130, 470, DX - 130, DT, INK, 6) + line(DX + 130, 470, DX + 130, DT, INK, 6)
-    # three floating phones
+    # three floating phones, each with small bobbing marks
     def phone(cx, cy, rot, label, inner):
         p = rrect(-104, -157, 224, 330, 30, INK, None) + rrect(-112, -165, 224, 330, 30, WHITE, INK, 5) + rrect(-30, -150, 60, 10, 5, INK, None) + inner
-        return group(p, cx, cy, rot) + T(cx, cy + 230, label, 42)
+        bob = path(f'M{cx - 150} {cy - 110} q-16 30 0 60', stroke=WHITE, sw=7) + path(f'M{cx - 172} {cy - 96} q-10 16 0 32', stroke=WHITE, sw=7)
+        return bob + group(p, cx, cy, rot) + T(cx, cy + 230, label, 42)
     def tile(x, y, t, w, fill=WHITE, col=INK):
         return rrect(x, y, w, 40, 10, fill, INK, 3) + T(x + w / 2, y + 28, t, 22, fill=col, check=False)
     lang = rrect(-84, -122, 110, 12, 6, RULE, None)
@@ -457,97 +588,155 @@ def A1():
     mol = line(0, -40, -52, 28, INK, 6) + line(0, -40, 52, 28, INK, 6) + line(0, -40, 0, -104, INK, 6)
     mol += circle(0, -40, 34, ORANGE, INK, 5) + circle(-52, 28, 22, CREAM, INK, 5) + circle(52, 28, 22, CREAM, INK, 5) + circle(0, -104, 18, YEL, INK, 5)
     mol += rrect(-78, 108, 156, 34, 17, ORANGE, None)
-    s += phone(916, 370, -4, 'Languages', lang)
-    s += phone(916, 860, 3, 'Coding', code)
-    s += phone(916, 1350, -3, 'Science', mol)
-    # Ledger from 3/4 back, one hand on the handle
-    L = Ledger('34b_r', hx - 258, FL + 20, 2.9)
-    b, f = L.draw(armR={'hand': L.r((hx - 2, hy + 4)), 'front': True, 'bend': 1})
-    return s + b + f, L, YEL
+    s += phone(926, 370, -4, 'Languages', lang)
+    s += phone(926, 860, 3, 'Coding', code)
+    s += phone(926, 1350, -3, 'Science', mol)
+    # Ledger from straight behind, standing at the door, one hand on the handle
+    L = Ledger('back', hx - 262, FL + 20, 2.9)
+    s += speed(L.X - 236, FL + 60, 3, 90, 34, WHITE, 9)                               # he has just walked up
+    s += path(f'M{hx - 30} {hy - 96} q30 -34 60 0', stroke=WHITE, sw=7) + path(f'M{hx - 16} {hy - 120} q16 -18 32 0', stroke=WHITE, sw=7)   # handle rattles
+    b, f = L.draw(armR={'hand': L.r((hx - 2, hy + 6)), 'front': True, 'bend': 1})
+    s += b + f
+    return s, L, YEL
 
 
-def A2():
-    FL = 1740
+def desk_and_ledger(FL, solved, cable_to):
+    """Desk with keyboard, mouse and mouse mat; Ledger from straight behind in front of it."""
+    sc = 2.3
+    dt = FL - 228                                                                    # desk top edge
+    s = rrect(108, FL - 110, 20, 84, 4, SUIT, None) + rrect(952, FL - 110, 20, 84, 4, SUIT, None)
+    s += rrect(70, FL - 140, 940, 36, 8, '#D9B382', INK, 5)
+    s += rrect(56, dt, 968, 92, 16, '#F2D7B0', INK, 5)
+    # keyboard, left of him
+    kx, ky = 110, dt + 14
+    s += rrect(kx, ky, 300, 64, 12, WHITE, INK, 4)
+    for r in range(2):
+        for c in range(9):
+            s += rrect(kx + 12 + c * 31, ky + 10 + r * 24, 24, 17, 4, SUIT if (r, c) != (1, 8) else BLUE, None)
+    # mouse mat and mouse, right of him
+    mx_, my_ = 742, dt + 46
+    s += rrect(690, dt + 10, 250, 70, 14, TINT, INK, 4)
+    s += path(f'M{mx_ + 40} {my_ - 6} C {mx_ + 150} {my_ - 60} 960 {dt - 60} {cable_to[0]} {cable_to[1]}', stroke=INK, sw=5)
+    mouse = rrect(mx_ - 40, my_ - 26, 84, 50, 24, WHITE, INK, 5) + line(mx_ + 2, my_ - 26, mx_ + 2, my_ - 6, INK, 4)
+    hop = 44 if solved else 0
+    L = Ledger('back', 540, FL - hop, sc, rot=0 if solved else -5)
+    s += f'<ellipse cx="540" cy="{FL + 32}" rx="{(74 if solved else 96)}" ry="13" fill="{INK}" opacity="0.14"/>'
+    if solved:
+        s += mouse
+        b, f = L.draw(armL={'hand': (26, 104), 'bend': -1}, armR={'hand': (214, 104), 'bend': 1}, shadow=False)
+        s += b + f
+        top = L.w((0, 34))[1]
+        s += sparks(540, top + 150, 205, 252, (-126, -106, -74, -54), WHITE, 9)
+        s += confetti([(250, top + 10, -20), (205, top + 110, 30), (150, top + 30, 60), (930, top - 30, 25), (968, top + 80, -35), (700, top - 96, 10)])
+        for x in (478, 602):                                                         # hop lines under his shoes
+            s += line(x - 22, FL + 6, x + 22, FL + 6, WHITE, 8)
+        s += line(mx_ + 70, my_ - 14, mx_ + 110, my_ - 14, INK, 5) + line(mx_ + 70, my_ + 8, mx_ + 100, my_ + 8, INK, 5)   # click marks
+    else:
+        s += mouse
+        b, f = L.draw(armL={'hand': (45, 93), 'bend': -1}, armR={'hand': L.r((mx_, my_ - 2)), 'bend': 1}, shadow=False)
+        s += b + f
+        top = L.w((0, 34))[1]
+        s += qmark(300, top + 40, 120, -16) + qmark(380, top - 44, 96, -4) + qmark(742, top + 6, 140, 12)
+        s += path(f'M{L.w((46, 70))[0] - 40:.0f} {L.w((46, 70))[1]:.0f} q-14 14 0 28 q14 14 0 28', stroke=WHITE, sw=7)   # scratch squiggle
+    return s, L
+
+
+def A2(solved):
+    FL = 1790
     s = floor(FL - 60, EMER_D) + header('ACCOUNTING', 'Journal entries')
-    mx, my, mw, mh = 70, 410, 940, 650
-    s += monitor(mx, my, mw, mh)
-    s += rrect(270, my + mh + 82, 540, 26, 8, CREAM, INK, 5)                          # wall shelf
-    # T-account on the screen
-    tm, ty = 540, my + 138
-    s += T(315, ty - 30, 'Debit', 58) + T(765, ty - 30, 'Credit', 58)
-    s += line(130, ty, 950, ty, INK, 8) + line(tm, ty, tm, my + mh - 50, INK, 8)
-    s += T(315, ty + 66, 'Cash', 44, fill=SLATE) + T(765, ty + 66, 'Sales', 44, fill=SLATE)
-    s += rrect(215, ty + 100, 200, 110, 16, TINT, BLUE, 5, 'stroke-dasharray="14 10"')   # where the block goes
-    s += block(765, ty + 155, fill=ORANGE)
-    # the source of the entry and the drag trail
-    s += rrect(650, my + mh - 150, 300, 86, 43, CREAM, INK, 4) + T(800, my + mh - 95, 'Cash sale €500', 34, maxw=280)
-    bx, by = 388, ty + 228
-    s += path(f'M648 {my + mh - 110} Q 560 {my + mh - 96} {bx + 122} {by + 110}', stroke=INK, sw=6, dash='3 15')
-    s += block(bx, by, fill=BLUE, lift=10)
-    s += cursor(bx + 56, by + 22)
-    # Ledger at a small desk, 3/4 back, one hand on the mouse
-    L = Ledger('34b_r', 400, FL, 2.7)
-    hx, hy = L.w((214, 168))
-    top = hy + 42
-    dx0 = L.w((192, 0))[0]
-    s += line(dx0 + 40, top + 20, dx0 + 40, FL + 16, INK, 10) + line(dx0 + 320, top + 20, dx0 + 320, FL + 16, INK, 10)
-    s += rrect(dx0, top, 360, 30, 8, CREAM, INK, 5)
-    s += path(f'M{hx + 46} {hy + 16} C {hx + 190} {hy - 30} 930 1330 800 {my + mh + 108}', stroke=INK, sw=5)   # mouse cable
-    b, f = L.draw(armR={'hand': L.r((hx, hy)), 'front': True, 'bend': 1})
-    s += b
-    s += rrect(hx - 38, hy - 8, 88, 50, 24, WHITE, INK, 5) + line(hx + 6, hy - 8, hx + 6, hy + 12, INK, 4)
-    s += f
-    return s, L, EMER
+    mx, my, mw, mh = 50, 400, 980, 770
+    s += monitor_desk(mx, my, mw, mh, FL - 228)
+    sx, sy, sw_ = mx + 22, my + 22, mw - 44
+    s += qstrip(sx + 18, sy + 16, sw_ - 36, 150, [('Cash sale of €500', 42, SLATE, 600), ('Does Cash go on Debit or Credit?', 46, INK, 700)])
+    # T-account for Cash
+    ty, tb, tm = 690, 1000, 540
+    s += T(tm, ty - 22, 'Cash account', 46)
+    s += line(140, ty, 940, ty, INK, 8) + line(tm, ty, tm, tb, INK, 8)
+    s += T(340, ty + 58, 'Debit', 46, fill=SLATE) + T(740, ty + 58, 'Credit', 46, fill=SLATE)
+    zl, zr, zy = (240, 440), (640, 840), ty + 86
+    bw, bh = 200, 100
+    home = (tm, 1076)                                                                # the block starts in the tray under the T
+    s += rrect(zr[0], zy, bw, bh, 16, WHITE, SLATE, 5, 'stroke-dasharray="14 10"')
+    if not solved:
+        s += rrect(zl[0], zy, bw, bh, 16, WHITE, SLATE, 5, 'stroke-dasharray="14 10"')
+        s += curve_arrow(home[0] - 108, home[1] - 20, 330, home[1] - 30, 340, zy + bh + 22, SLATE, 6, '4 16', 24)
+        s += curve_arrow(home[0] + 108, home[1] - 20, 750, home[1] - 30, 740, zy + bh + 22, SLATE, 6, '4 16', 24)
+        s += block(home[0], home[1], w=bw, h=bh - 8, fill=BLUE, lift=8)
+        s += cursor(home[0] + 84, home[1] - 6, 1.2)
+    else:
+        s += rrect(home[0] - bw / 2, home[1] - 46, bw, bh - 8, 16, 'none', SLATE, 5, 'stroke-dasharray="14 10"')   # where it was
+        s += curve_arrow(home[0] - 108, home[1] - 4, 330, home[1], 338, zy + bh + 26, BLUE, 8, None, 30)
+        s += rrect(zl[0] - 10, zy - 10, bw + 20, bh + 20, 22, GREEN_T, GREEN, 6)
+        s += block(340, zy + bh / 2, w=bw, h=bh - 8, fill=BLUE)
+        s += cursor(340 + 84, zy + bh / 2 + 4, 1.2)
+        s += popup(772, 958, 'Correct', 56, col=GREEN, sw=7, corners=(1, 2), n1=44)
+    d, L = desk_and_ledger(FL, solved, (760, my + mh - 8))
+    return s + d, L, EMER
 
 
-def A3():
-    FL = 1700
+def A3(solved):
+    FL = 1850
     s = floor(FL - 60, ORANGE_D) + header('FINANCE', 'Compound interest')
-    s += panel(60, 410, 960, 640)
-    ox, oy, xr, yt = 150, 970, 940, 530
-    s += T(ox, 490, 'Savings', 42, anchor='start')
-    k = math.log((oy - yt - 30) / 60)
-    cy = lambda t: oy - 60 * math.exp(k * t)
-    for i in range(5):
-        t = 0.16 + 0.19 * i
-        x = ox + (xr - ox) * t
-        n = max(1, int((oy - cy(t) - 34) // 24))
+    s += qcard(400, 180, [('€1,000 grows at 5% a year', 42, SLATE, 600), ('In which year does it double?', 48, INK, 700)])
+    s += panel(50, 612, 980, 700)
+    ox, oy, top_v, ppe = 200, 1100, 3000, 370 / 3000
+    X = lambda t: ox + 44 + t * 35
+    Y = lambda v: oy - v * ppe
+    val = lambda t: 1000 * 1.05 ** t
+    year = 15 if solved else 0
+    assert val(14) < 2000 < val(15) and round(val(15)) == 2079
+    s += T(ox + 4, 676, 'Savings', 40, anchor='start')
+    s += path(f'M{ox} {Y(top_v) - 14} V{oy} H{X(20) + 30}', sw=6)
+    for v, lab in ((1000, '€1,000'), (2000, '€2,000')):
+        s += line(ox - 12, Y(v), ox, Y(v), INK, 5) + T(ox - 20, Y(v) + 11, lab, 30, anchor='end', fill=SLATE)
+    s += line(ox, Y(2000), X(20) + 20, Y(2000), GREEN, 5, dash='16 12') + T(X(20) + 20, Y(2000) - 16, 'Double', 32, anchor='end', fill=GREEN_D)
+    for t in ((0, 5, 10, 15) if solved else (0,)):
+        n = round(val(t) / 125)
+        ch = val(t) * ppe / n
         for j in range(n):
-            s += rrect(x - 40, oy - 3 - 24 * (j + 1), 80, 24, 12, YEL, INK, 3)
-    pts = ' L'.join(f'{ox + (xr - ox) * i / 60:.1f} {cy(i / 60):.1f}' for i in range(61))
-    s += path('M' + pts, stroke=BLUE, sw=9) + circle(xr, cy(1), 15, BLUE, INK, 4)
-    s += path(f'M{ox} {yt - 4} V{oy} H{xr + 14}', sw=6)
-    # slider rail on two posts
-    sc = 2.8
-    x0, x1, ry = 110, 970, FL - 196
-    kx = x0 + (x1 - x0) * 0.7
-    s += line(x0, ry, x0, FL, INK, 9) + line(x1, ry, x1, FL, INK, 9)
-    s += rrect(x0 - 18, ry - 18, x1 - x0 + 36, 36, 18, WHITE, INK, 5)
-    s += rrect(x0 - 12, ry - 12, kx - x0 + 12, 24, 12, BLUE, None)
-    for i in range(11):
-        x = x0 + (x1 - x0) * i / 10
-        s += line(x, ry + 28, x, ry + 48, INK, 5)
-    s += T(x0, ry - 50, '10', 50) + T(x1, ry - 50, '20', 50)
-    # Ledger 3/4 front, one hand pushing the knob
-    L = Ledger('34f_r', (kx - 62) - 105 * sc, FL, sc)
-    b, f = L.draw(armR={'hand': L.r((kx - 62, ry)), 'front': True, 'bend': -1},
-                  face={'look': (3, 0.5), 'mouth': 'grin', 'brows': 2})
-    s += b
-    s += circle(kx, ry, 54, WHITE, INK, 5) + circle(kx, ry, 22, BLUE, None)
-    s += rrect(kx - 122, ry - 196, 244, 90, 22, BLUE, INK, 5) + T(kx, ry - 134, '17 years', 50, fill=WHITE)
-    s += path(f'M{kx - 18} {ry - 108} L{kx} {ry - 78} L{kx + 18} {ry - 108} Z', fill=BLUE, stroke=None)
-    s += f
-    lx = L.w((58, 0))[0]
-    for i in range(3):
-        s += line(lx - 36, FL - 500 + i * 64, lx - 120 + i * 16, FL - 500 + i * 64, WHITE, 9)   # push lines
-    return s, L, ORANGE
+            s += rrect(X(t) - 27, oy - 3 - ch * (j + 1), 54, ch, 7, YEL, INK, 3)
+    pts = lambda a, b_: 'M' + ' L'.join(f'{X(a + (b_ - a) * i / 40):.1f} {Y(val(a + (b_ - a) * i / 40)):.1f}' for i in range(41))
+    if solved:
+        s += path(pts(15, 20), stroke=SLATE, sw=5, dash='3 13') + path(pts(0, 15), stroke=BLUE, sw=9)
+    s += circle(X(year), Y(val(year)), 15, BLUE, INK, 4)
+    lab = f'Year {year}: €{val(year):,.0f}'
+    lw = tw(lab, 40) + 56
+    px, py = X(year), Y(val(year))
+    bx = px - 70 if solved else px + lw / 2 - 30
+    by = py - 118                                                                   # top of the read-out bubble
+    s += rrect(bx - lw / 2, by, lw, 74, 20, BLUE, INK, 5) + T(bx, by + 51, lab, 40, fill=WHITE)
+    s += path(f'M{px - 16} {by + 72} L{px} {py - 22} L{px + 16} {by + 72} Z', fill=BLUE, stroke=None)
+    # slider on the same scale as the chart
+    ry = 1222
+    s += T(118, ry + 12, 'Year', 34, fill=SLATE)
+    s += rrect(X(0) - 16, ry - 14, X(20) - X(0) + 32, 28, 14, WHITE, INK, 5)
+    for t in (0, 5, 10, 15, 20):
+        s += line(X(t), ry + 24, X(t), ry + 38, INK, 5) + T(X(t), ry + 72, str(t), 30, fill=SLATE)
+    if solved:
+        s += rrect(X(0) - 11, ry - 9, X(15) - X(0) + 11, 18, 9, BLUE, None)
+        s += circle(X(0), ry, 30, 'none', SLATE, 5).replace('/>', ' stroke-dasharray="10 8"/>')
+        s += arrow(X(0) + 44, ry - 52, X(15) - 50, ry - 52, BLUE, 9, head=30)
+    else:
+        s += arrow(X(0) + 52, ry - 52, X(8), ry - 52, SLATE, 6, dash='4 16', head=24)
+    s += circle(X(year), ry, 32, WHITE, INK, 5) + circle(X(year), ry, 13, BLUE, None)
+    s += cursor(X(year) + 20, ry + 2, 1.2)
+    # Ledger below: thinking, then joyful
+    LX = 250
+    if solved:
+        s += state_ledger('joy', LX, FL, 2.05, True)
+        s += popup(762, FL - 260, 'Correct', 68, 'It doubles in year 15')
+    else:
+        s += state_ledger('think', LX, FL, 2.05, False)
+        s += thought(720, FL - 300)
+    return s, None, ORANGE
 
 
-def A4():
-    FL = 1800
-    s = floor(FL - 70, VIOLET_D) + header('STATISTICS', 'Hypothesis testing')
-    s += panel(40, 410, 1000, 780)
-    BL, CX, SG, HH, TOP = 1090, 540, 148, 430, 440
+def A4(solved):
+    FL = 1856
+    s = floor(FL - 60, VIOLET_D) + header('STATISTICS', 'Hypothesis testing')
+    s += qcard(400, 180, [('z = 2.0, 5% level, two-tailed test', 42, SLATE, 600), ('Do we reject H_0?', 50, INK, 700)])
+    s += panel(40, 612, 1000, 580)
+    BL, CX, SG, HH, TOP = 1096, 540, 148, 310, 634
     hy = lambda x: BL - HH * math.exp(-((x - CX) / SG) ** 2 / 2)
     xa, xb = CX - 3.15 * SG, CX + 3.15 * SG
     xl, xr = CX - 1.96 * SG, CX + 1.96 * SG
@@ -563,132 +752,230 @@ def A4():
     s += line(xl, BL, xl, hy(xl), INK, 5) + line(xr, BL, xr, hy(xr), INK, 5)
     s += line(xa - 10, BL, xb + 10, BL, INK, 6)
     for x, lab in ((xl, '−1.96'), (CX, '0'), (xr, '1.96')):
-        s += line(x, BL, x, BL + 18, INK, 5) + T(x, BL + 64, lab, 40)
-    s += T((xa + xl) / 2, TOP + 52, 'Reject H_0', 31, fill=GREEN_D, maxw=xl - xa)
-    s += T((xr + xb) / 2, TOP + 52, 'Reject H_0', 31, fill=GREEN_D, maxw=xb - xr)
-    s += T(CX, TOP + 66, 'Do not reject H_0', 50, fill=RED_D)
-    # the z marker, planted just past 1.96
-    zx = CX + 2.0 * SG
-    s += line(zx, BL, zx, 700, INK, 7) + circle(zx, BL, 14, INK, None)
-    s += rrect(zx - 118 + 8, 628, 236, 92, 18, INK, None) + rrect(zx - 118, 620, 236, 92, 18, YEL, INK, 5) + T(zx, 684, 'z = 2.0', 50)
-    # result badge
-    s += panel(40, 1290, 556, 300)
-    s += tick(128, 1392, 58) + T(206, 1418, 'Reject H_0', 70, anchor='start', maxw=380)
-    s += T(78, 1530, 'z = 2.0 is beyond 1.96', 42, weight=600, anchor='start', fill=SLATE, maxw=520)
-    # Ledger, happy, pointing up at the marker
-    L = Ledger('34f_l', 868, FL, 2.5)
-    b, f = L.draw(armL={'hand': (30, 110), 'front': True, 'bend': -1},
-                  face={'look': (-2, -2), 'glad': True, 'mouth': 'grin'})
-    s += b + f
-    return s, L, VIOLET
+        s += line(x, BL, x, BL + 16, INK, 5) + T(x, BL + 58, lab, 38)
+    s += T((xa + xl) / 2, TOP + 48, 'Reject H_0', 31, fill=GREEN_D, maxw=xl - xa)
+    s += T((xr + xb) / 2, TOP + 48, 'Reject H_0', 31, fill=GREEN_D, maxw=xb - xr)
+    s += T(CX, TOP + 58, 'Do not reject H_0', 46, fill=RED_D)
+    # the z marker: starts at 0, is dragged to 2.0
+    z = 2.0 if solved else 0.0
+    zx, z2 = CX + z * SG, CX + 2.0 * SG
+    fy = 790
+    if solved:
+        s += line(CX, BL, CX, fy + 40, WHITE, 6, dash='12 12') + circle(CX, BL, 13, WHITE, INK, 4)
+        s += arrow(CX + 20, fy + 40, zx - 136, fy + 40, INK, 9, head=30)
+    else:
+        s += arrow(zx + 132, fy + 40, z2 - 6, fy + 40, INK, 6, dash='4 16', head=24)
+    s += line(zx, BL, zx, fy + 40, INK, 7) + circle(zx, BL, 14, INK, None)
+    s += rrect(zx - 110 + 8, fy + 8, 220, 80, 18, INK, None) + rrect(zx - 110, fy, 220, 80, 18, YEL, INK, 5)
+    s += T(zx, fy + 56, 'z = 2.0' if solved else 'z = 0', 46)
+    if not solved:
+        s += cursor(zx - 104, fy + 62, 1.2)
+    if solved:                                                                        # zoom: 2.0 lies just beyond 1.96
+        ix, iy, ir = 934, 982, 94
+        s += line(zx + 6, BL - 14, ix - 50, iy + 62, INK, 4)
+        s += f'<clipPath id="zoom"><circle cx="{ix}" cy="{iy}" r="{ir}"/></clipPath>'
+        g = rrect(ix - ir, iy - ir, ir - 26, 2 * ir, 0, RED_T, None) + rrect(ix - 26, iy - ir, ir + 26, 2 * ir, 0, GREEN_T, None)
+        g += line(ix - 26, iy - ir, ix - 26, iy + ir, INK, 5) + line(ix + 26, iy - ir, ix + 26, iy + ir, INK, 9)
+        s += f'<g clip-path="url(#zoom)">{g}</g>' + circle(ix, iy, ir, 'none', INK, 6)
+        s += T(ix - 33, iy + 10, '1.96', 26, anchor='end') + T(ix + 37, iy + 10, '2.0', 28, anchor='start')
+    # answer chips
+    cy_ = 1222
+    chips = [('Reject H_0', 300), ('Do not reject H_0', 470)]
+    x = 540 - (300 + 470 + 30) / 2
+    for i, (t, w_) in enumerate(chips):
+        on = solved and i == 0
+        s += rrect(x + 8, cy_ + 8, w_, 92, 46, INK, None) + rrect(x, cy_, w_, 92, 46, GREEN if on else WHITE, INK, 5)
+        if on:
+            s += circle(x + 50, cy_ + 46, 24, WHITE, INK, 4) + path(f'M{x + 39} {cy_ + 47} L{x + 47} {cy_ + 56} L{x + 62} {cy_ + 38}', stroke=GREEN_D, sw=7)
+            s += T(x + 86, cy_ + 61, t, 42, anchor='start', fill=WHITE, maxw=w_ - 100)
+            s += cursor(x + w_ - 16, cy_ + 66, 1.2)
+        else:
+            s += circle(x + 50, cy_ + 46, 22, WHITE, INK, 4) + T(x + 86, cy_ + 61, t, 42, anchor='start', maxw=w_ - 100)
+        x += w_ + 30
+    LX = 250
+    if solved:
+        s += state_ledger('cheer', LX, FL, 2.0, True)
+        s += popup(762, FL - 260, 'Reject H_0', 66, '2.0 is beyond 1.96')
+    else:
+        s += state_ledger('confused', LX, FL, 2.0, False)
+        s += thought(720, FL - 290)
+    return s, None, VIOLET
 
 
-def A5():
-    s = header('ECONOMICS', 'Market equilibrium')
-    s += panel(30, 410, 1016, 1350)
-    ox, oy, yt, xr = 130, 1640, 500, 1000
-    m, ex, ey, sh = 1.25, 480, 1050, 130
-    S = lambda x: ey - m * (x - ex)
-    D2 = lambda x: ey + m * (x - ex)
-    D1 = lambda x: ey + m * (x - ex + sh)
-    e1x = ex - sh / 2
-    e1y = S(e1x)
-    # platform for Ledger between the two lines
-    sc, LX, LY = 2.5, 862, 1300
-    s += rrect(LX + 8, LY + 26, 26, oy - LY - 26, 0, PINK_D, INK, 5)
-    s += path(f'M{ox} {yt - 10} V{oy} H{xr + 10}', sw=7)
-    s += arrow_head(ox, yt - 30, -90, 30) + arrow_head(xr + 30, oy, 0, 30)
-    s += T(ox + 30, 492, 'Price', 40, anchor='start', fill=SLATE) + T(xr + 20, oy + 68, 'Quantity', 40, anchor='end', fill=SLATE)
-    s += line(ox, ey, ex, ey, SLATE, 5, dash='3 14') + line(ex, ey, ex, oy, SLATE, 5, dash='3 14')
-    s += line(175, D1(175), 700, D1(700), PINK, 7, dash='18 16')                       # where demand was
-    s += line(180, S(180), 850, S(850), INK, 10) + T(876, S(850) - 26, 'Supply', 48, anchor='end')
-    s += line(205, D2(205), 810, D2(810), PINK, 11)
-    s += T(214, D2(205) - 30, 'Demand', 48, anchor='start', fill=PINK_D)
-    for yy in (880, 1400):
-        xa, xb = ex - sh + (yy - ey) / m, ex + (yy - ey) / m
-        s += arrow(xa + 22, yy, xb - 20, yy, PINK_D, 8, head=26)
-    s += circle(e1x, e1y, 14, WHITE, INK, 5) + circle(ex, ey, 20, GREEN, INK, 6)
-    s += T(78, ey + 18, 'P*', 52) + T(ex, oy + 72, 'Q*', 52)
-    s += rrect(LX - 126, LY, 290, 30, 8, PINK, INK, 5)
-    # Ledger on the platform, 3/4 front, one hand on the grip of the demand line
-    L = Ledger('34f_l', LX, LY, sc)
-    gx, gy = 606, D2(606)
-    b, f = L.draw(armL={'hand': L.r((gx + 16, gy - 12)), 'front': True, 'bend': 1},
-                  face={'look': (-3, 1.5), 'mouth': 'smile', 'brows': 2}, shadow=False)
-    s += b + f
-    return s, L, PINK
+def A5(solved):
+    FL = 1860
+    s = floor(FL - 60, PINK_D) + header('ECONOMICS', 'Market equilibrium')
+    s += qcard(400, 214, [('What happens to demand?', 52, INK, 700)], ctx='Coffee becomes more popular')
+    s += panel(40, 646, 1000, 690)
+    ox, oy, yt, xr = 160, 1244, 700, 990
+    e1, sh = (450, 1010), 200
+    S = lambda x: e1[1] - (x - e1[0])
+    D = lambda x, k=0: e1[1] + (x - e1[0] - k)
+    e2 = (e1[0] + sh / 2, S(e1[0] + sh / 2))
+    assert abs(D(e2[0], sh) - e2[1]) < 1e-6
+    s += path(f'M{ox} {yt - 6} V{oy} H{xr + 4}', sw=7)
+    s += arrow_head(ox, yt - 26, -90, 28) + arrow_head(xr + 24, oy, 0, 28)
+    s += T(ox + 26, yt + 6, 'Price', 38, anchor='start', fill=SLATE) + T(xr + 20, oy + 56, 'Quantity', 38, anchor='end', fill=SLATE)
+    s += line(260, S(260), 740, S(740), INK, 10) + T(762, S(740) + 26, 'Supply', 44, anchor='start')
+    dl = lambda k, col, sw_, dash=None: line(220 + k, D(220 + k, k), 640 + k, D(640 + k, k), col, sw_, dash)
+    if not solved:
+        s += line(ox, e1[1], e1[0], e1[1], SLATE, 5, dash='3 14') + line(e1[0], e1[1], e1[0], oy, SLATE, 5, dash='3 14')
+        s += dl(0, PINK, 11) + T(626, 1150 + 14, 'Demand', 44, anchor='start', fill=PINK_D)
+        s += circle(e1[0], e1[1], 18, WHITE, INK, 6)
+        s += T(ox - 20, e1[1] + 14, 'P_1', 40, anchor='end') + T(e1[0], oy + 56, 'Q_1', 40)
+        gy = 860                                                                      # grab point on the line, could go either way
+        gx = e1[0] + (gy - e1[1])
+        s += arrow(gx + 40, gy, gx + 190, gy, SLATE, 6, dash='4 16', head=24) + arrow(gx - 40, gy, gx - 120, gy, SLATE, 6, dash='4 16', head=24)
+        s += cursor(gx - 6, gy - 4, 1.4)
+    else:
+        for e in (e1, e2):
+            s += line(ox, e[1], e[0], e[1], SLATE, 5, dash='3 14') + line(e[0], e[1], e[0], oy, SLATE, 5, dash='3 14')
+        s += dl(0, PINK, 7, '18 16') + dl(sh, PINK, 11) + T(826, 1150 + 14, 'Demand', 44, anchor='start', fill=PINK_D)
+        for yy in (812, 1130):
+            xa_ = e1[0] + (yy - e1[1])
+            s += arrow(xa_ + 26, yy, xa_ + sh - 22, yy, PINK_D, 9, head=28)
+        s += circle(e1[0], e1[1], 13, WHITE, INK, 5) + circle(e2[0], e2[1], 20, GREEN, INK, 6)
+        s += T(ox - 20, e1[1] + 14, 'P_1', 40, anchor='end') + T(ox - 20, e2[1] + 14, 'P_2', 40, anchor='end')
+        s += T(e1[0], oy + 56, 'Q_1', 40) + T(e2[0], oy + 56, 'Q_2', 40)
+        s += arrow(ox + 24, e1[1] - 8, ox + 24, e2[1] + 8, GREEN, 8, head=24)
+        s += arrow(e1[0] + 10, oy - 24, e2[0] - 10, oy - 24, GREEN, 8, head=24)
+        gy = 1040
+        gx = e1[0] + sh + (gy - e1[1])
+        s += cursor(gx - 6, gy - 4, 1.4)
+    LX = 250
+    if solved:
+        s += state_ledger('joy', LX, FL, 2.0, True)
+        s += popup(762, FL - 260, 'Correct', 68, 'Demand shifts right')
+    else:
+        s += state_ledger('scratch', LX, FL, 2.0, False)
+        s += thought(720, FL - 290)
+    return s, None, PINK
 
 
-def A6():
-    FL = 1800
-    s = floor(FL - 70, PINK_D) + header('ECONOMICS', 'The IS-LM model')
-    mx, my, mw, mh = 40, 410, 1000, 730
-    s += monitor(mx, my, mw, mh)
-    s += rrect(250, my + mh + 82, 580, 26, 8, CREAM, INK, 5)
-    ox, oy, yt, xr = 150, 1040, 480, 990
-    y1, y2, m = 650, 830, 1.125
-    e1, e2 = (700, y1), (700 + (y2 - y1) / m, y2)
-    IS = lambda x: y1 + m * (x - 700)
-    s += path(f'M{ox} {yt - 6} V{oy} H{xr + 6}', sw=7)
-    s += arrow_head(ox, yt - 24, -90, 28) + arrow_head(xr + 24, oy, 0, 28)
-    s += T(ox + 26, yt - 4, 'Interest rate i', 38, anchor='start', fill=SLATE)
-    s += T(ox + 20, oy + 56, 'Output Y', 38, anchor='start', fill=SLATE)
-    s += line(e1[0], y1, e1[0], oy, SLATE, 5, dash='3 14') + line(e2[0], y2, e2[0], oy, SLATE, 5, dash='3 14')
-    s += line(ox, y1, xr - 20, y1, SLATE, 7, dash='18 16')
-    s += line(ox, y2, xr - 20, y2, INK, 10)
-    s += line(540, IS(540), 905, IS(905), BLUE, 10) + T(524, IS(540) + 34, 'IS', 54, anchor='end', fill=BLUE)
-    s += T(ox + 26, y2 + 56, 'LM (set by the central bank)', 38, anchor='start', maxw=530)
-    s += arrow(330, y1 + 26, 330, y2 - 22, PINK, 14, head=40)
-    s += circle(e1[0], y1, 14, WHITE, INK, 5) + circle(e2[0], y2, 20, GREEN, INK, 6)
-    s += T(e1[0], oy + 58, 'Y_1', 46) + T(e2[0], oy + 58, 'Y_2', 46)
-    s += arrow(e1[0] + 44, oy + 42, e2[0] - 44, oy + 42, GREEN, 8, head=24)
-    cxp = 940
-    s += line(cxp, y1 + 14, cxp, y2 - 16, INK, 6, dash='3 15') + cursor(cxp - 4, y2 - 4)
-    # Ledger from the back, game controller in both hands
-    sc = 2.4
-    L = Ledger('back', 540, FL, sc)
-    pad = rrect(8, 146, 224, 46, 23, WHITE, INK, 4)
-    pad += rrect(8, 160, 46, 56, 22, WHITE, INK, 4) + rrect(186, 160, 46, 56, 22, WHITE, INK, 4)
-    pad += rrect(12, 150, 216, 38, 19, WHITE, None)
-    pad += rrect(24, 156, 8, 24, 2, INK, None) + rrect(16, 164, 24, 8, 2, INK, None)                 # D-pad
-    pad += circle(206, 160, 5.5, GREEN, INK, 2) + circle(218, 171, 5.5, RED, INK, 2) + circle(205, 177, 5.5, YEL, INK, 2)
-    s += f'<g transform="translate({L.X - 120 * sc:.2f} {L.Y - 222 * sc:.2f}) scale({sc})">{pad}</g>'
-    b, f = L.draw(armL={'hand': (30, 200), 'bend': 1}, armR={'hand': (210, 200), 'bend': -1})
-    s += b + f
-    top = L.w((0, 34))[1]
-    for r in (22, 44, 66):
-        s += path(f'M{540 - r} {top - 16} A{r} {r} 0 0 1 {540 + r} {top - 16}', stroke=WHITE, sw=9)   # wireless signal
-    return s, L, PINK
+def A6(solved):
+    FL = 1790
+    s = floor(FL - 60, PINK_D) + header('ECONOMICS', 'The IS-LM model')
+    mx, my, mw, mh = 50, 400, 980, 770
+    s += monitor_desk(mx, my, mw, mh, FL - 228)
+    sx, sy, sw_ = mx + 22, my + 22, mw - 44
+    s += qstrip(sx + 18, sy + 16, sw_ - 36, 150, [('The central bank cuts the rate', 42, SLATE, 600), ('What happens to output Y?', 46, INK, 700)])
+    ox, oy, yt, xr = 180, 1070, 650, 960
+    y1, y2 = 770, 900
+    e1 = (720, y1)
+    IS = lambda x: e1[1] + (x - e1[0])
+    e2 = (e1[0] + (y2 - y1), y2)
+    assert IS(e2[0]) == y2
+    s += path(f'M{ox} {yt - 6} V{oy} H{xr + 4}', sw=7)
+    s += arrow_head(ox, yt - 24, -90, 26) + arrow_head(xr + 22, oy, 0, 26)
+    s += T(ox + 24, yt + 8, 'Interest rate i', 34, anchor='start', fill=SLATE)
+    s += T(ox + 24, oy + 50, 'Output Y', 34, anchor='start', fill=SLATE)
+    s += line(e1[0], y1, e1[0], oy, SLATE, 5, dash='3 14')
+    s += T(e1[0], oy + 50, 'Y_1', 40) + T(ox - 16, y1 + 13, 'i_1', 40, anchor='end')
+    isl = line(640, IS(640), 940, IS(940), BLUE, 10) + T(628, IS(640) + 6, 'IS', 50, anchor='end', fill=BLUE)
+    cx_ = 900                                                                         # where the cursor holds the LM line
+    lm = lambda y: (T(ox + 24, y - 18, 'LM', 44, anchor='start') +
+                    T(ox + 24 + tw('LM', 44) + 16, y - 20, 'set by the central bank', 28, 600, anchor='start', fill=SLATE, maxw=340))
+    if not solved:
+        s += line(ox, y1, xr - 10, y1, INK, 10) + isl + lm(y1)
+        s += circle(e1[0], y1, 18, WHITE, INK, 6)
+        s += arrow(cx_, y1 + 30, cx_, y1 + 140, SLATE, 6, dash='4 16', head=24) + arrow(cx_, y1 - 30, cx_, y1 - 90, SLATE, 6, dash='4 16', head=24)
+        s += cursor(cx_ + 22, y1 - 6, 1.3)
+    else:
+        s += line(e2[0], y2, e2[0], oy, SLATE, 5, dash='3 14')
+        s += line(ox, y1, xr - 10, y1, SLATE, 7, dash='18 16') + line(ox, y2, xr - 10, y2, INK, 10) + isl + lm(y2)
+        s += arrow(660, y1 + 20, 660, y2 - 20, PINK, 14, head=38)
+        s += circle(e1[0], y1, 13, WHITE, INK, 5) + circle(e2[0], y2, 20, GREEN, INK, 6)
+        s += T(e2[0], oy + 50, 'Y_2', 40) + T(ox - 16, y2 + 13, 'i_2', 40, anchor='end')
+        s += arrow(e1[0] + 12, oy - 24, e2[0] - 12, oy - 24, GREEN, 8, head=24)
+        s += cursor(cx_ + 22, y2 - 6, 1.3)
+        s += popup(400, 990, 'Correct', 48, col=GREEN, sw=6, corners=(0, 1), h=96, n1=30)
+    d, L = desk_and_ledger(FL, solved, (760, my + mh - 8))
+    return s + d, L, PINK
 
 
 def A7():
     s = floor(1740, YEL_D)
-    def lines(rows, size, lh=None, weight=700, fill=INK):
-        lh = lh or size * 1.32
-        y0 = -lh * (len(rows) - 1) / 2 + size * 0.35
-        return ''.join(T(0, y0 + i * lh, r, size, weight, fill=fill, check=False) for i, r in enumerate(rows))
-    be = lines(['Break-even units =', 'Fixed costs ÷', '(Price − Variable cost per unit)'], 32, fill=WHITE)
-    npv = T(0, -34, 'NPV =', 44, check=False, fill=WHITE)
-    npv += (f'<text x="0" y="38" font-family="{FONT}" font-size="36" font-weight="700" text-anchor="middle" fill="{WHITE}">'
-            f'Σ CF<tspan dy="10" font-size="24">t</tspan><tspan dy="-10"> ÷ (1 + r)</tspan><tspan dy="-16" font-size="24">t</tspan>'
-            f'<tspan dy="16"> − Initial cost</tspan></text>')
-    zf = lines(['z = (x − μ) ÷ σ'], 54, fill=WHITE)
-    ale = lines(['Assets =', 'Liabilities + Equity'], 44, fill=WHITE)
+    CW, CH, HD = 450, 340, 84
+
+    def lesson(col, topic, icon, body):
+        x, y = -CW / 2, -CH / 2
+        g = rrect(x + 10, y + 10, CW, CH, 26, INK, None) + rrect(x, y, CW, CH, 26, WHITE, INK, 5)
+        g += path(f'M{x} {y + HD} V{y + 26} Q{x} {y} {x + 26} {y} H{-x - 26} Q{-x} {y} {-x} {y + 26} V{y + HD} Z', fill=col, stroke=INK, sw=5)
+        g += circle(x + 50, y + HD / 2, 28, WHITE, INK, 4) + group(icon, x + 50, y + HD / 2)
+        g += T(x + 92, y + HD / 2 + 12, topic, 34, anchor='start', fill=WHITE, check=False)
+        assert tw(topic, 34) < CW - 110, topic
+        return g + group(body, 0, 42)
+
+    def cur(x, y):
+        return cursor(x, y, 0.8)
+
+    # 1 journal entries: drag the block onto a side of the T-account
+    b1 = line(-190, -62, 190, -62, INK, 5) + line(0, -62, 0, 100, INK, 5)
+    b1 += T(-95, -74, 'Debit', 26, check=False) + T(95, -74, 'Credit', 26, check=False)
+    b1 += rrect(-160, -40, 130, 56, 10, WHITE, SLATE, 4, 'stroke-dasharray="9 7"') + rrect(30, -40, 130, 56, 10, WHITE, SLATE, 4, 'stroke-dasharray="9 7"')
+    b1 += curve_arrow(26, 70, -80, 80, -95, 30, SLATE, 4, '3 10', 16)
+    b1 += rrect(34, 44, 130, 56, 10, INK, None) + rrect(28, 38, 130, 56, 10, BLUE, INK, 4) + T(93, 77, '€500', 30, fill=WHITE, check=False) + cur(142, 78)
+    i1 = line(-13, -9, 13, -9, INK, 5) + line(0, -9, 0, 14, INK, 5)
+    # 2 compound interest: slider under a growing curve
+    gy_ = lambda i: 30 - 19 * 1.026 ** i
+    cv = 'M' + ' L'.join(f'{-160 + 3.3 * i:.1f} {gy_(i):.1f}' for i in range(0, 71))
+    b2 = path('M-180 -98 V30 H190', sw=5)
+    for i in (12, 32, 52):
+        for j in range(int((30 - gy_(i)) // 10)):
+            b2 += rrect(-160 + 3.3 * i - 18, 28 - 10 * (j + 1), 36, 10, 5, YEL, INK, 2.5)
+    b2 += path(cv, stroke=BLUE, sw=7) + circle(-160 + 3.3 * 70, gy_(70), 9, BLUE, INK, 3)
+    b2 += rrect(-180, 82, 370, 16, 8, WHITE, INK, 4) + rrect(-176, 86, 250, 8, 4, BLUE, None) + circle(74, 90, 18, WHITE, INK, 4) + circle(74, 90, 8, BLUE, None)
+    b2 += arrow(-70, 58, 40, 58, BLUE, 5, head=16) + cur(84, 88)
+    i2 = T(0, 13, '€', 36, check=False)
+    # 3 hypothesis testing: drag the marker along the bell curve
+    hb = lambda x: 90 - 150 * math.exp(-(x / 62) ** 2 / 2)
+    seg = lambda a, b_: ' L'.join(f'{a + (b_ - a) * i / 30:.1f} {hb(a + (b_ - a) * i / 30):.1f}' for i in range(31))
+    b3 = path(f'M-190 90 L{seg(-190, -121)} L-121 90 Z', fill=GREEN, stroke=None) + path(f'M121 90 L{seg(121, 190)} L190 90 Z', fill=GREEN, stroke=None)
+    b3 += path(f'M-121 90 L{seg(-121, 121)} L121 90 Z', fill=RED2, stroke=None)
+    b3 += path(f'M{seg(-190, 190)}', sw=5) + line(-196, 90, 196, 90, INK, 5)
+    b3 += line(134, 90, 134, -20, INK, 5) + rrect(98, -62, 72, 44, 10, YEL, INK, 4) + T(134, -30, 'z', 30, check=False)
+    b3 += arrow(40, -40, 88, -40, INK, 5, head=16) + cur(150, -30)
+    i3 = path('M-16 10 C-6 10 -6 -12 0 -12 C6 -12 6 10 16 10', sw=4)
+    # 4 supply and demand: drag the demand line
+    b4 = path('M-170 -92 V96 H180', sw=5)
+    b4 += line(-140, 76, 60, -80, INK, 6) + line(-150, -70, 20, 70, PINK, 4, '10 9') + line(-70, -70, 100, 70, PINK, 7)
+    b4 += arrow(-52, 18, 8, 18, PINK_D, 5, head=16) + circle(1.5, -34, 9, GREEN, INK, 3)
+    b4 += T(72, -70, 'Supply', 24, anchor='start', check=False) + T(112, 62, 'Demand', 24, anchor='start', fill=PINK_D, check=False) + cur(70, 30)
+    i4 = line(-13, -12, 13, 12, INK, 5) + line(-13, 12, 13, -12, PINK, 5)
+    # 5 break-even point: pick the right answer
+    assert 1000 / 4 == 250
+    b5 = T(0, -52, '€1,000 fixed costs ÷ €4 a unit', 26, check=False)
+    assert tw('€1,000 fixed costs ÷ €4 a unit', 26) < CW - 50
+    for i, (t, on) in enumerate((('150 units', False), ('250 units', True), ('400 units', False))):
+        yy = -30 + i * 44
+        b5 += rrect(-150, yy, 300, 36, 18, GREEN if on else WHITE, INK, 4) + T(-10 if on else 0, yy + 27, t, 26, fill=WHITE if on else INK, check=False)
+        if on:
+            b5 += path(f'M64 {yy + 18} L72 {yy + 26} L86 {yy + 10}', stroke=WHITE, sw=5) + cur(138, yy + 22)
+    i5 = rrect(-14, 0, 8, 12, 1, INK, None) + rrect(-4, -6, 8, 18, 1, INK, None) + rrect(6, -13, 8, 25, 1, BLUE, None)
+    # 6 net present value: cash flows on a timeline and a rate slider
+    b6 = line(-180, 10, 180, 10, INK, 5) + rrect(-160, 10, 44, 62, 4, RED2, INK, 4)
+    for i, hgt in enumerate((40, 54, 66, 80)):
+        b6 += rrect(-80 + i * 62, 10 - hgt, 44, hgt, 4, GREEN, INK, 4)
+    b6 += rrect(-40, 78, 220, 14, 7, WHITE, INK, 4) + circle(60, 85, 16, WHITE, INK, 4) + circle(60, 85, 6, BLUE, None) + T(-64, 96, 'Rate', 24, anchor='end', fill=SLATE, check=False)
+    b6 += arrow(140, 62, 92, 62, BLUE, 5, head=16) + cur(66, 88)
+    i6 = T(0, 12, 'Σ', 34, check=False)
     cards = [
-        (300, 300, -4, 532, 250, be, EMER_D),
-        (824, 266, 5, 404, 170, zf, VIOLET),
-        (800, 610, -3, 420, 360, group(mini_sd(290, 230), 0, 4), WHITE),
-        (304, 670, 3, 540, 220, npv, ORANGE),
-        (274, 1030, -5, 430, 270, group(mini_t(340, 200, True, EMER, '#A7F3D0'), 0, 0), WHITE),
-        (784, 1030, 4, 500, 210, ale, BLUE),
+        (296, 296, -4, EMER_D, 'Journal entries', i1, b1),
+        (788, 282, 4, ORANGE, 'Compound interest', i2, b2),
+        (290, 694, 3, VIOLET, 'Hypothesis testing', i3, b3),
+        (792, 686, -3, PINK, 'Supply and demand', i4, b4),
+        (296, 1092, -4, BLUE, 'Break-even point', i5, b5),
+        (788, 1082, 3, SUIT, 'Net present value', i6, b6),
     ]
-    for cx, cy, rot, w, h, inner, fill in cards:
-        s += group(card(w, h, inner, fill=fill), cx, cy, rot)
-    L = Ledger('back', 540, 1800, 2.5)
-    b, f = L.draw(armL={'hand': (25, 127), 'bend': 1}, armR={'hand': (215, 127), 'bend': -1})
+    for cx, cy, rot, col, topic, icon, body in cards:
+        outer = {True: {296: (0,), 1092: (3,)}, False: {282: (1,), 1082: (2,)}}[cx < 540].get(cy, ())   # pop lines on the four outer corners
+        s += group(pop_lines(-CW / 2, -CH / 2, CW, CH, WHITE, 7, 14, 36, outer) + lesson(col, topic, icon, body), cx, cy, rot)
+    L = Ledger('back', 540, 1810, 2.3)
+    b, f = L.draw(armL={'hand': (26, 104), 'bend': -1}, armR={'hand': (214, 104), 'bend': 1})
     s += b + f
     top = L.w((0, 34))[1]
-    s += sparks(540, top + 150, 215, 268, (-145, -118, -90, -62, -35), WHITE, 10)
+    s += sparks(540, top + 150, 205, 250, (-126, -106, -74, -54), WHITE, 9)
+    s += confetti([(215, top + 60, -20), (250, top + 230, 30), (860, top + 50, 25), (840, top + 230, -35), (160, top + 180, 60), (915, top + 170, 10)])
     return s, L, YEL
 
 
@@ -702,33 +989,35 @@ def A8():
     s += rrect(ix, iy, iw, 100, 14, TINT, None) + rrect(ix, iy + 50, iw, 50, 0, TINT, None)
     for i, col in enumerate((RED, YEL, GREEN)):
         s += circle(ix + 54 + i * 44, iy + 50, 14, col, None)
-    s += rrect(ix + 190, iy + 18, iw - 240, 64, 32, WHITE, INK, 3) + T(ix + 190 + (iw - 240) / 2, iy + 65, 'edlintics.com', 40)
-    # page
-    wm, a_, b_ = 120, 'Ed', 'lintics'
-    wa, wb = tw(a_, wm), tw(b_, wm)
-    x0 = 540 - (wa + wb) / 2
-    s += T(x0, iy + 270, a_, wm, anchor='start') + T(x0 + wa, iy + 270, b_, wm, anchor='start', fill=BLUE)
-    s += T(540, iy + 370, 'Learn the language of business', 54, maxw=iw - 60)
+    s += rrect(ix + 190, iy + 18, iw - 240, 64, 32, WHITE, INK, 3) + T(ix + 190 + (iw - 240) / 2, iy + 64, 'www.edlintics.com', 40)
+    # page: the real logo, the headline, the four subjects and the button
+    lw = 640
+    s += embed_logo(540 - lw / 2, iy + 136, lw)
+    s += T(540, iy + 392, 'Learn the language of business', 54, maxw=iw - 60)
     rows = [(('Accounting', EMER_D), ('Finance', ORANGE)), (('Economics', PINK), ('Statistics', VIOLET))]
     for r, row in enumerate(rows):
         ws = [tw(t, 46) + 76 for t, _ in row]
         x = 540 - (sum(ws) + 28) / 2
-        y = iy + 430 + r * 112
+        y = iy + 446 + r * 108
         for (t, col), w_ in zip(row, ws):
             s += rrect(x, y, w_, 88, 44, col, INK, 4) + T(x + w_ / 2, y + 60, t, 46, fill=WHITE)
             x += w_ + 28
-    by = iy + 700
+    by = iy + 706
     s += rrect(160, by + 10, 780, 160, 80, INK, None) + rrect(150, by, 780, 160, 80, BLUE, INK, 5)
-    s += T(540, by + 102, 'Get started for free', 66, fill=WHITE, maxw=700)
-    s += cursor(862, by + 104, 2.1)
-    # Ledger below the monitor, waving
-    sc = 2.5
-    s += embed_state('hello', 540, FL, sc)
-    s += sparks(540, FL - 300, 300, 360, (-160, -20), WHITE, 10) + sparks(540, FL - 300, 300, 360, (-172, -8), WHITE, 10)
+    s += T(500, by + 102, 'Get started for free', 60, fill=WHITE, maxw=640)
+    s += sparks(874, by + 112, 24, 56, (-128, -92, -56, -20), WHITE, 8)             # click burst
+    s += cursor(874, by + 112, 1.9)
+    # Ledger below the monitor, cheering
+    sc = 2.2
+    s += embed_state('cheer', 540, FL, sc)
+    top = FL - 188 * sc
+    s += solved_marks(540, top, 136 * sc / 2 + 120)
     return s, None, BLUE
 
 
-FRAMES = {'A1': A1, 'A2': A2, 'A3': A3, 'A4': A4, 'A5': A5, 'A6': A6, 'A7': A7, 'A8': A8}
+FRAMES = {'A1': A1, 'A2a': lambda: A2(False), 'A2b': lambda: A2(True), 'A3a': lambda: A3(False), 'A3b': lambda: A3(True),
+          'A4a': lambda: A4(False), 'A4b': lambda: A4(True), 'A5a': lambda: A5(False), 'A5b': lambda: A5(True),
+          'A6a': lambda: A6(False), 'A6b': lambda: A6(True), 'A7': A7, 'A8': A8}
 
 
 def build(name):
@@ -752,12 +1041,14 @@ def build(name):
         print('   WARNING', w_)
 
 
-def sheet():
+def sheet(per_row=7):
     names = [n for n in FRAMES if os.path.exists(os.path.join(OUT, f'{n}.png'))]
     tw_, th = 250, 444
-    im = Image.new('RGB', (tw_ * len(names), th), 'white')
+    rows = math.ceil(len(names) / per_row)
+    im = Image.new('RGB', (tw_ * min(per_row, len(names)), th * rows), 'white')
     for i, n in enumerate(names):
-        im.paste(Image.open(os.path.join(OUT, f'{n}.png')).convert('RGB').resize((tw_ - 4, th - 4), Image.Resampling.LANCZOS), (i * tw_ + 2, 2))
+        im.paste(Image.open(os.path.join(OUT, f'{n}.png')).convert('RGB').resize((tw_ - 4, th - 4), Image.Resampling.LANCZOS),
+                 ((i % per_row) * tw_ + 2, (i // per_row) * th + 2))
     im.save(os.path.join(OUT, 'sheet.png'))
     print('sheet.png', im.size)
 
